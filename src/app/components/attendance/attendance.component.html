@@ -1,0 +1,113 @@
+<div class="p-3 mb-2 bg-light">
+<h1 class="h1" >INTEQ ATTENDANCE MANAGEMENT SYSTEM</h1>
+</div>
+<form class="row g-3">
+    <div class="col-md-3">
+        <label for="Empname" class="form-label">Emp.Name</label>
+    </div>
+    <div class="col-md-3">
+        <input type="text" class="form-control" id="Empname">
+    </div>
+    <div class="col-md-3">
+        <label for="Empid" class="labelid-role">Emp.ID</label>
+    </div>
+    <div class="col-md-3">
+        <input type="text" class="form-control" id="Empid">
+    </div>
+    <div class="col-md-3">
+        <label for="projname" class="form-label">Project Name</label>
+    </div>
+    <div class="col-md-3">
+        <input type="text" class="form-control" id="projname">
+    </div>
+    <div class="col-md-3">
+        <label for="Role" class="labelid-role">Role</label>
+    </div>
+    <div class="col-md-3">
+        <input type="text" class="form-control" id="Role">
+    </div>
+    <div class="container">
+     <div>
+        <h2 class="notify">Inteq Holidays</h2>
+     </div>
+     <div id="newsTicker" class="newsinfo">
+        <ul class="newsList">
+            <li>Dasara</li>
+        </ul>
+     </div>
+    </div>
+    <div class="container-main">
+       <h3 class="main">{{currentdate| date:'longDate'}}</h3> 
+       <label class="labeldrp1">Leave</label>
+       <div class="drpdwn1">
+        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          - select leave type -
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" href="#">Full Day</a></li>
+          <li><a class="dropdown-item" href="#">Half Day</a></li>
+          <li><a class="dropdown-item" href="#">OH(Optional Holiday)</a></li>
+        </ul>
+      </div>
+      <label class="labeldrp2">Work Location</label>
+      <div class="drpdwn2">
+        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          - select work type -
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" href="#">WFH</a></li>
+          <li><a class="dropdown-item" href="#">WFO</a></li>
+          <li><a class="dropdown-item" href="#">WFH/WFO</a></li>
+        </ul>
+      </div>
+      <label class="labeltime1">Login Time</label>
+      <input class="time" type="time">
+      <label class="labeltime2">Logout Time</label>
+      <input class="time" type="time">
+      <div>
+        <button class="button">Save</button>
+      </div>
+    </div>
+    <div class="container-calendar">
+     <!-- <mat-card class="demo-inline-calendar-card">
+       <mat-calendar class="calendar"></mat-calendar>
+     </mat-card> -->
+     <ngb-datepicker #dp [(ngModel)]="model"  />
+     <!-- <ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next" /> -->
+    </div>
+    <div class="d-flex justify-content-center">
+        <div class="border rounded" data-coreui-toggle="calendar"></div>
+    </div>
+    <div class="container-bottom">
+      <label class="lbltwd">Total Working Days</label>
+      <input class="inputtwd" type="text">
+      <div class="drpmnth">
+        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          - Select Month -
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" href="#">January</a></li>
+          <li><a class="dropdown-item" href="#">February</a></li>
+          <li><a class="dropdown-item" href="#">March</a></li>
+        </ul>
+      </div>
+      <div class="drpyear">
+        <button class="btn btn-drp-year" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          - Select Year -
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" href="#">2024</a></li>
+          <li><a class="dropdown-item" href="#">2023</a></li>
+        </ul>
+      </div>
+      <label class="lbltlc">Total Leave Count</label>
+      <input class="inputtlc" type="text">
+      <div>
+        <button class="buttonprnt">Print\Export</button>
+      </div>
+      
+    </div>
+</form>
+
+  
+  

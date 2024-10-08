@@ -1,0 +1,282 @@
+h1 {
+    /* font-family: Times New Roman; */
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    text-align: center;
+    color: rgb(55, 103, 236);
+   
+}
+label {
+    display: inline-block;
+    margin-left: 3%;
+    font-weight: bold;
+    color: black;
+    margin-top: 1%;
+}
+.labelid-role{
+    display: inline-block;
+    margin-left: 13%;
+    font-weight: bold;
+    color: black;
+    margin-top: 1%;
+}
+
+.form-control {
+    display: block;
+    width: 167%;
+    margin-left: -70%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-color: black;
+    font-weight: 400;
+    line-height: 0.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    /* border: var(--bs-border-width) solid var(--bs-border-color); */
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border-color: black;
+}
+.notify {
+    width: 399px;
+    margin-left: -3%;
+    margin-top: 0%;
+    background-color: rgb(36, 120, 156);
+    color: white;
+    height: 42px;
+    text-align: center;
+    border-radius: 6%;
+}
+.container {
+    border-style: solid;
+    border-color: inherit;
+    border-width: 1px;
+    margin-left: 1%;
+    margin-top: 1%;
+    width: 403px;
+    border-radius: 5px;
+    height: 264px;
+}
+#newsTicker {
+    height: 217px;
+    overflow: hidden;
+    position: relative;
+}
+.newsinfo {
+    width: 465px;
+    height: 237px;
+    left: 0px;
+    top: 0px;
+}
+#newsTicker .newsList {
+    list-style: none;
+    position: absolute;
+    top: 100%;
+    animation: scrollTicker 15s linear infinite;
+}
+#newsTicker ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#newsTicker ul li {
+    margin-bottom: 25px;
+    font-family: "Arial", sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+.container-main {
+    border-style: solid;
+    border-color: inherit;
+    border-width: 1px;
+    margin-top: 1%;
+    width: 787px;
+    border-radius: 5px;
+    height: 264px;
+    margin-right: 24%;
+}
+.main {
+    width: 785px;
+    margin-left: -1%;
+    margin-top: 0%;
+    color: white;
+    height: 42px;
+    text-align: center;
+    border-radius: 0%;
+    background-color: rgb(36, 120, 156);
+}
+.labeldrp1 {
+    display: inline-block;
+    margin-left: 21%;
+    margin-top: -5px;
+    /* font-weight: bold;
+    color: black; */
+}
+.drpdwn1 {
+    cursor: pointer;
+    margin-top: -4%;
+    margin-left: 37%;
+   border-color: black;
+   background-color: rgb(159, 196, 238);
+   color: black;
+   width: 181px;
+   border-radius: 5px;
+   border: 1px solid black;
+}
+.labeldrp2 {
+    display: inline-block;
+    margin-left: 21%;
+    margin-top: 12px;
+
+}
+.drpdwn2{
+    cursor: pointer;
+    margin-top: -4%;
+    margin-left: 37%;
+   border-color: black;
+   background-color: rgb(159, 196, 238);
+   color: black;
+   width: 180px;
+   border-radius: 5px; 
+   border: 1px solid black;
+}
+.labeltime1 {
+    display: inline-block;
+    margin-left: 12%;
+    margin-top: 12px;
+}
+.labeltime2 {
+    display: inline-block;
+    margin-left: 22%;
+    margin-top: 12px;
+}
+.time {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    margin-left: 1%;
+}
+.button {
+        cursor: pointer;
+        margin-top: 3%;
+        margin-left: 37%;
+       border-color: black;
+       color: black;
+       background-color: rgb(159, 196, 238);
+       width: 181px;
+       border-radius: 5px; 
+    
+}
+.lbltwd {
+    display: inline-block;
+    margin-left: 1%;
+    margin-top: 16px;
+}
+.inputtwd {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    margin-left: 0.5%;
+    border-radius: 5px;
+}
+.drpmnth {
+    position: relative;
+    margin-left: 25%;
+    margin-top: -2%;
+    border-color: black;
+   background-color: rgb(159, 196, 238);
+   color: black;
+   width: 156px;
+   border-radius: 5px;
+   border: 1px solid black;
+}
+.drpyear {
+    position: relative;
+    margin-left: 38%;
+    margin-top: -2.5%;
+    border-color: black;
+    background-color: rgb(159, 196, 238);
+    color: black;
+    width: 156px;
+    border-radius: 5px;
+    border: 1px solid black;
+}
+
+.btn-drp-year {
+    white-space: nowrap;
+    width: 155px;
+}
+.lbltlc {
+    display: inline-block;
+    margin-left: 50%;
+    margin-top: -2.2%;
+    position: absolute;
+}
+.inputtlc {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    margin-left: 59%;
+    border-radius: 5px;
+    margin-top: -2.4%;
+    position: absolute;
+}
+.container-calendar {
+    border-style: solid;
+    border-color: inherit;
+    border-width: 1px;
+    margin-left: 77%;
+    margin-top: -16.5%;
+    width: 350px;
+    border-radius: 5px;
+    height: 264px;
+}
+.calendar {
+    width: 398px;
+    margin-left: -54%;
+    height: 232px;
+    margin-top: -10%;
+    font-size: 10px;
+    font-weight: 500;
+}
+.calhead {
+    padding: 0 .25rem;
+    margin: 0 .5rem;
+    border: none;
+    background-color: transparent;
+    z-index: 1;
+}
+.demo-inline-calendar-card {
+    width: 300px;
+}
+.buttonprnt {
+    cursor: pointer;
+    margin-top: -2.5%;
+    margin-left: 75%;
+    border-color: black;
+    color: black;
+    background-color: rgb(159, 196, 238);
+    width: 181px;
+    border-radius: 5px;
+    position: absolute;
+    height: 40px;
+}
+.container-bottom {
+    border-style: solid;
+    border-color: inherit;
+    border-width: 1px;
+    margin-top: 0%;
+    width: 1575px;
+    border-radius: 5px;
+    height: 264px;
+    margin-left: 1%;
+    
+}
