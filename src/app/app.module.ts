@@ -6,6 +6,7 @@ import { NgbCalendar, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatCardModule} from '@angular/material/card';
 
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -13,6 +14,7 @@ import { AttendanceComponent } from './components/attendance/attendance.componen
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,7 @@ import { FormsModule } from '@angular/forms';
     AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
-    NgbDatepickerModule,FormsModule,MatDatepickerModule,MatNativeDateModule,MatCardModule
+    NgbDatepickerModule,FormsModule,MatDatepickerModule,MatNativeDateModule,MatCardModule,FullCalendarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -42,14 +42,14 @@ label {
     border-color: black;
 }
 .notify {
-    width: 399px;
-    margin-left: -3%;
+    width: 401px;
+    margin-left: -3.2%;
     margin-top: 0%;
     background-color: rgb(36, 120, 156);
     color: white;
     height: 42px;
     text-align: center;
-    border-radius: 6%;
+    border-radius: 4%;
 }
 .container {
     border-style: solid;
@@ -75,7 +75,7 @@ label {
 #newsTicker .newsList {
     list-style: none;
     position: absolute;
-    top: 100%;
+    top: 40%;
     animation: scrollTicker 15s linear infinite;
 }
 #newsTicker ul {
@@ -90,6 +90,14 @@ label {
     font-weight: bold;
     color: #333;
 }
+@keyframes scrollTicker {
+0% {
+    transform: translateY(0);
+}
+100% {
+    transform: translateY(-100%);
+}
+}
 .container-main {
     border-style: solid;
     border-color: inherit;
@@ -98,7 +106,7 @@ label {
     width: 787px;
     border-radius: 5px;
     height: 264px;
-    margin-right: 24%;
+    margin-right: 23.6%;
 }
 .main {
     width: 785px;
@@ -119,14 +127,15 @@ label {
 }
 .drpdwn1 {
     cursor: pointer;
-    margin-top: -4%;
+    margin-top: -3.8%;
     margin-left: 37%;
-   border-color: black;
-   background-color: rgb(159, 196, 238);
-   color: black;
-   width: 181px;
-   border-radius: 5px;
-   border: 1px solid black;
+    border-color: black;
+    background-color: rgb(159, 196, 238);
+    color: black;
+    width: 181px;
+    border-radius: 5px;
+    border: 1px solid black;
+    height: 40px;
 }
 .labeldrp2 {
     display: inline-block;
@@ -144,6 +153,7 @@ label {
    width: 180px;
    border-radius: 5px; 
    border: 1px solid black;
+   height: 40px;
 }
 .labeltime1 {
     display: inline-block;
@@ -152,7 +162,7 @@ label {
 }
 .labeltime2 {
     display: inline-block;
-    margin-left: 22%;
+    margin-left: 28%;
     margin-top: 12px;
 }
 .time {
@@ -171,7 +181,7 @@ label {
        background-color: rgb(159, 196, 238);
        width: 181px;
        border-radius: 5px; 
-    
+       height: 35px;
 }
 .lbltwd {
     display: inline-block;
@@ -185,38 +195,43 @@ label {
     line-height: inherit;
     margin-left: 0.5%;
     border-radius: 5px;
+    height: 35px;
+    margin-top: 0.7%;
+    position: absolute;
 }
 .drpmnth {
     position: relative;
     margin-left: 25%;
-    margin-top: -2%;
+    margin-top: -1.8%;
     border-color: black;
    background-color: rgb(159, 196, 238);
    color: black;
-   width: 156px;
+   width: 157px;
    border-radius: 5px;
    border: 1px solid black;
+   height: 37px;
 }
 .drpyear {
     position: relative;
     margin-left: 38%;
-    margin-top: -2.5%;
+    margin-top: -2.4%;
     border-color: black;
     background-color: rgb(159, 196, 238);
     color: black;
     width: 156px;
     border-radius: 5px;
     border: 1px solid black;
+    height: 38px;
 }
 
 .btn-drp-year {
-    white-space: nowrap;
+
     width: 155px;
 }
 .lbltlc {
     display: inline-block;
     margin-left: 50%;
-    margin-top: -2.2%;
+    margin-top: -2.0%;
     position: absolute;
 }
 .inputtlc {
@@ -226,8 +241,9 @@ label {
     line-height: inherit;
     margin-left: 59%;
     border-radius: 5px;
-    margin-top: -2.4%;
+    margin-top: -2.5%;
     position: absolute;
+    height: 35px;
 }
 .container-calendar {
     border-style: solid;
@@ -239,27 +255,29 @@ label {
     border-radius: 5px;
     height: 264px;
 }
-.calendar {
-    width: 398px;
-    margin-left: -54%;
-    height: 232px;
-    margin-top: -10%;
-    font-size: 10px;
-    font-weight: 500;
+.calsize {
+    width: 335px;
+    height: 255px;
+    font-size: 12px;
+    margin-top: 1%;
 }
-.calhead {
-    padding: 0 .25rem;
-    margin: 0 .5rem;
-    border: none;
-    background-color: transparent;
-    z-index: 1;
+
+.ngb-dp-header {
+    border-bottom: 0;
+    border-radius: .25rem .25rem 0 0;
+    padding-top: .25rem;
+    background-color: var(--bs-tertiary-bg);
 }
 .demo-inline-calendar-card {
     width: 300px;
 }
+.form-select {
+    margin: 0.5rem 0.5rem 0 0;
+    width: auto;
+}
 .buttonprnt {
     cursor: pointer;
-    margin-top: -2.5%;
+    margin-top: -2.4%;
     margin-left: 75%;
     border-color: black;
     color: black;
@@ -267,16 +285,22 @@ label {
     width: 181px;
     border-radius: 5px;
     position: absolute;
-    height: 40px;
+    height: 35px;
 }
 .container-bottom {
     border-style: solid;
     border-color: inherit;
     border-width: 1px;
     margin-top: 0%;
-    width: 1575px;
+    width: 1563px;
     border-radius: 5px;
-    height: 264px;
+    height: 600px;
     margin-left: 1%;
     
+}
+.tablebottom {
+    margin-top: 1%;
+}
+.pagination {
+    margin-left: 72%;
 }
