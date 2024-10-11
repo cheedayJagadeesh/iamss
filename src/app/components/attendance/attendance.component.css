@@ -121,7 +121,7 @@ label {
 .labeldrp1 {
     display: inline-block;
     margin-left: 21%;
-    margin-top: -5px;
+    margin-top: 1px;
     /* font-weight: bold;
     color: black; */
 }
@@ -155,15 +155,44 @@ label {
    border: 1px solid black;
    height: 40px;
 }
+.lblcal{
+    display: inline-block;
+    margin-left: 21%;
+    font-weight: bold;
+    color: black;
+    margin-top: 0%;
+}
+.formcontrolcalendar {
+    display: block;
+    width: 54px;
+    margin-left: 30%;
+    font-size: 3rem;
+    border-color: black;
+    font-weight: 400;
+    line-height: 0.5;
+    color: var(--bs-body-color);
+    line-height: 5;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border-color: black;
+    position: absolute;
+    height: 53px;
+    margin-top: -0.3%;
+
+}
 .labeltime1 {
     display: inline-block;
     margin-left: 12%;
     margin-top: 12px;
+    font-size: large;
 }
 .labeltime2 {
     display: inline-block;
     margin-left: 28%;
     margin-top: 12px;
+    font-size: large;
 }
 .time {
     margin: 0;
@@ -172,9 +201,23 @@ label {
     line-height: inherit;
     margin-left: 1%;
 }
+.labeltime3 {
+    display: inline-block;
+    margin-left: 63.5%;
+    font-weight: bold;
+    color: rgb(240, 75, 75);
+    margin-top: 1%;
+}
+.timeextra {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    margin-left: 3.3%;
+}
 .button {
         cursor: pointer;
-        margin-top: 3%;
+        margin-top: 1%;
         margin-left: 37%;
        border-color: black;
        color: black;
@@ -260,7 +303,23 @@ label {
     height: 255px;
     font-size: 12px;
     margin-top: 1%;
+
+    a {
+        color: black;
+        text-decoration: none;
+    }
+    .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
+        min-height: 1.5em;
+        position: relative;
+    }
+    .fc .fc-daygrid-day-events {
+        margin-top: -4px;
+    }
+    .fc-day-today {
+        background: yellow;
+        }
 }
+
 
 .ngb-dp-header {
     border-bottom: 0;

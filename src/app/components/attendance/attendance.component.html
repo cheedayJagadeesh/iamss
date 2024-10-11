@@ -38,7 +38,12 @@
      </div>
     </div>
     <div class="container-main">
-       <h3 class="main">{{currentdate| date:'longDate'}}</h3> 
+       <h3 for="inputdate" class="main">{{selectedDate| date:'longDate'}}</h3> 
+       <div class="form-outline datepicker">
+        <!-- <label class="lblcal">Choose Date</label> -->
+        <input class="formcontrolcalendar" type="date" [(ngModel)]="selectedDate" id="inputdate">
+        <!-- {{selectedDate}} -->
+      </div>
        <label class="labeldrp1">Leave</label>
        <div class="drpdwn1">
         <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -66,16 +71,15 @@
       <label class="labeltime2">Logout Time</label>
       <input class="time" type="time">
       <div>
+        <label class="labeltime3" *ngIf="false">Extra Hours</label>
+        <input class="timeextra" *ngIf="false" type="time">
+      </div>
+      <div>
         <button class="button">Save</button>
       </div>
     </div>
     <div class="container-calendar">
-     <!-- <mat-card class="demo-inline-calendar-card">
-       <mat-calendar class="calendar"></mat-calendar>
-     </mat-card> -->
      <full-calendar class="calsize" [options]="calendarOptions"></full-calendar>
-     <!-- <ngb-datepicker #dp [(ngModel)]="model"  /> -->
-     <!-- <ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next" /> -->
     </div>
     <div class="d-flex justify-content-center">
         <div class="border rounded" data-coreui-toggle="calendar"></div>
@@ -117,6 +121,7 @@
                   <th scope="col">Date</th>
                   <th scope="col">Login</th>
                   <th scope="col">Logout</th>
+                  <th scope="col">Extra Hours</th>
                   <th scope="col">Total Working Hours</th>
                   <th scope="col">Leaves</th>
                 </tr>

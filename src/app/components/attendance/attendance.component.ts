@@ -13,17 +13,14 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 
 
 export class AttendanceComponent {
-currentdate:Date=new Date()
-// today = inject(NgbCalendar).getToday();
-// //  model:any
-//   // model: NgbDateStruct;
-//   // date: { year: number; month: number; };
-   model = inject(NgbCalendar).getToday();
+ selectedDate:Date=new Date()
+
 
    calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin]
   };
+
 
 }
 
