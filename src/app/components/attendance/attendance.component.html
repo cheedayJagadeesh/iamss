@@ -42,7 +42,7 @@
        <div class="form-outline datepicker">
         <!-- <label class="lblcal">Choose Date</label> -->
         <input class="formcontrolcalendar" type="date" [(ngModel)]="selectedDate" id="inputdate">
-        <!-- {{selectedDate}} -->
+        {{selectedDate}}
       </div>
        <label class="labeldrp1">Leave</label>
        <div class="drpdwn1">
@@ -69,10 +69,11 @@
       <label class="labeltime1">Login Time</label>
       <input class="time" type="time">
       <label class="labeltime2">Logout Time</label>
-      <input class="time" type="time">
-      <div>
-        <label class="labeltime3" *ngIf="false">Extra Hours</label>
-        <input class="timeextra" *ngIf="false" type="time">
+      <input class="time" type="time" [(ngModel)]="inputtime" (change)="checktime()">
+      {{inputtime}}
+      <div *ngIf="showEaxtraHoursLabel">
+        <label class="labeltime3" >Extra Hours</label>
+        <input class="timeextra"  type="time">
       </div>
       <div>
         <button class="button">Save</button>

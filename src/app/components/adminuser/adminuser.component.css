@@ -21,10 +21,10 @@ h1 {
     border-color: inherit;
     border-width: 1px;
     margin-top: 0%;
-    width: 1563px;
+    width: 1350px;
     border-radius: 5px;
     height: 250px;
-    margin-left: 1%;
+    margin-left: 8%;
 }
 .h3 {
     /* font-family: Times New Roman; */
@@ -68,7 +68,7 @@ label {
 }
 .labelid-role1{
     display: inline-block;
-    margin-left: 13%;
+    margin-left: 35%;
     font-weight: bold;
     color: black;
     margin-top: 2%;
@@ -95,8 +95,8 @@ label {
 }
 .form-controlsearch {
     display: block;
-    width: 20%;
-    margin-left: 58%;
+    width: 20.05%;
+    margin-left: 55%;
     padding: .375rem .75rem;
     font-size: 1rem;
     border-color: black;
@@ -106,7 +106,7 @@ label {
     appearance: none;
     background-color: var(--bs-body-bg);
     /* background-clip: padding-box; */
-    border-radius: 4px;
+    border-radius: 5px;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     /* border-color: black; */
     margin-top: -3.5%;
@@ -116,7 +116,7 @@ label {
 .btnsearch {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    margin-left: 78%;
+    margin-left: 75%;
     margin-top: -3.5%;
     position: absolute;
     height: 37px;
@@ -126,30 +126,35 @@ label {
 .labeltime1 {
     display: inline-block;
     margin-left: 0.7%;
-    margin-top: 1px;
+    margin-top: -6px;
+    position: absolute;
 }
 .labeltime2 {
     display: inline-block;
-    margin-left: 33%;
-    margin-top: -27px;
+    margin-left: 27%;
+    font-weight: bold;
+    color: black;
+    margin-top: 0.1%;
+    position: absolute;
 }
 .time1 {
     margin: 0;
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
-    margin-left: 8.6%;
+    margin-left: 7%;
     width: 106px;
-    margin-top: -1.5%;
+    margin-top: -0.5%;
     border-radius: 5px;
     height: 35px;
+    position: absolute;
 }
 .time2 {
     margin: 0;
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
-    margin-left: 42%;
+    margin-left: 40.7%;
     width: 106px;
     margin-top: -2%;
     border-radius: 5px;
@@ -165,16 +170,16 @@ label {
 }
 .labeldrp1 {
     display: inline-block;
-    margin-left: 4.2%;
+    margin-left: 49.9%;
     font-weight: bold;
     color: black;
-    margin-top: -2.7%;
+    margin-top: -3.2%;
     position: absolute;
 }
 .drpdwn1 {
     cursor: pointer;
-    margin-top: -12.8%;
-    margin-left: 43%;
+    margin-top: -15.8%;
+    margin-left: 270%;
     border-color: black;
     background-color: rgb(159, 196, 238);
     color: black;
@@ -186,18 +191,18 @@ label {
 .buttonsave {
     cursor: pointer;
     margin-top: 0%;
-    margin-left: 37%;
-   border-color: black;
-   color: black;
-   background-color: rgb(159, 196, 238);
-   width: 181px;
-   border-radius: 5px; 
-   height: 35px;
+    margin-left: 39%;
+    border-color: black;
+    color: black;
+    background-color: rgb(159, 196, 238);
+    width: 181px;
+    border-radius: 5px;
+    height: 35px;
 }
 .buttonclr {
     cursor: pointer;
-    margin-top: -3%;
-    margin-left: 52%;
+    margin-top: -3.2%;
+    margin-left: 47.6%;
     border-color: black;
     color: black;
     background-color: rgb(159, 196, 238);
@@ -205,4 +210,191 @@ label {
     border-radius: 5px;
     height: 35px;
     position: absolute;
+}
+.container-table {
+    border-style: solid;
+    border-color: inherit;
+    border-width: 1px;
+    margin-top: 1%;
+    width: 751px;
+    border-radius: 5px;
+    height: 350px;
+    margin-left: 8%;
+}
+.tablebottom {
+    margin-top: 7%;
+}
+.notify {
+    width: 748px;
+    margin-left: -0.5%;
+    margin-top: 0%;
+    background-color: rgb(36, 120, 156);
+    color: white;
+    height: 42px;
+    text-align: center;
+    border-radius: 2%;
+    position: absolute;
+}
+.container-info {
+    border-style: solid;
+    border-color: inherit;
+    border-width: 1px;
+    margin-top: 1%;
+    width: 592px;
+    border-radius: 5px;
+    height: 350px;
+    margin-left: 0.5%;
+}
+.drpmnth {
+    position: relative;
+    margin-left: 18%;
+    margin-top: 1.0%;
+    border-color: black;
+    background-color: rgb(159, 196, 238);
+    color: black;
+    width: 158px;
+    border-radius: 5px;
+    border: 1px solid black;
+    height: 38px;
+}
+.drpyear {
+    position: relative;
+    margin-left: 60%;
+    margin-top: -6.5%;
+    border-color: black;
+    background-color: rgb(159, 196, 238);
+    color: black;
+    width: 156px;
+    border-radius: 5px;
+    border: 1px solid black;
+    height: 38px;
+}
+.btn-drp-year {
+
+    width: 156px;
+}
+.form-controlprj{
+    display: block;
+    width: 170%;
+    margin-left: 182%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-color: black;
+    font-weight: 400;
+    line-height: 0.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border-color: black;
+    margin-top: 10.5%;
+}
+.form-controlname{
+    display: block;
+    width: 170%;
+    margin-left: 182%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-color: black;
+    font-weight: 400;
+    line-height: 0.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border-color: black;
+    margin-top: 10.5%;
+}
+.lblprj{
+    display: inline-block;
+    margin-left: 7%;
+    font-weight: bold;
+    color: black;
+    margin-top: 1.4%;
+    position: absolute;
+}
+.lblname{
+    display: inline-block;
+    margin-left: 7%;
+    font-weight: bold;
+    color: black;
+    margin-top: 1.4%;
+    position: absolute;
+}
+.labelid{
+    display: inline-block;
+    margin-left: 7%;
+    font-weight: bold;
+    color: black;
+    margin-top: 1.4%;
+    position: absolute;
+}
+.form-controlsearchbtm {
+    display: block;
+    width: 13.1%;
+    margin-left: 16.4%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-color: black;
+    font-weight: 400;
+    line-height: 0.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    border-radius: 5px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-top: 1%;
+    position: absolute;
+    outline-offset: 1px;
+}
+.btnsearchbtm{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: 29.5%;
+    margin-top: 1%;
+    position: absolute;
+    height: 37px;
+    background-color: rgb(13, 152, 233);
+    outline-offset: 3px;
+}
+.lbllc{
+    display: inline-block;
+    margin-left: 7%;
+    font-weight: bold;
+    color: black;
+    margin-top: 5%;
+    position: absolute;
+}
+.form-controllc{
+    display: block;
+    width: 170%;
+    margin-left: 182%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-color: black;
+    font-weight: 400;
+    line-height: 0.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border-color: black;
+    margin-top: 47.5%;
+}
+.buttonsavebtm {
+    cursor: pointer;
+    margin-top: 4%;
+    margin-left: 39%;
+    border-color: black;
+    color: black;
+    background-color: rgb(159, 196, 238);
+    width: 181px;
+    border-radius: 5px;
+    height: 35px;
 }

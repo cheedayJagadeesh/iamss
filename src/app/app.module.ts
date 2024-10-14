@@ -6,8 +6,9 @@ import { NgbCalendar, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatCardModule} from '@angular/material/card';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-// import {provideNativeDateAdapter} from '@angular/material/core';
-
+import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatButtonModule} from '@angular/material/button';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,7 +32,8 @@ import { AdminuserComponent } from './components/adminuser/adminuser.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
-    NgbDatepickerModule,FormsModule,MatDatepickerModule,MatNativeDateModule,MatCardModule,FullCalendarModule,MatInputModule,MatFormFieldModule
+    NgbDatepickerModule,FormsModule,MatDatepickerModule,MatNativeDateModule,MatCardModule,FullCalendarModule,MatInputModule,
+    MatFormFieldModule,MatButtonModule,MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

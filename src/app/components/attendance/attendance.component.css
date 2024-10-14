@@ -103,19 +103,19 @@ label {
     border-color: inherit;
     border-width: 1px;
     margin-top: 1%;
-    width: 787px;
+    width: 793px;
     border-radius: 5px;
     height: 264px;
-    margin-right: 23.6%;
+    margin-right: 23.5%;
 }
 .main {
-    width: 785px;
-    margin-left: -1%;
+    width: 792px;
+    margin-left: -1.1%;
     margin-top: 0%;
     color: white;
     height: 42px;
     text-align: center;
-    border-radius: 0%;
+    border-radius: 1%;
     background-color: rgb(36, 120, 156);
 }
 .labeldrp1 {
@@ -293,16 +293,17 @@ label {
     border-color: inherit;
     border-width: 1px;
     margin-left: 77%;
-    margin-top: -16.5%;
+    margin-top: -16.6%;
     width: 350px;
     border-radius: 5px;
     height: 264px;
 }
 .calsize {
-    width: 335px;
+    width: 340px;
     height: 255px;
     font-size: 12px;
     margin-top: 1%;
+    margin-left: -1%;
 
     a {
         color: black;
