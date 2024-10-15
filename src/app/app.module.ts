@@ -12,13 +12,13 @@ import {MatButtonModule} from '@angular/material/button';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
-import { AttendanceComponent } from './components/attendance/attendance.component';
+import { LoginComponent } from './login/login.component';
+import { AttendanceComponent } from './attendance/attendance.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { AdminuserComponent } from './components/adminuser/adminuser.component';
+import { AdminuserComponent } from './adminuser/adminuser.component';
 
 @NgModule({
   declarations: [

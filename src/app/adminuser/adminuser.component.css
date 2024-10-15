@@ -37,10 +37,11 @@ h1 {
 }
 .lblcal {
     display: inline-block;
-    margin-left: -7%;
+    margin-left: -6%;
     font-weight: bold;
     color: black;
-    margin-top: -1%;
+    margin-top: -0.5%;
+    position: absolute;
 }
 .cal{
     margin-left: 45%;
@@ -58,6 +59,8 @@ h1 {
     text-align: center;
     font-size: 15px;
     margin-left: 1%;
+    margin-top: -1%;
+    position: absolute;
 }
 label {
     display: inline-block;
@@ -68,10 +71,10 @@ label {
 }
 .labelid-role1{
     display: inline-block;
-    margin-left: 35%;
+    margin-left: 7%;
     font-weight: bold;
     color: black;
-    margin-top: 2%;
+    margin-top: 3.3%;
 }
 
 .form-control {
@@ -93,10 +96,10 @@ label {
     border-color: black;
     margin-top: 1.5%;
 }
-.form-controlsearch {
+.form-controlsearchname {
     display: block;
-    width: 20.05%;
-    margin-left: 55%;
+    width: 30%;
+    margin-left: -14.5%;
     padding: .375rem .75rem;
     font-size: 1rem;
     border-color: black;
@@ -105,23 +108,38 @@ label {
     color: var(--bs-body-color);
     appearance: none;
     background-color: var(--bs-body-bg);
-    /* background-clip: padding-box; */
     border-radius: 5px;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-    /* border-color: black; */
-    margin-top: -3.5%;
+    margin-top: 0%;
+    position: absolute;
+    outline-offset: 1px;
+}
+.form-controlsearchid {
+    display: block;
+    width: 30%;
+    margin-left: 49%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-color: black;
+    font-weight: 400;
+    line-height: 0.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    border-radius: 5px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-top: -3%;
     position: absolute;
     outline-offset: 1px;
 }
 .btnsearch {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    margin-left: 75%;
-    margin-top: -3.5%;
+    margin-left: 81%;
+    margin-top: -3.1%;
     position: absolute;
-    height: 37px;
+    height: 35px;
     background-color: rgb(13, 152, 233);
     outline-offset: 3px;
+    border-radius: 4px;
 }
 .labeltime1 {
     display: inline-block;
@@ -131,10 +149,10 @@ label {
 }
 .labeltime2 {
     display: inline-block;
-    margin-left: 27%;
+    margin-left: 23%;
     font-weight: bold;
     color: black;
-    margin-top: 0.1%;
+    margin-top: -0.2%;
     position: absolute;
 }
 .time1 {
@@ -154,7 +172,7 @@ label {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
-    margin-left: 40.7%;
+    margin-left: 35.7%;
     width: 106px;
     margin-top: -2%;
     border-radius: 5px;
@@ -170,28 +188,32 @@ label {
 }
 .labeldrp1 {
     display: inline-block;
-    margin-left: 49.9%;
+    margin-left: 43.8%;
     font-weight: bold;
     color: black;
-    margin-top: -3.2%;
+    margin-top: -2.7%;
     position: absolute;
 }
 .drpdwn1 {
     cursor: pointer;
     margin-top: -15.8%;
-    margin-left: 270%;
+    margin-left: 243%;
     border-color: black;
     background-color: rgb(159, 196, 238);
     color: black;
-    width: 182px;
+    width: 260px;
     border-radius: 5px;
     border: 1px solid black;
-    height: 38px;
+    height: 37px;
+}
+.drpbtn {
+    width: 259px;
+    height: 35px;
 }
 .buttonsave {
     cursor: pointer;
     margin-top: 0%;
-    margin-left: 39%;
+    margin-left: 35.5%;
     border-color: black;
     color: black;
     background-color: rgb(159, 196, 238);
@@ -202,7 +224,7 @@ label {
 .buttonclr {
     cursor: pointer;
     margin-top: -3.2%;
-    margin-left: 47.6%;
+    margin-left: 43.7%;
     border-color: black;
     color: black;
     background-color: rgb(159, 196, 238);
@@ -218,7 +240,7 @@ label {
     margin-top: 1%;
     width: 751px;
     border-radius: 5px;
-    height: 350px;
+    height: 335px;
     margin-left: 8%;
 }
 .tablebottom {
@@ -242,24 +264,24 @@ label {
     margin-top: 1%;
     width: 592px;
     border-radius: 5px;
-    height: 350px;
+    height: 335px;
     margin-left: 0.5%;
 }
 .drpmnth {
     position: relative;
-    margin-left: 18%;
+    margin-left: 12%;
     margin-top: 1.0%;
     border-color: black;
     background-color: rgb(159, 196, 238);
     color: black;
-    width: 158px;
+    width: 154px;
     border-radius: 5px;
     border: 1px solid black;
     height: 38px;
 }
 .drpyear {
     position: relative;
-    margin-left: 60%;
+    margin-left: 47%;
     margin-top: -6.5%;
     border-color: black;
     background-color: rgb(159, 196, 238);
@@ -311,7 +333,7 @@ label {
 }
 .lblprj{
     display: inline-block;
-    margin-left: 7%;
+    margin-left: 2%;
     font-weight: bold;
     color: black;
     margin-top: 1.4%;
@@ -319,7 +341,7 @@ label {
 }
 .lblname{
     display: inline-block;
-    margin-left: 7%;
+    margin-left: 2%;
     font-weight: bold;
     color: black;
     margin-top: 1.4%;
@@ -327,7 +349,7 @@ label {
 }
 .labelid{
     display: inline-block;
-    margin-left: 7%;
+    margin-left: 2%;
     font-weight: bold;
     color: black;
     margin-top: 1.4%;
@@ -335,8 +357,8 @@ label {
 }
 .form-controlsearchbtm {
     display: block;
-    width: 13.1%;
-    margin-left: 16.4%;
+    width: 16.4%;
+    margin-left: 10.5%;
     padding: .375rem .75rem;
     font-size: 1rem;
     border-color: black;
@@ -352,18 +374,17 @@ label {
     outline-offset: 1px;
 }
 .btnsearchbtm{
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    margin-left: 29.5%;
+    margin-left: 29.2%;
     margin-top: 1%;
     position: absolute;
-    height: 37px;
+    height: 34px;
     background-color: rgb(13, 152, 233);
     outline-offset: 3px;
+    border-radius: 4px;
 }
 .lbllc{
     display: inline-block;
-    margin-left: 7%;
+    margin-left: 2%;
     font-weight: bold;
     color: black;
     margin-top: 5%;
@@ -371,8 +392,8 @@ label {
 }
 .form-controllc{
     display: block;
-    width: 170%;
-    margin-left: 182%;
+    width: 180%;
+    margin-left: 117%;
     padding: .375rem .75rem;
     font-size: 1rem;
     border-color: black;
@@ -390,11 +411,86 @@ label {
 .buttonsavebtm {
     cursor: pointer;
     margin-top: 4%;
-    margin-left: 39%;
+    margin-left: 29.3%;
     border-color: black;
     color: black;
     background-color: rgb(159, 196, 238);
     width: 181px;
     border-radius: 5px;
+    height: 35px;
+}
+.modeltitle {
+    font-size: medium;
+}
+
+.modelcallbl {
+       display: inline-block;
+    margin-left: -50%;
+    font-weight: bold;
+    color: black;
+    margin-top: 0.5%;
+    position: absolute;
+}
+.modelcal {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    width: 252px;
+    height: 35px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 15px;
+    margin-left: -28%;
+    margin-top: -0.5%;
+    position: absolute;
+}
+.modelhldlbl {
+    display: inline-block;
+    margin-left: -206%;
+    font-weight: bold;
+    color: black;
+    margin-top: 17%;
+}
+.modelhldname {
+    display: block;
+    width: 51%;
+    margin-left: 4.5%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-color: black;
+    font-weight: 400;
+    line-height: 0.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    border-radius: 5px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-top: -6%;
+    position: absolute;
+    outline-offset: 1px;
+}
+.drpdwnbtmprj {
+    cursor: pointer;
+    margin-top: 2%;
+    margin-left: 29%;
+    border-color: black;
+    /* background-color: rgb(159, 196, 238); */
+    color: black;
+    width: 260px;
+    border-radius: 5px;
+    border: 1px solid black;
+    height: 35px;
+}
+.drpdwnbtmemp {
+    cursor: pointer;
+    margin-top: 2%;
+    margin-left: 29%;
+    border-color: black;
+    /* background-color: rgb(159, 196, 238); */
+    color: black;
+    width: 260px;
+    border-radius: 5px;
+    border: 1px solid black;
     height: 35px;
 }

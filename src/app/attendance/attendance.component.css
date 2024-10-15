@@ -132,10 +132,10 @@ label {
     border-color: black;
     background-color: rgb(159, 196, 238);
     color: black;
-    width: 181px;
+    width: 179px;
     border-radius: 5px;
     border: 1px solid black;
-    height: 40px;
+    height: 39px;
 }
 .labeldrp2 {
     display: inline-block;
@@ -145,7 +145,7 @@ label {
 }
 .drpdwn2{
     cursor: pointer;
-    margin-top: -4%;
+    margin-top: -3.8%;
     margin-left: 37%;
    border-color: black;
    background-color: rgb(159, 196, 238);
@@ -154,6 +154,10 @@ label {
    border-radius: 5px; 
    border: 1px solid black;
    height: 40px;
+}
+.btndrp2{
+    cursor: pointer;
+    width: 178px;
 }
 .lblcal{
     display: inline-block;
@@ -179,20 +183,20 @@ label {
     border-color: black;
     position: absolute;
     height: 53px;
-    margin-top: -0.3%;
+    margin-top: -0.6%;
 
 }
 .labeltime1 {
     display: inline-block;
     margin-left: 12%;
     margin-top: 12px;
-    font-size: large;
+    font-size: medium;
 }
 .labeltime2 {
     display: inline-block;
     margin-left: 28%;
     margin-top: 12px;
-    font-size: large;
+    font-size: medium;
 }
 .time {
     margin: 0;
@@ -203,7 +207,7 @@ label {
 }
 .labeltime3 {
     display: inline-block;
-    margin-left: 63.5%;
+    margin-left: 61%;
     font-weight: bold;
     color: rgb(240, 75, 75);
     margin-top: 1%;

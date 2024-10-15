@@ -14,11 +14,11 @@ import { __values } from 'tslib';
 
 
 export class AttendanceComponent {
-//  selectedDate:Date=new Date()
-selectedDate: string;
-constructor(){
-  this.selectedDate='';
-}
+  selectedDate:Date=new Date()
+//selectedDate: string;
+// constructor(){
+//   this.selectedDate='';
+// }
    calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin]
@@ -27,7 +27,7 @@ constructor(){
   inputtime:string=''
   showEaxtraHoursLabel:boolean=false
   checktime(){
-    if(this.inputtime==='23:59'){
+    if(this.inputtime='23:59'){
       this.showEaxtraHoursLabel=true;
     }else{
       this.showEaxtraHoursLabel=false;
