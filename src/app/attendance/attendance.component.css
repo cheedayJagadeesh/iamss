@@ -117,6 +117,8 @@ label {
     text-align: center;
     border-radius: 1%;
     background-color: rgb(36, 120, 156);
+    font-size: 30px;
+    line-height: 38px;
 }
 .labeldrp1 {
     display: inline-block;
@@ -204,10 +206,15 @@ label {
     font-size: inherit;
     line-height: inherit;
     margin-left: 1%;
+    height: 30px;
+    width: 83px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 17px;
 }
 .labeltime3 {
     display: inline-block;
-    margin-left: 61%;
+    margin-left: 62.3%;
     font-weight: bold;
     color: rgb(240, 75, 75);
     margin-top: 1%;
@@ -218,6 +225,11 @@ label {
     font-size: inherit;
     line-height: inherit;
     margin-left: 3.3%;
+    height: 30px;
+    width: 83px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 17px;
 }
 .button {
         cursor: pointer;
@@ -313,8 +325,12 @@ label {
         color: black;
         text-decoration: none;
     }
-    .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
-        min-height: 1.5em;
+    /* .fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {
+        min-height: 0.5em;
+        position: relative;
+    } */
+    .fc-daygrid-day-events {
+        min-height: 0.5em;
         position: relative;
     }
     .fc .fc-daygrid-day-events {

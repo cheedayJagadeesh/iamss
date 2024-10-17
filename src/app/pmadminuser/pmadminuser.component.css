@@ -1,0 +1,295 @@
+h1 {
+    /* font-family: Times New Roman; */
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    text-align: center;
+    color: rgb(55, 103, 236);
+}
+.h2 {
+    /* font-family: Times New Roman; */
+    display: block;
+    font-size: 1.7em;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    text-align: center;
+    color: rgb(86, 105, 158);
+}
+.container-top {
+    border-style: solid;
+    border-color: inherit;
+    border-width: 1px;
+    margin-top: 0%;
+    width: 1350px;
+    border-radius: 5px;
+    height: 250px;
+    margin-left: 8%;
+}
+.h3 {
+    /* font-family: Times New Roman; */
+    display: block;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    font-size: 1.25rem;
+    color: red;
+    margin-top: 1%;
+}
+.lblcal {
+    display: inline-block;
+    margin-left: -6%;
+    font-weight: bold;
+    color: black;
+    margin-top: -0.5%;
+    position: absolute;
+}
+.cal{
+    margin-left: 45%;
+    margin-top: -2%;
+    height: 47px;
+}
+.inputcal {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    width: 140px;
+    height: 35px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 15px;
+    margin-left: 1%;
+    margin-top: -1%;
+    position: absolute;
+}
+label {
+    display: inline-block;
+    margin-left: 3%;
+    font-weight: bold;
+    color: black;
+    margin-top: 2%;
+}
+.labelid-role1{
+    display: inline-block;
+    margin-left: 7%;
+    font-weight: bold;
+    color: black;
+    margin-top: 3.3%;
+}
+
+.form-control {
+    display: block;
+    width: 167%;
+    margin-left: -70%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-color: black;
+    font-weight: 400;
+    line-height: 0.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    /* border: var(--bs-border-width) solid var(--bs-border-color); */
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border-color: black;
+    margin-top: 1.5%;
+}
+.form-controlsearchname {
+    display: block;
+    width: 30%;
+    margin-left: -14.5%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-color: black;
+    font-weight: 400;
+    line-height: 0.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    border-radius: 5px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-top: 0%;
+    position: absolute;
+    outline-offset: 1px;
+}
+.form-controlsearchid {
+    display: block;
+    width: 30%;
+    margin-left: 49%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-color: black;
+    font-weight: 400;
+    line-height: 0.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    border-radius: 5px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-top: -3%;
+    position: absolute;
+    outline-offset: 1px;
+}
+.btnsearch {
+    margin-left: 81%;
+    margin-top: -3.1%;
+    position: absolute;
+    height: 35px;
+    background-color: rgb(13, 152, 233);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+.labeltime1 {
+    display: inline-block;
+    margin-left: 0.7%;
+    margin-top: -6px;
+    position: absolute;
+}
+.labeltime2 {
+    display: inline-block;
+    margin-left: 23%;
+    font-weight: bold;
+    color: black;
+    margin-top: -0.2%;
+    position: absolute;
+}
+.time1 {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    margin-left: 7%;
+    width: 106px;
+    margin-top: -0.5%;
+    border-radius: 5px;
+    height: 35px;
+    position: absolute;
+}
+.time2 {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    margin-left: 35.7%;
+    width: 106px;
+    margin-top: -2%;
+    border-radius: 5px;
+    height: 35px;
+}
+.labelid-role2{
+    display: inline-block;
+    margin-left: 4.2%;
+    font-weight: bold;
+    color: black;
+    margin-top: -2.7%;
+    position: absolute;
+}
+.labeldrp1 {
+    display: inline-block;
+    margin-left: 43.8%;
+    font-weight: bold;
+    color: black;
+    margin-top: -2.7%;
+    position: absolute;
+}
+.drpdwn1 {
+    cursor: pointer;
+    margin-top: -15.8%;
+    margin-left: 241%;
+    border-color: black;
+    background-color: rgb(159, 196, 238);
+    color: black;
+    width: 260px;
+    border-radius: 5px;
+    border: 1px solid black;
+    height: 37px;
+}
+.drpbtn {
+    width: 259px;
+    height: 35px;
+}
+.buttonsave {
+    cursor: pointer;
+    margin-top: 0%;
+    margin-left: 35.5%;
+    border-color: black;
+    color: black;
+    background-color: rgb(159, 196, 238);
+    width: 181px;
+    border-radius: 5px;
+    height: 35px;
+}
+.buttonclr {
+    cursor: pointer;
+    margin-top: -3.2%;
+    margin-left: 43.7%;
+    border-color: black;
+    color: black;
+    background-color: rgb(159, 196, 238);
+    width: 181px;
+    border-radius: 5px;
+    height: 35px;
+    position: absolute;
+}
+.container-bottom {
+    border-style: solid;
+    border-color: inherit;
+    border-width: 1px;
+    margin-top: 1%;
+    width: 1563px;
+    border-radius: 5px;
+    height: 348px;
+    margin-left: 1%;
+    
+}
+.tablebottom {
+    margin-top: 1.5%;
+}
+.pagination {
+    margin-left: 72%;
+}
+
+.lbltwd {
+    display: inline-block;
+    margin-left: 1%;
+    margin-top: 16px;
+}
+.inputtwd {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    margin-left: 0.5%;
+    border-radius: 5px;
+    height: 35px;
+    margin-top: 0.7%;
+    position: absolute;
+}
+.lbltlc {
+    display: inline-block;
+    margin-left: 19%;
+    margin-top: 1%;
+    position: absolute;
+}
+.inputtlc {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    margin-left: 27%;
+    border-radius: 5px;
+    margin-top: 0.7%;
+    position: absolute;
+    height: 35px;
+}
+.lblheader {
+    display: inline-block;
+    margin-left: 30%;
+    font-weight: bold;
+    color: black;
+    margin-top: 1%;
+    font-size: 25px;
+    color: green;
+}

@@ -19,13 +19,15 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { AdminuserComponent } from './adminuser/adminuser.component';
+import { PmadminuserComponent } from './pmadminuser/pmadminuser.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     AttendanceComponent,
-    AdminuserComponent
+    AdminuserComponent,
+    PmadminuserComponent
   ],
   imports: [
     BrowserModule,

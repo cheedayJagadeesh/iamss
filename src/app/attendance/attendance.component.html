@@ -1,7 +1,7 @@
 <div class="p-3 mb-2 bg-light">
 <h1 class="h1" >INTEQ ATTENDANCE MANAGEMENT SYSTEM</h1>
 </div>
-<form class="row g-3">
+<form class="row g-3" #attendanceform="ngForm" (ngSubmit)="showData(attendanceform.value)">
     <div class="col-md-3">
         <label for="Empname" class="form-label">Emp.Name</label>
     </div>
@@ -37,12 +37,14 @@
         </ul>
      </div>
     </div>
+
     <div class="container-main">
-       <h3 for="inputdate" class="main">{{selectedDate| date:'longDate'}}</h3> 
+       <!-- <h3 class="main">{{currentDate | date:'longDate'}}</h3>  -->
+       <h3 class="main">{{selectedDate | date:'longDate'}}</h3> 
        <div class="form-outline datepicker">
         <!-- <label class="lblcal">Choose Date</label> -->
-        <input class="formcontrolcalendar" type="date" [(ngModel)]="selectedDate" id="inputdate">
-        <!-- {{selectedDate}} -->
+        <!-- <input class="formcontrolcalendar" type="date" [(ngModel)]="selectedDate" (ngModelChange)="onDatechange($event)" > -->
+        <input class="formcontrolcalendar" type="date" name="selectedDate" [(ngModel)]="selectedDate" >
       </div>
        <label class="labeldrp1">Leave</label>
        <div class="drpdwn1">
@@ -67,18 +69,20 @@
         </ul>
       </div>
       <label class="labeltime1">Login Time</label>
-      <input class="time" type="time">
+      <input class="time" type="time" name="time1" ngModel>
       <label class="labeltime2">Logout Time</label>
-      <input class="time" type="time" [(ngModel)]="inputtime" (change)="checktime()">
-      {{inputtime}}
+      <!-- <input class="time" type="time" [(ngModel)]="inputtime" (change)="checktime()"> -->
+      <input class="time" type="time" name="time2" [(ngModel)]="time2" (change)="checktime()">
+      {{time2}}
       <div *ngIf="showEaxtraHoursLabel">
         <label class="labeltime3" >Extra Hours</label>
-        <input class="timeextra"  type="time">
+        <input class="timeextra"  type="time" name="extratime" ngModel>
       </div>
       <div>
         <button class="button">Save</button>
       </div>
     </div>
+
     <div class="container-calendar">
      <full-calendar class="calsize" [options]="calendarOptions"></full-calendar>
     </div>
@@ -195,7 +199,8 @@
           </nav>
       </div>
     </div>
-</form>
+
+  </form>
 
   
   
