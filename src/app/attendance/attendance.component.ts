@@ -14,21 +14,16 @@ import { __values } from 'tslib';
 
 
 export class AttendanceComponent {
-  currentDate:Date=new Date()
+
+  // currentDate:Date=new Date()
   selectedDate:string=''
+ constructor(){
+    this.selectedDate= new Date().toString()
+  }
+ showData(item:any){
+ console.log(item)
+ }
 
-showData(item:any){
-console.log(item)
-}
-
-
-
-
-
-//selectedDate: string;
-// constructor(){
-//   this.selectedDate='';
-// }
    calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin]

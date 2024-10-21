@@ -20,6 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { AdminuserComponent } from './adminuser/adminuser.component';
 import { PmadminuserComponent } from './pmadminuser/pmadminuser.component';
+import { AdminreportsComponent } from './adminreports/adminreports.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { PmadminuserComponent } from './pmadminuser/pmadminuser.component';
     LoginComponent,
     AttendanceComponent,
     AdminuserComponent,
-    PmadminuserComponent
+    PmadminuserComponent,
+    AdminreportsComponent
   ],
   imports: [
     BrowserModule,
