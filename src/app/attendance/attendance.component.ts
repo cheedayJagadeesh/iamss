@@ -17,6 +17,10 @@ export class AttendanceComponent {
 
   // currentDate:Date=new Date()
   selectedDate:string=''
+  leave='';
+  // month=''
+  // year=''
+  work='';
  constructor(){
     this.selectedDate= new Date().toString()
   }
@@ -37,6 +41,58 @@ export class AttendanceComponent {
       console.log(this.time2)
     }else{
       this.showEaxtraHoursLabel=false;
+    }
+  }
+
+  leavetype=[
+    {
+      name: 'Full Day'
+    },
+    {
+      name: 'Half Day'
+    },
+    {
+      name: 'OH(Optional Holiday)'
+    }
+  ]
+
+
+worktype=[
+  {
+    name: 'WFO'
+  },
+  {
+    name: 'WFH'
+  },
+  {
+    name: 'WFH/WFO'
+  }
+]
+
+isSecondSelectDisabled: boolean = false;
+isfirstSelectDisabled: boolean = false;
+
+  onSelect1Change() {
+    this.isSecondSelectDisabled = !!this.leave
+    // if(this.isSecondSelectDisabled){
+    //   this.leave=''
+    // }
+    // if(this.leave==='Full Day' || this.leave==='OH(Optional Holiday)') 
+    // {
+    //   this.isSecondSelectDisabled= true
+    // }else(this.leave==='Half Day')
+    // {
+    //   this.isSecondSelectDisabled =false
+    // }
+    if(this.leave==='Half Day')
+      {
+      this.isSecondSelectDisabled=false
+    } 
+  }
+  onSelect2Change() {
+    // this.isfirstSelectDisabled = !!this.work;
+    if(this.isfirstSelectDisabled){
+      this.work=''
     }
   }
 

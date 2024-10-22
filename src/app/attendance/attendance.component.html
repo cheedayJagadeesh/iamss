@@ -32,8 +32,8 @@
      </div>
      <div id="newsTicker" class="newsinfo">
         <ul class="newsList">
-            <li>Dasara</li>
-            <li>Diwali</li>
+            <li>12-10-2024: Dasara</li>
+            <li>31-10-2024: Diwali</li>
         </ul>
      </div>
     </div>
@@ -44,40 +44,64 @@
        <div class="form-outline datepicker">
         <!-- <label class="lblcal">Choose Date</label> -->
         <!-- <input class="formcontrolcalendar" type="date" [(ngModel)]="selectedDate" (ngModelChange)="onDatechange($event)" > -->
-        <input class="formcontrolcalendar" type="date" name="selectedDate" [(ngModel)]="selectedDate" >
+        <input class="formcontrolcalendar" type="date" name="selectedDate" [(ngModel)]="selectedDate" required >
       </div>
+      <div>
        <label class="labeldrp1">Leave</label>
-       <div class="drpdwn1">
-        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+      </div>
+       <div>
+        <select id="select1" name="leavetype" class="drpdwn1" [(ngModel)]="leave" (change)="onSelect1Change()" [disabled]="isfirstSelectDisabled">
+          <!-- <option value="" disabled selected>- select leave type -</option>
+          <option *ngFor="let leaves of leavetype">
+              {{ leaves.name }}
+          </option> -->
+           <option value="" disabled selected>- select leave type -</option>
+           <option value="Full Day">Full Day</option>
+           <option value="Half Day">Half Day</option>
+           <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
+      </select>
+        <!-- <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" name="leavetype" [(ngModel)]="leavetype">
           - select leave type -
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li><a class="dropdown-item" href="#">Full Day</a></li>
           <li><a class="dropdown-item" href="#">Half Day</a></li>
           <li><a class="dropdown-item" href="#">OH(Optional Holiday)</a></li>
-        </ul>
+        </ul> -->
       </div>
+    
+    <div>
       <label class="labeldrp2">Work Location</label>
-      <div class="drpdwn2">
-        <button class="btn btndrp2 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+   
+      <div>
+        <select id="select2" name="worktype" class="drpdwn2" [(ngModel)]="work" [disabled]="isSecondSelectDisabled" (change)="onSelect2Change()">
+          <option value="" disabled selected>- select work type -</option>
+          <option *ngFor="let work of worktype">
+              {{ work.name }}
+          </option>
+      </select>
+        <!-- <button class="btn btndrp2 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
           - select work type -
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li><a class="dropdown-item" href="#">WFH</a></li>
           <li><a class="dropdown-item" href="#">WFO</a></li>
           <li><a class="dropdown-item" href="#">WFH/WFO</a></li>
-        </ul>
+        </ul> -->
       </div>
+    </div>
+    <div>
       <label class="labeltime1">Login Time</label>
-      <input class="time" type="time" name="time1" ngModel>
+      <input class="time" type="time" name="time1" ngModel [disabled]="isSecondSelectDisabled">
       <label class="labeltime2">Logout Time</label>
       <!-- <input class="time" type="time" [(ngModel)]="inputtime" (change)="checktime()"> -->
-      <input class="time" type="time" name="time2" [(ngModel)]="time2" (change)="checktime()">
-      {{time2}}
+      <input class="time" type="time" name="time2" [(ngModel)]="time2" (change)="checktime()" [disabled]="isSecondSelectDisabled">
+      <!-- {{time2}} -->
       <div *ngIf="showEaxtraHoursLabel">
         <label class="labeltime3" >Extra Hours</label>
         <input class="timeextra"  type="time" name="extratime" ngModel>
       </div>
+    </div>
       <div>
         <button class="button">Save</button>
       </div>
@@ -92,24 +116,34 @@
     <div class="container-bottom">
       <label class="lbltwd">Total Working Days</label>
       <input class="inputtwd" type="text">
-      <div class="drpmnth">
-        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          - Select Month -
+      <div>
+        <select name="month" class="drpmnth">
+           <option value="" disabled selected>- select month -</option>
+           <option value="jan">January</option>
+           <option value="feb">February</option>
+      </select>
+        <!-- <button class="btn dropdown-toggle btn-drp-mnth" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          - select month -
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li><a class="dropdown-item" href="#">January</a></li>
           <li><a class="dropdown-item" href="#">February</a></li>
           <li><a class="dropdown-item" href="#">March</a></li>
-        </ul>
+        </ul> -->
       </div>
-      <div class="drpyear">
-        <button class="btn dropdown-toggle btn-drp-year " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          - Select Year -
+      <div>
+        <select name="year" class="drpyear" >
+          <option value="" disabled selected>- select year -</option>
+          <option value="jan">2024</option>
+          <option value="feb">2023</option>
+     </select>
+        <!-- <button class="btn dropdown-toggle btn-drp-year " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          - select year -
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li><a class="dropdown-item" href="#">2024</a></li>
           <li><a class="dropdown-item" href="#">2023</a></li>
-        </ul>
+        </ul> -->
       </div>
       <label class="lbltlc">Total Leave Count</label>
       <input class="inputtlc" type="text">
