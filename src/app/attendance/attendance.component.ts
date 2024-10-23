@@ -1,4 +1,4 @@
-import { Component,inject } from '@angular/core';
+import { Component,inject,OnInit } from '@angular/core';
 import { NgbDatepickerModule,NgbCalendar,NgbDateStruct,NgbDateAdapter,NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { JsonPipe, Time } from '@angular/common';
@@ -13,7 +13,7 @@ import { __values } from 'tslib';
 })
 
 
-export class AttendanceComponent {
+export class AttendanceComponent implements OnInit {
 
   // currentDate:Date=new Date()
   selectedDate:string=''
@@ -21,12 +21,31 @@ export class AttendanceComponent {
   // month=''
   // year=''
   work='';
+  
  constructor(){
-    this.selectedDate= new Date().toString()
+    // this.selectedDate= new Date().toString()
+    this.selectedDate= new Date().toISOString().split('T')[0]
   }
  showData(item:any){
  console.log(item)
  }
+
+ngOnInit(): void {
+  this.checkingtime()
+}
+ isTimeInputDisabled:boolean=true
+ time1=''
+ firsttimeentered:Date |null=null
+  
+checkingtime(){
+ const currenttime = new Date().getHours();
+ if(currenttime >= 13)
+ {
+ this.isTimeInputDisabled=false
+ }
+
+
+}
 
    calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
@@ -77,24 +96,24 @@ isfirstSelectDisabled: boolean = false;
     // if(this.isSecondSelectDisabled){
     //   this.leave=''
     // }
-    // if(this.leave==='Full Day' || this.leave==='OH(Optional Holiday)') 
-    // {
-    //   this.isSecondSelectDisabled= true
-    // }else(this.leave==='Half Day')
-    // {
-    //   this.isSecondSelectDisabled =false
-    // }
     if(this.leave==='Half Day')
       {
       this.isSecondSelectDisabled=false
     } 
+    // else(this.leave==='Full Day' || this.leave==='OH(Optional Holiday)')
+    // {
+    //   this.isSecondSelectDisabled=true
+    // }
   }
   onSelect2Change() {
-    // this.isfirstSelectDisabled = !!this.work;
-    if(this.isfirstSelectDisabled){
-      this.work=''
-    }
+    this.isfirstSelectDisabled = !!this.work;
+    // if(this.isfirstSelectDisabled){
+    //   this.work=''
+    // }
   }
+
+ 
+
 
 }
 

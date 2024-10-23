@@ -55,7 +55,7 @@
           <option *ngFor="let leaves of leavetype">
               {{ leaves.name }}
           </option> -->
-           <option value="" disabled selected>- select leave type -</option>
+           <option value="">- select leave type -</option>
            <option value="Full Day">Full Day</option>
            <option value="Half Day">Half Day</option>
            <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
@@ -75,7 +75,7 @@
    
       <div>
         <select id="select2" name="worktype" class="drpdwn2" [(ngModel)]="work" [disabled]="isSecondSelectDisabled" (change)="onSelect2Change()">
-          <option value="" disabled selected>- select work type -</option>
+          <option value="" >- select work type -</option>
           <option *ngFor="let work of worktype">
               {{ work.name }}
           </option>
@@ -95,7 +95,7 @@
       <input class="time" type="time" name="time1" ngModel [disabled]="isSecondSelectDisabled">
       <label class="labeltime2">Logout Time</label>
       <!-- <input class="time" type="time" [(ngModel)]="inputtime" (change)="checktime()"> -->
-      <input class="time" type="time" name="time2" [(ngModel)]="time2" (change)="checktime()" [disabled]="isSecondSelectDisabled">
+      <input class="time" type="time" name="time2" [(ngModel)]="time2" (change)="checktime()" [disabled]="isSecondSelectDisabled" [disabled]="isTimeInputDisabled" >
       <!-- {{time2}} -->
       <div *ngIf="showEaxtraHoursLabel">
         <label class="labeltime3" >Extra Hours</label>
@@ -121,7 +121,7 @@
            <option value="" disabled selected>- select month -</option>
            <option value="jan">January</option>
            <option value="feb">February</option>
-      </select>
+        </select>
         <!-- <button class="btn dropdown-toggle btn-drp-mnth" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
           - select month -
         </button>
