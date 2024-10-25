@@ -13,7 +13,7 @@ import { __values } from 'tslib';
 })
 
 
-export class AttendanceComponent implements OnInit {
+export class AttendanceComponent  {
 
   // currentDate:Date=new Date()
   selectedDate:string=''
@@ -21,31 +21,73 @@ export class AttendanceComponent implements OnInit {
   // month=''
   // year=''
   work='';
+  taskslist=''
   
  constructor(){
     // this.selectedDate= new Date().toString()
     this.selectedDate= new Date().toISOString().split('T')[0]
   }
  showData(item:any){
+  if (this.time1) {
+  this.isTimeInputDisabled = false;
+  }
  console.log(item)
  }
 
-ngOnInit(): void {
-  this.checkingtime()
-}
+// ngOnInit(): void {
+//   this.checkiftimepassed()
+// }
  isTimeInputDisabled:boolean=true
  time1=''
  firsttimeentered:Date |null=null
   
-checkingtime(){
- const currenttime = new Date().getHours();
- if(currenttime >= 13)
+// checkingtime(){
+//  const currenttime = new Date().getHours();
+//  if(currenttime >= 13)
+//  {
+//  this.isTimeInputDisabled=false
+//  }
+// }
+
+ onFirsttimechange()
  {
- this.isTimeInputDisabled=false
+this.isTimeInputDisabled=!!this.time1
+  // if(this.time1)
+  // {  
+  //   const timeparts =this.time1.split(':')
+  //   const currentDate = new Date()
+  //   this.firsttimeentered= new Date(currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate(),+timeparts[0],+timeparts[1])
+  //  this.isTimeInputDisabled=true
+  //    this.checkiftimepassed();
+  // }
  }
 
+//  checkiftimepassed()
+//  {
+//   const interval=setInterval(()=>{
+//     if (this.firsttimeentered) {
+//       const currentTime = new Date();
 
-}
+//       const timeDifference = (currentTime.getTime() - this.firsttimeentered.getTime()) / (1000 * 60 * 60); // Convert to hours
+
+      
+//       if (timeDifference >= 4) {
+//         this.isTimeInputDisabled = false;
+//         clearInterval(interval); 
+//       }
+//     }
+//  },2000);
+
+// }
+// enableSecondInputAfterfewHours() {
+//   if (this.firsttimeentered) {
+//     const HoursInMs = 1 * 60 * 60 * 1000; 
+
+//     setTimeout(() => {
+//       this.isTimeInputDisabled = false;
+//     }, HoursInMs);
+//   }
+// }
 
    calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
@@ -78,28 +120,41 @@ checkingtime(){
 
 worktype=[
   {
-    name: 'WFO'
+    name: 'WFO(Work From Office)'
   },
   {
-    name: 'WFH'
+    name: 'WFH(Work From Home)'
   },
   {
     name: 'WFH/WFO'
+  },
+  {
+    name: 'WFC(Work From Client)'
   }
 ]
 
 isSecondSelectDisabled: boolean = false;
 isfirstSelectDisabled: boolean = false;
 
+
   onSelect1Change() {
     this.isSecondSelectDisabled = !!this.leave
+    
+
     // if(this.isSecondSelectDisabled){
     //   this.leave=''
     // }
     if(this.leave==='Half Day')
       {
+      
       this.isSecondSelectDisabled=false
+      
+        
     } 
+    if(this.work)
+      {
+      this.isTimeInputDisabled = true;
+      }
     // else(this.leave==='Full Day' || this.leave==='OH(Optional Holiday)')
     // {
     //   this.isSecondSelectDisabled=true

@@ -55,7 +55,7 @@
           <option *ngFor="let leaves of leavetype">
               {{ leaves.name }}
           </option> -->
-           <option value="">- select leave type -</option>
+           <option value="" >- select leave type -</option>
            <option value="Full Day">Full Day</option>
            <option value="Half Day">Half Day</option>
            <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
@@ -92,11 +92,39 @@
     </div>
     <div>
       <label class="labeltime1">Login Time</label>
-      <input class="time" type="time" name="time1" ngModel [disabled]="isSecondSelectDisabled">
+      <input class="time" type="time" name="time1" [(ngModel)]="time1" [disabled]="isSecondSelectDisabled" (change)="onFirsttimechange()" >
       <label class="labeltime2">Logout Time</label>
       <!-- <input class="time" type="time" [(ngModel)]="inputtime" (change)="checktime()"> -->
       <input class="time" type="time" name="time2" [(ngModel)]="time2" (change)="checktime()" [disabled]="isSecondSelectDisabled" [disabled]="isTimeInputDisabled" >
       <!-- {{time2}} -->
+       <!-- Button trigger modal -->
+       
+<button type="button" class="tasksbtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Tasks
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tasks Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label  class="form-label">Tasks Description</label>
+          <textarea class="modal-form-control" name="taskslist" [(ngModel)]="taskslist" rows="3" ></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
       <div *ngIf="showEaxtraHoursLabel">
         <label class="labeltime3" >Extra Hours</label>
         <input class="timeextra"  type="time" name="extratime" ngModel>

@@ -147,7 +147,7 @@ label {
     border-color: black;
     /* background-color: rgb(213, 225, 240); */
     color: black;
-    width: 179px;
+    width: 191px;
     border-radius: 5px;
     border: 1px solid black;
     height: 39px;
@@ -169,10 +169,10 @@ label {
     margin-left: 18.2%;
     border-color: black;
     color: black;
-    width: 180px;
+    width: 191px;
     border-radius: 5px;
     border: 1px solid black;
-    height: 40px;
+    height: 39px;
     text-align: center;
     font-size: 16px;
     position: absolute;
@@ -191,7 +191,7 @@ label {
 .formcontrolcalendar {
     display: block;
     width: 54px;
-    margin-left: 30%;
+    margin-left: 31%;
     font-size: 3rem;
     border-color: black;
     font-weight: 400;
@@ -258,7 +258,7 @@ label {
        border-color: black;
        color: black;
        background-color: rgb(159, 196, 238);
-       width: 181px;
+       width: 191px;
        border-radius: 5px; 
        height: 35px;
 }
@@ -409,4 +409,37 @@ label {
 }
 .pagination {
     margin-left: 72%;
+}
+.tasksbtn {
+    margin-left: 2%;
+    height: 30px;
+    margin-top: -1%;
+    background-color: rgb(188, 240, 240);
+    width: 90px;
+    text-align: center;
+    font-size: large;
+    border-radius: 5px;
+    border-color:rgb(188, 240, 240); ;
+}
+.modal-title {
+    font-size: medium;
+}
+.modal-form-control{
+    display: block;
+    width: 90%;
+    margin-left: 3%;
+    padding: .375rem .75rem;
+    font-size: 1.2rem;
+    border-color: black;
+    font-weight: 400;
+    line-height: 1;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border-color: black;
+    /* position: absolute; */
+    height: 200px;
 }
