@@ -5,6 +5,8 @@ import { JsonPipe, Time } from '@angular/common';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { __values } from 'tslib';
+import { diffDates } from '@fullcalendar/core/internal';
+import { start } from '@popperjs/core';
 
 @Component({
   selector: 'app-attendance',
@@ -26,12 +28,13 @@ export class AttendanceComponent  {
  constructor(){
     // this.selectedDate= new Date().toString()
     this.selectedDate= new Date().toISOString().split('T')[0]
+    this.isTimeInputDisabled=true
   }
  showData(item:any){
-  if (this.time1) {
-  this.isTimeInputDisabled = false;
-  }
  console.log(item)
+ }
+ modaldatasave(item:any){
+console.log(item)
  }
 
 // ngOnInit(): void {
@@ -41,17 +44,10 @@ export class AttendanceComponent  {
  time1=''
  firsttimeentered:Date |null=null
   
-// checkingtime(){
-//  const currenttime = new Date().getHours();
-//  if(currenttime >= 13)
-//  {
-//  this.isTimeInputDisabled=false
-//  }
-// }
-
  onFirsttimechange()
  {
-this.isTimeInputDisabled=!!this.time1
+   this.isTimeInputDisabled=!!this.time1
+   this.calculatetime()
   // if(this.time1)
   // {  
   //   const timeparts =this.time1.split(':')
@@ -79,15 +75,6 @@ this.isTimeInputDisabled=!!this.time1
 //  },2000);
 
 // }
-// enableSecondInputAfterfewHours() {
-//   if (this.firsttimeentered) {
-//     const HoursInMs = 1 * 60 * 60 * 1000; 
-
-//     setTimeout(() => {
-//       this.isTimeInputDisabled = false;
-//     }, HoursInMs);
-//   }
-// }
 
    calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
@@ -103,6 +90,7 @@ this.isTimeInputDisabled=!!this.time1
     }else{
       this.showEaxtraHoursLabel=false;
     }
+    this.calculatetime()
   }
 
   leavetype=[
@@ -138,7 +126,7 @@ isfirstSelectDisabled: boolean = false;
 
 
   onSelect1Change() {
-    this.isSecondSelectDisabled = !!this.leave
+     this.isSecondSelectDisabled = !!this.leave
     
 
     // if(this.isSecondSelectDisabled){
@@ -146,15 +134,10 @@ isfirstSelectDisabled: boolean = false;
     // }
     if(this.leave==='Half Day')
       {
-      
-      this.isSecondSelectDisabled=false
-      
-        
+       this.isSecondSelectDisabled=false
+      this.isTimeInputDisabled=false
     } 
-    if(this.work)
-      {
-      this.isTimeInputDisabled = true;
-      }
+    
     // else(this.leave==='Full Day' || this.leave==='OH(Optional Holiday)')
     // {
     //   this.isSecondSelectDisabled=true
@@ -165,10 +148,30 @@ isfirstSelectDisabled: boolean = false;
     // if(this.isfirstSelectDisabled){
     //   this.work=''
     // }
+
+    if(this.work)
+    {
+      this.isTimeInputDisabled=false
+    }
+    
   }
+  calculatetime()
+  {
+    if(this.time1 && this.time2)
+    {
+     const starttime =new Date('${this.time1}');
+     const endtime=new Date('${this.time2}') 
+     const diff=(endtime.getTime()-starttime.getTime())/ (1000 * 60 * 60);
 
- 
-
+     if(diff < 4)
+     {
+      this.leave='Half Day'
+     }else
+     {
+      this.leave='Full Day'
+     }
+    }
+  }
 
 }
 

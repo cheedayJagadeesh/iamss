@@ -47,15 +47,25 @@
     </div> -->
     <div class="col-md-3">
         <label class="labeldrp1">Leave</label>
-       <div class="drpdwn1">
-        <button class="btn drpbtn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+       <div>
+        <select id="select1" name="leavetype" class="drpdwn1">
+          <!-- <option value="" disabled selected>- select leave type -</option>
+          <option *ngFor="let leaves of leavetype">
+              {{ leaves.name }}
+          </option> -->
+           <option value="" disabled selected >- select leave type -</option>
+           <option value="Full Day">Full Day</option>
+           <option value="Half Day">Half Day</option>
+           <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
+      </select>
+        <!-- <button class="btn drpbtn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
           - select leave type -
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
           <li><a class="dropdown-item" href="#">Full Day</a></li>
           <li><a class="dropdown-item" href="#">Half Day</a></li>
           <li><a class="dropdown-item" href="#">OH(Optional Holiday)</a></li>
-        </ul>
+        </ul> -->
       </div>
     </div>
     <div>

@@ -55,7 +55,7 @@
           <option *ngFor="let leaves of leavetype">
               {{ leaves.name }}
           </option> -->
-           <option value="" >- select leave type -</option>
+           <option value="" disabled selected >- select leave type -</option>
            <option value="Full Day">Full Day</option>
            <option value="Half Day">Half Day</option>
            <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
@@ -95,11 +95,11 @@
       <input class="time" type="time" name="time1" [(ngModel)]="time1" [disabled]="isSecondSelectDisabled" (change)="onFirsttimechange()" >
       <label class="labeltime2">Logout Time</label>
       <!-- <input class="time" type="time" [(ngModel)]="inputtime" (change)="checktime()"> -->
-      <input class="time" type="time" name="time2" [(ngModel)]="time2" (change)="checktime()" [disabled]="isSecondSelectDisabled" [disabled]="isTimeInputDisabled" >
+      <input class="time" type="time" name="time2" [(ngModel)]="time2" (change)="checktime()" [disabled]="isSecondSelectDisabled" [disabled]="!isTimeInputDisabled" >
       <!-- {{time2}} -->
        <!-- Button trigger modal -->
        
-<button type="button" class="tasksbtn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+<button type="button" class="tasksbtn" data-bs-toggle="modal" data-bs-target="#exampleModal" [disabled]="isSecondSelectDisabled">
   Tasks
 </button>
 
@@ -119,7 +119,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-primary" (click)="modaldatasave(attendanceform.value)">Save changes</button>
       </div>
     </div>
   </div>
