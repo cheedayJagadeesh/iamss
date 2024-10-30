@@ -16,7 +16,7 @@ import { LoginComponent } from './login/login.component';
 import { AttendanceComponent } from './attendance/attendance.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule,FormGroup,FormControl } from '@angular/forms';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { AdminuserComponent } from './adminuser/adminuser.component';
 import { PmadminuserComponent } from './pmadminuser/pmadminuser.component';

@@ -4,19 +4,19 @@
 <div class="p-3 mb-2">
     <h2 class="h2" >Admin User</h2>
 </div>
-<form class="row g-3">
+<form class="row g-3" #adminform="ngForm"  (ngSubmit)="submitdata(adminform.value)" >
     <div class="container-top">
     <h3 class="h3">Modify User Leaves, Login and Logout</h3>
     <div class="cal">
         <label class="lblcal">Choose Date</label>
-        <input class="inputcal" type="date">
+        <input class="inputcal" type="date" name="selectedDate" [(ngModel)]="selectedDate" >
     </div>
     <div class="row g-3">
     <div class="col-md-3">
         <label for="Empname" class="form-label">Emp.Name</label>
     </div>
     <div class="col-md-3">
-        <input type="search" class="form-controlsearchname" id="Empname">
+        <input type="search" class="form-controlsearchname" id="Empname" name="searchname" placeholder="Enter Employee Name" [(ngModel)]="searchname">
     </div>
     <div class="col-md-3">
         <label for="Empid" class="labelid-role1">Emp.ID</label>
@@ -26,10 +26,10 @@
     </div> -->
     <div>
         <div>
-          <input type="search" class="form-controlsearchid" />
+          <input type="search" class="form-controlsearchid" name="searchid" placeholder="Enter Employee ID"  [(ngModel)]="searchid" />
         </div>
         <div>
-        <button class="btn btnsearch">
+        <button class="btn btnsearch" (click)="searchEmployee()" >
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
               </svg>
@@ -38,9 +38,9 @@
     </div>
     <div>
     <label class="labeltime1">Login Time</label>
-    <input class="time1" type="time">
+    <input class="time1" type="time" name="time1" [(ngModel)]="time1">
     <label class="labeltime2">Logout Time</label>
-    <input class="time2" type="time">
+    <input class="time2" type="time" name="time2" [(ngModel)]="time2">
     </div>
     <!-- <div class="col-md-3">
         <label for="Role" class="labelid-role2">Leave</label>
@@ -48,12 +48,12 @@
     <div class="col-md-3">
         <label class="labeldrp1">Leave</label>
        <div>
-        <select id="select1" name="leavetype" class="drpdwn1">
+        <select id="select1" name="leavetype" class="drpdwn1"  name="leavetype" [(ngModel)]="leave" >
           <!-- <option value="" disabled selected>- select leave type -</option>
           <option *ngFor="let leaves of leavetype">
               {{ leaves.name }}
           </option> -->
-           <option value="" disabled selected >- select leave type -</option>
+           <option value="" disabled >- select leave type -</option>
            <option value="Full Day">Full Day</option>
            <option value="Half Day">Half Day</option>
            <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
@@ -72,7 +72,7 @@
         <button class="buttonsave">Save</button>
       </div>
       <div>
-        <button class="buttonclr">Clear</button>
+        <button class="buttonclr" (click)="clearData(adminform)" >Clear</button>
       </div>
     </div>
     </div>
@@ -117,18 +117,18 @@
                                   <div class="modal-body">
                                     <div class="cal">
                                       <label class="modelcallbl">Choose Date </label>
-                                      <input class="modelcal" type="date">
+                                      <input class="modelcal" type="date" name="selectedDate" [(ngModel)]="selectedDate" >
                                     </div>
                                     <div class="col-md-3">
                                       <label class="modelhldlbl">Holiday</label>
                                     </div>
                                   <div class="col-md-3">
-                                      <input type="text" class="modelhldname" id="hldname">
+                                      <input type="text" class="modelhldname" id="hldname" name="addholidays" [(ngModel)]="addholidays" >
                                   </div>
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save</button>
+                                    <button type="button" class="btn btn-primary" (click)="addholiday(adminform.value)" >Save</button>
                                   </div>
                                 </div>
                               </div>
@@ -153,18 +153,18 @@
                                   <div class="modal-body">
                                     <div class="cal">
                                       <label class="modelcallbl">Choose Date </label>
-                                      <input class="modelcal" type="date">
+                                      <input class="modelcal" type="date" name="selectedDate" [(ngModel)]="selectedDate" >
                                     </div>
                                     <div class="col-md-3">
                                       <label class="modelhldlbl">Holiday</label>
                                     </div>
                                   <div class="col-md-3">
-                                      <input type="text" class="modelhldname" id="hldname">
+                                      <input type="text" class="modelhldname" id="hldname" name="editholidays" [(ngModel)]="editholidays">
                                   </div>
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save</button>
+                                    <button type="button" class="btn btn-primary" (click)="editholiday(adminform.value)" >Save</button>
                                   </div>
                                 </div>
                               </div>
@@ -182,46 +182,68 @@
         </div>          
     </div>
     <div class="container-info">
-        <div class="drpmnth">
-            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        <div>
+          <select name="month" class="drpmnth">
+            <option value="" disabled selected>- select month -</option>
+            <option value="jan">January</option>
+            <option value="feb">February</option>
+         </select>
+            <!-- <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               - Select Month -
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li><a class="dropdown-item" href="#">January</a></li>
               <li><a class="dropdown-item" href="#">February</a></li>
               <li><a class="dropdown-item" href="#">March</a></li>
-            </ul>
+            </ul> -->
           </div>
-          <div class="drpyear">
-            <button class="btn dropdown-toggle btn-drp-year " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          <div>
+            <select name="year" class="drpyear" >
+              <option value="" disabled selected>- select year -</option>
+              <option value="jan">2024</option>
+              <option value="feb">2023</option>
+            </select>
+            <!-- <button class="btn dropdown-toggle btn-drp-year " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
               - Select Year -
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li><a class="dropdown-item" href="#">2024</a></li>
               <li><a class="dropdown-item" href="#">2023</a></li>
-            </ul>
+            </ul> -->
           </div>
           <div class="col-md-3">
             <label for="projname" class="lblprj">Project Name</label>
         </div>
-        <div class="drpdwnbtmprj">
-          <button class="btn drpbtn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        <div>
+          <select id="select2" name="project" class="drpdwnbtmprj">
+            <option value="" >- select project -</option>
+            <option *ngFor="let project of projects">
+                {{ project.name }}
+            </option>
+        </select>
+          <!-- <button class="btn drpbtn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
             - Select Project -
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li><a class="dropdown-item" href="#">NNA</a></li>
-          </ul>
+          </ul> -->
         </div>
         <div class="col-md-3">
             <label for="Empname" class="lblname">Employee Name</label>
         </div>
-        <div class="drpdwnbtmemp">
-          <button class="btn drpbtn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        <div>
+          <select id="select2" name="employee" class="drpdwnbtmemp">
+            <option value="" >- select Employee -</option>
+            <option *ngFor="let employee of employees">
+                {{ employee.name }}
+            </option>
+          </select>
+          <!-- <button class="btn drpbtn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
             - Select Employee -
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li><a class="dropdown-item" href="#">NNA</a></li>
-          </ul>
+          </ul> -->
         </div>
         <div class="col-md-3">
             <label for="Empid" class="labelid">Emp.ID</label>

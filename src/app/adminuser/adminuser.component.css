@@ -279,24 +279,27 @@ label {
     margin-left: 12%;
     margin-top: 1.0%;
     border-color: black;
-    background-color:  rgb(213, 225, 240);
+    /* background-color:  rgb(213, 225, 240); */
     color: black;
     width: 154px;
     border-radius: 5px;
     border: 1px solid black;
     height: 38px;
+    text-align: center;
+    font-size: 17px;
 }
 .drpyear {
-    position: relative;
-    margin-left: 47%;
-    margin-top: -6.5%;
+    position: absolute;
+    margin-left: 17%;
+    margin-top: -2.4%;
     border-color: black;
-    background-color:  rgb(213, 225, 240);
     color: black;
     width: 156px;
     border-radius: 5px;
     border: 1px solid black;
     height: 38px;
+    text-align: center;
+    font-size: 17px;
 }
 .btn-drp-year {
 
@@ -364,8 +367,8 @@ label {
 }
 .form-controlsearchbtm {
     display: block;
-    width: 16.4%;
-    margin-left: 10.5%;
+    width: 16.5%;
+    margin-left: 10.4%;
     padding: .375rem .75rem;
     font-size: 1rem;
     border-color: black;
@@ -378,7 +381,7 @@ label {
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     margin-top: 1%;
     position: absolute;
-    outline-offset: 1px;
+    outline-offset: 0.7px;
 }
 .btnsearchbtm{
     margin-left: 29.2%;
@@ -399,8 +402,8 @@ label {
 }
 .form-controllc{
     display: block;
-    width: 180%;
-    margin-left: 117%;
+    width: 182%;
+    margin-left: 116%;
     padding: .375rem .75rem;
     font-size: 1rem;
     border-color: black;
@@ -418,7 +421,7 @@ label {
 .buttonsavebtm {
     cursor: pointer;
     margin-top: 4%;
-    margin-left: 29.3%;
+    margin-left: 29%;
     border-color: black;
     color: black;
     background-color: rgb(159, 196, 238);
@@ -451,6 +454,7 @@ label {
     margin-left: -28%;
     margin-top: -0.5%;
     position: absolute;
+    font-size: 18px;
 }
 .modelhldlbl {
     display: inline-block;
@@ -482,22 +486,26 @@ label {
     margin-top: 2%;
     margin-left: 29%;
     border-color: black;
-    background-color:  rgb(213, 225, 240);
+    /* background-color:  rgb(213, 225, 240); */
     color: black;
     width: 260px;
     border-radius: 5px;
     border: 1px solid black;
     height: 35px;
+    text-align: center;
+    font-size: 17px;
 }
 .drpdwnbtmemp {
     cursor: pointer;
     margin-top: 2%;
     margin-left: 29%;
     border-color: black;
-    background-color:  rgb(213, 225, 240);
+    /* background-color:  rgb(213, 225, 240); */
     color: black;
     width: 260px;
     border-radius: 5px;
     border: 1px solid black;
     height: 35px;
+    text-align: center;
+    font-size: 17px;
 }
