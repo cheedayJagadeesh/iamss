@@ -53,7 +53,7 @@
           <option *ngFor="let leaves of leavetype">
               {{ leaves.name }}
           </option> -->
-           <option value="" disabled >- select leave type -</option>
+           <option value="" disabled  >- select leave type -</option>
            <option value="Full Day">Full Day</option>
            <option value="Half Day">Half Day</option>
            <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
@@ -72,7 +72,7 @@
         <button class="buttonsave">Save</button>
       </div>
       <div>
-        <button class="buttonclr" (click)="clearData(adminform)" >Clear</button>
+        <button class="buttonclr" (click)="clearData()" >Clear</button>
       </div>
     </div>
     </div>
@@ -128,7 +128,7 @@
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" (click)="addholiday(adminform.value)" >Save</button>
+                                    <button type="button" class="btn btn-primary" (click)="addholiday()" >Save</button>
                                   </div>
                                 </div>
                               </div>
@@ -164,7 +164,7 @@
                                   </div>
                                   <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary" (click)="editholiday(adminform.value)" >Save</button>
+                                    <button type="button" class="btn btn-primary" (click)="editholiday()" >Save</button>
                                   </div>
                                 </div>
                               </div>

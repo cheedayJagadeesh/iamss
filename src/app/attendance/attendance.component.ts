@@ -31,8 +31,20 @@ export class AttendanceComponent  {
     this.isTimeInputDisabled=true
   }
  showData(item:any){
+  // if (this.time1) {
+  //   this.isTimeInputDisabled = false;
+  //   }
  console.log(item)
+ 
  }
+ save()
+ {
+  this.isTimeInputDisabled = !!this.time1;
+   if (this.time1) {
+    this.isTimeInputDisabled = true;
+    }
+ }
+
  modaldatasave(item:any){
 console.log(item)
  }

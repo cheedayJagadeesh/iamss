@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import {MatInputModule} from '@angular/material/input';
@@ -34,14 +34,19 @@ export class AdminuserComponent {
 //   leave:new FormControl(''),
 // })
 
+@ViewChild('adminform') adminform!: NgForm;
+
   submitdata(adminform:any)
   {
     console.log(adminform);
   }
-  clearData(adminform:NgForm)
+  clearData()
   {
-    adminform.reset()
-     this.leave=''
+    console.log(this.adminform.value);
+    this.adminform.resetForm({
+      leave:''
+    });
+   
   }
 
 
@@ -80,14 +85,27 @@ export class AdminuserComponent {
     //   alert('Employee not found');
     // }
   }
-  addholiday(item:any)
-  {
-    console.log(item);
+ 
+ 
+
+  addholiday() {
+    console.log(this.adminform.value);
+    this.adminform.resetForm();
   }
 
-  editholiday(item:any)
+  // addholiday(adminform: NgForm)
+  // {
+  //   console.log(adminform);
+  //    adminform.resetForm()
+    
+   
+    
+  // }
+
+  editholiday()
   {
-    console.log(item);
+    console.log(this.adminform.value);
+    this.adminform.resetForm();
   }
 
 
