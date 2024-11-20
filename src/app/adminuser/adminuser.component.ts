@@ -42,10 +42,10 @@ export class AdminuserComponent {
   }
   clearData()
   {
-    console.log(this.adminform.value);
-    this.adminform.resetForm({
-      leave:''
-    });
+    // console.log(this.adminform.value);
+    // this.adminform.resetForm({
+    //   leave:''
+    // });
    
   }
 
@@ -107,6 +107,21 @@ export class AdminuserComponent {
     console.log(this.adminform.value);
     this.adminform.resetForm();
   }
+  isSecondSelectDisabled: boolean = false;
+  isTimeInputDisabled: boolean = true;
+ 
+  onSelect1Change() {
+    this.isSecondSelectDisabled = !!this.leave
+   
 
+   // if(this.isSecondSelectDisabled){
+   //   this.leave=''
+   // }
+   if(this.leave==='Half Day')
+     {
+      this.isSecondSelectDisabled=false
+     this.isTimeInputDisabled=false
+   } 
+  }
 
 }

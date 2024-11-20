@@ -38,9 +38,9 @@
     </div>
     <div>
     <label class="labeltime1">Login Time</label>
-    <input class="time1" type="time" name="time1" [(ngModel)]="time1">
+    <input class="time1" type="time" name="time1" [(ngModel)]="time1" [disabled]="isSecondSelectDisabled">
     <label class="labeltime2">Logout Time</label>
-    <input class="time2" type="time" name="time2" [(ngModel)]="time2">
+    <input class="time2" type="time" name="time2" [(ngModel)]="time2" [disabled]="isSecondSelectDisabled">
     </div>
     <!-- <div class="col-md-3">
         <label for="Role" class="labelid-role2">Leave</label>
@@ -48,7 +48,7 @@
     <div class="col-md-3">
         <label class="labeldrp1">Leave</label>
        <div>
-        <select id="select1" name="leavetype" class="drpdwn1"  name="leavetype" [(ngModel)]="leave" >
+        <select id="select1" name="leavetype" class="drpdwn1"  name="leavetype" [(ngModel)]="leave" (change)="onSelect1Change()">
           <!-- <option value="" disabled selected>- select leave type -</option>
           <option *ngFor="let leaves of leavetype">
               {{ leaves.name }}

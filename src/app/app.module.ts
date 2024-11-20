@@ -21,6 +21,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { AdminuserComponent } from './adminuser/adminuser.component';
 import { PmadminuserComponent } from './pmadminuser/pmadminuser.component';
 import { AdminreportsComponent } from './adminreports/adminreports.component';
+import { MonthlyempreportComponent } from './monthlyempreport/monthlyempreport.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AdminreportsComponent } from './adminreports/adminreports.component';
     AttendanceComponent,
     AdminuserComponent,
     PmadminuserComponent,
-    AdminreportsComponent
+    AdminreportsComponent,
+    MonthlyempreportComponent
   ],
   imports: [
     BrowserModule,

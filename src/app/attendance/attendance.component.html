@@ -55,7 +55,7 @@
           <option *ngFor="let leaves of leavetype">
               {{ leaves.name }}
           </option> -->
-           <option value="" disabled selected >- select leave type -</option>
+           <option value="" selected >- select leave type -</option>
            <option value="Full Day">Full Day</option>
            <option value="Half Day">Half Day</option>
            <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
@@ -119,7 +119,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="modaldatasave(attendanceform.value)">Save changes</button>
+        <button type="button" class="btn btn-primary" (click)="modaldatasave()">Save changes</button>
       </div>
     </div>
   </div>
@@ -131,7 +131,7 @@
       </div>
     </div>
       <div>
-        <button class="button" (click)="save()" >Save</button>
+        <button class="button" (click)="save()"  [disabled]="!time1" >Save</button>
       </div>
     </div>
 

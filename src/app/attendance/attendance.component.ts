@@ -1,6 +1,6 @@
-import { Component,inject,OnInit } from '@angular/core';
+import { Component,inject,OnInit,ViewChild } from '@angular/core';
 import { NgbDatepickerModule,NgbCalendar,NgbDateStruct,NgbDateAdapter,NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,NgForm } from '@angular/forms';
 import { JsonPipe, Time } from '@angular/common';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -17,6 +17,7 @@ import { start } from '@popperjs/core';
 
 export class AttendanceComponent  {
 
+  @ViewChild('attendanceform') attendanceform!: NgForm;
   // currentDate:Date=new Date()
   selectedDate:string=''
   leave='';
@@ -30,23 +31,22 @@ export class AttendanceComponent  {
     this.selectedDate= new Date().toISOString().split('T')[0]
     this.isTimeInputDisabled=true
   }
- showData(item:any){
-  // if (this.time1) {
-  //   this.isTimeInputDisabled = false;
-  //   }
- console.log(item)
- 
+ showData(attendanceform:any)
+ {
+  console.log(attendanceform)
  }
  save()
  {
-  this.isTimeInputDisabled = !!this.time1;
+  // this.isTimeInputDisabled = !!this.time1;
    if (this.time1) {
     this.isTimeInputDisabled = true;
     }
+   
  }
 
- modaldatasave(item:any){
-console.log(item)
+ modaldatasave(){
+  console.log(this.attendanceform.value);
+  this.attendanceform.resetForm();
  }
 
 // ngOnInit(): void {
@@ -59,34 +59,9 @@ console.log(item)
  onFirsttimechange()
  {
    this.isTimeInputDisabled=!!this.time1
-   this.calculatetime()
-  // if(this.time1)
-  // {  
-  //   const timeparts =this.time1.split(':')
-  //   const currentDate = new Date()
-  //   this.firsttimeentered= new Date(currentDate.getFullYear(),currentDate.getMonth(),currentDate.getDate(),+timeparts[0],+timeparts[1])
-  //  this.isTimeInputDisabled=true
-  //    this.checkiftimepassed();
-  // }
+  //  this.calculatetime()
+   this.isTimeInputDisabled = false;
  }
-
-//  checkiftimepassed()
-//  {
-//   const interval=setInterval(()=>{
-//     if (this.firsttimeentered) {
-//       const currentTime = new Date();
-
-//       const timeDifference = (currentTime.getTime() - this.firsttimeentered.getTime()) / (1000 * 60 * 60); // Convert to hours
-
-      
-//       if (timeDifference >= 4) {
-//         this.isTimeInputDisabled = false;
-//         clearInterval(interval); 
-//       }
-//     }
-//  },2000);
-
-// }
 
    calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
@@ -102,7 +77,7 @@ console.log(item)
     }else{
       this.showEaxtraHoursLabel=false;
     }
-    this.calculatetime()
+    // this.calculatetime()
   }
 
   leavetype=[
@@ -167,23 +142,23 @@ isfirstSelectDisabled: boolean = false;
     }
     
   }
-  calculatetime()
-  {
-    if(this.time1 && this.time2)
-    {
-     const starttime =new Date('${this.time1}');
-     const endtime=new Date('${this.time2}') 
-     const diff=(endtime.getTime()-starttime.getTime())/ (1000 * 60 * 60);
+  // calculatetime()
+  // {
+  //   if(this.time1 && this.time2)
+  //   {
+  //    const starttime =new Date('${this.time1}');
+  //    const endtime=new Date('${this.time2}') 
+  //    const diff=(endtime.getTime()-starttime.getTime())/ (1000 * 60 * 60);
 
-     if(diff < 4)
-     {
-      this.leave='Half Day'
-     }else
-     {
-      this.leave='Full Day'
-     }
-    }
-  }
+  //    if(diff < 4)
+  //    {
+  //     this.leave='Half Day'
+  //    }else
+  //    {
+  //     this.leave='Full Day'
+  //    }
+  //   }
+  // }
 
 }
 
