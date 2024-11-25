@@ -22,6 +22,7 @@ import { AdminuserComponent } from './adminuser/adminuser.component';
 import { PmadminuserComponent } from './pmadminuser/pmadminuser.component';
 import { AdminreportsComponent } from './adminreports/adminreports.component';
 import { MonthlyempreportComponent } from './monthlyempreport/monthlyempreport.component';
+import { ProjectreportsComponent } from './projectreports/projectreports.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MonthlyempreportComponent } from './monthlyempreport/monthlyempreport.c
     AdminuserComponent,
     PmadminuserComponent,
     AdminreportsComponent,
-    MonthlyempreportComponent
+    MonthlyempreportComponent,
+    ProjectreportsComponent
   ],
   imports: [
     BrowserModule,
