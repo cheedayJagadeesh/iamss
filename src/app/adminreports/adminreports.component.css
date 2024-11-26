@@ -80,7 +80,7 @@ h1 {
     margin-top: -1%;
     margin-left: 20%;
     border-color: black;
-    background-color: rgb(213, 225, 240);
+    /* background-color: rgb(213, 225, 240); */
     color: black;
     width: 260px;
     border-radius: 5px;
@@ -96,7 +96,7 @@ h1 {
     margin-left: 45%;
     margin-top: -2.2%;
     border-color: black;
-    background-color: rgb(213, 225, 240);
+    /* background-color: rgb(213, 225, 240); */
     color: black;
     width: 153px;
     border-radius: 5px;
@@ -111,7 +111,7 @@ h1 {
     margin-left: 64%;
     margin-top: -2.3%;
     border-color: black;
-    background-color: rgb(213, 225, 240);
+    /* background-color: rgb(213, 225, 240); */
     color: black;
     width: 157px;
     border-radius: 5px;

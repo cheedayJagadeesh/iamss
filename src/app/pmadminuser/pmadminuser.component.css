@@ -57,7 +57,7 @@ h1 {
     height: 35px;
     border-radius: 5px;
     text-align: center;
-    font-size: 15px;
+    font-size: 18px;
     margin-left: 1%;
     margin-top: -1%;
     position: absolute;
@@ -143,16 +143,16 @@ label {
 }
 .labeltime1 {
     display: inline-block;
-    margin-left: 0.7%;
-    margin-top: -6px;
+    margin-left: 42.7%;
+    margin-top: 0%;
     position: absolute;
 }
 .labeltime2 {
     display: inline-block;
-    margin-left: 23%;
+    margin-left: 65%;
     font-weight: bold;
     color: black;
-    margin-top: -0.2%;
+    margin-top: 0%;
     position: absolute;
 }
 .time1 {
@@ -160,23 +160,27 @@ label {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
-    margin-left: 7%;
+    margin-left: 48.9%;
     width: 106px;
     margin-top: -0.5%;
     border-radius: 5px;
     height: 35px;
     position: absolute;
+    text-align: center;
+    font-size: 17px;
 }
 .time2 {
     margin: 0;
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
-    margin-left: 35.7%;
+    margin-left: 85.4%;
     width: 106px;
     margin-top: -2%;
     border-radius: 5px;
     height: 35px;
+    text-align: center;
+    font-size: 17px;
 }
 .labelid-role2{
     display: inline-block;
@@ -188,7 +192,7 @@ label {
 }
 .labeldrp1 {
     display: inline-block;
-    margin-left: 43.8%;
+    margin-left: 0.8%;
     font-weight: bold;
     color: black;
     margin-top: -2.7%;
@@ -196,15 +200,18 @@ label {
 }
 .drpdwn1 {
     cursor: pointer;
-    margin-top: -15.8%;
-    margin-left: 241%;
+    margin-top: -3.1%;
+    margin-left: 6.8%;
     border-color: black;
-    background-color: rgb(159, 196, 238);
+    /* background-color: rgb(159, 196, 238); */
     color: black;
     width: 260px;
     border-radius: 5px;
     border: 1px solid black;
-    height: 37px;
+    height: 35px;
+    position: absolute;
+    text-align: center;
+    font-size: 17px;
 }
 .drpbtn {
     width: 259px;
