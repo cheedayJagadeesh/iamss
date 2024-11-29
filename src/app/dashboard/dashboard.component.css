@@ -1,0 +1,75 @@
+h1 {
+    /* font-family: Times New Roman; */
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    text-align: center;
+    color: rgb(55, 103, 236);
+}
+.h2 {
+    /* font-family: Times New Roman; */
+    display: block;
+    font-size: 1.7em;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    text-align: center;
+    color: rgb(86, 105, 158);
+}
+.h4 {
+    color: rgb(252, 252, 252);
+    font-size: 20px;
+}
+.li{
+    font-size: 20px;
+    font-weight: bold;
+    /* width: 200px;
+    border-radius: 10px;
+    text-align: center; */
+}
+.container-top {
+    border-style: solid;
+    border-color: inherit;
+    border-width: 1px;
+    margin-top: 0%;
+    width: 1350px;
+    border-radius: 5px;
+    height: 250px;
+    margin-left: 8%;
+}
+
+.button1 {
+    cursor: pointer;
+    margin-top: 2%;
+    margin-left: 12;
+    border-color: black;
+    color: black;
+    background-color: rgb(207, 223, 241);
+    width: 181px;
+    border-radius: 5px;
+    height: 35px;
+}
+.button2 {
+    cursor: pointer;
+    margin-top: 2%;
+    margin-left: 24%;
+    border-color: black;
+    color: black;
+    background-color: rgb(207, 223, 241);
+    width: 181px;
+    border-radius: 5px;
+    height: 35px;
+}
+.button3 {
+    cursor: pointer;
+    margin-top: 2%;
+    margin-left: 36%;
+    border-color: black;
+    color: black;
+    background-color: rgb(207, 223, 241);
+    width: 181px;
+    border-radius: 5px;
+    height: 35px;
+}
+
+  

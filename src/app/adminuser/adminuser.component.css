@@ -20,7 +20,7 @@ h1 {
     border-style: solid;
     border-color: inherit;
     border-width: 1px;
-    margin-top: 0%;
+    margin-top: -1%;
     width: 1350px;
     border-radius: 5px;
     height: 250px;
@@ -508,4 +508,8 @@ label {
     height: 35px;
     text-align: center;
     font-size: 17px;
+}
+.btnback{
+    margin-top: -5%;
+    margin-left: 95%;
 }

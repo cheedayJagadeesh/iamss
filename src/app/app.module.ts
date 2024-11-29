@@ -24,6 +24,7 @@ import { AdminreportsComponent } from './adminreports/adminreports.component';
 import { MonthlyempreportComponent } from './monthlyempreport/monthlyempreport.component';
 import { ProjectreportsComponent } from './projectreports/projectreports.component';
 import { ConfigurationsComponent } from './configurations/configurations.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ConfigurationsComponent } from './configurations/configurations.compone
     AdminreportsComponent,
     MonthlyempreportComponent,
     ProjectreportsComponent,
-    ConfigurationsComponent
+    ConfigurationsComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

@@ -4,19 +4,19 @@
 <div class="p-3 mb-2">
     <h2 class="h2" >PM Admin User</h2>
 </div>
-<form class="row g-3">
+<form class="row g-3"  #pmadminform="ngForm"  (ngSubmit)="submitdata(pmadminform.value)" >
     <div class="container-top">
     <h3 class="h3">Modify User Leaves, Login and Logout</h3>
     <div class="cal">
         <label class="lblcal">Choose Date</label>
-        <input class="inputcal" type="date">
+        <input class="inputcal" type="date" name="selectedDate" [(ngModel)]="selectedDate">
     </div>
     <div class="row g-3">
     <div class="col-md-3">
         <label for="Empname" class="form-label">Emp.Name</label>
     </div>
     <div class="col-md-3">
-        <input type="search" class="form-controlsearchname" id="Empname">
+        <input type="search" class="form-controlsearchname" id="Empname" name="searchname" placeholder="Enter Employee Name" [(ngModel)]="searchname">
     </div>
     <div class="col-md-3">
         <label for="Empid" class="labelid-role1">Emp.ID</label>
@@ -26,7 +26,7 @@
     </div> -->
     <div>
         <div>
-          <input type="search" class="form-controlsearchid" />
+          <input type="search" class="form-controlsearchid" name="searchid" placeholder="Enter Employee ID"  [(ngModel)]="searchid" />
         </div>
         <div>
         <button class="btn btnsearch">
@@ -38,9 +38,9 @@
     </div>
     <div>
     <label class="labeltime1">Login Time</label>
-    <input class="time1" type="time">
+    <input class="time1" type="time" name="time1" [(ngModel)]="time1" [disabled]="isSecondSelectDisabled">
     <label class="labeltime2">Logout Time</label>
-    <input class="time2" type="time">
+    <input class="time2" type="time" name="time2" [(ngModel)]="time2" [disabled]="isSecondSelectDisabled">
     </div>
     <!-- <div class="col-md-3">
         <label for="Role" class="labelid-role2">Leave</label>
@@ -48,27 +48,19 @@
     <div class="col-md-3">
         <label class="labeldrp1">Leave</label>
        <div >
-        <select id="select1" name="leavetype" class="drpdwn1"  name="leavetype">
-           <option value="" disabled selected >- select leave type -</option>
+        <select id="select1" name="leavetype" class="drpdwn1" name="leavetype"[(ngModel)]="leave" (change)="onSelect1Change()">
+           <option value="" disabled selected>- select leave type -</option>
            <option value="Full Day">Full Day</option>
            <option value="Half Day">Half Day</option>
            <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
       </select>
-        <!-- <button class="btn drpbtn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          - select leave type -
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" href="#">Full Day</a></li>
-          <li><a class="dropdown-item" href="#">Half Day</a></li>
-          <li><a class="dropdown-item" href="#">OH(Optional Holiday)</a></li>
-        </ul> -->
       </div>
     </div>
     <div>
         <button class="buttonsave">Save</button>
       </div>
       <div>
-        <button class="buttonclr">Clear</button>
+        <button class="buttonclr" (click)="clearData()">Clear</button>
       </div>
     </div>
     </div>
