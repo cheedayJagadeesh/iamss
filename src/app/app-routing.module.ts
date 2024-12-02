@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminuserComponent } from './adminuser/adminuser.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { PmadminuserComponent } from './pmadminuser/pmadminuser.component';
-import { AdminreportsComponent } from './adminreports/adminreports.component';
-import { MonthlyempreportComponent } from './monthlyempreport/monthlyempreport.component';
-import { ProjectreportsComponent } from './projectreports/projectreports.component';
-import { ConfigurationsComponent } from './configurations/configurations.component';
+import { AdminuserComponent } from './IAMS/adminuser/adminuser.component';
+import { DashboardComponent } from './IAMS/dashboard/dashboard.component';
+import { PmadminuserComponent } from './IAMS/pmadminuser/pmadminuser.component';
+import { AdminreportsComponent } from './IAMS/adminreports/adminreports.component';
+import { MonthlyempreportComponent } from './IAMS/monthlyempreport/monthlyempreport.component';
+import { ProjectreportsComponent } from './IAMS/projectreports/projectreports.component';
+import { ConfigurationsComponent } from './IAMS/configurations/configurations.component';
 
 const routes: Routes = [
   {path:'adminuser',component:AdminuserComponent},

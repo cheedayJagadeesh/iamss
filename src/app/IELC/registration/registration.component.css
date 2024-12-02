@@ -1,0 +1,197 @@
+h1 {
+    /* font-family: Times New Roman; */
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    text-align: center;
+    color: rgb(55, 103, 236);
+}
+.tablebottom {
+    width: 483px;
+    margin-left: 35%;
+    margin-top: -1%;
+
+}
+.lbllogin{
+    margin-top: 0%;
+    margin-left: 73%;
+    /* position: absolute; */
+}
+.lblsessions{
+    position: absolute;
+    margin-top: 1%;
+    margin-left: 76%;
+    visibility: visible;
+    color: lime;
+}
+h2 {
+    font-weight: bold;
+    font-size: 15px;
+    text-align: center;
+    position: absolute;
+    margin-top: 3%;
+    margin-left: 76%;
+    visibility: visible;
+}
+.lblskill{
+    margin-left: 70%;
+    margin-top: 7%;
+}
+.lblmode{
+    margin-left: 70%;
+    margin-top: 0%;
+}
+.form-controlone {
+    display: block;
+    border-color: black;
+    color: black;
+    border: 1px solid black;
+    border-radius: 6px;
+    text-align: center;
+    width: 25%;
+    margin-top: 0%;
+    margin-left: 70%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    outline-offset: 1px;
+}
+.lbldate{
+    margin-left: 70%;
+    margin-top: 0%;
+    position: absolute;
+}
+.lbltime{
+    margin-left: 83%;
+    margin-top: 0%;
+    position: absolute;
+}
+.form-controldate {
+    display: block;
+    border-color: black;
+    color: black;
+    border: 1px solid black;
+    border-radius: 6px;
+    text-align: center;
+    width: 12%;
+    margin-top: 1.3%;
+    margin-left: 70%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    outline-offset: 1px;
+    position: absolute;
+}
+.form-controltime {
+    display: block;
+    border-color: black;
+    color: black;
+    border: 1px solid black;
+    border-radius: 6px;
+    text-align: center;
+    width: 12%;
+    margin-top: 1.3%;
+    margin-left: 83%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    outline-offset: 1px;
+    position: absolute;
+}
+.lblfname{
+    margin-left: 70%;
+    margin-top: 4.5%;
+    position: absolute;
+}
+.lbllname{
+    margin-left: 83%;
+    margin-top: 4.5%;
+    position: absolute;
+}
+.form-controlfname {
+    display: block;
+    border-color: black;
+    color: black;
+    border: 1px solid black;
+    border-radius: 6px;
+    text-align: center;
+    width: 12%;
+    margin-top: 5.8%;
+    margin-left: 70%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    outline-offset: 1px;
+    position: absolute;
+}
+.form-controllname {
+    display: block;
+    border-color: black;
+    color: black;
+    border: 1px solid black;
+    border-radius: 6px;
+    text-align: center;
+    width: 12%;
+    margin-top: 5.8%;
+    margin-left: 83%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    outline-offset: 1px;
+    position: absolute;
+}
+.lblemail{
+    margin-left: 70%;
+    margin-top: 9.3%;
+    position: absolute;
+}
+.form-controlemail {
+    display: block;
+    border-color: black;
+    color: black;
+    border: 1px solid black;
+    border-radius: 6px;
+    text-align: center;
+    width: 25%;
+    margin-top: 10.6%;
+    margin-left: 70%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    outline-offset: 1px;
+    position: absolute;
+}
+.lblmbl{
+    margin-left: 70%;
+    margin-top: 14%;
+    position: absolute;
+}
+.form-controlmbl {
+    display: block;
+    border-color: black;
+    color: black;
+    border: 1px solid black;
+    border-radius: 6px;
+    text-align: center;
+    width: 25%;
+    margin-top: 15.3%;
+    margin-left: 70%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    outline-offset: 1px;
+    position: absolute;
+}
+.lblbatch{
+    margin-left: 70%;
+    margin-top: 18.5%;
+    position: absolute;
+}

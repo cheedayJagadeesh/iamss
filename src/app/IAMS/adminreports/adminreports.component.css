@@ -20,7 +20,7 @@ h1 {
     border-style: solid;
     border-color: inherit;
     border-width: 1px;
-    margin-top: 0%;
+    margin-top: -1%;
     width: 1563px;
     border-radius: 5px;
     height: 600px;
@@ -173,4 +173,8 @@ h1 {
 }
 .pagination {
     margin-left: 72%;
+}
+.btnback{
+    margin-top: -5%;
+    margin-left: 95%;
 }

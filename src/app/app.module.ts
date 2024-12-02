@@ -12,19 +12,20 @@ import {MatButtonModule} from '@angular/material/button';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { AttendanceComponent } from './attendance/attendance.component';
+import { LoginComponent } from './IAMS/login/login.component';
+import { AttendanceComponent } from './IAMS/attendance/attendance.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule,ReactiveFormsModule,FormGroup,FormControl } from '@angular/forms';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { AdminuserComponent } from './adminuser/adminuser.component';
-import { PmadminuserComponent } from './pmadminuser/pmadminuser.component';
-import { AdminreportsComponent } from './adminreports/adminreports.component';
-import { MonthlyempreportComponent } from './monthlyempreport/monthlyempreport.component';
-import { ProjectreportsComponent } from './projectreports/projectreports.component';
-import { ConfigurationsComponent } from './configurations/configurations.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminuserComponent } from './IAMS/adminuser/adminuser.component';
+import { PmadminuserComponent } from './IAMS/pmadminuser/pmadminuser.component';
+import { AdminreportsComponent } from './IAMS/adminreports/adminreports.component';
+import { MonthlyempreportComponent } from './IAMS/monthlyempreport/monthlyempreport.component';
+import { ProjectreportsComponent } from './IAMS/projectreports/projectreports.component';
+import { ConfigurationsComponent } from './IAMS/configurations/configurations.component';
+import { DashboardComponent } from './IAMS/dashboard/dashboard.component';
+import { RegistrationComponent } from './IELC/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     MonthlyempreportComponent,
     ProjectreportsComponent,
     ConfigurationsComponent,
-    DashboardComponent
+    DashboardComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
