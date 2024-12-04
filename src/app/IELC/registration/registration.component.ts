@@ -16,7 +16,7 @@ export class RegistrationComponent {
  // year=''
  work='';
  taskslist=''
- 
+ email='incidents@inteqsolutions.com'
 constructor(){
    // this.selectedDate= new Date().toString()
    this.selectedDate= new Date().toISOString().split('T')[0]
