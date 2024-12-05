@@ -26,6 +26,7 @@ import { ProjectreportsComponent } from './IAMS/projectreports/projectreports.co
 import { ConfigurationsComponent } from './IAMS/configurations/configurations.component';
 import { DashboardComponent } from './IAMS/dashboard/dashboard.component';
 import { RegistrationComponent } from './IELC/registration/registration.component';
+import { RegisteredusersComponent } from './IELC/registeredusers/registeredusers.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { RegistrationComponent } from './IELC/registration/registration.componen
     ProjectreportsComponent,
     ConfigurationsComponent,
     DashboardComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    RegisteredusersComponent
   ],
   imports: [
     BrowserModule,

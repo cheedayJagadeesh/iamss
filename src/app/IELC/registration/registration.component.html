@@ -2,7 +2,7 @@
     <img class="img" src="\assets\images\Inteq logo.png">
     <h1 class="h1" >INTEQ EMPLOYEE LEARNING CENTER</h1>
 </div>
-<form>
+<form #registration="ngForm" (ngSubmit)="showData(registration.value)" >
  <div>
    <table class="tableleft">
     <tr>
@@ -384,6 +384,17 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
             </tr>
           </tbody>
     </table>
+    <div class="pagination">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
+          </nav>
+      </div>
 </div>
 <div class="container">
     <div>

@@ -18,14 +18,18 @@ h1 {
     margin-top: 4%;
 
 }
+.pagination{
+    margin-left: 40.2%;
+    margin-top: -1%;
+}
 .lbllogin{
-    margin-top: -17%;
+    margin-top: -18%;
     margin-left: 73%;
     position: absolute;
 }
 .lblsessions{
     position: absolute;
-    margin-top: -15%;
+    margin-top: -16%;
     margin-left: 79%;
     visibility: visible;
     color: lime;
@@ -47,7 +51,7 @@ h2 {
     font-size: 15px;
     text-align: center;
     position: absolute;
-    margin-top: -13%;
+    margin-top: -14%;
     margin-left: 78%;
     visibility: visible;
 }
@@ -55,7 +59,7 @@ h2 {
     margin-left: 2%;
 }
 .formdiv{
-    margin-top: -17.5%;
+    margin-top: -18%;
 }
 .lblskill{
     margin-left: 71.5%;
@@ -242,7 +246,7 @@ h2 {
     margin-top: -3.5%;
     width: 590px;
     border-radius: 5px;
-    height: 264px;
+    height: 272px;
     margin-left: 32%;
 }
 .main {
@@ -347,7 +351,7 @@ h2 {
 .labeltime1 {
     display: inline-block;
     margin-left: 4%;
-    margin-top: 20px;
+    margin-top: 21px;
     font-size: medium;
 }
 .labeltime2 {
@@ -389,7 +393,7 @@ h2 {
 }
 .button {
         cursor: pointer;
-        margin-top: 1%;
+        margin-top: 4%;
         margin-left: 35%;
        border-color: black;
        color: black;
@@ -406,7 +410,7 @@ h2 {
     color: white;
     height: 42px;
     text-align: center;
-    border-radius: 4%;
+    border-radius: 3%;
     font-size: x-large;
 }
 .container {
@@ -414,7 +418,7 @@ h2 {
     border-color: inherit;
     border-width: 1px;
     margin-left: 32%;
-    margin-top: 2%;
+    margin-top: 0%;
     width: 590px;
     border-radius: 5px;
     height: 264px;
@@ -428,7 +432,7 @@ h2 {
     width: 465px;
     height: 237px;
     left: 0px;
-    top: 40px;
+    top: 45px;
 }
 #newsTicker .newsList {
     list-style: none;

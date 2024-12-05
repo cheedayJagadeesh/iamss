@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { __values } from 'tslib';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-registration',
@@ -9,6 +10,8 @@ import { __values } from 'tslib';
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent {
+
+  @ViewChild('registration') registration!: NgForm;
  // currentDate:Date=new Date()
  selectedDate:string=''
  leave='';
@@ -22,9 +25,9 @@ constructor(){
    this.selectedDate= new Date().toISOString().split('T')[0]
    this.isTimeInputDisabled=true
  }
-showData(attendanceform:any)
+showData(registration:any)
 {
- console.log(attendanceform)
+ console.log(registration)
 }
 save()
 {
