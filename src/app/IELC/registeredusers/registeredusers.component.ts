@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./registeredusers.component.css']
 })
 export class RegisteredusersComponent {
-
+ selectedDate:string=''
 }

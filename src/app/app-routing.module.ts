@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminuserComponent } from './IAMS/adminuser/adminuser.component';
 import { DashboardComponent } from './IAMS/dashboard/dashboard.component';
@@ -7,6 +7,7 @@ import { AdminreportsComponent } from './IAMS/adminreports/adminreports.componen
 import { MonthlyempreportComponent } from './IAMS/monthlyempreport/monthlyempreport.component';
 import { ProjectreportsComponent } from './IAMS/projectreports/projectreports.component';
 import { ConfigurationsComponent } from './IAMS/configurations/configurations.component';
+import { RegisteredusersComponent } from './IELC/registeredusers/registeredusers.component';
 
 const routes: Routes = [
   {path:'adminuser',component:AdminuserComponent},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path:'projectreports',component:ProjectreportsComponent},
   {path:'configuration',component:ConfigurationsComponent},
   {path:'dashboard',component:DashboardComponent},
+  {path:'registered',component:RegisteredusersComponent}
 ];
 
 @NgModule({

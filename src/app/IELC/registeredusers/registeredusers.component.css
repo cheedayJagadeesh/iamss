@@ -2,12 +2,13 @@
     height: 76px;
     width: 150px;
 }
-.active{
-    background-color: #87ceeb;
+.container-fluid{
+    font-size: 15.9px;
+    font-weight: 500;
 }
 .navbar {
     display: flex;
-    background-color: #f8f9fa;
+    background-color: #333;
     padding: 10px 20px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   }
@@ -15,18 +16,170 @@
   .nav-item {
     text-decoration: none;
     color: #333;
-    padding: 10px 15px;
+    padding: 5px 5px;
     margin-right: 10px;
     border-radius: 5px;
     transition: background-color 0.3s, color 0.3s;
   }
   
   .nav-item:hover {
-    background-color: #e0e0e0;
+    background-color: #87ceeb;
   }
   
   .active-tab {
-    background-color: #007bff;
-    color: white;
+    background-color: #87ceeb;
+    color: rgb(31, 29, 29);
     font-weight: bold;
   }
+  .lbllogin{
+    margin-top: 1.5%;
+    margin-left: 75%;
+    position: absolute;
+}
+  .container {
+    border-style: solid;
+    border-color: inherit;
+    border-width: 1px;
+    margin-top: 3.5%;
+    width: 1565px;
+    border-radius: 5px;
+    height: 139px;
+    margin-left: 1%;
+}
+.tablebottom {
+    margin-top: 1%;
+}
+.pagination {
+    margin-left: 72%;
+}
+
+.drpyear {
+    position: absolute;
+    margin-left: 58%;
+    margin-top: -3.5%;
+    border-color: black;
+    color: black;
+    width: 258px;
+    border-radius: 5px;
+    border: 1px solid black;
+    height: 35px;
+    text-align: center;
+}
+
+.btn-drp-year {
+    width: 256px;
+    height: 35px;
+}
+.dropdown-menu.show {
+    display: block;
+    width: 260px;
+    text-align: center;
+}
+.form-controlsearchname {
+    display: block;
+    width: 23%;
+    margin-left: -2.7%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    /* border-color: black; */
+    font-weight: 400;
+    line-height: 0.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    border-radius: 5px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-top: 1%;
+    position: absolute;
+    outline-offset: 0.5px;
+}
+
+.btnsearch {
+    margin-left: 77%;
+    margin-top: -3.5%;
+    position: absolute;
+    height: 35px;
+    background-color: rgb(13, 152, 233);
+    outline-offset: 3px;
+    border-radius: 4px;
+}
+label {
+    display: inline-block;
+    margin-left: 66%;
+    /* font-weight: bold; */
+    color: black;
+    margin-top: 7%;
+    font-size: 15px;
+}
+.labelid-role1{
+    display: inline-block;
+    margin-left: 1%;
+    /* font-weight: bold; */
+    color: black;
+    margin-top: 7%;
+}
+.lblcal {
+    display: inline-block;
+    margin-left: 15.5%;
+    /* font-weight: bold; */
+    color: black;
+    margin-top: 0.5%;
+    position: absolute;
+}
+.cal{
+    margin-left: 45%;
+    margin-top: -2%;
+    height: 47px;
+}
+.inputcal {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    width: 140px;
+    height: 35px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 18px;
+    margin-left: 22%;
+    margin-top: 0%;
+    position: absolute;
+}
+.lbltime{
+    display: inline-block;
+    margin-left: 54%;
+    color: black;
+    margin-top: -0.5%;
+    position: absolute;
+}
+.form-control {
+    display: block;
+    width: 12%;
+    margin-left: 59.5%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-color: black;
+    font-weight: 400;
+    line-height: 0.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    /* border-radius: var(--bs-border-radius); */
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border-color: black;
+    margin-top: -1%;
+    border-radius: 5px;
+}
+.buttonclr {
+    cursor: pointer;
+    margin-top: -3.2%;
+    margin-left: 71.7%;
+    border-color: black;
+    color: black;
+    background-color: rgb(192, 216, 230);
+    width: 126px;
+    border-radius: 5px;
+    height: 33px;
+    position: absolute;
+}

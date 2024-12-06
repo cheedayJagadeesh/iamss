@@ -10,15 +10,23 @@
         <div class="col-md-3">
             <label for="projname" class="lblprj">Project Name</label>
         </div>
-        <div class="drpdwnbtmprj">
+        <!-- <div class="drpdwnbtmprj">
           <button class="btn drpbtn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
             - Select Project -
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li><a class="dropdown-item" href="#">NNA</a></li>
           </ul>
-        </div>
-        <div class="drpmnth">
+        </div> -->
+        <select name="project" class="drpdwnbtmprj"  name="project">
+          <!-- <option value="" disabled selected>- select leave type -</option>
+          <option *ngFor="let leaves of leavetype">
+              {{ leaves.name }}
+          </option> -->
+           <option value=""   >- select project -</option>
+           <option value="">NNA</option>
+      </select>
+        <!-- <div class="drpmnth">
           <button class="btn dropdown-toggle btn-drp-mnth" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
             - Select Month -
           </button>
@@ -27,8 +35,17 @@
             <li><a class="dropdown-item" href="#">February</a></li>
             <li><a class="dropdown-item" href="#">March</a></li>
           </ul>
-        </div>
-        <div class="drpyear">
+        </div> -->
+        <select  name="mnth" class="drpmnth"  name="mnth">
+          <!-- <option value="" disabled selected>- select leave type -</option>
+          <option *ngFor="let leaves of leavetype">
+              {{ leaves.name }}
+          </option> -->
+           <option value=""   >- select month -</option>
+           <option value="">January</option>
+           <option value="">February</option>
+      </select>
+        <!-- <div class="drpyear">
           <button class="btn dropdown-toggle btn-drp-year " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
             - Select Year -
           </button>
@@ -36,7 +53,16 @@
             <li><a class="dropdown-item" href="#">2024</a></li>
             <li><a class="dropdown-item" href="#">2023</a></li>
           </ul>
-        </div>
+        </div> -->
+        <select  name="year" class="drpyear"  name="year">
+          <!-- <option value="" disabled selected>- select leave type -</option>
+          <option *ngFor="let leaves of leavetype">
+              {{ leaves.name }}
+          </option> -->
+           <option value=""   >- select year -</option>
+           <option value="">2024</option>
+           <option value="">2023</option>
+      </select>
     
     <div class="row g-3">
         <div class="col-md-3">

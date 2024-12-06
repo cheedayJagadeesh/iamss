@@ -40,12 +40,12 @@ h1 {
     margin-top: 1%;
     margin-left: 9%;
     border-color: black;
-    /* background-color: rgb(213, 225, 240); */
     color: black;
     width: 260px;
     border-radius: 5px;
     border: 1px solid black;
     height: 35px;
+    text-align: center;
 }
 .drpbtn {
     width: 259px;
@@ -53,15 +53,15 @@ h1 {
 }
 .drpmnth {
     position: absolute;
-    margin-left: 37%;
-    margin-top: -2.3%;
+    margin-left: 13%;
+    margin-top: 0.8%;
     border-color: black;
-    /* background-color: rgb(213, 225, 240); */
     color: black;
     width: 165px;
     border-radius: 5px;
     border: 1px solid black;
     height: 35px;
+    text-align: center;
 }
 .btn-drp-mnth {
     height: 35px;
@@ -69,15 +69,15 @@ h1 {
 }
 .drpyear {
     position: absolute;
-    margin-left: 60%;
-    margin-top: -2.3%;
+    margin-left: 34%;
+    margin-top: 0.8%;
     border-color: black;
-    /* background-color: rgb(213, 225, 240); */
     color: black;
     width: 165px;
     border-radius: 5px;
     border: 1px solid black;
     height: 35px;
+    text-align: center;
 }
 
 .btn-drp-year {
