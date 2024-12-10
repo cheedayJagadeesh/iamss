@@ -8,6 +8,7 @@ import { MonthlyempreportComponent } from './IAMS/monthlyempreport/monthlyemprep
 import { ProjectreportsComponent } from './IAMS/projectreports/projectreports.component';
 import { ConfigurationsComponent } from './IAMS/configurations/configurations.component';
 import { RegisteredusersComponent } from './IELC/registeredusers/registeredusers.component';
+import { HomeComponent } from './IELC/home/home.component';
 
 const routes: Routes = [
   {path:'adminuser',component:AdminuserComponent},
@@ -17,7 +18,9 @@ const routes: Routes = [
   {path:'projectreports',component:ProjectreportsComponent},
   {path:'configuration',component:ConfigurationsComponent},
   {path:'dashboard',component:DashboardComponent},
-  {path:'registered',component:RegisteredusersComponent}
+  {path:'registered',component:RegisteredusersComponent},
+  {path:'home',component:HomeComponent},
+  {path:'',component:HomeComponent,pathMatch:'full'}
 ];
 
 @NgModule({

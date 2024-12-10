@@ -4,7 +4,8 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="nav nav-pills">
         <li class="nav-item">
-            <a class="nav-link" href="#" >Home</a>
+            <a class="nav-link" routerLink="/home"  routerLinkActive="active-tab" 
+            [routerLinkActiveOptions]="{ exact: true }">Home</a>
         </li>
           <li class="nav-item">
             <a class="nav-link "  routerLink="/registered"  routerLinkActive="active-tab" 

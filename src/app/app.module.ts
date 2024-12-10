@@ -27,6 +27,7 @@ import { ConfigurationsComponent } from './IAMS/configurations/configurations.co
 import { DashboardComponent } from './IAMS/dashboard/dashboard.component';
 import { RegistrationComponent } from './IELC/registration/registration.component';
 import { RegisteredusersComponent } from './IELC/registeredusers/registeredusers.component';
+import { HomeComponent } from './IELC/home/home.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { RegisteredusersComponent } from './IELC/registeredusers/registeredusers
     ConfigurationsComponent,
     DashboardComponent,
     RegistrationComponent,
-    RegisteredusersComponent
+    RegisteredusersComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
