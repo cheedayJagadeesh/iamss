@@ -28,6 +28,7 @@ import { DashboardComponent } from './IAMS/dashboard/dashboard.component';
 import { RegistrationComponent } from './IELC/registration/registration.component';
 import { RegisteredusersComponent } from './IELC/registeredusers/registeredusers.component';
 import { HomeComponent } from './IELC/home/home.component';
+import { HeaderComponent } from './IELC/header/header.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { HomeComponent } from './IELC/home/home.component';
     DashboardComponent,
     RegistrationComponent,
     RegisteredusersComponent,
-    HomeComponent
+    HomeComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

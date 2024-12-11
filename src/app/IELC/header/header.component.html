@@ -1,0 +1,74 @@
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #fff;">
+    <img class="img" src="\assets\images\Inteq logo.png">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/home"  routerLinkActive="active-tab" 
+            [routerLinkActiveOptions]="{ exact: true }">Home</a>
+        </li>
+          <li class="nav-item">
+            <a class="nav-link "  routerLink="/registered"  routerLinkActive="active-tab" 
+            [routerLinkActiveOptions]="{ exact: true }" >RegisteredUser</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="#" >AddNewSkill</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="#">SkillQA</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link  dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Compliance
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="#">ISMS Task</a></li>
+              <li><a class="dropdown-item" href="#">QMS Task</a></li>
+              <li><a class="dropdown-item" href="#">SOC2 Task</a></li>
+            </ul>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link  dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              AllDepts
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" href="#">Admin Dept</a></li>
+              <li><a class="dropdown-item" href="#">HR Dept</a></li>
+              <li><a class="dropdown-item" href="#">IT Dept</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="#">AdminUsers</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link  dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Attendance
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <li><a class="dropdown-item" routerLink="/attendance" routerLinkActive="active-tab" 
+                [routerLinkActiveOptions]="{ exact: true }">Attendance</a></li>
+              <li><a class="dropdown-item" routerLink="/adminuser" routerLinkActive="active-tab" 
+                [routerLinkActiveOptions]="{ exact: true }">Admin User</a></li>
+              <li><a class="dropdown-item" routerLink="/pmadminuser" routerLinkActive="active-tab" 
+                [routerLinkActiveOptions]="{ exact: true }">PM Admin User</a></li>
+              <li><a class="dropdown-item" routerLink="/adminreports" routerLinkActive="active-tab" 
+                [routerLinkActiveOptions]="{ exact: true }">Admin Reports</a></li>
+              <li><a class="dropdown-item" routerLink="/projectreports" routerLinkActive="active-tab" 
+                [routerLinkActiveOptions]="{ exact: true }">project Reports</a></li>
+              <li><a class="dropdown-item" routerLink="/monthlyempreport" routerLinkActive="active-tab" 
+                [routerLinkActiveOptions]="{ exact: true }">Monthly Emp Report</a></li>
+              <li><a class="dropdown-item" routerLink="/configuration" routerLinkActive="active-tab" 
+                [routerLinkActiveOptions]="{ exact: true }">Configurations</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " routerLink="/registration" routerLinkActive="active-tab" 
+            [routerLinkActiveOptions]="{ exact: true }">RegistrationPage</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="#">Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>

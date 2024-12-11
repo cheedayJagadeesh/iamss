@@ -13,14 +13,14 @@ label {
     margin-left: 3%;
     font-weight: bold;
     color: black;
-    margin-top: 1%;
+    margin-top: 7%;
 }
 .labelid-role{
     display: inline-block;
     margin-left: 13%;
     font-weight: bold;
     color: black;
-    margin-top: 1%;
+    margin-top: 7%;
 }
 
 .form-control {
@@ -40,6 +40,7 @@ label {
     border-radius: var(--bs-border-radius);
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     border-color: black;
+    margin-top: 6%;
 }
 .notify {
     width: 401px;

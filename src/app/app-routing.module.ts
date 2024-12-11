@@ -9,6 +9,8 @@ import { ProjectreportsComponent } from './IAMS/projectreports/projectreports.co
 import { ConfigurationsComponent } from './IAMS/configurations/configurations.component';
 import { RegisteredusersComponent } from './IELC/registeredusers/registeredusers.component';
 import { HomeComponent } from './IELC/home/home.component';
+import { AttendanceComponent } from './IAMS/attendance/attendance.component';
+import { RegistrationComponent } from './IELC/registration/registration.component';
 
 const routes: Routes = [
   {path:'adminuser',component:AdminuserComponent},
@@ -17,10 +19,11 @@ const routes: Routes = [
   {path:'monthlyempreport',component:MonthlyempreportComponent},
   {path:'projectreports',component:ProjectreportsComponent},
   {path:'configuration',component:ConfigurationsComponent},
-  {path:'dashboard',component:DashboardComponent},
+  {path:'attendance',component:AttendanceComponent},
   {path:'registered',component:RegisteredusersComponent},
   {path:'home',component:HomeComponent},
-  {path:'',component:HomeComponent,pathMatch:'full'}
+  {path:'',component:HomeComponent,pathMatch:'full'},
+  {path:'registration',component:RegistrationComponent}
 ];
 
 @NgModule({
