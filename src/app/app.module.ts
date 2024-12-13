@@ -29,6 +29,7 @@ import { RegistrationComponent } from './IELC/registration/registration.componen
 import { RegisteredusersComponent } from './IELC/registeredusers/registeredusers.component';
 import { HomeComponent } from './IELC/home/home.component';
 import { HeaderComponent } from './IELC/header/header.component';
+import { AddnewskillComponent } from './IELC/addnewskill/addnewskill.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { HeaderComponent } from './IELC/header/header.component';
     RegistrationComponent,
     RegisteredusersComponent,
     HomeComponent,
-    HeaderComponent
+    HeaderComponent,
+    AddnewskillComponent
   ],
   imports: [
     BrowserModule,

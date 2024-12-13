@@ -11,6 +11,7 @@ import { RegisteredusersComponent } from './IELC/registeredusers/registeredusers
 import { HomeComponent } from './IELC/home/home.component';
 import { AttendanceComponent } from './IAMS/attendance/attendance.component';
 import { RegistrationComponent } from './IELC/registration/registration.component';
+import { AddnewskillComponent } from './IELC/addnewskill/addnewskill.component';
 
 const routes: Routes = [
   {path:'adminuser',component:AdminuserComponent},
@@ -23,7 +24,8 @@ const routes: Routes = [
   {path:'registered',component:RegisteredusersComponent},
   {path:'home',component:HomeComponent},
   {path:'',component:HomeComponent,pathMatch:'full'},
-  {path:'registration',component:RegistrationComponent}
+  {path:'registration',component:RegistrationComponent},
+  {path:'addskill',component:AddnewskillComponent}
 ];
 
 @NgModule({
