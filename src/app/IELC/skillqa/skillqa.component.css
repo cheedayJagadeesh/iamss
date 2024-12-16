@@ -1,0 +1,40 @@
+.lbllogin{
+    margin-top: 1.5%;
+    margin-left: 75%;
+    position: absolute;
+}
+.form-label{
+    margin-top: 21%;
+    margin-left: 80%;
+}
+.form-controlone {
+    display: block;
+    border-color: black;
+    color: black;
+    border: 1px solid black;
+    border-radius: 6px;
+    text-align: center;
+    width: 100%;
+    margin-top: 0%;
+    margin-left: 71.5%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    outline-offset: 1px;
+    margin-top: 19%;
+    margin-left: 1%;
+}
+.btnexam{
+    margin-top: -5%;
+    margin-left: 55%;
+}
+.btnresult{
+    margin-top: -5%;
+}
+.tablebottom {
+    margin-top: 1%;
+}
+.pagination {
+    margin-left: 72%;
+}

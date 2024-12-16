@@ -1,0 +1,198 @@
+.img{
+    height: 100px;
+    width: 200px;
+}
+.btnback{
+    margin-left: 92%;
+    margin-top: -7%;
+}
+.lbllogin{
+    margin-top: 1.5%;
+    margin-left: 75%;
+    position: absolute;
+}
+.exam{
+    margin-top: 0%;
+    margin-left: 34.8%;
+    width: 75px;
+    font-size: 15px;
+    font-weight: bold;
+}
+.form-controlexam {
+    display: block;
+    width: 17%;
+    margin-left: 40%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 0.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    border-radius: 5px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-top: -3.1%;
+    position: absolute;
+    outline-offset: 0.5px;
+}
+.btnexam{
+    margin-top: -5.3%;
+    margin-left: 59%;
+    height: 35px;
+    width: 100px;
+}
+.exambtm{
+    margin-left: 40%;
+    margin-top: -2%;
+    font-weight: bold;
+    position: absolute;
+    color: red;
+}
+.batch{
+    margin-top: 0%;
+    margin-left: 30%;
+    /* width: 75px; */
+    font-size: 15px;
+    font-weight: bold;
+}
+.form-controlbatch {
+    display: block;
+    width: 17%;
+    margin-left: 40%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 0.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    border-radius: 5px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-top: -2.8%;
+    position: absolute;
+    outline-offset: 0.5px;
+}
+.btnbatch{
+    margin-top: -5%;
+    margin-left: 59%;
+    height: 35px;
+    width: 100px;
+}
+.batchbtm{
+    margin-left: 40%;
+    margin-top: -2%;
+    font-weight: bold;
+    position: absolute;
+    color: red;
+}
+.question{
+    margin-top: 0%;
+    margin-left: 28.8%;
+    /* width: 75px; */
+    font-size: 15px;
+    font-weight: bold;
+}
+.form-controlquestion {
+    display: block;
+    width: 17%;
+    margin-left: 40%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 0.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    border-radius: 5px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-top: -2.8%;
+    position: absolute;
+    outline-offset: 0.5px;
+}
+.btnquestion{
+    margin-top: -5%;
+    margin-left: 59%;
+    height: 35px;
+    width: 100px;
+}
+.batchquestion{
+    margin-left: 40%;
+    margin-top: -2%;
+    font-weight: bold;
+    position: absolute;
+    color: red;
+}
+.stquestion{
+    margin-top: 0%;
+    margin-left: 28%;
+    /* width: 75px; */
+    font-size: 15px;
+    font-weight: bold;
+}
+.form-controlstquestion {
+    display: block;
+    width: 17%;
+    margin-left: 40%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 0.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    border-radius: 5px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-top: -2.8%;
+    position: absolute;
+    outline-offset: 0.5px;
+}
+.btnstquestion{
+    margin-top: -5%;
+    margin-left: 59%;
+    height: 35px;
+    width: 100px;
+}
+.batchstquestion{
+    margin-left: 40%;
+    margin-top: -2%;
+    font-weight: bold;
+    position: absolute;
+    color: red;
+}
+.ep{
+    margin-top: 0%;
+    margin-left: 31.6%;
+    /* width: 75px; */
+    font-size: 15px;
+    font-weight: bold;
+}
+.form-controlep {
+    display: block;
+    width: 17%;
+    margin-left: 40%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 0.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    border-radius: 5px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-top: -2.8%;
+    position: absolute;
+    outline-offset: 0.5px;
+}
+.btnep{
+    margin-top: -5%;
+    margin-left: 59%;
+    height: 35px;
+    width: 100px;
+}
+.batchep{
+    margin-left: 40%;
+    margin-top: -2%;
+    font-weight: bold;
+    position: absolute;
+    color: red;
+}

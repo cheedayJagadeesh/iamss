@@ -30,6 +30,8 @@ import { RegisteredusersComponent } from './IELC/registeredusers/registeredusers
 import { HomeComponent } from './IELC/home/home.component';
 import { HeaderComponent } from './IELC/header/header.component';
 import { AddnewskillComponent } from './IELC/addnewskill/addnewskill.component';
+import { SkillqaComponent } from './IELC/skillqa/skillqa.component';
+import { ExaminfoComponent } from './IELC/examinfo/examinfo.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { AddnewskillComponent } from './IELC/addnewskill/addnewskill.component';
     RegisteredusersComponent,
     HomeComponent,
     HeaderComponent,
-    AddnewskillComponent
+    AddnewskillComponent,
+    SkillqaComponent,
+    ExaminfoComponent
   ],
   imports: [
     BrowserModule,
