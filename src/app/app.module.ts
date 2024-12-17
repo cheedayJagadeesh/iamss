@@ -32,6 +32,7 @@ import { HeaderComponent } from './IELC/header/header.component';
 import { AddnewskillComponent } from './IELC/addnewskill/addnewskill.component';
 import { SkillqaComponent } from './IELC/skillqa/skillqa.component';
 import { ExaminfoComponent } from './IELC/examinfo/examinfo.component';
+import { ResultinfoComponent } from './IELC/resultinfo/resultinfo.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { ExaminfoComponent } from './IELC/examinfo/examinfo.component';
     HeaderComponent,
     AddnewskillComponent,
     SkillqaComponent,
-    ExaminfoComponent
+    ExaminfoComponent,
+    ResultinfoComponent
   ],
   imports: [
     BrowserModule,

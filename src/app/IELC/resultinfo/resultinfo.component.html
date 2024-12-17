@@ -1,0 +1,46 @@
+<form class="row g-3">
+    <div>
+        <label class="lbllogin">Login as </label>
+    </div>
+    <img class="img" src="\assets\images\Inteq logo.png">
+    <div>
+        <button class="btn btn-dark btnback" routerLink="/skillqa">Back</button>
+    </div>
+    <div class="row g-3">
+        <div class="col-md-3">
+            <label for="Empname" class="form-label">Skill Name</label>
+        </div>
+        <div class="col-md-3">
+            <select name="skill" class="form-controlone" required>
+                <option value="" disabled selected>- select skill -</option>
+                <option>azure</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="Empname" class="form-label st">Status</label>
+        </div>
+        <div class="col-md-3">
+            <select name="skill" class="form-controlst" required>
+                <option value="" disabled selected>- select status -</option>
+                <option>azure</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label for="Empname" class="form-label email">Eamil</label>
+        </div>
+        <div class="col-md-3">
+            <input type="text" class="form-controlemail" id="Empname">
+        </div>
+        <div class="col-md-3">
+            <button class="btn btn-info btnsrch">search</button>
+            <button class="btn btn-dark btnclr">clear</button>
+            <button class="btn btn-primary btnexpt">ExportToExcel</button>
+        </div>
+        <div class="form-check div">
+            <input class="form-check-input" type="checkbox" value="">
+            <label class="lbl">
+               Export All Records
+            </label>
+        </div>
+    </div>
+</form>

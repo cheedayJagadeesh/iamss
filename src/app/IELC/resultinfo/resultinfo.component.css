@@ -1,0 +1,131 @@
+.img{
+    height: 100px;
+    width: 200px;
+}
+.btnback{
+    margin-left: 92%;
+    margin-top: -7%;
+}
+.lbllogin{
+    margin-top: 1.5%;
+    margin-left: 75%;
+    position: absolute;
+}
+.form-label{
+    margin-top: 1%;
+    margin-left: 80%;
+}
+.form-controlone {
+    display: block;
+    border-color: black;
+    color: black;
+    border: 1px solid black;
+    border-radius: 6px;
+    text-align: center;
+    width: 100%;
+    margin-top: 0%;
+    margin-left: 71.5%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    outline-offset: 1px;
+    margin-top: -1%;
+    margin-left: 1%;
+}
+.st{
+    margin-top: 1%;
+    margin-left: 38%;
+}
+.form-controlst {
+    display: block;
+    border-color: black;
+    color: black;
+    border: 1px solid black;
+    border-radius: 6px;
+    text-align: center;
+    width: 100%;
+    margin-top: 0%;
+    margin-left: 71.5%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    outline-offset: 1px;
+    margin-top: -1%;
+    margin-left: -49%;
+}
+.email{
+    margin-top: 4%;
+    margin-left: 87%;
+}
+.form-controlemail {
+    display: block;
+    border-color: black;
+    color: black;
+    border: 1px solid black;
+    border-radius: 6px;
+    text-align: center;
+    width: 100%;
+    margin-top: 0%;
+    margin-left: 71.5%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    outline-offset: 1px;
+    margin-top: 2%;
+    margin-left: 1%;
+}
+.btnsrch{
+    margin-top: 19%;
+    margin-left: -29%;
+    width: 100px;
+}
+.btnclr{
+    margin-top: 19%;
+    margin-left: 6%;
+    width: 100px;
+}
+.btnexpt{
+    margin-top: 19%;
+    margin-left: 6%;
+    width: 127px;
+}
+.div{
+    margin-top: -2.8%;
+    margin-left: 68.5%;
+    width: 500px;
+}
+.form-check-input {
+    --bs-form-check-bg: var(--bs-body-bg);
+    flex-shrink: 0;
+    width: 1em;
+    height: 1em;
+    margin-top: 1em;
+    vertical-align: top;
+    appearance: none;
+    background-color: var(--bs-form-check-bg);
+    background-image: var(--bs-form-check-bg-image);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    height: 27px;
+    width: 26px;
+    border-color: black;
+}
+.form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+.lbl{
+    display: inline-block;
+    margin-left: 1%;
+    /* font-weight: bold; */
+    color: black;
+    margin-top: 1.2%;
+    position: absolute;
+}

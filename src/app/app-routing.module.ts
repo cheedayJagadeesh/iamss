@@ -14,6 +14,7 @@ import { RegistrationComponent } from './IELC/registration/registration.componen
 import { AddnewskillComponent } from './IELC/addnewskill/addnewskill.component';
 import { SkillqaComponent } from './IELC/skillqa/skillqa.component';
 import { ExaminfoComponent } from './IELC/examinfo/examinfo.component';
+import { ResultinfoComponent } from './IELC/resultinfo/resultinfo.component';
 
 const routes: Routes = [
   {path:'adminuser',component:AdminuserComponent},
@@ -29,7 +30,8 @@ const routes: Routes = [
   {path:'registration',component:RegistrationComponent},
   {path:'addskill',component:AddnewskillComponent},
   {path:'skillqa',component:SkillqaComponent},
-  {path:'examinfo',component:ExaminfoComponent}
+  {path:'examinfo',component:ExaminfoComponent},
+  {path:'resultinfo',component:ResultinfoComponent}
 ];
 
 @NgModule({
