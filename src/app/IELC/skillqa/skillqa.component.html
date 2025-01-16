@@ -52,6 +52,60 @@
                                     d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
                             </svg>
                         </button>
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Question</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                        <label>Skill Name</label>
+                                        <select id="select1" name="skills" class="form-control" name="skills">
+                                            <!-- <option value="" disabled selected>- select leave type -</option>
+                                            <option *ngFor="let leaves of leavetype">
+                                                {{ leaves.name }}
+                                            </option> -->
+                                            <option>- Select skill -</option>
+                                            <option>Azure</option>
+                                        </select>
+                                       </div>
+                                   <div class="divmodal">
+                                    <label>Question</label>
+                                    <input type="file" id="myFile" name="filename" class="form-control">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>Option A</label>
+                                    <input type="file" id="myFile" name="filename" class="form-control">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>Option B</label>
+                                    <input type="file" id="myFile" name="filename" class="form-control">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>Option C</label>
+                                    <input type="file" id="myFile" name="filename" class="form-control">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>Option D</label>
+                                    <input type="file" id="myFile" name="filename" class="form-control">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>Answer</label>
+                                    <input type="text" class="form-control">
+                                   </div>
+                                  </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
                         <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-pencil-square" viewBox="0 0 16 16">
@@ -68,7 +122,7 @@
                                     d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
                             </svg>
                         </button>
-                    </td>
+                    </td>    
                 </tr>
                 <tr>
                     <th scope="row">2</th>
