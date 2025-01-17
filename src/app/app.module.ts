@@ -33,6 +33,9 @@ import { AddnewskillComponent } from './IELC/addnewskill/addnewskill.component';
 import { SkillqaComponent } from './IELC/skillqa/skillqa.component';
 import { ExaminfoComponent } from './IELC/examinfo/examinfo.component';
 import { ResultinfoComponent } from './IELC/resultinfo/resultinfo.component';
+import { IsmstaskComponent } from './IELC/ismstask/ismstask.component';
+import { IsmshistoryComponent } from './IELC/ismshistory/ismshistory.component';
+import { IsmsmailsComponent } from './IELC/ismsmails/ismsmails.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +56,10 @@ import { ResultinfoComponent } from './IELC/resultinfo/resultinfo.component';
     AddnewskillComponent,
     SkillqaComponent,
     ExaminfoComponent,
-    ResultinfoComponent
+    ResultinfoComponent,
+    IsmstaskComponent,
+    IsmshistoryComponent,
+    IsmsmailsComponent
   ],
   imports: [
     BrowserModule,

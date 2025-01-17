@@ -15,6 +15,9 @@ import { AddnewskillComponent } from './IELC/addnewskill/addnewskill.component';
 import { SkillqaComponent } from './IELC/skillqa/skillqa.component';
 import { ExaminfoComponent } from './IELC/examinfo/examinfo.component';
 import { ResultinfoComponent } from './IELC/resultinfo/resultinfo.component';
+import { IsmstaskComponent } from './IELC/ismstask/ismstask.component';
+import { IsmshistoryComponent } from './IELC/ismshistory/ismshistory.component';
+import { IsmsmailsComponent } from './IELC/ismsmails/ismsmails.component';
 
 const routes: Routes = [
   {path:'adminuser',component:AdminuserComponent},
@@ -31,7 +34,10 @@ const routes: Routes = [
   {path:'addskill',component:AddnewskillComponent},
   {path:'skillqa',component:SkillqaComponent},
   {path:'examinfo',component:ExaminfoComponent},
-  {path:'resultinfo',component:ResultinfoComponent}
+  {path:'resultinfo',component:ResultinfoComponent},
+  {path:'ismstask',component:IsmstaskComponent},
+  {path:'ismshistory',component:IsmshistoryComponent},
+  {path:'ismsmails',component:IsmsmailsComponent}
 ];
 
 @NgModule({
