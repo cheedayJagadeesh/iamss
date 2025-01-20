@@ -18,6 +18,12 @@ import { ResultinfoComponent } from './IELC/resultinfo/resultinfo.component';
 import { IsmstaskComponent } from './IELC/ismstask/ismstask.component';
 import { IsmshistoryComponent } from './IELC/ismshistory/ismshistory.component';
 import { IsmsmailsComponent } from './IELC/ismsmails/ismsmails.component';
+import { QmstaskComponent } from './IELC/qmstask/qmstask.component';
+import { QmshistoryComponent } from './IELC/qmshistory/qmshistory.component';
+import { QmsmailsComponent } from './IELC/qmsmails/qmsmails.component';
+import { Soc2taskComponent } from './IELC/soc2task/soc2task.component';
+import { Soc2historyComponent } from './IELC/soc2history/soc2history.component';
+import { Soc2mailsComponent } from './IELC/soc2mails/soc2mails.component';
 
 const routes: Routes = [
   {path:'adminuser',component:AdminuserComponent},
@@ -37,7 +43,13 @@ const routes: Routes = [
   {path:'resultinfo',component:ResultinfoComponent},
   {path:'ismstask',component:IsmstaskComponent},
   {path:'ismshistory',component:IsmshistoryComponent},
-  {path:'ismsmails',component:IsmsmailsComponent}
+  {path:'ismsmails',component:IsmsmailsComponent},
+  {path:'qmstask',component:QmstaskComponent},
+  {path:'qmshistory',component:QmshistoryComponent},
+  {path:'qmsmails',component:QmsmailsComponent},
+  {path:'soc2task',component:Soc2taskComponent},
+  {path:'soc2history',component:Soc2historyComponent},
+  {path:'soc2mails',component:Soc2mailsComponent}
 ];
 
 @NgModule({

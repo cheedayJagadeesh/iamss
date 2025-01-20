@@ -36,6 +36,16 @@ import { ResultinfoComponent } from './IELC/resultinfo/resultinfo.component';
 import { IsmstaskComponent } from './IELC/ismstask/ismstask.component';
 import { IsmshistoryComponent } from './IELC/ismshistory/ismshistory.component';
 import { IsmsmailsComponent } from './IELC/ismsmails/ismsmails.component';
+import { QmsheaderComponent } from './IELC/qmsheader/qmsheader.component';
+import { QmstaskComponent } from './IELC/qmstask/qmstask.component';
+import { QmshistoryComponent } from './IELC/qmshistory/qmshistory.component';
+import { QmsmailsComponent } from './IELC/qmsmails/qmsmails.component';
+import { IsmsheaderComponent } from './IELC/ismsheader/ismsheader.component';
+import { Soc2headerComponent } from './IELC/soc2header/soc2header.component';
+import { Soc2taskComponent } from './IELC/soc2task/soc2task.component';
+import { Soc2historyComponent } from './IELC/soc2history/soc2history.component';
+import { Soc2mailsComponent } from './IELC/soc2mails/soc2mails.component';
+import { AttendanceheaderComponent } from './IELC/attendanceheader/attendanceheader.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +69,17 @@ import { IsmsmailsComponent } from './IELC/ismsmails/ismsmails.component';
     ResultinfoComponent,
     IsmstaskComponent,
     IsmshistoryComponent,
-    IsmsmailsComponent
+    IsmsmailsComponent,
+    QmsheaderComponent,
+    QmstaskComponent,
+    QmshistoryComponent,
+    QmsmailsComponent,
+    IsmsheaderComponent,
+    Soc2headerComponent,
+    Soc2taskComponent,
+    Soc2historyComponent,
+    Soc2mailsComponent,
+    AttendanceheaderComponent
   ],
   imports: [
     BrowserModule,
