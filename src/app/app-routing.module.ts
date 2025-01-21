@@ -24,6 +24,7 @@ import { QmsmailsComponent } from './IELC/qmsmails/qmsmails.component';
 import { Soc2taskComponent } from './IELC/soc2task/soc2task.component';
 import { Soc2historyComponent } from './IELC/soc2history/soc2history.component';
 import { Soc2mailsComponent } from './IELC/soc2mails/soc2mails.component';
+import { ComplianceformComponent } from './IELC/complianceform/complianceform.component';
 
 const routes: Routes = [
   {path:'adminuser',component:AdminuserComponent},
@@ -49,7 +50,8 @@ const routes: Routes = [
   {path:'qmsmails',component:QmsmailsComponent},
   {path:'soc2task',component:Soc2taskComponent},
   {path:'soc2history',component:Soc2historyComponent},
-  {path:'soc2mails',component:Soc2mailsComponent}
+  {path:'soc2mails',component:Soc2mailsComponent},
+  {path:'complianceform',component:ComplianceformComponent}
 ];
 
 @NgModule({

@@ -1,0 +1,64 @@
+.img{
+    height: 100px;
+    width: 200px;
+}
+.btnback{
+    margin-left: 92%;
+    margin-top: -7%;
+}
+.lbllogin{
+    margin-top: 1.5%;
+    margin-left: 75%;
+    position: absolute;
+}
+.form-label{
+    margin-top: 1%;
+    margin-left: 30%;
+    font-size: 16px;
+}
+.form-control {
+    display: block;
+    width: 30%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-top: -3.5%;
+    margin-left: 40%;
+    text-align: center;
+    border-color: black;
+    color: black;
+    border: 1px solid black;
+    border-radius: 6px;
+    line-height: 1.5;
+    outline-offset: 1px;
+}
+/* .form-control{
+    display: block;
+    border-color: black;
+    color: black;
+    border: 1px solid black;
+    border-radius: 6px;
+    text-align: center;
+    width: 100%;
+    margin-top: 0%;
+    margin-left: 71.5%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    outline-offset: 1px;
+    margin-top: -1%;
+    margin-left: 1%;
+} */
+.btnsrch{
+    margin-left: 40%;
+    width: 10%;
+}

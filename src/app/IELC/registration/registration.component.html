@@ -3,6 +3,9 @@
     <h1 class="h1" >INTEQ EMPLOYEE LEARNING CENTER</h1>
 </div>
 <form #registration="ngForm" (ngSubmit)="showData(registration.value)" >
+  <div>
+    <button type="button" class="btn btnlink btn-link" routerLink="/complianceform">Go To ISMSQMS Status</button>
+  </div>
  <div>
    <table class="tableleft">
     <tr>
@@ -177,7 +180,6 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
     </tr>
 </table>
  </div>
-    
     <div class="container-main">
         <!-- <h3 class="main">{{currentDate | date:'longDate'}}</h3>  -->
         <h3 class="main">{{selectedDate | date:'longDate'}}</h3> 
