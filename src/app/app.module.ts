@@ -47,6 +47,7 @@ import { Soc2historyComponent } from './IELC/soc2history/soc2history.component';
 import { Soc2mailsComponent } from './IELC/soc2mails/soc2mails.component';
 import { AttendanceheaderComponent } from './IELC/attendanceheader/attendanceheader.component';
 import { ComplianceformComponent } from './IELC/complianceform/complianceform.component';
+import { AdminusersComponent } from './IELC/adminusers/adminusers.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { ComplianceformComponent } from './IELC/complianceform/complianceform.co
     Soc2historyComponent,
     Soc2mailsComponent,
     AttendanceheaderComponent,
-    ComplianceformComponent
+    ComplianceformComponent,
+    AdminusersComponent
   ],
   imports: [
     BrowserModule,

@@ -1,11 +1,3 @@
-.img{
-    height: 100px;
-    width: 200px;
-}
-.btnback{
-    margin-left: 92%;
-    margin-top: -7%;
-}
 .lbllogin{
     margin-top: 1.5%;
     margin-left: 75%;
@@ -40,28 +32,17 @@
     line-height: 1.5;
     outline-offset: 1px;
 }
-/* .form-control{
-    display: block;
-    border-color: black;
-    color: black;
-    border: 1px solid black;
-    border-radius: 6px;
-    text-align: center;
-    width: 100%;
-    margin-top: 0%;
-    margin-left: 71.5%;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    outline-offset: 1px;
-    margin-top: -1%;
-    margin-left: 1%;
-} */
-.btnsrch{
-    margin-left: 40%;
-    width: 10%;
-}
 .tablebottom {
-    margin-top: 2%;
+    margin-top: 1%;
+}
+.pagination {
+    margin-left: 72%;
+}
+.divmodal{
+    margin-top: 1%;
+    font-size: 15px;
+}
+.headermodal{
+    font-size: 15px;
+    font-weight: bold;
 }
