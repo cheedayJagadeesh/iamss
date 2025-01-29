@@ -1,0 +1,67 @@
+.img{
+    height: 100px;
+    width: 200px;
+}
+.btnback{
+    margin-left: 92%;
+    margin-top: -7%;
+}
+.lbllogin{
+    margin-top: 1.5%;
+    margin-left: 75%;
+    position: absolute;
+}
+h1 {
+    /* font-family: Times New Roman; */
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    text-align: center;
+    color: rgb(0, 3, 12);
+    margin-top: -3%;
+}
+.h2 {
+    /* font-family: Times New Roman; */
+    display: block;
+    font-size: 1.3em;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    text-align: left;
+    color: rgb(0, 3, 12);
+}
+.h3{
+    margin-top: 0%;
+    margin-right: 14%;
+}
+.btnlnk{
+    margin-top: -5.2%;
+    margin-left: 10%;
+}
+.tablebottom {
+    margin-top: 0%;
+}
+.pagination {
+    margin-left: 72%;
+}
+.divmodal{
+    margin-top: 1%;
+    font-size: 15px;
+}
+.headermodal{
+    font-size: 15px;
+    font-weight: bold;
+}
+.divtext{
+   text-align: center;
+}
+.h4{
+        /* font-family: Times New Roman; */
+        display: block;
+        font-size: 1.3em;
+        font-weight: bold;
+        unicode-bidi: isolate;
+        text-align: center;
+        color: rgb(0, 3, 12);
+
+}

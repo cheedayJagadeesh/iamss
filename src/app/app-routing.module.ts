@@ -26,6 +26,11 @@ import { Soc2historyComponent } from './IELC/soc2history/soc2history.component';
 import { Soc2mailsComponent } from './IELC/soc2mails/soc2mails.component';
 import { ComplianceformComponent } from './IELC/complianceform/complianceform.component';
 import { AdminusersComponent } from './IELC/adminusers/adminusers.component';
+import { IthelpsprtComponent } from './IELC/ithelpsprt/ithelpsprt.component';
+import { AdminsprtComponent } from './IELC/adminsprt/adminsprt.component';
+import { HrsprtComponent } from './IELC/hrsprt/hrsprt.component';
+import { EmercntctlstComponent } from './IELC/emercntctlst/emercntctlst.component';
+import { VarcmtsComponent } from './IELC/varcmts/varcmts.component';
 
 const routes: Routes = [
   {path:'adminuser',component:AdminuserComponent},
@@ -53,7 +58,12 @@ const routes: Routes = [
   {path:'soc2history',component:Soc2historyComponent},
   {path:'soc2mails',component:Soc2mailsComponent},
   {path:'complianceform',component:ComplianceformComponent},
-  {path:'adminusers',component:AdminusersComponent}
+  {path:'adminusers',component:AdminusersComponent},
+  {path:'ithelpsprt',component:IthelpsprtComponent},
+  {path:'adminsprt',component:AdminsprtComponent},
+  {path:'hrsprt',component:HrsprtComponent},
+  {path:'emercntctlst',component:EmercntctlstComponent},
+  {path:'varcmts',component:VarcmtsComponent}
 ];
 
 @NgModule({

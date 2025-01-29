@@ -48,6 +48,11 @@ import { Soc2mailsComponent } from './IELC/soc2mails/soc2mails.component';
 import { AttendanceheaderComponent } from './IELC/attendanceheader/attendanceheader.component';
 import { ComplianceformComponent } from './IELC/complianceform/complianceform.component';
 import { AdminusersComponent } from './IELC/adminusers/adminusers.component';
+import { IthelpsprtComponent } from './IELC/ithelpsprt/ithelpsprt.component';
+import { AdminsprtComponent } from './IELC/adminsprt/adminsprt.component';
+import { HrsprtComponent } from './IELC/hrsprt/hrsprt.component';
+import { EmercntctlstComponent } from './IELC/emercntctlst/emercntctlst.component';
+import { VarcmtsComponent } from './IELC/varcmts/varcmts.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +88,12 @@ import { AdminusersComponent } from './IELC/adminusers/adminusers.component';
     Soc2mailsComponent,
     AttendanceheaderComponent,
     ComplianceformComponent,
-    AdminusersComponent
+    AdminusersComponent,
+    IthelpsprtComponent,
+    AdminsprtComponent,
+    HrsprtComponent,
+    EmercntctlstComponent,
+    VarcmtsComponent
   ],
   imports: [
     BrowserModule,
