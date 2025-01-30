@@ -9,8 +9,11 @@ h1 {
     margin-top: -3.5%;
 }
 .btnlink{
-    margin-left: 45%;
+    margin-left: 40%;
+    color: red;
+    font-weight: bold;
 }
+
 .img{
     height: 76px;
     width: 150px;

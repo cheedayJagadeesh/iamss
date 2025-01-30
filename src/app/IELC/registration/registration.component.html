@@ -4,7 +4,7 @@
 </div>
 <form #registration="ngForm" (ngSubmit)="showData(registration.value)" >
   <div>
-    <button type="button" class="btn btnlink btn-link" routerLink="/complianceform">Go To ISMSQMS Status</button>
+    <a type="button" class="btn btnlink " routerLink="/complianceform"><a class="blink" style="color: blue;">Go To:</a>  ISMS - QMS Monthly Task Status Update</a>
   </div>
  <div>
    <table class="tableleft">
@@ -42,7 +42,7 @@
             Projects Support:
         </td>
         <td>
-            <button type="button" class="btn btn-link">Click Here</button>
+            <button type="button" class="btn btn-link" routerLink="/prjsprt">Click Here</button>
         </td>
     </tr>
     <tr>
@@ -67,7 +67,7 @@
         <th>
             ISO 27001:</th>
         <th>
-             <button type="button" class="btn btnknwb btn-link">Knowledge Base</button>
+             <button type="button" class="btn btnknwb btn-link" routerLink="/iso27001">Knowledge Base</button>
         </th>
     </tr>
     <tr>
@@ -83,7 +83,7 @@
         <th>
             ISO 9001:</th>
         <th>
-            <button type="button" class="btn btnknwb btn-link">Knowledge Base</button>
+            <button type="button" class="btn btnknwb btn-link" routerLink="/iso9001">Knowledge Base</button>
         </th>
     </tr>
     <tr>
