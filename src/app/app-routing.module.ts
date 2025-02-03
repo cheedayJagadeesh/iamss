@@ -35,6 +35,7 @@ import { PrjsprtComponent } from './IELC/prjsprt/prjsprt.component';
 import { Iso27001Component } from './IELC/iso27001/iso27001.component';
 import { Iso9001Component } from './IELC/iso9001/iso9001.component';
 import { HippaComponent } from './IELC/hippa/hippa.component';
+import { GdprComponent } from './IELC/gdpr/gdpr.component';
 
 const routes: Routes = [
   {path:'adminuser',component:AdminuserComponent},
@@ -71,7 +72,8 @@ const routes: Routes = [
   {path:'prjsprt',component:PrjsprtComponent},
   {path:'iso27001',component:Iso27001Component},
   {path:'iso9001',component:Iso9001Component},
-  {path:'hippa',component:HippaComponent}
+  {path:'hippa',component:HippaComponent},
+  {path:'gdpr',component:GdprComponent}
 ];
 
 @NgModule({
