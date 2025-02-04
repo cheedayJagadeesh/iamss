@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./soc.component.css']
 })
 export class SocComponent {
-
+email='cvprasad@inteqsolutions.com'
 }
