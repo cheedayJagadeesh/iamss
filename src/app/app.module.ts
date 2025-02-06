@@ -60,6 +60,8 @@ import { HippaComponent } from './IELC/hippa/hippa.component';
 import { GdprComponent } from './IELC/gdpr/gdpr.component';
 import { SocComponent } from './IELC/soc/soc.component';
 import { DpdpComponent } from './IELC/dpdp/dpdp.component';
+import { IelcapiService } from './IELC/ielcapi.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -115,9 +117,9 @@ import { DpdpComponent } from './IELC/dpdp/dpdp.component';
     BrowserAnimationsModule,
     NgbModule,
     NgbDatepickerModule,FormsModule,MatDatepickerModule,MatNativeDateModule,MatCardModule,FullCalendarModule,MatInputModule,
-    MatFormFieldModule,MatButtonModule,MatIconModule
+    MatFormFieldModule,MatButtonModule,MatIconModule,HttpClientModule
   ],
-  providers: [],
+  providers: [IelcapiService,HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

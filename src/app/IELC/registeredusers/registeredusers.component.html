@@ -72,17 +72,18 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Otto</td>
+                <tr *ngFor="let row of Registeredusers">
+                    <!-- <th scope="row"></th> -->
+                    <td>{{row.enrollmentID}}</td>
+                    <td>{{row.name}}</td>
+                    <td>{{row.mail}}</td>
+                    <td>{{row.mobile}}</td>
+                    <td>{{row.skillName}}</td>
+                    <td>{{row.date}}</td>
+                    <td>{{row.time}}</td>
+                    <td>{{row.venue}}</td>
+                    <td>{{row.batchmembers}}</td>
+                    <td>{{row.enrollmentDate}}</td>
                     <td>
                         <button class="btn btn-info me-1">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
@@ -90,66 +91,27 @@
                             </svg>
                         </button>
                     </td>
-                 
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                  
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                </tr>
-                <tr>
-                    <th scope="row">4</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                </tr>
-                <tr>
-                    <th scope="row">5</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                </tr>
-                <tr>
-                  <th scope="row">6</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-              </tr>
-              <tr>
-                  <th scope="row">7</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-              </tr>
-              <tr>
-                <th scope="row">8</th>
-                <td>Mark</td>
-                <td>Otto</td>
-            </tr>
-            <tr>
-                <th scope="row">9</th>
-                <td>Mark</td>
-                <td>Otto</td>
-            </tr>
-            <tr>
-                <th scope="row">10</th>
-                <td>Mark</td>
-                <td>Otto</td>
-            </tr>
               </tbody>
           </table>
           <div class="pagination">
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
-                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-                  <li class="page-item"><a class="page-link" href="#">2</a></li>
-                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-                  <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
-              </nav>
+                    <li class="page-item" [class.disabled]="currentPage === 1">
+                      <a class="page-link" href="#" (click)="prevPage($event)">Previous</a>
+                    </li>
+                  
+                    <!-- Use *ngFor to iterate directly over the totalPages array -->
+                    <li *ngFor="let page of totalPages" class="page-item" [class.active]="currentPage === page">
+                      <a class="page-link" href="#" (click)="setPage(page, $event)">{{ page }}</a>
+                    </li>
+                  
+                    <li class="page-item" [class.disabled]="currentPage === totalPages.length">
+                      <a class="page-link" href="#" (click)="nextPage($event)">Next</a>
+                    </li>
+                  </ul>
+                  
+                  </nav>
           </div>
       </div>
       
