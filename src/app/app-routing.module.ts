@@ -37,6 +37,7 @@ import { Iso9001Component } from './IELC/iso9001/iso9001.component';
 import { HippaComponent } from './IELC/hippa/hippa.component';
 import { GdprComponent } from './IELC/gdpr/gdpr.component';
 import { SocComponent } from './IELC/soc/soc.component';
+import { DpdpComponent } from './IELC/dpdp/dpdp.component';
 
 const routes: Routes = [
   {path:'adminuser',component:AdminuserComponent},
@@ -75,7 +76,8 @@ const routes: Routes = [
   {path:'iso9001',component:Iso9001Component},
   {path:'hippa',component:HippaComponent},
   {path:'gdpr',component:GdprComponent},
-  {path:'soc',component:SocComponent}
+  {path:'soc',component:SocComponent},
+  {path:'dpdp',component:DpdpComponent}
 ];
 
 @NgModule({

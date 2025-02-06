@@ -59,6 +59,7 @@ import { Iso9001Component } from './IELC/iso9001/iso9001.component';
 import { HippaComponent } from './IELC/hippa/hippa.component';
 import { GdprComponent } from './IELC/gdpr/gdpr.component';
 import { SocComponent } from './IELC/soc/soc.component';
+import { DpdpComponent } from './IELC/dpdp/dpdp.component';
 
 @NgModule({
   declarations: [
@@ -105,7 +106,8 @@ import { SocComponent } from './IELC/soc/soc.component';
     Iso9001Component,
     HippaComponent,
     GdprComponent,
-    SocComponent
+    SocComponent,
+    DpdpComponent
   ],
   imports: [
     BrowserModule,
