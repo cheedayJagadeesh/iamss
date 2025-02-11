@@ -38,6 +38,9 @@ import { HippaComponent } from './IELC/hippa/hippa.component';
 import { GdprComponent } from './IELC/gdpr/gdpr.component';
 import { SocComponent } from './IELC/soc/soc.component';
 import { DpdpComponent } from './IELC/dpdp/dpdp.component';
+import { MsalGuard } from '@azure/msal-angular';
+import { LoginComponent } from './IAMS/login/login.component';
+
 
 const routes: Routes = [
   {path:'adminuser',component:AdminuserComponent},
@@ -49,7 +52,9 @@ const routes: Routes = [
   {path:'attendance',component:AttendanceComponent},
   {path:'registered',component:RegisteredusersComponent},
   {path:'home',component:HomeComponent},
-  {path:'',component:HomeComponent,pathMatch:'full'},
+  {path:'',redirectTo:'home', pathMatch:'full'},
+  // {path:'login',component:LoginComponent},
+  // {path: '**', redirectTo: '/login'},
   {path:'registration',component:RegistrationComponent},
   {path:'addskill',component:AddnewskillComponent},
   {path:'skillqa',component:SkillqaComponent},

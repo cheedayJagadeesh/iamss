@@ -1,18 +1,18 @@
 <app-header></app-header>
-  <form class="row g-3">
+  <form class="row g-3" #searchform="ngForm" (ngSubmit)="searchSkills()">
     <div>
         <label class="lbllogin">Login as </label>
     </div>
     <div class="container">
         <div class="row g-3">
             <div class="col-md-3">
-                <label for="Empname" class="form-label">Skill Name</label>
+                <label for="skillname" class="form-label">Skill Name</label>
             </div>
             <div class="col-md-3">
-                <input type="text" class="form-controlsearchname" id="Empname">
+                <input type="text" class="form-controlsearchname" name="skillname" id="skillname"  (keyup.enter)="searchSkills()" [(ngModel)]="skillname">
             </div>
             <div class="col-md-3">
-                <label for="Empid" class="labelid-role1">Mode of Training</label>
+                <label for="Modeoftraining" class="labelid-role1">Mode of Training</label>
             </div>
             
             <div>
@@ -25,12 +25,14 @@
                       <li><a class="dropdown-item" href="#">Devops</a></li>
                     </ul>
                   </div> -->
-                  <select id="select1" name="modetype" class="drpyear"  name="modetype">
+                  <select id="select1" name="modetype" class="drpyear" [(ngModel)]="modetype">
                     <!-- <option value="" disabled selected>- select leave type -</option>
                     <option *ngFor="let leaves of leavetype">
                         {{ leaves.name }}
                     </option> -->
-                     <option   >- Select Mode -</option>
+                     <option value=""  >- Select Mode -</option>
+                     <option >Offline</option>
+                     <option >Self-Learning</option>
                      <option >Teams</option>
                 </select>
                 <div>
@@ -47,10 +49,14 @@
             </div>
             <div>
                 <label class="lbltime">Time</label>
-                <input type="text" class="form-control" id="Empname">
+                <input type="text" class="form-control" id="time" name="time" [(ngModel)]="time">
             </div>
             <div>
-                <button class="buttonclr">Clear</button>
+                <button class="buttonclr" (click)="clear()">Clear</button>
+                 <!-- <button class="buttonclr">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                    <path d="M8 1a7 7 0 1 0 0 14A7 7 0 1 0 8 1zM5.354 4.646a.5.5 0 1 1 .708.708L8 7.293l1.938-1.939a.5.5 0 1 1 .707.708L8.707 8l1.938 1.938a.5.5 0 0 1-.707.707L8 8.707l-1.938 1.938a.5.5 0 0 1-.708-.707L7.293 8 5.354 6.062a.5.5 0 0 1 0-.707z"/>
+                  </svg></button> -->
               </div>
         </div>
     </div>
@@ -72,7 +78,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let row of Registeredusers">
+                <tr *ngFor="let row of Registeredusers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
                     <!-- <th scope="row"></th> -->
                     <td>{{row.enrollmentID}}</td>
                     <td>{{row.name}}</td>
@@ -85,7 +91,7 @@
                     <td>{{row.batchmembers}}</td>
                     <td>{{row.enrollmentDate}}</td>
                     <td>
-                        <button class="btn btn-info me-1">
+                        <button class="btn btn-info me-1" (click)="deleteItem(row.enrollmentID)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                               <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
                             </svg>
@@ -94,25 +100,30 @@
                 </tr>
               </tbody>
           </table>
-          <div class="pagination">
+          <!-- <div class="pagination">
             <nav aria-label="Page navigation example">
-                <ul class="pagination">
+                <ul class="pagination justify-content-center">
                     <li class="page-item" [class.disabled]="currentPage === 1">
-                      <a class="page-link" href="#" (click)="prevPage($event)">Previous</a>
+                      <button class="page-link" (click)="goToPage(currentPage - 1)">Previous</button>
                     </li>
-                  
-                    <!-- Use *ngFor to iterate directly over the totalPages array -->
-                    <li *ngFor="let page of totalPages" class="page-item" [class.active]="currentPage === page">
-                      <a class="page-link" href="#" (click)="setPage(page, $event)">{{ page }}</a>
+              
+                    <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index"
+                        [class.active]="currentPage === i + 1">
+                      <button class="page-link" (click)="goToPage(i + 1)">{{ i + 1 }}</button>
                     </li>
-                  
-                    <li class="page-item" [class.disabled]="currentPage === totalPages.length">
-                      <a class="page-link" href="#" (click)="nextPage($event)">Next</a>
+              
+                    <li class="page-item" [class.disabled]="currentPage === totalPages">
+                      <button class="page-link" (click)="goToPage(currentPage + 1)">Next</button>
                     </li>
                   </ul>
-                  
                   </nav>
+          </div> -->
+          <!-- <div *ngFor="let item of items | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+            {{ item.id }} - {{ item.name }}
+          </div> -->
+          <div class="pagination" >
+          <pagination-controls (pageChange)="page = $event"></pagination-controls>
           </div>
-      </div>
+        </div>
       
   </form>

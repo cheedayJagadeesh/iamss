@@ -1,10 +1,24 @@
-<div class="loginform">
+<!-- <div class="loginform">
   <h1>WELCOME</h1>
   <h2 class="h2style">InteQ Attendance Management System</h2>
   <h3>
     Login to access your account
-    <button class="button btn" type="button">Sign in with Office 365</button>
+    <button *ngIf="!isAuthenticated" (click)="login()" class="button btn" type="button">Sign in with Office 365</button>
     <img class="imagelogo" src="\assets\images\Inteq logo.png">
    </h3>
+   <div *ngIf="isAuthenticated">
+   
+  </div>
+
+</div> -->
+
+<!-- <div *ngIf="user; else loginTemplate">
+  <h2>Welcome, {{ user.username }}</h2>
+  <button (click)="logout()">Logout</button>
 </div>
 
+<ng-template #loginTemplate>
+  <button (click)="login()">Login with Microsoft</button>
+</ng-template> -->
+
+<button (click)="login()">Login with Microsoft</button>

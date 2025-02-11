@@ -61,7 +61,35 @@ import { GdprComponent } from './IELC/gdpr/gdpr.component';
 import { SocComponent } from './IELC/soc/soc.component';
 import { DpdpComponent } from './IELC/dpdp/dpdp.component';
 import { IelcapiService } from './IELC/ielcapi.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MsalModule, MsalRedirectComponent, MsalInterceptor, MsalGuardConfiguration,MsalInterceptorConfiguration } from '@azure/msal-angular';
+import { MsalGuard, MsalService } from '@azure/msal-angular';
+import { AuthService } from './authservice.service';
+import { RouterModule, Routes } from '@angular/router';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import {  MSAL_INSTANCE } from '@azure/msal-angular';
+import { InteractionType, IPublicClientApplication } from '@azure/msal-browser'; 
+import { NgxPaginationModule } from 'ngx-pagination';
+import { PublicClientApplication } from '@azure/msal-browser';
+import { DatePipe } from '@angular/common';
+
+// const isIE = window.navigator.userAgent.includes('MSIE') || window.navigator.userAgent.includes('Trident');
+
+// export function MSALInstanceFactory(): PublicClientApplication {
+//   return new PublicClientApplication({
+//     auth: {
+//       clientId: '17af1879-bbe9-4a73-8284-1f007a330453', // From Azure AD registration
+//       authority: 'https://login.microsoftonline.com/d0ae250e-943b-431f-be00-cc1a2f3f59d9', // Replace with your tenant ID
+//       redirectUri: 'http://localhost:4200/',
+//     },
+//     cache: {
+//       cacheLocation: 'localStorage',
+//       storeAuthStateInCookie: isIE, // For IE compatibility
+//     }
+//   });
+// }
+
 
 @NgModule({
   declarations: [
@@ -117,9 +145,14 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     NgbModule,
     NgbDatepickerModule,FormsModule,MatDatepickerModule,MatNativeDateModule,MatCardModule,FullCalendarModule,MatInputModule,
-    MatFormFieldModule,MatButtonModule,MatIconModule,HttpClientModule
+    MatFormFieldModule,MatButtonModule,MatIconModule,HttpClientModule,NgxPaginationModule
+    
   ],
-  providers: [IelcapiService,HttpClient],
+  providers: [IelcapiService,HttpClient,AuthService,MsalModule,MsalGuard,MsalService,DatePipe
+    // { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true },
+    // { provide: MSAL_INSTANCE, useFactory: MSALInstanceFactory },
+    // MsalGuard,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

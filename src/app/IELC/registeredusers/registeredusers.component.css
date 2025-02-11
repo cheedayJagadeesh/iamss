@@ -3,6 +3,10 @@
     margin-left: 75%;
     position: absolute;
 }
+.formcont{
+    overflow: hidden;
+    max-width: 100%;
+}
   .container {
     border-style: solid;
     border-color: inherit;
@@ -17,7 +21,7 @@
     margin-top: 1%;
 }
 .pagination {
-    margin-left: 72%;
+    margin-left: 66%;
 }
 
 .drpyear {
