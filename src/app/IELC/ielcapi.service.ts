@@ -28,9 +28,9 @@ export class IelcapiService {
     }
 
     apidate="https://ielc-coreapi.azurewebsites.net/EnrollmentData/Date"
-    GetUsersByDate(date: string): Observable<any> {
-      return this.http.get<any>(`${this.apidate}/${date}`);
-    }
+    // GetUsersByDate(date: string): Observable<any> {
+    //   return this.http.get<any>(`${this.apidate}/${date}`);
+    // }
     getEnrollmentData(date: string) : Observable<any>{
       // Convert date from YYYY-MM-DD to DD-MM-YYYY using DatePipe
       const formattedDate = this.convertDateFormat(date);

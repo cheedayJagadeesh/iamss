@@ -5,17 +5,22 @@
 }
 .formcont{
     overflow: hidden;
-    max-width: 100%;
+    width: 100%;
 }
   .container {
     border-style: solid;
     border-color: inherit;
     border-width: 1px;
     margin-top: 3.5%;
-    width: 1565px;
+    /* width: 1565px; */
+    width: 98%;
     border-radius: 5px;
     height: 139px;
     margin-left: 1%;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+
 }
 .tablebottom {
     margin-top: 1%;
@@ -26,11 +31,12 @@
 
 .drpyear {
     position: absolute;
-    margin-left: 58%;
-    margin-top: -3.5%;
+    margin-left: 21.9%;
+    margin-top: -1.5%;
     border-color: black;
     color: black;
-    width: 258px;
+    /* width: 361px; */
+    width: 23%;
     border-radius: 5px;
     border: 1px solid black;
     height: 35px;
@@ -66,8 +72,8 @@
 }
 
 .btnsearch {
-    margin-left: 77%;
-    margin-top: -3.5%;
+    margin-left: 72%;
+    margin-top: -5.5%;
     position: absolute;
     height: 35px;
     background-color: rgb(13, 152, 233);
@@ -84,17 +90,16 @@ label {
 }
 .labelid-role1{
     display: inline-block;
-    margin-left: 1%;
-    /* font-weight: bold; */
+    margin-left: 13%;
     color: black;
-    margin-top: 7%;
+    margin-top: 0%;
+    position: absolute;
 }
 .lblcal {
     display: inline-block;
-    margin-left: 15.5%;
-    /* font-weight: bold; */
+    margin-left: 50.5%;
     color: black;
-    margin-top: 0.5%;
+    margin-top: -2.7%;
     position: absolute;
 }
 .cal{
@@ -107,25 +112,26 @@ label {
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
-    width: 140px;
+    /* width: 172px; */
+    width: 11%;
     height: 35px;
     border-radius: 5px;
     text-align: center;
     font-size: 18px;
-    margin-left: 22%;
-    margin-top: 0%;
+    margin-left: 58%;
+    margin-top: -3.4%;
     position: absolute;
 }
 .lbltime{
     display: inline-block;
-    margin-left: 54%;
+    margin-left: 53%;
     color: black;
-    margin-top: -0.5%;
+    margin-top: -2%;
     position: absolute;
 }
 .form-control {
     display: block;
-    width: 12%;
+    width: 11.2%;
     margin-left: 59.5%;
     padding: .375rem .75rem;
     font-size: 1rem;
@@ -136,21 +142,21 @@ label {
     appearance: none;
     background-color: var(--bs-body-bg);
     background-clip: padding-box;
-    /* border-radius: var(--bs-border-radius); */
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     border-color: black;
-    margin-top: -1%;
+    margin-top: -2.5%;
+    height: 35px;
     border-radius: 5px;
 }
 .buttonclr {
     cursor: pointer;
-    margin-top: -3.2%;
-    margin-left: 71.7%;
+    margin-top: -3.5%;
+    margin-left: 70.7%;
     border-color: black;
     color: black;
     background-color: rgb(192, 216, 230);
-    width: 126px;
+    width: 81px;
     border-radius: 5px;
-    height: 33px;
+    height: 35px;
     position: absolute;
 }

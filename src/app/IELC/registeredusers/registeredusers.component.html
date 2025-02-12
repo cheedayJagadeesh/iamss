@@ -11,6 +11,10 @@
             <div class="col-md-3">
                 <input type="text" class="form-controlsearchname" name="skillname" id="skillname"  (keyup.enter)="searchSkills()" [(ngModel)]="skillname">
             </div>
+            <div>
+                <label class="lblcal">Choose Date</label>
+                <input class="inputcal" type="date" name="selectedDate" [(ngModel)]="selectedDate" >
+            </div>
             <div class="col-md-3">
                 <label for="Modeoftraining" class="labelid-role1">Mode of Training</label>
             </div>
@@ -42,10 +46,6 @@
                       </svg>
                 </button>
             </div>
-            </div>
-            <div>
-                <label class="lblcal">Choose Date</label>
-                <input class="inputcal" type="date" name="selectedDate" [(ngModel)]="selectedDate" >
             </div>
             <div>
                 <label class="lbltime">Time</label>
@@ -125,5 +125,5 @@
           <pagination-controls (pageChange)="page = $event"></pagination-controls>
           </div>
         </div>
-      
+        <meta name="viewport" content="width=device-width, initial-scale=1">
   </form>
