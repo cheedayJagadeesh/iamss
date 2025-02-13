@@ -4,61 +4,34 @@
         <label class="lbllogin">Login as </label>
     </div>
     <div class="container">
-        <div class="row g-3">
-            <div class="col-md-3">
+        <div >
                 <label for="skillname" class="form-label">Skill Name</label>
-            </div>
-            <div class="col-md-3">
                 <input type="text" class="form-controlsearchname" name="skillname" id="skillname"  (keyup.enter)="searchSkills()" [(ngModel)]="skillname">
-            </div>
-            <div>
                 <label class="lblcal">Choose Date</label>
                 <input class="inputcal" type="date" name="selectedDate" [(ngModel)]="selectedDate" >
-            </div>
-            <div class="col-md-3">
+                <button class="btn btnsearch">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                    </svg>
+              </button>
+        </div>
+         <div>
                 <label for="Modeoftraining" class="labelid-role1">Mode of Training</label>
-            </div>
-            
-            <div>
-                <!-- <div class="drpyear">
-                    <button class="btn dropdown-toggle btn-drp-year " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                      - Select Mode -
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <li><a class="dropdown-item" href="#">azure</a></li>
-                      <li><a class="dropdown-item" href="#">Devops</a></li>
-                    </ul>
-                  </div> -->
-                  <select id="select1" name="modetype" class="drpyear" [(ngModel)]="modetype">
-                    <!-- <option value="" disabled selected>- select leave type -</option>
-                    <option *ngFor="let leaves of leavetype">
-                        {{ leaves.name }}
-                    </option> -->
+                <select id="select1" name="modetype" class="drpyear" [(ngModel)]="modetype">
                      <option value=""  >- Select Mode -</option>
                      <option >Offline</option>
                      <option >Self-Learning</option>
                      <option >Teams</option>
                 </select>
-                <div>
-                <button class="btn btnsearch">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                      </svg>
-                </button>
-            </div>
-            </div>
-            <div>
                 <label class="lbltime">Time</label>
                 <input type="text" class="form-control" id="time" name="time" [(ngModel)]="time">
-            </div>
-            <div>
                 <button class="buttonclr" (click)="clear()">Clear</button>
                  <!-- <button class="buttonclr">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
                     <path d="M8 1a7 7 0 1 0 0 14A7 7 0 1 0 8 1zM5.354 4.646a.5.5 0 1 1 .708.708L8 7.293l1.938-1.939a.5.5 0 1 1 .707.708L8.707 8l1.938 1.938a.5.5 0 0 1-.707.707L8 8.707l-1.938 1.938a.5.5 0 0 1-.708-.707L7.293 8 5.354 6.062a.5.5 0 0 1 0-.707z"/>
                   </svg></button> -->
-              </div>
-        </div>
+         </div>
+        
     </div>
     <div class="tablebottom">
         <table class="table table-striped table-bordered">
