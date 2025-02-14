@@ -147,14 +147,11 @@ label {
     border-radius: 5px;
 }
 .buttonclr {
-    cursor: pointer;
-    margin-top: 1.4%;
-    margin-left: 71%;
-    border-color: black;
-    color: black;
-    background-color: rgb(192, 216, 230);
-    width: 81px;
-    border-radius: 5px;
-    height: 35px;
+    margin-left: 72.3%;
+    margin-top: 1.5%;
     position: absolute;
+    height: 35px;
+    background-color: rgb(13, 152, 233);
+    outline-offset: 3px;
+    border-radius: 4px;
 }

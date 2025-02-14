@@ -1,10 +1,50 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { IelcapiService } from '../ielcapi.service';
 
+
+interface NewSkillsInfo {
+  sessionID: string;
+  fromDate: Date;
+  toDate: Date;
+  skillStartTime: string;
+  skillEndTime: string;
+  skillDescription: string;
+  aadUsersData: any;  
+  aadGroupsData: any; 
+  conductedBy: string;
+}
 @Component({
   selector: 'app-addnewskill',
   templateUrl: './addnewskill.component.html',
   styleUrls: ['./addnewskill.component.css']
 })
-export class AddnewskillComponent {
+
+export class AddnewskillComponent implements OnInit {
+  Enrolledusers: any[] = []; 
+
+  page: number = 1;  
+  itemsPerPage: number = 10; 
+
+  constructor(private ielc:IelcapiService) {
+    for (let i = 1; i <= 100; i++) {
+      this.Enrolledusers.push({ id: i, name: `Item ${i}` });
+    }
+    this.GetAllSkills();
+  }
+
+  ngOnInit() {
+    this.GetAllSkills();
+   }
+  
+   sortRegisteredUsers(data: any[]): any[] {
+    return data.sort((a, b) => (a.enrollmentID > b.enrollmentID ? -1 : a.enrollmentID < b.enrollmentID ? 1 : 0));
+  }
+  
+   GetAllSkills(){
+    this.ielc.GetSkills().subscribe((data) => {
+      this.Enrolledusers=data;
+      this.Enrolledusers = this.sortRegisteredUsers(data);
+    });
+   }
 
 }

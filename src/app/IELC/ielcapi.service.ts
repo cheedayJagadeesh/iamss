@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
   import { UsersInfo } from './users-info';
 import { DatePipe } from '@angular/common';
+import { map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class IelcapiService {
 
   constructor(private http:HttpClient,private datepipe:DatePipe) {}
 
-    // Registeredusers
+    //---------------------------------------------------------------------------------------- Registeredusers
     apiUrl='https://ielc-coreapi.azurewebsites.net/EnrollmentData';
     GetUsers(): Observable<UsersInfo[]> {
       return this.http.get<UsersInfo[]>(this.apiUrl);
@@ -28,21 +29,43 @@ export class IelcapiService {
     }
 
     apidate="https://ielc-coreapi.azurewebsites.net/EnrollmentData/Date"
-    // GetUsersByDate(date: string): Observable<any> {
-    //   return this.http.get<any>(`${this.apidate}/${date}`);
+    // GetUsersByDate(date: string) : Observable<any>{
+    //   // Convert date from YYYY-MM-DD to DD-MM-YYYY using DatePipe
+    //   const formattedDate = this.convertDateFormat(date);
+    //   const url = `${this.apidate}/${formattedDate}`;
+      
+    //   return this.http.get(url);
     // }
-    getEnrollmentData(date: string) : Observable<any>{
-      // Convert date from YYYY-MM-DD to DD-MM-YYYY using DatePipe
+    // private convertDateFormat(date: string): string {
+    //   const parsedDate = new Date(date); // Convert string to Date object
+    //   return this.datepipe.transform(parsedDate, 'dd-MM-yyyy') || date; // Format using DatePipe
+    // }
+    GetUsersByDate(date: string): Observable<any> {
+      // Convert input date to DD-MM-YYYY format
       const formattedDate = this.convertDateFormat(date);
       const url = `${this.apidate}/${formattedDate}`;
-      
-      return this.http.get(url);
+    
+      return this.http.get(url).pipe(
+        map((response: any) => {
+          return response.filter((user: any) => {
+            // Ensure the date range is in the expected format "DD-MM-YYYY to DD-MM-YYYY"
+            if (user.date && user.date.includes(" to ")) {
+              const startDate = user.date.split(" to ")[0].trim(); // Extract start date
+              return startDate === formattedDate; // Compare with formattedDate
+            }
+            return false;
+          });
+        })
+      );
     }
-  
+
     private convertDateFormat(date: string): string {
+      if (!date) return date; // Handle null or undefined values
+  
       const parsedDate = new Date(date); // Convert string to Date object
       return this.datepipe.transform(parsedDate, 'dd-MM-yyyy') || date; // Format using DatePipe
     }
+  
 
     apiTime="https://ielc-coreapi.azurewebsites.net/EnrollmentData/Time"
     GetUsersByTime(Time: string): Observable<any> {
@@ -54,4 +77,10 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.apiID}/${id}`);
     }
 
+    //---------------------------------------------------------------------------------------Add New Skills
+
+    skillsUrl='https://ielc-coreapi.azurewebsites.net/EnrollmentSessions';
+    GetSkills(): Observable<UsersInfo[]> {
+      return this.http.get<UsersInfo[]>(this.skillsUrl);
+    }
 }

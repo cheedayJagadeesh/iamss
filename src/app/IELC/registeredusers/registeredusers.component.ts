@@ -65,7 +65,7 @@ export class RegisteredusersComponent implements OnInit {
     });
   }
   if (this.selectedDate) {
-    this.ielc.getEnrollmentData(this.selectedDate).subscribe((data) => {
+    this.ielc.GetUsersByDate(this.selectedDate).subscribe((data) => {
       this.Registeredusers = data;
       this.Registeredusers = this.sortRegisteredUsers(data);
     });
@@ -106,9 +106,9 @@ export class RegisteredusersComponent implements OnInit {
       this.ielc.GetUsersBySkill(this.skillname),
       this.ielc.GetUsersByTime(this.time)
     ]).subscribe({
-      next: ([skillUsers, optedtime]) => {
+      next: ([skillUsers, optedtimes]) => {
         this.Registeredusers = (skillUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
-          (optedtime as UsersInfo[]).some((optedtime: UsersInfo) => optedtime.enrollmentID === skillUser.enrollmentID)
+          (optedtimes as UsersInfo[]).some((optedtime: UsersInfo) => optedtime.enrollmentID === skillUser.enrollmentID)
         );
         console.log("Filtered Users:", this.Registeredusers);
       },
@@ -123,11 +123,67 @@ export class RegisteredusersComponent implements OnInit {
   if (this.skillname && this.selectedDate) {
     forkJoin([
       this.ielc.GetUsersBySkill(this.skillname),
-      this.ielc.getEnrollmentData(this.selectedDate),
+      this.ielc.GetUsersByDate(this.selectedDate),
     ]).subscribe({
-      next: ([skillUsers, opteddate]) => {
+      next: ([skillUsers, opteddates]) => {
         this.Registeredusers = (skillUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
-          (opteddate as UsersInfo[]).some((opteddate: UsersInfo) => opteddate.enrollmentID === skillUser.enrollmentID)
+          (opteddates as UsersInfo[]).some((opteddate: UsersInfo) => opteddate.enrollmentID === skillUser.enrollmentID)
+        );
+        console.log("Filtered Users:", this.Registeredusers);
+      },
+      
+      error: (err) => {
+        console.error("Error fetching data:", err);
+      }
+    
+    });
+  }
+
+ if(this.selectedDate && this.modetype) {
+  forkJoin([
+    this.ielc.GetUsersBySkill(this.selectedDate),
+    this.ielc.GetUsersByVenue(this.modetype)
+  ]).subscribe({
+    next: ([opteddates, venueUsers]) => {
+      this.Registeredusers = (opteddates as UsersInfo[]).filter((opteddate: UsersInfo) =>
+        (venueUsers as UsersInfo[]).some((venueUser: UsersInfo) => venueUser.enrollmentID === opteddate.enrollmentID)
+      );
+      console.log("Filtered Users:", this.Registeredusers);
+    },
+    
+    error: (err) => {
+      console.error("Error fetching data:", err);
+    }
+  });
+ }
+
+  if (this.modetype && this.time) {
+    forkJoin([
+      this.ielc.GetUsersByVenue(this.modetype),
+      this.ielc.GetUsersByTime(this.time)
+    ]).subscribe({
+      next: ([venueUsers, optedtimes]) => {
+        this.Registeredusers = (venueUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
+          (optedtimes as UsersInfo[]).some((optedtime: UsersInfo) => optedtime.enrollmentID === skillUser.enrollmentID)
+        );
+        console.log("Filtered Users:", this.Registeredusers);
+      },
+      
+      error: (err) => {
+        console.error("Error fetching data:", err);
+      }
+    
+    });
+  }
+
+  if (this.time && this.selectedDate) {
+    forkJoin([
+      this.ielc.GetUsersByTime(this.time),
+      this.ielc.GetUsersByDate(this.selectedDate),
+    ]).subscribe({
+      next: ([optedtimes, opteddates]) => {
+        this.Registeredusers = (optedtimes as UsersInfo[]).filter((skillUser: UsersInfo) =>
+          (opteddates as UsersInfo[]).some((opteddate: UsersInfo) => opteddate.enrollmentID === skillUser.enrollmentID)
         );
         console.log("Filtered Users:", this.Registeredusers);
       },
@@ -157,6 +213,68 @@ export class RegisteredusersComponent implements OnInit {
       }
     });
   }
+
+  if(this.skillname && this.modetype && this.selectedDate) {
+    forkJoin([
+      this.ielc.GetUsersBySkill(this.skillname),
+      this.ielc.GetUsersByVenue(this.modetype)
+    ]).subscribe({
+      next: ([skillUsers, venueUsers]) => {
+        this.Registeredusers = (skillUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
+          (venueUsers as UsersInfo[]).some((venueUser: UsersInfo) => venueUser.enrollmentID === skillUser.enrollmentID)
+        && new Date(skillUser.date).getTime() === new Date(this.selectedDate).getTime() 
+        );
+        console.log("Filtered Users:", this.Registeredusers);
+      },
+      
+      error: (err) => {
+        console.error("Error fetching data:", err);
+      }
+    });
+  }
+
+  if(this.time && this.modetype && this.selectedDate) {
+    forkJoin([
+      this.ielc.GetUsersByTime(this.time),
+      this.ielc.GetUsersByVenue(this.modetype)
+    ]).subscribe({
+      next: ([optedtimes, venueUsers]) => {
+        this.Registeredusers = (optedtimes as UsersInfo[]).filter((optedtime: UsersInfo) =>
+          (venueUsers as UsersInfo[]).some((venueUser: UsersInfo) => venueUser.enrollmentID === optedtime.enrollmentID)
+        && new Date(optedtime.date).getTime() === new Date(this.selectedDate).getTime() 
+        );
+        console.log("Filtered Users:", this.Registeredusers);
+      },
+      
+      error: (err) => {
+        console.error("Error fetching data:", err);
+      }
+    });
+  }
+
+  if (this.modetype && this.time && this.skillname && this.selectedDate) {
+    forkJoin([
+      this.ielc.GetUsersByVenue(this.modetype),
+      this.ielc.GetUsersByTime(this.time),
+      this.ielc.GetUsersBySkill(this.skillname),
+      this.ielc.GetUsersByDate(this.selectedDate)
+    ]).subscribe({
+      next: ([venueUsers, optedtimes, skillUsers, dateUsers]) => {
+        this.Registeredusers = (venueUsers as UsersInfo[]).filter((user: UsersInfo) =>
+          (optedtimes as UsersInfo[]).some((optedtime: UsersInfo) => optedtime.enrollmentID === user.enrollmentID) &&
+          (skillUsers as UsersInfo[]).some((skillUser: UsersInfo) => skillUser.enrollmentID === user.enrollmentID) &&
+          (dateUsers as UsersInfo[]).some((dateUser: UsersInfo) => dateUser.enrollmentID === user.enrollmentID)
+        );
+  
+        console.log("Filtered Users:", this.Registeredusers);
+      },
+  
+      error: (err) => {
+        console.error("Error fetching data:", err);
+      }
+    });
+  }
+  
 
 
  }
