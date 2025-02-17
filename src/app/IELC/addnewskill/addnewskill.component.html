@@ -3,13 +3,9 @@
     <div>
         <label class="lbllogin">Login as </label>
     </div>
-    <div class="col-md-3">
-        <label for="Empname" class="form-label">Skill Name</label>
-    </div>
-    <div class="col-md-3">
-        <input type="text" class="form-controlsearchname" id="Empname">
-    </div>
     <div>
+        <label for="Empname" class="form-label">Skill Name</label>
+        <input type="text" class="form-controlsearchname" id="Empname">
         <button type="button" class="btn btninsert btn-info">Insert</button>
         <button type="button" class="btn btndlt btn-danger">Delete</button>
     </div>
@@ -39,19 +35,20 @@
             </thead>
             <tbody>
                 <tr *ngFor="let row of Enrolledusers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td></td>
-                    <td></td>
+                    <!-- <th scope="row">1</th> -->
+                     <td>{{row.sessionID}}</td>
+                    <td>{{row.fromDate}}</td>
+                    <td>{{row.toDate}}</td>
+                    <td>{{row.skillStartTime}}</td>
+                    <td>{{row.skillEndTime}}</td>
+                    <td>{{row.venue}}</td>
+                    <td>{{row.skillDescription}}</td>
+                    <td>{{row.skillName}}</td>
+                    <td>{{row.conductedBy}}</td>
+                    <td>{{row.aadUsersData}}</td>
+                    <td>{{row.aadGroupsData}}</td>
                     <td>
-                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-info me-1" style="margin: 2px" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-plus-square" viewBox="0 0 16 16">
@@ -136,7 +133,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit">
+                        <button class="btn btn-info me-1"  style="margin: 2px" data-bs-toggle="modal" data-bs-target="#exampleModaledit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path
@@ -145,7 +142,7 @@
                                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                             </svg>
                         </button>
-                        <button class="btn btn-info me-1">
+                        <button class="btn btn-info me-1"  style="margin: 2px">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path
@@ -157,7 +154,7 @@
                 </tr>
             </tbody>
         </table>
-        <div class="pagination">
+        <!-- <div class="pagination">
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item"><a class="page-link" href="#">Previous</a></li>
@@ -167,6 +164,9 @@
                     <li class="page-item"><a class="page-link" href="#">Next</a></li>
                 </ul>
             </nav>
+        </div> -->
+        <div class="pagination" >
+            <pagination-controls (pageChange)="page = $event"></pagination-controls>
         </div>
     </div>
 </form>

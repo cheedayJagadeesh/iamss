@@ -28,7 +28,7 @@ export class IelcapiService {
       return this.http.get<any>(`${this.apivenue}/${Venue}`);
     }
 
-    apidate="https://ielc-coreapi.azurewebsites.net/EnrollmentData/Date"
+    apidate="https://ielc-coreapi.azurewebsites.net/EnrollmentData/StartDate"
     // GetUsersByDate(date: string) : Observable<any>{
     //   // Convert date from YYYY-MM-DD to DD-MM-YYYY using DatePipe
     //   const formattedDate = this.convertDateFormat(date);
@@ -40,10 +40,62 @@ export class IelcapiService {
     //   const parsedDate = new Date(date); // Convert string to Date object
     //   return this.datepipe.transform(parsedDate, 'dd-MM-yyyy') || date; // Format using DatePipe
     // }
+    // GetUsersByDate(date: string): Observable<any> {
+    //   // Convert input date to DD-MM-YYYY format
+    //   const formattedDate = this.convertDateFormat(date);
+    //   const url = `${this.apidate}/${formattedDate}`;
+    
+    //   return this.http.get(url).pipe(
+    //     map((response: any) => {
+    //       return response.filter((user: any) => {
+    //         // Ensure the date range is in the expected format "DD-MM-YYYY to DD-MM-YYYY"
+    //         if (user.date && user.date.includes(" to ")) {
+    //           const startDate = user.date.split(" to ")[0].trim(); // Extract start date
+    //           return startDate === formattedDate; // Compare with formattedDate
+    //         }
+    //         return false;
+    //       });
+    //     })
+    //   );
+    // }
+
+    // private convertDateFormat(date: string): string {
+    //   if (!date) return date; // Handle null or undefined values
+  
+    //   const parsedDate = new Date(date); // Convert string to Date object
+    //   return this.datepipe.transform(parsedDate, 'yyyy-MM-dd') || date; // Format using DatePipe
+    // }
+    // GetUsersByDate(date: string): Observable<any> {
+    //   // Convert input date to DD-MM-YYYY format
+    //   const formattedDate = this.convertDateFormat(date);
+    //   const url = `https://ielc-coreapi.azurewebsites.net/EnrollmentData/StartDate/${formattedDate}`;
+    
+    //   return this.http.get(url).pipe(
+    //     map((response: any) => {
+    //       return response.filter((user: any) => {
+    //         // Ensure the date range is in the expected format "DD-MM-YYYY to DD-MM-YYYY"
+    //         if (user.date && user.date.includes(" to ")) {
+    //           const startDate = user.date.split(" to ")[0].trim(); // Extract start date
+    //           return startDate === formattedDate; // Compare with formattedDate
+    //         }
+    //         return false;
+    //       });
+    //     })
+    //   );
+    // }
+    
+    // // Convert input date to DD-MM-YYYY format
+    // convertDateFormat(dateString: string): string {
+    //   const parts = dateString.split('-');
+    //   if (parts.length !== 3) return ''; // Handle invalid cases
+    //   const [day, month, year] = parts;
+    //   return `${day}-${month}-${year}`; // Return "DD-MM-YYYY"
+    // }
+    
     GetUsersByDate(date: string): Observable<any> {
       // Convert input date to DD-MM-YYYY format
       const formattedDate = this.convertDateFormat(date);
-      const url = `${this.apidate}/${formattedDate}`;
+      const url = `https://ielc-coreapi.azurewebsites.net/EnrollmentData/StartDate/${formattedDate}`;
     
       return this.http.get(url).pipe(
         map((response: any) => {
@@ -51,21 +103,40 @@ export class IelcapiService {
             // Ensure the date range is in the expected format "DD-MM-YYYY to DD-MM-YYYY"
             if (user.date && user.date.includes(" to ")) {
               const startDate = user.date.split(" to ")[0].trim(); // Extract start date
-              return startDate === formattedDate; // Compare with formattedDate
+              const formattedStartDate = this.convertDateFormatForComparison(startDate); // Convert start date to YYYY-MM-DD for comparison
+              return formattedStartDate === formattedDate; // Compare both dates
             }
             return false;
           });
         })
       );
     }
-
-    private convertDateFormat(date: string): string {
-      if (!date) return date; // Handle null or undefined values
-  
-      const parsedDate = new Date(date); // Convert string to Date object
-      return this.datepipe.transform(parsedDate, 'dd-MM-yyyy') || date; // Format using DatePipe
+    
+    // Convert input date to DD-MM-YYYY format
+    convertDateFormat(dateString: string): string {
+      const parts = dateString.split('-');
+      if (parts.length !== 3) return ''; // Handle invalid cases
+      const [day, month, year] = parts;
+      return `${day}-${month}-${year}`; // Return "DD-MM-YYYY"
     }
-  
+    
+    // Convert DD-MM-YYYY to YYYY-MM-DD format for comparison
+    convertDateFormatForComparison(dateString: string): string {
+      const parts = dateString.split('-');
+      if (parts.length !== 3) return ''; // Handle invalid cases
+      const [day, month, year] = parts;
+      return `${year}-${month}-${day}`; // Return "YYYY-MM-DD"
+    }
+
+    
+
+ 
+
+   
+   
+ 
+    
+    
 
     apiTime="https://ielc-coreapi.azurewebsites.net/EnrollmentData/Time"
     GetUsersByTime(Time: string): Observable<any> {

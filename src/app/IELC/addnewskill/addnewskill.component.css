@@ -4,16 +4,16 @@
     position: absolute;
 }
 .form-label{
-    margin-top: 21%;
-    margin-left: 71%;
+    margin-top: 3%;
+    margin-left: 28%;
+    position: absolute;
 }
 .form-controlsearchname {
     display: block;
     width: 23%;
-    margin-left: -2.7%;
+    margin-left: 33.3%;
     padding: .375rem .75rem;
     font-size: 1rem;
-    /* border-color: black; */
     font-weight: 400;
     line-height: 0.5;
     color: var(--bs-body-color);
@@ -21,19 +21,21 @@
     background-color: var(--bs-body-bg);
     border-radius: 5px;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-    margin-top: 4.5%;
+    margin-top: 2.5%;
     position: absolute;
     outline-offset: 0.5px;
 }
 .btninsert{
-    margin-left: 47%;
-    margin-top: -6%;
+    margin-left: 58%;
+    margin-top: 2.3%;
     width: 95px;
+    position: absolute;
 }
 .btndlt{
-    margin-left: 2%;
-    margin-top: -6%;
+    margin-left: 65%;
+    margin-top: 2.3%;
     width: 95px;
+    position: absolute;
 }
 .div{
     margin-top: -2%;
@@ -45,7 +47,8 @@
     flex-shrink: 0;
     width: 1em;
     height: 1em;
-    margin-top: 1em;
+    margin-top: 8.2%;
+    margin-left: 10.5%;
     vertical-align: top;
     appearance: none;
     background-color: var(--bs-form-check-bg);
@@ -56,9 +59,10 @@
     border: var(--bs-border-width) solid var(--bs-border-color);
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
-    height: 27px;
-    width: 26px;
+    height: 16px;
+    width: 16px;
     border-color: black;
+    position: absolute;
 }
 .form-check-input:checked {
     background-color: #0d6efd;
@@ -66,14 +70,14 @@
 }
 .lbl{
     display: inline-block;
-    margin-left: 1%;
-    /* font-weight: bold; */
+    margin-left: 12%;
     color: black;
-    margin-top: 1.2%;
+    margin-top: 8.2%;
     position: absolute;
 }
 .tablebottom {
-    margin-top: 2%;
+    margin-top: 11%;
+    position: absolute;
 }
 .pagination {
     margin-left: 72%;

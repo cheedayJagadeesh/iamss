@@ -29,6 +29,9 @@ export class RegisteredusersComponent implements OnInit {
    this.GetAllUSers()
  }
 
+
+ 
+
   Registeredusers: any[] = []; 
   page: number = 1;  
   itemsPerPage: number = 10; 

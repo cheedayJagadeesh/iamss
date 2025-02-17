@@ -8,11 +8,14 @@ interface NewSkillsInfo {
   toDate: Date;
   skillStartTime: string;
   skillEndTime: string;
+  venue: string;
   skillDescription: string;
+  skillName: string;
   aadUsersData: any;  
   aadGroupsData: any; 
   conductedBy: string;
 }
+
 @Component({
   selector: 'app-addnewskill',
   templateUrl: './addnewskill.component.html',
@@ -37,7 +40,7 @@ export class AddnewskillComponent implements OnInit {
    }
   
    sortRegisteredUsers(data: any[]): any[] {
-    return data.sort((a, b) => (a.enrollmentID > b.enrollmentID ? -1 : a.enrollmentID < b.enrollmentID ? 1 : 0));
+    return data.sort((a, b) => (a.sessionID > b.sessionID ? -1 : a.sessionID < b.sessionID ? 1 : 0));
   }
   
    GetAllSkills(){
