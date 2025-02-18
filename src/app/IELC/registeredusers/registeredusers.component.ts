@@ -286,12 +286,15 @@ export class RegisteredusersComponent implements OnInit {
 deleteItem(id: number) {
   if (confirm('Are you sure you want to delete this record?')) {
     this.ielc.DeleteDataById(id).subscribe({
-      next: () => alert(`Record with  EnrollmentID ${id} deleted successfully!`),
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetAllUSers(); // Call this only after successful deletion
+      },
       error: (err) => console.error('Error deleting item:', err)
     });
   }
-  this.GetAllUSers();
 }
+
 
 
 
