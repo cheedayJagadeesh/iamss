@@ -1,12 +1,13 @@
 import { booleanAttribute, Component, OnInit } from '@angular/core';
 import { IelcapiService } from '../ielcapi.service';
 import { forkJoin } from 'rxjs';
+import { NgForm } from '@angular/forms';
 
 
 interface NewSkillsInfo {
   sessionID: string;
-  fromDate: Date;
-  toDate: Date;
+  fromDate: Date | string;  
+  toDate: Date | string; 
   skillStartTime: string;
   skillEndTime: string;
   venue: string;
@@ -21,7 +22,7 @@ interface NewSkillsInfo {
 }
 
 interface addskill {
-  skillID: number;
+  skillID: string;
   skillName: string;
 }
 
@@ -37,11 +38,29 @@ export class AddnewskillComponent implements OnInit {
   AadUsers:any[]=[];
   AadUserGroups:any[]=[];
   skillData: addskill = {
-    skillID: 0,
+    skillID: '',
     skillName: ''
   };
+  
    skillname:string=''
    includeStQuestions:boolean=false;
+
+   skillSessions: NewSkillsInfo= {
+    sessionID: '',
+    fromDate: new Date(),
+    toDate: new Date(),
+    skillStartTime: '',
+    skillEndTime: '',
+    venue: '',
+    skillDescription: '',
+    skillName: '',
+    aadUsersData: [],
+    aadGroupsData: [],
+    conductedBy: '',
+    skillID: '',
+    mail: '',
+    groupName: ''
+  };
   
 
   
@@ -74,60 +93,135 @@ export class AddnewskillComponent implements OnInit {
     });
    }
 
+   PostSkillsessiondata() {
+    const formattedSession = {
+      ...this.skillSessions,
+      fromDate: new Date(this.skillSessions.fromDate), // Convert string to Date
+      toDate: new Date(this.skillSessions.toDate) // Convert string to Date
+    };
+  
+    this.ielc.PostEnrolledSessions(formattedSession).subscribe({
+      next: (response) => {
+        alert('✅ Skill session added successfully!');
+        console.log('Success:', response);
+          this.resetSkillSession();
+          this.GetAllSkills();
+      },
+      error: (err) => {
+        alert('❌ Error adding skill session. Please try again.');
+        console.error('Error:', err);
+      }
+    });
+  }
+
+  resetSkillSession() {
+    this.skillSessions = {
+      sessionID: '',
+      fromDate: new Date(), // Reset to current date
+      toDate: new Date(),   // Reset to current date
+      skillStartTime: '',
+      skillEndTime: '',
+      venue: '',
+      skillDescription: '',
+      skillName: '',
+      aadUsersData: [],
+      aadGroupsData: [],
+      conductedBy: '',
+      skillID: '',
+      mail: '',
+      groupName: ''
+    };
+  }
+  
+
    GetAllSkillsData(){
     this.ielc.GetEnrolledSkills().subscribe((data) => {
       this.Enrolledskills=data;
     });
    }
 
-   AddSkill(): void {
-    this.ielc.AddEnrolledSkill(this.skillData).subscribe(
-      (response) => {
-        alert('✅ Skill Added Successfully!');
-        this.GetAllSkillsData()
-      },
-      (error) => {
-        alert('❌ Error adding skill. Please try again.');
-      }
-    );
-  }
-
-  // AddSkill(): void {
-  //     let skillsToInsert = [{ skillName: this.skillData.skillName }];
-  
-  //     // If checkbox is checked, add another record with "_stquestions"
-  //     if (this.includeStQuestions) {
-  //       skillsToInsert.push({ skillName: this.skillData.skillName + '_stquestions' });
+  //  AddSkill(): void {
+  //   this.ielc.AddEnrolledSkill(this.skillData).subscribe(
+  //     (response) => {
+  //       alert('✅ Skill Added Successfully!');
+  //       this.GetAllSkillsData()
+  //     },
+  //     (error) => {
+  //       alert('❌ Error adding skill. Please try again.');
   //     }
-  
-  //     // Send multiple insert requests
-  //     forkJoin(skillsToInsert.map(skill => this.ielc.AddEnrolledSkill(skill))).subscribe(
-  //       () => {
-  //         alert('✅ Skill(s) Added Successfully!');
-  //         this.GetAllSkillsData(); // Refresh data
-  //         this.skillData.skillName = ''; // Clear input
-  //         this.includeStQuestions = false; // Reset checkbox
-  //       },
-  //       (error) => {
-  //         alert('❌ Error adding skill(s). Please try again.');
-  //         console.error('API Error:', error);
-  //       }
-  //     );
-    
+  //   );
   // }
+
+  AddSkill(): void {
+      let skillsToInsert = [{ skillName: this.skillData.skillName }];
+  
+      // If checkbox is checked, add another record with "_stquestions"
+      if (this.includeStQuestions) {
+        skillsToInsert.push({ skillName: this.skillData.skillName + '_StQuestions' });
+      }
+  
+      // Send multiple insert requests
+      forkJoin(skillsToInsert.map(skill => this.ielc.PostEnrolledSkill(skill))).subscribe(
+        () => {
+          alert('✅ Skill(s) Added Successfully!');
+          this.GetAllSkillsData(); // Refresh data
+          this.skillData.skillName = ''; // Clear input
+          this.includeStQuestions = false; // Reset checkbox
+        },
+        (error) => {
+          alert('❌ Error adding skill(s). Please try again.');
+          console.error('API Error:', error);
+        }
+      );
+    
+  }
+
+  DeleteSkill(): void {
+    // Prepare an array of skill names to delete
+    let skillsToDelete: string[] = [this.skillData.skillName];
+  
+    if (this.includeStQuestions) {
+      skillsToDelete.push(this.skillData.skillName + '_StQuestions');
+    }
+  
+    if (!confirm(`🗑️ Are you sure you want to delete: ${skillsToDelete.join(", ")}?`)) {
+      return;
+    }
+  
+    console.log(`🗑️ Deleting skills:`, skillsToDelete);
+  
+    // Call the API with an array
+    this.ielc.DeleteEnrolledSkill(skillsToDelete).subscribe({
+      next: () => {
+        alert(`✅ Skills deleted successfully!`);
+        this.GetAllSkillsData(); // Refresh skill list
+        this.skillData.skillName = ''; // Clear input
+        this.includeStQuestions = false; // Reset checkbox
+      },
+      error: (error) => {
+        console.error('❌ API Error:', error);
+        alert(`❌ Error deleting skills: ${error.message}`);
+      }
+    });
+  }
+  
+  
+   
+  
+  
   
 
-  deleteSkill(skillName: string) {
-    if (confirm('Are you sure you want to delete this record?')) {
-      this.ielc.DeleteEnrolledSkill(skillName).subscribe({
-        next: () => {
-          alert(`Record with ID ${skillName} deleted successfully!`);
-          this.GetAllSkillsData();
-        },
-        error: (err) => console.error('Error deleting item:', err)
-      });
-    }
-  }
+  // deleteSkill(skillName: string) {
+  //   if (confirm('Are you sure you want to delete this record?')) {
+  //     this.ielc.DeleteEnrolledSkill(skillName).subscribe({
+  //       next: () => {
+  //         alert(`Record with ID ${skillName} deleted successfully!`);
+  //         this.GetAllSkillsData();
+  //       },
+  //       error: (err) => console.error('Error deleting item:', err)
+  //     });
+  //   }
+  // }
   
 
    GetAadUsersData(){

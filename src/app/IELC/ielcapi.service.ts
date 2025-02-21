@@ -83,6 +83,11 @@ export class IelcapiService {
     GetSkills(): Observable<any> {
       return this.http.get<any>(this.EnrolledskillsUrl);
     }
+
+    PostEnrolledSessions(skillData: any): Observable<any> {
+      const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.EnrolledskillsUrl, skillData, {headers});
+    }
    
     DeleteskillById(id: number): Observable<void> {
       return this.http.delete<void>(`${this.EnrolledskillsUrl}/${id}`);
@@ -93,22 +98,18 @@ export class IelcapiService {
       return this.http.get<any>(this.EnrolledskillDataUrl);
     }
 
-    AddEnrolledSkill(skillData: any): Observable<any> {
-      const headers = { 'Content-Type': 'application/json' };
-      return this.http.post<any>(this.EnrolledskillDataUrl, skillData, { headers });
+    PostEnrolledSkill(skillData: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.EnrolledskillDataUrl, skillData);
     }
 
-    DeleteEnrolledSkill(skillName: string): Observable<void> {
-      return this.http.delete<void>(`${this.EnrolledskillDataUrl}/${skillName}`);
-    }
-
-    // DeleteEnrolledSkill(skillName: string): Observable<void> {
-    //   const options = {
-    //     body: { skillName: skillName }, // Sending skill name in request body
-    //   };
-    //   return this.http.request<void>('DELETE', this.EnrolledskillDataUrl, options);
+    // DeleteEnrolledSkill(skillName: string[]): Observable<void> {
+    //   return this.http.delete<void>(`${this.EnrolledskillDataUrl}/${skillName}`);
     // }
-   
+    DeleteEnrolledSkill(skillNames: string[]): Observable<any> {
+      const queryParams = skillNames.join(',');
+      return this.http.delete(`${this.EnrolledskillDataUrl}/${queryParams}`);
+    }
 
     AadUsersUrl='https://ielc-coreapi.azurewebsites.net/AADUsersData'
     GetAadUserslist(): Observable<any> {
