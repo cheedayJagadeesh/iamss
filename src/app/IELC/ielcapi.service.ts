@@ -80,16 +80,24 @@ export class IelcapiService {
     //---------------------------------------------------------------------------------------Add New Skills
 
     EnrolledskillsUrl='https://ielc-coreapi.azurewebsites.net/EnrollmentSessions';
-    GetSkills(): Observable<any> {
+    GetSkillSessions(): Observable<any> {
       return this.http.get<any>(this.EnrolledskillsUrl);
     }
 
-    PostEnrolledSessions(skillData: any): Observable<any> {
-      const headers = { 'Content-Type': 'application/json' };
-      return this.http.post<any>(this.EnrolledskillsUrl, skillData, {headers});
+    GetSkillSessionById(id: string): Observable<any> {
+      return this.http.get<any>(`${this.EnrolledskillsUrl}/${id}`);
+    }
+  
+    PostEnrolledSessions(skillSessions: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.EnrolledskillsUrl, skillSessions);
+    }
+
+    UpdateSkillSession(id: string, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.EnrolledskillsUrl}/${id}`, updatedData);
     }
    
-    DeleteskillById(id: number): Observable<void> {
+    DeleteskillsessionsById(id: number): Observable<void> {
       return this.http.delete<void>(`${this.EnrolledskillsUrl}/${id}`);
     }
 
@@ -103,9 +111,6 @@ export class IelcapiService {
       return this.http.post<any>(this.EnrolledskillDataUrl, skillData);
     }
 
-    // DeleteEnrolledSkill(skillName: string[]): Observable<void> {
-    //   return this.http.delete<void>(`${this.EnrolledskillDataUrl}/${skillName}`);
-    // }
     DeleteEnrolledSkill(skillNames: string[]): Observable<any> {
       const queryParams = skillNames.join(',');
       return this.http.delete(`${this.EnrolledskillDataUrl}/${queryParams}`);
@@ -119,6 +124,33 @@ export class IelcapiService {
     AadUGroupUrl='https://ielc-coreapi.azurewebsites.net/AADGroupMails'
     GetAadUserGroupslist(): Observable<any> {
       return this.http.get<any>(this.AadUGroupUrl);
+    }
+
+   //---------------------------------------------------------------------------------------Inteq IT Support
+
+    itsprtUrl='https://ielc-coreapi.azurewebsites.net/INTEQITSupport';
+    GetItSprt(): Observable<any> {
+      return this.http.get<any>(this.itsprtUrl);
+    }
+
+    ismsguidelineUrl='https://ielc-coreapi.azurewebsites.net/ITSupportGuidelinessISMS';
+    Getismsguidelines(): Observable<any> {
+      return this.http.get<any>(this.ismsguidelineUrl);
+    }
+
+    ismspolicyUrl='https://ielc-coreapi.azurewebsites.net/ITSupportPolicyISMS';
+    Getismspolicy(): Observable<any> {
+      return this.http.get<any>(this.ismspolicyUrl);
+    }
+
+    ismsprocedureUrl='https://ielc-coreapi.azurewebsites.net/ITSupportProcedureISMS';
+    Getismsprocedure(): Observable<any> {
+      return this.http.get<any>(this.ismsprocedureUrl);
+    }
+
+    ismsformatUrl='https://ielc-coreapi.azurewebsites.net/ITSupportFormatsISMS';
+    Getismsformat(): Observable<any> {
+      return this.http.get<any>(this.ismsformatUrl);
     }
 
 

@@ -1,13 +1,14 @@
-import { booleanAttribute, Component, OnInit } from '@angular/core';
+import { booleanAttribute, Component, OnInit,AfterViewInit } from '@angular/core';
 import { IelcapiService } from '../ielcapi.service';
 import { forkJoin } from 'rxjs';
 import { NgForm } from '@angular/forms';
+declare var bootstrap: any; 
 
 
 interface NewSkillsInfo {
   sessionID: string;
-  fromDate: Date | string;  
-  toDate: Date | string; 
+  fromDate:  string ;  
+  toDate:  string; 
   skillStartTime: string;
   skillEndTime: string;
   venue: string;
@@ -16,7 +17,13 @@ interface NewSkillsInfo {
   aadUsersData: any;  
   aadGroupsData: any; 
   conductedBy: string;
-  skillID: string;
+  // skillID: string;
+  // mail: string;
+  // groupName:string;
+}
+
+
+interface aad{
   mail: string;
   groupName:string;
 }
@@ -32,11 +39,13 @@ interface addskill {
   styleUrls: ['./addnewskill.component.css']
 })
 
-export class AddnewskillComponent implements OnInit {
+export class AddnewskillComponent implements OnInit,AfterViewInit {
   Enrolledusers: any[] = []; 
   Enrolledskills: any[]=[];
-  AadUsers:any[]=[];
-  AadUserGroups:any[]=[];
+  // AadUsers:any[]=[];
+  // AadUserGroups:any[]=[];
+  aadUsersData:any[]=[];
+  aadGroupsData:any[]=[];
   skillData: addskill = {
     skillID: '',
     skillName: ''
@@ -45,21 +54,19 @@ export class AddnewskillComponent implements OnInit {
    skillname:string=''
    includeStQuestions:boolean=false;
 
-   skillSessions: NewSkillsInfo= {
+   
+  skillSessionData: NewSkillsInfo = {
     sessionID: '',
-    fromDate: new Date(),
-    toDate: new Date(),
+    fromDate: '',
+    toDate: '',
     skillStartTime: '',
     skillEndTime: '',
     venue: '',
     skillDescription: '',
     skillName: '',
-    aadUsersData: [],
-    aadGroupsData: [],
+    aadUsersData: '',
+    aadGroupsData: '',
     conductedBy: '',
-    skillID: '',
-    mail: '',
-    groupName: ''
   };
   
 
@@ -72,85 +79,151 @@ export class AddnewskillComponent implements OnInit {
     for (let i = 1; i <= 100; i++) {
       this.Enrolledusers.push({ id: i, name: `Item ${i}` });
     }
-    this.GetAllSkills();
+    this.GetAllSkillSessions();
+    this.GetAllSkillsData();
   }
 
   ngOnInit() {
-    this.GetAllSkills();
-    this. GetAllSkillsData();
+    this.GetAllSkillSessions();
+    this.GetAllSkillsData();
     this.GetAadUsersData();
     this.GetAadUserGroupsData();
    }
+
+   ngAfterViewInit() {
+    // Get the modal element
+    const modalElement = document.getElementById('exampleModal');
+    if (modalElement) {
+      modalElement.addEventListener('hidden.bs.modal', () => {
+        console.log('Modal closed, reloading skill sessions...');
+        this.GetAllSkillSessions();
+      });
+    }
+  }
   
    sortRegisteredUsers(data: any[]): any[] {
     return data.sort((a, b) => (a.sessionID > b.sessionID ? -1 : a.sessionID < b.sessionID ? 1 : 0));
   }
   
-   GetAllSkills(){
-    this.ielc.GetSkills().subscribe((data) => {
+   GetAllSkillSessions(){
+    this.ielc.GetSkillSessions().subscribe((data) => {
       this.Enrolledusers=data;
       this.Enrolledusers = this.sortRegisteredUsers(data);
     });
    }
 
-   PostSkillsessiondata() {
-    const formattedSession = {
-      ...this.skillSessions,
-      fromDate: new Date(this.skillSessions.fromDate), // Convert string to Date
-      toDate: new Date(this.skillSessions.toDate) // Convert string to Date
-    };
-  
-    this.ielc.PostEnrolledSessions(formattedSession).subscribe({
-      next: (response) => {
-        alert('✅ Skill session added successfully!');
-        console.log('Success:', response);
-          this.resetSkillSession();
-          this.GetAllSkills();
-      },
-      error: (err) => {
-        alert('❌ Error adding skill session. Please try again.');
-        console.error('Error:', err);
-      }
-    });
-  }
-
   resetSkillSession() {
-    this.skillSessions = {
+    this.skillSessionData = {
       sessionID: '',
-      fromDate: new Date(), // Reset to current date
-      toDate: new Date(),   // Reset to current date
+      fromDate: '', 
+      toDate: '',  
       skillStartTime: '',
       skillEndTime: '',
       venue: '',
       skillDescription: '',
       skillName: '',
-      aadUsersData: [],
-      aadGroupsData: [],
+      aadUsersData: '',
+      aadGroupsData: '',
       conductedBy: '',
-      skillID: '',
-      mail: '',
-      groupName: ''
+      // skillID: '',
+      // mail: '',
+      // groupName: ''
     };
   }
   
-
+  updateSelectedUsers(event: Event) {
+    const target = event.target as HTMLSelectElement; // Cast event.target
+    const selectedValues = Array.from(target.selectedOptions).map((option: HTMLOptionElement) => option.value);
+    
+    this.skillSessionData.aadUsersData = selectedValues.join(', '); // Convert array to comma-separated string
+    console.log('Selected Users:', this.skillSessionData.aadUsersData);
+  }
+  
+  updateSelectedGroups(event: Event) {
+    const target = event.target as HTMLSelectElement; // Cast event.target
+    const selectedValues = Array.from(target.selectedOptions).map((option: HTMLOptionElement) => option.value);
+    
+    this.skillSessionData.aadGroupsData = selectedValues.join(', '); // Convert array to comma-separated string
+    console.log('Selected Users:', this.skillSessionData.aadGroupsData);
+  }
+  
+  
    GetAllSkillsData(){
     this.ielc.GetEnrolledSkills().subscribe((data) => {
       this.Enrolledskills=data;
     });
    }
 
-  //  AddSkill(): void {
-  //   this.ielc.AddEnrolledSkill(this.skillData).subscribe(
-  //     (response) => {
-  //       alert('✅ Skill Added Successfully!');
-  //       this.GetAllSkillsData()
-  //     },
-  //     (error) => {
-  //       alert('❌ Error adding skill. Please try again.');
-  //     }
-  //   );
-  // }
+   AddSkillsession(): void {
+
+    const formatTime = (time: string | undefined | null): string => {
+      if (!time) return '00:00:00'; // Default value if time is empty or undefined
+    
+      const parts = time.split(':');
+      if (parts.length < 2) return '00:00:00'; // Handle invalid time format
+    
+      const [hours, minutes, seconds = '00'] = parts; // Default seconds to "00"
+      return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:${seconds.padStart(2, '0')}`;
+    };
+    
+    
+    const formattedSession = {
+      ...this.skillSessionData,
+      fromDate: new Date(this.skillSessionData.fromDate).toISOString(),
+      toDate: new Date(this.skillSessionData.toDate).toISOString(),
+      skillStartTime: formatTime(this.skillSessionData.skillStartTime),
+      skillEndTime: formatTime(this.skillSessionData.skillEndTime),
+      aadUsersData: this.skillSessionData.aadUsersData , 
+      aadGroupsData: this.skillSessionData.aadGroupsData ,
+      venue:this.skillSessionData.venue,
+      skillDescription:this.skillSessionData.skillDescription,
+      conductedBy:this.skillSessionData.conductedBy,
+      sessionID:this.skillSessionData.sessionID ? this.skillSessionData.sessionID : 0,
+
+    };
+    console.log('Sending Data:', formattedSession); 
+    this.ielc.PostEnrolledSessions(formattedSession).subscribe(
+      (response) => {
+        alert('✅ Skill Added Successfully!');
+        this.GetAllSkillsData();
+        this.resetSkillSession();
+      },
+      (error) => {
+        alert('❌ Error adding skill. Please try again.');
+      }
+    );
+  }
+ 
+  EditSkillSession(id: string){
+    //const id = this.skillSessionData.sessionID; 
+    this.ielc.GetSkillSessionById(id).subscribe(data => {
+      console.log("Fetched Skill Session:", data);
+      // this.GetAllSkillSessions();
+      this.skillSessionData = { ...data }; 
+      if (this.skillSessionData.fromDate) {
+        this.skillSessionData.fromDate = this.skillSessionData.fromDate.split("T")[0];
+      }
+      if (this.skillSessionData.toDate) {
+        this.skillSessionData.toDate = this.skillSessionData.toDate.split("T")[0];
+      }
+
+    });
+  }
+
+  UpdateSkillSession() {
+    this.ielc.UpdateSkillSession(this.skillSessionData.sessionID, this.skillSessionData).subscribe(
+      (response) => {
+        console.log("Updated Successfully:", response);
+        alert(" ✅ Skill session updated successfully!");
+        this.GetAllSkillsData();
+       
+      },
+      (error) => {
+        console.error("Error updating skill session:", error);
+      }
+    );
+  }
+  
 
   AddSkill(): void {
       let skillsToInsert = [{ skillName: this.skillData.skillName }];
@@ -226,22 +299,22 @@ export class AddnewskillComponent implements OnInit {
 
    GetAadUsersData(){
     this.ielc.GetAadUserslist().subscribe((data) => {
-      this.AadUsers=data;
+      this.aadUsersData=data;
     });
    }
 
    GetAadUserGroupsData(){
     this.ielc.GetAadUserGroupslist().subscribe((data) => {
-      this.AadUserGroups=data;
+      this.aadGroupsData=data;
     });
    }
 
    deleteItem(id: number) {
     if (confirm('Are you sure you want to delete this record?')) {
-      this.ielc.DeleteskillById(id).subscribe({
+      this.ielc.DeleteskillsessionsById(id).subscribe({
         next: () => {
           alert(`Record with ID ${id} deleted successfully!`);
-          this.GetAllSkills();
+          this.GetAllSkillSessions();
         },
         error: (err) => console.error('Error deleting item:', err)
       });

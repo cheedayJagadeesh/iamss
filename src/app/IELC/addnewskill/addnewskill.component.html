@@ -1,5 +1,5 @@
 <app-header></app-header>
-<form class="row g-3" #addskillsform="ngForm" >
+<form class="row g-3" #addskillsform="ngForm" novalidate >
     <div>
         <label class="lbllogin">Login as </label>
     </div>
@@ -44,13 +44,21 @@
                     <td>{{row.skillEndTime}}</td>
                     <td>{{row.venue}}</td>
                     <!-- <td>{{row.skillDescription}}</td> -->
-                    <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    <td style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                         {{ row.skillDescription }}
                     </td>
-                    <td>{{row.skillName}}</td>
-                    <td>{{row.conductedBy}}</td>
-                    <td>{{row.aadUsersData}}</td>
-                    <td>{{row.aadGroupsData}}</td>
+                    <td style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        {{row.skillName}}
+                    </td>
+                    <td style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        {{row.conductedBy}}
+                    </td>
+                    <td style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        {{row.aadUsersData}}
+                    </td>
+                    <td style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        {{row.aadGroupsData}}
+                    </td>
                     <td>
                         <button type="button" class="btn btn-info me-1" style="margin: 2px" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
@@ -70,28 +78,28 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                                            aria-label="Close" ></button>
                                     </div>
                                     <div class="modal-body">
                                        <div class="divmodal">
                                         <label>Start Date</label>
-                                        <input type="date" class="form-control" [(ngModel)]="skillSessions.fromDate" name="fromDate" required>
+                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.fromDate" name="fromDate" >
                                        </div>
                                        <div class="divmodal">
                                         <label>End Date</label>
-                                        <input type="date" class="form-control" [(ngModel)]="skillSessions.toDate" name="toDate" required>
+                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.toDate" name="toDate" >
                                        </div>
                                        <div class="divmodal">
                                         <label>Start Time</label>
-                                        <input type="time" class="form-control" [(ngModel)]="skillSessions.skillStartTime" name="skillStartTime" required>
+                                        <input type="time" class="form-control" [(ngModel)]="skillSessionData.skillStartTime" name="skillStartTime" >
                                        </div>
                                        <div class="divmodal">
                                         <label>End Time</label>
-                                        <input type="time" class="form-control" [(ngModel)]="skillSessions.skillEndTime" name="skillEndTime" required>
+                                        <input type="time" class="form-control" [(ngModel)]="skillSessionData.skillEndTime" name="skillEndTime" >
                                        </div>
                                        <div class="divmodal">
                                         <label>Venue</label>
-                                        <select id="select1"   class="form-control" name="modetype" [(ngModel)]="skillSessions.venue" name="venue" required>
+                                        <select id="select1"   class="form-control" name="modetype" [(ngModel)]="skillSessionData.venue" name="venue" >
                                             <option value=""  >- Select Mode -</option>
                                             <option >Offline</option>
                                             <option >Self-Learning</option>
@@ -100,45 +108,47 @@
                                        </div>
                                        <div class="divmodal">
                                         <label>Description</label>
-                                        <textarea  class="form-control" [(ngModel)]="skillSessions.skillDescription" name="skillDescription" required></textarea>
+                                        <textarea  class="form-control" [(ngModel)]="skillSessionData.skillDescription" name="skillDescription" ></textarea>
                                        </div>
                                        <div class="divmodal">
-                                        <label>Skill Name</label>
-                                        <select  id="select2"  class="form-control" name="skillname" [(ngModel)]="skillSessions.skillName" name="skillName" required>
+                                        <label>Skill Name<span style="color: red;">*</span></label>
+                                        <select  id="select2"  class="form-control" name="skillname" [(ngModel)]="skillSessionData.skillName" name="skillName" required #skillNameRef="ngModel" >
+                                            <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;">
+                                                Skill Name is required!
+                                              </div>
                                             <option value="">- select skill -</option>
-                                            <option *ngFor="let item of Enrolledskills" [value]="item.skillID">{{ item.skillName }}</option>
+                                            <option *ngFor="let item of Enrolledskills" [value]="item.skillName">{{ item.skillName }}</option>
                                         </select>
                                        </div>
                                        <div class="divmodal">
                                         <label>Conducted By</label>
-                                        <input type="text" class="form-control" [(ngModel)]="skillSessions.conductedBy" name="conductedBy" required>
+                                        <input type="text" class="form-control" [(ngModel)]="skillSessionData.conductedBy" name="conductedBy" >
                                        </div>
                                        <div class="divmodal">
                                         <label>Users</label>
-                                        <select id="select3" class="form-control" name="users" [(ngModel)]="skillSessions.mail" name="mail" >
+                                        <select id="select3" class="form-control" name="users"  name="mail" multiple size="10" (change)="updateSelectedUsers($event)" >
                                                 <option value="">- select user -</option>
-                                                <option *ngFor="let row of AadUsers" >{{ row.mail }}</option>
+                                                <option *ngFor="let row of aadUsersData" >{{ row.mail }}</option>
                                         </select>
                                        </div>
                                        <div class="divmodal">
                                         <label>Groups</label>
-                                        <select id="select4" name="groups" class="form-control" name="groups" [(ngModel)]="skillSessions.groupName" name="groupName" >
+                                        <select id="select4" name="groups" class="form-control" name="groups"  name="groupName" multiple size="10" (change)="updateSelectedGroups($event)">
                                             <option value="">- select group -</option>
-                                            <option *ngFor="let item of AadUserGroups" >{{ item.groupName }}</option>
+                                            <option *ngFor="let item of aadGroupsData" >{{ item.groupName }}</option>
                                         </select>
-                                    
                                        </div>
 
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" (click)="PostSkillsessiondata()" >Add</button>
+                                            data-bs-dismiss="modal" >Close</button>
+                                        <button type="button" class="btn btn-primary" (click)="AddSkillsession()" [disabled]="addskillsform.invalid" >Add</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-info me-1"  style="margin: 2px" data-bs-toggle="modal" data-bs-target="#exampleModaledit">
+                        <button class="btn btn-info me-1"  style="margin: 2px" data-bs-toggle="modal" data-bs-target="#exampleModaledit" (click)="EditSkillSession(row.sessionID)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path
@@ -147,6 +157,83 @@
                                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                             </svg>
                         </button>
+                         <!-- Modal -->
+                        <div class="modal fade" id="exampleModaledit" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close" ></button>
+                                    </div>
+                                    <div class="modal-body">
+                                       <div class="divmodal">
+                                        <label>Start Date</label>
+                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.fromDate" name="fromDate" >
+                                       </div>
+                                       <div class="divmodal">
+                                        <label>End Date</label>
+                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.toDate" name="toDate" >
+                                       </div>
+                                       <div class="divmodal">
+                                        <label>Start Time</label>
+                                        <input type="time" class="form-control" [(ngModel)]="skillSessionData.skillStartTime" name="skillStartTime" >
+                                       </div>
+                                       <div class="divmodal">
+                                        <label>End Time</label>
+                                        <input type="time" class="form-control" [(ngModel)]="skillSessionData.skillEndTime" name="skillEndTime" >
+                                       </div>
+                                       <div class="divmodal">
+                                        <label>Venue</label>
+                                        <select id="select1"   class="form-control" name="modetype" [(ngModel)]="skillSessionData.venue" name="venue" >
+                                            <option value=""  >- Select Mode -</option>
+                                            <option >Offline</option>
+                                            <option >Self-Learning</option>
+                                            <option >Teams</option>
+                                       </select>
+                                       </div>
+                                       <div class="divmodal">
+                                        <label>Description</label>
+                                        <textarea  class="form-control" [(ngModel)]="skillSessionData.skillDescription" name="skillDescription" ></textarea>
+                                       </div>
+                                       <div class="divmodal">
+                                        <label>Skill Name</label>
+                                        <select  id="select2"  class="form-control" name="skillname" [(ngModel)]="skillSessionData.skillName" name="skillName" >
+                                           
+                                            <option value="">- select skill -</option>
+                                            <option *ngFor="let item of Enrolledskills" [value]="item.skillName">{{ item.skillName }}</option>
+                                        </select>
+                                       </div>
+                                       <div class="divmodal">
+                                        <label>Conducted By</label>
+                                        <input type="text" class="form-control" [(ngModel)]="skillSessionData.conductedBy" name="conductedBy" >
+                                       </div>
+                                       <div class="divmodal">
+                                        <label>Users</label>
+                                        <select id="select3" class="form-control" name="users"  name="mail" multiple size="10" (change)="updateSelectedUsers($event)" >
+                                                <option value="">- select user -</option>
+                                                <option *ngFor="let row of aadUsersData" >{{ row.mail }}</option>
+                                        </select>
+                                       </div>
+                                       <div class="divmodal">
+                                        <label>Groups</label>
+                                        <select id="select4" name="groups" class="form-control" name="groups"  name="groupName" multiple size="10" (change)="updateSelectedGroups($event)">
+                                            <option value="">- select group -</option>
+                                            <option *ngFor="let item of aadGroupsData" >{{ item.groupName }}</option>
+                                        </select>
+                                       </div>
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" >Close</button>
+                                        <button type="button" class="btn btn-primary"  (click)="UpdateSkillSession()" [disabled]="addskillsform.invalid" >Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> 
+                        
                         <button class="btn btn-info me-1"  style="margin: 2px" (click)="deleteItem(row.sessionID)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash-fill" viewBox="0 0 16 16">
