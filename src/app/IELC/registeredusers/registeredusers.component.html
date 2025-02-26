@@ -35,8 +35,11 @@
          </div>
         
     </div>
+    <div *ngIf="isLoading" class="loading-container">
+        <span class="dot"></span>
+    </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered">
+        <table  class="table table-striped table-bordered">
             <thead class="table-primary">
                 <tr>
                   <th scope="col">Enrollment Id</th>
@@ -52,9 +55,12 @@
                   <th scope="col">Action</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr *ngFor="let row of Registeredusers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
-                    <!-- <th scope="row"></th> -->
+              <tbody *ngIf="!isLoading">
+                <!-- <div *ngIf="isLoading; else dataTemplate" class="loading-container">
+                    <span class="dot"></span>
+                  </div>
+                  <ng-template #dataTemplate> -->
+                <tr *ngFor="let row of Registeredusers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }" >
                     <td>{{row.enrollmentID}}</td>
                     <td>{{row.name}}</td>
                     <td>{{row.mail}}</td>
@@ -73,6 +79,7 @@
                         </button>
                     </td>
                 </tr>
+            <!-- </ng-template> -->
               </tbody>
           </table>
           <!-- <div class="pagination">
@@ -100,5 +107,5 @@
           <pagination-controls (pageChange)="page = $event"></pagination-controls>
           </div>
         </div>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
   </form>

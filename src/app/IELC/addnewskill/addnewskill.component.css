@@ -39,7 +39,7 @@
 }
 .div{
     margin-top: -2%;
-    margin-left: 17.5%;
+    margin-left: 21.6%;
     width: 500px;
 }
 .form-check-input {
@@ -94,3 +94,38 @@
     font-size: 15px;
     font-weight: bold;
 }
+
+.loading-container {
+    position: fixed; /* Ensures it stays in place */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centers it exactly */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* Optional: adds a light overlay */
+    z-index: 9999; /* Ensures it's above other elements */
+  }
+  .dot {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: #3498db;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+    margin: 0 5px;
+  }
+  
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.5); opacity: 1; }
+  }
+  
+
+  
+  

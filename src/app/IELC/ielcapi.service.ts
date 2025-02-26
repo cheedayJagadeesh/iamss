@@ -133,25 +133,110 @@ export class IelcapiService {
       return this.http.get<any>(this.itsprtUrl);
     }
 
-    ismsguidelineUrl='https://ielc-coreapi.azurewebsites.net/ITSupportGuidelinessISMS';
-    Getismsguidelines(): Observable<any> {
-      return this.http.get<any>(this.ismsguidelineUrl);
+    itismsgeneralUrl='https://ielc-coreapi.azurewebsites.net/ITSupport';
+    Getitismsgeneral(): Observable<any> {
+      return this.http.get<any>(this.itismsgeneralUrl);
     }
 
-    ismspolicyUrl='https://ielc-coreapi.azurewebsites.net/ITSupportPolicyISMS';
-    Getismspolicy(): Observable<any> {
-      return this.http.get<any>(this.ismspolicyUrl);
+    itismsguidelineUrl='https://ielc-coreapi.azurewebsites.net/ITSupportGuidelinessISMS';
+    Getitismsguidelines(): Observable<any> {
+      return this.http.get<any>(this.itismsguidelineUrl);
     }
 
-    ismsprocedureUrl='https://ielc-coreapi.azurewebsites.net/ITSupportProcedureISMS';
-    Getismsprocedure(): Observable<any> {
-      return this.http.get<any>(this.ismsprocedureUrl);
+    itismspolicyUrl='https://ielc-coreapi.azurewebsites.net/ITSupportPolicyISMS';
+    Getitismspolicy(): Observable<any> {
+      return this.http.get<any>(this.itismspolicyUrl);
     }
 
-    ismsformatUrl='https://ielc-coreapi.azurewebsites.net/ITSupportFormatsISMS';
-    Getismsformat(): Observable<any> {
-      return this.http.get<any>(this.ismsformatUrl);
+    itismsprocedureUrl='https://ielc-coreapi.azurewebsites.net/ITSupportProcedureISMS';
+    Getitismsprocedure(): Observable<any> {
+      return this.http.get<any>(this.itismsprocedureUrl);
     }
 
+    itismsformatUrl='https://ielc-coreapi.azurewebsites.net/ITSupportFormatsISMS';
+    Getitismsformat(): Observable<any> {
+      return this.http.get<any>(this.itismsformatUrl);
+    }
 
+    itqmsgeneralUrl='https://ielc-coreapi.azurewebsites.net/ITSupportGeneralQMS';
+    Getitqmsgeneral(): Observable<any> {
+      return this.http.get<any>(this.itqmsgeneralUrl);
+    }
+
+    itqmsguidelineUrl='https://ielc-coreapi.azurewebsites.net/ITSupportGuidelinessQMS';
+    Getitqmsguidelines(): Observable<any> {
+      return this.http.get<any>(this.itqmsguidelineUrl);
+    }
+
+    itqmspolicyUrl='https://ielc-coreapi.azurewebsites.net/ITSupportPolicyQMS';
+    Getitqmspolicy(): Observable<any> {
+      return this.http.get<any>(this.itqmspolicyUrl);
+    }
+
+    itqmsprocedureUrl='https://ielc-coreapi.azurewebsites.net/ITSupportProcedureQMS';
+    Getitqmsprocedure(): Observable<any> {
+      return this.http.get<any>(this.itqmsprocedureUrl);
+    }
+
+    itqmsformatUrl='https://ielc-coreapi.azurewebsites.net/ITSupportFormatsQMS';
+    Getitqmsformat(): Observable<any> {
+      return this.http.get<any>(this.itqmsformatUrl);
+    }
+
+     //---------------------------------------------------------------------------------------Inteq HR Support
+
+     hrsprtUrl='https://ielc-coreapi.azurewebsites.net/HRHelpDesk';
+     GetHrSprt(): Observable<any> {
+       return this.http.get<any>(this.hrsprtUrl);
+     }
+
+    hrismsgeneralUrl='https://ielc-coreapi.azurewebsites.net/HRSupport';
+    Gethrismsgeneral(): Observable<any> {
+      return this.http.get<any>(this.hrismsgeneralUrl);
+    }
+
+    hrismsguidelineUrl='https://ielc-coreapi.azurewebsites.net/HRSupportGuidelinessISMS';
+    Gethrismsguidelines(): Observable<any> {
+      return this.http.get<any>(this.hrismsguidelineUrl);
+    }
+
+    hrismspolicyUrl='https://ielc-coreapi.azurewebsites.net/HRSupportPolicyISMS';
+    Gethrismspolicy(): Observable<any> {
+      return this.http.get<any>(this.hrismspolicyUrl);
+    }
+
+    hrismsprocedureUrl='https://ielc-coreapi.azurewebsites.net/HRSupportProcedureISMS';
+    Gethrismsprocedure(): Observable<any> {
+      return this.http.get<any>(this.hrismsprocedureUrl);
+    }
+
+    hrismsformatUrl='https://ielc-coreapi.azurewebsites.net/HRSupportFormatsISMS';
+    Gethrismsformat(): Observable<any> {
+      return this.http.get<any>(this.hrismsformatUrl);
+    }
+
+    hrqmsgeneralUrl='https://ielc-coreapi.azurewebsites.net/HRSupportGeneralQMS';
+    Gethrqmsgeneral(): Observable<any> {
+      return this.http.get<any>(this.hrqmsgeneralUrl);
+    }
+
+    hrqmsguidelineUrl='https://ielc-coreapi.azurewebsites.net/HRSupportGuidelinessQMS';
+    Gethrqmsguidelines(): Observable<any> {
+      return this.http.get<any>(this.hrqmsguidelineUrl);
+    }
+
+    hrqmspolicyUrl='https://ielc-coreapi.azurewebsites.net/HRSupportPolicyQMS';
+    Gethrqmspolicy(): Observable<any> {
+      return this.http.get<any>(this.hrqmspolicyUrl);
+    }
+
+    hrqmsprocedureUrl='https://ielc-coreapi.azurewebsites.net/HRSupportProcedureQMS';
+    Gethrqmsprocedure(): Observable<any> {
+      return this.http.get<any>(this.hrqmsprocedureUrl);
+    }
+
+    hrqmsformatUrl='https://ielc-coreapi.azurewebsites.net/HRSupportFormatsQMS';
+    Gethrqmsformat(): Observable<any> {
+      return this.http.get<any>(this.hrqmsformatUrl);
+    }
 }

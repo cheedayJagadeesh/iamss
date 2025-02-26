@@ -15,8 +15,11 @@
             Include _StQuestions column
         </label>
     </div>
+    <div *ngIf="isLoading" class="loading-container">
+        <span class="dot"></span>
+    </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered">
+        <table  class="table table-striped table-bordered">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">ID</th>
@@ -34,7 +37,7 @@
                     <th scope="col">Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="!isLoading" >
                 <tr *ngFor="let row of Enrolledusers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
                     <!-- <th scope="row">1</th> -->
                      <td>{{row.sessionID}}</td>
@@ -78,28 +81,43 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close" ></button>
+                                            aria-label="Close" (click)="resetSkillSession(); GetAllSkillSessions()" ></button>
                                     </div>
                                     <div class="modal-body">
                                        <div class="divmodal">
-                                        <label>Start Date</label>
-                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.fromDate" name="fromDate" >
+                                        <label>Start Date<span style="color: red;">*</span></label>
+                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.fromDate" name="fromDate" required #skillNameRef="ngModel"  >
+                                        <!-- <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;">
+                                            Start Date is required!
+                                          </div> -->
                                        </div>
                                        <div class="divmodal">
-                                        <label>End Date</label>
-                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.toDate" name="toDate" >
+                                        <label>End Date<span style="color: red;">*</span></label>
+                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.toDate" name="toDate" required #skillNameRef="ngModel"  >
+                                        <!-- <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;">
+                                            End Date is required!
+                                          </div> -->
                                        </div>
                                        <div class="divmodal">
-                                        <label>Start Time</label>
-                                        <input type="time" class="form-control" [(ngModel)]="skillSessionData.skillStartTime" name="skillStartTime" >
+                                        <label>Start Time<span style="color: red;">*</span></label>
+                                        <input type="time" class="form-control" [(ngModel)]="skillSessionData.skillStartTime" name="skillStartTime" required #skillNameRef="ngModel"  >
+                                        <!-- <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;">
+                                            Start Time is required!
+                                          </div> -->
                                        </div>
                                        <div class="divmodal">
-                                        <label>End Time</label>
-                                        <input type="time" class="form-control" [(ngModel)]="skillSessionData.skillEndTime" name="skillEndTime" >
+                                        <label>End Time<span style="color: red;">*</span></label>
+                                        <input type="time" class="form-control" [(ngModel)]="skillSessionData.skillEndTime" name="skillEndTime" required #skillNameRef="ngModel"  >
+                                        <!-- <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;">
+                                            End Time is required!
+                                          </div> -->
                                        </div>
                                        <div class="divmodal">
-                                        <label>Venue</label>
-                                        <select id="select1"   class="form-control" name="modetype" [(ngModel)]="skillSessionData.venue" name="venue" >
+                                        <label>Venue<span style="color: red;">*</span></label>
+                                        <select id="select1"   class="form-control" name="modetype" [(ngModel)]="skillSessionData.venue" name="venue" required #skillNameRef="ngModel" >
+                                            <!-- <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;">
+                                                Venue is required!
+                                              </div> -->
                                             <option value=""  >- Select Mode -</option>
                                             <option >Offline</option>
                                             <option >Self-Learning</option>
@@ -107,15 +125,18 @@
                                        </select>
                                        </div>
                                        <div class="divmodal">
-                                        <label>Description</label>
-                                        <textarea  class="form-control" [(ngModel)]="skillSessionData.skillDescription" name="skillDescription" ></textarea>
+                                        <label>Description<span style="color: red;">*</span></label>
+                                        <textarea  class="form-control" [(ngModel)]="skillSessionData.skillDescription" name="skillDescription" required #skillNameRef="ngModel" ></textarea>
+                                        <!-- <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;">
+                                            Skill Name is required!
+                                          </div> -->
                                        </div>
                                        <div class="divmodal">
                                         <label>Skill Name<span style="color: red;">*</span></label>
                                         <select  id="select2"  class="form-control" name="skillname" [(ngModel)]="skillSessionData.skillName" name="skillName" required #skillNameRef="ngModel" >
-                                            <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;">
+                                            <!-- <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;">
                                                 Skill Name is required!
-                                              </div>
+                                              </div> -->
                                             <option value="">- select skill -</option>
                                             <option *ngFor="let item of Enrolledskills" [value]="item.skillName">{{ item.skillName }}</option>
                                         </select>
@@ -140,9 +161,13 @@
                                        </div>
 
                                     </div>
+                                    
                                     <div class="modal-footer">
+                                        <!-- <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;margin-right: 35%;font-weight: 500;">
+                                            All * Marks are required!
+                                        </div> -->
                                         <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal" >Close</button>
+                                            data-bs-dismiss="modal" (click)="resetSkillSession(); GetAllSkillSessions()" >Close</button>
                                         <button type="button" class="btn btn-primary" (click)="AddSkillsession()" [disabled]="addskillsform.invalid" >Add</button>
                                     </div>
                                 </div>
@@ -165,28 +190,28 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close" ></button>
+                                            aria-label="Close" (click)="GetAllSkillSessions()" ></button>
                                     </div>
                                     <div class="modal-body">
                                        <div class="divmodal">
-                                        <label>Start Date</label>
-                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.fromDate" name="fromDate" >
+                                        <label>Start Date<span style="color: red;">*</span></label>
+                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.fromDate" name="fromDate" required #skillNameRef="ngModel">
                                        </div>
                                        <div class="divmodal">
-                                        <label>End Date</label>
-                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.toDate" name="toDate" >
+                                        <label>End Date<span style="color: red;">*</span></label>
+                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.toDate" name="toDate" required #skillNameRef="ngModel" >
                                        </div>
                                        <div class="divmodal">
-                                        <label>Start Time</label>
-                                        <input type="time" class="form-control" [(ngModel)]="skillSessionData.skillStartTime" name="skillStartTime" >
+                                        <label>Start Time<span style="color: red;">*</span></label>
+                                        <input type="time" class="form-control" [(ngModel)]="skillSessionData.skillStartTime" name="skillStartTime" required #skillNameRef="ngModel" >
                                        </div>
                                        <div class="divmodal">
-                                        <label>End Time</label>
-                                        <input type="time" class="form-control" [(ngModel)]="skillSessionData.skillEndTime" name="skillEndTime" >
+                                        <label>End Time<span style="color: red;">*</span></label>
+                                        <input type="time" class="form-control" [(ngModel)]="skillSessionData.skillEndTime" name="skillEndTime" required #skillNameRef="ngModel">
                                        </div>
                                        <div class="divmodal">
-                                        <label>Venue</label>
-                                        <select id="select1"   class="form-control" name="modetype" [(ngModel)]="skillSessionData.venue" name="venue" >
+                                        <label>Venue<span style="color: red;">*</span></label>
+                                        <select id="select1"   class="form-control" name="modetype" [(ngModel)]="skillSessionData.venue" name="venue" required #skillNameRef="ngModel">
                                             <option value=""  >- Select Mode -</option>
                                             <option >Offline</option>
                                             <option >Self-Learning</option>
@@ -194,12 +219,12 @@
                                        </select>
                                        </div>
                                        <div class="divmodal">
-                                        <label>Description</label>
-                                        <textarea  class="form-control" [(ngModel)]="skillSessionData.skillDescription" name="skillDescription" ></textarea>
+                                        <label>Description<span style="color: red;">*</span></label>
+                                        <textarea  class="form-control" [(ngModel)]="skillSessionData.skillDescription" name="skillDescription" required #skillNameRef="ngModel"></textarea>
                                        </div>
                                        <div class="divmodal">
-                                        <label>Skill Name</label>
-                                        <select  id="select2"  class="form-control" name="skillname" [(ngModel)]="skillSessionData.skillName" name="skillName" >
+                                        <label>Skill Name<span style="color: red;">*</span></label>
+                                        <select  id="select2"  class="form-control" name="skillname" [(ngModel)]="skillSessionData.skillName" name="skillName" required #skillNameRef="ngModel">
                                            
                                             <option value="">- select skill -</option>
                                             <option *ngFor="let item of Enrolledskills" [value]="item.skillName">{{ item.skillName }}</option>
@@ -227,7 +252,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal" >Close</button>
+                                            data-bs-dismiss="modal" (click)="GetAllSkillSessions()" >Close</button>
                                         <button type="button" class="btn btn-primary"  (click)="UpdateSkillSession()" [disabled]="addskillsform.invalid" >Update</button>
                                     </div>
                                 </div>
@@ -242,8 +267,8 @@
                             </svg>
                         </button>
                     </td>
-
                 </tr>
+               
             </tbody>
         </table>
         <!-- <div class="pagination">

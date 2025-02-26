@@ -4,13 +4,14 @@ import { UsersInfo } from '../users-info';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 
 
 @Component({
   selector: 'app-registeredusers',
   templateUrl: './registeredusers.component.html',
   styleUrls: ['./registeredusers.component.css']
+ 
 })
 export class RegisteredusersComponent implements OnInit {
  selectedDate:string=''
@@ -18,6 +19,7 @@ export class RegisteredusersComponent implements OnInit {
  skillname:string=''
  modetype:string='';
  time:string=''
+ isLoading = true;
 
  //Registeredusers:any
  clear(){
@@ -38,7 +40,8 @@ export class RegisteredusersComponent implements OnInit {
 
   constructor(private ielc:IelcapiService, private datePipe: DatePipe) {
     for (let i = 1; i <= 100; i++) {
-      this.Registeredusers.push({ id: i, name: `Item ${i}` });
+      // this.Registeredusers.push({ id: i, name: `item ${i}` });
+      this.Registeredusers.push({ id: i });
     }
     this.GetAllUSers();
   }
@@ -46,6 +49,8 @@ export class RegisteredusersComponent implements OnInit {
  ngOnInit() {
   this.GetAllUSers();
  }
+
+
 
  sortRegisteredUsers(data: any[]): any[] {
   return data.sort((a, b) => (a.enrollmentID > b.enrollmentID ? -1 : a.enrollmentID < b.enrollmentID ? 1 : 0));
@@ -55,6 +60,7 @@ export class RegisteredusersComponent implements OnInit {
   this.ielc.GetUsers().subscribe((data) => {
     this.Registeredusers=data;
     this.Registeredusers = this.sortRegisteredUsers(data);
+    this.isLoading = false;
   });
  }
 

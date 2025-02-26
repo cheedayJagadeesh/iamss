@@ -40,6 +40,7 @@ interface addskill {
 })
 
 export class AddnewskillComponent implements OnInit,AfterViewInit {
+  isLoading=true;
   Enrolledusers: any[] = []; 
   Enrolledskills: any[]=[];
   // AadUsers:any[]=[];
@@ -109,6 +110,7 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
     this.ielc.GetSkillSessions().subscribe((data) => {
       this.Enrolledusers=data;
       this.Enrolledusers = this.sortRegisteredUsers(data);
+      this.isLoading=false;
     });
    }
 
@@ -278,25 +280,6 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
     });
   }
   
-  
-   
-  
-  
-  
-
-  // deleteSkill(skillName: string) {
-  //   if (confirm('Are you sure you want to delete this record?')) {
-  //     this.ielc.DeleteEnrolledSkill(skillName).subscribe({
-  //       next: () => {
-  //         alert(`Record with ID ${skillName} deleted successfully!`);
-  //         this.GetAllSkillsData();
-  //       },
-  //       error: (err) => console.error('Error deleting item:', err)
-  //     });
-  //   }
-  // }
-  
-
    GetAadUsersData(){
     this.ielc.GetAadUserslist().subscribe((data) => {
       this.aadUsersData=data;
