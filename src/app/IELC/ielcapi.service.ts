@@ -183,6 +183,62 @@ export class IelcapiService {
       return this.http.get<any>(this.itqmsformatUrl);
     }
 
+     //---------------------------------------------------------------------------------------Inteq Admin/OS Support
+
+     ossprtUrl='';
+     GetosSprt(): Observable<any> {
+       return this.http.get<any>(this.ossprtUrl);
+     }
+     
+    osismsgeneralUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupport';
+    Getosismsgeneral(): Observable<any> {
+      return this.http.get<any>(this.osismsgeneralUrl);
+    }
+
+    osismsguidelineUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupportGuidelinessISMS';
+    Getosismsguidelines(): Observable<any> {
+      return this.http.get<any>(this.osismsguidelineUrl);
+    }
+
+    osismspolicyUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupportPolicyISMS';
+    Getosismspolicy(): Observable<any> {
+      return this.http.get<any>(this.osismspolicyUrl);
+    }
+
+    osismsprocedureUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupportProcedureISMS';
+    Getosismsprocedure(): Observable<any> {
+      return this.http.get<any>(this.osismsprocedureUrl);
+    }
+
+    osismsformatUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupportFormatsISMS';
+    Getosismsformat(): Observable<any> {
+      return this.http.get<any>(this.osismsformatUrl);
+    }
+    
+    osqmsgeneralUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupportGeneralQMS';
+    Getosqmsgeneral(): Observable<any> {
+      return this.http.get<any>(this.osqmsgeneralUrl);
+    }
+
+    osqmsguidelineUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupportGuidelinessQMS';
+    Getosqmsguidelines(): Observable<any> {
+      return this.http.get<any>(this.osqmsguidelineUrl);
+    }
+
+    osqmspolicyUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupportPolicyQMS';
+    Getosqmspolicy(): Observable<any> {
+      return this.http.get<any>(this.osqmspolicyUrl);
+    }
+
+    osqmsprocedureUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupportProcedureQMS';
+    Getosqmsprocedure(): Observable<any> {
+      return this.http.get<any>(this.osqmsprocedureUrl);
+    }
+
+    osqmsformatUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupportFormatsQMS';
+    Getosqmsformat(): Observable<any> {
+      return this.http.get<any>(this.osqmsformatUrl);
+    }
      //---------------------------------------------------------------------------------------Inteq HR Support
 
      hrsprtUrl='https://ielc-coreapi.azurewebsites.net/HRHelpDesk';
@@ -238,5 +294,62 @@ export class IelcapiService {
     hrqmsformatUrl='https://ielc-coreapi.azurewebsites.net/HRSupportFormatsQMS';
     Gethrqmsformat(): Observable<any> {
       return this.http.get<any>(this.hrqmsformatUrl);
+    }
+
+  //---------------------------------------------------------------------------------------Inteq Project Support
+
+    prjtsprtUrl='';
+    GetprjtSprt(): Observable<any> {
+     return this.http.get<any>(this.prjtsprtUrl);
+    }
+
+    prjtismsgeneralUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupport';
+    Getprjtismsgeneral(): Observable<any> {
+      return this.http.get<any>(this.prjtismsgeneralUrl);
+    }
+
+    prjtismsguidelineUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportGuidelinessISMS';
+    Getprjtismsguidelines(): Observable<any> {
+      return this.http.get<any>(this.prjtismsguidelineUrl);
+    }
+
+    prjtismspolicyUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportPolicyISMS';
+    Getprjtismspolicy(): Observable<any> {
+      return this.http.get<any>(this.prjtismspolicyUrl);
+    }
+
+    prjtismsprocedureUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportProcedureISMS';
+    Getprjtismsprocedure(): Observable<any> {
+      return this.http.get<any>(this.prjtismsprocedureUrl);
+    }
+
+    prjtismsformatUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportFormatsISMS';
+    Getprjtismsformat(): Observable<any> {
+      return this.http.get<any>(this.prjtismsformatUrl);
+    }
+
+    prjtqmsgeneralUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportGeneralQMS';
+    Getprjtqmsgeneral(): Observable<any> {
+      return this.http.get<any>(this.prjtqmsgeneralUrl);
+    }
+
+    prjtqmsguidelineUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportGuidelinessQMS';
+    Getprjtqmsguidelines(): Observable<any> {
+      return this.http.get<any>(this.prjtqmsguidelineUrl);
+    }
+
+    prjtqmspolicyUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportPolicyQMS';
+    Getprjtqmspolicy(): Observable<any> {
+      return this.http.get<any>(this.prjtqmspolicyUrl);
+    }
+
+    prjtqmsprocedureUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportProcedureQMS';
+    Getprjtqmsprocedure(): Observable<any> {
+      return this.http.get<any>(this.prjtqmsprocedureUrl);
+    }
+
+    prjtqmsformatUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportFormatsQMS';
+    Getprjtqmsformat(): Observable<any> {
+      return this.http.get<any>(this.prjtqmsformatUrl);
     }
 }
