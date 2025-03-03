@@ -185,7 +185,7 @@ export class IelcapiService {
 
      //---------------------------------------------------------------------------------------Inteq Admin/OS Support
 
-     ossprtUrl='';
+     ossprtUrl='https://ielc-coreapi.azurewebsites.net/AdminHelpDesk';
      GetosSprt(): Observable<any> {
        return this.http.get<any>(this.ossprtUrl);
      }
@@ -298,7 +298,7 @@ export class IelcapiService {
 
   //---------------------------------------------------------------------------------------Inteq Project Support
 
-    prjtsprtUrl='';
+    prjtsprtUrl='https://ielc-coreapi.azurewebsites.net/ProjectsList';
     GetprjtSprt(): Observable<any> {
      return this.http.get<any>(this.prjtsprtUrl);
     }
@@ -351,5 +351,98 @@ export class IelcapiService {
     prjtqmsformatUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportFormatsQMS';
     Getprjtqmsformat(): Observable<any> {
       return this.http.get<any>(this.prjtqmsformatUrl);
+    }
+
+//---------------------------------------------------------------------------------------Inteq Emergency Support
+  
+    emersprtUrl='https://ielc-coreapi.azurewebsites.net/EmergencyContactList';
+    GetemerSprt(): Observable<any> {
+     return this.http.get<any>(this.emersprtUrl);
+    }
+
+    emergeneralUrl='https://ielc-coreapi.azurewebsites.net/Emergency';
+    Getemergeneral(): Observable<any> {
+      return this.http.get<any>(this.emergeneralUrl);
+    }
+   
+//---------------------------------------------------------------------------------------Inteq Various committees Support  
+     
+    varcmtsUrl='https://ielc-coreapi.azurewebsites.net/VariousCommittees';
+    Getvarcmt(): Observable<any> {
+     return this.http.get<any>(this.varcmtsUrl);
+    }
+//---------------------------------------------------------------------------------------Inteq ISO 27001
+
+    iso27001Url='https://ielc-coreapi.azurewebsites.net/ISO27001';
+    Getiso27001(): Observable<any> {
+     return this.http.get<any>(this.iso27001Url);
+    }
+
+    ismsinfoUrl='https://ielc-coreapi.azurewebsites.net/ISMSSupport';
+    Getismsinfo(): Observable<any> {
+     return this.http.get<any>(this.ismsinfoUrl);
+    }
+
+    ispolicyUrl='https://ielc-coreapi.azurewebsites.net/ISPolicy';
+    Getispolicy(): Observable<any> {
+     return this.http.get<any>(this.ispolicyUrl);
+    }
+//---------------------------------------------------------------------------------------CISO Support
+
+    cisoismsgeneralUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_Support';
+    Getcisoismsgeneral(): Observable<any> {
+      return this.http.get<any>(this.cisoismsgeneralUrl);
+    }
+
+    cisoismsguidelineUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportGuidelinessISMS';
+    Getcisoismsguidelines(): Observable<any> {
+      return this.http.get<any>(this.cisoismsguidelineUrl);
+    }
+
+    cisoismspolicyUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportPolicyISMS';
+    Getcisoismspolicy(): Observable<any> {
+      return this.http.get<any>(this.cisoismspolicyUrl);
+    }
+
+    cisoismsprocedureUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportProcedureISMS';
+    Getcisoismsprocedure(): Observable<any> {
+      return this.http.get<any>(this.cisoismsprocedureUrl);
+    }
+
+    cisoismsformatUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportFormatsISMS';
+    Getcisoismsformat(): Observable<any> {
+      return this.http.get<any>(this.cisoismsformatUrl);
+    }
+
+    cisoqmsgeneralUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportGeneralQMS';
+    Getcqoismsgeneral(): Observable<any> {
+      return this.http.get<any>(this.cisoqmsgeneralUrl);
+    }
+
+    cisoqmsguidelineUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportGuidelinessQMS';
+    Getcisoqmsguidelines(): Observable<any> {
+      return this.http.get<any>(this.cisoqmsguidelineUrl);
+    }
+
+    cisoqmspolicyUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportPolicyQMS';
+    Getcisoqmspolicy(): Observable<any> {
+      return this.http.get<any>(this.cisoqmspolicyUrl);
+    }
+
+    cisoqmsprocedureUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportProcedureQMS';
+    Getcisoqmsprocedure(): Observable<any> {
+      return this.http.get<any>(this.cisoqmsprocedureUrl);
+    }
+
+    cisoqmsformatUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportFormatsQMS';
+    Getcisoqmsformat(): Observable<any> {
+      return this.http.get<any>(this.cisoqmsformatUrl);
+    }
+    
+//---------------------------------------------------------------------------------------Hippa
+
+    hippaUrl='https://ielc-coreapi.azurewebsites.net/HIPAA';
+    Gethippa(): Observable<any> {
+     return this.http.get<any>(this.hippaUrl);
     }
 }

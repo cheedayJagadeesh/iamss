@@ -8,8 +8,11 @@
     </div>
     <h1 class="h1">Welcome to INTEQ ISO 27001</h1>
     <h2 class="h2">CISO\HCO: C V Prasad</h2>
+    <div *ngIf="isLoading" class="loading-container">
+        <span class="dot"></span>
+    </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="iso27001">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="iso27001">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Contact Priority</th>
@@ -19,11 +22,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Mark</td>
-                    <td>Control</td>
-                    <td>Mark</td>
-                    <td>Control</td>   
+                <tr *ngFor="let row of isosprtlist" >
+                    <td>{{row.contactPriority}}</td>
+                    <td>{{row.name}}</td>
+                    <td>{{row.mobile}}</td>
+                    <td>{{row.email}}</td>  
                 </tr>
             </tbody>
         </table>
@@ -33,403 +36,403 @@
         <a  class="btn btnlnk btn-link" href="mailto:incidents@inteqsolutions.com">{{email}}</a>
     </div>
     <h4 class="h4">ISMS Info</h4>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="ismssprt">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="ismssprt">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr  *ngFor="let item of isoinfolist">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>   
                 </tr>
             </tbody>
         </table>
     </div>
     <h4 class="h4">IS Policy</h4>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="ispolicy">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="ispolicy">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr  *ngFor="let item of isopolicylist">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td> 
                 </tr>
             </tbody>
         </table>
     </div>
     <h4 class="h4">Projects</h4>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="prjisms2">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms2">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Guidelines Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Guidelines Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr  *ngFor="let item of prjtIsmsGuidelinesdata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="prjisms3">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms3">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Policy Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Policy Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr  *ngFor="let item of prjtIsmsPolicydata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>   
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="prjisms4">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms4">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Procedure Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Procedure Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr  *ngFor="let item of prjtIsmsProceduredata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>  
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="prjisms5">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms5">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Formats Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Formats Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr  *ngFor="let item of prjtIsmsFormatdata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>  
                 </tr>
             </tbody>
         </table>
     </div>
     <h4 class="h4">CISO</h4>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="cisoisms2">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoisms2">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Guidelines Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Guidelines Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr  *ngFor="let item of cisoIsmsGuidelinesdata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>  
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="cisoisms3">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoisms3">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Policy Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Policy Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr  *ngFor="let item of cisoIsmsPolicydata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td> 
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="cisoisms4">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoisms4">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Procedure Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Procedure Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr  *ngFor="let item of cisoIsmsProceduredata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>   
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="cisoisms5">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoisms5">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Formats Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Formats Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr  *ngFor="let item of cisoIsmsFormatdata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>   
                 </tr>
             </tbody>
         </table>
     </div>
     <h4 class="h4">IT</h4>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="itisms2">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itisms2">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Guidelines Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Guidelines Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr *ngFor="let item of IsmsGuidelinesdata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td> 
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="itisms3">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itisms3">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Policy Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Policy Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Mark</td>
+                <tr *ngFor="let item of IsmsPolicydata">
+                    <td>{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="itisms4">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itisms4">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Procedure Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Procedure Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr *ngFor="let item of IsmsProceduredata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>  
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="itisms5">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itisms5">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Formats Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Formats Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr *ngFor="let item of IsmsFormatdata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
     <h4 class="h4">Admin</h4>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="osisms2">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osisms2">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Guidelines Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Guidelines Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr *ngFor="let item of OsIsmsGuidelinesdata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>    
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="osisms3">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osisms3">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Policy Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Policy Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr *ngFor="let item of OsIsmsPolicydata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>  
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="osisms4">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osisms4">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Procedure Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Procedure Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr *ngFor="let item of OsIsmsProceduredata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>   
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="osisms5">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osisms5">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Formats Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Formats Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr *ngFor="let item of OsIsmsFormatdata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>  
                 </tr>
             </tbody>
         </table>
     </div>
     <h4 class="h4">HR</h4>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="hrisms2">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrisms2">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Guidelines Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Guidelines Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr *ngFor="let item of HrIsmsGuidelinesdata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="hrisms3">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrisms3">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Policy Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Policy Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr *ngFor="let item of HrIsmsPolicydata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>   
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="hrisms4">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrisms4">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Procedure Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Procedure Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr *ngFor="let item of HrIsmsProceduredata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>   
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="hrisms5">
+    <div class="tablebottom1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrisms5">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">Formats Document Name</th>
-                    <th scope="col" colspan="2">Share Path Links</th>
+                    <th scope="col" style="width:70%">Formats Document Name</th>
+                    <th scope="col" style="width:30%">Share Path Links</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td >Mark</td>
+                <tr *ngFor="let item of HrIsmsFormatdata">
+                    <td >{{item.documentName}}</td>
                     <td>
-                        <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">Click Here</a>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>   
                 </tr>
             </tbody>

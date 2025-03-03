@@ -22,11 +22,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td></td>
-                    <td>Control</td>
-                    <td></td>
-                    <td>Control</td>  
+                <tr *ngFor="let row of prjtsprtlist" >
+                    <td>{{row.functions}}</td>
+                    <td>{{row.name}}</td>
+                    <td>{{row.mobile}}</td>
+                    <td>{{row.email}}</td>
                 </tr>
             </tbody>
         </table>

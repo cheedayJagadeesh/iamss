@@ -3,7 +3,7 @@ import { IelcapiService } from '../ielcapi.service';
 
 interface prjtsprtinfo{
   id: string;
-  contactPriority: string;
+  functions: string;
   name: string;
   mobile: string;
   email: string;
@@ -26,7 +26,7 @@ isLoading = true;
 prjtsprtlist: any[] = []; 
 prjtsprtdata:prjtsprtinfo={
  id: '',
- contactPriority: '',
+ functions: '',
  name: '',
  mobile: '',
  email: '',
