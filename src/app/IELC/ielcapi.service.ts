@@ -387,6 +387,19 @@ export class IelcapiService {
     Getispolicy(): Observable<any> {
      return this.http.get<any>(this.ispolicyUrl);
     }
+
+//---------------------------------------------------------------------------------------Inteq ISO 9001
+    
+    iso9001Url='https://ielc-coreapi.azurewebsites.net/ISO9001';
+    Getiso9001(): Observable<any> {
+     return this.http.get<any>(this.iso9001Url);
+    }
+
+    isoinfoUrl='https://ielc-coreapi.azurewebsites.net/ISOSupport';
+    Getisoinfo(): Observable<any> {
+     return this.http.get<any>(this.isoinfoUrl);
+    }
+    
 //---------------------------------------------------------------------------------------CISO Support
 
     cisoismsgeneralUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_Support';
@@ -444,5 +457,26 @@ export class IelcapiService {
     hippaUrl='https://ielc-coreapi.azurewebsites.net/HIPAA';
     Gethippa(): Observable<any> {
      return this.http.get<any>(this.hippaUrl);
+    }
+    
+//---------------------------------------------------------------------------------------GDPR
+
+    gdprUrl='https://ielc-coreapi.azurewebsites.net/GDPR';
+    Getgdpr(): Observable<any> {
+     return this.http.get<any>(this.gdprUrl);
+    }
+
+//---------------------------------------------------------------------------------------SOC
+
+    socUrl='https://ielc-coreapi.azurewebsites.net/SOC';
+    Getsoc(): Observable<any> {
+     return this.http.get<any>(this.socUrl);
+    }
+
+//---------------------------------------------------------------------------------------DPDP
+
+    dpdpUrl='https://ielc-coreapi.azurewebsites.net/DPDP';
+    Getdpdp(): Observable<any> {
+     return this.http.get<any>(this.dpdpUrl);
     }
 }
