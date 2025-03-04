@@ -442,10 +442,14 @@ h2 {
 }
 #newsTicker .newsList {
     list-style: none;
-    position: absolute;
-    top: 40%;
-    animation: scrollTicker 15s linear infinite;
+    position: revert;
+    top: 100%;
+    animation: scrollTicker 20s linear infinite;
 }
+#newsTicker:hover .newsList {
+    animation-play-state: paused;
+}
+
 #newsTicker ul {
     list-style: none;
     margin: 0;
@@ -466,6 +470,39 @@ h2 {
     transform: translateY(-100%);
 }
 }
+
+
+.ticker-container {
+    width: 300px;
+    height: 50px;
+    overflow: hidden;
+    border: 2px solid #222;
+    background: #222;
+    color: white;
+    position: relative;
+    font-family: Arial, sans-serif;
+}
+
+.ticker-content {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    animation: vertical-scroll 6s linear infinite;
+}
+
+.ticker-item {
+    padding: 10px;
+    text-align: center;
+}
+
+@keyframes vertical-scroll {
+    0% { transform: translateY(0); }
+    25% { transform: translateY(-50px); }
+    50% { transform: translateY(-100px); }
+    75% { transform: translateY(-150px); }
+    100% { transform: translateY(0); }
+}
+
 .lblevents{
     margin-left: 32%;
     margin-top: 1%;
@@ -475,7 +512,7 @@ h2 {
 .imgevents{
     margin-left: 32%;
     margin-top: 1%;
-    width: 1500px;
+    width: 1020px;
 }
 .auto-style30 {
     width: 1000px;

@@ -3,6 +3,13 @@ import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { __values } from 'tslib';
 import { NgForm } from '@angular/forms';
+import { IelcapiService } from '../ielcapi.service';
+
+
+interface holidaysinfo{
+  date: string;
+  content: string;
+}
 
 @Component({
   selector: 'app-registration',
@@ -20,11 +27,24 @@ export class RegistrationComponent {
  work='';
  taskslist=''
  email='incidents@inteqsolutions.com'
-constructor(){
+ holidayslist: any[] = []; 
+ holidaysdata:holidaysinfo={
+  date: '',
+  content: ''
+ }
+constructor(private ielc:IelcapiService){
    // this.selectedDate= new Date().toString()
    this.selectedDate= new Date().toISOString().split('T')[0]
-   this.isTimeInputDisabled=true
+   this.isTimeInputDisabled=true;
+   this.GetHolidayslist();
  }
+
+ GetHolidayslist(){
+  this.ielc.Getholidays().subscribe((data) => {
+    this.holidayslist=data;
+  });
+ }
+
 showData(registration:any)
 {
  console.log(registration)

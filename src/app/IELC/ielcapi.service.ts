@@ -399,7 +399,7 @@ export class IelcapiService {
     Getisoinfo(): Observable<any> {
      return this.http.get<any>(this.isoinfoUrl);
     }
-    
+
 //---------------------------------------------------------------------------------------CISO Support
 
     cisoismsgeneralUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_Support';
@@ -479,4 +479,18 @@ export class IelcapiService {
     Getdpdp(): Observable<any> {
      return this.http.get<any>(this.dpdpUrl);
     }
+
+//---------------------------------------------------------------------------------------Inteq Holidays
+
+    holidaysUrl='https://ielc-coreapi.azurewebsites.net/HolidayList';
+    Getholidays(): Observable<any> {
+     return this.http.get<any>(this.holidaysUrl);
+    } 
+    
+//---------------------------------------------------------------------------------------ISMS mails
+
+    ismsmailsUrl='https://ielc-coreapi.azurewebsites.net/ISMSEmails';
+    Getismsmails(): Observable<any> {
+     return this.http.get<any>(this.ismsmailsUrl);
+    }          
 }
