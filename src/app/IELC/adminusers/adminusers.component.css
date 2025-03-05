@@ -8,6 +8,11 @@
     margin-left: 30%;
     font-size: 16px;
 }
+.form-label1{
+    margin-top: 1%;
+    margin-left: 30%;
+    font-size: 16px;
+}
 .form-controlone {
     display: block;
     width: 20%;
@@ -34,6 +39,9 @@
 }
 .tablebottom {
     margin-top: 1%;
+    border-collapse: collapse;
+    width: 50%;
+    margin-left: 25%;
 }
 .pagination {
     margin-left: 72%;
@@ -45,4 +53,14 @@
 .headermodal{
     font-size: 15px;
     font-weight: bold;
+}
+
+select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.container {
+    max-width: 600px;
 }

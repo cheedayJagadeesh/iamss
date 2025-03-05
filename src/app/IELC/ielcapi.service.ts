@@ -492,5 +492,54 @@ export class IelcapiService {
     ismsmailsUrl='https://ielc-coreapi.azurewebsites.net/ISMSEmails';
     Getismsmails(): Observable<any> {
      return this.http.get<any>(this.ismsmailsUrl);
-    }          
+    } 
+    
+    PostIsmsMails(skillSessions: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.ismsmailsUrl, skillSessions);
+    }
+
+    GetIsmsMailsById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.ismsmailsUrl}/${id}`);
+    }
+
+    UpdateIsmsMails(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.ismsmailsUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+ 
+//---------------------------------------------------------------------------------------QMS mails
+
+    qmsmailsUrl='https://ielc-coreapi.azurewebsites.net/QMSEmails';
+    Getqmsmails(): Observable<any> {
+     return this.http.get<any>(this.qmsmailsUrl);
+    } 
+    
+    PostqmsMails(skillSessions: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.qmsmailsUrl, skillSessions);
+    }
+
+    GetqmsMailsById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.qmsmailsUrl}/${id}`);
+    }
+
+    UpdateqmsMails(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.qmsmailsUrl}/${id}`, updatedData);
+    }
+
+//---------------------------------------------------------------------------------------SMTP Admin
+
+    smtpUrl='https://ielc-coreapi.azurewebsites.net/SMPTAdmin';
+    Getsmtp(): Observable<any> {
+     return this.http.get<any>(this.smtpUrl);
+    } 
+
+    Postsmtp(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.smtpUrl, data);
+    }
+
+    DeletesmtpById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.smtpUrl}/${id}`);
+    }
 }

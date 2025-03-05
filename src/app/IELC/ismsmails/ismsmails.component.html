@@ -1,5 +1,5 @@
 <app-ismsheader></app-ismsheader>
-  <form>
+  <form #form="ngForm">
     <div *ngIf="isLoading" class="loading-container">
         <span class="dot"></span>
     </div>
@@ -64,7 +64,7 @@
                                     <div class="modal-header">
                                         <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
+                                            aria-label="Close" (click)="resetlist(); GetIsmsmailslist()"></button>
                                     </div>
                                     <div class="modal-body">
                                        <div class="divmodal">
@@ -118,13 +118,13 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Add</button>
+                                            data-bs-dismiss="modal" (click)="resetlist(); GetIsmsmailslist()">Close</button>
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddIsmsMails()" >Add</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <button class="btn btn-info me-1" style="margin: 2px" data-bs-toggle="modal" data-bs-target="#exampleModaledit">
+                        <button class="btn btn-info me-1" style="margin: 2px" data-bs-toggle="modal" data-bs-target="#exampleModaledit" (click)="EditIsmsMails(row.id)" >
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path
@@ -133,6 +133,74 @@
                                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                             </svg>
                         </button>
+                          <!-- Modal -->
+                          <div class="modal fade" id="exampleModaledit" tabindex="-1" aria-labelledby="exampleModalLabel"
+                          aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-scrollable">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                          aria-label="Close" (click)="GetIsmsmailslist()"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                     <div class="divmodal">
+                                      <label>Department</label>
+                                      <input type="text" class="form-control" name="department" [(ngModel)]="ismsmailsdata.department" > 
+                                     </div>
+                                     <div class="divmodal">
+                                      <label>To Address</label>
+                                      <input type="text" class="form-control" name="toaddress" [(ngModel)]="ismsmailsdata.toaddress">
+                                     </div>
+                                     <div class="divmodal">
+                                      <label>CC Address</label>
+                                      <input type="text" class="form-control" name="ccaddress" [(ngModel)]="ismsmailsdata.cc">
+                                     </div>
+                                     <div class="divmodal">
+                                      <label>SharePath</label>
+                                      <input type="text" class="form-control" name="sharepath" [(ngModel)]="ismsmailsdata.sharePath">
+                                     </div>
+                                     <div class="divmodal">
+                                      <label>SharePathURL</label>
+                                      <input type="text" class="form-control" name="sharepathurl" [(ngModel)]="ismsmailsdata.sharePathURL">
+                                     </div>
+                                     <div class="divmodal">
+                                      <label>Prjtloc</label>
+                                      <input type="text" class="form-control" name="projloc" [(ngModel)]="ismsmailsdata.projectwiseShareLocation">
+                                     </div>
+                                     <div class="divmodal">
+                                      <label>PrjtlocURL</label>
+                                      <input type="text" class="form-control" name="projlocurl" [(ngModel)]="ismsmailsdata.projectwiseShareLocationURL">
+                                     </div>
+                                     <div class="divmodal">
+                                      <label>StartDate</label>
+                                      <input type="text" class="form-control" name="startdate" [(ngModel)]="ismsmailsdata.startDate">
+                                     </div>
+                                     <div class="divmodal">
+                                      <label>EndDate</label>
+                                      <input type="text" class="form-control" name="enddate" [(ngModel)]="ismsmailsdata.endDate">
+                                     </div>
+                                     <div class="divmodal">
+                                      <label>IncidentMailDate</label>
+                                      <input type="text" class="form-control" name="incidentmaildate" [(ngModel)]="ismsmailsdata.incidentMailDate">
+                                     </div>
+                                     <div class="divmodal">
+                                      <label>FromAddress</label>
+                                      <input type="text" class="form-control" name="fromaddress" [(ngModel)]="ismsmailsdata.fromaddress">
+                                     </div>
+                                     <div class="divmodal">
+                                      <label>Password</label>
+                                      <input type="text" class="form-control" name="password" [(ngModel)]="ismsmailsdata.password">
+                                     </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary"
+                                          data-bs-dismiss="modal" (click)="GetIsmsmailslist()">Close</button>
+                                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="UpdateIsmsMails()" >Update</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
                     </td>
                 </tr>
             </tbody>
