@@ -133,6 +133,23 @@ export class IelcapiService {
       return this.http.get<any>(this.itsprtUrl);
     }
 
+    PostITSprt(skillSessions: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.itsprtUrl, skillSessions);
+    }
+
+    GetITSprtById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.itsprtUrl}/${id}`);
+    }
+
+    UpdateITSprt(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.itsprtUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteITSprtById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.itsprtUrl}/${id}`);
+    }
+
     itismsgeneralUrl='https://ielc-coreapi.azurewebsites.net/ITSupport';
     Getitismsgeneral(): Observable<any> {
       return this.http.get<any>(this.itismsgeneralUrl);
@@ -189,7 +206,24 @@ export class IelcapiService {
      GetosSprt(): Observable<any> {
        return this.http.get<any>(this.ossprtUrl);
      }
-     
+
+     PostOsSprt(skillSessions: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.ossprtUrl, skillSessions);
+    }
+
+    GetOsSprtById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.ossprtUrl}/${id}`);
+    }
+
+    UpdateOsSprt(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.ossprtUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteOsSprtById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.ossprtUrl}/${id}`);
+    }
+
     osismsgeneralUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupport';
     Getosismsgeneral(): Observable<any> {
       return this.http.get<any>(this.osismsgeneralUrl);
@@ -245,6 +279,23 @@ export class IelcapiService {
      GetHrSprt(): Observable<any> {
        return this.http.get<any>(this.hrsprtUrl);
      }
+
+     PostHrSprt(skillSessions: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.hrsprtUrl, skillSessions);
+    }
+
+    GetHrSprtById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.hrsprtUrl}/${id}`);
+    }
+
+    UpdateHrSprt(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.hrsprtUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteHrSprtById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.hrsprtUrl}/${id}`);
+    }
 
     hrismsgeneralUrl='https://ielc-coreapi.azurewebsites.net/HRSupport';
     Gethrismsgeneral(): Observable<any> {
@@ -359,6 +410,23 @@ export class IelcapiService {
     GetemerSprt(): Observable<any> {
      return this.http.get<any>(this.emersprtUrl);
     }
+    
+    PostEmerSprt(skillSessions: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.emersprtUrl, skillSessions);
+    }
+
+    GetEmerSprtById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.emersprtUrl}/${id}`);
+    }
+
+    UpdateEmerSprt(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.emersprtUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteEmerSprtById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.emersprtUrl}/${id}`);
+    }
 
     emergeneralUrl='https://ielc-coreapi.azurewebsites.net/Emergency';
     Getemergeneral(): Observable<any> {
@@ -378,6 +446,23 @@ export class IelcapiService {
      return this.http.get<any>(this.iso27001Url);
     }
 
+    PostIso27001Sprt(skillSessions: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.iso27001Url, skillSessions);
+    }
+
+    GetIso27001SprtById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.iso27001Url}/${id}`);
+    }
+
+    UpdateIso27001Sprt(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.iso27001Url}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteIso27001SprtById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.iso27001Url}/${id}`);
+    }
+
     ismsinfoUrl='https://ielc-coreapi.azurewebsites.net/ISMSSupport';
     Getismsinfo(): Observable<any> {
      return this.http.get<any>(this.ismsinfoUrl);
@@ -393,6 +478,23 @@ export class IelcapiService {
     iso9001Url='https://ielc-coreapi.azurewebsites.net/ISO9001';
     Getiso9001(): Observable<any> {
      return this.http.get<any>(this.iso9001Url);
+    }
+
+    PostIso9001Sprt(skillSessions: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.iso9001Url, skillSessions);
+    }
+
+    GetIso9001SprtById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.iso9001Url}/${id}`);
+    }
+
+    UpdateIso9001Sprt(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.iso9001Url}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteIso9001SprtById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.iso9001Url}/${id}`);
     }
 
     isoinfoUrl='https://ielc-coreapi.azurewebsites.net/ISOSupport';
