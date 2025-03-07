@@ -51,12 +51,12 @@
             </select>
         </div>
         </div>
-        <div  *ngIf="selectedOption1 === 'HRSupport'">
+        <div  [hidden]="!isHRSelected">
         <div class="">
             <label for="Empname" class="form-label2">Select Type</label>
         </div>
         <div class="">
-            <select name="skill" class="form-controltwo" required>
+            <select name="skill" class="form-controltwo"required [(ngModel)]="selectedOption3" (change)="onSelection3Change()">
                 <option value=""  >- select -</option>
                 <option value="ISMS">ISMS</option>
                 <option value="QMS">QMS</option>
@@ -858,7 +858,7 @@
             </tbody>
         </table>
     </div> 
-    <div class="tablebottom">
+    <div class="tablebottom1" *ngIf="selectedOption3 === 'ISMS'">
         <table class="table table-striped table-bordered" name="hrisms1">
             <thead class="table-primary">
                 <tr>
@@ -868,10 +868,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">Mark</th>
-                    <td >Mark</td>
-                    <td>Mark</td>
+                <tr *ngFor="let item of HrIsmsGeneraldata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
                             data-bs-target="#exampleModal8">
@@ -888,29 +892,29 @@
                         <div class="modal-dialog modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - General Document</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                        aria-label="Close" (click)="resetHrISMS(); GetHrISMSGenerallist()"></button>
                                 </div>
                                 <div class="modal-body">
                                    <div class="divmodal">
                                     <label>General Document Name</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="generaldocname" [(ngModel)]="docsdata.documentName">
                                    </div>
                                    <div class="divmodal">
                                     <label>URL</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
                                    </div>
                                    <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Add</button>
+                                        data-bs-dismiss="modal" (click)="resetHrISMS(); GetHrISMSGenerallist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddHrISMSGeneral()">Add</button>
                                    </div>
                                 </div>
                             </div>
                         </div>
                         </div>
-                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit">
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit8" (click)="EditHrISMSGeneral(item.documentID)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path
@@ -919,7 +923,34 @@
                                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                             </svg>
                         </button>
-                        <button class="btn btn-info me-1">
+                        <div class="modal fade" id="exampleModaledit8" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - General Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetHrISMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>General Document Name</label>
+                                     <input type="text" class="form-control" name="generaldocname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetHrISMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateHrISMSGeneral()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteHrISMSGeneral(item.documentID)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path
@@ -931,7 +962,7 @@
             </tbody>
         </table>
     </div> 
-    <div class="tablebottom">
+    <div class="tablebottom1" *ngIf="selectedOption3 === 'ISMS'">
         <table class="table table-striped table-bordered" name="hrisms2">
             <thead class="table-primary">
                 <tr>
@@ -941,10 +972,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">Mark</th>
-                    <td >Mark</td>
-                    <td>Mark</td>
+                <tr *ngFor="let item of HrIsmsGuidelinesdata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
                             data-bs-target="#exampleModal9">
@@ -961,29 +996,29 @@
                         <div class="modal-dialog modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Guidelines Document</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                        aria-label="Close" (click)="resetHrISMS(); GetHrISMSGuidelineslist()"></button>
                                 </div>
                                 <div class="modal-body">
                                    <div class="divmodal">
                                     <label>Guidelines Document Name</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control"  name="docname" [(ngModel)]="docsdata.documentName">
                                    </div>
                                    <div class="divmodal">
                                     <label>URL</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
                                    </div>
                                    <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Add</button>
+                                        data-bs-dismiss="modal" (click)="resetHrISMS(); GetHrISMSGuidelineslist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddHrISMSGuidelines()">Add</button>
                                    </div>
                                 </div>
                             </div>
                         </div>
                         </div>
-                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit">
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit9" (click)="EditHrISMSGuidelines(item.documentID)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path
@@ -992,7 +1027,34 @@
                                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                             </svg>
                         </button>
-                        <button class="btn btn-info me-1">
+                        <div class="modal fade" id="exampleModaledit9" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Guidelines Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetHrISMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Guidelines Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetHrISMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateHrISMSGuidelines()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteHrISMSGuidelines(item.documentID)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path
@@ -1004,7 +1066,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
+    <div class="tablebottom1" *ngIf="selectedOption3 === 'ISMS'">
         <table class="table table-striped table-bordered" name="hrisms3">
             <thead class="table-primary">
                 <tr>
@@ -1014,10 +1076,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">Mark</th>
-                    <td >Mark</td>
-                    <td>Mark</td>
+                <tr *ngFor="let item of HrIsmsPolicydata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
                             data-bs-target="#exampleModal10">
@@ -1034,29 +1100,29 @@
                         <div class="modal-dialog modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Policy Document</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                        aria-label="Close"  (click)="resetHrISMS(); GetHrISMSPolicylist()"></button>
                                 </div>
                                 <div class="modal-body">
                                    <div class="divmodal">
                                     <label>Policy Document Name</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
                                    </div>
                                    <div class="divmodal">
                                     <label>URL</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
                                    </div>
                                    <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Add</button>
+                                        data-bs-dismiss="modal" (click)="resetHrISMS(); GetHrISMSPolicylist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddHrISMSPolicy()">Add</button>
                                    </div>
                                 </div>
                             </div>
                         </div>
                         </div>
-                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit">
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit10" (click)="EditHrISMSPolicy(item.documentID)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path
@@ -1065,7 +1131,34 @@
                                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                             </svg>
                         </button>
-                        <button class="btn btn-info me-1">
+                        <div class="modal fade" id="exampleModaledit10" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Policy Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetHrISMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Policy Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetHrISMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateHrISMSPolicy()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteHrISMSPolicy(item.documentID)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path
@@ -1077,7 +1170,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
+    <div class="tablebottom1" *ngIf="selectedOption3 === 'ISMS'">
         <table class="table table-striped table-bordered" name="hrisms4">
             <thead class="table-primary">
                 <tr>
@@ -1087,10 +1180,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">Mark</th>
-                    <td >Mark</td>
-                    <td>Mark</td>
+                <tr *ngFor="let item of HrIsmsProceduredata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td>  
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
                             data-bs-target="#exampleModal11">
@@ -1107,29 +1204,29 @@
                         <div class="modal-dialog modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Procedure Document</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                        aria-label="Close" (click)="resetHrISMS(); GetHrISMSProcedurelist()"></button>
                                 </div>
                                 <div class="modal-body">
                                    <div class="divmodal">
                                     <label>Procedure Document Name</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
                                    </div>
                                    <div class="divmodal">
                                     <label>URL</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
                                    </div>
                                    <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Add</button>
+                                        data-bs-dismiss="modal" (click)="resetHrISMS(); GetHrISMSProcedurelist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddHrISMSProcedure()">Add</button>
                                    </div>
                                 </div>
                             </div>
                         </div>
                         </div>
-                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit">
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit11"  (click)="EditHrISMSProcedure(item.documentID)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path
@@ -1138,7 +1235,34 @@
                                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                             </svg>
                         </button>
-                        <button class="btn btn-info me-1">
+                        <div class="modal fade" id="exampleModaledit11" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Procedure Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetHrISMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Procedure Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetHrISMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateHrISMSProcedure()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteHrISMSProcedure(item.documentID)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path
@@ -1150,7 +1274,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
+    <div class="tablebottom1" *ngIf="selectedOption3 === 'ISMS'">
         <table class="table table-striped table-bordered" name="hrisms5">
             <thead class="table-primary">
                 <tr>
@@ -1160,10 +1284,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">Mark</th>
-                    <td >Mark</td>
-                    <td>Mark</td>
+                <tr *ngFor="let item of HrIsmsFormatdata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td>  
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
                             data-bs-target="#exampleModal12">
@@ -1180,29 +1308,29 @@
                         <div class="modal-dialog modal-dialog-scrollable">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Formats Document</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                        aria-label="Close" (click)="resetHrISMS(); GetHrISMSFormatlist()"></button>
                                 </div>
                                 <div class="modal-body">
                                    <div class="divmodal">
                                     <label>Formats Document Name</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
                                    </div>
                                    <div class="divmodal">
                                     <label>URL</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
                                    </div>
                                    <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Add</button>
+                                        data-bs-dismiss="modal" (click)="resetHrISMS(); GetHrISMSFormatlist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddHrISMSFormat()">Add</button>
                                    </div>
                                 </div>
                             </div>
                         </div>
                         </div>
-                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit">
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit12" (click)="EditHrISMSFormat(item.documentID)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path
@@ -1211,7 +1339,34 @@
                                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                             </svg>
                         </button>
-                        <button class="btn btn-info me-1">
+                        <div class="modal fade" id="exampleModaledit12" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Formats Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetHrISMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Formats Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetHrISMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateHrISMSFormat()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteHrISMSFormat(item.documentID)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path
@@ -1223,7 +1378,527 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
+    <div class="tablebottom1" *ngIf="selectedOption3 === 'QMS'">
+        <table class="table table-striped table-bordered" name="hrqms1">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">General Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of HrqmsGeneraldata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal13">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal13" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - General Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetHrQMS(); GetHrQMSGenerallist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>General Document Name</label>
+                                    <input type="text" class="form-control" name="generaldocname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetHrQMS(); GetHrQMSGenerallist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddHrQMSGeneral()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit13" (click)="EditHrQMSGeneral(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit13" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - General Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetHrQMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>General Document Name</label>
+                                     <input type="text" class="form-control" name="generaldocname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetHrQMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateHrQMSGeneral()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteHrQMSGeneral(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div> 
+    <div class="tablebottom1" *ngIf="selectedOption3 === 'QMS'">
+        <table class="table table-striped table-bordered" name="hrqms2">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Guidelines Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of HrqmsGuidelinesdata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal14">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal14" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Guidelines Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetHrQMS(); GetHrQMSGuidelineslist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Guidelines Document Name</label>
+                                    <input type="text" class="form-control"  name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetHrQMS(); GetHrQMSGuidelineslist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddHrQMSGuidelines()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit14" (click)="EditHrQMSGuidelines(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit14" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Guidelines Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetHrQMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Guidelines Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetHrQMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateHrQMSGuidelines()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteHrQMSGuidelines(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tablebottom1" *ngIf="selectedOption3 === 'QMS'">
+        <table class="table table-striped table-bordered" name="hrqms3">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Policy Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of HrqmsPolicydata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal15">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal15" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Policy Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"  (click)="resetHrQMS(); GetHrQMSPolicylist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Policy Document Name</label>
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetHrQMS(); GetHrQMSPolicylist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddHrQMSPolicy()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit15" (click)="EditHrQMSPolicy(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit15" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Policy Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetHrQMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Policy Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetHrQMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateHrQMSPolicy()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteHrQMSPolicy(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tablebottom1" *ngIf="selectedOption3 === 'QMS'">
+        <table class="table table-striped table-bordered" name="hrqms4">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Procedure Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of HrqmsProceduredata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td>  
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal16">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal16" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Procedure Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetHrQMS(); GetHrQMSProcedurelist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Procedure Document Name</label>
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetHrQMS(); GetHrQMSProcedurelist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddHrQMSProcedure()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit16"  (click)="EditHrQMSProcedure(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit16" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Procedure Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetHrQMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Procedure Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetHrQMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateHrQMSProcedure()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteHrQMSProcedure(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tablebottom1" *ngIf="selectedOption3 === 'QMS'">
+        <table class="table table-striped table-bordered" name="hrqms5">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Formats Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of HrqmsFormatdata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td>  
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal17">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal17" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Formats Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetHrQMS(); GetHrQMSFormatlist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Formats Document Name</label>
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetHrQMS(); GetHrQMSFormatlist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddHrQMSFormat()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit17" (click)="EditHrQMSFormat(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit17" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Formats Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetHrQMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Formats Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetHrQMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateHrQMSFormat()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteHrQMSFormat(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- <div class="tablebottom1" *ngIf="selectedOption3 === 'QSMS'">
         <table class="table table-striped table-bordered" name="hrqms1">
             <thead class="table-primary">
                 <tr>
@@ -1296,7 +1971,7 @@
             </tbody>
         </table>
     </div> 
-    <div class="tablebottom">
+    <div class="tablebottom1" *ngIf="selectedOption3 === 'QSMS'">
         <table class="table table-striped table-bordered" name="hrqms2">
             <thead class="table-primary">
                 <tr>
@@ -1369,7 +2044,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
+    <div class="tablebottom1" *ngIf="selectedOption3 === 'QSMS'">
         <table class="table table-striped table-bordered" name="hrqms3">
             <thead class="table-primary">
                 <tr>
@@ -1442,7 +2117,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
+    <div class="tablebottom1" *ngIf="selectedOption3 === 'QSMS'">
         <table class="table table-striped table-bordered" name="hrqms4">
             <thead class="table-primary">
                 <tr>
@@ -1515,7 +2190,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
+    <div class="tablebottom1" *ngIf="selectedOption3 === 'QSMS'">
         <table class="table table-striped table-bordered" name="hrqms5">
             <thead class="table-primary">
                 <tr>
@@ -1587,7 +2262,7 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div> -->
     <div class="tablebottom">
         <table class="table table-striped table-bordered" name="osisms1">
             <thead class="table-primary">

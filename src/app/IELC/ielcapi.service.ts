@@ -302,24 +302,105 @@ export class IelcapiService {
       return this.http.get<any>(this.hrismsgeneralUrl);
     }
 
+    PostHrismsgeneral(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.hrismsgeneralUrl, data);
+    }
+
+    GetHrismsgeneralById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.hrismsgeneralUrl}/${id}`);
+    }
+
+    UpdateHrismsgeneral(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.hrismsgeneralUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteHrismsgeneralById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.hrismsgeneralUrl}/${id}`);
+    }
+
     hrismsguidelineUrl='https://ielc-coreapi.azurewebsites.net/HRSupportGuidelinessISMS';
     Gethrismsguidelines(): Observable<any> {
       return this.http.get<any>(this.hrismsguidelineUrl);
+    }
+    PostHrismsguideline(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.hrismsguidelineUrl, data);
+    }
+
+    GetHrismsguidelineById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.hrismsguidelineUrl}/${id}`);
+    }
+
+    UpdateHrismsguideline(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.hrismsguidelineUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteHrismsguidelineById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.hrismsguidelineUrl}/${id}`);
     }
 
     hrismspolicyUrl='https://ielc-coreapi.azurewebsites.net/HRSupportPolicyISMS';
     Gethrismspolicy(): Observable<any> {
       return this.http.get<any>(this.hrismspolicyUrl);
     }
+    PostHrismspolicy(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.hrismspolicyUrl, data);
+    }
+
+    GetHrismspolicyById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.hrismspolicyUrl}/${id}`);
+    }
+
+    UpdateHrismspolicy(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.hrismspolicyUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteHrismspolicyById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.hrismspolicyUrl}/${id}`);
+    }
 
     hrismsprocedureUrl='https://ielc-coreapi.azurewebsites.net/HRSupportProcedureISMS';
     Gethrismsprocedure(): Observable<any> {
       return this.http.get<any>(this.hrismsprocedureUrl);
     }
+    PostHrismsprocedure(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.hrismsprocedureUrl, data);
+    }
+
+    GetHrismsprocedureById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.hrismsprocedureUrl}/${id}`);
+    }
+
+    UpdateHrismsprocedure(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.hrismsprocedureUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteHrismsprocedureById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.hrismsprocedureUrl}/${id}`);
+    }
 
     hrismsformatUrl='https://ielc-coreapi.azurewebsites.net/HRSupportFormatsISMS';
     Gethrismsformat(): Observable<any> {
       return this.http.get<any>(this.hrismsformatUrl);
+    }
+    PostHrismsformat(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.hrismsformatUrl, data);
+    }
+
+    GetHrismsformatById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.hrismsformatUrl}/${id}`);
+    }
+
+    UpdateHrismsformat(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.hrismsformatUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteHrismsformatById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.hrismsformatUrl}/${id}`);
     }
 
     hrqmsgeneralUrl='https://ielc-coreapi.azurewebsites.net/HRSupportGeneralQMS';
@@ -327,14 +408,66 @@ export class IelcapiService {
       return this.http.get<any>(this.hrqmsgeneralUrl);
     }
 
+    PostHrqmsgeneral(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.hrqmsgeneralUrl, data);
+    }
+
+    GetHrqmsgeneralById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.hrqmsgeneralUrl}/${id}`);
+    }
+
+    UpdateHrqmsgeneral(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.hrqmsgeneralUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteHrqmsgeneralById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.hrqmsgeneralUrl}/${id}`);
+    }
+
     hrqmsguidelineUrl='https://ielc-coreapi.azurewebsites.net/HRSupportGuidelinessQMS';
     Gethrqmsguidelines(): Observable<any> {
       return this.http.get<any>(this.hrqmsguidelineUrl);
     }
+    
+    PostHrqmsguideline(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.hrqmsguidelineUrl, data);
+    }
+
+    GetHrqmsguidelineById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.hrqmsguidelineUrl}/${id}`);
+    }
+
+    UpdateHrqmsguideline(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.hrqmsguidelineUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteHrqmsguidelineById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.hrqmsguidelineUrl}/${id}`);
+    }
+
 
     hrqmspolicyUrl='https://ielc-coreapi.azurewebsites.net/HRSupportPolicyQMS';
     Gethrqmspolicy(): Observable<any> {
       return this.http.get<any>(this.hrqmspolicyUrl);
+    }
+    
+    PostHrqmspolicy(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.hrqmspolicyUrl, data);
+    }
+
+    GetHrqmspolicyById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.hrqmspolicyUrl}/${id}`);
+    }
+
+    UpdateHrqmspolicy(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.hrqmspolicyUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteHrqmspolicyById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.hrqmspolicyUrl}/${id}`);
     }
 
     hrqmsprocedureUrl='https://ielc-coreapi.azurewebsites.net/HRSupportProcedureQMS';
@@ -342,9 +475,43 @@ export class IelcapiService {
       return this.http.get<any>(this.hrqmsprocedureUrl);
     }
 
+    PostHrqmsprocedure(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.hrqmsprocedureUrl, data);
+    }
+
+    GetHrqmsprocedureById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.hrqmsprocedureUrl}/${id}`);
+    }
+
+    UpdateHrqmsprocedure(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.hrqmsprocedureUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteHrqmsprocedureById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.hrqmsprocedureUrl}/${id}`);
+    }
+
     hrqmsformatUrl='https://ielc-coreapi.azurewebsites.net/HRSupportFormatsQMS';
     Gethrqmsformat(): Observable<any> {
       return this.http.get<any>(this.hrqmsformatUrl);
+    }
+    
+    PostHrqmsformat(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.hrqmsformatUrl, data);
+    }
+
+    GetHrqmsformatById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.hrqmsformatUrl}/${id}`);
+    }
+
+    UpdateHrqmsformat(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.hrqmsformatUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteHrqmsformatById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.hrqmsformatUrl}/${id}`);
     }
 
   //---------------------------------------------------------------------------------------Inteq Project Support

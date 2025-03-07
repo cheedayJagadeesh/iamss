@@ -41,6 +41,12 @@ interface isosprtinfo{
   mobile: number;
   email: string;
 }
+interface docs{
+  documentID: number;
+  documentName: string;
+  url: string;
+}
+
 @Component({
   selector: 'app-adminusers',
   templateUrl: './adminusers.component.html',
@@ -50,16 +56,23 @@ export class AdminusersComponent {
   // selectedOption: string = '';
   selectedOption1: string = '';
   selectedOption2: string = '';
+  selectedOption3: string = '';
   isContactSelected: boolean = false;
+  isHRSelected: boolean = false;
 
 onSelection1Change() {
   this.isContactSelected = this.selectedOption1 === 'Contact';
+  this.isHRSelected = this.selectedOption1 === 'HRSupport';
 
 }
 onSelection2Change() {
   // if (this.selectedOption2 === 'INTEQITSupport') {
   //   this.isContactSelected = true; 
   // }
+  // this.isHRSelected = this.selectedOption2 === 'HRSupport';
+}
+onSelection3Change() {
+  
 }
 
 
@@ -110,6 +123,21 @@ onSelection2Change() {
     mobile: 0,
     email: '',
  }
+ docsdata:docs={
+  documentID: 0,
+  documentName: '',
+  url: '',
+ }
+ HrIsmsGeneraldata: any[] = []; 
+ HrIsmsGuidelinesdata: any[] = []; 
+ HrIsmsPolicydata: any[] = []; 
+ HrIsmsProceduredata: any[] = []; 
+ HrIsmsFormatdata: any[] = []; 
+ HrqmsGeneraldata: any[] = []; 
+ HrqmsGuidelinesdata: any[] = []; 
+ HrqmsPolicydata: any[] = []; 
+ HrqmsProceduredata: any[] = []; 
+ HrqmsFormatdata: any[] = []; 
   
   constructor(private ielc:IelcapiService) {
 
@@ -127,6 +155,16 @@ onSelection2Change() {
     this.GetEmerSprtlist();
     this.GetIsoSprtlist();
     this.GetIso9001Sprtlist();
+    this.GetHrISMSGenerallist();
+    this.GetHrISMSGuidelineslist();
+    this.GetHrISMSPolicylist();
+    this.GetHrISMSProcedurelist();
+    this.GetHrISMSFormatlist();
+    this.GetHrQMSGenerallist();
+    this.GetHrQMSGuidelineslist();
+    this.GetHrQMSPolicylist();
+    this.GetHrQMSProcedurelist();
+    this.GetHrQMSFormatlist();
   }
 
 //-------------------------------------------------------------------------------SMTP
@@ -650,4 +688,694 @@ resetISO9001Sprt(){
     email: '',
   }
 }
+
+//-------------------------------------------------------------------------------HR ISMS
+GetHrISMSGenerallist(){
+  this.ielc.Gethrismsgeneral().subscribe((data) => {
+    this.HrIsmsGeneraldata=data;
+    this.isLoading = false;
+  });
+ }
+
+ 
+ AddHrISMSGeneral(): void {
+  this.ielc.PostHrismsgeneral(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetHrISMSGenerallist();
+      this.resetHrISMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+
+deleteHrISMSGeneral(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteHrismsgeneralById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetHrISMSGenerallist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditHrISMSGeneral(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetHrismsgeneralById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateHrISMSGeneral() {
+  this.ielc.UpdateHrismsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetHrISMSGenerallist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+resetHrISMS(){
+  this.docsdata={
+    documentID: 0,
+    documentName: '',
+    url: '',
+  }
+}
+ GetHrISMSGuidelineslist(){
+  this.ielc.Gethrismsguidelines().subscribe((data) => {
+    this.HrIsmsGuidelinesdata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddHrISMSGuidelines(): void {
+  this.ielc.PostHrismsguideline(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetHrISMSGuidelineslist();
+      this.resetHrISMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteHrISMSGuidelines(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteHrismsguidelineById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetHrISMSGuidelineslist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditHrISMSGuidelines(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetHrismsguidelineById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateHrISMSGuidelines() {
+  this.ielc.UpdateHrismsguideline(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetHrISMSGuidelineslist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+ GetHrISMSPolicylist(){
+  this.ielc.Gethrismspolicy().subscribe((data) => {
+    this.HrIsmsPolicydata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddHrISMSPolicy(): void {
+  this.ielc.PostHrismspolicy(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetHrISMSPolicylist();
+      this.resetHrISMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteHrISMSPolicy(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteHrismspolicyById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetHrISMSPolicylist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditHrISMSPolicy(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetHrismspolicyById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateHrISMSPolicy() {
+  this.ielc.UpdateHrismspolicy(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetHrISMSPolicylist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+ GetHrISMSProcedurelist(){
+  this.ielc.Gethrismsprocedure().subscribe((data) => {
+    this.HrIsmsProceduredata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddHrISMSProcedure(): void {
+  this.ielc.PostHrismsprocedure(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetHrISMSProcedurelist();
+      this.resetHrISMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteHrISMSProcedure(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteHrismsprocedureById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetHrISMSProcedurelist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditHrISMSProcedure(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetHrismsprocedureById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateHrISMSProcedure() {
+  this.ielc.UpdateHrismsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetHrISMSProcedurelist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+ GetHrISMSFormatlist(){
+  this.ielc.Gethrismsformat().subscribe((data) => {
+    this.HrIsmsFormatdata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddHrISMSFormat(): void {
+  this.ielc.PostHrismsformat(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetHrISMSFormatlist();
+      this.resetHrISMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteHrISMSFormat(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteHrismsformatById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetHrISMSFormatlist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditHrISMSFormat(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetHrismsformatById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateHrISMSFormat() {
+  this.ielc.UpdateHrismsformat(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetHrISMSFormatlist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+//-------------------------------------------------------------------------------------------HR QMS
+GetHrQMSGenerallist(){
+  this.ielc.Gethrqmsgeneral().subscribe((data) => {
+    this.HrqmsGeneraldata=data;
+    this.isLoading = false;
+  });
+ }
+
+ 
+ AddHrQMSGeneral(): void {
+  this.ielc.PostHrqmsgeneral(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetHrQMSGenerallist();
+      this.resetHrQMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+
+deleteHrQMSGeneral(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteHrqmsgeneralById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetHrQMSGenerallist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditHrQMSGeneral(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetHrqmsgeneralById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateHrQMSGeneral() {
+  this.ielc.UpdateHrqmsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetHrQMSGenerallist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+resetHrQMS(){
+  this.docsdata={
+    documentID: 0,
+    documentName: '',
+    url: '',
+  }
+}
+ GetHrQMSGuidelineslist(){
+  this.ielc.Gethrqmsguidelines().subscribe((data) => {
+    this.HrqmsGuidelinesdata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddHrQMSGuidelines(): void {
+  this.ielc.PostHrqmsguideline(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetHrQMSGuidelineslist();
+      this.resetHrQMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteHrQMSGuidelines(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteHrqmsguidelineById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetHrQMSGuidelineslist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditHrQMSGuidelines(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetHrqmsguidelineById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateHrQMSGuidelines() {
+  this.ielc.UpdateHrqmsguideline(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetHrQMSGuidelineslist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+ GetHrQMSPolicylist(){
+  this.ielc.Gethrqmspolicy().subscribe((data) => {
+    this.HrqmsPolicydata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddHrQMSPolicy(): void {
+  this.ielc.PostHrqmspolicy(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetHrQMSPolicylist();
+      this.resetHrISMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteHrQMSPolicy(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteHrqmspolicyById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetHrQMSPolicylist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditHrQMSPolicy(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetHrqmspolicyById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateHrQMSPolicy() {
+  this.ielc.UpdateHrqmspolicy(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetHrQMSPolicylist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+ GetHrQMSProcedurelist(){
+  this.ielc.Gethrqmsprocedure().subscribe((data) => {
+    this.HrqmsProceduredata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddHrQMSProcedure(): void {
+  this.ielc.PostHrqmsprocedure(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetHrQMSProcedurelist();
+      this.resetHrISMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteHrQMSProcedure(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteHrqmsprocedureById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetHrQMSProcedurelist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditHrQMSProcedure(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetHrqmsprocedureById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateHrQMSProcedure() {
+  this.ielc.UpdateHrqmsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetHrQMSProcedurelist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+ GetHrQMSFormatlist(){
+  this.ielc.Gethrqmsformat().subscribe((data) => {
+    this.HrqmsFormatdata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddHrQMSFormat(): void {
+  this.ielc.PostHrqmsformat(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetHrQMSFormatlist();
+      this.resetHrISMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteHrQMSFormat(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteHrqmsformatById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetHrQMSFormatlist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditHrQMSFormat(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetHrqmsformatById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateHrQMSFormat() {
+  this.ielc.UpdateHrqmsformat(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetHrQMSFormatlist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+
+
 }

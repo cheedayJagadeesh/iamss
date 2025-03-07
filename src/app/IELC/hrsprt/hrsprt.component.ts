@@ -55,7 +55,7 @@ isLoading = true;
    this.GetHrSprtlist();
    this.GetHrISMSGenerallist();
    this.GetHrISMSGuidelineslist();
-   this. GetHrISMSPolicylist();
+   this.GetHrISMSPolicylist();
    this.GetHrISMSProcedurelist();
    this.GetHrISMSFormatlist();
    this.GetHrQMSGenerallist();
