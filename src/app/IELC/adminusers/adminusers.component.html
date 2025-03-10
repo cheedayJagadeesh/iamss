@@ -51,7 +51,8 @@
             </select>
         </div>
         </div>
-        <div  [hidden]="!isHRSelected">
+        <div  [hidden]="!(isHRSelected || isOSSelected || isITSelected)">
+        <!-- <div  *ngIf="isHRSelected || isOSSelected"> -->
         <div class="">
             <label for="Empname" class="form-label2">Select Type</label>
         </div>
@@ -858,7 +859,7 @@
             </tbody>
         </table>
     </div> 
-    <div class="tablebottom1" *ngIf="selectedOption3 === 'ISMS'">
+    <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'ISMS'">
         <table class="table table-striped table-bordered" name="hrisms1">
             <thead class="table-primary">
                 <tr>
@@ -962,7 +963,7 @@
             </tbody>
         </table>
     </div> 
-    <div class="tablebottom1" *ngIf="selectedOption3 === 'ISMS'">
+    <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'ISMS'">
         <table class="table table-striped table-bordered" name="hrisms2">
             <thead class="table-primary">
                 <tr>
@@ -1066,7 +1067,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom1" *ngIf="selectedOption3 === 'ISMS'">
+    <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'ISMS'">
         <table class="table table-striped table-bordered" name="hrisms3">
             <thead class="table-primary">
                 <tr>
@@ -1170,7 +1171,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom1" *ngIf="selectedOption3 === 'ISMS'">
+    <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'ISMS'">
         <table class="table table-striped table-bordered" name="hrisms4">
             <thead class="table-primary">
                 <tr>
@@ -1274,7 +1275,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom1" *ngIf="selectedOption3 === 'ISMS'">
+    <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'ISMS'">
         <table class="table table-striped table-bordered" name="hrisms5">
             <thead class="table-primary">
                 <tr>
@@ -1378,7 +1379,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom1" *ngIf="selectedOption3 === 'QMS'">
+    <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'QMS'">
         <table class="table table-striped table-bordered" name="hrqms1">
             <thead class="table-primary">
                 <tr>
@@ -1482,7 +1483,7 @@
             </tbody>
         </table>
     </div> 
-    <div class="tablebottom1" *ngIf="selectedOption3 === 'QMS'">
+    <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'QMS'">
         <table class="table table-striped table-bordered" name="hrqms2">
             <thead class="table-primary">
                 <tr>
@@ -1586,7 +1587,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom1" *ngIf="selectedOption3 === 'QMS'">
+    <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'QMS'">
         <table class="table table-striped table-bordered" name="hrqms3">
             <thead class="table-primary">
                 <tr>
@@ -1690,7 +1691,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom1" *ngIf="selectedOption3 === 'QMS'">
+    <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'QMS'">
         <table class="table table-striped table-bordered" name="hrqms4">
             <thead class="table-primary">
                 <tr>
@@ -1794,7 +1795,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom1" *ngIf="selectedOption3 === 'QMS'">
+    <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'QMS'">
         <table class="table table-striped table-bordered" name="hrqms5">
             <thead class="table-primary">
                 <tr>
@@ -2263,7 +2264,1047 @@
             </tbody>
         </table>
     </div> -->
-    <div class="tablebottom">
+    <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'ISMS'">
+        <table class="table table-striped table-bordered" name="osisms1">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">General Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of OsIsmsGeneraldata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal18">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal18" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - General Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetOsISMS(); GetOsISMSGenerallist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>General Document Name</label>
+                                    <input type="text" class="form-control" name="generaldocname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetOsISMS(); GetOsISMSGenerallist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddOsISMSGeneral()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit18" (click)="EditOsISMSGeneral(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit18" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - General Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetOsISMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>General Document Name</label>
+                                     <input type="text" class="form-control" name="generaldocname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetOsISMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateOsISMSGeneral()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteOsISMSGeneral(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div> 
+    <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'ISMS'">
+        <table class="table table-striped table-bordered" name="osisms2">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Guidelines Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of OsIsmsGuidelinesdata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal19">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal19" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Guidelines Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetOsISMS(); GetOsISMSGuidelineslist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Guidelines Document Name</label>
+                                    <input type="text" class="form-control"  name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetOsISMS(); GetOsISMSGuidelineslist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddOsISMSGuidelines()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit19" (click)="EditOsISMSGuidelines(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit19" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Guidelines Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetOsISMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Guidelines Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetOsISMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateOsISMSGuidelines()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteOsISMSGuidelines(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'ISMS'">
+        <table class="table table-striped table-bordered" name="osisms3">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Policy Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of OsIsmsPolicydata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal20">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal20" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Policy Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"  (click)="resetOsISMS(); GetOsISMSPolicylist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Policy Document Name</label>
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetOsISMS(); GetOsISMSPolicylist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddOsISMSPolicy()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit20" (click)="EditOsISMSPolicy(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit20" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Policy Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetOsISMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Policy Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetOsISMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateOsISMSPolicy()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteOsISMSPolicy(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'ISMS'">
+        <table class="table table-striped table-bordered" name="osisms4">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Procedure Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of OsIsmsProceduredata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td>  
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal21">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal21" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Procedure Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetOsISMS(); GetOsISMSProcedurelist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Procedure Document Name</label>
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetOsISMS(); GetOsISMSProcedurelist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddOsISMSProcedure()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit21"  (click)="EditOsISMSProcedure(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit21" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Procedure Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetOsISMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Procedure Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetOsISMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateOsISMSProcedure()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteOsISMSProcedure(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'ISMS'">
+        <table class="table table-striped table-bordered" name="osisms5">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Formats Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of OsIsmsFormatdata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td>  
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal22">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal22" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Formats Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetOsISMS(); GetOsISMSFormatlist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Formats Document Name</label>
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetOsISMS(); GetOsISMSFormatlist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddOsISMSFormat()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit22" (click)="EditOsISMSFormat(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit22" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Formats Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetOsISMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Formats Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetOsISMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateOsISMSFormat()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteOsISMSFormat(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tablebottom1" *ngIf="isOSSelected &&selectedOption3 === 'QMS'">
+        <table class="table table-striped table-bordered" name="osqms1">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">General Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of OsqmsGeneraldata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal23">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal23" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - General Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetOsQMS(); GetOsQMSGenerallist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>General Document Name</label>
+                                    <input type="text" class="form-control" name="generaldocname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetOsQMS(); GetOsQMSGenerallist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddOsQMSGeneral()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit23" (click)="EditOsQMSGeneral(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit23" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - General Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetOsQMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>General Document Name</label>
+                                     <input type="text" class="form-control" name="generaldocname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetOsQMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateOsQMSGeneral()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteOsQMSGeneral(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div> 
+    <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'QMS'">
+        <table class="table table-striped table-bordered" name="osqms2">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Guidelines Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of OsqmsGuidelinesdata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal24">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal24" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Guidelines Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetOsQMS(); GetOsQMSGuidelineslist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Guidelines Document Name</label>
+                                    <input type="text" class="form-control"  name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetOsQMS(); GetOsQMSGuidelineslist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddOsQMSGuidelines()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit24" (click)="EditOsQMSGuidelines(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit24" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Guidelines Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetOsQMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Guidelines Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetOsQMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateOsQMSGuidelines()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteOsQMSGuidelines(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'QMS'">
+        <table class="table table-striped table-bordered" name="osqms3">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Policy Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of OsqmsPolicydata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal25">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal25" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Policy Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"  (click)="resetOsQMS(); GetOsQMSPolicylist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Policy Document Name</label>
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetOsQMS(); GetOsQMSPolicylist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddOsQMSPolicy()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit25" (click)="EditOsQMSPolicy(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit25" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Policy Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetOsQMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Policy Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetOsQMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateOsQMSPolicy()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteOsQMSPolicy(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'QMS'">
+        <table class="table table-striped table-bordered" name="osqms4">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Procedure Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of OsqmsProceduredata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td>  
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal26">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal26" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Procedure Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetOsQMS(); GetOsQMSProcedurelist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Procedure Document Name</label>
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetOsQMS(); GetOsQMSProcedurelist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddOsQMSProcedure()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit26"  (click)="EditOsQMSProcedure(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit26" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Procedure Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetOsQMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Procedure Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetOsQMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateOsQMSProcedure()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteOsQMSProcedure(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'QMS'">
+        <table class="table table-striped table-bordered" name="osqms5">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Formats Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of OsqmsFormatdata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td>  
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal27">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal27" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Formats Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetOsQMS(); GetOsQMSFormatlist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Formats Document Name</label>
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetOsQMS(); GetOsQMSFormatlist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddOsQMSFormat()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit27" (click)="EditOsQMSFormat(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit27" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Formats Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetOsQMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Formats Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetOsQMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateOsQMSFormat()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteOsQMSFormat(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'ISMS'">
         <table class="table table-striped table-bordered" name="osisms1">
             <thead class="table-primary">
                 <tr>
@@ -2627,8 +3668,8 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-    <div class="tablebottom">
+    </div> -->
+    <!-- <div class="tablebottom">
         <table class="table table-striped table-bordered" name="osqms1">
             <thead class="table-primary">
                 <tr>
@@ -2992,8 +4033,9 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-    <div class="tablebottom">
+    </div> -->
+   
+    <div class="tablebottom1"  *ngIf="selectedOption1 === 'ISMSSupport'">
         <table class="table table-striped table-bordered" name="ismssprt">
             <thead class="table-primary">
                 <tr>
@@ -3003,10 +4045,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">Mark</th>
-                    <td >Mark</td>
-                    <td>Mark</td>
+                <tr *ngFor="let item of IsmsSprtdata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
                             data-bs-target="#exampleModal28">
@@ -3025,27 +4071,27 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                        aria-label="Close"  (click)="resetIsmsSprt(); GetIsmsSprt()"></button>
                                 </div>
                                 <div class="modal-body">
                                    <div class="divmodal">
                                     <label>Document Name</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
                                    </div>
                                    <div class="divmodal">
                                     <label>URL</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
                                    </div>
                                    <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Add</button>
+                                        data-bs-dismiss="modal" (click)="resetIsmsSprt(); GetIsmsSprt()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddIsmsSprt()">Add</button>
                                    </div>
                                 </div>
                             </div>
                         </div>
                         </div>
-                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit">
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit28" (click)="EditIsmsSprt(item.documentID)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path
@@ -3054,7 +4100,34 @@
                                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                             </svg>
                         </button>
-                        <button class="btn btn-info me-1">
+                        <div class="modal fade" id="exampleModaledit28" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetIsmsSprt()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetIsmsSprt()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateOsQMSProcedure()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteIsmsSprt(item.documentID)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path
@@ -3066,7 +4139,111 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
+    <div class="tablebottom1"  *ngIf="selectedOption1 === 'ISOSupport'">
+        <table class="table table-striped table-bordered" name="isosprt">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of IsoSprtdata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal29">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal29" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"  (click)="resetIsoSprt(); GetIsoSprt()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Document Name</label>
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetIsoSprt(); GetIsoSprt()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddIsoSprt()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit29" (click)="EditIsoSprt(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit29" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetIsoSprt()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetIsoSprt()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateIsoSprt()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteIsoSprt(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- <div class="tablebottom">
         <table class="table table-striped table-bordered" name="isosprt">
             <thead class="table-primary">
                 <tr>
@@ -3138,8 +4315,1048 @@
                 </tr>
             </tbody>
         </table>
+    </div> -->
+    <div class="tablebottom1" *ngIf="isITSelected && selectedOption3 === 'ISMS'">
+        <table class="table table-striped table-bordered" name="itisms1">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">General Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of ItIsmsGeneraldata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal30">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal30" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - General Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetItISMS(); GetItISMSGenerallist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>General Document Name</label>
+                                    <input type="text" class="form-control" name="generaldocname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetItISMS(); GetItISMSGenerallist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddItISMSGeneral()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit30" (click)="EditItISMSGeneral(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit30" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - General Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetItISMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>General Document Name</label>
+                                     <input type="text" class="form-control" name="generaldocname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetItISMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateItISMSGeneral()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteItISMSGeneral(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div> 
+    <div class="tablebottom1" *ngIf="isITSelected && selectedOption3 === 'ISMS'">
+        <table class="table table-striped table-bordered" name="itisms2">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Guidelines Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of ItIsmsGuidelinesdata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal31">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal31" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Guidelines Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetItISMS(); GetItISMSGuidelineslist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Guidelines Document Name</label>
+                                    <input type="text" class="form-control"  name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetItISMS(); GetItISMSGuidelineslist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddItISMSGuidelines()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit31" (click)="EditItISMSGuidelines(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit31" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Guidelines Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetItISMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Guidelines Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetItISMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateItISMSGuidelines()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteItISMSGuidelines(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <div class="tablebottom">
+    <div class="tablebottom1" *ngIf="isITSelected && selectedOption3 === 'ISMS'">
+        <table class="table table-striped table-bordered" name="itisms3">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Policy Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of ItIsmsPolicydata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal32">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal32" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Policy Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"  (click)="resetItISMS(); GetItISMSPolicylist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Policy Document Name</label>
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetItISMS(); GetItISMSPolicylist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddItISMSPolicy()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit32" (click)="EditItISMSPolicy(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit32" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Policy Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetItISMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Policy Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetItISMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateItISMSPolicy()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteItISMSPolicy(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tablebottom1" *ngIf="isITSelected && selectedOption3 === 'ISMS'">
+        <table class="table table-striped table-bordered" name="itisms4">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Procedure Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of ItIsmsProceduredata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td>  
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal33">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal33" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Procedure Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetItISMS(); GetItISMSProcedurelist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Procedure Document Name</label>
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetItISMS(); GetItISMSProcedurelist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddItISMSProcedure()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit33"  (click)="EditItISMSProcedure(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit33" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Procedure Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetItISMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Procedure Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetItISMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateItISMSProcedure()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteItISMSProcedure(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tablebottom1" *ngIf="isITSelected && selectedOption3 === 'ISMS'">
+        <table class="table table-striped table-bordered" name="itisms5">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Formats Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of ItIsmsFormatdata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td>  
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal34">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal34" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Formats Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetItISMS(); GetItISMSFormatlist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Formats Document Name</label>
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetItISMS(); GetItISMSFormatlist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddItISMSFormat()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit34" (click)="EditItISMSFormat(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit34" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Formats Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetItISMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Formats Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetItISMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateItISMSFormat()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteItISMSFormat(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tablebottom1" *ngIf="isITSelected &&selectedOption3 === 'QMS'">
+        <table class="table table-striped table-bordered" name="itqms1">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">General Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of ItqmsGeneraldata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal35">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal35" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - General Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetItQMS(); GetItQMSGenerallist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>General Document Name</label>
+                                    <input type="text" class="form-control" name="generaldocname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetItQMS(); GetItQMSGenerallist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddItQMSGeneral()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit35" (click)="EditItQMSGeneral(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit35" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - General Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetItQMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>General Document Name</label>
+                                     <input type="text" class="form-control" name="generaldocname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetItQMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateItQMSGeneral()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteItQMSGeneral(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div> 
+    <div class="tablebottom1" *ngIf="isITSelected && selectedOption3 === 'QMS'">
+        <table class="table table-striped table-bordered" name="itqms2">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Guidelines Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of ItqmsGuidelinesdata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal36">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal36" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Guidelines Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetItQMS(); GetItQMSGuidelineslist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Guidelines Document Name</label>
+                                    <input type="text" class="form-control"  name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetItQMS(); GetItQMSGuidelineslist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddItQMSGuidelines()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit36" (click)="EditItQMSGuidelines(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit36" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Guidelines Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetItQMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Guidelines Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetItQMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateItQMSGuidelines()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteItQMSGuidelines(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tablebottom1" *ngIf="isITSelected && selectedOption3 === 'QMS'">
+        <table class="table table-striped table-bordered" name="itqms3">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Policy Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of ItqmsPolicydata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal37">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal37" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Policy Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"  (click)="resetItQMS(); GetItQMSPolicylist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Policy Document Name</label>
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetItQMS(); GetItQMSPolicylist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddItQMSPolicy()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit37" (click)="EditItQMSPolicy(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit37" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Policy Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetItQMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Policy Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetItQMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateItQMSPolicy()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteItQMSPolicy(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tablebottom1" *ngIf="isITSelected && selectedOption3 === 'QMS'">
+        <table class="table table-striped table-bordered" name="itqms4">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Procedure Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of ItqmsProceduredata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td>  
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal38">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal38" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Procedure Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetItQMS(); GetItQMSProcedurelist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Procedure Document Name</label>
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetItQMS(); GetItQMSProcedurelist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddItQMSProcedure()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit38"  (click)="EditItQMSProcedure(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit38" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Procedure Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetItQMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Procedure Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetItQMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateItQMSProcedure()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteItQMSProcedure(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="tablebottom1" *ngIf="isITSelected && selectedOption3 === 'QMS'">
+        <table class="table table-striped table-bordered" name="itqms5">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Formats Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of ItqmsFormatdata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td>  
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal39">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal39" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record - Formats Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetItQMS(); GetItQMSFormatlist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Formats Document Name</label>
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetItQMS(); GetItQMSFormatlist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddItQMSFormat()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit39" (click)="EditItQMSFormat(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit39" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record - Formats Document</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetItQMS()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Formats Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetItQMS()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateItQMSFormat()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteItQMSFormat(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- <div class="tablebottom">
         <table class="table table-striped table-bordered" name="itisms1">
             <thead class="table-primary">
                 <tr>
@@ -3868,8 +6085,112 @@
                 </tr>
             </tbody>
         </table>
+    </div> -->
+    <div class="tablebottom1"  *ngIf="selectedOption1 === 'ISPolicy'">
+        <table class="table table-striped table-bordered" name="ispolicy">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">Document Name</th>
+                    <th scope="col" colspan="2">URL</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of IsPolicydata">
+                    <td  style="max-width: 300px;" >{{item.documentName}}</td>
+                    <td >
+                        <span>{{ item.url }}</span>
+                    </td> 
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                    </td> 
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal29">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal29" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"  (click)="resetIsoPolicy(); GetIsoPolicy()"></button>
+                                </div>
+                                <div class="modal-body">
+                                   <div class="divmodal">
+                                    <label>Document Name</label>
+                                    <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>URL</label>
+                                    <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal" (click)="resetIsoPolicy(); GetIsoPolicy()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddIsoPolicy()">Add</button>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit29" (click)="EditIsoPolicy(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit29" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetIsoPolicy()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>Document Name</label>
+                                     <input type="text" class="form-control" name="docname" [(ngModel)]="docsdata.documentName">
+                                    </div>
+                                    <div class="divmodal">
+                                     <label>URL</label>
+                                     <input type="text" class="form-control" name="url" [(ngModel)]="docsdata.url">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetIsoPolicy()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateIsoPolicy()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteIsoPolicy(item.documentID)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
     </div>
-    <div class="tablebottom">
+    <!-- <div class="tablebottom">
         <table class="table table-striped table-bordered" name="ispolicy">
             <thead class="table-primary">
                 <tr>
@@ -3941,7 +6262,7 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div> -->
     <div class="tablebottom">
         <table class="table table-striped table-bordered" name="prjisms1">
             <thead class="table-primary">

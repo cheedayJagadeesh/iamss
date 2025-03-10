@@ -59,10 +59,14 @@ export class AdminusersComponent {
   selectedOption3: string = '';
   isContactSelected: boolean = false;
   isHRSelected: boolean = false;
+  isOSSelected: boolean = false;
+  isITSelected: boolean = false;
 
 onSelection1Change() {
   this.isContactSelected = this.selectedOption1 === 'Contact';
   this.isHRSelected = this.selectedOption1 === 'HRSupport';
+  this.isOSSelected = this.selectedOption1 === 'OperationsSupport';
+  this.isITSelected = this.selectedOption1 === 'ITSupport';
 
 }
 onSelection2Change() {
@@ -74,6 +78,7 @@ onSelection2Change() {
 onSelection3Change() {
   
 }
+
 
 
   isLoading = true;
@@ -138,6 +143,29 @@ onSelection3Change() {
  HrqmsPolicydata: any[] = []; 
  HrqmsProceduredata: any[] = []; 
  HrqmsFormatdata: any[] = []; 
+ OsIsmsGeneraldata: any[] = []; 
+ OsIsmsGuidelinesdata: any[] = []; 
+ OsIsmsPolicydata: any[] = []; 
+ OsIsmsProceduredata: any[] = []; 
+ OsIsmsFormatdata: any[] = []; 
+ OsqmsGeneraldata: any[] = []; 
+ OsqmsGuidelinesdata: any[] = []; 
+ OsqmsPolicydata: any[] = []; 
+ OsqmsProceduredata: any[] = []; 
+ OsqmsFormatdata: any[] = []; 
+ IsmsSprtdata:any[]=[];
+ IsoSprtdata:any[]=[];
+ IsPolicydata:any[]=[];
+ ItIsmsGeneraldata: any[] = []; 
+ ItIsmsGuidelinesdata: any[] = []; 
+ ItIsmsPolicydata: any[] = []; 
+ ItIsmsProceduredata: any[] = []; 
+ ItIsmsFormatdata: any[] = []; 
+ ItqmsGeneraldata: any[] = []; 
+ ItqmsGuidelinesdata: any[] = []; 
+ ItqmsPolicydata: any[] = []; 
+ ItqmsProceduredata: any[] = []; 
+ ItqmsFormatdata: any[] = []; 
   
   constructor(private ielc:IelcapiService) {
 
@@ -165,6 +193,29 @@ onSelection3Change() {
     this.GetHrQMSPolicylist();
     this.GetHrQMSProcedurelist();
     this.GetHrQMSFormatlist();
+    this.GetOsISMSGenerallist();
+    this.GetOsISMSGuidelineslist();
+    this.GetOsISMSPolicylist();
+    this.GetOsISMSProcedurelist();
+    this.GetOsISMSFormatlist();
+    this.GetOsQMSGenerallist();
+    this.GetOsQMSGuidelineslist();
+    this.GetOsQMSPolicylist();
+    this.GetOsQMSProcedurelist();
+    this.GetOsQMSFormatlist();
+    this.GetIsmsSprt();
+    this.GetIsoSprt();
+    this.GetItISMSGenerallist();
+    this.GetItISMSGuidelineslist();
+    this.GetItISMSPolicylist();
+    this.GetItISMSProcedurelist();
+    this.GetItISMSFormatlist();
+    this.GetItQMSGenerallist();
+    this.GetItQMSGuidelineslist();
+    this.GetItQMSPolicylist();
+    this.GetItQMSProcedurelist();
+    this.GetItQMSFormatlist();
+    this.GetIsoPolicy();
   }
 
 //-------------------------------------------------------------------------------SMTP
@@ -1375,6 +1426,1612 @@ UpdateHrQMSFormat() {
     }
   );
 }
+//=====================================================================================Admin/OS Support ISMS
+
+GetOsISMSGenerallist(){
+  this.ielc.Getosismsgeneral().subscribe((data) => {
+    this.OsIsmsGeneraldata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddOsISMSGeneral(): void {
+  this.ielc.Postosismsgeneral(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetOsISMSGenerallist();
+      this.resetOsISMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+
+deleteOsISMSGeneral(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteosismsgeneralById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetOsISMSGenerallist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditOsISMSGeneral(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetosismsgeneralById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateOsISMSGeneral() {
+  this.ielc.Updateosismsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetOsISMSGenerallist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+resetOsISMS(){
+  this.docsdata={
+    documentID: 0,
+    documentName: '',
+    url: '',
+  }
+}
+GetOsISMSGuidelineslist(){
+  this.ielc.Getosismsguidelines().subscribe((data) => {
+    this.OsIsmsGuidelinesdata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddOsISMSGuidelines(): void {
+  this.ielc.Postosismsguideline(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetOsISMSGuidelineslist();
+      this.resetOsISMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteOsISMSGuidelines(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteosismsguidelineById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetOsISMSGuidelineslist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditOsISMSGuidelines(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetosismsguidelineById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateOsISMSGuidelines() {
+  this.ielc.Updateosismsguideline(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetOsISMSGuidelineslist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+GetOsISMSPolicylist(){
+  this.ielc.Getosismspolicy().subscribe((data) => {
+    this.OsIsmsPolicydata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddOsISMSPolicy(): void {
+  this.ielc.Postosismspolicy(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetOsISMSPolicylist();
+      this.resetOsISMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteOsISMSPolicy(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteosismspolicyById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetOsISMSPolicylist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditOsISMSPolicy(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetosismspolicyById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateOsISMSPolicy() {
+  this.ielc.Updateosismspolicy(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetOsISMSPolicylist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+GetOsISMSProcedurelist(){
+  this.ielc.Getosismsprocedure().subscribe((data) => {
+    this.OsIsmsProceduredata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddOsISMSProcedure(): void {
+  this.ielc.Postosismsprocedure(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetOsISMSProcedurelist();
+      this.resetOsISMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteOsISMSProcedure(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteosismsprocedureById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetOsISMSProcedurelist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditOsISMSProcedure(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetosismsprocedureById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateOsISMSProcedure() {
+  this.ielc.Updateosismsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetOsISMSProcedurelist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+GetOsISMSFormatlist(){
+  this.ielc.Getosismsformat().subscribe((data) => {
+    this.OsIsmsFormatdata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddOsISMSFormat(): void {
+  this.ielc.Postosismsformat(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetOsISMSFormatlist();
+      this.resetOsISMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteOsISMSFormat(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteosismsformatById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetOsISMSFormatlist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditOsISMSFormat(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetosismsformatById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateOsISMSFormat() {
+  this.ielc.Updateosismsformat(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetOsISMSFormatlist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+//===============================================================================Admin/OS support QMS
+
+
+GetOsQMSGenerallist(){
+  this.ielc.Getosqmsgeneral().subscribe((data) => {
+    this.OsqmsGeneraldata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddOsQMSGeneral(): void {
+  this.ielc.Postosqmsgeneral(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetOsQMSGenerallist();
+      this.resetOsQMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+
+deleteOsQMSGeneral(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteosqmsgeneralById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetOsQMSGenerallist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditOsQMSGeneral(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetosqmsgeneralById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateOsQMSGeneral() {
+  this.ielc.Updateosqmsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetOsQMSGenerallist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+resetOsQMS(){
+  this.docsdata={
+    documentID: 0,
+    documentName: '',
+    url: '',
+  }
+}
+GetOsQMSGuidelineslist(){
+  this.ielc.Getosqmsguidelines().subscribe((data) => {
+    this.OsqmsGuidelinesdata=data;
+    this.isLoading = false;
+  });
+ }
+ AddOsQMSGuidelines(): void {
+  this.ielc.Postosqmsguideline(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetOsQMSGuidelineslist();
+      this.resetOsQMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteOsQMSGuidelines(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteosqmsguidelineById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetOsQMSGuidelineslist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditOsQMSGuidelines(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetosqmsguidelineById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateOsQMSGuidelines() {
+  this.ielc.Updateosqmsguideline(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetOsQMSGuidelineslist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+GetOsQMSPolicylist(){
+  this.ielc.Getosqmspolicy().subscribe((data) => {
+    this.OsqmsPolicydata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddOsQMSPolicy(): void {
+  this.ielc.Postosqmspolicy(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetOsQMSPolicylist();
+      this.resetOsQMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteOsQMSPolicy(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteosqmspolicyById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetOsQMSPolicylist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditOsQMSPolicy(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetosqmspolicyById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateOsQMSPolicy() {
+  this.ielc.Updateosqmspolicy(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetOsQMSPolicylist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+GetOsQMSProcedurelist(){
+  this.ielc.Getosqmsprocedure().subscribe((data) => {
+    this.OsqmsProceduredata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddOsQMSProcedure(): void {
+  this.ielc.Postosqmsprocedure(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetOsQMSProcedurelist();
+      this.resetOsQMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteOsQMSProcedure(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteosqmsprocedureById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetOsQMSProcedurelist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditOsQMSProcedure(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetosqmsprocedureById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateOsQMSProcedure() {
+  this.ielc.Updateosqmsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetOsQMSProcedurelist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+GetOsQMSFormatlist(){
+  this.ielc.Getosqmsformat().subscribe((data) => {
+    this.OsqmsFormatdata=data;
+    this.isLoading = false;
+  });
+ }
+
+ 
+ AddOsQMSFormat(): void {
+  this.ielc.Postosqmsformat(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetOsQMSFormatlist();
+      this.resetOsQMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteOsQMSFormat(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteosqmsformatById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetOsQMSFormatlist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditOsQMSFormat(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetosqmsformatById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateOsQMSFormat() {
+  this.ielc.Updateosqmsformat(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetOsQMSFormatlist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+//-------------------------------------------------------------------------------------ISMS Support
+GetIsmsSprt(){
+  this.ielc.Getismsinfo().subscribe((data) => {
+    this.IsmsSprtdata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddIsmsSprt(): void {
+  this.ielc.PostIsmsSprt(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetIsmsSprt();
+      this.resetIsmsSprt();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteIsmsSprt(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteIsmsSprtById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetIsmsSprt();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditIsmsSprt(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetIsmsSprtById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateIsmsSprt() {
+  this.ielc.UpdateIsmsSprt(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetIsmsSprt();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+resetIsmsSprt(){
+  this.docsdata={
+    documentID: 0,
+    documentName: '',
+    url: '',
+  }
+}
+
+//-------------------------------------------------------------------------------------ISO Supprot
+GetIsoSprt(){
+  this.ielc.Getisosprt().subscribe((data) => {
+    this.IsoSprtdata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddIsoSprt(): void {
+  this.ielc.Postisosprt(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetIsoSprt();
+      this.resetIsoSprt();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteIsoSprt(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteisosprtById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetIsoSprt();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditIsoSprt(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetisosprtById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateIsoSprt() {
+  this.ielc.Updateisosprt(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetIsoSprt();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+resetIsoSprt(){
+  this.docsdata={
+    documentID: 0,
+    documentName: '',
+    url: '',
+  }
+}
+
+//-------------------------------------------------------------------------------------IS Policy
+GetIsoPolicy(){
+  this.ielc.Getispolicy().subscribe((data) => {
+    this.IsPolicydata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddIsoPolicy(): void {
+  this.ielc.Postispolicy(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetIsoPolicy();
+      this.resetIsoPolicy();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteIsoPolicy(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteispolicyById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetIsoPolicy();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditIsoPolicy(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetispolicyById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateIsoPolicy() {
+  this.ielc.Updateispolicy(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetIsoPolicy();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+resetIsoPolicy(){
+  this.docsdata={
+    documentID: 0,
+    documentName: '',
+    url: '',
+  }
+}
+//================================================================================IT Support ISMS
+
+GetItISMSGenerallist(){
+  this.ielc.Getitismsgeneral().subscribe((data) => {
+    this.ItIsmsGeneraldata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddItISMSGeneral(): void {
+  this.ielc.Postitismsgeneral(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetItISMSGenerallist();
+      this.resetItISMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+
+deleteItISMSGeneral(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteitismsgeneralById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetItISMSGenerallist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditItISMSGeneral(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetitismsgeneralById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateItISMSGeneral() {
+  this.ielc.Updateitismsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetItISMSGenerallist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+resetItISMS(){
+  this.docsdata={
+    documentID: 0,
+    documentName: '',
+    url: '',
+  }
+}
+GetItISMSGuidelineslist(){
+  this.ielc.Getitismsguidelines().subscribe((data) => {
+    this.ItIsmsGuidelinesdata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddItISMSGuidelines(): void {
+  this.ielc.Postitismsguideline(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetItISMSGuidelineslist();
+      this.resetItISMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteItISMSGuidelines(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteitismsguidelineById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetItISMSGuidelineslist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditItISMSGuidelines(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetitismsguidelineById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateItISMSGuidelines() {
+  this.ielc.Updateitismsguideline(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetItISMSGuidelineslist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+GetItISMSPolicylist(){
+  this.ielc.Getitismspolicy().subscribe((data) => {
+    this.ItIsmsPolicydata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddItISMSPolicy(): void {
+  this.ielc.Postitismspolicy(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetItISMSPolicylist();
+      this.resetItISMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteItISMSPolicy(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteitismspolicyById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetItISMSPolicylist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditItISMSPolicy(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetitismspolicyById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateItISMSPolicy() {
+  this.ielc.Updateitismspolicy(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetItISMSPolicylist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+GetItISMSProcedurelist(){
+  this.ielc.Getitismsprocedure().subscribe((data) => {
+    this.ItIsmsProceduredata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddItISMSProcedure(): void {
+  this.ielc.Postitismsprocedure(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetItISMSProcedurelist();
+      this.resetItISMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteItISMSProcedure(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteitismsprocedureById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetItISMSProcedurelist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditItISMSProcedure(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetitismsprocedureById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateItISMSProcedure() {
+  this.ielc.Updateitismsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetItISMSProcedurelist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+GetItISMSFormatlist(){
+  this.ielc.Getitismsformat().subscribe((data) => {
+    this.ItIsmsFormatdata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddItISMSFormat(): void {
+  this.ielc.Postitismsformat(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetItISMSFormatlist();
+      this.resetOsISMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteItISMSFormat(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteitismsformatById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetItISMSFormatlist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditItISMSFormat(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetitismsformatById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateItISMSFormat() {
+  this.ielc.Updateitismsformat(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetItISMSFormatlist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+
+ //================================================================================IT Support QMS
+ GetItQMSGenerallist(){
+  this.ielc.Getitqmsgeneral().subscribe((data) => {
+    this.ItqmsGeneraldata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddItQMSGeneral(): void {
+  this.ielc.Postitqmsgeneral(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetItQMSGenerallist();
+      this.resetItQMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+
+deleteItQMSGeneral(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteitqmsgeneralById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetItQMSGenerallist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditItQMSGeneral(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetitqmsgeneralById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateItQMSGeneral() {
+  this.ielc.Updateitqmsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetItQMSGenerallist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+resetItQMS(){
+  this.docsdata={
+    documentID: 0,
+    documentName: '',
+    url: '',
+  }
+}
+GetItQMSGuidelineslist(){
+  this.ielc.Getitqmsguidelines().subscribe((data) => {
+    this.ItqmsGuidelinesdata=data;
+    this.isLoading = false;
+  });
+ }
+ AddItQMSGuidelines(): void {
+  this.ielc.Postitqmsguideline(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetItQMSGuidelineslist();
+      this.resetItQMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteItQMSGuidelines(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteitqmsguidelineById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetItQMSGuidelineslist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditItQMSGuidelines(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetitqmsguidelineById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateItQMSGuidelines() {
+  this.ielc.Updateitqmsguideline(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetItQMSGuidelineslist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+GetItQMSPolicylist(){
+  this.ielc.Getitqmspolicy().subscribe((data) => {
+    this.ItqmsPolicydata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddItQMSPolicy(): void {
+  this.ielc.Postitqmspolicy(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetItQMSPolicylist();
+      this.resetItQMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteItQMSPolicy(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteitqmspolicyById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetItQMSPolicylist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditItQMSPolicy(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetitqmspolicyById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateItQMSPolicy() {
+  this.ielc.Updateitqmspolicy(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetItQMSPolicylist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+GetItQMSProcedurelist(){
+  this.ielc.Getitqmsprocedure().subscribe((data) => {
+    this.ItqmsProceduredata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddItQMSProcedure(): void {
+  this.ielc.Postitqmsprocedure(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetItQMSProcedurelist();
+      this.resetItQMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteItQMSProcedure(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteitqmsprocedureById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetItQMSProcedurelist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditItQMSProcedure(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetitqmsprocedureById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateItQMSProcedure() {
+  this.ielc.Updateitqmsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetItQMSProcedurelist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+GetItQMSFormatlist(){
+  this.ielc.Getitqmsformat().subscribe((data) => {
+    this.ItqmsFormatdata=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddItQMSFormat(): void {
+  this.ielc.Postitqmsformat(this.docsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetItQMSFormatlist();
+      this.resetOsQMS();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteItQMSFormat(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteitqmsformatById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetItQMSFormatlist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditItQMSFormat(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetitqmsformatById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.docsdata = { 
+        documentID: data.documentID || 0,
+        documentName: data.documentName || '',
+        url:  data.url || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateItQMSFormat() {
+  this.ielc.Updateitqmsformat(this.docsdata.documentID, this.docsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetItQMSFormatlist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+ 
+
+ 
+
+
+
+
 
 
 

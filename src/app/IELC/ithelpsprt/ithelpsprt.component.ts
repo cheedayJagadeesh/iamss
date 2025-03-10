@@ -54,12 +54,12 @@ ngOnInit(): void {
   this.GetItSprtlist();
   this.GetISMSGenerallist();
   this.GetISMSGuidelineslist();
-  this. GetISMSPolicylist();
+  this.GetISMSPolicylist();
   this.GetISMSProcedurelist();
   this.GetISMSFormatlist();
   this.GetQMSGenerallist();
   this.GetQMSGuidelineslist();
-  this. GetQMSPolicylist();
+  this.GetQMSPolicylist();
   this.GetQMSProcedurelist();
   this.GetQMSFormatlist();
 }
