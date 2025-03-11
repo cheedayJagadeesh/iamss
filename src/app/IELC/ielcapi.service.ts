@@ -855,50 +855,219 @@ export class IelcapiService {
     Getprjtismsgeneral(): Observable<any> {
       return this.http.get<any>(this.prjtismsgeneralUrl);
     }
+    Postprjtismsgeneral(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.prjtismsgeneralUrl, data);
+    }
+
+    GetprjtismsgeneralById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.prjtismsgeneralUrl}/${id}`);
+    }
+
+    Updateprjtismsgeneral(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.prjtismsgeneralUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteprjtismsgeneralById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.prjtismsgeneralUrl}/${id}`);
+    }
 
     prjtismsguidelineUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportGuidelinessISMS';
     Getprjtismsguidelines(): Observable<any> {
       return this.http.get<any>(this.prjtismsguidelineUrl);
+    }
+    
+    Postprjtismsguideline(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.prjtismsguidelineUrl, data);
+    }
+
+    GetprjtismsguidelineById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.prjtismsguidelineUrl}/${id}`);
+    }
+
+    Updateprjtismsguideline(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.prjtismsguidelineUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteprjtismsguidelineById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.prjtismsguidelineUrl}/${id}`);
     }
 
     prjtismspolicyUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportPolicyISMS';
     Getprjtismspolicy(): Observable<any> {
       return this.http.get<any>(this.prjtismspolicyUrl);
     }
+    
+    Postprjtismspolicy(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.prjtismspolicyUrl, data);
+    }
+
+    GetprjtismspolicyById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.prjtismspolicyUrl}/${id}`);
+    }
+
+    Updateprjtismspolicy(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.prjtismspolicyUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteprjtismspolicyById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.prjtismspolicyUrl}/${id}`);
+    }
 
     prjtismsprocedureUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportProcedureISMS';
     Getprjtismsprocedure(): Observable<any> {
       return this.http.get<any>(this.prjtismsprocedureUrl);
+    }
+    
+    Postprjtismsprocedure(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.prjtismsprocedureUrl, data);
+    }
+
+    GetprjtismsprocedureById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.prjtismsprocedureUrl}/${id}`);
+    }
+
+    Updateprjtismsprocedure(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.prjtismsprocedureUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteprjtismsprocedureById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.prjtismsprocedureUrl}/${id}`);
     }
 
     prjtismsformatUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportFormatsISMS';
     Getprjtismsformat(): Observable<any> {
       return this.http.get<any>(this.prjtismsformatUrl);
     }
+    
+    Postprjtismsformat(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.prjtismsformatUrl, data);
+    }
+
+    GetprjtismsformatById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.prjtismsformatUrl}/${id}`);
+    }
+
+    Updateprjtismsformat(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.prjtismsformatUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteprjtismsformatById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.prjtismsformatUrl}/${id}`);
+    }
 
     prjtqmsgeneralUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportGeneralQMS';
     Getprjtqmsgeneral(): Observable<any> {
       return this.http.get<any>(this.prjtqmsgeneralUrl);
+    }
+    
+    Postprjtqmsgeneral(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.prjtqmsgeneralUrl, data);
+    }
+
+    GetprjtqmsgeneralById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.prjtqmsgeneralUrl}/${id}`);
+    }
+
+    Updateprjtqmsgeneral(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.prjtqmsgeneralUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteprjtqmsgeneralById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.prjtqmsgeneralUrl}/${id}`);
     }
 
     prjtqmsguidelineUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportGuidelinessQMS';
     Getprjtqmsguidelines(): Observable<any> {
       return this.http.get<any>(this.prjtqmsguidelineUrl);
     }
+    
+    Postprjtqmsguideline(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.prjtqmsguidelineUrl, data);
+    }
+
+    GetprjtqmsguidelineById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.prjtqmsguidelineUrl}/${id}`);
+    }
+
+    Updateprjtqmsguideline(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.prjtqmsguidelineUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteprjtqmsguidelineById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.prjtqmsguidelineUrl}/${id}`);
+    }
+
 
     prjtqmspolicyUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportPolicyQMS';
     Getprjtqmspolicy(): Observable<any> {
       return this.http.get<any>(this.prjtqmspolicyUrl);
+    }
+    
+    Postprjtqmspolicy(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.prjtqmspolicyUrl, data);
+    }
+
+    GetprjtqmspolicyById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.prjtqmspolicyUrl}/${id}`);
+    }
+
+    Updateprjtqmspolicy(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.prjtqmspolicyUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteprjtqmspolicyById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.prjtqmspolicyUrl}/${id}`);
     }
 
     prjtqmsprocedureUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportProcedureQMS';
     Getprjtqmsprocedure(): Observable<any> {
       return this.http.get<any>(this.prjtqmsprocedureUrl);
     }
+    Postprjtqmsprocedure(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.prjtqmsprocedureUrl, data);
+    }
+
+    GetprjtqmsprocedureById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.prjtqmsprocedureUrl}/${id}`);
+    }
+
+    Updateprjtqmsprocedure(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.prjtqmsprocedureUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteprjtqmsprocedureById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.prjtqmsprocedureUrl}/${id}`);
+    }
 
     prjtqmsformatUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportFormatsQMS';
     Getprjtqmsformat(): Observable<any> {
       return this.http.get<any>(this.prjtqmsformatUrl);
+    }
+    
+    Postprjtqmsformat(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.prjtqmsformatUrl, data);
+    }
+
+    GetprjtqmsformatById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.prjtqmsformatUrl}/${id}`);
+    }
+
+    Updateprjtqmsformat(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.prjtqmsformatUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteprjtqmsformatById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.prjtqmsformatUrl}/${id}`);
     }
 
 //---------------------------------------------------------------------------------------Inteq Emergency Support
@@ -929,12 +1098,45 @@ export class IelcapiService {
     Getemergeneral(): Observable<any> {
       return this.http.get<any>(this.emergeneralUrl);
     }
+    Postemergeneral(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.emergeneralUrl, data);
+    }
+
+    GetemergeneralById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.emergeneralUrl}/${id}`);
+    }
+
+    Updateemergeneral(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.emergeneralUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeleteemergeneralById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.emergeneralUrl}/${id}`);
+    }
    
 //---------------------------------------------------------------------------------------Inteq Various committees Support  
      
     varcmtsUrl='https://ielc-coreapi.azurewebsites.net/VariousCommittees';
     Getvarcmt(): Observable<any> {
      return this.http.get<any>(this.varcmtsUrl);
+    }
+    
+    Postvarcmt(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.varcmtsUrl, data);
+    }
+
+    GetvarcmtById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.varcmtsUrl}/${id}`);
+    }
+
+    Updatevarcmt(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.varcmtsUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeletevarcmtById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.varcmtsUrl}/${id}`);
     }
 //---------------------------------------------------------------------------------------Inteq ISO 27001
 
@@ -1061,50 +1263,217 @@ export class IelcapiService {
     Getcisoismsgeneral(): Observable<any> {
       return this.http.get<any>(this.cisoismsgeneralUrl);
     }
+    Postcisoismsgeneral(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.cisoismsgeneralUrl, data);
+    }
+
+    GetcisoismsgeneralById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.cisoismsgeneralUrl}/${id}`);
+    }
+
+    Updatecisoismsgeneral(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.cisoismsgeneralUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeletecisoismsgeneralById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.cisoismsgeneralUrl}/${id}`);
+    }
 
     cisoismsguidelineUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportGuidelinessISMS';
     Getcisoismsguidelines(): Observable<any> {
       return this.http.get<any>(this.cisoismsguidelineUrl);
+    }
+    Postcisoismsguideline(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.cisoismsguidelineUrl, data);
+    }
+
+    GetcisoismsguidelineById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.cisoismsguidelineUrl}/${id}`);
+    }
+
+    Updatecisoismsguideline(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.cisoismsguidelineUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeletecisoismsguidelineById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.cisoismsguidelineUrl}/${id}`);
     }
 
     cisoismspolicyUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportPolicyISMS';
     Getcisoismspolicy(): Observable<any> {
       return this.http.get<any>(this.cisoismspolicyUrl);
     }
+    Postcisoismspolicy(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.cisoismspolicyUrl, data);
+    }
+
+    GetcisoismspolicyById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.cisoismspolicyUrl}/${id}`);
+    }
+
+    Updatecisoismspolicy(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.cisoismspolicyUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeletecisoismspolicyById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.cisoismspolicyUrl}/${id}`);
+    }
 
     cisoismsprocedureUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportProcedureISMS';
     Getcisoismsprocedure(): Observable<any> {
       return this.http.get<any>(this.cisoismsprocedureUrl);
+    }
+    Postcisoismsprocedure(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.cisoismsprocedureUrl, data);
+    }
+
+    GetcisoismsprocedureById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.cisoismsprocedureUrl}/${id}`);
+    }
+
+    Updatecisoismsprocedure(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.cisoismsprocedureUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeletecisoismsprocedureById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.cisoismsprocedureUrl}/${id}`);
     }
 
     cisoismsformatUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportFormatsISMS';
     Getcisoismsformat(): Observable<any> {
       return this.http.get<any>(this.cisoismsformatUrl);
     }
+    Postcisoismsformat(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.cisoismsformatUrl, data);
+    }
+
+    GetcisoismsformatById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.cisoismsformatUrl}/${id}`);
+    }
+
+    Updatecisoismsformat(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.cisoismsformatUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeletecisoismsformatById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.cisoismsformatUrl}/${id}`);
+    }
 
     cisoqmsgeneralUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportGeneralQMS';
-    Getcqoismsgeneral(): Observable<any> {
+    Getcisoqmsgeneral(): Observable<any> {
       return this.http.get<any>(this.cisoqmsgeneralUrl);
     }
+    
+    Postcisoqmsgeneral(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.cisoqmsgeneralUrl, data);
+    }
+
+    GetcisoqmsgeneralById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.cisoqmsgeneralUrl}/${id}`);
+    }
+
+    Updatecisoqmsgeneral(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.cisoqmsgeneralUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeletecisoqmsgeneralById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.cisoqmsgeneralUrl}/${id}`);
+    }
+
 
     cisoqmsguidelineUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportGuidelinessQMS';
     Getcisoqmsguidelines(): Observable<any> {
       return this.http.get<any>(this.cisoqmsguidelineUrl);
+    }
+    
+    Postcisoqmsguideline(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.cisoqmsguidelineUrl, data);
+    }
+
+    GetcisoqmsguidelineById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.cisoqmsguidelineUrl}/${id}`);
+    }
+
+    Updatecisoqmsguideline(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.cisoqmsguidelineUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeletecisoqmsguidelineById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.cisoqmsguidelineUrl}/${id}`);
     }
 
     cisoqmspolicyUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportPolicyQMS';
     Getcisoqmspolicy(): Observable<any> {
       return this.http.get<any>(this.cisoqmspolicyUrl);
     }
+    
+    Postcisoqmspolicy(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.cisoqmspolicyUrl, data);
+    }
+
+    GetcisoqmspolicyById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.cisoqmspolicyUrl}/${id}`);
+    }
+
+    Updatecisoqmspolicy(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.cisoqmspolicyUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeletecisoqmspolicyById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.cisoqmspolicyUrl}/${id}`);
+    }
 
     cisoqmsprocedureUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportProcedureQMS';
     Getcisoqmsprocedure(): Observable<any> {
       return this.http.get<any>(this.cisoqmsprocedureUrl);
     }
+    
+    Postcisoqmsprocedure(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.cisoqmsprocedureUrl, data);
+    }
+
+    GetcisoqmsprocedureById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.cisoqmsprocedureUrl}/${id}`);
+    }
+
+    Updatecisoqmsprocedure(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.cisoqmsprocedureUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeletecisoqmsprocedureById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.cisoqmsprocedureUrl}/${id}`);
+    }
+
 
     cisoqmsformatUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportFormatsQMS';
     Getcisoqmsformat(): Observable<any> {
       return this.http.get<any>(this.cisoqmsformatUrl);
+    }
+    
+    Postcisoqmsformat(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.cisoqmsformatUrl, data);
+    }
+
+    GetcisoqmsformatById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.cisoqmsformatUrl}/${id}`);
+    }
+
+    Updatecisoqmsformat(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.cisoqmsformatUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeletecisoqmsformatById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.cisoqmsformatUrl}/${id}`);
     }
     
 //---------------------------------------------------------------------------------------Hippa
@@ -1114,11 +1483,44 @@ export class IelcapiService {
      return this.http.get<any>(this.hippaUrl);
     }
     
+    Posthippa(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.hippaUrl, data);
+    }
+
+    GethippaById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.hippaUrl}/${id}`);
+    }
+
+    Updatehippa(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.hippaUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeletehippaById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.hippaUrl}/${id}`);
+    }
+    
 //---------------------------------------------------------------------------------------GDPR
 
     gdprUrl='https://ielc-coreapi.azurewebsites.net/GDPR';
     Getgdpr(): Observable<any> {
      return this.http.get<any>(this.gdprUrl);
+    }
+    Postgdpr(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.gdprUrl, data);
+    }
+
+    GetgdprById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.gdprUrl}/${id}`);
+    }
+
+    Updategdpr(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.gdprUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeletegdprById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.gdprUrl}/${id}`);
     }
 
 //---------------------------------------------------------------------------------------SOC
@@ -1127,12 +1529,44 @@ export class IelcapiService {
     Getsoc(): Observable<any> {
      return this.http.get<any>(this.socUrl);
     }
+    Postsoc(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.socUrl, data);
+    }
+
+    GetsocById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.socUrl}/${id}`);
+    }
+
+    Updatesoc(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.socUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeletesocById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.socUrl}/${id}`);
+    }
 
 //---------------------------------------------------------------------------------------DPDP
 
     dpdpUrl='https://ielc-coreapi.azurewebsites.net/DPDP';
     Getdpdp(): Observable<any> {
      return this.http.get<any>(this.dpdpUrl);
+    }
+    Postdpdp(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.dpdpUrl, data);
+    }
+
+    GetdpdpById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.dpdpUrl}/${id}`);
+    }
+
+    Updatedpdp(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.dpdpUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+    DeletedpdpById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.dpdpUrl}/${id}`);
     }
 
 //---------------------------------------------------------------------------------------Inteq Holidays
