@@ -1575,6 +1575,14 @@ export class IelcapiService {
     Getholidays(): Observable<any> {
      return this.http.get<any>(this.holidaysUrl);
     } 
+    Postholidays(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.holidaysUrl, data);
+    }
+
+    DeleteholidaysById(content: any): Observable<void> {
+      return this.http.delete<void>(`${this.holidaysUrl}/${content}`);
+    }
     
 //---------------------------------------------------------------------------------------ISMS mails
 
@@ -1631,4 +1639,83 @@ export class IelcapiService {
     DeletesmtpById(id: number): Observable<void> {
       return this.http.delete<void>(`${this.smtpUrl}/${id}`);
     }
+ //---------------------------------------------------------------------------------------ADmin users
+ 
+ adminusersUrl='https://ielc-coreapi.azurewebsites.net/AdminUsersRoles';
+   Getadminusers(): Observable<any> {
+     return this.http.get<any>(this.adminusersUrl);
+    } 
+    Postadminusers(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.adminusersUrl, data);
+    }
+
+    DeleteadminusersById(email: any): Observable<void> {
+      return this.http.delete<void>(`${this.adminusersUrl}/${email}`);
+    }  
+ //---------------------------------------------------------------------------------------Events
+ 
+ eventsUrl='https://ielc-coreapi.azurewebsites.net/Events';
+   Getevents(): Observable<any> {
+     return this.http.get<any>(this.eventsUrl);
+    } 
+    Postevents(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.eventsUrl, data);
+    }
+
+    DeleteeventsById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.eventsUrl}/${id}`);
+    }  
+    GeteventsById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.eventsUrl}/${id}`);
+    }
+
+    Updateevents(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.eventsUrl}/${id}`, updatedData);
+    }  
+    
+//---------------------------------------------------------------------------------------Courses Restriction
+ 
+ courseUrl='https://ielc-coreapi.azurewebsites.net/CoursesRestriction';
+   Getcourse(): Observable<any> {
+     return this.http.get<any>(this.courseUrl);
+    } 
+    Postcourse(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.courseUrl, data);
+    }
+
+    DeletecourseById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.courseUrl}/${id}`);
+    }  
+    GetcourseById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.courseUrl}/${id}`);
+    }
+
+    Updatecourse(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.courseUrl}/${id}`, updatedData);
+    }  
+
+//---------------------------------------------------------------------------------------Events Alerts
+ 
+ eventalertsUrl='https://ielc-coreapi.azurewebsites.net/EventAlerts';
+   Geteventalerts(): Observable<any> {
+     return this.http.get<any>(this.eventalertsUrl);
+    } 
+    Posteventalerts(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.eventalertsUrl, data);
+    }
+
+    DeleteeventalertsById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.eventalertsUrl}/${id}`);
+    }  
+    GeteventalertsById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.eventalertsUrl}/${id}`);
+    }
+
+    Updateeventalerts(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.eventalertsUrl}/${id}`, updatedData);
+    } 
 }

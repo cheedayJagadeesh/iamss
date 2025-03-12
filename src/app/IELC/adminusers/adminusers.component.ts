@@ -46,7 +46,35 @@ interface docs{
   documentName: string;
   url: string;
 }
-
+interface adminusersinfo{
+  roleName: string;
+  pageName: string;
+  email: string;
+}
+interface holidays{
+  date: string;
+  content: string;
+}
+interface eventsinfo{
+  id: number;
+  eventData: string;
+  eventName: string;
+}
+interface crserest{
+  id: number;
+  coursesList: string;
+}
+interface eventalertsinfo{
+  alertID: number;
+  alertName: string;
+  alertDate: string;
+  toMails: string;
+  ccMails: string;
+  mailAlertDay: number;
+  mailType: string;
+  frequency: string;
+  alertAttachment: string;
+}
 @Component({
   selector: 'app-adminusers',
   templateUrl: './adminusers.component.html',
@@ -144,6 +172,35 @@ onSelection3Change() {
   documentName: '',
   url: '',
  }
+ adminusersdata:adminusersinfo={
+  roleName: '',
+  pageName: '',
+  email: '',
+ }
+ holidaysdata:holidays={
+  date: '',
+  content: ''
+ }
+ eventsdata:eventsinfo={
+  id: 0,
+  eventData: '',
+  eventName: ''
+ }
+ crserestdata:crserest={
+  id: 0,
+  coursesList: '',
+ }
+ eventalertsdata:eventalertsinfo={
+  alertID: 0,
+  alertName: '',
+  alertDate: '',
+  toMails: '',
+  ccMails: '',
+  mailAlertDay: 0,
+  mailType: '',
+  frequency: '',
+  alertAttachment: ''
+ }
  HrIsmsGeneraldata: any[] = []; 
  HrIsmsGuidelinesdata: any[] = []; 
  HrIsmsPolicydata: any[] = []; 
@@ -188,12 +245,12 @@ onSelection3Change() {
  prjtqmsProceduredata: any[] = []; 
  prjtqmsFormatdata: any[] = []; 
  cisoIsmsGeneraldata: []=[];
- cisoIsmsGendata: []=[];
+ cisoIsmsGendata: any[]=[];
  cisoIsmsGuidelinesdata: docs[] = []; 
  cisoIsmsPolicydata: any[] = []; 
  cisoIsmsProceduredata: any[] = []; 
  cisoIsmsFormatdata: any[] = []; 
- cisoqmsGeneraldata: []=[];
+ cisoqmsGeneraldata: any[]=[];
  cisoqmsGuidelinesdata: any[] = []; 
  cisoqmsPolicydata: any[] = []; 
  cisoqmsProceduredata: any[] = []; 
@@ -204,6 +261,11 @@ onSelection3Change() {
  SocGeneraldata: any[]=[];
  GdprGeneraldata: any[]=[];
  DpdpGeneraldata: any[]=[];
+ adminuserslist: any[]=[];
+ holidayslist: any[]=[];
+ eventslist: any[]=[];
+ crserestlist: any[]=[];
+ eventalertslist: any[]=[];
   
   constructor(private ielc:IelcapiService) {
 
@@ -280,7 +342,11 @@ onSelection3Change() {
     this.GetSocGenerallist();
     this.GetGdprGenerallist();
     this.GetDpdpGenerallist();
-
+    this.GetAdminuserslist();
+    this.GetHolidaysist();
+    this.GetEventsist();
+    this.GetCourseist();
+    this.GetEventAlertsist();
   }
 
 //-------------------------------------------------------------------------------SMTP
@@ -4912,15 +4978,378 @@ resetDpdp(){
     url: '',
   }
 }
+//========================================================================================Admin users
+GetAdminuserslist(){
+  this.ielc.Getadminusers().subscribe((data) => {
+    this.adminuserslist=data;
+    this.isLoading = false;
+  });
+}  
+AddAdminusers(): void {
+  this.ielc.Postadminusers(this.adminusersdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetAdminuserslist();
+      this.resetAdminusers();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteAdminusers(email: any) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteadminusersById(email).subscribe({
+      next: () => {
+        alert(`Record with ${email} deleted successfully!`);
+        this.GetAdminuserslist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+resetAdminusers(){
+  this.adminusersdata={
+    roleName: '',
+    pageName: '',
+    email: '',
+  }
+}
+//---------------------------------------------------------------------------------------Holidays
  
+GetHolidaysist(){
+  this.ielc.Getholidays().subscribe((data) => {
+    this.holidayslist=data;
+    this.holidayslist = this.sortdate(data)
+    this.isLoading = false;
+  });
+}  
+sortdate(data: any[]): any[] {
+  return data.sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : 0));
+}
+AddHolidays(): void {
+  this.ielc.Postholidays(this.holidaysdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetHolidaysist();
+      this.resetHolidays();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteHolidays(content: any) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteholidaysById(content).subscribe({
+      next: () => {
+        alert(`Record with  ${content} deleted successfully!`);
+        this.GetHolidaysist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+resetHolidays(){
+  this.holidaysdata={
+    date: '',
+  content: ''
+  }
+}
+
+//=====================================================================================Events 
+GetEventsist(){
+  this.ielc.Getevents().subscribe((data) => {
+    this.eventslist=data;
+    this.isLoading = false;
+  });
+ }
  
+//  AddEvents(): void {
+//   this.ielc.Postevents(this.eventsdata).subscribe(
+//     (response) => {
+//       alert('✅ Record Added Successfully!');
+//       this.GetEventsist();
+//       this.resetEvents();
+//     },
+//     (error) => {
+//       alert('❌ Error adding Record. Please try again.');
+//     }
+//   );
+// }
+AddEvents(item: any) {
+  const eventPayload = {
+    id: item.id,             // Event ID
+    eventData: item.eventData, // Base64 Image Data
+    eventName: item.eventName  // Event Name
+  };
 
+  this.ielc.Postevents(eventPayload).subscribe(
+    response => {
+      alert('✅ Event Added Successfully!');
+      console.log('Response:', response);
+    },
+    error => {
+      alert('❌ Error adding event. Please try again.');
+      console.error('Error:', error);
+    }
+  );
+}
+
+
+deleteEvents(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteeventsById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetEventsist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditEvents(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GeteventsById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.eventsdata = { 
+        id: data.id || 0,
+        eventData: data.eventData || '',
+        eventName:  data.eventName || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateEvents() {
+  this.ielc.Updateevents(this.eventsdata.id, this.eventsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetEventsist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+resetEvents(){
+  this.eventsdata={
+    id: 0,
+  eventData: '',
+  eventName: ''
+  }
+}
+
+//=====================================================================================Courses Restriction 
+GetCourseist(){
+  this.ielc.Getcourse().subscribe((data) => {
+    this.crserestlist=data;
+    this.isLoading = false;
+  });
+ }
  
+ AddCourse(): void {
+  this.ielc.Postcourse(this.crserestdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetCourseist();
+      this.resetCourse();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
 
 
+deleteCourse(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeletecourseById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetCourseist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditCourse(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetcourseById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.crserestdata = { 
+        id: data.id || 0,
+        coursesList: data.coursesList || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
 
 
+UpdateCourse() {
+  this.ielc.Updatecourse(this.crserestdata.id, this.crserestdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetCourseist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+resetCourse(){
+  this.crserestdata={
+    id: 0,
+    coursesList: ''
+  }
+}
 
+//=====================================================================================Event Alerts
+GetEventAlertsist(){
+  this.ielc.Geteventalerts().subscribe((data) => {
+    this.eventalertslist=data;
+    this.isLoading = false;
+  });
+ }
+ 
+ AddEventAlerts(): void {
+  this.ielc.Posteventalerts(this.eventalertsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetEventAlertsist();
+      this.resetEventAlerts();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+
+
+deleteEventAlerts(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteeventalertsById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetEventAlertsist();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditEventAlerts(id: number) {
+  console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GeteventalertsById(id).subscribe(data => {
+
+    console.log("Fetched Record Session:", data); 
+
+    if (data) {
+      // Assign data only if it's valid
+      this.eventalertsdata = { 
+        alertID: data.alertID || 0,
+        alertName: data.alertName || '',
+        alertDate: data.alertDate || '',
+        toMails: data.toMails || '',
+        ccMails: data.ccMails || '',
+        mailAlertDay: data.mailAlertDay || 0,
+        mailType: data.mailType || '',
+        frequency: data.frequency || '',
+        alertAttachment: data.alertAttachment || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateEventAlerts() {
+  this.ielc.Updateeventalerts(this.eventalertsdata.alertID, this.eventalertsdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetEventAlertsist();
+     
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+resetEventAlerts(){
+  this.eventalertsdata={
+    alertID: 0,
+    alertName: '',
+    alertDate: '',
+    toMails: '',
+    ccMails: '',
+    mailAlertDay: 0,
+    mailType: '',
+    frequency: '',
+    alertAttachment: ''
+   }
+}
+getFileIcon(alertAttachment: string): string {
+  if (!alertAttachment) {
+    return 'assets/icons/default-file-icon.jpg'; // Default icon
+  }
+
+  const extension = alertAttachment.split('.').pop()?.toLowerCase(); // Get file extension
+
+  switch (extension) {
+    case 'pdf':
+      return 'assets/icons/pdf-icon.jpg';
+    case 'doc':
+    case 'docx':
+      return 'assets/icons/word-icon.jpg';
+    case 'xls':
+    case 'xlsx':
+      return 'assets/icons/excel-icon.jpg';
+    case 'txt':
+      return 'assets/icons/text-icon.jpg';
+    case 'jpg':
+    case 'jpeg':
+    case 'png':
+      return 'assets/icons/image-icon.jpg';
+    case 'zip':
+    case 'rar':
+      return 'assets/icons/zip-icon.jpg';
+    default:
+      return 'assets/icons/default-file-icon.jpg';
+  }
+}
+
+getDownloadLink(alertAttachment: string): string {
+  return alertAttachment.startsWith('data:') 
+    ? alertAttachment  // Base64 data
+    : `https://ielc-coreapi.azurewebsites.net/EventAlerts/${alertAttachment}`; // File URL
+}
 
 
 }

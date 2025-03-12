@@ -8033,7 +8033,7 @@
             </tbody>
         </table>
     </div> -->
-    <!-- <div class="tablebottom1" *ngIf="isCISOSelected && selectedOption3 === 'ISMS'">
+    <div class="tablebottom1" *ngIf="isCISOSelected && selectedOption3 === 'ISMS'">
         <table class="table table-striped table-bordered" name="cisoisms1">
             <thead class="table-primary">
                 <tr>
@@ -8136,8 +8136,9 @@
                 </tr>
             </tbody>
         </table>
-    </div>  -->
+    </div> 
    
+
     <div class="tablebottom1" *ngIf="isCISOSelected && selectedOption3 === 'ISMS'">
         <table class="table table-striped table-bordered" name="cisoisms2">
             <thead class="table-primary">
@@ -8554,7 +8555,7 @@
             </tbody>
         </table>
     </div>
-    <!-- <div class="tablebottom1" *ngIf="isCISOSelected && selectedOption3 === 'QMS'">
+    <div class="tablebottom1" *ngIf="isCISOSelected && selectedOption3 === 'QMS'">
         <table class="table table-striped table-bordered" name="cisoqms1">
             <thead class="table-primary">
                 <tr>
@@ -8657,7 +8658,7 @@
                 </tr>
             </tbody>
         </table>
-    </div>  -->
+    </div> 
     <div class="tablebottom1" *ngIf="isCISOSelected && selectedOption3 === 'QMS'">
         <table class="table table-striped table-bordered" name="cisoqms2">
             <thead class="table-primary">
@@ -10866,19 +10867,21 @@
             </tbody>
         </table>
     </div> -->
-    <div class="tablebottom">
+    <div class="tablebottom" *ngIf="selectedOption1 === 'AdminUsers'">
         <table class="table table-striped table-bordered" name="adminusers">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Role Name</th>
+                    <th scope="col">Page Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">Mark</th>
-                    <td >Mark</td>
+                <tr *ngFor="let item of adminuserslist" >
+                    <td>{{item.roleName}}</td>
+                    <td>{{item.pageName}}</td>
+                    <td>{{item.email}}</td>
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
                             data-bs-target="#exampleModal67">
@@ -10897,27 +10900,31 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                        aria-label="Close"  (click)="resetAdminusers(); GetAdminuserslist()"></button>
                                 </div>
                                 <div class="modal-body">
                                    <div class="divmodal">
                                     <label>Role Name</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="role" [(ngModel)]="adminusersdata.roleName">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>Page Name</label>
+                                    <input type="text" class="form-control" name="Page" [(ngModel)]="adminusersdata.pageName">
                                    </div>
                                    <div class="divmodal">
                                     <label>Email</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="email" [(ngModel)]="adminusersdata.email">
                                    </div>
                                    <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Add</button>
+                                        data-bs-dismiss="modal" (click)="resetAdminusers(); GetAdminuserslist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddAdminusers()">Add</button>
                                    </div>
                                 </div>
                             </div>
                         </div>
                         </div>
-                        <button class="btn btn-info me-1">
+                        <button class="btn btn-info me-1" (click)="deleteAdminusers(item.email)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path
@@ -10929,7 +10936,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
+    <div class="tablebottom" *ngIf="selectedOption1 === 'News'">
         <table class="table table-striped table-bordered" name="news">
             <thead class="table-primary">
                 <tr>
@@ -10939,9 +10946,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">Mark</th>
-                    <td >Mark</td>
+                <tr *ngFor="let item of holidayslist" >
+                    <td>{{item.date}}</td>
+                    <td>{{item.content}}</td>
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
                             data-bs-target="#exampleModal68">
@@ -10960,27 +10967,27 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                        aria-label="Close"  (click)="resetHolidays(); GetHolidaysist()"></button>
                                 </div>
                                 <div class="modal-body">
                                    <div class="divmodal">
                                     <label>Date</label>
-                                    <input type="date" class="form-control">
+                                    <input type="date" class="form-control" name="date" [(ngModel)]="holidaysdata.date">
                                    </div>
                                    <div class="divmodal">
                                     <label>Content</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="content" [(ngModel)]="holidaysdata.content">
                                    </div>
                                    <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Add</button>
+                                        data-bs-dismiss="modal" (click)="resetHolidays(); GetHolidaysist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddHolidays()">Add</button>
                                    </div>
                                 </div>
                             </div>
                         </div>
                         </div>
-                        <button class="btn btn-info me-1">
+                        <button class="btn btn-info me-1" (click)="deleteHolidays(item.content)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path
@@ -10992,7 +10999,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
+    <div class="tablebottom" *ngIf="selectedOption1 === 'Events'">
         <table class="table table-striped table-bordered" name="events">
             <thead class="table-primary">
                 <tr>
@@ -11003,10 +11010,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td >Mark</td>
- 		            <td >Mark</td>
+                <tr *ngFor="let item of eventslist" >
+                    <td>{{item.id}}</td>
+                    <td>
+                        <img [src]="'data:image/jpeg;base64,' + item.eventData" alt="Event Image" width="100" height="50">
+                    </td>                      
+                    <td>{{item.eventName}}</td>
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
                             data-bs-target="#exampleModal69">
@@ -11025,27 +11034,27 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                        aria-label="Close"  (click)="resetEvents(); GetEventsist()"></button>
                                 </div>
                                 <div class="modal-body">
                                    <div class="divmodal">
                                     <label>Events</label>
-                                    <input class="form-control" type="file" id="formFile">
+                                    <input class="form-control" type="file" id="formFile" name="event" [(ngModel)]="eventsdata.eventData">
                                    </div>
                                    <div class="divmodal">
                                     <label>Event Name</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="eventname" [(ngModel)]="eventsdata.eventName">
                                    </div>
                                    <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Add</button>
+                                        data-bs-dismiss="modal" (click)="resetEvents(); GetEventsist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddEvents(item)">Add</button>
                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
- <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit">
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit69" (click)="EditEvents(item.id)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path
@@ -11054,7 +11063,34 @@
                                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                             </svg>
                         </button>
- <button class="btn btn-info me-1">
+                        <div class="modal fade" id="exampleModaledit69" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetEvents()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                        <label>Events</label>
+                                        <input class="form-control" type="file" id="formFile" name="event" [(ngModel)]="eventsdata.eventData">
+                                       </div>
+                                       <div class="divmodal">
+                                        <label>Event Name</label>
+                                        <input type="text" class="form-control" name="eventname" [(ngModel)]="eventsdata.eventName">
+                                       </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetEvents()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateEvents()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteEvents(item.id)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path
@@ -11066,7 +11102,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
+    <div class="tablebottom"  *ngIf="selectedOption1 === 'CoursesRestriction'">
         <table class="table table-striped table-bordered" name="courserestriction">
             <thead class="table-primary">
                 <tr>
@@ -11076,9 +11112,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
- 		    <td >Mark</td>
+                <tr *ngFor="let item of crserestlist" >
+                    <td>{{item.id}}</td>
+                    <td>{{item.coursesList}}</td>
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
                             data-bs-target="#exampleModal70">
@@ -11097,23 +11133,23 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                        aria-label="Close"  (click)="resetCourse(); GetCourseist()"></button>
                                 </div>
                                 <div class="modal-body">
                                    <div class="divmodal">
                                     <label>Courses List</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="courselist" [(ngModel)]="crserestdata.coursesList">
                                    </div>
                                    <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Add</button>
+                                        data-bs-dismiss="modal" (click)="resetCourse(); GetCourseist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddCourse()">Add</button>
                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
- <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit">
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit70" (click)="EditCourse(item.id)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path
@@ -11122,7 +11158,30 @@
                                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                             </svg>
                         </button>
- <button class="btn btn-info me-1">
+                        <div class="modal fade" id="exampleModaledit70" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetCourse()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                        <label>Courses List</label>
+                                        <input type="text" class="form-control" name="courselist" [(ngModel)]="crserestdata.coursesList">
+                                       </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetCourse()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateCourse()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteCourse(item.id)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path
@@ -11134,7 +11193,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom">
+    <div class="tablebottom1" *ngIf="selectedOption1 === 'EventAlerts'">
         <table class="table table-striped table-bordered" name="Eventalerts">
             <thead class="table-primary">
                 <tr>
@@ -11151,16 +11210,27 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
- 		            <td >Mark</td>
-                     <td >Mark</td>
-                     <td >Mark</td>
-                     <td >Mark</td>
-                     <td >Mark</td>
-                     <td >Mark</td>
-                     <td >Mark</td>
-                     <td ></td>
+                <tr *ngFor="let item of eventalertslist" >
+                    <td>{{item.alertID}}</td>
+                    <td>{{item.alertName}}</td>
+                    <td>{{item.alertDate}}</td>
+                    <td>{{item.toMails}}</td>
+                    <td>{{item.ccMails}}</td>
+                    <td>{{item.mailAlertDay}}</td>
+                    <td>{{item.mailType}}</td>
+                    <td>{{item.frequency}}</td>
+                    <!-- <td>
+                        <img src="assets/images/text-icon.jpg" alt="Attachment Icon" height="50">
+                        <a [href]="'data:application/octet-stream;base64,' + item.alertAttachment" download="attachment.txt">
+                          Download
+                        </a>
+                    </td>-->
+                    <td>
+                        <img [src]="getFileIcon(item.alertAttachment)" alt="File Icon" height="50">
+                        <a [href]="getDownloadLink(item.alertAttachment)" download>
+                          Download
+                        </a>
+                    </td>
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
                             data-bs-target="#exampleModal71">
@@ -11179,57 +11249,61 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                        aria-label="Close"  (click)="resetEventAlerts(); GetEventAlertsist()"></button>
                                 </div>
                                 <div class="modal-body">
                                    <div class="divmodal">
                                     <label>Alert Name</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="alertname" [(ngModel)]="eventalertsdata.alertName">
                                    </div>
                                    <div class="divmodal">
                                     <label>Alert Date</label>
-                                    <input type="date" class="form-control">
+                                    <input type="date" class="form-control" name="alertdate" [(ngModel)]="eventalertsdata.alertDate">
                                    </div>
                                    <div class="divmodal">
                                     <label>To Mails</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="tomails" [(ngModel)]="eventalertsdata.toMails">
                                    </div>
                                    <div class="divmodal">
                                     <label>CC Mails</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="ccmails" [(ngModel)]="eventalertsdata.ccMails">
                                    </div>
                                    <div class="divmodal">
                                     <label>Mail Alert Day</label>
-                                    <input type="text" class="form-control">
+                                    <input type="text" class="form-control" name="mailalertday" [(ngModel)]="eventalertsdata.mailAlertDay">
                                    </div>
                                    <div class="divmodal">
                                     <label>Mail Type</label>
-                                    <select name="malitype" class="form-control" required>
+                                    <select name="malitype" class="form-control" required name="mailtype" [(ngModel)]="eventalertsdata.mailType"> 
                                         <option value="" disabled selected>- select -</option>
-                                        <option>azure</option>
+                                        <option>OneTime</option>
+                                        <option>Continuous</option>
                                     </select>
                                    </div>
                                    <div class="divmodal">
                                     <label>Frequency</label>
-                                    <select name="frequency" class="form-control" required>
+                                    <select name="frequency" class="form-control" required name="frequency" [(ngModel)]="eventalertsdata.frequency">
                                         <option value="" disabled selected>- select -</option>
-                                        <option>weekly</option>
+                                        <option>Daily</option>
+                                        <option>Weekly</option>
+                                        <option>Monthly</option>
+                                        <option>Yearly</option>
                                     </select>
                                    </div>
                                    <div class="divmodal">
                                     <label>Attachment</label>
-                                    <input class="form-control" type="file" id="formFile">
+                                    <input class="form-control" type="file" id="formFile" name="attachment" [(ngModel)]="eventalertsdata.alertAttachment">
                                    </div>
                                    <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Add</button>
+                                        data-bs-dismiss="modal" (click)="resetEventAlerts(); GetEventAlertsist()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddEventAlerts()">Add</button>
                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
- <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit">
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit71"  (click)="EditEventAlerts(item.alertID)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path
@@ -11238,7 +11312,64 @@
                                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                             </svg>
                         </button>
- <button class="btn btn-info me-1">
+                        <div class="modal fade" id="exampleModaledit71" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetEventAlerts()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                        <label>Alert Name</label>
+                                        <input type="text" class="form-control" name="alertname" [(ngModel)]="eventalertsdata.alertName">
+                                       </div>
+                                       <div class="divmodal">
+                                        <label>Alert Date</label>
+                                        <input type="date" class="form-control" name="alertdate" [(ngModel)]="eventalertsdata.alertDate">
+                                       </div>
+                                       <div class="divmodal">
+                                        <label>To Mails</label>
+                                        <input type="text" class="form-control" name="tomails" [(ngModel)]="eventalertsdata.toMails">
+                                       </div>
+                                       <div class="divmodal">
+                                        <label>CC Mails</label>
+                                        <input type="text" class="form-control" name="ccmails" [(ngModel)]="eventalertsdata.ccMails">
+                                       </div>
+                                       <div class="divmodal">
+                                        <label>Mail Alert Day</label>
+                                        <input type="text" class="form-control" name="mailalertday" [(ngModel)]="eventalertsdata.mailAlertDay">
+                                       </div>
+                                       <div class="divmodal">
+                                        <label>Mail Type</label>
+                                        <select name="malitype" class="form-control" required name="mailtype" [(ngModel)]="eventalertsdata.mailType"> 
+                                            <option value="" disabled selected>- select -</option>
+                                            <option>azure</option>
+                                        </select>
+                                       </div>
+                                       <div class="divmodal">
+                                        <label>Frequency</label>
+                                        <select name="frequency" class="form-control" required name="frequency" [(ngModel)]="eventalertsdata.frequency">
+                                            <option value="" disabled selected>- select -</option>
+                                            <option>weekly</option>
+                                        </select>
+                                       </div>
+                                       <div class="divmodal">
+                                        <label>Attachment</label>
+                                        <input class="form-control" type="file" id="formFile" name="attachment" [(ngModel)]="eventalertsdata.alertAttachment">
+                                       </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetEventAlerts()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateEventAlerts()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="deleteEventAlerts(item.alertID)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path
