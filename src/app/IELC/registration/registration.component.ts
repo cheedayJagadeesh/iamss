@@ -10,6 +10,11 @@ interface holidaysinfo{
   date: string;
   content: string;
 }
+interface eventsinfo{
+  id: number;
+  eventData: string;
+  eventName: string;
+}
 
 @Component({
   selector: 'app-registration',
@@ -32,16 +37,37 @@ export class RegistrationComponent {
   date: '',
   content: ''
  }
+ eventslist: any[]=[];
+ eventsdata:eventsinfo={
+  id: 0,
+  eventData: '',
+  eventName: ''
+ }
+latestEvent: any= null; 
 constructor(private ielc:IelcapiService){
    // this.selectedDate= new Date().toString()
    this.selectedDate= new Date().toISOString().split('T')[0]
    this.isTimeInputDisabled=true;
    this.GetHolidayslist();
+   this.GetEventsist();
+   if (this.eventslist && this.eventslist.length > 0) {
+    this.eventslist = this.eventslist.sort((a, b) => Number(b.id) - Number(a.id));
+  }
  }
 
  GetHolidayslist(){
   this.ielc.Getholidays().subscribe((data) => {
     this.holidayslist=data;
+  });
+ }
+ sortlist(data: any[]): any[] {
+  return data.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+}
+
+ GetEventsist(){
+  this.ielc.Getevents().subscribe((data) => {
+    this.eventslist=data;
+    // this.eventslist = this.sortlist(data);
   });
  }
 

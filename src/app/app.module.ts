@@ -73,6 +73,7 @@ import { InteractionType, IPublicClientApplication } from '@azure/msal-browser';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PublicClientApplication } from '@azure/msal-browser';
 import { DatePipe } from '@angular/common';
+import { ExcelExportService } from './excel-export.service';
 
 // const isIE = window.navigator.userAgent.includes('MSIE') || window.navigator.userAgent.includes('Trident');
 
@@ -148,7 +149,7 @@ import { DatePipe } from '@angular/common';
     MatFormFieldModule,MatButtonModule,MatIconModule,HttpClientModule,NgxPaginationModule
     
   ],
-  providers: [IelcapiService,HttpClient,AuthService,MsalModule,MsalGuard,MsalService,DatePipe
+  providers: [IelcapiService,HttpClient,AuthService,MsalModule,MsalGuard,MsalService,DatePipe,ExcelExportService
     // { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true },
     // { provide: MSAL_INSTANCE, useFactory: MSALInstanceFactory },
     // MsalGuard,

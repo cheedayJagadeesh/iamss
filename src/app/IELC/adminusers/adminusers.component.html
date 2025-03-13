@@ -3,6 +3,9 @@
     <div>
         <label class="lbllogin">Login as </label>
     </div>
+    <div *ngIf="isLoading" class="loading-container">
+        <span class="dot"></span>
+    </div>
     <div class="row g-3">
         <div >
         <div class="row-md-3">
@@ -67,7 +70,7 @@
   </div>
 
     <div class="tablebottom"  *ngIf="selectedOption1 === 'SMTPAdmin'">
-        <table class="table table-striped table-bordered" name="smptadmin"  >
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="smptadmin"  >
             <thead class="table-primary">
                 <tr>
                     <th scope="col">ID</th>
@@ -133,7 +136,7 @@
         </table>
     </div>    
     <div class="tablebottom" *ngIf="selectedOption2 === 'INTEQITSupport'">
-        <table class="table table-striped table-bordered" name="inteqitsuprt" >
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="inteqitsuprt" >
             <thead class="table-primary">
                 <tr>
                     <th scope="col">ID</th>
@@ -255,7 +258,7 @@
         </table>
     </div>  
     <div class="tablebottom"  *ngIf="selectedOption2 === 'AdminHelpDesk'">
-        <table class="table table-striped table-bordered" name="adminhd" >
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="adminhd" >
             <thead class="table-primary">
                 <tr>
                     <th scope="col">ID</th>
@@ -376,7 +379,7 @@
         </table>
     </div>  
     <div class="tablebottom" *ngIf="selectedOption2 === 'HRHelpDesk'">
-        <table class="table table-striped table-bordered" name="hrhd">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrhd">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">ID</th>
@@ -497,7 +500,7 @@
         </table>
     </div> 
     <div class="tablebottom" *ngIf="selectedOption2 === 'EmergencyContactList'">
-        <table class="table table-striped table-bordered" name="emergencycnctlist" >
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="emergencycnctlist" >
             <thead class="table-primary">
                 <tr>
                     <th scope="col">ID</th>
@@ -618,7 +621,7 @@
         </table>
     </div> 
     <div class="tablebottom"  *ngIf="selectedOption2 === 'ISO27001'">
-        <table class="table table-striped table-bordered" name="iso27001">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="iso27001">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">ID</th>
@@ -739,7 +742,7 @@
         </table>
     </div> 
     <div class="tablebottom" *ngIf="selectedOption2 === 'ISO9001'">
-        <table class="table table-striped table-bordered" name="iso9001">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="iso9001">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">ID</th>
@@ -860,7 +863,7 @@
         </table>
     </div> 
     <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="hrisms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrisms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -964,7 +967,7 @@
         </table>
     </div> 
     <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="hrisms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrisms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -1068,7 +1071,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="hrisms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrisms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -1172,7 +1175,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="hrisms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrisms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -1276,7 +1279,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="hrisms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrisms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -1380,7 +1383,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="hrqms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrqms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -1484,7 +1487,7 @@
         </table>
     </div> 
     <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="hrqms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrqms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -1588,7 +1591,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="hrqms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrqms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -1692,7 +1695,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="hrqms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrqms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -1796,7 +1799,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isHRSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="hrqms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrqms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -1900,7 +1903,7 @@
         </table>
     </div>
     <!-- <div class="tablebottom1" *ngIf="selectedOption3 === 'QSMS'">
-        <table class="table table-striped table-bordered" name="hrqms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrqms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -1973,7 +1976,7 @@
         </table>
     </div> 
     <div class="tablebottom1" *ngIf="selectedOption3 === 'QSMS'">
-        <table class="table table-striped table-bordered" name="hrqms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrqms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -2046,7 +2049,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="selectedOption3 === 'QSMS'">
-        <table class="table table-striped table-bordered" name="hrqms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrqms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -2119,7 +2122,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="selectedOption3 === 'QSMS'">
-        <table class="table table-striped table-bordered" name="hrqms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrqms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -2192,7 +2195,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="selectedOption3 === 'QSMS'">
-        <table class="table table-striped table-bordered" name="hrqms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrqms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -2265,7 +2268,7 @@
         </table>
     </div> -->
     <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="osisms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osisms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -2369,7 +2372,7 @@
         </table>
     </div> 
     <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="osisms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osisms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -2473,7 +2476,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="osisms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osisms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -2577,7 +2580,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="osisms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osisms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -2681,7 +2684,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="osisms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osisms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -2785,7 +2788,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isOSSelected &&selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="osqms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osqms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -2889,7 +2892,7 @@
         </table>
     </div> 
     <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="osqms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osqms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -2993,7 +2996,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="osqms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osqms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -3097,7 +3100,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="osqms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osqms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -3201,7 +3204,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="osqms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osqms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -3305,7 +3308,7 @@
         </table>
     </div>
     <!-- <div class="tablebottom1" *ngIf="isOSSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="osisms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osisms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -3378,7 +3381,7 @@
         </table>
     </div> 
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="osisms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osisms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -3451,7 +3454,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="osisms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osisms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -3524,7 +3527,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="osisms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osisms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -3597,7 +3600,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="osisms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osisms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -3670,7 +3673,7 @@
         </table>
     </div> -->
     <!-- <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="osqms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osqms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -3743,7 +3746,7 @@
         </table>
     </div> 
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="osqms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osqms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -3816,7 +3819,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="osqms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osqms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -3889,7 +3892,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="osqms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osqms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -3962,7 +3965,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="osqms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osqms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -4036,7 +4039,7 @@
     </div> -->
    
     <div class="tablebottom1"  *ngIf="selectedOption1 === 'ISMSSupport'">
-        <table class="table table-striped table-bordered" name="ismssprt">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="ismssprt">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Document Name</th>
@@ -4140,7 +4143,7 @@
         </table>
     </div>
     <div class="tablebottom1"  *ngIf="selectedOption1 === 'ISOSupport'">
-        <table class="table table-striped table-bordered" name="isosprt">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="isosprt">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Document Name</th>
@@ -4244,7 +4247,7 @@
         </table>
     </div>
     <!-- <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="isosprt">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="isosprt">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Document Name</th>
@@ -4317,7 +4320,7 @@
         </table>
     </div> -->
     <div class="tablebottom1" *ngIf="isITSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="itisms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itisms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -4421,7 +4424,7 @@
         </table>
     </div> 
     <div class="tablebottom1" *ngIf="isITSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="itisms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itisms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -4525,7 +4528,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isITSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="itisms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itisms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -4629,7 +4632,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isITSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="itisms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itisms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -4733,7 +4736,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isITSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="itisms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itisms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -4837,7 +4840,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isITSelected &&selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="itqms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itqms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -4941,7 +4944,7 @@
         </table>
     </div> 
     <div class="tablebottom1" *ngIf="isITSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="itqms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itqms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -5045,7 +5048,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isITSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="itqms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itqms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -5149,7 +5152,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isITSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="itqms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itqms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -5253,7 +5256,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isITSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="itqms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itqms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -5357,7 +5360,7 @@
         </table>
     </div>
     <!-- <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="itisms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itisms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -5430,7 +5433,7 @@
         </table>
     </div> 
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="itisms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itisms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -5503,7 +5506,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="itisms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itisms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -5576,7 +5579,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="itisms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itisms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -5649,7 +5652,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="itisms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itisms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -5722,7 +5725,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="itqms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itqms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -5795,7 +5798,7 @@
         </table>
     </div> 
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="itqms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itqms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -5868,7 +5871,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="itqms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itqms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -5941,7 +5944,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="itqms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itqms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -6014,7 +6017,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="itqms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itqms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -6087,7 +6090,7 @@
         </table>
     </div> -->
     <div class="tablebottom1"  *ngIf="selectedOption1 === 'ISPolicy'">
-        <table class="table table-striped table-bordered" name="ispolicy">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="ispolicy">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Document Name</th>
@@ -6191,7 +6194,7 @@
         </table>
     </div>
     <!-- <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="ispolicy">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="ispolicy">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Document Name</th>
@@ -6264,7 +6267,7 @@
         </table>
     </div> -->
     <div class="tablebottom1" *ngIf="isPRJTSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="prjisms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -6368,7 +6371,7 @@
         </table>
     </div> 
     <div class="tablebottom1" *ngIf="isPRJTSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="prjisms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -6472,7 +6475,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isPRJTSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="prjisms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -6576,7 +6579,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isPRJTSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="prjisms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -6680,7 +6683,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isPRJTSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="prjisms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -6784,7 +6787,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isPRJTSelected &&selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="prjqms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjqms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -6888,7 +6891,7 @@
         </table>
     </div> 
     <div class="tablebottom1" *ngIf="isPRJTSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="prjqms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjqms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -6992,7 +6995,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isPRJTSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="prjqms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjqms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -7096,7 +7099,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isPRJTSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="prjqms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjqms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -7200,7 +7203,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isPRJTSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="prjqms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjqms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -7304,7 +7307,7 @@
         </table>
     </div>
     <!-- <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="prjisms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -7377,7 +7380,7 @@
         </table>
     </div> 
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="prjisms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -7450,7 +7453,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="prjisms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -7523,7 +7526,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="prjisms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -7596,7 +7599,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="prjisms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -7669,7 +7672,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="prjqms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjqms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -7742,7 +7745,7 @@
         </table>
     </div> 
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="prjqms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjqms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -7815,7 +7818,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="prjqms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjqms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -7888,7 +7891,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="prjqms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjqms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -7961,7 +7964,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="prjqms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjqms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -8034,7 +8037,7 @@
         </table>
     </div> -->
     <div class="tablebottom1" *ngIf="isCISOSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="cisoisms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoisms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -8140,7 +8143,7 @@
    
 
     <div class="tablebottom1" *ngIf="isCISOSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="cisoisms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoisms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -8244,7 +8247,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isCISOSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="cisoisms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoisms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -8348,7 +8351,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isCISOSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="cisoisms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoisms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -8452,7 +8455,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isCISOSelected && selectedOption3 === 'ISMS'">
-        <table class="table table-striped table-bordered" name="cisoisms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoisms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -8556,7 +8559,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isCISOSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="cisoqms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoqms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -8660,7 +8663,7 @@
         </table>
     </div> 
     <div class="tablebottom1" *ngIf="isCISOSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="cisoqms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoqms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -8764,7 +8767,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isCISOSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="cisoqms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoqms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -8868,7 +8871,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isCISOSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="cisoqms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoqms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -8972,7 +8975,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="isCISOSelected && selectedOption3 === 'QMS'">
-        <table class="table table-striped table-bordered" name="cisoqms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoqms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -9076,7 +9079,7 @@
         </table>
     </div>
     <!-- <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="cisoisms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoisms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -9149,7 +9152,7 @@
         </table>
     </div> 
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="cisoisms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoisms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -9222,7 +9225,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="cisoisms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoisms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -9295,7 +9298,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="cisoisms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoisms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -9368,7 +9371,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="cisoisms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoisms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -9441,7 +9444,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="cisoqms1">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoqms1">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">General Document Name</th>
@@ -9514,7 +9517,7 @@
         </table>
     </div> 
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="cisoqms2">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoqms2">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Guidelines Document Name</th>
@@ -9587,7 +9590,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="cisoqms3">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoqms3">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Policy Document Name</th>
@@ -9660,7 +9663,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="cisoqms4">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoqms4">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Procedure Document Name</th>
@@ -9733,7 +9736,7 @@
         </table>
     </div>
     <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="cisoqms5">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoqms5">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Formats Document Name</th>
@@ -9806,7 +9809,7 @@
         </table>
     </div> -->
     <div class="tablebottom1"  *ngIf="selectedOption1 === 'Emergency'">
-        <table class="table table-striped table-bordered" name="emergency">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="emergency">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Document Name</th>
@@ -9910,7 +9913,7 @@
         </table>
     </div>
     <!-- <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="emergency">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="emergency">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Document Name</th>
@@ -9983,7 +9986,7 @@
         </table>
     </div> -->
     <div class="tablebottom1"  *ngIf="selectedOption1 === 'VariousCommittees'">
-        <table class="table table-striped table-bordered" name="varcmts">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="varcmts">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Document Name</th>
@@ -10087,7 +10090,7 @@
         </table>
     </div>
     <!-- <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="varcmts">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="varcmts">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Document Name</th>
@@ -10160,7 +10163,7 @@
         </table>
     </div> -->
     <div class="tablebottom1"  *ngIf="selectedOption1 === 'SOC'">
-        <table class="table table-striped table-bordered" name="soc">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="soc">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Document Name</th>
@@ -10264,7 +10267,7 @@
         </table>
     </div>
     <!-- <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="soc">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="soc">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Document Name</th>
@@ -10337,7 +10340,7 @@
         </table>
     </div> -->
     <div class="tablebottom1"  *ngIf="selectedOption1 === 'HIPAA'">
-        <table class="table table-striped table-bordered" name="hipaa">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hipaa">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Document Name</th>
@@ -10441,7 +10444,7 @@
         </table>
     </div>
     <!-- <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="hippa">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hippa">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Document Name</th>
@@ -10514,7 +10517,7 @@
         </table>
     </div> -->
     <div class="tablebottom1"  *ngIf="selectedOption1 === 'GDPR'">
-        <table class="table table-striped table-bordered" name="gdpr">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="gdpr">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Document Name</th>
@@ -10618,7 +10621,7 @@
         </table>
     </div>
     <!-- <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="gdpr">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="gdpr">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Document Name</th>
@@ -10691,7 +10694,7 @@
         </table>
     </div> -->
         <div class="tablebottom1"  *ngIf="selectedOption1 === 'DPDP'">
-        <table class="table table-striped table-bordered" name="dpdp">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="dpdp">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Document Name</th>
@@ -10795,7 +10798,7 @@
         </table>
     </div>
     <!-- <div class="tablebottom">
-        <table class="table table-striped table-bordered" name="dpdp">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="dpdp">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Document Name</th>
@@ -10868,7 +10871,7 @@
         </table>
     </div> -->
     <div class="tablebottom" *ngIf="selectedOption1 === 'AdminUsers'">
-        <table class="table table-striped table-bordered" name="adminusers">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="adminusers">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Role Name</th>
@@ -10937,7 +10940,7 @@
         </table>
     </div>
     <div class="tablebottom" *ngIf="selectedOption1 === 'News'">
-        <table class="table table-striped table-bordered" name="news">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="news">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Date</th>
@@ -11000,7 +11003,7 @@
         </table>
     </div>
     <div class="tablebottom" *ngIf="selectedOption1 === 'Events'">
-        <table class="table table-striped table-bordered" name="events">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="events">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">ID</th>
@@ -11103,7 +11106,7 @@
         </table>
     </div>
     <div class="tablebottom"  *ngIf="selectedOption1 === 'CoursesRestriction'">
-        <table class="table table-striped table-bordered" name="courserestriction">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="courserestriction">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">ID</th>
@@ -11194,7 +11197,7 @@
         </table>
     </div>
     <div class="tablebottom1" *ngIf="selectedOption1 === 'EventAlerts'">
-        <table class="table table-striped table-bordered" name="Eventalerts">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="Eventalerts">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">ID</th>

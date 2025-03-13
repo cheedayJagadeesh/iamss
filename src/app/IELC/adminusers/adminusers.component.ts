@@ -5061,6 +5061,7 @@ resetHolidays(){
 GetEventsist(){
   this.ielc.Getevents().subscribe((data) => {
     this.eventslist=data;
+    this.eventslist = this.sortlist(data)
     this.isLoading = false;
   });
  }

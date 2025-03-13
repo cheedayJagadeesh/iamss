@@ -23,6 +23,14 @@ export class IelcapiService {
     GetUsersBySkill(skillName: string): Observable<any> {
       return this.http.get<any>(`${this.apiskill}/${skillName}`);
     }
+    apistatus='https://ielc-coreapi.azurewebsites.net/EnrollmentData/Status'
+    GetUsersByStatus(data: string): Observable<any> {
+      return this.http.get<any>(`${this.apistatus}/${data}`);
+    }
+    apimail='https://ielc-coreapi.azurewebsites.net/EnrollmentData/Mail'
+    GetUsersByEmail(data: string): Observable<any> {
+      return this.http.get<any>(`${this.apimail}/${data}`);
+    }
 
     apivenue="https://ielc-coreapi.azurewebsites.net/EnrollmentData/Venue"
     GetUsersByVenue(Venue: string): Observable<any> {
@@ -1718,4 +1726,5 @@ export class IelcapiService {
     Updateeventalerts(id: number, updatedData: any): Observable<any> {
       return this.http.put<any>(`${this.eventalertsUrl}/${id}`, updatedData);
     } 
+//================================================================================    
 }
