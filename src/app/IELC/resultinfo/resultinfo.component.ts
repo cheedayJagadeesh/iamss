@@ -21,6 +21,7 @@ interface Enrollment {
   enrollmentDate: string; 
   startDate: string;
   result: string;
+  percentage: string,
   testTakenDate: string;
   subjectMatterKnowledge: string;
   presentation: string;
@@ -168,7 +169,7 @@ export class ResultinfoComponent implements OnInit  {
   }
 }
 //columns: string[] = ['Mail','SkillName','Venue','Result','Percentage','TestTakenDate', 'Knowledge', 'Presentation', 'Communication', 'HandlingDoubts', 'Applicationtowork', 'Comments' ];
-columns: string[] = ['mail','skillName','venue','result','Percentage','testTakenDate', 'subjectMatterKnowledge', 'presentation', 'communication', 'handlingDoubts', 'applicationtowork', 'comments' ];
+columns: string[] = ['mail','skillName','venue','result','percentage','testTakenDate', 'subjectMatterKnowledge', 'presentation', 'communication', 'handlingDoubts', 'applicationtowork', 'comments' ];
 //   columns: { [key: string]: string } = {
 //   mail: "Email",
 //   skillName: "SkillName",
@@ -192,13 +193,13 @@ exportExcel(): void {
     skillName: "Skill Name",
     venue: "Venue",
     result: "Result",
-    Percentage: "Percentage",
-    testTakenDate: "Test Taken Date",
-    subjectMatterKnowledge: "Subject Matter Knowledge",
-    presentation: "Presentation Skills",
+    percentage: "Percentage",
+    testTakenDate: "TestTakenDate",
+    subjectMatterKnowledge: "Knowledge",
+    presentation: "Presentation",
     communication: "Communication",
-    handlingDoubts: "Handling Doubts",
-    applicationtowork: "Application to Work",
+    handlingDoubts: "HandlingDoubts",
+    applicationtowork: "ApplicationtoWork",
     comments: "Comments"
   };
 
@@ -226,10 +227,25 @@ exportExcel(): void {
 
   // Apply column width settings for visibility
   worksheet["!cols"] = Object.keys(columnMappings).map(() => ({ wch: 20 }));
-
-  // Ensure all rows have borders by explicitly setting them
+  
+  
+  // Apply styles manually using cell properties
   const range = XLSX.utils.decode_range(worksheet["!ref"] as string);
-  for (let R = range.s.r; R <= range.e.r; ++R) {
+
+  // 1️⃣ Apply Header Formatting (Bold & Background Color)
+  for (let C = range.s.c; C <= range.e.c; ++C) {
+    const cellAddress = XLSX.utils.encode_cell({ r: 0, c: C });
+    if (worksheet[cellAddress]) {
+      worksheet[cellAddress].s = {
+        font: { bold: true }, // Bold header text
+        fill: { fgColor: { rgb: "D9D9D9" } }, // Light gray background
+        alignment: { horizontal: "center", vertical: "center" }
+      };
+    }
+  }
+
+  // 2️⃣ Apply Alternating Row Colors & Borders
+  for (let R = range.s.r + 1; R <= range.e.r; ++R) {
     for (let C = range.s.c; C <= range.e.c; ++C) {
       const cellAddress = XLSX.utils.encode_cell({ r: R, c: C });
 
@@ -238,8 +254,10 @@ exportExcel(): void {
         worksheet[cellAddress] = { v: "" }; // Set empty value
       }
 
-      // Apply a border style
+      // Apply alternating row colors
       worksheet[cellAddress].s = {
+        fill: { fgColor: { rgb: R % 2 === 0 ? "F7F7F7" : "FFFFFF" } }, // Alternate row color
+        alignment: { horizontal: "center", vertical: "center" }, // Center text
         border: {
           top: { style: "thin", color: { rgb: "000000" } },
           bottom: { style: "thin", color: { rgb: "000000" } },
@@ -249,6 +267,7 @@ exportExcel(): void {
       };
     }
   }
+
 
   // Create Workbook and Export
   const workbook: XLSX.WorkBook = { Sheets: { 'Sheet1': worksheet }, SheetNames: ['Sheet1'] };

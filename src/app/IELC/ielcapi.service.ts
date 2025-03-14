@@ -1726,5 +1726,17 @@ export class IelcapiService {
     Updateeventalerts(id: number, updatedData: any): Observable<any> {
       return this.http.put<any>(`${this.eventalertsUrl}/${id}`, updatedData);
     } 
-//================================================================================    
+//================================================================================Exam info
+
+examinfoUrl='https://ielc-coreapi.azurewebsites.net/ExamInfo';
+Getexaminfo(): Observable<any> {
+     return this.http.get<any>(this.examinfoUrl);
+}    
+GetexaminfoById(id: number): Observable<any> {
+  return this.http.get<any>(`${this.examinfoUrl}/${id}`);
+}
+
+Updateexaminfo(id: number, updatedData: any): Observable<any> {
+  return this.http.put<any>(`${this.examinfoUrl}/${id}`, updatedData);
+} 
 }

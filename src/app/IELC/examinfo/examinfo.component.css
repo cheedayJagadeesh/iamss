@@ -46,7 +46,7 @@
     margin-top: -2%;
     font-weight: bold;
     position: absolute;
-    color: red;
+    /* color: red; */
 }
 .batch{
     margin-top: 0%;
@@ -83,7 +83,7 @@
     margin-top: -2%;
     font-weight: bold;
     position: absolute;
-    color: red;
+    /* color: red; */
 }
 .question{
     margin-top: 0%;
@@ -120,7 +120,7 @@
     margin-top: -2%;
     font-weight: bold;
     position: absolute;
-    color: red;
+    /* color: red; */
 }
 .stquestion{
     margin-top: 0%;
@@ -157,7 +157,7 @@
     margin-top: -2%;
     font-weight: bold;
     position: absolute;
-    color: red;
+    /* color: red; */
 }
 .ep{
     margin-top: 0%;
@@ -194,5 +194,73 @@
     margin-top: -2%;
     font-weight: bold;
     position: absolute;
-    color: red;
+    /* color: red; */
+}
+.tablebottom {
+    margin-top: 1%;
+    border-collapse: collapse;
+    width: 60%;
+    margin-left: 20%;
+}
+.divmodal{
+    margin-top: 1%;
+    font-size: 15px;
+}
+.headermodal{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.loading-container {
+    position: fixed; /* Ensures it stays in place */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centers it exactly */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* Optional: adds a light overlay */
+    z-index: 9999; /* Ensures it's above other elements */
+  }
+  
+  .dot {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: #3498db;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+    margin: 0 5px;
+  }
+  
+  .dot:nth-child(2) { animation-delay: 0.2s; }
+  .dot:nth-child(3) { animation-delay: 0.4s; }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.5); opacity: 1; }
+  }
+
+  h1 {
+    /* font-family: Times New Roman; */
+    display: block;
+    font-size: 2em;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    text-align: center;
+    color: rgb(0, 3, 12);
+    margin-top: -3%;
+}
+.h2 {
+    /* font-family: Times New Roman; */
+    display: block;
+    font-size: 1.3em;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    text-align: left;
+    color: rgb(0, 3, 12);
+    margin-left: 25%;
+    width: 30%;
 }
