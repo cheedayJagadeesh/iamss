@@ -330,7 +330,7 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
         <label class="lblbatch">Batch Members</label>
       </div>
       <div>
-        <label class="lblbatchpopup">...</label>
+        <label class="lblbatchpopup" *ngFor="let item of examlist">(Each Skill have only {{item.batchLimitMembers}} Members...)</label>
       </div>
       <div class="mb-3 ">
         <button type="button" class="btn buttonsub btn-success">Submit</button>

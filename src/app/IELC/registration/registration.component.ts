@@ -15,6 +15,14 @@ interface eventsinfo{
   eventData: string;
   eventName: string;
 }
+interface exam{
+  id: number;
+  examTime: number;
+  batchLimitMembers: number;
+  displayExamQuestions: number;
+  standardExamQuestions: number;
+  examPercentage: number;
+}
 
 @Component({
   selector: 'app-registration',
@@ -26,6 +34,15 @@ export class RegistrationComponent {
   @ViewChild('registration') registration!: NgForm;
  // currentDate:Date=new Date()
  selectedDate:string=''
+ examlist: any[] = []; 
+ examdata:exam={
+  id: 0,
+  examTime: 0,
+  batchLimitMembers: 0,
+  displayExamQuestions: 0,
+  standardExamQuestions: 0,
+  examPercentage: 0
+ }
  leave='';
  // month=''
  // year=''
@@ -50,6 +67,7 @@ constructor(private ielc:IelcapiService){
    this.isTimeInputDisabled=true;
    this.GetHolidayslist();
    this.GetEventsist();
+   this.GetExamlist();
    if (this.eventslist && this.eventslist.length > 0) {
     this.eventslist = this.eventslist.sort((a, b) => Number(b.id) - Number(a.id));
   }
@@ -68,6 +86,11 @@ constructor(private ielc:IelcapiService){
   this.ielc.Getevents().subscribe((data) => {
     this.eventslist=data;
     // this.eventslist = this.sortlist(data);
+  });
+ }
+ GetExamlist(){
+  this.ielc.Getexaminfo().subscribe((data) => {
+    this.examlist=data;
   });
  }
 

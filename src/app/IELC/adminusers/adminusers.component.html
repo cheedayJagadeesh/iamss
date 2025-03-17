@@ -1,5 +1,5 @@
 <app-header></app-header>
-<form class="row g-3">
+<form class="row g-3" #form="ngForm">
     <div>
         <label class="lbllogin">Login as </label>
     </div>
@@ -633,7 +633,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let row of isosprtlist" >
+                <tr *ngFor="let row of isosprtlist27001" >
                     <td>{{row.id}}</td>
                     <td>{{row.contactPriority}}</td>
                     <td>{{row.name}}</td>
@@ -723,7 +723,7 @@
                                    <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal" (click)="resetISO27001Sprt()">Close</button>
-                                    <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateISO27001Sprt()">Update</button>
+                                    <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateISO27001Sprt();resetISO27001Sprt()">Update</button>
                                    </div>
                                 </div>
                             </div>
@@ -754,7 +754,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let row of isosprtlist" >
+                <tr *ngFor="let row of isosprtlist9001" >
                     <td>{{row.id}}</td>
                     <td>{{row.contactPriority}}</td>
                     <td>{{row.name}}</td>
@@ -778,7 +778,7 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close" (click)="resetISO9001Sprt(); GetIsoSprtlist()"></button>
+                                        aria-label="Close" (click)="resetISO9001Sprt(); GetIso9001Sprtlist()"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="divmodal">
@@ -799,7 +799,7 @@
                                        </div>
                                    <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal" (click)="resetISO9001Sprt(); GetIsoSprtlist()">Close</button>
+                                        data-bs-dismiss="modal" (click)="resetISO9001Sprt(); GetIso9001Sprtlist()">Close</button>
                                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddISO9001Sprt()">Add</button>
                                    </div>
                                 </div>

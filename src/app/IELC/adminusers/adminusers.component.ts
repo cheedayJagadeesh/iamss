@@ -159,7 +159,8 @@ onSelection3Change() {
   mobile: 0,
   email: '',
   }
-  isosprtlist: any[] = []; 
+  isosprtlist27001: any[] = []; 
+  isosprtlist9001: any[] = []; 
   isosprtdata:isosprtinfo={
     id: 0,
     contactPriority: '',
@@ -347,8 +348,11 @@ onSelection3Change() {
     this.GetEventsist();
     this.GetCourseist();
     this.GetEventAlertsist();
+    
   }
+ 
 
+ 
 //-------------------------------------------------------------------------------SMTP
   GetSmtplist(){
     this.ielc.Getsmtp().subscribe((data) => {
@@ -449,7 +453,7 @@ UpdateItSprt() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItSprtlist();
-     
+      this.resetItSprt();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -530,7 +534,7 @@ UpdateOsSprt() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsSprtlist();
-     
+      this.resetOsSprt();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -611,7 +615,7 @@ UpdateHrSprt() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrSprtlist();
-     
+      this.resetHrSprt();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -691,7 +695,7 @@ UpdateEmerSprt() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetEmerSprtlist();
-     
+      this.resetEmerSprt();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -712,8 +716,8 @@ resetEmerSprt(){
 
 GetIsoSprtlist(){
   this.ielc.Getiso27001().subscribe((data) => {
-    this.isosprtlist=data;
-    this.isosprtlist = this.sortlist(data)
+    this.isosprtlist27001=data;
+    this.isosprtlist27001 = this.sortlist(data)
     this.isLoading = false;
   });
  }
@@ -773,7 +777,7 @@ UpdateISO27001Sprt() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetIsoSprtlist();
-     
+      this.resetISO27001Sprt();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -794,8 +798,8 @@ resetISO27001Sprt(){
 
 GetIso9001Sprtlist(){
   this.ielc.Getiso9001().subscribe((data) => {
-    this.isosprtlist=data;
-    this.isosprtlist = this.sortlist(data)
+    this.isosprtlist9001=data;
+    this.isosprtlist9001 = this.sortlist(data)
     this.isLoading = false;
   });
  }
@@ -854,7 +858,7 @@ UpdateISO9001Sprt() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetIso9001Sprtlist();
-     
+      this.resetISO9001Sprt();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -933,7 +937,7 @@ UpdateHrISMSGeneral() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrISMSGenerallist();
-     
+      this.resetHrISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -1006,7 +1010,7 @@ UpdateHrISMSGuidelines() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrISMSGuidelineslist();
-     
+      this.resetHrISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -1073,7 +1077,7 @@ UpdateHrISMSPolicy() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrISMSPolicylist();
-     
+      this.resetHrISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -1140,7 +1144,7 @@ UpdateHrISMSProcedure() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrISMSProcedurelist();
-     
+      this.resetHrISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -1207,7 +1211,7 @@ UpdateHrISMSFormat() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrISMSFormatlist();
-     
+      this.resetHrISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -1276,7 +1280,7 @@ UpdateHrQMSGeneral() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrQMSGenerallist();
-     
+      this.resetHrQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -1349,7 +1353,7 @@ UpdateHrQMSGuidelines() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrQMSGuidelineslist();
-     
+      this.resetHrQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -1416,7 +1420,7 @@ UpdateHrQMSPolicy() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrQMSPolicylist();
-     
+      this.resetHrQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -1483,7 +1487,7 @@ UpdateHrQMSProcedure() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrQMSProcedurelist();
-     
+      this.resetHrQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -1550,7 +1554,7 @@ UpdateHrQMSFormat() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrQMSFormatlist();
-     
+      this.resetHrQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
