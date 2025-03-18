@@ -1623,7 +1623,7 @@ UpdateOsISMSGeneral() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsISMSGenerallist();
-     
+      this.resetOsISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -1696,7 +1696,7 @@ UpdateOsISMSGuidelines() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsISMSGuidelineslist();
-     
+      this.resetOsISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -1763,7 +1763,7 @@ UpdateOsISMSPolicy() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsISMSPolicylist();
-     
+      this.resetOsISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -1830,7 +1830,7 @@ UpdateOsISMSProcedure() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsISMSProcedurelist();
-     
+      this.resetOsISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -1897,7 +1897,7 @@ UpdateOsISMSFormat() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsISMSFormatlist();
-     
+      this.resetOsISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -1968,7 +1968,7 @@ UpdateOsQMSGeneral() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsQMSGenerallist();
-     
+      this.resetOsQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -2040,7 +2040,7 @@ UpdateOsQMSGuidelines() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsQMSGuidelineslist();
-     
+      this.resetOsQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -2107,7 +2107,7 @@ UpdateOsQMSPolicy() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsQMSPolicylist();
-     
+      this.resetOsQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -2174,7 +2174,7 @@ UpdateOsQMSProcedure() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsQMSProcedurelist();
-     
+      this.resetOsQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -2242,7 +2242,7 @@ UpdateOsQMSFormat() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsQMSFormatlist();
-     
+      this.resetOsQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -2310,7 +2310,7 @@ UpdateIsmsSprt() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetIsmsSprt();
-     
+      this.resetIsmsSprt();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -2385,7 +2385,7 @@ UpdateIsoSprt() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetIsoSprt();
-     
+      this.resetIsoSprt();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -2460,7 +2460,7 @@ UpdateIsoPolicy() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetIsoPolicy();
-     
+      this.resetIsoPolicy();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -2536,7 +2536,7 @@ UpdateItISMSGeneral() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItISMSGenerallist();
-     
+      this.resetItISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -2609,7 +2609,7 @@ UpdateItISMSGuidelines() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItISMSGuidelineslist();
-     
+      this.resetItISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -2676,7 +2676,7 @@ UpdateItISMSPolicy() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItISMSPolicylist();
-     
+      this.resetItISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -2743,7 +2743,7 @@ UpdateItISMSProcedure() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItISMSProcedurelist();
-     
+      this.resetItISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -2810,7 +2810,7 @@ UpdateItISMSFormat() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItISMSFormatlist();
-     
+      this.resetItISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -2880,7 +2880,7 @@ UpdateItQMSGeneral() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItQMSGenerallist();
-     
+      this.resetItQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -2952,7 +2952,7 @@ UpdateItQMSGuidelines() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItQMSGuidelineslist();
-     
+      this.resetItQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -3019,7 +3019,7 @@ UpdateItQMSPolicy() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItQMSPolicylist();
-     
+      this.resetItQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -3086,7 +3086,7 @@ UpdateItQMSProcedure() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItQMSProcedurelist();
-     
+      this.resetItQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -3153,7 +3153,7 @@ UpdateItQMSFormat() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItQMSFormatlist();
-     
+      this.resetItQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -3222,7 +3222,7 @@ UpdatePrjtISMSGeneral() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtISMSGenerallist();
-     
+      this.resetPrjtISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -3295,7 +3295,7 @@ UpdatePrjtISMSGuidelines() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtISMSGuidelineslist();
-     
+      this.resetPrjtISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -3362,7 +3362,7 @@ UpdatePrjtISMSPolicy() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtISMSPolicylist();
-     
+      this.resetPrjtISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -3429,7 +3429,7 @@ UpdatePrjtISMSProcedure() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtISMSProcedurelist();
-     
+      this.resetPrjtISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -3496,7 +3496,7 @@ UpdatePrjtISMSFormat() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtISMSFormatlist();
-     
+      this.resetPrjtISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -3564,7 +3564,7 @@ UpdatePrjtQMSGeneral() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtQMSGenerallist();
-     
+      this.resetPrjtQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -3637,7 +3637,7 @@ UpdatePrjtQMSGuidelines() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtQMSGuidelineslist();
-     
+      this.resetPrjtQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -3704,7 +3704,7 @@ UpdatePrjtQMSPolicy() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtQMSPolicylist();
-     
+      this.resetPrjtQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -3771,7 +3771,7 @@ UpdatePrjtQMSProcedure() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtQMSProcedurelist();
-     
+      this.resetPrjtQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -3838,7 +3838,7 @@ UpdatePrjtQMSFormat() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtQMSFormatlist();
-     
+      this.resetPrjtQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -3907,7 +3907,7 @@ UpdateCisoISMSGeneral() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoISMSGenerallist();
-     
+      this.resetCisoISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -3980,7 +3980,7 @@ UpdateCisoISMSGuidelines() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoISMSGuidelineslist();
-     
+      this.resetCisoISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -4047,7 +4047,7 @@ UpdateCisoISMSPolicy() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoISMSPolicylist();
-     
+      this.resetCisoISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -4114,7 +4114,7 @@ UpdateCisoISMSProcedure() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoISMSProcedurelist();
-     
+      this.resetCisoISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -4181,7 +4181,7 @@ UpdateCisoISMSFormat() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoISMSFormatlist();
-     
+      this.resetCisoISMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -4250,7 +4250,7 @@ UpdateCisoQMSGeneral() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoQMSGenerallist();
-     
+      this.resetCisoQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -4323,7 +4323,7 @@ UpdateCisoQMSGuidelines() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoQMSGuidelineslist();
-     
+      this.resetCisoQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -4390,7 +4390,7 @@ UpdateCisoQMSPolicy() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoQMSPolicylist();
-     
+      this.resetCisoQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -4457,7 +4457,7 @@ UpdateCisoQMSProcedure() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoQMSProcedurelist();
-     
+      this.resetCisoQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -4524,7 +4524,7 @@ UpdateCisoQMSFormat() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoQMSFormatlist();
-     
+      this.resetCisoQMS();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -4544,7 +4544,7 @@ GetEmerGenerallist(){
     (response) => {
       alert('✅ Record Added Successfully!');
       this.GetEmerGenerallist();
-      this.resetCisoQMS();
+      this.resetEmer();
     },
     (error) => {
       alert('❌ Error adding Record. Please try again.');
@@ -4592,7 +4592,7 @@ UpdateEmerGeneral() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetEmerGenerallist();
-     
+      this.resetEmer();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -4668,7 +4668,7 @@ UpdateVarCmtGeneral() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetVarCmtGenerallist();
-     
+      this.resetVarCmt();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -4743,7 +4743,7 @@ UpdateHipaaGeneral() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHipaaGenerallist();
-     
+      this.resetHipaa();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -4818,7 +4818,7 @@ UpdateSocGeneral() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetSocGenerallist();
-     
+      this.resetSoc();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -4893,7 +4893,7 @@ UpdateGdprGeneral() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetGdprGenerallist();
-     
+      this.resetGdpr();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -4968,7 +4968,7 @@ UpdateDpdpGeneral() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetDpdpGenerallist();
-     
+      this.resetDpdp();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -5093,6 +5093,8 @@ AddEvents(item: any) {
     response => {
       alert('✅ Event Added Successfully!');
       console.log('Response:', response);
+      this.GetEventsist();
+      this.resetEvents();
     },
     error => {
       alert('❌ Error adding event. Please try again.');
@@ -5142,7 +5144,7 @@ UpdateEvents() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetEventsist();
-     
+      this.resetEvents();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -5218,7 +5220,7 @@ UpdateCourse() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCourseist();
-     
+      this.resetCourse();
     },
     (error) => {
       console.error("Error updating Record:", error);
@@ -5300,7 +5302,7 @@ UpdateEventAlerts() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetEventAlertsist();
-     
+      this.resetEventAlerts();
     },
     (error) => {
       console.error("Error updating Record:", error);

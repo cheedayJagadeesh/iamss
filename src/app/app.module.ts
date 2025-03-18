@@ -74,6 +74,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { PublicClientApplication } from '@azure/msal-browser';
 import { DatePipe } from '@angular/common';
 import { ExcelExportService } from './excel-export.service';
+import { FeedbackComponent } from './IELC/feedback/feedback.component';
 
 // const isIE = window.navigator.userAgent.includes('MSIE') || window.navigator.userAgent.includes('Trident');
 
@@ -138,7 +139,8 @@ import { ExcelExportService } from './excel-export.service';
     HippaComponent,
     GdprComponent,
     SocComponent,
-    DpdpComponent
+    DpdpComponent,
+    FeedbackComponent
   ],
   imports: [
     BrowserModule,

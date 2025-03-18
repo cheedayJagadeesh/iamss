@@ -35,6 +35,7 @@ export class RegistrationComponent {
  // currentDate:Date=new Date()
  selectedDate:string=''
  examlist: any[] = []; 
+ isLoading = true;
  examdata:exam={
   id: 0,
   examTime: 0,

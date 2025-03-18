@@ -2,7 +2,8 @@
     <img class="img" src="\assets\images\Inteq logo.png">
     <h1 class="h1" >INTEQ EMPLOYEE LEARNING CENTER</h1>
 </div>
-<form #registration="ngForm" (ngSubmit)="showData(registration.value)" >
+<form #registration="ngForm"  (ngSubmit)="showData(registration.value)" >
+
   <div>
     <a type="button" class="btn btnlink " routerLink="/complianceform"><a class="blink" style="color: blue;">Go To:</a>  ISMS - QMS Monthly Task Status Update</a>
   </div>
@@ -402,14 +403,14 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
     <div>
        <h2 class="notify">Inteq Holidays</h2>
     </div>
-    <div id="newsTicker" class="newsinfo">
+    <div id="newsTicker" class="newsinfo" >
        <ul class="newsList">
            <li *ngFor="let item of holidayslist">{{item.date | date: 'yyyy-MM-dd'}}: {{item.content}}</li>
        </ul>
     </div>
    </div>
-   <div>
+   <div >
     <label class="lblevents blink">Latest Events:</label>
-    <img *ngFor="let item of eventslist | slice:0:1" class="imgevents" [src]="'data:image/jpeg;base64,' + item.eventData" alt="Latest Event Image" >
+    <img  *ngFor="let item of eventslist | slice:0:1" class="imgevents" [src]="'data:image/jpeg;base64,' + item.eventData" alt="Latest Event Image" >
    </div>
    </form>

@@ -40,6 +40,7 @@ import { SocComponent } from './IELC/soc/soc.component';
 import { DpdpComponent } from './IELC/dpdp/dpdp.component';
 import { MsalGuard } from '@azure/msal-angular';
 import { LoginComponent } from './IAMS/login/login.component';
+import { FeedbackComponent } from './IELC/feedback/feedback.component';
 
 
 const routes: Routes = [
@@ -82,7 +83,8 @@ const routes: Routes = [
   {path:'hippa',component:HippaComponent},
   {path:'gdpr',component:GdprComponent},
   {path:'soc',component:SocComponent},
-  {path:'dpdp',component:DpdpComponent}
+  {path:'dpdp',component:DpdpComponent},
+  {path:'feedback',component:FeedbackComponent}
 ];
 
 @NgModule({
