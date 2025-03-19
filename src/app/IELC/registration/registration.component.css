@@ -12,6 +12,14 @@ h1 {
     margin-left: 40%;
     color: red;
     font-weight: bold;
+    text-decoration: none;
+}
+.a{
+    margin-left: 37.5%;
+    font-weight: bold;
+    position: absolute;
+    margin-top: 0.6%;
+    text-decoration: none;
 }
 
 .img{

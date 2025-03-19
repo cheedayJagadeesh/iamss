@@ -5,7 +5,10 @@
 <form #registration="ngForm"  (ngSubmit)="showData(registration.value)" >
 
   <div>
-    <a type="button" class="btn btnlink " routerLink="/complianceform"><a class="blink" style="color: blue;">Go To:</a>  ISMS - QMS Monthly Task Status Update</a>
+   
+    <!-- <a type="button" class="btn btnlink " routerLink="/complianceform"><a class="blink" style="color: blue;">Go To:</a>  ISMS - QMS Monthly Task Status Update</a> -->
+   <a class="a">Go To:</a>
+    <button type="button" class="btn btn-link btnlink" routerLink="/complianceform">ISMS - QMS Monthly Task Status Update</button>
   </div>
  <div>
    <table class="tableleft">
@@ -351,11 +354,15 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
           </thead>
           <tbody>
             <tr>
-                <th scope="row">Mark</th>
-                <td>Mark</td>
+                <td>Otto</td>
+                <td>
+                <button type="button" class="btn btn-link" routerLink="/exampage">Start Test</button>
+                </td>
                 <td>Otto</td>
                 <td>Mark</td>
-                <td>Otto</td>
+                <td>
+                <button type="button" class="btn btn-link" routerLink="/feedback">FeedBack</button>
+                </td>
             </tr>
             <tr>
                 <th scope="row">Mark</th>

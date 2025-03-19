@@ -1,0 +1,87 @@
+<form class="row g-3">
+    
+<div class="exam-container">
+    <div>
+        <label class="lbllogin">Login as </label>
+    </div>
+    <!-- <a (click)="goBack()" class="back-link">Back</a> -->
+     <div>
+    <button class="btn btn-dark btnback" routerLink="/registration" (click)="goBack()">Back</button>
+    </div>
+    <div class="exam-header">
+      <h2>Your Test: <strong>Cloud Computing</strong></h2>
+      <p>Time Left:  {{ formattedTime }}</p>
+    </div>
+<!--   
+    <div *ngIf="currentQuestion">
+      <h3>{{ currentQuestionIndex + 1 }}. {{ currentQuestion.question }}</h3>
+      
+      <div class="options">
+        <label class="options-label" *ngFor="let option of currentQuestion.options">
+          <input 
+            class="options-input"
+            type="radio" 
+            name="answer" 
+            [value]="option" 
+            [(ngModel)]="selectedAnswer">
+          {{ option }}
+        </label>
+      </div>
+    </div>
+  
+    <button (click)="nextQuestion()" [disabled]="!selectedAnswer" class="next-button">Next</button> -->
+
+
+    <!-- <p *ngIf="examdata.displayExamQuestions > 0">Question {{ currentQuestionIndex + 1 }} of {{ examdata.displayExamQuestions }}</p> -->
+
+
+<div *ngIf="examdata.displayExamQuestions > 0">
+  <!-- <h3 *ngIf="questions[currentQuestionIndex]?.question">
+   {{ currentQuestionIndex + 1 }}.{{ questions[currentQuestionIndex].question }}
+  </h3>
+  <img *ngIf="questions[currentQuestionIndex]?.questionImage" 
+       [src]="questions[currentQuestionIndex].questionImage" 
+       alt="Question Image" class="question-image" /> -->
+       <!-- Show Question Text Only If It Exists -->
+<!-- Always Show Question Number -->
+<h3>
+    {{ currentQuestionIndex + 1 }}.
+    <span *ngIf="questions[currentQuestionIndex]?.question">
+      {{ questions[currentQuestionIndex].question }}
+    </span>
+  </h3>
+  
+  <!-- Show Image If There Is No Question Text -->
+  <img 
+    *ngIf="questions[currentQuestionIndex]?.questionImage" 
+    [src]="questions[currentQuestionIndex].questionImage" 
+    alt="Question Image" 
+    class="question-image"
+  />
+  
+  
+
+  <!-- Display Text or Image-Based Options -->
+  <div class="options">
+    <label class="options-label" *ngFor="let option of questions[currentQuestionIndex]?.options">
+      <input  class="options-input" type="radio" name="answer" [value]="option.text" [(ngModel)]="selectedAnswer" />
+
+      <!-- Show Text Option -->
+      <span *ngIf="option.text">{{ option.text }}</span>
+
+      <!-- Show Image Option -->
+      <img *ngIf="option.image" [src]="option.image" alt="Option Image" class="option-image" />
+    </label>
+  </div>
+</div>
+
+<!-- Navigation Buttons -->
+<!-- <button (click)="goBack()">Back</button>
+<button (click)="nextQuestion()">Next</button> -->
+<button (click)="nextQuestion()" [disabled]="!selectedAnswer" class="next-button">Next</button>
+
+  
+    <p>Question {{ currentQuestionIndex + 1 }} of {{ examdata.displayExamQuestions }}</p>
+  </div>
+  </form>
+  
