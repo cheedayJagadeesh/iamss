@@ -41,6 +41,7 @@ import { DpdpComponent } from './IELC/dpdp/dpdp.component';
 import { MsalGuard } from '@azure/msal-angular';
 import { LoginComponent } from './IAMS/login/login.component';
 import { FeedbackComponent } from './IELC/feedback/feedback.component';
+import { ExampageComponent } from './IELC/exampage/exampage.component';
 
 
 const routes: Routes = [
@@ -52,10 +53,17 @@ const routes: Routes = [
   {path:'configuration',component:ConfigurationsComponent},
   {path:'attendance',component:AttendanceComponent},
   {path:'registered',component:RegisteredusersComponent},
-  {path:'home',component:HomeComponent},
-  {path:'',redirectTo:'home', pathMatch:'full'},
+  // {path:'home',component:HomeComponent,canActivate:[MsalGuard]},
+  // {path:'',redirectTo:'login', pathMatch:'full'},
   // {path:'login',component:LoginComponent},
   // {path: '**', redirectTo: '/login'},
+
+  { path: 'home', component: HomeComponent, canActivate: [MsalGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  // { path: '**', redirectTo: 'login' },
+
+
   {path:'registration',component:RegistrationComponent},
   {path:'addskill',component:AddnewskillComponent},
   {path:'skillqa',component:SkillqaComponent},
@@ -84,7 +92,8 @@ const routes: Routes = [
   {path:'gdpr',component:GdprComponent},
   {path:'soc',component:SocComponent},
   {path:'dpdp',component:DpdpComponent},
-  {path:'feedback',component:FeedbackComponent}
+  {path:'feedback',component:FeedbackComponent},
+  {path:'exampage',component:ExampageComponent}
 ];
 
 @NgModule({

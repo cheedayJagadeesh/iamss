@@ -62,19 +62,26 @@ import { SocComponent } from './IELC/soc/soc.component';
 import { DpdpComponent } from './IELC/dpdp/dpdp.component';
 import { IelcapiService } from './IELC/ielcapi.service';
 import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { MsalModule, MsalRedirectComponent, MsalInterceptor, MsalGuardConfiguration,MsalInterceptorConfiguration } from '@azure/msal-angular';
-import { MsalGuard, MsalService } from '@azure/msal-angular';
+import { MsalModule, MsalRedirectComponent, MsalInterceptor, MsalGuardConfiguration,MsalInterceptorConfiguration, MSAL_INTERCEPTOR_CONFIG } from '@azure/msal-angular';
+import { MsalGuard, MsalService, MsalBroadcastService  } from '@azure/msal-angular';
 import { AuthService } from './authservice.service';
 import { RouterModule, Routes } from '@angular/router';
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import {  MSAL_INSTANCE } from '@azure/msal-angular';
-import { InteractionType, IPublicClientApplication } from '@azure/msal-browser'; 
+// import { IPublicClientApplication } from '@azure/msal-browser'; 
 import { NgxPaginationModule } from 'ngx-pagination';
-import { PublicClientApplication } from '@azure/msal-browser';
+import { PublicClientApplication, IPublicClientApplication } from '@azure/msal-browser';
 import { DatePipe } from '@angular/common';
 import { ExcelExportService } from './excel-export.service';
 import { FeedbackComponent } from './IELC/feedback/feedback.component';
+import { ExampageComponent } from './IELC/exampage/exampage.component';
+import { BrowserCacheLocation } from '@azure/msal-browser';
+import {  MSAL_GUARD_CONFIG } from '@azure/msal-angular';
+import { InteractionType } from '@azure/msal-browser'; 
+const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
+
+
 
 // const isIE = window.navigator.userAgent.includes('MSIE') || window.navigator.userAgent.includes('Trident');
 
@@ -91,6 +98,101 @@ import { FeedbackComponent } from './IELC/feedback/feedback.component';
 //     }
 //   });
 // }
+
+// function MSALConfigFactory() {
+//   return {
+//     auth: {
+//       clientId: '{YOUR_CLIENT_ID}',
+//       authority: 'https://login.microsoftonline.com/{YOUR_TENANT_ID}/',
+//       validateAuthority: true,
+//       redirectUri: 'http://localhost:4200',
+//       postLogoutRedirectUri: 'http://localhost:4200',
+//       navigateToLoginRequestUrl: true
+//     },
+//     cache: {
+//       storeAuthStateInCookie: false,
+//     }
+//   };
+// }
+// export function MSALInstanceFactory(): PublicClientApplication {
+//   return new PublicClientApplication({
+//     auth: {
+//       clientId: '{YOUR_CLIENT_ID}',
+//       authority: 'https://login.microsoftonline.com/{YOUR_TENANT_ID}/',
+//       redirectUri: 'http://localhost:4200',
+//       postLogoutRedirectUri: 'http://localhost:4200',
+//       navigateToLoginRequestUrl: true
+//     },
+//     cache: {
+//       cacheLocation: BrowserCacheLocation.LocalStorage,
+//       storeAuthStateInCookie: false,
+//     }
+//   });
+// }
+// export function MSALInstanceFactory() {
+//   return new PublicClientApplication({
+//     auth: {
+//       clientId: "17af1879-bbe9-4a73-8284-1f007a330453", // Replace with your Azure AD App's Client ID
+//       authority: "https://login.microsoftonline.com/d0ae250e-943b-431f-be00-cc1a2f3f59d9", // Replace with your Tenant ID
+//       redirectUri: "http://localhost:4200", // Must match your Azure AD App's Redirect URI
+//     },
+//     cache: {
+//       cacheLocation: BrowserCacheLocation.LocalStorage,
+//       storeAuthStateInCookie: true,
+//     },
+//     system: {
+//       loggerOptions: {
+//         loggerCallback: (level, message, containsPii) => {
+//           console.log(`MSAL Logging: ${message}`);
+//         },
+      
+//         piiLoggingEnabled: false,
+//       },
+//     },
+//   });
+// }
+export function MSALInstanceFactory(): IPublicClientApplication {
+  return new PublicClientApplication({
+    auth: {
+      // 'Application (client) ID' of app registration in the Microsoft Entra admin center - this value is a GUID
+      clientId: "17af1879-bbe9-4a73-8284-1f007a330453",
+      // Full directory URL, in the form of https://login.microsoftonline.com/<tenant>
+      authority: "https://login.microsoftonline.com/d0ae250e-943b-431f-be00-cc1a2f3f59d9",
+      // Must be the same redirectUri as what was provided in your app registration.
+      redirectUri: "http://localhost:4200",
+      postLogoutRedirectUri: 'http://localhost:4200/login'
+    },
+    cache: {
+      cacheLocation: BrowserCacheLocation.LocalStorage,
+      storeAuthStateInCookie: false
+    }
+  });
+}
+export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
+  const protectedResourceMap = new Map<string, Array<string>>();
+  protectedResourceMap.set('https://graph.microsoft.com/v1.0/me', ['user.read']);
+
+  return {
+    interactionType: InteractionType.Popup,
+    protectedResourceMap
+  };
+}
+// export function MSALGuardConfigFactory(): MsalGuardConfiguration {
+//   return {
+//     interactionType: InteractionType.Redirect, // or 'popup'
+//     authRequest: {
+//       scopes: ['User.Read']
+//     }
+//   };
+// }
+export function MSALGuardConfigFactory(): MsalGuardConfiguration {
+  return {
+    interactionType: InteractionType.Popup, // Change to Popup if needed
+    authRequest: {
+      scopes: ['User.Read'], // Check API Permissions in Azure
+    }
+  };
+}
 
 
 @NgModule({
@@ -140,7 +242,8 @@ import { FeedbackComponent } from './IELC/feedback/feedback.component';
     GdprComponent,
     SocComponent,
     DpdpComponent,
-    FeedbackComponent
+    FeedbackComponent,
+    ExampageComponent
   ],
   imports: [
     BrowserModule,
@@ -151,11 +254,28 @@ import { FeedbackComponent } from './IELC/feedback/feedback.component';
     MatFormFieldModule,MatButtonModule,MatIconModule,HttpClientModule,NgxPaginationModule
     
   ],
-  providers: [IelcapiService,HttpClient,AuthService,MsalModule,MsalGuard,MsalService,DatePipe,ExcelExportService
+  providers: [IelcapiService,HttpClient,AuthService,MsalModule,MsalGuard,MsalService,DatePipe,ExcelExportService,MsalBroadcastService, 
+    {
+      provide: MSAL_INSTANCE,
+      useFactory: MSALInstanceFactory
+    },
+    {
+      provide: MSAL_GUARD_CONFIG,
+      useFactory: MSALGuardConfigFactory
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MsalInterceptor,
+      multi: true,
+    },
+    {
+      provide: MSAL_INTERCEPTOR_CONFIG,
+      useFactory: MSALInterceptorConfigFactory
+    },
     // { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true },
     // { provide: MSAL_INSTANCE, useFactory: MSALInstanceFactory },
     // MsalGuard,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent,MsalRedirectComponent]
 })
 export class AppModule { }
