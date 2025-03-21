@@ -37,9 +37,12 @@
               AllDepts
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" href="#">Admin Dept</a></li>
-              <li><a class="dropdown-item" href="#">HR Dept</a></li>
-              <li><a class="dropdown-item" href="#">IT Dept</a></li>
+              <li><a class="dropdown-item" routerLink="/admindept"  routerLinkActive="active-tab" 
+                [routerLinkActiveOptions]="{ exact: true }">Admin Dept</a></li>
+              <li><a class="dropdown-item" routerLink="/hrdept"  routerLinkActive="active-tab" 
+                [routerLinkActiveOptions]="{ exact: true }">HR Dept</a></li>
+              <li><a class="dropdown-item" routerLink="/itdept"  routerLinkActive="active-tab" 
+                [routerLinkActiveOptions]="{ exact: true }">IT Dept</a></li>
             </ul>
           </li>
           <li class="nav-item">
@@ -76,9 +79,12 @@
             [routerLinkActiveOptions]="{ exact: true }">RegistrationPage</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link " (click)="logout()" >Logout</a>
+            <a class="nav-link " (click)="logout()" style="cursor: pointer;">Logout</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+  <div>
+    <label class="lbllogin">Login as <strong>{{ userName }}</strong> </label>
+</div>

@@ -36,12 +36,12 @@
                 [routerLinkActiveOptions]="{ exact: true }"  >Configurations</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " (click)="logout()">Logout</a>
+                <a class="nav-link " (click)="logout()" style="cursor: pointer;">Logout</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
   <div>
-    <label class="lbllogin">Login as </label>
+    <label class="lbllogin">Login as <strong>{{ userName }}</strong></label>
   </div>

@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { IelcapiService } from '../ielcapi.service';
+import { AuthService } from 'src/app/authservice.service';
+import { MsalService } from '@azure/msal-angular';
+import { Router } from '@angular/router';
 
 interface exam{
   id: number;
@@ -26,12 +29,34 @@ export class ExaminfoComponent {
     examPercentage: 0
    }
 
-   constructor(private ielc:IelcapiService) {
+  //  constructor(private ielc:IelcapiService) {
 
-   }
-   ngOnInit(): void {
-     this.GetExamlist();
-   }
+  //  }
+   userName: string | null = null;
+
+  constructor(private msalService: MsalService, private authService: AuthService, private router: Router,private ielc:IelcapiService) {}
+ 
+   async ngOnInit() {
+    try {
+      await this.msalService.instance.handleRedirectPromise(); // Ensure MSAL is initialized
+      this.authService.setActiveAccount(); // Ensure an account is set
+
+      this.authService.userName$.subscribe(username => {
+        if (username) {
+          this.userName = username;
+        } else {
+          this.authService.fetchUserDetails(); // Fetch from Microsoft Graph API if missing
+        }
+      });
+
+      if (!this.authService.isAuthenticated()) {
+        this.router.navigate(['/login']); // Redirect if not authenticated
+      }
+    } catch (error) {
+      console.error('MSAL initialization error in HomeComponent:', error);
+    }
+    this.GetExamlist();
+  }
    
     GetExamlist(){
      this.ielc.Getexaminfo().subscribe((data) => {
@@ -78,5 +103,9 @@ export class ExaminfoComponent {
         }
       );
     }
+    
+  
+
+  
   
 }

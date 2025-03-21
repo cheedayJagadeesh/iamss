@@ -11,7 +11,7 @@
     margin-left: 75%;
     position: absolute;
 }
-.form-label{
+/* .form-label{
     margin-top: 1%;
     margin-left: 30%;
     font-size: 16px;
@@ -40,28 +40,72 @@
     line-height: 1.5;
     outline-offset: 1px;
 }
-/* .form-control{
-    display: block;
-    border-color: black;
-    color: black;
-    border: 1px solid black;
-    border-radius: 6px;
-    text-align: center;
-    width: 100%;
+
+.btnsrch{
+    margin-left: 40%;
+    width: 10%;
+} */
+.container {
+    max-width: 600px; /* Adjust width */
+    background: #f8f9fa; /* Light background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+.form-label{
     margin-top: 0%;
-    margin-left: 71.5%;
+    margin-left: 30%;
+    font-size: 16px;
+    position: absolute;
+}
+
+.form-control {
+    display: block;
+    width: 20%;
     padding: .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
-    outline-offset: 1px;
-    margin-top: -1%;
-    margin-left: 1%;
-} */
-.btnsrch{
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-top: -0.5%;
     margin-left: 40%;
-    width: 10%;
+    text-align: center;
+    border-color: black;
+    color: black;
+    border: 1px solid black;
+    border-radius: 6px;
+    line-height: 1.5;
+    outline-offset: 1px;
+    position: absolute;
 }
+.div1{
+    margin-top: 3%;
+}
+.div2{
+    margin-top: 6%;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: 0.3s;
+    position: absolute;
+    margin-top: 3%;
+    margin-left: -3%;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+}
+
 .tablebottom {
-    margin-top: 2%;
+    margin-top: 7%;
 }

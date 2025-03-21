@@ -1,9 +1,12 @@
-import { Component,ViewChild } from '@angular/core';
+import { Component,OnInit,ViewChild } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { __values } from 'tslib';
 import { NgForm } from '@angular/forms';
 import { IelcapiService } from '../ielcapi.service';
+import { AuthService } from 'src/app/authservice.service';
+import { MsalService } from '@azure/msal-angular';
+import { Router } from '@angular/router';
 
 
 interface holidaysinfo{
@@ -29,7 +32,7 @@ interface exam{
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
-export class RegistrationComponent {
+export class RegistrationComponent implements OnInit {
 
   @ViewChild('registration') registration!: NgForm;
  // currentDate:Date=new Date()
@@ -62,7 +65,7 @@ export class RegistrationComponent {
   eventName: ''
  }
 latestEvent: any= null; 
-constructor(private ielc:IelcapiService){
+constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router){
    // this.selectedDate= new Date().toString()
    this.selectedDate= new Date().toISOString().split('T')[0]
    this.isTimeInputDisabled=true;
@@ -73,6 +76,29 @@ constructor(private ielc:IelcapiService){
     this.eventslist = this.eventslist.sort((a, b) => Number(b.id) - Number(a.id));
   }
  }
+ 
+ userName: string | null = null;
+ async ngOnInit() {
+   try {
+     await this.msalService.instance.handleRedirectPromise(); // Ensure MSAL is initialized
+     this.authService.setActiveAccount(); // Ensure an account is set
+
+     this.authService.userName$.subscribe(username => {
+       if (username) {
+         this.userName = username;
+       } else {
+         this.authService.fetchUserDetails(); // Fetch from Microsoft Graph API if missing
+       }
+     });
+
+     if (!this.authService.isAuthenticated()) {
+       this.router.navigate(['/login']); // Redirect if not authenticated
+     }
+   } catch (error) {
+     console.error('MSAL initialization error in HomeComponent:', error);
+   }
+ }
+
 
  GetHolidayslist(){
   this.ielc.Getholidays().subscribe((data) => {

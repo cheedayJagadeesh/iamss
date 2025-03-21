@@ -1,16 +1,17 @@
 <form class="row g-3">
-    
+    <app-sprtheader></app-sprtheader>
 <div class="exam-container">
-    <div>
+    <!-- <div>
         <label class="lbllogin">Login as </label>
-    </div>
+    </div> -->
+    
     <!-- <a (click)="goBack()" class="back-link">Back</a> -->
      <div>
     <button class="btn btn-dark btnback" routerLink="/registration" (click)="goBack()">Back</button>
     </div>
     <div class="exam-header">
       <h2>Your Test: <strong>Cloud Computing</strong></h2>
-      <p>Time Left:  {{ formattedTime }}</p>
+      <p>Time Left:  <strong>{{ formattedTime }}</strong></p>
     </div>
 <!--   
     <div *ngIf="currentQuestion">

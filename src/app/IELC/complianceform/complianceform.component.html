@@ -1,36 +1,37 @@
 
 <form class="row g-3">
-    <div>
-        <label class="lbllogin">Login as </label>
-    </div>
+    <!-- <div>
+        <label class="lbllogin">Login as <strong>{{ userName }}</strong> </label>
+    </div> -->
+    <app-sprtheader></app-sprtheader>
     <img class="img" src="\assets\images\Inteq logo.png">
     <div>
         <button class="btn btn-dark btnback" routerLink="/registration">Back</button>
     </div>
-    <div class="row g-3">
+    <!-- <div class="row g-3">
         <div class="row-md-3">
-            <label for="Empname" class="form-label">select compliance</label>
+            <label for="compliance" class="form-label">select compliance</label>
         </div>
         <div class="row-md-3">
-            <select name="skill" class="form-controlone" required>
+            <select name="compliance" class="form-controlone" required>
                 <option value="" disabled selected>- select compliance -</option>
                 <option>azure</option>
             </select>
         </div>
         <div class="">
-            <label for="Empname" class="form-label">select projects</label>
+            <label for="project" class="form-label">select projects</label>
         </div>
         <div class="">
-            <select name="skill" class="form-controlone" required>
+            <select name="projects" class="form-controlone" required>
                 <option value="" disabled selected>- select projects -</option>
                 <option>azure</option>
             </select>
         </div>
         <div class="">
-            <label for="Empname" class="form-label">select status</label>
+            <label for="status" class="form-label">select status</label>
         </div>
         <div class="">
-            <select name="skill" class="form-controlone" required>
+            <select name="status" class="form-controlone" required>
                 <option value="" disabled selected>- select status -</option>
                 <option>azure</option>
             </select>
@@ -38,7 +39,37 @@
         <div class="">
             <button class="btn btn-info btnsrch">submit</button>
         </div>
+    </div> -->
+    <div>
+           <div>
+             <label for="compliance" class="form-label">Select Compliance</label>
+                <select id="compliance" name="compliance" class="form-control" required>
+                    <option value="" disabled selected>- Select Compliance -</option>
+                    <option>Azure</option>
+                </select>
+            </div>
+            <div class="div1" >
+                <label for="project" class="form-label">Select Project</label>
+                <select id="project" name="projects" class="form-control" required>
+                    <option value="" disabled selected>- Select Project -</option>
+                    <option>Azure</option>
+                </select>
+            </div>
+            <div class="div2">
+                <label for="status" class="form-label">Select Status</label>
+                <select id="status" name="status" class="form-control" required>
+                    <option value="" disabled selected>- Select Status -</option>
+                    <option>Azure</option>
+                </select>
+            </div>
+    
+            <!-- Submit Button -->
+            <div class="col-md-12 text-center mt-3">
+                <button class="btn btn-info btnsrch">Submit</button>
+            </div>
+       
     </div>
+    
     <div class="tablebottom">
         <table class="table table-striped table-bordered">
             <thead class="table-primary">
