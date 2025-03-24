@@ -39,6 +39,10 @@ export class RegistrationComponent implements OnInit {
  selectedDate:string=''
  examlist: any[] = []; 
  isLoading = true;
+ skillname='';
+ mode='';
+ date='';
+ time='';
  examdata:exam={
   id: 0,
   examTime: 0,
@@ -78,18 +82,34 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
  }
  
  userName: string | null = null;
+ userEmail: string | null = null;
+ firstName: string = '';
+ lastName: string = '';
  async ngOnInit() {
    try {
      await this.msalService.instance.handleRedirectPromise(); // Ensure MSAL is initialized
      this.authService.setActiveAccount(); // Ensure an account is set
 
-     this.authService.userName$.subscribe(username => {
-       if (username) {
-         this.userName = username;
-       } else {
-         this.authService.fetchUserDetails(); // Fetch from Microsoft Graph API if missing
-       }
-     });
+    //  this.authService.userName$.subscribe(username => {
+    //    if (username) {
+    //      this.userName = username;
+    //    } else {
+    //      this.authService.fetchUserDetails(); // Fetch from Microsoft Graph API if missing
+    //    }
+    //  });
+    this.authService.userDetails$.subscribe(userDetails => {
+      this.userName = userDetails.displayName;
+      this.userEmail = userDetails.email;
+    });
+    if (this.userEmail) {
+      const emailPrefix = this.userEmail.split('@')[0]; // Get the part before '@'
+      const nameParts = emailPrefix.split(/[._]/); // Split by dot (.) or underscore (_)
+      this.firstName = nameParts[0] || ''; // First part as first name
+      this.lastName = nameParts.length > 1 ? nameParts[1] : ''; // Second part as last name (if exists)
+    }
+   else {
+    this.authService.fetchUserDetails(); // Fetch details if missing
+  }
 
      if (!this.authService.isAuthenticated()) {
        this.router.navigate(['/login']); // Redirect if not authenticated
@@ -98,6 +118,9 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
      console.error('MSAL initialization error in HomeComponent:', error);
    }
  }
+ logout(): void {
+  this.authService.logout();
+}
 
 
  GetHolidayslist(){

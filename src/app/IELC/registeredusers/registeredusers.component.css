@@ -28,6 +28,10 @@
 .pagination {
     margin-left: 66%;
 }
+th {
+    white-space: nowrap;
+    /* text-align: center;  */
+}
 
 .drpyear {
     position: absolute;

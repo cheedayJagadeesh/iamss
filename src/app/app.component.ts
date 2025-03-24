@@ -14,6 +14,9 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     // this.authService.startInactivityTimer();
+    // this.router.events.subscribe(() => {
+    //   this.authService.startInactivityTimer();
+    // });
     try {
       await this.msalService.instance.initialize(); // Ensure MSAL is initialized
       console.log('MSAL initialized successfully');
@@ -25,6 +28,44 @@ export class AppComponent implements OnInit {
     }
 
   }
+
+  // async ngOnInit() {
+  //   try {
+  //     // Wait for redirect authentication response
+  //     const result = await this.msalService.instance.handleRedirectPromise();
+  
+  //     if (result !== null && result.account) {
+  //       this.msalService.instance.setActiveAccount(result.account);
+  //       console.log('User authenticated:', result.account);
+  //     } else {
+  //       console.log('No authentication detected.');
+  //     }
+  
+  //     // Redirect to home if already authenticated
+  //     if (this.authService.isAuthenticated()) {
+  //       this.router.navigate(['/home']);
+  //     }
+  //   } catch (error) {
+  //     console.error('MSAL initialization error:', error);
+  //   }
+  // }
+
+
+  // async ngOnInit() {
+  //   try {
+  //     await this.msalService.instance.handleRedirectPromise(); // Wait for MSAL to initialize
+  //     this.authService.setActiveAccount();
+
+  //     if (this.authService.isAuthenticated()) {
+  //       this.router.navigate(['/home']);
+  //     } else {
+  //       this.router.navigate(['/login']);
+  //     }
+  //   } catch (error) {
+  //     console.error('MSAL initialization error:', error);
+  //   }
+  // }
+  
   // constructor(private authService: AuthService, private router: Router, private msalService: MsalService) {}
 
   // ngOnInit(): void {

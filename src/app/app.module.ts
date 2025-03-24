@@ -78,7 +78,11 @@ import { FeedbackComponent } from './IELC/feedback/feedback.component';
 import { ExampageComponent } from './IELC/exampage/exampage.component';
 import { BrowserCacheLocation } from '@azure/msal-browser';
 import {  MSAL_GUARD_CONFIG } from '@azure/msal-angular';
-import { InteractionType } from '@azure/msal-browser'; 
+import { InteractionType } from '@azure/msal-browser';
+import { AdmindeptComponent } from './IELC/admindept/admindept.component';
+import { HrdeptComponent } from './IELC/hrdept/hrdept.component';
+import { ItdeptComponent } from './IELC/itdept/itdept.component';
+import { SprtheaderComponent } from './IELC/sprtheader/sprtheader.component'; 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
 
@@ -243,7 +247,11 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     SocComponent,
     DpdpComponent,
     FeedbackComponent,
-    ExampageComponent
+    ExampageComponent,
+    AdmindeptComponent,
+    HrdeptComponent,
+    ItdeptComponent,
+    SprtheaderComponent
   ],
   imports: [
     BrowserModule,

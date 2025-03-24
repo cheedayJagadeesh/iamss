@@ -291,44 +291,44 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
 </div>
 <div class="div">
     <div class="mb-3 formdiv">
-        <label class="lblskill">Skill Name</label>
-        <select name="skill" class="form-controlone" required>
+        <label class="lblskill">Skill Name<span style="color: red;">*</span></label>
+        <select name="skill" class="form-controlone" required [(ngModel)]="skillname">
             <option value="" disabled selected>- select skill -</option>
             <option>azure</option>
         </select>
       </div>
       <div class="mb-3">
-        <label class="lblmode">Mode of Training</label>
-        <select name="mode" class="form-controlone" required>
+        <label class="lblmode">Mode of Training<span style="color: red;">*</span></label>
+        <select name="mode" class="form-controlone" required [(ngModel)]="mode">
             <option value="" disabled selected>- select mode -</option>
             <option>..</option>
         </select>
       </div>
       <div class="col-md-3">
-        <label class="lbldate">Date</label>
-        <select name="skill" class="form-controldate" required>
+        <label class="lbldate">Date<span style="color: red;">*</span></label>
+        <select name="date" class="form-controldate" required [(ngModel)]="date">
             <option value="" disabled selected>- select Date -</option>
             <option>azure</option>
         </select>
-        <label class="lbltime">Time</label>
-        <select name="mode" class="form-controltime" required>
+        <label class="lbltime">Time<span style="color: red;">*</span></label>
+        <select name="time" class="form-controltime" required [(ngModel)]="time">
             <option value="" disabled selected>- select Time -</option>
             <option>..</option>
         </select>
       </div>
       <div class="col-md-3">
-        <label class="lblfname">First Name</label>
-        <input type="text" class="form-controlfname">
-        <label class="lbllname">Last Name</label>
-        <input type="text" class="form-controllname">
+        <label class="lblfname">First Name<span style="color: red;">*</span></label>
+        <input type="text" class="form-controlfname" name="firstName" [(ngModel)]="firstName" readonly required>
+        <label class="lbllname">Last Name<span style="color: red;">*</span></label>
+        <input type="text" class="form-controllname" name="lastName" [(ngModel)]="lastName" readonly required>
       </div>
       <div class="mb-3 ">
-        <label class="lblemail">Email</label>
-        <input type="text" class="form-controlemail">
+        <label class="lblemail">Email<span style="color: red;">*</span></label>
+        <input type="text" class="form-controlemail" name="email" [(ngModel)]="userEmail" readonly required>
       </div>
       <div class="mb-3 ">
         <label class="lblmbl">Mobile No.</label>
-        <input type="text" class="form-controlmbl">
+        <input type="text" class="form-controlmbl" >
       </div>
       <div class="mb-3 ">
         <label class="lblbatch">Batch Members</label>
@@ -337,8 +337,8 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
         <label class="lblbatchpopup" *ngFor="let item of examlist">(Each Skill have only {{item.batchLimitMembers}} Members...)</label>
       </div>
       <div class="mb-3 ">
-        <button type="button" class="btn buttonsub btn-success">Submit</button>
-        <button type="button" class="btn buttonlogout btn-danger">Logout</button>
+        <button type="button" class="btn buttonsub btn-success" [disabled]="!registration.valid">Submit</button>
+        <button type="button" class="btn buttonlogout btn-danger" (click)="logout()">Logout</button>
       </div>
  </div>
 <div class="tablebottom">

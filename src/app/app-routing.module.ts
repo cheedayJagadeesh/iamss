@@ -42,6 +42,9 @@ import { MsalGuard } from '@azure/msal-angular';
 import { LoginComponent } from './IAMS/login/login.component';
 import { FeedbackComponent } from './IELC/feedback/feedback.component';
 import { ExampageComponent } from './IELC/exampage/exampage.component';
+import { AdmindeptComponent } from './IELC/admindept/admindept.component';
+import { HrdeptComponent } from './IELC/hrdept/hrdept.component';
+import { ItdeptComponent } from './IELC/itdept/itdept.component';
 
 
 const routes: Routes = [
@@ -93,7 +96,10 @@ const routes: Routes = [
   {path:'soc',component:SocComponent},
   {path:'dpdp',component:DpdpComponent},
   {path:'feedback',component:FeedbackComponent},
-  {path:'exampage',component:ExampageComponent}
+  {path:'exampage',component:ExampageComponent},
+  {path:'admindept',component:AdmindeptComponent},
+  {path:'hrdept',component:HrdeptComponent},
+  {path:'itdept',component:ItdeptComponent}
 ];
 
 @NgModule({
