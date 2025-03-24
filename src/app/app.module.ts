@@ -84,6 +84,7 @@ import { HrdeptComponent } from './IELC/hrdept/hrdept.component';
 import { ItdeptComponent } from './IELC/itdept/itdept.component';
 import { SprtheaderComponent } from './IELC/sprtheader/sprtheader.component'; 
 import { environment } from './IELC/environment';
+// import { environment } from './IELC/environment.prod';
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
 
@@ -164,14 +165,16 @@ export function MSALInstanceFactory(): IPublicClientApplication {
       authority: "https://login.microsoftonline.com/d0ae250e-943b-431f-be00-cc1a2f3f59d9",
       // redirectUri: "http://localhost:4200",
       // postLogoutRedirectUri: 'http://localhost:4200/login'
-        redirectUri: environment.redirectUri,
-      postLogoutRedirectUri: environment.postLogoutRedirectUri
+      //   redirectUri: environment.redirectUri,
+      // postLogoutRedirectUri: environment.postLogoutRedirectUri
     },
     cache: {
       cacheLocation: BrowserCacheLocation.LocalStorage,
       storeAuthStateInCookie: false
     }
+    
   });
+  
 }
 export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
   const protectedResourceMap = new Map<string, Array<string>>();

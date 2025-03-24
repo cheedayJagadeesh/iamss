@@ -65,6 +65,7 @@
           "configurations": {
             "production": {
               "browserTarget": "IAMS:build:production"
+              
             },
             "development": {
               "browserTarget": "IAMS:build:development"
