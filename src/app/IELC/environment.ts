@@ -1,15 +1,13 @@
-// export const environment = {
-//     production: false,
-//     clientId: "17af1879-bbe9-4a73-8284-1f007a330453",
-//     authority: "https://login.microsoftonline.com/d0ae250e-943b-431f-be00-cc1a2f3f59d9",
-//     redirectUri: "http://localhost:4200",
-//     postLogoutRedirectUri: "http://localhost:4200/login"
-//   };
 export const environment = {
     production: false,
-    redirectUri: (window as any).env?.redirectUri || 'http://localhost:4200',
-    postLogoutRedirectUri: (window as any).env?.postLogoutRedirectUri || 'http://localhost:4200/login'
+    redirectUri: "http://localhost:4200",
+    postLogoutRedirectUri: "http://localhost:4200/login"
   };
+// export const environment = {
+//     production: false,
+//     redirectUri: (window as any).env?.redirectUri || 'http://localhost:4200',
+//     postLogoutRedirectUri: (window as any).env?.postLogoutRedirectUri || 'http://localhost:4200/login'
+//   };
 // export const environment = {
 //     production: window.location.hostname !== "localhost",
 //     clientId: "17af1879-bbe9-4a73-8284-1f007a330453",

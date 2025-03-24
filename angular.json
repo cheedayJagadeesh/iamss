@@ -34,6 +34,12 @@
           },
           "configurations": {
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/app/IELC/environment.ts",
+                  "with": "src/app/IELC/environment.prod.ts"
+                }
+              ],
               "budgets": [
                 {
                   "type": "initial",
