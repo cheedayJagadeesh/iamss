@@ -163,8 +163,10 @@ export function MSALInstanceFactory(): IPublicClientApplication {
       // Full directory URL, in the form of https://login.microsoftonline.com/<tenant>
       authority: "https://login.microsoftonline.com/d0ae250e-943b-431f-be00-cc1a2f3f59d9",
       // Must be the same redirectUri as what was provided in your app registration.
-      redirectUri: "http://localhost:4200",
-      postLogoutRedirectUri: 'http://localhost:4200/login'
+      // redirectUri: "http://localhost:4200",
+      // postLogoutRedirectUri: 'http://localhost:4200/login'
+        redirectUri: "https://sampleielc.azurewebsites.net",
+      postLogoutRedirectUri: 'https://sampleielc.azurewebsites.net/login'
     },
     cache: {
       cacheLocation: BrowserCacheLocation.LocalStorage,
