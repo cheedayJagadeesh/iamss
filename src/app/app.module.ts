@@ -83,6 +83,7 @@ import { AdmindeptComponent } from './IELC/admindept/admindept.component';
 import { HrdeptComponent } from './IELC/hrdept/hrdept.component';
 import { ItdeptComponent } from './IELC/itdept/itdept.component';
 import { SprtheaderComponent } from './IELC/sprtheader/sprtheader.component'; 
+import { environment } from './IELC/environment';
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
 
@@ -160,13 +161,11 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     auth: {
       // 'Application (client) ID' of app registration in the Microsoft Entra admin center - this value is a GUID
       clientId: "17af1879-bbe9-4a73-8284-1f007a330453",
-      // Full directory URL, in the form of https://login.microsoftonline.com/<tenant>
       authority: "https://login.microsoftonline.com/d0ae250e-943b-431f-be00-cc1a2f3f59d9",
-      // Must be the same redirectUri as what was provided in your app registration.
       // redirectUri: "http://localhost:4200",
       // postLogoutRedirectUri: 'http://localhost:4200/login'
-        redirectUri: "https://sampleielc.azurewebsites.net",
-      postLogoutRedirectUri: 'https://sampleielc.azurewebsites.net/login'
+        redirectUri: environment.redirectUri,
+      postLogoutRedirectUri: environment.postLogoutRedirectUri
     },
     cache: {
       cacheLocation: BrowserCacheLocation.LocalStorage,
