@@ -23,7 +23,11 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/web.config" 
+              {
+                "glob": "web.config",
+                "input": "src/assets",
+                "output": "./"
+              }
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
