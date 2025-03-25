@@ -258,11 +258,20 @@ constructor(private msalService: MsalService, private router: Router, private ht
   // this.setupActivityListeners();
 }
 
+// private initializeUser() {
+//   setTimeout(() => {
+//     const account = this.msalService.instance.getActiveAccount();
+//     if (account) {
+//       this.fetchUserDetails(); // Fetch details from Microsoft Graph API
+//     }
+//   }, 1000);
+// }
 private initializeUser() {
   setTimeout(() => {
-    const account = this.msalService.instance.getActiveAccount();
-    if (account) {
-      this.fetchUserDetails(); // Fetch details from Microsoft Graph API
+    const accounts = this.msalService.instance.getAllAccounts();
+    if (accounts.length > 0) {
+      this.msalService.instance.setActiveAccount(accounts[0]); // Ensure active account is set
+      this.fetchUserDetails();
     }
   }, 1000);
 }
@@ -331,7 +340,9 @@ handleRedirectCallback() {
     if (result) {
       this.msalService.instance.setActiveAccount(result.account);
       this.fetchUserDetails();
-      this.router.navigate(['/home']);
+      if (this.router.url === '/login') {
+        this.router.navigate(['/home']);
+      }
     }
   }).catch(error => {
     console.error("Redirect Authentication Error:", error);

@@ -85,39 +85,73 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
  userEmail: string | null = null;
  firstName: string = '';
  lastName: string = '';
- async ngOnInit() {
-   try {
-     await this.msalService.instance.handleRedirectPromise(); // Ensure MSAL is initialized
-     this.authService.setActiveAccount(); // Ensure an account is set
+//  async ngOnInit() {
+//    try {
+//      await this.msalService.instance.handleRedirectPromise(); // Ensure MSAL is initialized
+//      this.authService.setActiveAccount(); // Ensure an account is set
 
-    //  this.authService.userName$.subscribe(username => {
-    //    if (username) {
-    //      this.userName = username;
-    //    } else {
-    //      this.authService.fetchUserDetails(); // Fetch from Microsoft Graph API if missing
-    //    }
-    //  });
+//     //  this.authService.userName$.subscribe(username => {
+//     //    if (username) {
+//     //      this.userName = username;
+//     //    } else {
+//     //      this.authService.fetchUserDetails(); // Fetch from Microsoft Graph API if missing
+//     //    }
+//     //  });
+//     this.authService.userDetails$.subscribe(userDetails => {
+//       this.userName = userDetails.displayName;
+//       this.userEmail = userDetails.email;
+//     });
+//     if (this.userEmail) {
+//       const emailPrefix = this.userEmail.split('@')[0]; // Get the part before '@'
+//       const nameParts = emailPrefix.split(/[._]/); // Split by dot (.) or underscore (_)
+//       this.firstName = nameParts[0] || ''; // First part as first name
+//       this.lastName = nameParts.length > 1 ? nameParts[1] : ''; // Second part as last name (if exists)
+//     }
+//    else {
+//     this.authService.fetchUserDetails(); // Fetch details if missing
+//   }
+
+//      if (!this.authService.isAuthenticated()) {
+//        this.router.navigate(['/login']); // Redirect if not authenticated
+//      }
+//    } catch (error) {
+//      console.error('MSAL initialization error in HomeComponent:', error);
+//    }
+//  }
+async ngOnInit() {
+  try {
+    console.log("Initializing MSAL...");
+    
+    // Ensure MSAL is properly initialized before proceeding
+    await this.msalService.instance.initialize();  
+    await this.msalService.instance.handleRedirectPromise();
+
+    console.log("MSAL initialized successfully.");
+    
+    const activeAccount = this.msalService.instance.getActiveAccount();
+    if (!activeAccount) {
+      console.warn("No active account found. Redirecting to login...");
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.authService.setActiveAccount();
+
     this.authService.userDetails$.subscribe(userDetails => {
-      this.userName = userDetails.displayName;
-      this.userEmail = userDetails.email;
+      this.userName = userDetails?.displayName || 'Unknown User';
+      this.userEmail = userDetails?.email || 'No Email';
     });
-    if (this.userEmail) {
+        if (this.userEmail) {
       const emailPrefix = this.userEmail.split('@')[0]; // Get the part before '@'
       const nameParts = emailPrefix.split(/[._]/); // Split by dot (.) or underscore (_)
       this.firstName = nameParts[0] || ''; // First part as first name
       this.lastName = nameParts.length > 1 ? nameParts[1] : ''; // Second part as last name (if exists)
     }
-   else {
-    this.authService.fetchUserDetails(); // Fetch details if missing
   }
-
-     if (!this.authService.isAuthenticated()) {
-       this.router.navigate(['/login']); // Redirect if not authenticated
-     }
-   } catch (error) {
-     console.error('MSAL initialization error in HomeComponent:', error);
-   }
- }
+   catch (error) {
+    console.error("MSAL initialization error in HeaderComponent:", error);
+  }
+}
  logout(): void {
   this.authService.logout();
 }

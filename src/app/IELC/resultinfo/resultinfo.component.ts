@@ -63,28 +63,28 @@ export class ResultinfoComponent implements OnInit  {
    constructor(private msalService: MsalService, private authService: AuthService, private router: Router,private ielc:IelcapiService) {}
   
     async ngOnInit() {
-     try {
-       await this.msalService.instance.handleRedirectPromise(); // Ensure MSAL is initialized
-       this.authService.setActiveAccount(); // Ensure an account is set
+    //  try {
+    //    await this.msalService.instance.handleRedirectPromise(); // Ensure MSAL is initialized
+    //    this.authService.setActiveAccount(); // Ensure an account is set
  
-      //  this.authService.userName$.subscribe(username => {
-      //    if (username) {
-      //      this.userName = username;
-      //    } else {
-      //      this.authService.fetchUserDetails(); // Fetch from Microsoft Graph API if missing
-      //    }
-      //  });
-      this.authService.userDetails$.subscribe(userDetails => {
-        this.userName = userDetails.displayName;
-        this.userEmail = userDetails.email;
-      });
+    //   //  this.authService.userName$.subscribe(username => {
+    //   //    if (username) {
+    //   //      this.userName = username;
+    //   //    } else {
+    //   //      this.authService.fetchUserDetails(); // Fetch from Microsoft Graph API if missing
+    //   //    }
+    //   //  });
+    //   this.authService.userDetails$.subscribe(userDetails => {
+    //     this.userName = userDetails.displayName;
+    //     this.userEmail = userDetails.email;
+    //   });
  
-       if (!this.authService.isAuthenticated()) {
-         this.router.navigate(['/login']); // Redirect if not authenticated
-       }
-     } catch (error) {
-       console.error('MSAL initialization error in HomeComponent:', error);
-     }
+    //    if (!this.authService.isAuthenticated()) {
+    //      this.router.navigate(['/login']); // Redirect if not authenticated
+    //    }
+    //  } catch (error) {
+    //    console.error('MSAL initialization error in HomeComponent:', error);
+    //  }
      this.GetAllUSers();
     this.GetAllSkillsData();
    }

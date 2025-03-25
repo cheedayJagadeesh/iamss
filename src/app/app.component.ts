@@ -23,8 +23,13 @@ export class AppComponent implements OnInit {
     } catch (error) {
       console.error('MSAL initialization error:', error);
     }
-       if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/home']);
+    //    if (this.authService.isAuthenticated()) {
+    //   this.router.navigate(['/home']);
+    // }
+    if (this.authService.isAuthenticated()) {
+      this.authService.setActiveAccount();
+    } else {
+      this.router.navigate(['/login']); // Redirect to login only if not authenticated
     }
 
   }
