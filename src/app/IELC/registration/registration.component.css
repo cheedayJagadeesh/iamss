@@ -31,6 +31,10 @@ h1 {
     margin-left: 32%;
     margin-top: 4%;
 
+    th {
+        white-space: nowrap;
+       
+    }
 }
 .pagination{
     margin-left: 40.2%;

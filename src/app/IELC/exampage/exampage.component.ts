@@ -1,6 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IelcapiService } from '../ielcapi.service';
 import { Router } from '@angular/router'; 
+import { AuthService } from 'src/app/authservice.service';
+import { MsalService } from '@azure/msal-angular';
+import { ActivatedRoute } from '@angular/router';
 
 interface exam{
   id: number;
@@ -58,6 +61,7 @@ export class ExampageComponent implements OnInit, OnDestroy  {
   selectedAnswer: string | null = null;
 
   examlist: any[] = []; 
+  selectedSkill: string = '';
   examdata:exam={
     id: 0,
     examTime: 0,
@@ -68,15 +72,77 @@ export class ExampageComponent implements OnInit, OnDestroy  {
    }
    timeLeft: number = this.examdata.examTime;
    timer: any;
+   userName: string | null = null;
+   userEmail: string | null = null;
+   firstName: string = '';
+   lastName: string = '';
+   Registeredusers: any[] = []; 
 
-  constructor(private ielc:IelcapiService,private router: Router) {
-
+  constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => {
+      this.selectedSkill = params['skill'];
+    });
   }
   
-  ngOnInit(): void {
+   async ngOnInit(){
     // this.startTimer();
     this.GetExamlist();
+    
+  try {
+    console.log("Initializing MSAL...");
+    
+    // Ensure MSAL is properly initialized before proceeding
+    await this.msalService.instance.initialize();  
+    await this.msalService.instance.handleRedirectPromise();
+
+    console.log("MSAL initialized successfully.");
+    
+    const activeAccount = this.msalService.instance.getActiveAccount();
+    if (!activeAccount) {
+      console.warn("No active account found. Redirecting to login...");
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.authService.setActiveAccount();
+
+    this.authService.userDetails$.subscribe(userDetails => {
+      // this.userName = userDetails?.displayName || 'Unknown User';
+      // this.userEmail = userDetails?.email || 'No Email';
+      this.userName = userDetails?.displayName ;
+      this.userEmail = userDetails?.email;
+    });
+    this.authService.userDetails$.subscribe(userDetails => {
+      if (userDetails) {
+        this.userEmail = userDetails.email; // Ensure the email is correctly assigned
+        this.GetAllUsers(); // Call this AFTER we get the email
+      }
+    });   
   }
+  
+   catch (error) {
+    console.error("MSAL initialization error in HeaderComponent:", error);
+  }
+  }
+  sortRegisteredUsers(data: any[]): any[] {
+    return data.sort((a, b) => (a.enrollmentID > b.enrollmentID ? -1 : a.enrollmentID < b.enrollmentID ? 1 : 0));
+  }
+  GetAllUsers() {
+    this.ielc.GetUsers().subscribe((data) => {
+      const aadEmail = this.userEmail; // Use the retrieved AAD email
+  
+      if (aadEmail) {
+        this.Registeredusers = this.sortRegisteredUsers(
+          data.filter(user => user.mail === aadEmail)
+        );
+       
+      } else {
+        this.Registeredusers = []; // No users if email is missing
+      }
+    });
+  }
+
+  
  
   GetExamlist() {
     this.ielc.Getexaminfo().subscribe((data) => {
@@ -95,6 +161,7 @@ export class ExampageComponent implements OnInit, OnDestroy  {
       console.error("Error fetching exam data", error);
     });
   }
+ 
   
   ngOnDestroy(): void {
     clearInterval(this.timer); 

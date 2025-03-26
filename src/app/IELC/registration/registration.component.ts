@@ -7,6 +7,7 @@ import { IelcapiService } from '../ielcapi.service';
 import { AuthService } from 'src/app/authservice.service';
 import { MsalService } from '@azure/msal-angular';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 
 
 interface holidaysinfo{
@@ -26,6 +27,9 @@ interface exam{
   standardExamQuestions: number;
   examPercentage: number;
 }
+interface examlisinfot{
+  testTakenDate: string | null;
+}
 
 @Component({
   selector: 'app-registration',
@@ -38,6 +42,7 @@ export class RegistrationComponent implements OnInit {
  // currentDate:Date=new Date()
  selectedDate:string=''
  examlist: any[] = []; 
+ Registeredusers: any[] = []; 
  isLoading = true;
  skillname='';
  mode='';
@@ -69,6 +74,9 @@ export class RegistrationComponent implements OnInit {
   eventName: ''
  }
 latestEvent: any= null; 
+page: number = 1;  
+itemsPerPage: number = 5; 
+
 constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router){
    // this.selectedDate= new Date().toString()
    this.selectedDate= new Date().toISOString().split('T')[0]
@@ -76,6 +84,7 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
    this.GetHolidayslist();
    this.GetEventsist();
    this.GetExamlist();
+   this.GetAllUsers();
    if (this.eventslist && this.eventslist.length > 0) {
     this.eventslist = this.eventslist.sort((a, b) => Number(b.id) - Number(a.id));
   }
@@ -119,6 +128,7 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
 //    }
 //  }
 async ngOnInit() {
+  
   try {
     console.log("Initializing MSAL...");
     
@@ -138,23 +148,85 @@ async ngOnInit() {
     this.authService.setActiveAccount();
 
     this.authService.userDetails$.subscribe(userDetails => {
-      this.userName = userDetails?.displayName || 'Unknown User';
-      this.userEmail = userDetails?.email || 'No Email';
+      // this.userName = userDetails?.displayName || 'Unknown User';
+      // this.userEmail = userDetails?.email || 'No Email';
+      this.userName = userDetails?.displayName ;
+      this.userEmail = userDetails?.email;
+      if (this.userEmail) {
+        const emailPrefix = this.userEmail.split('@')[0]; // Get the part before '@'
+        const nameParts = emailPrefix.split(/[._]/); // Split by dot (.) or underscore (_)
+        this.firstName = nameParts[0] || ''; // First part as first name
+        this.lastName = nameParts.length > 1 ? nameParts[1] : ''; // Second part as last name (if exists)
+      }
     });
-        if (this.userEmail) {
-      const emailPrefix = this.userEmail.split('@')[0]; // Get the part before '@'
-      const nameParts = emailPrefix.split(/[._]/); // Split by dot (.) or underscore (_)
-      this.firstName = nameParts[0] || ''; // First part as first name
-      this.lastName = nameParts.length > 1 ? nameParts[1] : ''; // Second part as last name (if exists)
-    }
+    this.authService.userDetails$.subscribe(userDetails => {
+      if (userDetails) {
+        this.userEmail = userDetails.email; // Ensure the email is correctly assigned
+        this.GetAllUsers(); // Call this AFTER we get the email
+      }
+    });   
   }
+  
    catch (error) {
     console.error("MSAL initialization error in HeaderComponent:", error);
   }
+  // this.GetAllUsers();
 }
  logout(): void {
   this.authService.logout();
 }
+sortRegisteredUsers(data: any[]): any[] {
+  return data.sort((a, b) => (a.enrollmentID > b.enrollmentID ? -1 : a.enrollmentID < b.enrollmentID ? 1 : 0));
+}
+GetAllUsers() {
+  this.ielc.GetUsers().subscribe((data) => {
+    const aadEmail = this.userEmail; // Use the retrieved AAD email
+
+    if (aadEmail) {
+      this.Registeredusers = this.sortRegisteredUsers(
+        data.filter(user => user.mail === aadEmail)
+      );
+     
+    } else {
+      this.Registeredusers = []; // No users if email is missing
+    }
+  });
+}
+// getExamPercentage(skillName: string): number {
+//   const row = this.Registeredusers.find(exam => exam.skillName === skillName);
+//   if (row) {
+//     console.log(`Exam Percentage for ${skillName}:`, row.examPercentage); // Debugging log
+//     return Number(row.examPercentage); // Ensure it's a number
+//   }
+//   return 0; // Default to 0 if not found
+// }
+getExamPercentage(skillName: string): number {
+  console.log("Searching for skill:", skillName);
+  console.log("Exam List:", this.Registeredusers);
+
+  const exam = this.Registeredusers.find(exam => exam.skillName === skillName);
+  if (exam && exam.examPercentage !== undefined) {
+    console.log(`Exam Percentage for ${skillName}:`, exam.examPercentage);
+    return exam.examPercentage; // Always returns a number
+  } 
+
+  console.log(`Exam Percentage for ${skillName} not found, returning default value 0`);
+  return 0; // Ensures function always returns a number
+}
+selectedSkill: string = '';
+setSelectedSkill(skillName: string) {
+  this.router.navigate(['/exampage'], { queryParams: { skill: skillName } });
+}
+
+setSelectedSkillandId(skillName: string, enrollmentID: number) {
+  this.router.navigate(['/feedback'], { queryParams: { skill: skillName, enrollment: enrollmentID } });
+}
+
+
+
+
+
+
 
 
  GetHolidayslist(){
@@ -172,11 +244,27 @@ async ngOnInit() {
     // this.eventslist = this.sortlist(data);
   });
  }
- GetExamlist(){
-  this.ielc.Getexaminfo().subscribe((data) => {
-    this.examlist=data;
+//  GetExamlist(){
+//   this.ielc.Getexaminfo().subscribe((data) => {
+//     this.examlist=data;
+    
+//   });
+//  }
+
+GetExamlist() {
+  this.ielc.Getexaminfo().subscribe((data: any[]) => {
+    if (data) {
+      this.examlist = data.map((item: any) => ({
+        ...item,
+        testTakenDate: item.testTakenDate
+          ? moment(item.testTakenDate, 'MMM D YYYY hh:mmA').toDate()  // Convert to Date
+          : null,
+      }));
+    }
   });
- }
+}
+
+
 
 showData(registration:any)
 {

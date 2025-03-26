@@ -1592,6 +1592,52 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.holidaysUrl}/${content}`);
     }
     
+//---------------------------------------------------------------------------------------ISMS calendar
+    ismscalenarUrl='https://ielc-coreapi.azurewebsites.net/ISMSInteqSoftware_Calendar/GetCurrentYearCalendar';
+    Getismscalendar(): Observable<any> {
+     return this.http.get<any>(this.ismscalenarUrl);
+    } 
+    PostIsmscalendar(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.ismscalenarUrl, data);
+    }
+
+    GetIsmscalendarById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.ismscalenarUrl}/${id}`);
+    }
+
+    UpdateIsmscalendar(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.ismscalenarUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
+
+//---------------------------------------------------------------------------------------ISMS history
+    ismshistoryUrl='https://ielc-coreapi.azurewebsites.net/ISMSInteqSoftware_Calendar/GetHistoryCalendar';
+    Getismshistory(year: number): Observable<any> {
+      return this.http.get<any>(`${this.ismshistoryUrl}?year=${year}`);
+    }
+//---------------------------------------------------------------------------------------QMS calendar
+qmscalenarUrl='https://ielc-coreapi.azurewebsites.net/ISMSInteqSoftware_Calendar/GetCurrentYearCalendar';
+Getqmscalendar(): Observable<any> {
+ return this.http.get<any>(this.qmscalenarUrl);
+} 
+Postqmscalendar(data: any): Observable<any> {
+  // const headers = { 'Content-Type': 'application/json' };
+  return this.http.post<any>(this.qmscalenarUrl, data);
+}
+
+GetqmscalendarById(id: number): Observable<any> {
+  return this.http.get<any>(`${this.qmscalenarUrl}/${id}`);
+}
+
+Updateqmscalendar(id: number, updatedData: any): Observable<any> {
+  return this.http.put<any>(`${this.qmscalenarUrl}/${id}`, updatedData,{ observe: 'response' });
+}
+
+//---------------------------------------------------------------------------------------QMS history
+qmshistoryUrl='https://ielc-coreapi.azurewebsites.net/ISMSInteqSoftware_Calendar/GetHistoryCalendar';
+Getqmshistory(year: number): Observable<any> {
+  return this.http.get<any>(`${this.qmshistoryUrl}?year=${year}`);
+}
 //---------------------------------------------------------------------------------------ISMS mails
 
     ismsmailsUrl='https://ielc-coreapi.azurewebsites.net/ISMSEmails';

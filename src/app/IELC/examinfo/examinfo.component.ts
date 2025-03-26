@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/authservice.service';
 import { MsalService } from '@azure/msal-angular';
 import { Router } from '@angular/router';
 
+
 interface exam{
   id: number;
   examTime: number;

@@ -64,8 +64,8 @@ export class HeaderComponent implements OnInit {
       this.authService.setActiveAccount();
   
       this.authService.userDetails$.subscribe(userDetails => {
-        this.userName = userDetails?.displayName || 'Unknown User';
-        this.userEmail = userDetails?.email || 'No Email';
+        this.userName = userDetails?.displayName 
+        this.userEmail = userDetails?.email 
       });
   
     } catch (error) {

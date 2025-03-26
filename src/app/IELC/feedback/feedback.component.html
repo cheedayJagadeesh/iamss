@@ -9,8 +9,10 @@
 </div>
 <h1 class="h1">Assessment Feedback Details</h1>
 <div>
-    <label class="lblskill">skillName: </label>
-    <label class="lblid">ID: </label>
+    <label class="lblskill" *ngIf="selectedSkill">skillName: <strong>{{ selectedSkill }}</strong></label>
+    <!-- <h2 *ngIf="selectedSkill">Your Test: <strong>{{ selectedSkill }}</strong></h2> -->
+    <!-- <label class="lblskill" >skillName: </label> -->
+    <label class="lblid" *ngIf="enrollmentID">ID: <strong>{{ enrollmentID }}</strong></label>
 </div>
 <div class="radio-container">
 <div class="radio-group">

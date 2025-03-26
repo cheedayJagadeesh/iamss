@@ -10,7 +10,9 @@
     <button class="btn btn-dark btnback" routerLink="/registration" (click)="goBack()">Back</button>
     </div>
     <div class="exam-header">
-      <h2>Your Test: <strong>Cloud Computing</strong></h2>
+      <!-- <h2>Your Test: <strong>Cloud Computing</strong></h2> -->
+      <!-- <h2 *ngFor="let item of Registeredusers">Your Test: <strong>{{item.skillName}}</strong></h2> -->
+      <h2 *ngIf="selectedSkill">Your Test: <strong>{{ selectedSkill }}</strong></h2>
       <p>Time Left:  <strong>{{ formattedTime }}</strong></p>
     </div>
 <!--   

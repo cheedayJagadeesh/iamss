@@ -353,58 +353,45 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
             </tr>
           </thead>
           <tbody>
-            <tr>
-                <td>Otto</td>
-                <td>
-                <button type="button" class="btn btn-link" routerLink="/exampage">Start Test</button>
-                </td>
-                <td>Otto</td>
-                <td>Mark</td>
-                <td>
-                <button type="button" class="btn btn-link" routerLink="/feedback">FeedBack</button>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row">Mark</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>Mark</td>
-                <td>Otto</td>
-            </tr>
-            <tr>
-                <th scope="row">Mark</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>Mark</td>
-                <td>Otto</td>
-            </tr>
-            <tr>
-                <th scope="row">Mark</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>Mark</td>
-                <td>Otto</td>
-            </tr>
-            <tr>
-                <th scope="row">Mark</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>Mark</td>
-                <td>Otto</td>
+            <tr *ngFor="let item of Registeredusers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+                
+                <td>{{ item.skillName }}</td>
+      <td>
+        
+        <ng-container *ngIf="item.percentage !== null && item.percentage !== undefined; else startTest">
+          <span *ngIf="item.percentage > getExamPercentage(item.skillName); else pendingTest">
+            Completed
+          </span>
+        </ng-container>
+        
+        <ng-template #pendingTest>
+          <span>Pending - </span>
+          <a routerLink="/exampage" class="btn btn-link" (click)="setSelectedSkill(item.skillName)">StartTest</a>
+        </ng-template>
+        
+        <ng-template #startTest>
+          <a routerLink="/exampage" class="btn btn-link" (click)="setSelectedSkill(item.skillName)">StartTest</a>
+        </ng-template>
+        
+      </td>
+      <td>{{ item.percentage }}</td>
+      <td> 
+        <ng-container *ngIf="item.testTakenDate">
+          {{ item.testTakenDate  }}
+        </ng-container>
+        <!-- <ng-container *ngIf="item.testTakenDate && item.testTakenDate.trim() !== '';">
+        {{ item.testTakenDate }}
+      </ng-container> -->
+     </td>
+      <td>
+        <a routerLink="/feedback" class="btn btn-link" (click)="setSelectedSkillandId(item.skillName, item.enrollmentID)">Feedback</a>
+      </td>
             </tr>
           </tbody>
     </table>
     <div class="pagination">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-          </nav>
-      </div>
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+  </div>
 </div>
 <div class="container">
     <div>
