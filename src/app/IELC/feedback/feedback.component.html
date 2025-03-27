@@ -1,4 +1,4 @@
-<form class="row g-3">
+<form class="row g-3" #form="ngForm">
 <!-- <div>
     <label class="lbllogin">Login as </label>
 </div> -->
@@ -9,7 +9,7 @@
 </div>
 <h1 class="h1">Assessment Feedback Details</h1>
 <div>
-    <label class="lblskill" *ngIf="selectedSkill">skillName: <strong>{{ selectedSkill }}</strong></label>
+    <label class="lblskill" *ngIf="selectedSkill">SkillName: <strong>{{ selectedSkill }}</strong></label>
     <!-- <h2 *ngIf="selectedSkill">Your Test: <strong>{{ selectedSkill }}</strong></h2> -->
     <!-- <label class="lblskill" >skillName: </label> -->
     <label class="lblid" *ngIf="enrollmentID">ID: <strong>{{ enrollmentID }}</strong></label>
@@ -19,123 +19,123 @@
     <label class="radio-label">Subject Matter Knowledge:</label>
 
     <label class="radio-option">
-        <input type="radio" name="subjectMatter" value="Excellent"> Excellent
+        <input type="radio" name="subjectMatter" [(ngModel)]="feedbackdata.subjectMatterKnowledge" value="Excellent"> Excellent
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="subjectMatter" value="Very Good"> Very Good
+        <input type="radio" name="subjectMatter" [(ngModel)]="feedbackdata.subjectMatterKnowledge" value="Very Good"> Very Good
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="subjectMatter" value="Good"> Good
+        <input type="radio" name="subjectMatter" [(ngModel)]="feedbackdata.subjectMatterKnowledge" value="Good"> Good
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="subjectMatter" value="Fair"> Fair
+        <input type="radio" name="subjectMatter" [(ngModel)]="feedbackdata.subjectMatterKnowledge" value="Fair"> Fair
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="subjectMatter" value="Poor"> Poor
+        <input type="radio" name="subjectMatter" [(ngModel)]="feedbackdata.subjectMatterKnowledge" value="Poor"> Poor
     </label>
 </div>
 <div class="radio-groupnxt">
     <label class="radio-label">Presentation:</label>
 
     <label class="radio-option">
-        <input type="radio" name="Presentation" value="Excellent"> Excellent
+        <input type="radio" name="Presentation" [(ngModel)]="feedbackdata.presentation" value="Excellent"> Excellent
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="Presentation" value="Very Good"> Very Good
+        <input type="radio" name="Presentation" [(ngModel)]="feedbackdata.presentation"  value="Very Good"> Very Good
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="Presentation" value="Good"> Good
+        <input type="radio" name="Presentation" [(ngModel)]="feedbackdata.presentation"  value="Good"> Good
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="Presentation" value="Fair"> Fair
+        <input type="radio" name="Presentation" [(ngModel)]="feedbackdata.presentation"  value="Fair"> Fair
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="Presentation" value="Poor"> Poor
+        <input type="radio" name="Presentation" [(ngModel)]="feedbackdata.presentation"  value="Poor"> Poor
     </label>
 </div>
 <div class="radio-groupnxt">
     <label class="radio-label">Communication:</label>
 
     <label class="radio-option">
-        <input type="radio" name="Communication" value="Excellent"> Excellent
+        <input type="radio" name="Communication" [(ngModel)]="feedbackdata.communication"  value="Excellent"> Excellent
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="Communication" value="Very Good"> Very Good
+        <input type="radio" name="Communication" [(ngModel)]="feedbackdata.communication" value="Very Good"> Very Good
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="Communication" value="Good"> Good
+        <input type="radio" name="Communication" [(ngModel)]="feedbackdata.communication" value="Good"> Good
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="Communication" value="Fair"> Fair
+        <input type="radio" name="Communication" [(ngModel)]="feedbackdata.communication" value="Fair"> Fair
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="Communication" value="Poor"> Poor
+        <input type="radio" name="Communication" [(ngModel)]="feedbackdata.communication" value="Poor"> Poor
     </label>
 </div>
 <div class="radio-groupnxt">
     <label class="radio-label">Handling Doubts:</label>
 
     <label class="radio-option">
-        <input type="radio" name="Handlingdoubts" value="Excellent"> Excellent
+        <input type="radio" name="Handlingdoubts" [(ngModel)]="feedbackdata.handlingDoubts" value="Excellent"> Excellent
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="Handlingdoubts" value="Very Good"> Very Good
+        <input type="radio" name="Handlingdoubts" [(ngModel)]="feedbackdata.handlingDoubts" value="Very Good"> Very Good
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="Handlingdoubts" value="Good"> Good
+        <input type="radio" name="Handlingdoubts" [(ngModel)]="feedbackdata.handlingDoubts" value="Good"> Good
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="Handlingdoubts" value="Fair"> Fair
+        <input type="radio" name="Handlingdoubts" [(ngModel)]="feedbackdata.handlingDoubts" value="Fair"> Fair
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="Handlingdoubts" value="Poor"> Poor
+        <input type="radio" name="Handlingdoubts" [(ngModel)]="feedbackdata.handlingDoubts" value="Poor"> Poor
     </label>
 </div>
 <div class="radio-groupnxt">
     <label class="radio-label">Application to work:</label>
 
     <label class="radio-option">
-        <input type="radio" name="Applicationtowork" value="Excellent"> Excellent
+        <input type="radio" name="Applicationtowork" [(ngModel)]="feedbackdata.applicationtowork" value="Excellent"> Excellent
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="Applicationtowork" value="Very Good"> Very Good
+        <input type="radio" name="Applicationtowork" [(ngModel)]="feedbackdata.applicationtowork" value="Very Good"> Very Good
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="Applicationtowork" value="Good"> Good
+        <input type="radio" name="Applicationtowork" [(ngModel)]="feedbackdata.applicationtowork" value="Good"> Good
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="Applicationtowork" value="Fair"> Fair
+        <input type="radio" name="Applicationtowork" [(ngModel)]="feedbackdata.applicationtowork" value="Fair"> Fair
     </label>
 
     <label class="radio-option">
-        <input type="radio" name="Applicationtowork" value="Poor"> Poor
+        <input type="radio" name="Applicationtowork" [(ngModel)]="feedbackdata.applicationtowork" value="Poor"> Poor
     </label>
 </div>
 </div>
 <div>
-    <textarea class="txtarea" placeholder="Leave a comment here" ></textarea>
+    <textarea class="txtarea" name="comments" placeholder="Leave a comment here" [(ngModel)]="feedbackdata.comments" ></textarea>
 </div>
 <div>
-    <button class="btn btn-info btnsrch">Submit</button>
+    <button class="btn btn-info btnsrch"  (click)="UpdateFeedback()">Submit</button>
 </div>
 </form>
 

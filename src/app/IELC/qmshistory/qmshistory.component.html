@@ -35,7 +35,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let row of tableData | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+                <tr *ngFor="let row of tableData">
                     <td>{{row.id}}</td>
                         <td>{{row.team}}</td>
                         <td>{{row.process_Owner}}</td>
@@ -57,9 +57,9 @@
         <ng-template #noData>
             <p>No data available for the selected year.</p>
           </ng-template>
-        <div class="pagination" >
+        <!-- <div class="pagination" >
             <pagination-controls (pageChange)="page = $event"></pagination-controls>
-        </div>
+        </div> -->
     </div> 
 </ng-container>
   </form>

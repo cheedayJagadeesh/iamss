@@ -24,7 +24,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let row of qmsmailslist | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+                <tr *ngFor="let row of qmsmailslist">
                     <td >{{row.id}}</td>
                     <td>{{row.department}}</td>
                     <td>{{row.toaddress}}</td>
@@ -215,8 +215,8 @@
                 </ul>
             </nav>
         </div> -->
-        <div class="pagination" >
+        <!-- <div class="pagination" >
             <pagination-controls (pageChange)="page = $event"></pagination-controls>
-        </div>
+        </div> -->
     </div>
 </form>

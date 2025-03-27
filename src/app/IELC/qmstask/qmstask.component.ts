@@ -68,7 +68,7 @@ export class QmstaskComponent implements OnInit {
 
    
  AddQmscalendar(): void {
-  this.ielc.PostIsmscalendar(this.calendardata).subscribe(
+  this.ielc.Postqsmscalendar(this.calendardata).subscribe(
     (response) => {
       alert('✅ Record Added Successfully!');
       this.GetQmscalendarlist();

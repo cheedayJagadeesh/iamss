@@ -56,7 +56,7 @@ export class QmshistoryComponent  {
   }
 
   fetchData(year: number): void {
-    this.ielc.Getismshistory(year).subscribe(
+    this.ielc.Getqmshistory(year).subscribe(
       (data) => {
         this.tableData = data;
         this.tableData = this.sortlist(data);

@@ -7,6 +7,7 @@ import { IelcapiService } from '../ielcapi.service';
 import { AuthService } from 'src/app/authservice.service';
 import { MsalService } from '@azure/msal-angular';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 
 
@@ -76,8 +77,8 @@ export class RegistrationComponent implements OnInit {
 latestEvent: any= null; 
 page: number = 1;  
 itemsPerPage: number = 5; 
-
-constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router){
+submittedFeedbackIds: number[] = [];
+constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute){
    // this.selectedDate= new Date().toString()
    this.selectedDate= new Date().toISOString().split('T')[0]
    this.isTimeInputDisabled=true;
@@ -88,7 +89,42 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
    if (this.eventslist && this.eventslist.length > 0) {
     this.eventslist = this.eventslist.sort((a, b) => Number(b.id) - Number(a.id));
   }
+
+  this.route.queryParams.subscribe(params => {
+    const submittedID = +params['submittedID']; // Convert to number
+    if (submittedID && !this.submittedFeedbackIds.includes(submittedID)) {
+      this.submittedFeedbackIds.push(submittedID);
+    }
+  });
+  this.Registeredusers.forEach((item) => {
+    if (item.testTakenDate) {
+      // Convert the string to a valid Date object
+      item.testTakenDate = this.formatCustomDate(item.testTakenDate);
+    }
+  });
+  
  }
+
+ formatCustomDate(dateStr: string | null): string {
+  if (!dateStr) return 'Invalid Date';
+
+  // Normalize spaces
+  const normalizedDateStr = dateStr.replace(/\s+/g, ' ');
+
+  // Parse using Moment.js (matching your API's format)
+  const parsedDate = moment(normalizedDateStr, 'MMM D YYYY h:mmA');
+
+  // Check if the parsing was successful
+  if (!parsedDate.isValid()) {
+    return 'Invalid Date';
+  }
+
+  // Format the date as required
+  return parsedDate.format('MMM D, YYYY'); // Example: "Oct 3, 2024"
+}
+
+
+
  
  userName: string | null = null;
  userEmail: string | null = null;
@@ -178,20 +214,37 @@ async ngOnInit() {
 sortRegisteredUsers(data: any[]): any[] {
   return data.sort((a, b) => (a.enrollmentID > b.enrollmentID ? -1 : a.enrollmentID < b.enrollmentID ? 1 : 0));
 }
+// GetAllUsers() {
+//   this.ielc.GetUsers().subscribe((data) => {
+//     const aadEmail = this.userEmail; // Use the retrieved AAD email
+
+//     if (aadEmail) {
+//       this.Registeredusers = this.sortRegisteredUsers(
+//         data.filter(user => user.mail === aadEmail)
+//       );
+     
+//     } else {
+//       this.Registeredusers = []; // No users if email is missing
+//     }
+//   });
+// }
 GetAllUsers() {
   this.ielc.GetUsers().subscribe((data) => {
-    const aadEmail = this.userEmail; // Use the retrieved AAD email
+    const aadEmail = this.userEmail; // Get current user's email
 
     if (aadEmail) {
       this.Registeredusers = this.sortRegisteredUsers(
         data.filter(user => user.mail === aadEmail)
-      );
-     
+      ).map(user => ({
+        ...user,
+        testTakenDate: user.testTakenDate ? this.formatCustomDate(user.testTakenDate) : null,
+      }));
     } else {
-      this.Registeredusers = []; // No users if email is missing
+      this.Registeredusers = [];
     }
   });
 }
+
 // getExamPercentage(skillName: string): number {
 //   const row = this.Registeredusers.find(exam => exam.skillName === skillName);
 //   if (row) {
@@ -221,6 +274,8 @@ setSelectedSkill(skillName: string) {
 setSelectedSkillandId(skillName: string, enrollmentID: number) {
   this.router.navigate(['/feedback'], { queryParams: { skill: skillName, enrollment: enrollmentID } });
 }
+
+
 
 
 

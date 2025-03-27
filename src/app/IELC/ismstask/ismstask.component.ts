@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IelcapiService } from '../ielcapi.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 interface calendar {
   id: number;
@@ -46,7 +47,7 @@ export class IsmstaskComponent implements OnInit  {
     dec: '',
   }
    
-  constructor(private ielc:IelcapiService) {
+  constructor(private ielc:IelcapiService,private cdr: ChangeDetectorRef) {
     for (let i = 1; i <= 100; i++) {
    }
   }
@@ -121,6 +122,7 @@ UpdateIsmscalendar() {
       console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetIsmscalendarlist();
+      this.cdr.detectChanges(); 
       this.resetlist();
     },
     (error) => {

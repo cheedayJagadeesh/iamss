@@ -1576,7 +1576,11 @@ export class IelcapiService {
     DeletedpdpById(id: number): Observable<void> {
       return this.http.delete<void>(`${this.dpdpUrl}/${id}`);
     }
-
+//---------------------------------------------------------------------------------------feedback
+    feedbackUrl='https://ielc-coreapi.azurewebsites.net/EnrollmentData'
+    Updatefeedback(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.feedbackUrl}/${id}`, updatedData,{ observe: 'response' });
+    }
 //---------------------------------------------------------------------------------------Inteq Holidays
 
     holidaysUrl='https://ielc-coreapi.azurewebsites.net/HolidayList';
@@ -1593,22 +1597,30 @@ export class IelcapiService {
     }
     
 //---------------------------------------------------------------------------------------ISMS calendar
-    ismscalenarUrl='https://ielc-coreapi.azurewebsites.net/ISMSInteqSoftware_Calendar/GetCurrentYearCalendar';
+    ismscalenarUrl='https://ielc-coreapi.azurewebsites.net/ISMSInteqSoftware_Calendar';
     Getismscalendar(): Observable<any> {
      return this.http.get<any>(this.ismscalenarUrl);
     } 
+    // PostIsmscalendar(data: any): Observable<any> {
+    //   // const headers = { 'Content-Type': 'application/json' };
+    //   return this.http.post<any>(this.ismscalenarUrl, data);
+    // }
     PostIsmscalendar(data: any): Observable<any> {
-      // const headers = { 'Content-Type': 'application/json' };
-      return this.http.post<any>(this.ismscalenarUrl, data);
+      return this.http.post(this.ismscalenarUrl, data, { responseType: 'text' });
     }
+    
 
     GetIsmscalendarById(id: number): Observable<any> {
       return this.http.get<any>(`${this.ismscalenarUrl}/${id}`);
     }
 
     UpdateIsmscalendar(id: number, updatedData: any): Observable<any> {
-      return this.http.put<any>(`${this.ismscalenarUrl}/${id}`, updatedData,{ observe: 'response' });
+      return this.http.put(`${this.ismscalenarUrl}/${id}`, updatedData, {
+        observe: 'response',
+        responseType: 'text'
+      });
     }
+    
 
 //---------------------------------------------------------------------------------------ISMS history
     ismshistoryUrl='https://ielc-coreapi.azurewebsites.net/ISMSInteqSoftware_Calendar/GetHistoryCalendar';
@@ -1616,13 +1628,12 @@ export class IelcapiService {
       return this.http.get<any>(`${this.ismshistoryUrl}?year=${year}`);
     }
 //---------------------------------------------------------------------------------------QMS calendar
-qmscalenarUrl='https://ielc-coreapi.azurewebsites.net/ISMSInteqSoftware_Calendar/GetCurrentYearCalendar';
+qmscalenarUrl='https://ielc-coreapi.azurewebsites.net/QMSInteqSoftware_Calendar';
 Getqmscalendar(): Observable<any> {
  return this.http.get<any>(this.qmscalenarUrl);
 } 
-Postqmscalendar(data: any): Observable<any> {
-  // const headers = { 'Content-Type': 'application/json' };
-  return this.http.post<any>(this.qmscalenarUrl, data);
+Postqsmscalendar(data: any): Observable<any> {
+  return this.http.post(this.qmscalenarUrl, data, { responseType: 'text' });
 }
 
 GetqmscalendarById(id: number): Observable<any> {
@@ -1630,11 +1641,14 @@ GetqmscalendarById(id: number): Observable<any> {
 }
 
 Updateqmscalendar(id: number, updatedData: any): Observable<any> {
-  return this.http.put<any>(`${this.qmscalenarUrl}/${id}`, updatedData,{ observe: 'response' });
+  return this.http.put(`${this.qmscalenarUrl}/${id}`, updatedData, {
+    observe: 'response',
+    responseType: 'text'
+  });
 }
 
 //---------------------------------------------------------------------------------------QMS history
-qmshistoryUrl='https://ielc-coreapi.azurewebsites.net/ISMSInteqSoftware_Calendar/GetHistoryCalendar';
+qmshistoryUrl='https://ielc-coreapi.azurewebsites.net/QMSInteqSoftware_Calendar/GetHistoryCalendar';
 Getqmshistory(year: number): Observable<any> {
   return this.http.get<any>(`${this.qmshistoryUrl}?year=${year}`);
 }

@@ -377,17 +377,25 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
       <td>{{ item.percentage }}</td>
       <td> 
         <ng-container *ngIf="item.testTakenDate">
-          {{ item.testTakenDate  }}
+          <!-- {{ item.testTakenDate  }} -->
+          {{ item.testTakenDate }}
         </ng-container>
         <!-- <ng-container *ngIf="item.testTakenDate && item.testTakenDate.trim() !== '';">
         {{ item.testTakenDate }}
       </ng-container> -->
      </td>
       <td>
-        <a routerLink="/feedback" class="btn btn-link" (click)="setSelectedSkillandId(item.skillName, item.enrollmentID)">Feedback</a>
+        <ng-container *ngIf="submittedFeedbackIds.includes(item.enrollmentID); else showFeedbackLink">
+            Yes
+        </ng-container>
+        <ng-template #showFeedbackLink>
+          <a [routerLink]="['/feedback']" [queryParams]="{ skill: item.skillName, enrollment: item.enrollmentID }" class="btn btn-link">
+            Feedback
+          </a>
+        </ng-template>
       </td>
-            </tr>
-          </tbody>
+      </tr>
+      </tbody>
     </table>
     <div class="pagination">
       <pagination-controls (pageChange)="page = $event"></pagination-controls>

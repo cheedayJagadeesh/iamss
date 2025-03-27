@@ -35,6 +35,14 @@ h1 {
         white-space: nowrap;
        
     }
+    td {
+        padding: 5px;
+        text-align: left; 
+    }
+    td a {
+        text-decoration: none; /* Removes underline from links */
+        text-align: left; 
+      }
 }
 .pagination{
     margin-left: 40.2%;
