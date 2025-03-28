@@ -4,6 +4,7 @@ import { AuthenticationResult, PublicClientApplication } from '@azure/msal-brows
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { environment } from './IELC/environment';
 
 
 @Injectable({
@@ -291,7 +292,8 @@ login(): void {
 
 logout() {
   this.msalService.instance.logoutRedirect({
-    postLogoutRedirectUri: 'http://localhost:4200/login'
+    // postLogoutRedirectUri: 'http://localhost:4200/login'
+    postLogoutRedirectUri: environment.postLogoutRedirectUri
   });
   this.userDetailsSubject.next({ displayName: null, email: null }); // Clear user details on logout
 }
