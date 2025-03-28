@@ -170,7 +170,7 @@ export function MSALInstanceFactory(): IPublicClientApplication {
       postLogoutRedirectUri: environment.postLogoutRedirectUri
     },
     cache: {
-      cacheLocation: BrowserCacheLocation.LocalStorage,
+      cacheLocation: BrowserCacheLocation.SessionStorage,
       storeAuthStateInCookie: true
     }
     
