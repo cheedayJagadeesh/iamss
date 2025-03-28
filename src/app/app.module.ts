@@ -171,7 +171,7 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     },
     cache: {
       cacheLocation: BrowserCacheLocation.LocalStorage,
-      storeAuthStateInCookie: false
+      storeAuthStateInCookie: true
     }
     
   });
