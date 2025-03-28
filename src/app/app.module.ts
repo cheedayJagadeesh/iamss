@@ -85,6 +85,7 @@ import { ItdeptComponent } from './IELC/itdept/itdept.component';
 import { SprtheaderComponent } from './IELC/sprtheader/sprtheader.component'; 
 import { environment } from './IELC/environment';
 // import { environment } from './IELC/environment.prod';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
 
@@ -284,6 +285,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
       provide: MSAL_INTERCEPTOR_CONFIG,
       useFactory: MSALInterceptorConfigFactory
     },
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
     // { provide: HTTP_INTERCEPTORS, useClass: MsalInterceptor, multi: true },
     // { provide: MSAL_INSTANCE, useFactory: MSALInstanceFactory },
     // MsalGuard,
