@@ -3,6 +3,9 @@
     <!-- <div>
         <label class="lbllogin">Login as </label>
     </div> -->
+    <div *ngIf="isLoading" class="loading-container">
+        <span class="dot"></span>
+    </div>
     <div class="col-md-3">
         <label for="Empname" class="form-label">Skill Name</label>
     </div>
@@ -31,16 +34,31 @@
                     <th scope="col">Action</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Controls the space between the borders of adjacent table cells.</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td></td>
+            <tbody *ngIf="!isLoading">
+                <tr *ngFor="let row of Enrolledskillqa  | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+                    <td>{{ row.questionId }}</td>
+                    <td>{{ row.skillName }}</td>
+                    <td>
+                      <span *ngIf="row.question">{{ row.question }}</span>
+                      <img *ngIf="row.iQuestion" [src]="'data:image/jpeg;base64,' + row.iQuestion" alt="Question Image" width="80" height="80">
+                    </td>
+                    <td>
+                      <span *ngIf="row.a">{{ row.a }}</span>
+                      <img *ngIf="row.ia" [src]="'data:image/jpeg;base64,' + row.ia" alt="Option A" width="50" >
+                    </td>
+                    <td>
+                      <span *ngIf="row.b">{{ row.b }}</span>
+                      <img *ngIf="row.ib" [src]="'data:image/jpeg;base64,' + row.ib" alt="Option B" width="50" >
+                    </td>
+                    <td>
+                      <span *ngIf="row.c">{{ row.c }}</span>
+                      <img *ngIf="row.ic" [src]="'data:image/jpeg;base64,' + row.ic" alt="Option C" width="50" >
+                    </td>
+                    <td>
+                      <span *ngIf="row.d">{{ row.d }}</span>
+                      <img *ngIf="row.id" [src]="'data:image/jpeg;base64,' + row.id" alt="Option D" width="50">
+                    </td>
+                    <td>{{ row.questionAnswer }}</td>
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
@@ -59,60 +77,66 @@
                                 <div class="modal-header">
                                     <h5 class="modal-title headermodal" id="exampleModalLabel">Add Question</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                        aria-label="Close" (click)="resetlist(); GetAllSkillsQa()"></button>
                                 </div>
                                 <div class="modal-body">
                                     <div class="divmodal">
                                         <label>Skill Name</label>
-                                        <select id="select1" name="skills" class="form-control" name="skills">
-                                            <!-- <option value="" disabled selected>- select leave type -</option>
-                                            <option *ngFor="let leaves of leavetype">
-                                                {{ leaves.name }}
-                                            </option> -->
-                                            <option>- Select skill -</option>
-                                            <option>Azure</option>
+                                        <select id="select1" name="skills" class="form-control" [(ngModel)]="questiondata.skillName">
+                                            <option value="" disabled selected>- select skill -</option>
+                                            <option *ngFor="let row of Enrolledskills">{{ row.skillName }}</option>
                                         </select>
                                        </div>
-                                   <div class="divmodal">
-                                    <label>Question</label>
-                                    <input type="file" id="myFile" name="filename" class="form-control">
-                                    <input type="text" class="form-control">
-                                   </div>
-                                   <div class="divmodal">
-                                    <label>Option A</label>
-                                    <input type="file" id="myFile" name="filename" class="form-control">
-                                    <input type="text" class="form-control">
-                                   </div>
-                                   <div class="divmodal">
-                                    <label>Option B</label>
-                                    <input type="file" id="myFile" name="filename" class="form-control">
-                                    <input type="text" class="form-control">
-                                   </div>
-                                   <div class="divmodal">
-                                    <label>Option C</label>
-                                    <input type="file" id="myFile" name="filename" class="form-control">
-                                    <input type="text" class="form-control">
-                                   </div>
-                                   <div class="divmodal">
-                                    <label>Option D</label>
-                                    <input type="file" id="myFile" name="filename" class="form-control">
-                                    <input type="text" class="form-control">
-                                   </div>
-                                   <div class="divmodal">
-                                    <label>Answer</label>
-                                    <input type="file" id="myFile" name="filename" class="form-control">
-                                    <input type="text" class="form-control">
-                                   </div>
+                                       <div class="divmodal">
+                                        <label>Question </label>
+                                        <input type="file" id="myFile" name="iQuestion" class="form-control" (change)="onFileSelected($event, 'iQuestion')">
+                                        <input type="text" class="form-control" name="question" [(ngModel)]="questiondata.question">
+                                        <!-- <img *ngIf="questiondata.iQuestion" [src]="questiondata.iQuestion" alt="Question Image" width="200" height="100"> -->
+                                        <img *ngIf="questiondata.iQuestion" [src]="'data:image/jpeg;base64,' + questiondata.iQuestion" alt="Question Image" width="200" height="100">
+                                    </div>
+                                    
+                                    <div class="divmodal">
+                                        <label>Option A </label>
+                                        <input type="file" id="fileA" name="a" class="form-control" (change)="onFileSelected($event, 'ia')">
+                                        <input type="text" class="form-control" name="a" [(ngModel)]="questiondata.a">
+                                        <img *ngIf="this.questiondata.ia" [src]="'data:image/jpeg;base64,' + questiondata.ia"  alt="Option A Image" width="100" height="50">
+                                    </div>
+                                    
+                                    <div class="divmodal">
+                                        <label>Option B </label>
+                                        <input type="file" id="fileB" name="b" class="form-control" (change)="onFileSelected($event, 'ib')">
+                                        <input type="text" class="form-control" name="b" [(ngModel)]="questiondata.b">
+                                        <img *ngIf="this.questiondata.ib" [src]="'data:image/jpeg;base64,' + questiondata.ib"  alt="Option B Image" width="100" height="50">
+                                    </div>
+                                    
+                                    <div class="divmodal">
+                                        <label>Option C </label>
+                                        <input type="file" id="fileC" name="c" class="form-control" (change)="onFileSelected($event, 'ic')">
+                                        <input type="text" class="form-control" name="c" [(ngModel)]="questiondata.c">
+                                        <img *ngIf="this.questiondata.ic" [src]="'data:image/jpeg;base64,' + questiondata.ic"  alt="Option C Image" width="100" height="50">
+                                    </div>
+                                    
+                                    <div class="divmodal">
+                                        <label>Option D </label>
+                                        <input type="file" id="fileD" name="d" class="form-control" (change)="onFileSelected($event, 'id')">
+                                        <input type="text" class="form-control" name="d" [(ngModel)]="questiondata.d">
+                                        <img *ngIf="this.questiondata.id" [src]="'data:image/jpeg;base64,' + questiondata.id"  alt="Option D Image" width="100" height="50">
+                                    </div>
+                                    
+                                    <div class="divmodal">
+                                        <label>Answer</label>
+                                        <input type="text" class="form-control" name="answer" [(ngModel)]="questiondata.questionAnswer">
+                                    </div>
                                   </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Add</button>
+                                        data-bs-dismiss="modal" (click)="resetlist(); GetAllSkillsQa()">Close</button>
+                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddSkillsQa()">Add</button>
                                 </div>
                             </div>
                         </div>
                         </div>
-                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit">
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit" (click)="EditSkillsQa(row.questionId)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path
@@ -121,7 +145,73 @@
                                     d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
                             </svg>
                         </button>
-                        <button class="btn btn-info me-1">
+                        <div class="modal fade" id="exampleModaledit" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetlist()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                        <label>Skill Name</label>
+                                        <select id="select1" name="skills" class="form-control" [(ngModel)]="questiondata.skillName">
+                                            <option value="" disabled selected>- select skill -</option>
+                                            <option *ngFor="let row of Enrolledskills">{{ row.skillName }}</option>
+                                        </select>
+                                       </div>
+                                       <div class="divmodal">
+                                        <label>Question </label>
+                                        <input type="file" id="myFile" name="iQuestion" class="form-control" (change)="onFileSelected($event, 'iQuestion')">
+                                        <input type="text" class="form-control" name="question" [(ngModel)]="questiondata.question">
+                                        <!-- <img *ngIf="questiondata.iQuestion" [src]="questiondata.iQuestion" alt="Question Image" width="200" height="100"> -->
+                                        <img *ngIf="questiondata.iQuestion" [src]="'data:image/jpeg;base64,' + questiondata.iQuestion" alt="Question Image" width="200" height="100">
+                                    </div>
+                                    
+                                    <div class="divmodal">
+                                        <label>Option A </label>
+                                        <input type="file" id="fileA" name="a" class="form-control" (change)="onFileSelected($event, 'ia')">
+                                        <input type="text" class="form-control" name="a" [(ngModel)]="questiondata.a">
+                                        <img *ngIf="this.questiondata.ia" [src]="'data:image/jpeg;base64,' + questiondata.ia"  alt="Option A Image" width="100" height="50">
+                                    </div>
+                                    
+                                    <div class="divmodal">
+                                        <label>Option B </label>
+                                        <input type="file" id="fileB" name="b" class="form-control" (change)="onFileSelected($event, 'ib')">
+                                        <input type="text" class="form-control" name="b" [(ngModel)]="questiondata.b">
+                                        <img *ngIf="this.questiondata.ib" [src]="'data:image/jpeg;base64,' + questiondata.ib"  alt="Option B Image" width="100" height="50">
+                                    </div>
+                                    
+                                    <div class="divmodal">
+                                        <label>Option C </label>
+                                        <input type="file" id="fileC" name="c" class="form-control" (change)="onFileSelected($event, 'ic')">
+                                        <input type="text" class="form-control" name="c" [(ngModel)]="questiondata.c">
+                                        <img *ngIf="this.questiondata.ic" [src]="'data:image/jpeg;base64,' + questiondata.ic"  alt="Option C Image" width="100" height="50">
+                                    </div>
+                                    
+                                    <div class="divmodal">
+                                        <label>Option D </label>
+                                        <input type="file" id="fileD" name="d" class="form-control" (change)="onFileSelected($event, 'id')">
+                                        <input type="text" class="form-control" name="d" [(ngModel)]="questiondata.d">
+                                        <img *ngIf="this.questiondata.id" [src]="'data:image/jpeg;base64,' + questiondata.id"  alt="Option D Image" width="100" height="50">
+                                    </div>
+                                    
+                                    <div class="divmodal">
+                                        <label>Answer</label>
+                                        <input type="text" class="form-control" name="answer" [(ngModel)]="questiondata.questionAnswer">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetlist()">Close</button>
+                                        <button type="button" class="btn btn-primary"  data-bs-dismiss="modal" (click)="UpdateSkillsQa()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                        <button class="btn btn-info me-1" (click)="DeleteSkillsQa(row.questionId)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-trash-fill" viewBox="0 0 16 16">
                                 <path

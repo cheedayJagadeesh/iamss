@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { map } from 'rxjs';
 import { RegisteredusersComponent } from './registeredusers/registeredusers.component';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -1798,5 +1799,34 @@ GetexaminfoById(id: number): Observable<any> {
 
 Updateexaminfo(id: number, updatedData: any): Observable<any> {
   return this.http.put<any>(`${this.examinfoUrl}/${id}`, updatedData);
+} 
+//=================================================================================skillQA
+skillqaurl='https://ielc-coreapi.azurewebsites.net/IELCQA';
+Getskillqa(): Observable<any> {
+  return this.http.get<any>(this.skillqaurl);
+}   
+// Postskillqa(data: any): Observable<any> {
+//   return this.http.post<any>(this.skillqaurl, data);
+// }
+Postskillqa(data: any): Observable<any> {
+  const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+  return this.http.post<any>(this.skillqaurl, JSON.stringify(data), { headers });
+}
+
+// Postskillqa(data: FormData): Observable<any> {
+//   return this.http.post<any>(this.skillqaurl, data); 
+// }
+
+
+DeleteskillqaById(id: number): Observable<void> {
+  return this.http.delete<void>(`${this.skillqaurl}/${id}`);
+}  
+GetskillqaById(id: number): Observable<any> {
+  return this.http.get<any>(`${this.skillqaurl}/${id}`);
+}
+
+Updateskillqa(id: number, updatedData: any): Observable<any> {
+  return this.http.put<any>(`${this.skillqaurl}/${id}`, updatedData);
 } 
 }

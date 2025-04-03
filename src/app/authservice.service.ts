@@ -290,13 +290,27 @@ login(): void {
   });
 }
 
-logout() {
-  this.msalService.instance.logoutRedirect({
-    // postLogoutRedirectUri: 'http://localhost:4200/login'
-    postLogoutRedirectUri: environment.postLogoutRedirectUri
+// logout() {
+//   this.msalService.instance.logoutRedirect({
+//     // postLogoutRedirectUri: 'http://localhost:4200/login'
+//     postLogoutRedirectUri: environment.postLogoutRedirectUri
+//   });
+//   this.userDetailsSubject.next({ displayName: null, email: null }); // Clear user details on logout
+// }
+logout(): void {
+  this.msalService.logoutPopup().subscribe({
+    next: () => {
+      this.userDetailsSubject.next({ displayName: null, email: null }); // Clear user details
+
+      // Manually redirect to the post-logout URL
+      window.location.href = environment.postLogoutRedirectUri;
+    },
+    error: (error) => {
+      console.error('Logout Error:', error);
+    }
   });
-  this.userDetailsSubject.next({ displayName: null, email: null }); // Clear user details on logout
 }
+
 
 isAuthenticated(): boolean {
   return this.msalService.instance.getActiveAccount() !== null;
@@ -337,19 +351,37 @@ public fetchUserDetails() {
   });
 }
 
+// handleRedirectCallback() {
+//   this.msalService.instance.handleRedirectPromise().then((result: AuthenticationResult | null) => {
+//     if (result) {
+//       this.msalService.instance.setActiveAccount(result.account);
+//       this.fetchUserDetails();
+//       if (this.router.url === '/login') {
+//         this.router.navigate(['/home']);
+//       }
+//     }
+//   }).catch(error => {
+//     console.error("Redirect Authentication Error:", error);
+//   });
+// }
 handleRedirectCallback() {
-  this.msalService.instance.handleRedirectPromise().then((result: AuthenticationResult | null) => {
-    if (result) {
-      this.msalService.instance.setActiveAccount(result.account);
-      this.fetchUserDetails();
-      if (this.router.url === '/login') {
-        this.router.navigate(['/home']);
+  this.msalService.instance.handleRedirectPromise()
+    .then((result: AuthenticationResult | null) => {
+      console.log("handleRedirectPromise result:", result);
+      if (result) {
+        this.msalService.instance.setActiveAccount(result.account);
+        this.fetchUserDetails();
+        if (this.router.url === '/login') {
+          this.router.navigate(['/home']);
+        }
       }
-    }
-  }).catch(error => {
-    console.error("Redirect Authentication Error:", error);
-  });
+    })
+    .catch(error => {
+      console.error("Redirect Authentication Error:", error);
+    });
 }
+
+
 
 // ---------------- Inactivity Timer ----------------
 // startInactivityTimer() {

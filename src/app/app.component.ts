@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MsalService } from '@azure/msal-angular';
 import { AuthService } from './authservice.service';
 import { Router } from '@angular/router';
+import { AuthenticationResult } from '@azure/msal-browser';
 
 @Component({
   selector: 'app-root',
@@ -33,6 +34,36 @@ export class AppComponent implements OnInit {
     }
 
   }
+  
+
+  // async ngOnInit() {
+  //   try {
+  //     console.log('Checking MSAL authentication state...');
+  
+  //     // 1️⃣ Handle authentication response first (redirect-based login)
+  //     const authResponse = await this.msalService.instance.handleRedirectPromise();
+      
+  //     if (authResponse !== null && authResponse.account) {
+  //       this.msalService.instance.setActiveAccount(authResponse.account);
+  //       console.log("MSAL authentication successful", authResponse);
+  //     } else {
+  //       console.log("No authentication response found");
+  //     }
+  
+  //     // 2️⃣ Now check if user is authenticated
+  //     if (this.authService.isAuthenticated()) {
+  //       console.log("User is authenticated, setting active account...");
+  //       this.authService.setActiveAccount();
+  //     } else {
+  //       console.log("User is NOT authenticated, redirecting to login...");
+  //       this.router.navigate(['/login']); // Redirect to login only if not authenticated
+  //     }
+  
+  //   } catch (error) {
+  //     console.error('Error during MSAL authentication:', error);
+  //   }
+  // }
+  
 
   // async ngOnInit() {
   //   try {

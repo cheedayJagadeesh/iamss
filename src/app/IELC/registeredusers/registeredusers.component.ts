@@ -66,7 +66,7 @@ export class RegisteredusersComponent implements OnInit {
 
 
  searchSkills() {
-  
+  this.page = 1; 
   if (this.skillname.trim()) {
     this.ielc.GetUsersBySkill(this.skillname).subscribe((data) => {
       this.Registeredusers = data;

@@ -172,7 +172,10 @@ export function MSALInstanceFactory(): IPublicClientApplication {
     cache: {
       cacheLocation: BrowserCacheLocation.SessionStorage,
       storeAuthStateInCookie: true
-    }
+    },
+    // system: {
+    //   navigateToLoginRequestUrl: false // Add this to prevent unwanted redirects
+    // }
     
   });
   
@@ -276,11 +279,11 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
       provide: MSAL_GUARD_CONFIG,
       useFactory: MSALGuardConfigFactory
     },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: MsalInterceptor,
-      multi: true,
-    },
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: MsalInterceptor,
+    //   multi: true,
+    // },
     {
       provide: MSAL_INTERCEPTOR_CONFIG,
       useFactory: MSALInterceptorConfigFactory
