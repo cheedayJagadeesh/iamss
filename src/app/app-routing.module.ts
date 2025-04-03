@@ -46,6 +46,7 @@ import { AdmindeptComponent } from './IELC/admindept/admindept.component';
 import { HrdeptComponent } from './IELC/hrdept/hrdept.component';
 import { ItdeptComponent } from './IELC/itdept/itdept.component';
 import { authGuard } from './auth.guard';
+import { AuthcallbackComponent } from './IELC/authcallback/authcallback.component';
 
 
 const routes: Routes = [
@@ -100,7 +101,8 @@ const routes: Routes = [
   {path:'exampage',component:ExampageComponent,canActivate: [MsalGuard]},
   {path:'admindept',component:AdmindeptComponent,canActivate: [MsalGuard]},
   {path:'hrdept',component:HrdeptComponent,canActivate: [MsalGuard]},
-  {path:'itdept',component:ItdeptComponent,canActivate: [MsalGuard]}
+  {path:'itdept',component:ItdeptComponent,canActivate: [MsalGuard]},
+  {path:'authcallback', component:AuthcallbackComponent}
 ];
 
 @NgModule({

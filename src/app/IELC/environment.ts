@@ -1,7 +1,7 @@
 export const environment = {
     production: false,
-    redirectUri: "http://localhost:4200",
-    postLogoutRedirectUri: "http://localhost:4200/login"
+    redirectUri: "http://localhost:4200/authcallback",
+    postLogoutRedirectUri: "http://localhost:4200/#/login"
   };
 // export const environment = {
 //     production: false,

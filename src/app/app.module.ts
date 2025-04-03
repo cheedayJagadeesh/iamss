@@ -86,6 +86,7 @@ import { SprtheaderComponent } from './IELC/sprtheader/sprtheader.component';
 import { environment } from './IELC/environment';
 // import { environment } from './IELC/environment.prod';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { AuthcallbackComponent } from './IELC/authcallback/authcallback.component';
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
 
@@ -259,7 +260,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     AdmindeptComponent,
     HrdeptComponent,
     ItdeptComponent,
-    SprtheaderComponent
+    SprtheaderComponent,
+    AuthcallbackComponent
   ],
   imports: [
     BrowserModule,
