@@ -255,16 +255,16 @@ h2 {
     color: green;
 }
 .buttonsub{
-    margin-left: 70%;
+    margin-left: 77%;
     margin-top: 22%;
     position: absolute;
     width: 12%;
 }
 .buttonlogout{
-    margin-left: 83%;
-    margin-top: 22%;
+    margin-left: 92%;
+    margin-top: -21%;
     position: absolute;
-    width: 12%;
+    width: 5%;
 }
 .container-main {
     border-style: solid;
@@ -550,6 +550,23 @@ text-align: justify;
     position: absolute;
     width: 441px;
     text-align: justify;
+    border-collapse: collapse;
+    border-spacing: 0;
+    tr {
+        height: 30px; /* Adjust row height */
+        margin: 0; /* Ensure no extra margins */
+        padding: 0; /* Ensure no extra padding */
+    }
+ td {
+    /* padding: 2px 5px;
+    line-height: 1.2;
+    height: 25px; 
+    display: table-cell; 
+    vertical-align: middle; */
+    padding: 2px 5px !important; /* Reduce padding */
+    line-height: 1.2; /* Adjust text spacing */
+    border: none;
+}
 }
 .tableleft-2{
     margin-left: 5%;

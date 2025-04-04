@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { IelcapiService } from '../ielcapi.service';
 
-interface smtpinfo{
+interface smtpinfo {
   id: number;
   userName: string;
   password: string;
 }
+
+
 interface itsprtinfo{
   id: number;
   contactPriority: string;
@@ -81,6 +83,9 @@ interface eventalertsinfo{
   styleUrls: ['./adminusers.component.css']
 })
 export class AdminusersComponent {
+  encodePassword (password: string): string {
+    return btoa(password);
+  }
   // selectedOption: string = '';
   selectedOption1: string = '';
   selectedOption2: string = '';
@@ -91,6 +96,7 @@ export class AdminusersComponent {
   isITSelected: boolean = false;
   isPRJTSelected: boolean = false;
   isCISOSelected: boolean = false;
+  showContactTable: boolean = false;
 
 onSelection1Change() {
   this.isContactSelected = this.selectedOption1 === 'Contact';
@@ -99,12 +105,12 @@ onSelection1Change() {
   this.isITSelected = this.selectedOption1 === 'ITSupport';
   this.isPRJTSelected = this.selectedOption1 === 'ProjectsSupport';
   this.isCISOSelected = this.selectedOption1 === 'CISO_MR_Support';
-  if (this.selectedOption1 !== 'Contact') {
-    this.selectedOption2 =''
-    console.log(this.selectedOption1)
-  }
 
+  if (this.selectedOption1 !== 'Contact') {
+    this.showContactTable = false;
+  }
 }
+
 onSelection2Change() {
  
   // if (this.selectedOption2 === 'INTEQITSupport') {
@@ -361,7 +367,8 @@ onSelection3Change() {
       this.isLoading = false;
     });
    }
-   AddSmtp(): void {
+   AddSmtp(): void { 
+    this.smtpdata.password = this.encodePassword(this.smtpdata.password);  
     this.ielc.Postsmtp(this.smtpdata).subscribe(
       (response) => {
         alert('✅ Record Added Successfully!');
@@ -369,10 +376,17 @@ onSelection3Change() {
         this.resetsmtp();
       },
       (error) => {
+        console.error('❌ Error adding record:', error);
         alert('❌ Error adding Record. Please try again.');
       }
     );
   }
+   
+  
+  // AddSmtp() {
+  //   this.smtpdata.password = this.encodePassword(this.smtpdata.password);
+  //   this.smtplist.push({...this.smtpdata})
+  // }
   deletesmtp(id: number) {
     if (confirm('Are you sure you want to delete this record?')) {
       this.ielc.DeletesmtpById(id).subscribe({
@@ -5082,13 +5096,33 @@ GetEventsist(){
 //     }
 //   );
 // }
-AddEvents(item: any) {
-  const eventPayload = {
-    id: item.id,             // Event ID
-    eventData: item.eventData, // Base64 Image Data
-    eventName: item.eventName  // Event Name
-  };
+// AddEvents(item: any) {
+//   const eventPayload = {
+//     id: item.id,             // Event ID
+//     eventData: item.eventData, // Base64 Image Data
+//     eventName: item.eventName  // Event Name
+//   };
 
+//   this.ielc.Postevents(eventPayload).subscribe(
+//     response => {
+//       alert('✅ Event Added Successfully!');
+//       console.log('Response:', response);
+//       this.GetEventsist();
+//       this.resetEvents();
+//     },
+//     error => {
+//       alert('❌ Error adding event. Please try again.');
+//       console.error('Error:', error);
+//     }
+//   );
+// }
+AddEvents() {
+  const eventPayload = {
+    id: this.eventsdata.id,             // Event ID
+    eventData: this.eventsdata.eventData, // Base64 Image Data
+    eventName: this.eventsdata.eventName  // Event Name
+  };
+  // console.log("🚀 Sending Payload:", eventPayload); 
   this.ielc.Postevents(eventPayload).subscribe(
     response => {
       alert('✅ Event Added Successfully!');
@@ -5101,6 +5135,83 @@ AddEvents(item: any) {
       console.error('Error:', error);
     }
   );
+}
+showFileInput: boolean = true;
+fileError: string = ''; // Variable to store error message
+
+onEventFileSelected(event: any) {
+  const file = event.target.files[0]; // Get selected file
+  this.fileError = ""; // Reset error
+
+  if (!file) {
+    this.fileError = "Please select a file.";
+    return;
+  }
+
+  // Validate file type (Only allow images)
+  if (!file.type.startsWith("image/")) {
+    this.fileError = "Only image files are allowed.";
+    event.target.value = ""; // Reset file input
+    return;
+  }
+
+  // Validate file size (Max: 2MB)
+  const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+  if (file.size > maxSize) {
+    this.fileError = "File size must be less than 2MB.";
+    event.target.value = ""; // Reset file input
+    return;
+  }
+
+  // If file is valid, process it
+  const reader = new FileReader();
+  reader.onload = (e: any) => {
+    const img = new Image();
+    img.src = e.target.result;
+
+    img.onload = () => {
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      // Resize Image (Set max width & height)
+      const maxWidth = 300;
+      const maxHeight = 300;
+      let width = img.width;
+      let height = img.height;
+
+      if (width > maxWidth || height > maxHeight) {
+        if (width > height) {
+          height *= maxWidth / width;
+          width = maxWidth;
+        } else {
+          width *= maxHeight / height;
+          height = maxHeight;
+        }
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      ctx?.drawImage(img, 0, 0, width, height);
+
+      const fileType = file.type === "image/png" ? "image/png" : "image/jpeg";
+      const base64String = canvas.toDataURL(fileType).split(",")[1]; // Remove the prefix
+
+      this.eventsdata.eventData = base64String; // Store Base64 in your object
+    };
+  };
+
+  reader.readAsDataURL(file);
+}
+
+
+removeEventImage() {
+  this.eventsdata.eventData = ""; // ✅ Clear stored image
+
+  // ✅ Reset file input field
+  const fileInput = document.getElementById("formFile") as HTMLInputElement;
+  if (fileInput) {
+    fileInput.value = ""; // ✅ Properly reset file input
+  }
 }
 
 
@@ -5360,3 +5471,5 @@ getDownloadLink(alertAttachment: string): string {
 
 
 }
+
+

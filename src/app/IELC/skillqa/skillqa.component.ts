@@ -55,9 +55,13 @@ export class SkillqaComponent implements OnInit {
   Enrolledskills: any[] = []; 
   Enrolledskillqa: any[] = []; 
   skillname='';
+  selectedSkill: string = ""; 
+  allQuestions: Question[] = []; 
+  filteredQuestions: Question[] = [];
   isLoading = true;
   page: number = 1;  
   itemsPerPage: number = 10; 
+  submitted = false;
   questiondata: Question= {
     questionId: 0,
     skillName: '',
@@ -90,19 +94,18 @@ export class SkillqaComponent implements OnInit {
     this.ielc.Getskillqa().subscribe((data) => {
       this.Enrolledskillqa=data;
       this.isLoading = false;
+      this.filteredQuestions = [...this.Enrolledskillqa];
     });
    }
    sortRegisteredUsers(data: any[]): any[] {
     return data.sort((a, b) => (a.questionId > b.questionId ? -1 : a.questionId < b.questionId ? 1 : 0));
   }
-   searchSkills() {
-    this.page = 1; 
-    if (this.skillname.trim()) {
-      this.ielc.GetUsersBySkill(this.skillname).subscribe((data) => {
-        this.Enrolledskillqa = data;
-        this.Enrolledskillqa = this.sortRegisteredUsers(data);
-      });
-    }
+
+  filterQuestions() {
+    this.page = 1; // ✅ Reset to first page when filtering
+    this.filteredQuestions = this.selectedSkill 
+      ? this.Enrolledskillqa.filter(q => q.skillName === this.selectedSkill)
+      : [...this.Enrolledskillqa]; // Show all if nothing is selected
   }
   // AddSkillsQa(): void {
   //   this.ielc.Postskillqa(this.questiondata).subscribe(
@@ -194,21 +197,31 @@ export class SkillqaComponent implements OnInit {
       console.error("Error fetching record:", error);
     });
   }
-  
-  
   UpdateSkillsQa() {
+    const currentPage = this.page;  // ✅ Save current page
     this.ielc.Updateskillqa(this.questiondata.questionId, this.questiondata).subscribe(
       (response) => {
         console.log("Updated Successfully:", response);
         alert(" ✅ Record updated successfully!");
-        this.GetAllSkillsQa();
-       
+  
+        // ✅ Find the updated record and replace it locally
+        const index = this.Enrolledskillqa.findIndex(q => q.questionId === this.questiondata.questionId);
+        if (index !== -1) {
+          this.Enrolledskillqa[index] = { ...this.questiondata }; // Update locally
+        }
+  
+        // ✅ Apply the filter again so it does not reset
+        this.filterQuestions();  
+        
+        // ✅ Restore the same page
+        this.page = currentPage;  
       },
       (error) => {
         console.error("Error updating Record:", error);
       }
     );
   }
+  
   
   resetlist(){
     this.questiondata= {
@@ -324,6 +337,16 @@ export class SkillqaComponent implements OnInit {
       };
   
       reader.readAsDataURL(file);
+    }
+  }
+  
+  removeImage(fieldName: keyof Question) {
+    this.questiondata[fieldName] = undefined; // Clear the stored image
+  
+    // Convert fieldName to a string before passing to getElementById
+    const fileInput = document.getElementById(fieldName.toString()) as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = ""; // Reset the file input field
     }
   }
   

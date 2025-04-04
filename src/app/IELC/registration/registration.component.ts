@@ -83,7 +83,7 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
    this.selectedDate= new Date().toISOString().split('T')[0]
    this.isTimeInputDisabled=true;
    this.GetHolidayslist();
-   this.GetEventsist();
+   this.GetEventsList();
    this.GetExamlist();
    this.GetAllUsers();
    if (this.eventslist && this.eventslist.length > 0) {
@@ -293,18 +293,30 @@ setSelectedSkillandId(skillName: string, enrollmentID: number) {
   return data.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
 }
 
- GetEventsist(){
-  this.ielc.Getevents().subscribe((data) => {
-    this.eventslist=data;
-    // this.eventslist = this.sortlist(data);
-  });
- }
+//  GetEventsist(){
+//   this.ielc.Getevents().subscribe((data) => {
+//     this.eventslist=data;
+//     // this.eventslist = this.sortlist(data);
+//   });
+//  }
 //  GetExamlist(){
 //   this.ielc.Getexaminfo().subscribe((data) => {
 //     this.examlist=data;
     
 //   });
 //  }
+
+// latestEvent: any; // Store the latest event
+
+GetEventsList() {
+  this.ielc.Getevents().subscribe((data) => {
+    this.eventslist = data;
+
+    // Sort by ID in descending order & get the first event
+    this.latestEvent = this.eventslist.sort((a, b) => b.id - a.id)[0];
+  });
+}
+
 
 GetExamlist() {
   this.ielc.Getexaminfo().subscribe((data: any[]) => {

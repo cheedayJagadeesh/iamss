@@ -1728,9 +1728,13 @@ Getqmshistory(year: number): Observable<any> {
    Getevents(): Observable<any> {
      return this.http.get<any>(this.eventsUrl);
     } 
+    // Postevents(data: any): Observable<any> {
+    //   // const headers = { 'Content-Type': 'application/json' };
+    //   return this.http.post<any>(this.eventsUrl, data);
+    // }
     Postevents(data: any): Observable<any> {
-      // const headers = { 'Content-Type': 'application/json' };
-      return this.http.post<any>(this.eventsUrl, data);
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      return this.http.post<any>(this.eventsUrl, JSON.stringify(data), { headers });
     }
 
     DeleteeventsById(id: number): Observable<void> {
@@ -1827,6 +1831,11 @@ GetskillqaById(id: number): Observable<any> {
 }
 
 Updateskillqa(id: number, updatedData: any): Observable<any> {
-  return this.http.put<any>(`${this.skillqaurl}/${id}`, updatedData);
+  return this.http.put<any>(`${this.skillqaurl}/${id}`, updatedData, { observe: 'response' });
 } 
+skillnameurl='https://ielc-coreapi.azurewebsites.net/IELCQA/skillname'
+    GetskillqaBySkill(skillName: string): Observable<any> {
+      return this.http.get<any>(`${this.skillnameurl}/${skillName}`);
+    }
+
 }
