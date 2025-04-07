@@ -34,6 +34,34 @@ export class AppComponent implements OnInit {
     }
 
   }
+  // async ngOnInit() {
+  //   try {
+  //     await this.msalService.instance.initialize(); // Ensure MSAL is initialized
+  //     console.log('MSAL initialized successfully');
+  //   } catch (error) {
+  //     console.error('MSAL initialization error:', error);
+  //   }
+  
+  //   const accounts = this.msalService.instance.getAllAccounts();
+  //   if (accounts.length > 0) {
+  //     // Already logged in
+  //     this.authService.setActiveAccount();
+  //     this.router.navigate(['/home']); // or your desired route
+  //   } else {
+  //     // Try silent SSO
+  //     this.msalService.instance.ssoSilent({
+  //       scopes: ['user.read'], // use your required scopes
+  //       redirectUri: '/', // must match your MSAL config
+  //     }).then((result) => {
+  //       this.msalService.instance.setActiveAccount(result.account);
+  //       this.router.navigate(['/home']); // or your desired route
+  //     }).catch((error) => {
+  //       console.warn('Silent SSO failed:', error);
+  //       this.router.navigate(['/login']);
+  //     });
+  //   }
+  // }
+  
   
 
   // async ngOnInit() {

@@ -13,6 +13,29 @@ interface exam{
   standardExamQuestions: number;
   examPercentage: number;
 }
+interface Question {
+  [key: string]: string | number | File | undefined; // ✅ Allows dynamic property access
+
+  questionId: number;
+  skillName: string;
+  question: string;
+  a: string;
+  b: string;
+  c: string;
+  d: string;
+  iQuestion: string;
+  ia: string;
+  ib: string;
+  ic: string;
+  id: string;
+  questionAnswer: string;
+
+  iQuestionFile?: File;
+  iaFile?: File;
+  ibFile?: File;
+  icFile?: File;
+  idFile?: File;
+}
 @Component({
   selector: 'app-exampage',
   templateUrl: './exampage.component.html',
@@ -31,36 +54,38 @@ export class ExampageComponent implements OnInit, OnDestroy  {
   //     correctAnswer: "Infrastructure as a Service"
   //   }
   // ];
-  questions = [
-    {
-       question: "Which architectural layer is used as a backend in cloud computing?",
-    // questionImage: "https://th.bing.com/th/id/OIP._7eM_4ioIkRtrZ2hS4aCUAHaEK?w=296&h=180&c=7&r=0&o=5&pid=1.7", // Question has an image
-      options: [
-        { text: "Cloud", image: null}, // Text + Image
-        { image: "https://th.bing.com/th/id/OIP.TWE6jmJeglacdUsn3aYPVQHaEx?w=274&h=180&c=7&r=0&o=5&pid=1.7" }, // Only text
-        { text: "Client", image: null }, // Text + Image
-        { text: "All of the mentioned", image: null } // Only text
-      ],
-      correctAnswer: "Cloud"
-    },
-    {
-      question: "What does IaaS stand for?",
-      questionImage: null, // No image for this question
-      options: [
-        { text: "Infrastructure as a Service", image: null }, // Only text
-        { text: "Internet as a Service", image: null }, // Text + Image
-        { text: "Information as a System", image: null }, // Only text
-        { text: "None of the above", image: null } // Text + Image
-      ],
-      correctAnswer: "Infrastructure as a Service"
-    }
-  ];
+  questions: Question[] = [];
+  // questions = [
+  //   {
+  //      question: "Which architectural layer is used as a backend in cloud computing?",
+  //   // questionImage: "https://th.bing.com/th/id/OIP._7eM_4ioIkRtrZ2hS4aCUAHaEK?w=296&h=180&c=7&r=0&o=5&pid=1.7", // Question has an image
+  //     options: [
+  //       { text: "Cloud", image: null}, // Text + Image
+  //       { image: "https://th.bing.com/th/id/OIP.TWE6jmJeglacdUsn3aYPVQHaEx?w=274&h=180&c=7&r=0&o=5&pid=1.7" }, // Only text
+  //       { text: "Client", image: null }, // Text + Image
+  //       { text: "All of the mentioned", image: null } // Only text
+  //     ],
+  //     correctAnswer: "Cloud"
+  //   },
+  //   {
+  //     question: "What does IaaS stand for?",
+  //     questionImage: null, // No image for this question
+  //     options: [
+  //       { text: "Infrastructure as a Service", image: null }, // Only text
+  //       { text: "Internet as a Service", image: null }, // Text + Image
+  //       { text: "Information as a System", image: null }, // Only text
+  //       { text: "None of the above", image: null } // Text + Image
+  //     ],
+  //     correctAnswer: "Infrastructure as a Service"
+  //   }
+  // ];
   
 
   currentQuestionIndex = 0;
   selectedAnswer: string | null = null;
-
-  examlist: any[] = []; 
+  examlist: Question[] = [];
+  isLoading = true;
+  // examlist: any[] = []; 
   selectedSkill: string = '';
   examdata:exam={
     id: 0,
@@ -87,6 +112,7 @@ export class ExampageComponent implements OnInit, OnDestroy  {
    async ngOnInit(){
     // this.startTimer();
     this.GetExamlist();
+    this.GetAllSkillsQa();
     
   try {
     console.log("Initializing MSAL...");
@@ -144,23 +170,62 @@ export class ExampageComponent implements OnInit, OnDestroy  {
 
   
  
+  // GetExamlist() {
+  //   this.ielc.Getexaminfo().subscribe((data) => {
+  //     console.log("Exam data received:", data);
+  //     if (data && data.length > 0) {
+  //       this.examdata = this.examlist[0]; 
+  //       this.timeLeft = this.examdata.examTime * 60; 
+  //       console.log("Assigned timeLeft:", this.timeLeft);
+  //       console.log("Total Questions:", this.examdata.displayExamQuestions);
+  //       if (this.timeLeft > 0) {
+  //         this.startTimer(); 
+  //       }
+  //     }
+  //   }, (error) => {
+  //     console.error("Error fetching exam data", error);
+  //   });
+  // }
   GetExamlist() {
     this.ielc.Getexaminfo().subscribe((data) => {
       console.log("Exam data received:", data);
       if (data && data.length > 0) {
-        this.examlist = data; 
-        this.examdata = this.examlist[0]; 
+        this.examdata = data[0];  // <-- only assign to examdata
         this.timeLeft = this.examdata.examTime * 60; 
         console.log("Assigned timeLeft:", this.timeLeft);
         console.log("Total Questions:", this.examdata.displayExamQuestions);
+  
         if (this.timeLeft > 0) {
           this.startTimer(); 
         }
       }
+     
     }, (error) => {
       console.error("Error fetching exam data", error);
+     
     });
+    
   }
+  
+  GetAllSkillsQa() {
+    this.ielc.Getskillqa().subscribe((data: Question[]) => {
+      this.examlist = data;
+  
+      if (this.selectedSkill) {
+        this.questions = data.filter((q: Question) => q.skillName === this.selectedSkill);
+       
+      } else {
+        this.questions = data; // or [] if you want empty default
+      }
+  
+      this.examlist = [...this.questions];
+      this.currentQuestionIndex = 0;
+      this.isLoading = false;
+    });
+   
+  }
+  
+  
  
   
   ngOnDestroy(): void {

@@ -97,9 +97,23 @@ export class ResultinfoComponent implements OnInit  {
     this.ielc.GetUsers().subscribe((data) => {
       this.Enrollmentlist=data;
       this.Enrollmentlist = this.sortRegisteredUsers(data);
+
+       // Check each user for filled feedback fields
+    // this.submittedFeedbackIds = this.Enrollmentlist
+    // .filter(user =>
+    //   user.subjectMatterKnowledge &&
+    //   user.presentation &&
+    //   user.communication &&
+    //   user.handlingDoubts &&
+    //   user.applicationtowork
+    // )
+    // .map(user => user.enrollmentID); 
+
       this.isLoading = false;
     });
+    
    }
+ 
    GetAllSkillsData(){
     this.ielc.GetEnrolledSkills().subscribe((data) => {
       this.Enrolledskills=data;
@@ -312,6 +326,9 @@ exportExcel(): void {
   // Download the Excel file
   saveAs(fileData, 'TableData.xlsx');
 }
+
+
+submittedFeedbackIds: string[] = [];
 
  
 }

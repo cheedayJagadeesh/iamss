@@ -342,7 +342,7 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
       </div>
  </div>
 <div class="tablebottom">
-    <table class="table table-striped table-bordered">
+    <table class="table  table-striped table-bordered">
         <thead class="table-primary">
             <tr>
               <th scope="col">Skill Name</th>
@@ -356,24 +356,25 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
             <tr *ngFor="let item of Registeredusers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
                 
                 <td>{{ item.skillName }}</td>
-      <td>
-        
-        <ng-container *ngIf="item.percentage !== null && item.percentage !== undefined; else startTest">
-          <span *ngIf="item.percentage > getExamPercentage(item.skillName); else pendingTest">
-            Completed
-          </span>
-        </ng-container>
-        
-        <ng-template #pendingTest>
-          <span>Pending - </span>
-          <a routerLink="/exampage" class="btn btn-link" (click)="setSelectedSkill(item.skillName)">StartTest</a>
-        </ng-template>
-        
-        <ng-template #startTest>
-          <a routerLink="/exampage" class="btn btn-link" (click)="setSelectedSkill(item.skillName)">StartTest</a>
-        </ng-template>
-        
-      </td>
+                <td> 
+                  <ng-container *ngIf="item.percentage !== null && item.percentage !== undefined; else startTest">
+                    <span *ngIf="item.percentage >= getExamPercentage(); else pendingTest">
+                      Completed
+                    </span>
+                  </ng-container>
+                
+                  <ng-template #pendingTest>
+                    <span>Pending - </span>
+                    <span>
+                    <a routerLink="/exampage" class="btn btn-link" (click)="setSelectedSkill(item.skillName)">StartTest</a>
+                  </span>
+                  </ng-template>
+                
+                  <ng-template #startTest>
+                    <a routerLink="/exampage" class="btn btn-link" (click)="setSelectedSkill(item.skillName)">StartTest</a>
+                  </ng-template>
+                </td>
+                
       <td>{{ item.percentage }}</td>
       <td> 
         <ng-container *ngIf="item.testTakenDate">
@@ -384,8 +385,8 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
         {{ item.testTakenDate }}
       </ng-container> -->
      </td>
-      <td>
-        <ng-container *ngIf="submittedFeedbackIds.includes(item.enrollmentID); else showFeedbackLink">
+      <!-- <td>
+          <ng-container *ngIf="hasSubmittedFeedback(item.enrollmentID); else showFeedbackLink">
             Yes
         </ng-container>
         <ng-template #showFeedbackLink>
@@ -393,7 +394,25 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
             Feedback
           </a>
         </ng-template>
+      </td> -->
+      <td>
+        <ng-container *ngIf="hasSubmittedFeedback(item.enrollmentID); else feedbackLink">
+          Yes
+        </ng-container>
+      
+        <ng-template #feedbackLink>
+          <a
+           
+            (click)="handleFeedbackClick(item)"
+            class="btn btn-link"
+            [ngClass]="{ 'text-muted': item.result !== 'Completed' }"
+            [attr.title]="item.result !== 'Completed' ? 'Please complete the test before giving feedback' : ''">
+            Feedback
+          </a>
+        </ng-template>
       </td>
+      
+      
       </tr>
       </tbody>
     </table>
@@ -422,4 +441,7 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
   >
    
   </div>
+  
    </form>
+ 
+

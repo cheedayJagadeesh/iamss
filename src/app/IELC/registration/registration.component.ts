@@ -1,4 +1,4 @@
-import { Component,OnInit,ViewChild } from '@angular/core';
+import { Component,OnInit,ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { __values } from 'tslib';
@@ -9,6 +9,8 @@ import { MsalService } from '@azure/msal-angular';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
+
+
 
 
 interface holidaysinfo{
@@ -31,6 +33,14 @@ interface exam{
 interface examlisinfot{
   testTakenDate: string | null;
 }
+interface feedback{
+  subjectMatterKnowledge: string;
+  presentation: string;
+  communication: string;
+  handlingDoubts: string;
+  applicationtowork: string;
+  comments: string;
+}
 
 @Component({
   selector: 'app-registration',
@@ -39,8 +49,21 @@ interface examlisinfot{
 })
 export class RegistrationComponent implements OnInit {
 
+
+  // @Input() enrollmentList: any[] = [];
+  // @Input() submittedFeedbackIds: string[] = [];
+  
+  // hasSubmittedFeedback(id: string): boolean {
+  //   return this.submittedFeedbackIds.includes(id);
+  // }
+
+  enrollmentList: any[] = [];
+  submittedFeedbackIds: any[] = [];
+  
   @ViewChild('registration') registration!: NgForm;
  // currentDate:Date=new Date()
+
+
  selectedDate:string=''
  examlist: any[] = []; 
  Registeredusers: any[] = []; 
@@ -77,7 +100,7 @@ export class RegistrationComponent implements OnInit {
 latestEvent: any= null; 
 page: number = 1;  
 itemsPerPage: number = 5; 
-submittedFeedbackIds: number[] = [];
+// submittedFeedbackIds: number[] = [];
 constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute){
    // this.selectedDate= new Date().toString()
    this.selectedDate= new Date().toISOString().split('T')[0]
@@ -89,21 +112,19 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
    if (this.eventslist && this.eventslist.length > 0) {
     this.eventslist = this.eventslist.sort((a, b) => Number(b.id) - Number(a.id));
   }
-
-  this.route.queryParams.subscribe(params => {
-    const submittedID = +params['submittedID']; // Convert to number
-    if (submittedID && !this.submittedFeedbackIds.includes(submittedID)) {
-      this.submittedFeedbackIds.push(submittedID);
-    }
-  });
+  
   this.Registeredusers.forEach((item) => {
     if (item.testTakenDate) {
       // Convert the string to a valid Date object
       item.testTakenDate = this.formatCustomDate(item.testTakenDate);
     }
   });
+
+ 
   
  }
+
+
 
  formatCustomDate(dateStr: string | null): string {
   if (!dateStr) return 'Invalid Date';
@@ -232,6 +253,17 @@ GetAllUsers() {
   this.ielc.GetUsers().subscribe((data) => {
     const aadEmail = this.userEmail; // Get current user's email
 
+   this.submittedFeedbackIds = this.Registeredusers
+    .filter(user =>
+      user.subjectMatterKnowledge &&
+      user.presentation &&
+      user.communication &&
+      user.handlingDoubts &&
+      user.applicationtowork
+    )
+    .map(user => user.enrollmentID); 
+    
+
     if (aadEmail) {
       this.Registeredusers = this.sortRegisteredUsers(
         data.filter(user => user.mail === aadEmail)
@@ -243,7 +275,25 @@ GetAllUsers() {
       this.Registeredusers = [];
     }
   });
+  
 }
+hasSubmittedFeedback(enrollmentID: string): boolean {
+  return this.submittedFeedbackIds.includes(enrollmentID);
+}
+
+handleFeedbackClick(item: any): void {
+  if (item.result === 'Completed') {
+    this.router.navigate(['/feedback'], {
+      queryParams: {
+        skill: item.skillName,
+        enrollment: item.enrollmentID
+      }
+    });
+  } else {
+    alert('You must complete the test before giving feedback.');
+  }
+}
+
 
 // getExamPercentage(skillName: string): number {
 //   const row = this.Registeredusers.find(exam => exam.skillName === skillName);
@@ -253,19 +303,12 @@ GetAllUsers() {
 //   }
 //   return 0; // Default to 0 if not found
 // }
-getExamPercentage(skillName: string): number {
-  console.log("Searching for skill:", skillName);
-  console.log("Exam List:", this.Registeredusers);
-
-  const exam = this.Registeredusers.find(exam => exam.skillName === skillName);
-  if (exam && exam.examPercentage !== undefined) {
-    console.log(`Exam Percentage for ${skillName}:`, exam.examPercentage);
-    return exam.examPercentage; // Always returns a number
-  } 
-
-  console.log(`Exam Percentage for ${skillName} not found, returning default value 0`);
-  return 0; // Ensures function always returns a number
+getExamPercentage(): number {
+  return this.examlist.length > 0 ? this.examlist[0].examPercentage : 0;
 }
+
+
+
 selectedSkill: string = '';
 setSelectedSkill(skillName: string) {
   this.router.navigate(['/exampage'], { queryParams: { skill: skillName } });
@@ -323,6 +366,8 @@ GetExamlist() {
     if (data) {
       this.examlist = data.map((item: any) => ({
         ...item,
+        skillName: item.skillName ?? '',  
+        examPercentage: Number(item.examPercentage),
         testTakenDate: item.testTakenDate
           ? moment(item.testTakenDate, 'MMM D YYYY hh:mmA').toDate()  // Convert to Date
           : null,

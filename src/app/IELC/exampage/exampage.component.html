@@ -1,6 +1,9 @@
 <form class="row g-3">
     <app-sprtheader></app-sprtheader>
 <div class="exam-container">
+    <div *ngIf="isLoading" class="loading-container">
+        <span class="dot"></span>
+    </div>
     <!-- <div>
         <label class="lbllogin">Login as </label>
     </div> -->
@@ -37,16 +40,9 @@
 
     <!-- <p *ngIf="examdata.displayExamQuestions > 0">Question {{ currentQuestionIndex + 1 }} of {{ examdata.displayExamQuestions }}</p> -->
 
-
+<!-- 
 <div *ngIf="examdata.displayExamQuestions > 0">
-  <!-- <h3 *ngIf="questions[currentQuestionIndex]?.question">
-   {{ currentQuestionIndex + 1 }}.{{ questions[currentQuestionIndex].question }}
-  </h3>
-  <img *ngIf="questions[currentQuestionIndex]?.questionImage" 
-       [src]="questions[currentQuestionIndex].questionImage" 
-       alt="Question Image" class="question-image" /> -->
-       <!-- Show Question Text Only If It Exists -->
-<!-- Always Show Question Number -->
+ 
 <h3>
     {{ currentQuestionIndex + 1 }}.
     <span *ngIf="questions[currentQuestionIndex]?.question">
@@ -54,7 +50,7 @@
     </span>
   </h3>
   
-  <!-- Show Image If There Is No Question Text -->
+ 
   <img 
     *ngIf="questions[currentQuestionIndex]?.questionImage" 
     [src]="questions[currentQuestionIndex].questionImage" 
@@ -64,19 +60,102 @@
   
   
 
-  <!-- Display Text or Image-Based Options -->
+  
   <div class="options">
     <label class="options-label" *ngFor="let option of questions[currentQuestionIndex]?.options">
       <input  class="options-input" type="radio" name="answer" [value]="option.text" [(ngModel)]="selectedAnswer" />
 
-      <!-- Show Text Option -->
+   
       <span *ngIf="option.text">{{ option.text }}</span>
 
-      <!-- Show Image Option -->
+      
       <img *ngIf="option.image" [src]="option.image" alt="Option Image" class="option-image" />
     </label>
   </div>
-</div>
+</div> -->
+<!-- 
+<div *ngIf="questions.length > 0" >
+    <div  class="question-section">
+      <h3> <strong>{{ currentQuestion.question }}</strong></h3>
+  
+    
+      <img *ngIf="currentQuestion.iQuestion" [src]="'data:image/jpeg;base64,' + currentQuestion.iQuestion" alt="Question Image" width="400" />
+  
+ 
+      <ul class="options-list">
+        <li *ngFor="let option of ['a', 'b', 'c', 'd']">
+          <label class="options-label" >
+            <input
+            class="options-input"
+              type="radio"
+              name="answer"
+              [value]="currentQuestion[option]"
+               [(ngModel)]="selectedAnswer"
+            />
+            <span *ngIf="!currentQuestion['i' + option]">
+                {{ currentQuestion[option] }}
+              </span>
+  
+            <img
+            *ngIf="currentQuestion['i' + option]"
+            [src]="'data:image/jpeg;base64,' + currentQuestion['i' + option]"
+            alt="Option Image"
+            width="300"
+            height="180"
+            />
+          </label>
+        </li>
+      </ul>
+    </div>
+  
+    
+ 
+</div> -->
+<div *ngIf="questions.length > 0">
+    <div class="question-section">
+      <h3 style="font-size: 18px;"><strong>{{ currentQuestion.question }}</strong></h3>
+  
+      <!-- Question Image -->
+      <img *ngIf="currentQuestion.iQuestion" 
+           [src]="'data:image/jpeg;base64,' + currentQuestion.iQuestion" 
+           alt="Question Image" 
+           width="400" />
+  
+      <!-- Options -->
+      <ul class="options-list">
+        <li *ngFor="let option of ['a', 'b', 'c', 'd']">
+          <label class="options-label">
+            <input
+              class="options-input"
+              type="radio"
+              name="answer"
+              [value]="option"
+              [(ngModel)]="selectedAnswer"
+            />
+  
+            <!-- Display text if no image -->
+            <span *ngIf="!currentQuestion['i' + option]">
+              {{ currentQuestion[option] }}
+            </span>
+  
+            <!-- Display image if available -->
+            <img *ngIf="currentQuestion['i' + option]"
+                 [src]="'data:image/jpeg;base64,' + currentQuestion['i' + option]"
+                 alt="Option Image"
+                 width="300"
+                 height="180" />
+          </label>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+
+
+<!-- Loading or no questions -->
+<!-- <div *ngIf="questions.length === 0" >
+  <p >Loading questions</p>
+</div> -->
 
 <!-- Navigation Buttons -->
 <!-- <button (click)="goBack()">Back</button>
@@ -86,5 +165,6 @@
   
     <p>Question {{ currentQuestionIndex + 1 }} of {{ examdata.displayExamQuestions }}</p>
   </div>
+
   </form>
   
