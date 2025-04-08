@@ -356,7 +356,7 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
             <tr *ngFor="let item of Registeredusers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
                 
                 <td>{{ item.skillName }}</td>
-                <td> 
+                <!-- <td> 
                   <ng-container *ngIf="item.percentage !== null && item.percentage !== undefined; else startTest">
                     <span *ngIf="item.percentage >= getExamPercentage(); else pendingTest">
                       Completed
@@ -371,9 +371,40 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
                   </ng-template>
                 
                   <ng-template #startTest>
-                    <a routerLink="/exampage" class="btn btn-link" (click)="setSelectedSkill(item.skillName)">StartTest</a>
+                    <ng-container *ngIf="hasSubmittedResult(item.enrollmentID); else showFeedbackLink">
+                      Yes
+                  </ng-container>
+                  </ng-template>
+                </td> -->
+                <td>
+                  <ng-container *ngIf="!item.result || item.percentage === null || !item.testTakenDate; else showResult">
+                    <a
+                      routerLink="/exampage"
+                      class="btn btn-link"
+                      (click)="setSelectedSkill(item.skillName, item.enrollmentID)"
+                    >
+                      StartTest
+                    </a>
+                  </ng-container>
+                
+                  <ng-template #showResult>
+                    <ng-container *ngIf="item.percentage >= getExamPercentage(); else pendingTest">
+                      <span>Completed</span>
+                    </ng-container>
+                
+                    <ng-template #pendingTest>
+                      <span>Pending - </span>
+                      <a
+                        routerLink="/exampage"
+                        class="btn btn-link"
+                        (click)="setSelectedSkill(item.skillName, item.enrollmentID)"
+                      >
+                        StartTest
+                      </a>
+                    </ng-template>
                   </ng-template>
                 </td>
+                
                 
       <td>{{ item.percentage }}</td>
       <td> 
@@ -385,7 +416,7 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
         {{ item.testTakenDate }}
       </ng-container> -->
      </td>
-      <!-- <td>
+      <td>
           <ng-container *ngIf="hasSubmittedFeedback(item.enrollmentID); else showFeedbackLink">
             Yes
         </ng-container>
@@ -394,8 +425,8 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
             Feedback
           </a>
         </ng-template>
-      </td> -->
-      <td>
+      </td>
+      <!-- <td>
         <ng-container *ngIf="hasSubmittedFeedback(item.enrollmentID); else feedbackLink">
           Yes
         </ng-container>
@@ -410,7 +441,7 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
             Feedback
           </a>
         </ng-template>
-      </td>
+      </td> -->
       
       
       </tr>

@@ -42,6 +42,12 @@ interface feedback{
   comments: string;
 }
 
+interface Result{
+  result: string;
+  percentage: string;
+  testTakenDate: string;
+}
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -59,6 +65,7 @@ export class RegistrationComponent implements OnInit {
 
   enrollmentList: any[] = [];
   submittedFeedbackIds: any[] = [];
+  submittedResultIds: any[] = [];
   
   @ViewChild('registration') registration!: NgForm;
  // currentDate:Date=new Date()
@@ -262,6 +269,14 @@ GetAllUsers() {
       user.applicationtowork
     )
     .map(user => user.enrollmentID); 
+
+    this.submittedResultIds = this.Registeredusers
+    .filter(user =>
+      user.result &&
+      user.percentage &&
+      user.testTakenDate 
+    )
+    .map(user => user.enrollmentID); 
     
 
     if (aadEmail) {
@@ -279,6 +294,9 @@ GetAllUsers() {
 }
 hasSubmittedFeedback(enrollmentID: string): boolean {
   return this.submittedFeedbackIds.includes(enrollmentID);
+}
+hasSubmittedResult(enrollmentID: string): boolean {
+  return this.submittedResultIds.includes(enrollmentID);
 }
 
 handleFeedbackClick(item: any): void {
@@ -310,8 +328,8 @@ getExamPercentage(): number {
 
 
 selectedSkill: string = '';
-setSelectedSkill(skillName: string) {
-  this.router.navigate(['/exampage'], { queryParams: { skill: skillName } });
+setSelectedSkill(skillName: string, enrollmentID: number) {
+  this.router.navigate(['/exampage'], { queryParams: { skill: skillName, enrollment: enrollmentID } });
 }
 
 setSelectedSkillandId(skillName: string, enrollmentID: number) {

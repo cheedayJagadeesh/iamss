@@ -53,18 +53,18 @@
   
   /* Style the option labels */
   .options-label {
-    display: inline-flex;
+    /* display: inline-flex;
     align-items: center;
     margin-bottom: 10px; 
     font-size: 16px;
-    cursor: pointer;
-    /* display: -webkit-box;
+    cursor: pointer; */
+    display: -webkit-box;
     align-items: center;
     gap: 10px;
     margin-bottom: 10px;
     font-size: 16px;
     cursor: pointer;
-    margin-left: 47%; */
+    margin-left: 46%;
   }
   
   .options-input {

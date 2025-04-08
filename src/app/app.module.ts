@@ -171,7 +171,8 @@ export function MSALInstanceFactory(): IPublicClientApplication {
       postLogoutRedirectUri: environment.postLogoutRedirectUri
     },
     cache: {
-      cacheLocation: BrowserCacheLocation.SessionStorage,
+      // cacheLocation: BrowserCacheLocation.SessionStorage,
+      cacheLocation: 'localStorage',
       storeAuthStateInCookie: true
     },
     // system: {
@@ -281,11 +282,11 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
       provide: MSAL_GUARD_CONFIG,
       useFactory: MSALGuardConfigFactory
     },
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: MsalInterceptor,
-    //   multi: true,
-    // },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: MsalInterceptor,
+      multi: true,
+    },
     {
       provide: MSAL_INTERCEPTOR_CONFIG,
       useFactory: MSALInterceptorConfigFactory

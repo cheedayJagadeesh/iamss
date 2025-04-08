@@ -83,7 +83,8 @@ export class FeedbackComponent {
           alert('✅ Thank you for submitting the feedback!');
   
           // Navigate back to the table with submittedID
-          this.router.navigate(['/registration'], { queryParams: { submittedID: this.enrollmentID } });
+          this.router.navigate(['/registration']);
+          // this.router.navigate(['/registration'], { queryParams: { submittedID: this.enrollmentID } });
         },
         (error) => {
           console.error('Error updating Record:', error);

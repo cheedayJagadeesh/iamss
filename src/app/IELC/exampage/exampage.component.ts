@@ -36,50 +36,59 @@ interface Question {
   icFile?: File;
   idFile?: File;
 }
+
+interface Enrollment {
+  enrollmentID: number;
+  name: string;
+  mail: string;
+  mobile: number;
+  skillName: string;
+  date: string;
+  time: string;
+  venue: string;
+  batchmembers: number;
+  enrollmentDate: string; 
+  startDate: string;
+  result: string;
+  percentage: string,
+  testTakenDate: string;
+  subjectMatterKnowledge: string;
+  presentation: string;
+  communication: string;
+  handlingDoubts: string;
+  applicationtowork: string;
+  comments: string;
+}
 @Component({
   selector: 'app-exampage',
   templateUrl: './exampage.component.html',
   styleUrls: ['./exampage.component.css']
 })
 export class ExampageComponent implements OnInit, OnDestroy  {
-  // questions = [
-  //   {
-  //     question: "Which architectural layer is used as a backend in cloud computing?",
-  //     options: ["cloud", "soft", "client", "all of the mentioned"],
-  //     correctAnswer: "cloud"
-  //   },
-  //   {
-  //     question: "What does IaaS stand for?",
-  //     options: ["Infrastructure as a Service", "Internet as a Service", "Information as a System", "None of the above"],
-  //     correctAnswer: "Infrastructure as a Service"
-  //   }
-  // ];
+ 
   questions: Question[] = [];
-  // questions = [
-  //   {
-  //      question: "Which architectural layer is used as a backend in cloud computing?",
-  //   // questionImage: "https://th.bing.com/th/id/OIP._7eM_4ioIkRtrZ2hS4aCUAHaEK?w=296&h=180&c=7&r=0&o=5&pid=1.7", // Question has an image
-  //     options: [
-  //       { text: "Cloud", image: null}, // Text + Image
-  //       { image: "https://th.bing.com/th/id/OIP.TWE6jmJeglacdUsn3aYPVQHaEx?w=274&h=180&c=7&r=0&o=5&pid=1.7" }, // Only text
-  //       { text: "Client", image: null }, // Text + Image
-  //       { text: "All of the mentioned", image: null } // Only text
-  //     ],
-  //     correctAnswer: "Cloud"
-  //   },
-  //   {
-  //     question: "What does IaaS stand for?",
-  //     questionImage: null, // No image for this question
-  //     options: [
-  //       { text: "Infrastructure as a Service", image: null }, // Only text
-  //       { text: "Internet as a Service", image: null }, // Text + Image
-  //       { text: "Information as a System", image: null }, // Only text
-  //       { text: "None of the above", image: null } // Text + Image
-  //     ],
-  //     correctAnswer: "Infrastructure as a Service"
-  //   }
-  // ];
-  
+  resultdata: Enrollment = {
+    enrollmentID: 0,
+    name: '',
+    mail: '',
+    mobile: 0,
+    skillName: '',
+    date: '',
+    time: '',
+    venue: '',
+    batchmembers: 0,
+    enrollmentDate: '',
+    startDate: '',
+    result: '',
+    percentage: '',
+    testTakenDate: '',
+    subjectMatterKnowledge: '',
+    presentation: '',
+    communication: '',
+    handlingDoubts: '',
+    applicationtowork: '',
+    comments: '',
+    }
 
   currentQuestionIndex = 0;
   selectedAnswer: string | null = null;
@@ -102,10 +111,15 @@ export class ExampageComponent implements OnInit, OnDestroy  {
    firstName: string = '';
    lastName: string = '';
    Registeredusers: any[] = []; 
-
+   correctAnswersCount = 0;
+   enrollmentID: number | null = null;
   constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute) {
+    // this.route.queryParams.subscribe(params => {
+    //   this.selectedSkill = params['skill'];
+    // });
     this.route.queryParams.subscribe(params => {
       this.selectedSkill = params['skill'];
+      this.enrollmentID = params['enrollment'] ? Number(params['enrollment']) : null;
     });
   }
   
@@ -195,9 +209,9 @@ export class ExampageComponent implements OnInit, OnDestroy  {
         console.log("Assigned timeLeft:", this.timeLeft);
         console.log("Total Questions:", this.examdata.displayExamQuestions);
   
-        if (this.timeLeft > 0) {
-          this.startTimer(); 
-        }
+        // if (this.timeLeft > 0) {
+        //   this.startTimer(); 
+        // }
       }
      
     }, (error) => {
@@ -207,22 +221,147 @@ export class ExampageComponent implements OnInit, OnDestroy  {
     
   }
   
+  // GetAllSkillsQa() {
+  //   this.ielc.Getskillqa().subscribe((data: Question[]) => {
+  //     this.examlist = data;
+  
+  //     // Filter by selected skill
+  //     let filteredQuestions = this.selectedSkill
+  //       ? data.filter((q: Question) => q.skillName === this.selectedSkill)
+  //       : data;
+  
+  //     // Shuffle the filtered questions
+  //     filteredQuestions = this.shuffleArray(filteredQuestions);
+  
+  //     // Limit questions based on displayExamQuestions
+  //     const displayCount = this.examdata.displayExamQuestions || filteredQuestions.length;
+  //     this.questions = filteredQuestions.slice(0, displayCount);
+  
+  //     this.currentQuestionIndex = 0;
+  //     this.isLoading = false;
+  //     if (this.timeLeft > 0) {
+  //       this.startTimer(); 
+  //     }
+  //   });
+  // }
+  
   GetAllSkillsQa() {
     this.ielc.Getskillqa().subscribe((data: Question[]) => {
       this.examlist = data;
   
-      if (this.selectedSkill) {
-        this.questions = data.filter((q: Question) => q.skillName === this.selectedSkill);
-       
-      } else {
-        this.questions = data; // or [] if you want empty default
-      }
+      const standardSkillKey = this.selectedSkill + '_StQuestions';
+      const totalQuestions = this.examdata.displayExamQuestions || data.length;
+      const standardCount = this.examdata.standardExamQuestions || 0;
+      
+      // 🔹 Get and shuffle standard questions
+      const standardQuestions = this.shuffleArray(
+        data.filter(q => q.skillName === standardSkillKey)
+      ).slice(0, standardCount);
+      
+      // 🔹 Remaining questions count
+      const remainingCount = totalQuestions - standardQuestions.length;
   
-      this.examlist = [...this.questions];
+      const skillQuestions = data
+        .filter(q => q.skillName === this.selectedSkill)
+        .filter(q => !standardQuestions.includes(q)); // avoid duplicates
+      const shuffledSkillQuestions = this.shuffleArray(skillQuestions).slice(0, remainingCount);
+  
+      // Combine standard + remaining
+      // this.questions = [...standardQuestions, ...shuffledSkillQuestions];
+
+      const combined = [...standardQuestions, ...shuffledSkillQuestions];
+      this.questions = this.shuffleArray(combined); 
+  
+      // Final setup
       this.currentQuestionIndex = 0;
       this.isLoading = false;
+  
+      if (this.timeLeft > 0) {
+        this.startTimer();
+      }
     });
-   
+  }
+  
+
+  shuffleArray(array: any[]) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  formatDateToCustomString(): string {
+    const now = new Date();
+  
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  
+    const month = months[now.getMonth()];
+    const day = now.getDate(); // no leading zero
+    const year = now.getFullYear();
+  
+    let hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+  
+    hours = hours % 12;
+    hours = hours ? hours : 12; // 0 becomes 12
+  
+    const formattedHour = hours.toString().padStart(2, '0');
+  
+    return `${month} ${day} ${year} ${formattedHour}:${minutes}${ampm}`;
+  }
+  
+  
+  UpdateResult() {
+    if (this.Registeredusers.length > 0) {
+      // Match the user by skill, and if enrollmentID is available, use it too
+      const matchedUser = this.Registeredusers.find(user =>
+        user.skillName === this.selectedSkill &&
+        (this.enrollmentID ? user.enrollmentID === this.enrollmentID : true)
+      );
+  
+      if (!matchedUser) {
+        alert("⚠️ No matching registration found for this skill.");
+        return;
+      }
+  
+      const totalQuestions = this.examdata.displayExamQuestions;
+      const percentage = (this.correctAnswersCount / totalQuestions) * 100;
+      const formattedDate = this.formatDateToCustomString();
+  
+      this.resultdata = {
+        ...matchedUser,
+        testTakenDate: formattedDate,
+        percentage: percentage.toFixed(0),
+        result: "Completed"
+      };
+  
+      this.ielc.Updatefeedback(matchedUser.enrollmentID, this.resultdata).subscribe(
+        (response) => {
+          // console.log('✅ Updated Successfully:', response);
+          alert("✅ Exam Completed!\nThank you for taking the test.");
+          // this.router.navigate(['/registration'], { queryParams: { submittedID: matchedUser.enrollmentID } });
+          this.router.navigate(['/registration']);
+        },
+        (error) => {
+          console.error('❌ Error updating Record:', error);
+          alert("❌ Failed to submit your result. Please try again.");
+        }
+      );
+    } else {
+      alert("⚠️ Registered users not loaded.");
+    }
+  }
+  
+  
+  
+  submitExam() {
+    clearInterval(this.timer); // Stop timer when submitting
+  
+    // Submit result to backend
+    this.UpdateResult(); // This handles the alert + navigation
   }
   
   
@@ -254,18 +393,81 @@ export class ExampageComponent implements OnInit, OnDestroy  {
     return this.questions[this.currentQuestionIndex];
   }
 
+  // nextQuestion() {
+  //   if (this.selectedAnswer) {
+  //     this.selectedAnswer = null; // Reset answer for next question
+  //     if (this.currentQuestionIndex < this.questions.length - 1) {
+  //       this.currentQuestionIndex++;
+  //     } else {
+  //       clearInterval(this.timer); // Stop timer when exam is completed
+  //       alert("Exam Completed!");
+  //       this.router.navigate(['/registration']);
+  //     }
+  //   }
+  // }
+  // nextQuestion() {
+  //   if (this.selectedAnswer) {
+  //     this.selectedAnswer = null; // Reset answer for next question
+  //     if (this.currentQuestionIndex < this.questions.length - 1) {
+  //       this.currentQuestionIndex++;
+  //     } else {
+  //       clearInterval(this.timer); // Stop timer when exam is completed
+  //       alert("Exam Completed!");
+  //       this.router.navigate(['/registration']);
+  //     }
+  //   }
+  // }
+  // nextQuestion() {
+  //   if (this.selectedAnswer) {
+  //     const correctAnswer = this.currentQuestion.questionAnswer;
+  
+  //     // ✅ Check if selected answer is correct
+  //     if (this.selectedAnswer.toUpperCase() === correctAnswer.toUpperCase()) {
+  //       this.correctAnswersCount++;
+  //     }
+  
+  //     this.selectedAnswer = null; // Reset for next question
+  
+  //     if (this.currentQuestionIndex < this.questions.length - 1) {
+  //       this.currentQuestionIndex++;
+  //     } else {
+  //       clearInterval(this.timer); // Stop timer
+  
+  //       const totalQuestions = this.examdata.displayExamQuestions;
+  //       const percentage = (this.correctAnswersCount / totalQuestions) * 100;
+  
+  //       alert(`Exam Completed!\nYour Score: ${percentage}`);
+  
+  //       // You can submit this result to backend here if needed
+  //       this.router.navigate(['/registration']);
+  //     }
+  //   } else {
+  //     alert("Please select an answer before proceeding.");
+  //   }
+  // }
+
   nextQuestion() {
     if (this.selectedAnswer) {
-      this.selectedAnswer = null; // Reset answer for next question
+      const correctAnswer = this.currentQuestion.questionAnswer;
+  
+      // ✅ Track correct answers
+      if (this.selectedAnswer.toUpperCase() === correctAnswer.toUpperCase()) {
+        this.correctAnswersCount++;
+      }
+  
+      this.selectedAnswer = null; // Reset for next question
+  
       if (this.currentQuestionIndex < this.questions.length - 1) {
         this.currentQuestionIndex++;
-      } else {
-        clearInterval(this.timer); // Stop timer when exam is completed
-        alert("Exam Completed!");
-        this.router.navigate(['/registration']);
       }
+    } else {
+      alert("⚠️ Please select an answer before proceeding.");
     }
   }
+  
+  
+  
+  
 
   goBack() {
     if (confirm("Are you sure you want to exit the exam? Your progress will not be saved.")) {

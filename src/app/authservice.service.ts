@@ -289,6 +289,22 @@ login(): void {
     }
   });
 }
+// login(): void {
+//   this.msalService.loginPopup().subscribe({
+//     next: (response: AuthenticationResult) => {
+//       this.msalService.instance.setActiveAccount(response.account);
+//       this.fetchUserDetails();
+
+//       const redirectUrl = localStorage.getItem('redirectUrl') || '/home';
+//       localStorage.removeItem('redirectUrl');
+//       this.router.navigateByUrl(redirectUrl);
+//     },
+//     error: (error) => {
+//       console.error('Login Error:', error);
+//     }
+//   });
+// }
+
 
 // logout() {
 //   this.msalService.instance.logoutRedirect({
@@ -312,9 +328,26 @@ logout(): void {
 }
 
 
+// isAuthenticated(): boolean {
+//   return this.msalService.instance.getActiveAccount() !== null;
+// }
+
 isAuthenticated(): boolean {
-  return this.msalService.instance.getActiveAccount() !== null;
+  const active = this.msalService.instance.getActiveAccount();
+
+  if (!active) {
+    // Try to recover from all available accounts
+    const allAccounts = this.msalService.instance.getAllAccounts();
+    if (allAccounts.length > 0) {
+      this.msalService.instance.setActiveAccount(allAccounts[0]);
+      return true;
+    }
+    return false;
+  }
+
+  return true;
 }
+
 
 setActiveAccount() {
   setTimeout(() => {

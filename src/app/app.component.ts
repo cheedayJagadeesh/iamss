@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MsalService } from '@azure/msal-angular';
 import { AuthService } from './authservice.service';
 import { Router } from '@angular/router';
-import { AuthenticationResult } from '@azure/msal-browser';
+import { AuthenticationResult, InteractionRequiredAuthError  } from '@azure/msal-browser';
 
 @Component({
   selector: 'app-root',
@@ -34,33 +34,52 @@ export class AppComponent implements OnInit {
     }
 
   }
+
+  
   // async ngOnInit() {
-  //   try {
-  //     await this.msalService.instance.initialize(); // Ensure MSAL is initialized
-  //     console.log('MSAL initialized successfully');
-  //   } catch (error) {
-  //     console.error('MSAL initialization error:', error);
+  //   await this.msalService.instance.initialize();
+  //   const accounts = this.msalService.instance.getAllAccounts();
+  
+  //   if (accounts.length > 0) {
+  //     this.msalService.instance.setActiveAccount(accounts[0]);
   //   }
   
-  //   const accounts = this.msalService.instance.getAllAccounts();
-  //   if (accounts.length > 0) {
-  //     // Already logged in
-  //     this.authService.setActiveAccount();
-  //     this.router.navigate(['/home']); // or your desired route
+  //   const activeAccount = this.msalService.instance.getActiveAccount();
+  
+  //   if (activeAccount) {
+  //     try {
+  //       const result = await this.msalService.acquireTokenSilent({
+  //         account: activeAccount,
+  //         scopes: ['user.read'],
+  //       }).toPromise();
+  
+  //       if (result && result.accessToken) {
+  //         this.authService.setActiveAccount();
+  //         return; // All good
+  //       }
+  //     } catch (error) {
+  //       console.warn('Silent token acquisition failed:', error);
+  
+  //       if (error instanceof InteractionRequiredAuthError) {
+  //         console.log('No session found. Starting login...');
+  //         this.authService.login(); // 🔥 Trigger interactive login
+  //         return;
+  //       }
+  //     }
   //   } else {
-  //     // Try silent SSO
-  //     this.msalService.instance.ssoSilent({
-  //       scopes: ['user.read'], // use your required scopes
-  //       redirectUri: '/', // must match your MSAL config
-  //     }).then((result) => {
-  //       this.msalService.instance.setActiveAccount(result.account);
-  //       this.router.navigate(['/home']); // or your desired route
-  //     }).catch((error) => {
-  //       console.warn('Silent SSO failed:', error);
-  //       this.router.navigate(['/login']);
-  //     });
+  //     console.log('No active account found. Starting login...');
+  //     this.authService.login(); // 🔥 Trigger login if no account is active
   //   }
+  
+  //   // Save redirect URL if needed
+  //   const currentUrl = this.router.url;
+  //   localStorage.setItem('redirectUrl', currentUrl);
   // }
+  
+  
+  
+  
+  
   
   
 
