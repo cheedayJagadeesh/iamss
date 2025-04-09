@@ -132,7 +132,7 @@
 </div>
 </div>
 <div>
-    <textarea class="txtarea" name="comments" placeholder="Leave a comment here" [(ngModel)]="feedbackdata.comments" ></textarea>
+    <textarea class="txtarea" name="comments" placeholder="Leave a comment here" required  #commentsRef="ngModel" [(ngModel)]="feedbackdata.comments" ></textarea>
 </div>
 <div>
     <button class="btn btn-info btnsrch"  (click)="UpdateFeedback()"  [disabled]="form.invalid" >Submit</button>

@@ -1582,6 +1582,10 @@ export class IelcapiService {
     Updatefeedback(id: number, updatedData: any): Observable<any> {
       return this.http.put<any>(`${this.feedbackUrl}/${id}`, updatedData,{ observe: 'response' });
     }
+
+    GetExamById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.feedbackUrl}/${id}`);
+    }
 //---------------------------------------------------------------------------------------Inteq Holidays
 
     holidaysUrl='https://ielc-coreapi.azurewebsites.net/HolidayList';

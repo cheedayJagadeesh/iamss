@@ -47,6 +47,10 @@ interface Result{
   percentage: string;
   testTakenDate: string;
 }
+interface crserest {
+  id: number;
+  coursesList: string;
+}
 
 @Component({
   selector: 'app-registration',
@@ -115,7 +119,9 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
    this.GetHolidayslist();
    this.GetEventsList();
    this.GetExamlist();
-   this.GetAllUsers();
+  //  this.GetAllUsers();
+  this.GetAllSkillSessions();
+  this.GetCourseist();
    if (this.eventslist && this.eventslist.length > 0) {
     this.eventslist = this.eventslist.sort((a, b) => Number(b.id) - Number(a.id));
   }
@@ -270,13 +276,6 @@ GetAllUsers() {
     )
     .map(user => user.enrollmentID); 
 
-    this.submittedResultIds = this.Registeredusers
-    .filter(user =>
-      user.result &&
-      user.percentage &&
-      user.testTakenDate 
-    )
-    .map(user => user.enrollmentID); 
     
 
     if (aadEmail) {
@@ -292,9 +291,70 @@ GetAllUsers() {
   });
   
 }
+// GetAllUsers() {
+//   this.ielc.GetUsers().subscribe((data) => {
+//     const aadEmail = this.userEmail;
+
+//     if (aadEmail) {
+//       this.Registeredusers = this.sortRegisteredUsers(
+//         data.filter(user => user.mail === aadEmail)
+//       ).map(user => ({
+//         ...user,
+//         testTakenDate: user.testTakenDate ? this.formatCustomDate(user.testTakenDate) : null,
+//       }));
+
+//       // ✅ Compute after setting Registeredusers
+//       this.submittedFeedbackIds = this.Registeredusers
+//         .filter(user =>
+//           user.subjectMatterKnowledge &&
+//           user.presentation &&
+//           user.communication &&
+//           user.handlingDoubts &&
+//           user.applicationtowork &&
+//           user.comments
+//         )
+//         .map(user => user.enrollmentID);
+//     } else {
+//       this.Registeredusers = [];
+//     }
+//   });
+// // }
+// GetAllUsers() {
+//   this.ielc.GetUsers().subscribe((data) => {
+//     const aadEmail = this.userEmail;
+
+//     if (aadEmail) {
+//       const filteredUsers = data.filter(user => user.mail === aadEmail);
+//       this.Registeredusers = this.sortRegisteredUsers(filteredUsers).map(user => ({
+//         ...user,
+//         testTakenDate: user.testTakenDate ? this.formatCustomDate(user.testTakenDate) : null,
+//       }));
+
+//       // Move this inside after mapping
+//       this.submittedFeedbackIds = this.Registeredusers
+//         .filter(user =>
+//           user.subjectMatterKnowledge &&
+//           user.presentation &&
+//           user.communication &&
+//           user.handlingDoubts &&
+//           user.applicationtowork &&
+//           user.comments
+//         )
+//         .map(user => user.enrollmentID);
+//     } else {
+//       this.Registeredusers = [];
+//     }
+//   });
+// }
+
+
 hasSubmittedFeedback(enrollmentID: string): boolean {
   return this.submittedFeedbackIds.includes(enrollmentID);
 }
+// getFeedbackStatus(item: any): string {
+//   const hasSubmitted = this.submittedFeedbackIds.includes(item.enrollmentID);
+//   return hasSubmitted ? 'Yes' : 'Feedback';
+// }
 hasSubmittedResult(enrollmentID: string): boolean {
   return this.submittedResultIds.includes(enrollmentID);
 }
@@ -324,6 +384,14 @@ handleFeedbackClick(item: any): void {
 getExamPercentage(): number {
   return this.examlist.length > 0 ? this.examlist[0].examPercentage : 0;
 }
+isTestCompleted(item: any): boolean {
+  return item.result && item.percentage !== null && item.testTakenDate;
+}
+
+isTestPassed(item: any): boolean {
+  return this.isTestCompleted(item) && item.percentage >= this.getExamPercentage();
+}
+
 
 
 
@@ -336,9 +404,43 @@ setSelectedSkillandId(skillName: string, enrollmentID: number) {
   this.router.navigate(['/feedback'], { queryParams: { skill: skillName, enrollment: enrollmentID } });
 }
 
+sortRegisteredUsersbysession(data: any[]): any[] {
+  return data.sort((a, b) => (a.sessionID > b.sessionID ? -1 : a.sessionID < b.sessionID ? 1 : 0));
+}
 
+Enrolledusers: any[] = []; 
+topSkillName: string = '';
+ GetAllSkillSessions(){
+  this.ielc.GetSkillSessions().subscribe((data) => {
+    this.Enrolledusers=data;
+    this.Enrolledusers = this.sortRegisteredUsersbysession(data);
+    if (this.Enrolledusers.length > 0) {
+      this.topSkillName = this.Enrolledusers[0].skillName;
+    }
+  });
+ }
 
+ crserestlist: any[]=[];
+ courseSkillNames: string[] = [];
+ GetCourseist() {
+  this.ielc.Getcourse().subscribe((data: crserest[]) => {
+    this.crserestlist = data;
 
+    // Extract and normalize all skill names from all course entries
+    this.courseSkillNames = data
+      .map((item) => item.coursesList)       // get each coursesList string
+      .filter(Boolean)                       // filter out any null/undefined/empty
+      .flatMap((list) =>
+        list.split(',').map((skill) => skill.trim().toLowerCase())
+      );
+
+    // console.log('Filtered course skill names:', this.courseSkillNames);
+  });
+}
+
+isSkillRestricted(skillName: string): boolean {
+  return this.courseSkillNames.includes(skillName.trim().toLowerCase());
+}
 
 
 

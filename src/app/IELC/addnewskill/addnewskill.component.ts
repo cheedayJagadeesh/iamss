@@ -80,7 +80,7 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
     for (let i = 1; i <= 100; i++) {
       this.Enrolledusers.push({ id: i, name: `Item ${i}` });
     }
-    this.GetAllSkillSessions();
+    // this.GetAllSkillSessions();
     this.GetAllSkillsData();
   }
 
@@ -188,6 +188,7 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
       (response) => {
         alert('✅ Skill Added Successfully!');
         this.GetAllSkillsData();
+        this.GetAllSkillSessions();
         this.resetSkillSession();
       },
       (error) => {
@@ -218,7 +219,8 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
         console.log("Updated Successfully:", response);
         alert(" ✅ Skill session updated successfully!");
         this.GetAllSkillsData();
-       
+        this.GetAllSkillSessions();
+        this.resetSkillSession();
       },
       (error) => {
         console.error("Error updating skill session:", error);

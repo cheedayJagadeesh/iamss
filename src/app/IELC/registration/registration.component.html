@@ -287,32 +287,34 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
     <label class="lblsessions blink" >New / Upcomimg Sessions</label>
 </div>
 <div>
-    <h2 class="h2">ISO 9001-2015 Internal Auditor</h2>
+    <!-- <h2 class="h2">ISO 9001-2015 Internal Auditor</h2> -->
+    <h2 class="h2"> {{ topSkillName }}</h2>
+   
 </div>
 <div class="div">
     <div class="mb-3 formdiv">
         <label class="lblskill">Skill Name<span style="color: red;">*</span></label>
         <select name="skill" class="form-controlone" required [(ngModel)]="skillname">
-            <option value="" disabled selected>- select skill -</option>
+            <option value="" disabled selected>- select -</option>
             <option>azure</option>
         </select>
       </div>
       <div class="mb-3">
         <label class="lblmode">Mode of Training<span style="color: red;">*</span></label>
         <select name="mode" class="form-controlone" required [(ngModel)]="mode">
-            <option value="" disabled selected>- select mode -</option>
+            <option value="" disabled selected>- select -</option>
             <option>..</option>
         </select>
       </div>
       <div class="col-md-3">
         <label class="lbldate">Date<span style="color: red;">*</span></label>
         <select name="date" class="form-controldate" required [(ngModel)]="date">
-            <option value="" disabled selected>- select Date -</option>
+            <option value="" disabled selected>- select -</option>
             <option>azure</option>
         </select>
         <label class="lbltime">Time<span style="color: red;">*</span></label>
         <select name="time" class="form-controltime" required [(ngModel)]="time">
-            <option value="" disabled selected>- select Time -</option>
+            <option value="" disabled selected>- select -</option>
             <option>..</option>
         </select>
       </div>
@@ -376,7 +378,7 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
                   </ng-container>
                   </ng-template>
                 </td> -->
-                <td>
+                <!-- <td>
                   <ng-container *ngIf="!item.result || item.percentage === null || !item.testTakenDate; else showResult">
                     <a
                       routerLink="/exampage"
@@ -403,7 +405,53 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
                       </a>
                     </ng-template>
                   </ng-template>
+                </td> -->
+                <td>
+                  <ng-container *ngIf="!isSkillRestricted(item.skillName)">
+                    <ng-container *ngIf="!item.result || item.percentage === null || !item.testTakenDate; else showResult">
+                      <a
+                        routerLink="/exampage"
+                        class="btn btn-link"
+                        (click)="setSelectedSkill(item.skillName, item.enrollmentID)"
+                      >
+                        StartTest
+                      </a>
+                    </ng-container>
+                  </ng-container>
+                
+                  <ng-template #showResult>
+                    <ng-container *ngIf="item.percentage >= getExamPercentage(); else pendingTest">
+                      <span>Completed</span>
+                    </ng-container>
+                
+                    <ng-template #pendingTest>
+                      <span>Pending - </span>
+                      <a
+                        routerLink="/exampage"
+                        class="btn btn-link"
+                        (click)="setSelectedSkill(item.skillName, item.enrollmentID)"
+                      >
+                        StartTest
+                      </a>
+                    </ng-template>
+                  </ng-template>
                 </td>
+                
+                
+                <!-- <td>
+                  <ng-container *ngIf="isTestCompleted(item); else showStartTest">
+                    <ng-container *ngIf="isTestPassed(item); else pendingTest">
+                      <span>Completed</span>
+                    </ng-container>
+                    <ng-template #pendingTest>
+                      <span>Pending - <a class="btn btn-link" (click)="setSelectedSkill(item.skillName, item.enrollmentID)">StartTest</a></span>
+                    </ng-template>
+                  </ng-container>
+                  <ng-template #showStartTest>
+                    <a class="btn btn-link" (click)="setSelectedSkill(item.skillName, item.enrollmentID)">StartTest</a>
+                  </ng-template>
+                  
+                </td> -->
                 
                 
       <td>{{ item.percentage }}</td>
@@ -426,6 +474,17 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
           </a>
         </ng-template>
       </td>
+      <!-- <td>
+        <ng-container *ngIf="getFeedbackStatus(item) === 'Yes'; else showFeedbackLink">
+          Yes
+        </ng-container>
+        <ng-template #showFeedbackLink>
+          <a [routerLink]="['/feedback']" [queryParams]="{ skill: item.skillName, enrollment: item.enrollmentID }" class="btn btn-link">
+            Feedback
+          </a>
+        </ng-template>
+      </td> -->
+      
       <!-- <td>
         <ng-container *ngIf="hasSubmittedFeedback(item.enrollmentID); else feedbackLink">
           Yes

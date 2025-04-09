@@ -9,18 +9,25 @@ h1 {
     margin-top: -3.5%;
 }
 .btnlink{
-    margin-left: 40%;
+    margin-left: 42%;
     color: red;
     font-weight: bold;
     text-decoration: none;
 }
 .a{
-    margin-left: 37.5%;
+    margin-left: 40%;
     font-weight: bold;
     position: absolute;
     margin-top: 0.6%;
     text-decoration: none;
 }
+a.disabled {
+    pointer-events: none;
+    color: gray;
+    cursor: not-allowed;
+    text-decoration: none;
+  }
+  
 
 .img{
     height: 76px;
@@ -570,15 +577,15 @@ text-align: justify;
     height: 25px; 
     display: table-cell; 
     vertical-align: middle; */
-    padding: 2px 5px !important; /* Reduce padding */
-    line-height: 1.2; /* Adjust text spacing */
+    padding: 0px 0px !important;
+    line-height: 0.2;
     border: none;
 }
 }
 .tableleft-2{
     margin-left: 5%;
     font-size: 16px;
-    margin-top: 18%;
+    margin-top: 16.5%;
     position: absolute;
     width: 483px;
     text-align: justify;
@@ -592,7 +599,7 @@ text-align: justify;
 .tableleft-3{
     margin-left: 5%;
     font-size: 16px;
-    margin-top: 36%;
+    margin-top: 35%;
     position: absolute;
     width: 483px;
     text-align: justify;
