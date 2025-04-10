@@ -464,7 +464,7 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
         {{ item.testTakenDate }}
       </ng-container> -->
      </td>
-      <td>
+      <!-- <td>
           <ng-container *ngIf="hasSubmittedFeedback(item.enrollmentID); else showFeedbackLink">
             Yes
         </ng-container>
@@ -473,7 +473,20 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
             Feedback
           </a>
         </ng-template>
+      </td> -->
+      <td *ngIf="feedbackLoaded">
+        <ng-container *ngIf="item.hasFeedback; else showFeedbackLink">
+          Yes
+        </ng-container>
+        <ng-template #showFeedbackLink>
+          <a [routerLink]="['/feedback']"
+             [queryParams]="{ skill: item.skillName, enrollment: item.enrollmentID }"
+             class="btn btn-link">
+            Feedback
+          </a>
+        </ng-template>
       </td>
+      
       <!-- <td>
         <ng-container *ngIf="getFeedbackStatus(item) === 'Yes'; else showFeedbackLink">
           Yes

@@ -1,5 +1,10 @@
 .lbllogin{
+    /* margin-top: 1.5%;
+    margin-left: 75%;
+    position: absolute; */
     margin-top: 1.5%;
     margin-left: 75%;
+    position: absolute;
+    font-size: 16px;
     position: absolute;
 }

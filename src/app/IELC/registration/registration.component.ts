@@ -70,7 +70,7 @@ export class RegistrationComponent implements OnInit {
   enrollmentList: any[] = [];
   submittedFeedbackIds: any[] = [];
   submittedResultIds: any[] = [];
-  
+  loadingExamResults = true;
   @ViewChild('registration') registration!: NgForm;
  // currentDate:Date=new Date()
 
@@ -79,6 +79,7 @@ export class RegistrationComponent implements OnInit {
  examlist: any[] = []; 
  Registeredusers: any[] = []; 
  isLoading = true;
+ feedbackLoaded = false;
  skillname='';
  mode='';
  date='';
@@ -122,6 +123,7 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
   //  this.GetAllUsers();
   this.GetAllSkillSessions();
   this.GetCourseist();
+  
    if (this.eventslist && this.eventslist.length > 0) {
     this.eventslist = this.eventslist.sort((a, b) => Number(b.id) - Number(a.id));
   }
@@ -133,7 +135,10 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
     }
   });
 
- 
+
+  
+
+  
   
  }
 
@@ -215,6 +220,7 @@ async ngOnInit() {
       return;
     }
 
+    
     this.authService.setActiveAccount();
 
     this.authService.userDetails$.subscribe(userDetails => {
@@ -237,10 +243,12 @@ async ngOnInit() {
     });   
   }
   
+  
    catch (error) {
     console.error("MSAL initialization error in HeaderComponent:", error);
   }
   // this.GetAllUsers();
+  
 }
  logout(): void {
   this.authService.logout();
@@ -262,35 +270,71 @@ sortRegisteredUsers(data: any[]): any[] {
 //     }
 //   });
 // }
-GetAllUsers() {
-  this.ielc.GetUsers().subscribe((data) => {
-    const aadEmail = this.userEmail; // Get current user's email
+// GetAllUsers() {
+//   this.ielc.GetUsers().subscribe((data) => {
+//     const aadEmail = this.userEmail; // Get current user's email
 
-   this.submittedFeedbackIds = this.Registeredusers
-    .filter(user =>
-      user.subjectMatterKnowledge &&
-      user.presentation &&
-      user.communication &&
-      user.handlingDoubts &&
-      user.applicationtowork
-    )
-    .map(user => user.enrollmentID); 
+//    this.submittedFeedbackIds = this.Registeredusers
+//     .filter(user =>
+//       user.subjectMatterKnowledge &&
+//       user.presentation &&
+//       user.communication &&
+//       user.handlingDoubts &&
+//       user.applicationtowork
+//     )
+//     .map(user => user.enrollmentID); 
 
     
+
+//     if (aadEmail) {
+//       this.Registeredusers = this.sortRegisteredUsers(
+//         data.filter(user => user.mail === aadEmail)
+//       ).map(user => ({
+//         ...user,
+//         testTakenDate: user.testTakenDate ? this.formatCustomDate(user.testTakenDate) : null,
+//       }));
+      
+//     } else {
+//       this.Registeredusers = [];
+//     }
+//   });
+  
+// }
+
+GetAllUsers() {
+  this.ielc.GetUsers().subscribe((data) => {
+    const aadEmail = this.userEmail;
 
     if (aadEmail) {
       this.Registeredusers = this.sortRegisteredUsers(
         data.filter(user => user.mail === aadEmail)
-      ).map(user => ({
-        ...user,
-        testTakenDate: user.testTakenDate ? this.formatCustomDate(user.testTakenDate) : null,
-      }));
+      ).map(user => {
+        const hasFeedback = user.subjectMatterKnowledge &&
+                            user.presentation &&
+                            user.communication &&
+                            user.handlingDoubts &&
+                            user.applicationtowork;
+
+        return {
+          ...user,
+          testTakenDate: user.testTakenDate ? this.formatCustomDate(user.testTakenDate) : null,
+          hasFeedback: hasFeedback
+        };
+      });
+
+      // Also store enrollment IDs for any other logic
+      this.submittedFeedbackIds = this.Registeredusers
+        .filter(user => user.hasFeedback)
+        .map(user => user.enrollmentID);
+
     } else {
       this.Registeredusers = [];
     }
+
+    this.feedbackLoaded = true;
   });
-  
 }
+
 // GetAllUsers() {
 //   this.ielc.GetUsers().subscribe((data) => {
 //     const aadEmail = this.userEmail;
@@ -348,9 +392,14 @@ GetAllUsers() {
 // }
 
 
+
+
 hasSubmittedFeedback(enrollmentID: string): boolean {
   return this.submittedFeedbackIds.includes(enrollmentID);
 }
+
+
+
 // getFeedbackStatus(item: any): string {
 //   const hasSubmitted = this.submittedFeedbackIds.includes(item.enrollmentID);
 //   return hasSubmitted ? 'Yes' : 'Feedback';
@@ -391,8 +440,6 @@ isTestCompleted(item: any): boolean {
 isTestPassed(item: any): boolean {
   return this.isTestCompleted(item) && item.percentage >= this.getExamPercentage();
 }
-
-
 
 
 selectedSkill: string = '';
@@ -595,4 +642,6 @@ isfirstSelectDisabled: boolean = false;
    
  }
 
+
+ 
 }

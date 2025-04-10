@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
 })
 export class Soc2headerComponent {
  
-  userName: string | null = null;
-  userEmail: string | null = null;
+  // userName: string | null = null;
+  // userEmail: string | null = null;
 
   constructor(private msalService: MsalService, private authService: AuthService, private router: Router) {}
  
@@ -39,34 +39,34 @@ export class Soc2headerComponent {
   //     console.error('MSAL initialization error in HomeComponent:', error);
   //   }
   // }
-  async ngOnInit() {
-    try {
-      console.log("Initializing MSAL...");
+  // async ngOnInit() {
+  //   try {
+  //     console.log("Initializing MSAL...");
       
-      // Ensure MSAL is properly initialized before proceeding
-      await this.msalService.instance.initialize();  
-      await this.msalService.instance.handleRedirectPromise();
+  //     // Ensure MSAL is properly initialized before proceeding
+  //     await this.msalService.instance.initialize();  
+  //     await this.msalService.instance.handleRedirectPromise();
   
-      console.log("MSAL initialized successfully.");
+  //     console.log("MSAL initialized successfully.");
       
-      const activeAccount = this.msalService.instance.getActiveAccount();
-      if (!activeAccount) {
-        console.warn("No active account found. Redirecting to login...");
-        this.router.navigate(['/login']);
-        return;
-      }
+  //     const activeAccount = this.msalService.instance.getActiveAccount();
+  //     if (!activeAccount) {
+  //       console.warn("No active account found. Redirecting to login...");
+  //       this.router.navigate(['/login']);
+  //       return;
+  //     }
   
-      this.authService.setActiveAccount();
+  //     this.authService.setActiveAccount();
   
-      this.authService.userDetails$.subscribe(userDetails => {
-        this.userName = userDetails?.displayName ;
-        this.userEmail = userDetails?.email ;
-      });
+  //     this.authService.userDetails$.subscribe(userDetails => {
+  //       this.userName = userDetails?.displayName ;
+  //       this.userEmail = userDetails?.email ;
+  //     });
   
-    } catch (error) {
-      console.error("MSAL initialization error in HeaderComponent:", error);
-    }
-  }
+  //   } catch (error) {
+  //     console.error("MSAL initialization error in HeaderComponent:", error);
+  //   }
+  // }
   logout(): void {
     this.authService.logout();
   }

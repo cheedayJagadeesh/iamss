@@ -37,7 +37,9 @@
     /* position: absolute; */
 }
 .tablebottom {
-    margin-top: 2%;
+    margin-top: 4%;
+    position: absolute;
+    width: 100%;
 }
 .pagination {
     margin-left: 72%;

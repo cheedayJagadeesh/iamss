@@ -1,5 +1,7 @@
 .tablebottom {
-    margin-top: 2%;
+    margin-top: 4%;
+    position: absolute;
+    width: 100%;
 }
 table {
     width: 100% !important; /* Ensures the table does not exceed 100% */

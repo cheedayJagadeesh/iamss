@@ -5,9 +5,9 @@
     </div> -->
     <div>
         <label for="Empname" class="form-label">Skill Name</label>
-        <input type="text" class="form-controlsearchname" id="Empname" name="skillname" [(ngModel)]="skillData.skillName" >
-        <button type="button" class="btn btninsert btn-info" (click)="AddSkill()" >Insert</button>
-        <button type="button" class="btn btndlt btn-danger" (click)="DeleteSkill()" >Delete</button>
+        <input type="text" class="form-controlsearchname" id="Empname" name="skillName" [(ngModel)]="skillData.skillName" required #skillNameRef="ngModel" >
+        <button type="button" class="btn btninsert btn-info" [disabled]="!skillNameRef.valid" (click)="AddSkill()" >Insert</button>
+        <button type="button" class="btn btndlt btn-danger" [disabled]="!skillNameRef.valid"  (click)="DeleteSkill()" >Delete</button>
     </div>
     <div class="form-check div">
         <input class="form-check-input" type="checkbox" [(ngModel)]="includeStQuestions" name="includeStQuestions">

@@ -120,11 +120,15 @@ export class IelcapiService {
       return this.http.post<any>(this.EnrolledskillDataUrl, skillData);
     }
 
-    DeleteEnrolledSkill(skillNames: string[]): Observable<any> {
-      const queryParams = skillNames.join(',');
-      return this.http.delete(`${this.EnrolledskillDataUrl}/${queryParams}`);
-    }
+    // DeleteEnrolledSkill(skillNames: string[]): Observable<any> {
+    //   const queryParams = skillNames.join(',');
+    //   return this.http.delete(`${this.EnrolledskillDataUrl}/${queryParams}`);
+    // }
 
+    DeleteEnrolledSkill(skillName: string): Observable<any> {
+      return this.http.delete(`${this.EnrolledskillDataUrl}/${skillName}`, { observe: 'response' });
+    }
+    
     AadUsersUrl='https://ielc-coreapi.azurewebsites.net/AADUsersData'
     GetAadUserslist(): Observable<any> {
       return this.http.get<any>(this.AadUsersUrl);
