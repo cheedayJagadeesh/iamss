@@ -112,6 +112,15 @@ export class RegistrationComponent implements OnInit {
 latestEvent: any= null; 
 page: number = 1;  
 itemsPerPage: number = 5; 
+Enrolledskills: any[] = []; 
+venueList: any[]=[];   
+selectedVenue: string = '';
+selectDate: string = '';
+selectedTime: string = '';
+availableDates: string[] = [];
+availableTimes: string[] = [];
+
+showDateTimeDropdowns: boolean = false;
 // submittedFeedbackIds: number[] = [];
 constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute){
    // this.selectedDate= new Date().toString()
@@ -123,7 +132,7 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
   //  this.GetAllUsers();
   this.GetAllSkillSessions();
   this.GetCourseist();
-  
+  this.GetEnrolledSessionsSkillsData();
    if (this.eventslist && this.eventslist.length > 0) {
     this.eventslist = this.eventslist.sort((a, b) => Number(b.id) - Number(a.id));
   }
@@ -135,11 +144,6 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
     }
   });
 
-
-  
-
-  
-  
  }
 
 
@@ -335,78 +339,69 @@ GetAllUsers() {
   });
 }
 
-// GetAllUsers() {
-//   this.ielc.GetUsers().subscribe((data) => {
-//     const aadEmail = this.userEmail;
-
-//     if (aadEmail) {
-//       this.Registeredusers = this.sortRegisteredUsers(
-//         data.filter(user => user.mail === aadEmail)
-//       ).map(user => ({
-//         ...user,
-//         testTakenDate: user.testTakenDate ? this.formatCustomDate(user.testTakenDate) : null,
-//       }));
-
-//       // ✅ Compute after setting Registeredusers
-//       this.submittedFeedbackIds = this.Registeredusers
-//         .filter(user =>
-//           user.subjectMatterKnowledge &&
-//           user.presentation &&
-//           user.communication &&
-//           user.handlingDoubts &&
-//           user.applicationtowork &&
-//           user.comments
-//         )
-//         .map(user => user.enrollmentID);
-//     } else {
-//       this.Registeredusers = [];
-//     }
-//   });
-// // }
-// GetAllUsers() {
-//   this.ielc.GetUsers().subscribe((data) => {
-//     const aadEmail = this.userEmail;
-
-//     if (aadEmail) {
-//       const filteredUsers = data.filter(user => user.mail === aadEmail);
-//       this.Registeredusers = this.sortRegisteredUsers(filteredUsers).map(user => ({
-//         ...user,
-//         testTakenDate: user.testTakenDate ? this.formatCustomDate(user.testTakenDate) : null,
-//       }));
-
-//       // Move this inside after mapping
-//       this.submittedFeedbackIds = this.Registeredusers
-//         .filter(user =>
-//           user.subjectMatterKnowledge &&
-//           user.presentation &&
-//           user.communication &&
-//           user.handlingDoubts &&
-//           user.applicationtowork &&
-//           user.comments
-//         )
-//         .map(user => user.enrollmentID);
-//     } else {
-//       this.Registeredusers = [];
-//     }
-//   });
-// }
-
-
-
-
 hasSubmittedFeedback(enrollmentID: string): boolean {
   return this.submittedFeedbackIds.includes(enrollmentID);
 }
 
+GetEnrolledSessionsSkillsData(){
+  this.ielc.GetEnrolledSessions().subscribe((data) => {
+    this.Enrolledskills=data;
+  });
+ }
 
-
-// getFeedbackStatus(item: any): string {
-//   const hasSubmitted = this.submittedFeedbackIds.includes(item.enrollmentID);
-//   return hasSubmitted ? 'Yes' : 'Feedback';
-// }
-hasSubmittedResult(enrollmentID: string): boolean {
-  return this.submittedResultIds.includes(enrollmentID);
+ onSkillChange(skill: string) {
+  if (skill) {
+    this.ielc.GetEnrolledSessionsbyvenue(skill).subscribe((venues) => {
+      console.log('Venue response:', venues);
+      this.venueList = venues; // adjust based on API shape
+      this.selectedVenue = '';
+      this.showDateTimeDropdowns = false;
+      this.availableDates = [];
+      this.availableTimes = [];
+    });
+  }
 }
+
+onVenueChange(venue: string) {
+  this.showDateTimeDropdowns = venue === 'Teams';
+
+  if (this.showDateTimeDropdowns && this.skillname) {
+    this.ielc.GetEnrolledSessionsbydate(this.skillname).subscribe({
+      next: (res) => {
+        console.log('Date response:', res);
+        this.availableDates = Array.isArray(res) ? res : res.map((d: any) => d.date);
+      },
+      error: (err) => {
+        console.error('Error fetching dates:', err);
+        this.availableDates = [];
+      }
+    });
+
+    this.ielc.GetEnrolledSessionsbytime(this.skillname).subscribe({
+      next: (res) => {
+        console.log('Time response:', res);
+        this.availableTimes = Array.isArray(res) ? res : res.map((t: any) => t.time);
+      },
+      error: (err) => {
+        console.error('Error fetching times:', err);
+        this.availableTimes = [];
+      }
+    });
+  } else {
+    this.availableDates = [];
+    this.availableTimes = [];
+    this.date = '';
+    this.time = '';
+  }
+}
+
+
+
+
+
+// hasSubmittedResult(enrollmentID: string): boolean {
+//   return this.submittedResultIds.includes(enrollmentID);
+// }
 
 handleFeedbackClick(item: any): void {
   if (item.result === 'Completed') {

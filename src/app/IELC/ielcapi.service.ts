@@ -138,6 +138,25 @@ export class IelcapiService {
     GetAadUserGroupslist(): Observable<any> {
       return this.http.get<any>(this.AadUGroupUrl);
     }
+ 
+    Enrolledsessionsurl='https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/skills/latest'
+    GetEnrolledSessions(): Observable<any> {
+        return this.http.get<any>(this.Enrolledsessionsurl);
+    }
+
+    venuebyskill='https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/venues/search/skillName'
+    GetEnrolledSessionsbyvenue(skillName: string): Observable<any> {
+      return this.http.get<any>(`${this.venuebyskill}?skillName=${skillName}`);
+    }
+
+    datebyskill='https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Dates/search'
+    GetEnrolledSessionsbydate(skillName: string): Observable<any> {
+      return this.http.get<any>(`${this.datebyskill}/${skillName}`);
+    }
+    timebyskill='https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Times/search'
+    GetEnrolledSessionsbytime(skillName: string): Observable<any> {
+      return this.http.get<any>(`${this.timebyskill}/${skillName}`);
+    }
 
    //---------------------------------------------------------------------------------------Inteq IT Support
 
