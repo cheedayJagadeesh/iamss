@@ -3,7 +3,9 @@
     <h1 class="h1" >INTEQ EMPLOYEE LEARNING CENTER</h1>
 </div>
 <form #registration="ngForm"  (ngSubmit)="showData(registration.value)" >
-
+  <div *ngIf="isLoading" class="loading-container">
+    <span class="dot"></span>
+</div>
   <div>
    
     <!-- <a type="button" class="btn btnlink " routerLink="/complianceform"><a class="blink" style="color: blue;">Go To:</a>  ISMS - QMS Monthly Task Status Update</a> -->
@@ -295,27 +297,27 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
     <div class="mb-3 formdiv">
         <label class="lblskill">Skill Name<span style="color: red;">*</span></label>
         <select name="skillname" class="form-controlone" required [(ngModel)]="skillname" (change)="onSkillChange(skillname)">
-            <option value="" disabled selected>- select -</option>
+            <option value="" disabled >- select -</option>
             <option *ngFor="let row of Enrolledskills" [value]="row">{{ row }}</option>
         </select>
       </div>
       <div class="mb-3">
         <label class="lblmode">Mode of Training<span style="color: red;">*</span></label>
         <select name="selectedVenue" class="form-controlone" required [(ngModel)]="selectedVenue" (change)="onVenueChange(selectedVenue)" >
-            <option value="" disabled selected>- select -</option>
-            <option *ngFor="let venue of venueList" [value]="venue"> {{ venue }} </option>
+            <option value="" disabled >- select -</option>
+            <option *ngFor="let venue of venueList" [value]="venue.name"> {{ venue.name }} </option>
           
         </select>
       </div>
       <div class="col-md-3">
         <label class="lbldate">Date<span style="color: red;">*</span></label>
-        <select name="date" class="form-controldate" required [(ngModel)]="date"  [disabled]="selectedVenue && selectedVenue !== 'Teams'" >
-            <option value="" disabled selected>- select -</option>
+        <select name="date" class="form-controldate" required [(ngModel)]="date"  [disabled]="selectedVenue !== 'Teams'" >
+            <option value="" disabled >- select -</option>
             <option *ngFor="let d of availableDates" [value]="d">{{ d }}</option>
         </select>
         <label class="lbltime">Time<span style="color: red;">*</span></label>
-        <select name="time" class="form-controltime" required [(ngModel)]="time"  [disabled]="selectedVenue && selectedVenue !== 'Teams'">
-            <option value="" disabled selected>- select -</option>
+        <select name="time" class="form-controltime" required [(ngModel)]="time" [disabled]="selectedVenue !== 'Teams'">
+            <option value="" disabled >- select -</option>
             <option *ngFor="let t of availableTimes" [value]="t">{{ t }}</option>
         </select>
       </div>
@@ -355,7 +357,7 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
               <th scope="col">Feedback</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody *ngIf="!isLoading">
             <tr *ngFor="let item of Registeredusers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
                 
                 <td>{{ item.skillName }}</td>

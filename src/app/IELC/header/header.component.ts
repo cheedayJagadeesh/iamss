@@ -1,22 +1,84 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/authservice.service';
 import { MsalService } from '@azure/msal-angular';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent   {
+export class HeaderComponent implements OnDestroy  {
 
   // constructor(private authService: AuthService) {}
  
   
   // userName: string | null = null;
   // userEmail: string | null = null;
+  userRole: string | null = null;
+  allowedPages: string[] = [];
+  userInfoSubscription: Subscription;
+  userInfoInitialized = false;
+  
+  constructor(public authService: AuthService, private router: Router) {
+    // Subscribe to user info and update role and allowed pages
+    this.userInfoSubscription = this.authService.userInfo$.subscribe(userInfo => {
+      if (userInfo && userInfo.roleName) {
+        this.userInfoInitialized = true;
+        this.userRole = userInfo.roleName;
+        if (typeof userInfo.pageName === 'string') {
+          this.allowedPages = userInfo.pageName.split(',').map(p => p.trim());
+        } else if (Array.isArray(userInfo.pageName)) {
+          this.allowedPages = userInfo.pageName;
+        } else {
+          this.allowedPages = [];
+        }
+        // this.allowedPages = userInfo.pageName || []; // Assuming pageName is an array already
 
-  constructor(private msalService: MsalService, private authService: AuthService, private router: Router) {}
+        // Redirect unauthorized users
+        if (
+          !this.canAccess('home') &&
+          this.userRole !== 'SuperAdmin' &&
+          this.userRole !== 'Admin'
+        ) {
+          this.router.navigate(['/registration']);
+        }
+      }
+    });
+  }
+
+  // Method to check if a user has access to a specific page
+  // canAccess(page: string): boolean {
+  //   if (!this.userInfoInitialized) return true; // ✅ Prevent flicker before role is set
+
+  //   const pageLower = page.toLowerCase();
+  //   if (this.userRole === 'SuperAdmin') return true;
+
+  //   if (this.userRole === 'Admin') {
+  //     return ['home', 'registration', ...this.allowedPages].includes(pageLower);
+  //   }
+
+  //   return this.allowedPages.includes(pageLower);
+  // }
+  canAccess(page: string): boolean {
+    const pageLower = page.toLowerCase();
+  
+    if (this.userRole === 'SuperAdmin') return true;
+  
+    if (this.userRole === 'Admin') {
+      return ['home', 'registration', ...(this.allowedPages || [])].includes(pageLower);
+    }
+  
+    return (this.allowedPages || []).includes(pageLower);
+  }
+  
+  // Unsubscribe to prevent memory leaks
+  ngOnDestroy(): void {
+    this.userInfoSubscription?.unsubscribe();
+  }
+
+  
 
   // async ngOnInit() {
   //   try {

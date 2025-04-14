@@ -5,7 +5,13 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './IELC/environment';
+import { IelcapiService } from './IELC/ielcapi.service';
 
+interface User {
+  roleName: string;
+  pageName: string | string[];
+  email: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -254,9 +260,10 @@ export class AuthService {
 private userDetailsSubject = new BehaviorSubject<{ displayName: string | null, email: string | null }>({ displayName: null, email: null });
 userDetails$ = this.userDetailsSubject.asObservable();
 
-constructor(private msalService: MsalService, private router: Router, private http: HttpClient) {
+constructor(private msalService: MsalService, private router: Router, private http: HttpClient,private ielc: IelcapiService) {
   this.initializeUser();
   // this.setupActivityListeners();
+ 
 }
 
 // private initializeUser() {
@@ -360,13 +367,120 @@ setActiveAccount() {
 }
 
 // 🔹 Fetch user details from Microsoft Graph API
-public fetchUserDetails() {
+// public fetchUserDetails() {
+//   const accessTokenRequest = {
+//     scopes: ['user.read'] // Ensure 'user.read' permission is granted in Azure
+//   };
+
+//   this.msalService.instance.acquireTokenSilent(accessTokenRequest).then((tokenResponse) => {
+//     if (tokenResponse) {
+//       this.http.get<any>('https://graph.microsoft.com/v1.0/me', {
+//         headers: { Authorization: `Bearer ${tokenResponse.accessToken}` }
+//       }).subscribe({
+//         next: (user) => {
+//           this.userDetailsSubject.next({ 
+//             displayName: user.displayName, 
+//             email: user.mail || user.userPrincipalName // Use `mail`, fallback to `userPrincipalName`
+//           });
+//         },
+//         error: (err) => console.error('Error fetching user details:', err)
+//       });
+//     }
+//   }).catch(error => {
+//     console.error('Token acquisition failed:', error);
+//   });
+// }
+
+public userInfo: User | null = null;
+// private userInfoSubject = new BehaviorSubject<User | null>(null);
+// userInfo$ = this.userInfoSubject.asObservable();
+private userRole: string = '';
+private allowedPages: string[] = [];
+private userInfoSubject = new BehaviorSubject<User>({
+  email: '',
+  roleName: '',
+  pageName: [], // Default value is an array of strings
+});
+public userInfo$ = this.userInfoSubject.asObservable();
+// public fetchUserDetails(): void {
+//   const accessTokenRequest = {
+//     scopes: ['user.read']  // Ensure 'user.read' permission is granted in Azure
+//   };
+
+//   this.msalService.instance.acquireTokenSilent(accessTokenRequest).then((tokenResponse) => {
+//     if (tokenResponse) {
+//       this.http.get<any>('https://graph.microsoft.com/v1.0/me', {
+//         headers: { Authorization: `Bearer ${tokenResponse.accessToken}` }
+//       }).subscribe({
+//         next: (user) => {
+//           this.userDetailsSubject.next({ 
+//             displayName: user.displayName, 
+//             email: user.mail || user.userPrincipalName // Use `mail`, fallback to `userPrincipalName`
+   
+//           });
+
+//           // Fetch admin users and match the logged-in user
+//           this.ielc.Getadminusers().subscribe({
+//             next: (users: User[]) => {
+//               const graphEmail = user.mail || user.userPrincipalName;
+          
+//               console.log("Logged-in Graph Email:", graphEmail);
+//               console.log("Admin Users List:", users.map(u => u.email));
+          
+//               const currentUser = users.find((u: User) => 
+//                 u.email?.toLowerCase() === graphEmail?.toLowerCase()
+//               );
+          
+//               if (currentUser) {
+//                 this.userRole = user.role;
+//                 if (user.role === 'SuperAdmin') {
+//                   this.allowedPages = user.pages || [];
+//                   this.router.navigate(['/home']); // Redirect to Home
+//                 } else if (user.role === 'Admin') {
+//                   this.allowedPages = ['home', 'registration', ...(user.pages || [])];
+//                   this.router.navigate(['/home']);
+//                 } else {
+//                   this.allowedPages = ['registration'];
+//                   this.router.navigate(['/registration']);
+//                 }
+//               } else {
+//                 // User not found in admin list
+//                 this.userRole = 'User';
+//                 this.allowedPages = ['registration'];
+//                 this.router.navigate(['/registration']);
+//               }
+//             },
+//             error: (err) => console.error('API error:', err),
+//           });
+          
+//         },
+//         error: (err) => console.error('Error fetching user details:', err)
+//       });
+//     }
+//   }).catch((error) => {
+//     console.error('Token acquisition failed:', error);
+//   });
+  
+// }
+private hasRedirected = false; 
+public fetchUserDetails(): void {
   const accessTokenRequest = {
-    scopes: ['user.read'] // Ensure 'user.read' permission is granted in Azure
+    scopes: ['user.read']  // Ensure 'user.read' permission is granted in Azure
   };
 
   this.msalService.instance.acquireTokenSilent(accessTokenRequest).then((tokenResponse) => {
-    if (tokenResponse) {
+    // if (tokenResponse) {
+    //   this.http.get<any>('https://graph.microsoft.com/v1.0/me', {
+    //     headers: { Authorization: `Bearer ${tokenResponse.accessToken}` }
+    //   }).subscribe({
+    //     next: (user) => {
+    //       // Emit basic user details
+    //       this.userInfoSubject.next({ 
+    //         email: user.mail || user.userPrincipalName, 
+    //         roleName: '',  // Placeholder for roleName, to be populated later
+    //         pageName: []   // Placeholder for pageName, to be populated later
+    //       });
+        if (tokenResponse) {
       this.http.get<any>('https://graph.microsoft.com/v1.0/me', {
         headers: { Authorization: `Bearer ${tokenResponse.accessToken}` }
       }).subscribe({
@@ -374,15 +488,133 @@ public fetchUserDetails() {
           this.userDetailsSubject.next({ 
             displayName: user.displayName, 
             email: user.mail || user.userPrincipalName // Use `mail`, fallback to `userPrincipalName`
+   
           });
+
+          // Fetch admin users and match the logged-in user
+          this.ielc.Getadminusers().subscribe({
+            next: (users: User[]) => {
+              const graphEmail = user.mail || user.userPrincipalName;
+          
+              console.log("Logged-in Graph Email:", graphEmail);
+              console.log("Admin Users List:", users.map(u => u.email));
+          
+              const currentUser = users.find((u: User) => 
+                u.email?.toLowerCase() === graphEmail?.toLowerCase()
+              );
+          
+              if (currentUser) {
+                let pageNames: string[] = [];
+
+                if (Array.isArray(currentUser.pageName)) {
+                  pageNames = currentUser.pageName;
+                } else if (typeof currentUser.pageName === 'string') {
+                  pageNames = currentUser.pageName.split(',').map(p => p.trim());
+                }
+              
+                // If user found in the admin list, update the roleName and pageName
+                this.userInfoSubject.next({
+                  email: graphEmail,
+                  roleName: currentUser.roleName,  // Set the user's roleName
+                  pageName: pageNames   // Set the user's pageName (default to empty array)
+                });
+
+                // Perform redirection based on the roleName
+                if (!this.hasRedirected) {
+                  this.hasRedirected = true;
+                
+                  if (currentUser.roleName === 'SuperAdmin') {
+                    if (this.router.url !== '/home') {
+                      this.router.navigate(['/home']);
+                    }
+                  } else if (currentUser.roleName === 'Admin') {
+                    if (this.router.url !== '/home') {
+                      this.router.navigate(['/home']);
+                    }
+                  } else {
+                    if (this.router.url !== '/registration') {
+                      this.router.navigate(['/registration']);
+                    }
+                  }
+                }
+                
+              } else {
+                // If user is not found in the admin list, set default role and pageName
+                this.userInfoSubject.next({
+                  email: graphEmail,
+                  roleName: 'User',  // Default role for non-admin users
+                  pageName: ['registration']  // Default page for non-admin users
+                });
+
+                // Redirect to registration for non-admin users
+                this.router.navigate(['/registration']);
+              }
+            },
+            error: (err) => console.error('API error:', err),
+          });
+          
         },
         error: (err) => console.error('Error fetching user details:', err)
       });
     }
-  }).catch(error => {
+  }).catch((error) => {
     console.error('Token acquisition failed:', error);
   });
 }
+
+
+
+
+setUserInfo(user: User) {
+  this.userInfoSubject.next(user);
+}
+
+getUserInfo(): User | null {
+  return this.userInfoSubject.value;
+}
+getUserRole(): string {
+  return this.userRole;
+}
+getAllowedPages(): string[] {
+  return this.allowedPages;
+}
+
+// Get user information from the service
+// public getUserInfo(): User | null {
+//   return this.userInfo; // Return the stored user info
+  
+// }
+
+// Check if the user is authenticated
+// public isAuthenticated(): boolean {
+//   return !!this.userInfo; 
+// }
+
+// Check if the user has a specific page access based on their role
+// public hasPageAccess(page: string): boolean {
+//   return this.userInfo?.pageName === page || this.userInfo?.roleName === 'SuperAdmin';
+// }
+// public hasPageAccess(page: string): boolean {
+//   const allowedPages = this.userInfo?.pageName?.split(',').map(p => p.trim()) || [];
+//   return this.userInfo?.roleName === 'SuperAdmin' || allowedPages.includes(page);
+// }
+
+// public hasPageAccess(page: string): boolean {
+//   const roleName = this.userInfo?.roleName;
+//   const pageList = this.userInfo?.pageName?.split(',').map(p => p.trim().toLowerCase()) || [];
+
+//   if (roleName === 'SuperAdmin') {
+//     return true; // Full access
+//   } else if (roleName === 'Admin') {
+//     return pageList.includes(page.toLowerCase());
+//   }
+
+//   return page === 'registration';
+// }
+
+
+
+
 
 // handleRedirectCallback() {
 //   this.msalService.instance.handleRedirectPromise().then((result: AuthenticationResult | null) => {
@@ -413,6 +645,7 @@ handleRedirectCallback() {
       console.error("Redirect Authentication Error:", error);
     });
 }
+
 
 
 

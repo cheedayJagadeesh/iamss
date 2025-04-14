@@ -82,8 +82,8 @@ export class RegistrationComponent implements OnInit {
  feedbackLoaded = false;
  skillname='';
  mode='';
- date='';
- time='';
+ date:string = '';
+ time:string = '';
  examdata:exam={
   id: 0,
   examTime: 0,
@@ -232,12 +232,20 @@ async ngOnInit() {
       // this.userEmail = userDetails?.email || 'No Email';
       this.userName = userDetails?.displayName ;
       this.userEmail = userDetails?.email;
+
+      // this.authService.userInfo$.subscribe(userInfo => {
+      //   if (userInfo?.email && userInfo?.roleName) {
+      //     // console.log("User info received:", userInfo);
+      //     this.userName = userInfo?.displayName;
+      //     this.userEmail = userInfo.email;
+       
       if (this.userEmail) {
         const emailPrefix = this.userEmail.split('@')[0]; // Get the part before '@'
         const nameParts = emailPrefix.split(/[._]/); // Split by dot (.) or underscore (_)
         this.firstName = nameParts[0] || ''; // First part as first name
         this.lastName = nameParts.length > 1 ? nameParts[1] : ''; // Second part as last name (if exists)
       }
+    
     });
     this.authService.userDetails$.subscribe(userDetails => {
       if (userDetails) {
@@ -535,7 +543,9 @@ GetExamlist() {
           : null,
       }));
     }
+    this.isLoading = false;
   });
+  
 }
 
 

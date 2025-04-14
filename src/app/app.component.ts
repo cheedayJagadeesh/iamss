@@ -27,13 +27,19 @@ export class AppComponent implements OnInit {
     //    if (this.authService.isAuthenticated()) {
     //   this.router.navigate(['/home']);
     // }
+    // if (!this.authService.isAuthenticated()) {
+    //   this.authService.login();
+    // }
     if (this.authService.isAuthenticated()) {
       this.authService.setActiveAccount();
     } else {
       this.router.navigate(['/login']); // Redirect to login only if not authenticated
     }
+   
+   
 
   }
+  
 
   
   // async ngOnInit() {

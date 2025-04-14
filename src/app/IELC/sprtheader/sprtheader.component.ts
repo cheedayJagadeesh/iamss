@@ -63,6 +63,7 @@ export class SprtheaderComponent implements OnInit {
         this.userName = userDetails?.displayName ;
         this.userEmail = userDetails?.email ;
       });
+     
   
     } catch (error) {
       console.error("MSAL initialization error in HeaderComponent:", error);

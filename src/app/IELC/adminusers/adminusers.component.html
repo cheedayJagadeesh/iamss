@@ -10908,11 +10908,16 @@
                                 <div class="modal-body">
                                    <div class="divmodal">
                                     <label>Role Name</label>
-                                    <input type="text" class="form-control" name="role" required #roleRef="ngModel" [(ngModel)]="adminusersdata.roleName">
+                                    <!-- <input type="text" class="form-control" name="role" required #roleRef="ngModel" [(ngModel)]="adminusersdata.roleName"> -->
+                                     <select class="form-control" name="role" required #roleRef="ngModel" [(ngModel)]="adminusersdata.roleName">
+                                        <option value="" hidden>- select- </option>
+                                        <option value="SuperAdmin">SuperAdmin</option>
+                                        <option value="Admin">Admin</option>
+                                     </select>
                                    </div>
                                    <div class="divmodal">
                                     <label>Page Name</label>
-                                    <input type="text" class="form-control" name="Page" required #pageRef="ngModel" [(ngModel)]="adminusersdata.pageName">
+                                    <input type="text" class="form-control" name="Page"  [(ngModel)]="adminusersdata.pageName">
                                    </div>
                                    <div class="divmodal">
                                     <label>Email</label>
