@@ -392,6 +392,7 @@ setActiveAccount() {
 // }
 
 public userInfo: User | null = null;
+userInfoInitialized = false;
 // private userInfoSubject = new BehaviorSubject<User | null>(null);
 // userInfo$ = this.userInfoSubject.asObservable();
 private userRole: string = '';
@@ -490,6 +491,7 @@ public fetchUserDetails(): void {
             email: user.mail || user.userPrincipalName // Use `mail`, fallback to `userPrincipalName`
    
           });
+          
 
           // Fetch admin users and match the logged-in user
           this.ielc.Getadminusers().subscribe({
@@ -518,24 +520,42 @@ public fetchUserDetails(): void {
                   roleName: currentUser.roleName,  // Set the user's roleName
                   pageName: pageNames   // Set the user's pageName (default to empty array)
                 });
-
+                this.userInfoInitialized = true;
                 // Perform redirection based on the roleName
                 if (!this.hasRedirected) {
                   this.hasRedirected = true;
                 
-                  if (currentUser.roleName === 'SuperAdmin') {
-                    if (this.router.url !== '/home') {
-                      this.router.navigate(['/home']);
-                    }
-                  } else if (currentUser.roleName === 'Admin') {
-                    if (this.router.url !== '/home') {
-                      this.router.navigate(['/home']);
-                    }
-                  } else {
-                    if (this.router.url !== '/registration') {
-                      this.router.navigate(['/registration']);
+                  // if (currentUser.roleName === 'SuperAdmin') {
+                  //   if (this.router.url !== '/home') {
+                  //     this.router.navigate(['/home']);
+                  //   }
+                  // } else if (currentUser.roleName === 'Admin') {
+                  //   if (this.router.url !== '/home') {
+                  //     this.router.navigate(['/home']);
+                  //   }
+                  // } else {
+                  //   if (this.router.url !== '/registration') {
+                  //     this.router.navigate(['/registration']);
+                  //   }
+                  // }
+                  const lastRole = localStorage.getItem('userRole');
+                  const currentRole = currentUser.roleName;
+
+                  if (lastRole !== currentRole) {
+                    // Role changed or first login — perform redirection
+                    localStorage.setItem('userRole', currentRole);
+
+                    if (currentRole === 'SuperAdmin' || currentRole === 'Admin') {
+                      if (this.router.url === '/' || this.router.url === '/registration') {
+                        this.router.navigate(['/home']);
+                      }
+                    } else {
+                      if (this.router.url !== '/registration') {
+                        this.router.navigate(['/registration']);
+                      }
                     }
                   }
+                  
                 }
                 
               } else {
@@ -543,9 +563,10 @@ public fetchUserDetails(): void {
                 this.userInfoSubject.next({
                   email: graphEmail,
                   roleName: 'User',  // Default role for non-admin users
-                  pageName: ['registration']  // Default page for non-admin users
+                  pageName: ['registration']
+                    // Default page for non-admin users
                 });
-
+                this.userInfoInitialized = true;
                 // Redirect to registration for non-admin users
                 this.router.navigate(['/registration']);
               }
@@ -562,6 +583,9 @@ public fetchUserDetails(): void {
   });
 }
 
+loginSuccess(userInfo: any): void {
+  localStorage.setItem('userInfo', JSON.stringify(userInfo));
+}
 
 
 

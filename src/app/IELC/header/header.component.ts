@@ -20,12 +20,14 @@ export class HeaderComponent implements OnDestroy  {
   allowedPages: string[] = [];
   userInfoSubscription: Subscription;
   userInfoInitialized = false;
+  isLoading = true;
   
   constructor(public authService: AuthService, private router: Router) {
     // Subscribe to user info and update role and allowed pages
     this.userInfoSubscription = this.authService.userInfo$.subscribe(userInfo => {
-      if (userInfo && userInfo.roleName) {
+      if (userInfo && userInfo.email && userInfo.roleName) {
         this.userInfoInitialized = true;
+        this.isLoading=false
         this.userRole = userInfo.roleName;
         if (typeof userInfo.pageName === 'string') {
           this.allowedPages = userInfo.pageName.split(',').map(p => p.trim());
@@ -35,18 +37,25 @@ export class HeaderComponent implements OnDestroy  {
           this.allowedPages = [];
         }
         // this.allowedPages = userInfo.pageName || []; // Assuming pageName is an array already
-
+        const currentPage = this.router.url.replace('/', '').toLowerCase();
         // Redirect unauthorized users
         if (
-          !this.canAccess('home') &&
+          !this.canAccess(currentPage) &&
           this.userRole !== 'SuperAdmin' &&
           this.userRole !== 'Admin'
         ) {
           this.router.navigate(['/registration']);
         }
+        
       }
     });
+  
   }
+  
+ 
+  
+  
+ 
 
   // Method to check if a user has access to a specific page
   // canAccess(page: string): boolean {
@@ -73,11 +82,76 @@ export class HeaderComponent implements OnDestroy  {
     return (this.allowedPages || []).includes(pageLower);
   }
   
+  logout(): void {
+    this.authService.logout();
+    localStorage.removeItem('userRole');
+  }
+
   // Unsubscribe to prevent memory leaks
   ngOnDestroy(): void {
     this.userInfoSubscription?.unsubscribe();
   }
 
+
+  // userRole: string | null = null;
+  // allowedPages: string[] = [];
+  // userInfoSubscription: Subscription;
+  // userInfoInitialized = false;
+  // isLoading = true;
+
+  // constructor(public authService: AuthService, private router: Router) {}
+
+  // ngOnInit() {
+  //   // Try to retrieve user info from localStorage
+  //   const userInfo = localStorage.getItem('userInfo');
+  //   if (userInfo) {
+  //     const parsedUserInfo = JSON.parse(userInfo);
+  //     this.setUserInfo(parsedUserInfo);
+  //   }
+  //   // Optionally, subscribe to userInfo$ from AuthService if dynamic changes are needed
+  //   this.userInfoSubscription = this.authService.userInfo$.subscribe(userInfo => {
+  //     if (userInfo) {
+  //       this.setUserInfo(userInfo);
+  //     }
+  //   });
+  // }
+
+  // setUserInfo(userInfo: any) {
+  //   this.userInfoInitialized = true;
+  //   this.userRole = userInfo.roleName;
+  //   this.allowedPages = Array.isArray(userInfo.pageName)
+  //     ? userInfo.pageName
+  //     : userInfo.pageName.split(',').map((p: string) => p.trim());
+  //   this.isLoading = false;
+
+  //   // Redirect if not authorized
+  //   if (
+  //     !this.canAccess('home') &&
+  //     this.userRole !== 'SuperAdmin' &&
+  //     this.userRole !== 'Admin'
+  //   ) {
+  //     this.router.navigate(['/registration']);
+  //   }
+  // }
+
+  // // Check if the user has access to a specific page
+  // canAccess(page: string): boolean {
+  //   const pageLower = page.toLowerCase();
+  //   if (this.userRole === 'SuperAdmin') return true;
+  //   if (this.userRole === 'Admin') {
+  //     return ['home', 'registration', ...(this.allowedPages || [])].includes(pageLower);
+  //   }
+  //   return (this.allowedPages || []).includes(pageLower);
+  // }
+
+  // logout(): void {
+  //   this.authService.logout();
+  //   localStorage.removeItem('userInfo'); // Clear user info from storage on logout
+  // }
+
+  // ngOnDestroy(): void {
+  //   this.userInfoSubscription?.unsubscribe();
+  // }
   
 
   // async ngOnInit() {
@@ -136,8 +210,8 @@ export class HeaderComponent implements OnDestroy  {
   // }
   
 
-  logout(): void {
-    this.authService.logout();
-  }
+  // logout(): void {
+  //   this.authService.logout();
+  // }
 
 }

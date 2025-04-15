@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
     //   this.authService.startInactivityTimer();
     // });
     try {
+      
       await this.msalService.instance.initialize(); // Ensure MSAL is initialized
       console.log('MSAL initialized successfully');
     } catch (error) {
@@ -32,10 +33,12 @@ export class AppComponent implements OnInit {
     // }
     if (this.authService.isAuthenticated()) {
       this.authService.setActiveAccount();
+      this.authService.fetchUserDetails(); 
     } else {
       this.router.navigate(['/login']); // Redirect to login only if not authenticated
     }
-   
+  
+
    
 
   }

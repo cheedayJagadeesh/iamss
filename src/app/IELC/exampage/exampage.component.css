@@ -58,7 +58,7 @@
     margin-bottom: 10px; 
     font-size: 16px;
     cursor: pointer; */
-    display: -webkit-box;
+    display: flex;
     align-items: center;
     gap: 10px;
     margin-bottom: 10px;
