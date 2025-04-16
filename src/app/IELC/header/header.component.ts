@@ -24,31 +24,82 @@ export class HeaderComponent implements OnDestroy  {
   
   constructor(public authService: AuthService, private router: Router) {
     // Subscribe to user info and update role and allowed pages
-    this.userInfoSubscription = this.authService.userInfo$.subscribe(userInfo => {
-      if (userInfo && userInfo.email && userInfo.roleName) {
-        this.userInfoInitialized = true;
-        this.isLoading=false
-        this.userRole = userInfo.roleName;
-        if (typeof userInfo.pageName === 'string') {
-          this.allowedPages = userInfo.pageName.split(',').map(p => p.trim());
-        } else if (Array.isArray(userInfo.pageName)) {
-          this.allowedPages = userInfo.pageName;
-        } else {
-          this.allowedPages = [];
-        }
-        // this.allowedPages = userInfo.pageName || []; // Assuming pageName is an array already
-        const currentPage = this.router.url.replace('/', '').toLowerCase();
-        // Redirect unauthorized users
-        if (
-          !this.canAccess(currentPage) &&
-          this.userRole !== 'SuperAdmin' &&
-          this.userRole !== 'Admin'
-        ) {
-          this.router.navigate(['/registration']);
-        }
+    // this.userInfoSubscription = this.authService.userInfo$.subscribe(userInfo => {
+    //   if (userInfo && userInfo.email && userInfo.roleName) {
+    //     this.userInfoInitialized = true;
+    //     this.isLoading=false
+    //     this.userRole = userInfo.roleName;
+    //     if (typeof userInfo.pageName === 'string') {
+    //       this.allowedPages = userInfo.pageName.split(',').map(p => p.trim());
+    //     } else if (Array.isArray(userInfo.pageName)) {
+    //       this.allowedPages = userInfo.pageName;
+    //     } else {
+    //       this.allowedPages = [];
+    //     }
+    //     // this.allowedPages = userInfo.pageName || []; // Assuming pageName is an array already
+    //     const currentPage = this.router.url.replace('/', '').toLowerCase();
+    //     // Redirect unauthorized users
+    //     if (
+    //       !this.canAccess(currentPage) &&
+    //       this.userRole !== 'SuperAdmin' &&
+    //       this.userRole !== 'Admin'
+    //     ) {
+    //       this.router.navigate(['/registration']);
+    //     }
         
+    //   }
+    // });
+    this.userInfoSubscription = this.authService.userInfo$.subscribe(userInfo => {
+      if (!userInfo || !userInfo.email ) return;
+    
+      this.userRole = userInfo.roleName || 'User';
+      this.isLoading = false;
+    
+      // Store role for redirect tracking
+      const lastRole = localStorage.getItem('userRole');
+      if (lastRole !== this.userRole) {
+        localStorage.setItem('userRole', this.userRole);
+       
+        if (this.userRole === 'SuperAdmin' || this.userRole === 'Admin') {
+          if (this.router.url === '/' || this.router.url === '/registration') {
+            this.router.navigate(['/home']);
+          }
+        } else {
+          if (this.router.url !== '/registration') {
+            this.router.navigate(['/registration']);
+          }
+        }
+       
+       
+        // if ((this.userRole === 'SuperAdmin' || this.userRole === 'Admin') && this.router.url !== '/home') {
+        //   this.router.navigate(['/home']);
+        // } else if ( this.userRole === 'User' && this.router.url !== '/registration') {
+        //   this.router.navigate(['/registration']);
+        // }
       }
+    
+      // Set allowed pages
+      if (typeof userInfo.pageName === 'string') {
+        this.allowedPages = userInfo.pageName.split(',').map(p => p.trim());
+      } else if (Array.isArray(userInfo.pageName)) {
+        this.allowedPages = userInfo.pageName;
+      } else {
+        this.allowedPages = [];
+      }
+      const currentPage = this.router.url.replace('/', '').toLowerCase();
+      if (
+        !this.canAccess(currentPage) &&
+        this.userRole !== 'SuperAdmin' &&
+        this.userRole !== 'Admin'
+      ) {
+        this.router.navigate(['/registration']);
+      }
+    
+     
+    
+      this.userInfoInitialized = true;
     });
+    
   
   }
   
@@ -91,6 +142,9 @@ export class HeaderComponent implements OnDestroy  {
   ngOnDestroy(): void {
     this.userInfoSubscription?.unsubscribe();
   }
+
+
+
 
 
   // userRole: string | null = null;

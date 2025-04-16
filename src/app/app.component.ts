@@ -8,40 +8,82 @@ import { AuthenticationResult, InteractionRequiredAuthError  } from '@azure/msal
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
+  
 })
 export class AppComponent implements OnInit {
+
   title = 'IAMS';
   constructor(private msalService: MsalService,private authService: AuthService, private router: Router) {}
 
-  async ngOnInit() {
-    // this.authService.startInactivityTimer();
-    // this.router.events.subscribe(() => {
-    //   this.authService.startInactivityTimer();
-    // });
-    try {
+  // async ngOnInit() {
+  //   // this.authService.startInactivityTimer();
+  //   // this.router.events.subscribe(() => {
+  //   //   this.authService.startInactivityTimer();
+  //   // });
+  //   try {
       
-      await this.msalService.instance.initialize(); // Ensure MSAL is initialized
-      console.log('MSAL initialized successfully');
-    } catch (error) {
-      console.error('MSAL initialization error:', error);
-    }
-    //    if (this.authService.isAuthenticated()) {
-    //   this.router.navigate(['/home']);
-    // }
-    // if (!this.authService.isAuthenticated()) {
-    //   this.authService.login();
-    // }
-    if (this.authService.isAuthenticated()) {
-      this.authService.setActiveAccount();
-      this.authService.fetchUserDetails(); 
-    } else {
-      this.router.navigate(['/login']); // Redirect to login only if not authenticated
-    }
+  //     await this.msalService.instance.initialize(); // Ensure MSAL is initialized
+  //     console.log('MSAL initialized successfully');
+  //   } catch (error) {
+  //     console.error('MSAL initialization error:', error);
+  //   }
+  //   //    if (this.authService.isAuthenticated()) {
+  //   //   this.router.navigate(['/home']);
+  //   // }
+  //   // if (!this.authService.isAuthenticated()) {
+  //   //   this.authService.login();
+  //   // }
+  //   if (this.authService.isAuthenticated()) {
+  //     this.authService.setActiveAccount();
+  //     this.authService.fetchUserDetails();
+   
+  //   } else {
+  //     this.router.navigate(['/login']); // Redirect to login only if not authenticated
+  //   }
   
 
    
 
+  // }
+  isLoading: boolean = true;
+  currentRoute: string = '';
+  async ngOnInit() {
+    
+    try {
+      await this.msalService.instance.initialize();
+      console.log('MSAL initialized');
+      this.router.events.subscribe(() => {
+        this.currentRoute = this.router.url;
+      });
+      if (this.authService.isAuthenticated()) {
+        console.log('User is authenticated');
+        this.authService.setActiveAccount();
+  
+        const role = await this.authService.fetchUserDetails();
+        const currentRoute = this.router.url;
+  
+        if (role === 'SuperAdmin' || role === 'Admin') {
+          if (currentRoute === '/' || currentRoute === '/registration') {
+            this.router.navigate(['/home']);
+          }
+        } else {
+          if (currentRoute !== '/registration') {
+            this.router.navigate(['/registration']);
+          }
+        }
+  
+      } else {
+        console.log('User is not authenticated, starting login...');
+        await this.authService.login(); 
+      }
+    } catch (error) {
+      console.error('App init error:', error);
+      this.router.navigate(['/login']);
+    } finally {
+      this.isLoading = false;
+    }
   }
+  
   
 
   

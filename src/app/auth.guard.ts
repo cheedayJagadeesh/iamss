@@ -5,6 +5,32 @@ export const authGuard: CanActivateFn = (route, state) => {
   return true;
 };
 
+// import { inject } from '@angular/core';
+// import { CanActivateFn, Router } from '@angular/router';
+// import { AuthService } from './authservice.service'; // adjust path as needed
+
+// export const authGuard: CanActivateFn = async (route, state) => {
+//   const authService = inject(AuthService);
+//   const router = inject(Router);
+
+//   try {
+//     const userInfo = await authService.getUserInfo(); // Get user info asynchronously
+
+//     // Check if the user has the required role
+//     if (userInfo?.roleName === 'SuperAdmin' || userInfo?.roleName === 'Admin') {
+//       return true; // Authorized access
+//     } else {
+//       // If the user is not authorized, redirect to a login or restricted page
+//       console.log('User is not authorized.');
+//       return router.parseUrl('/login'); // Redirect to login page
+//     }
+//   } catch (error) {
+//     console.error('Error fetching user info:', error);
+//     // Handle error and redirect to login page
+//     return router.parseUrl('/login');
+//   }
+// };
+
 
 
 // import { CanActivateFn } from '@angular/router';

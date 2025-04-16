@@ -305,7 +305,7 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
         <label class="lblmode">Mode of Training<span style="color: red;">*</span></label>
         <select name="selectedVenue" class="form-controlone" required [(ngModel)]="selectedVenue" (change)="onVenueChange(selectedVenue)" >
             <option value="" disabled >- select -</option>
-            <option *ngFor="let venue of venueList" [value]="venue.name"> {{ venue.name }} </option>
+            <option *ngFor="let venue of venueList" [value]="venue"> {{ venue }} </option>
           
         </select>
       </div>
@@ -532,7 +532,7 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
     </div>
     <div id="newsTicker" class="newsinfo" >
        <ul class="newsList">
-           <li *ngFor="let item of holidayslist">{{item.date | date: 'yyyy-MM-dd'}}: {{item.content}}</li>
+           <li *ngFor="let item of holidayslist">{{item.date | date: 'dd-MM-yyyy'}}: {{item.content}}</li>
        </ul>
     </div>
    </div>

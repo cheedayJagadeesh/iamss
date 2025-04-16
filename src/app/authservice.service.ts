@@ -464,124 +464,215 @@ public userInfo$ = this.userInfoSubject.asObservable();
   
 // }
 private hasRedirected = false; 
-public fetchUserDetails(): void {
-  const accessTokenRequest = {
-    scopes: ['user.read']  // Ensure 'user.read' permission is granted in Azure
-  };
+// public fetchUserDetails(): void {
+//   const accessTokenRequest = {
+//     scopes: ['user.read']  // Ensure 'user.read' permission is granted in Azure
+//   };
 
-  this.msalService.instance.acquireTokenSilent(accessTokenRequest).then((tokenResponse) => {
-    // if (tokenResponse) {
-    //   this.http.get<any>('https://graph.microsoft.com/v1.0/me', {
-    //     headers: { Authorization: `Bearer ${tokenResponse.accessToken}` }
-    //   }).subscribe({
-    //     next: (user) => {
-    //       // Emit basic user details
-    //       this.userInfoSubject.next({ 
-    //         email: user.mail || user.userPrincipalName, 
-    //         roleName: '',  // Placeholder for roleName, to be populated later
-    //         pageName: []   // Placeholder for pageName, to be populated later
-    //       });
-        if (tokenResponse) {
+//   this.msalService.instance.acquireTokenSilent(accessTokenRequest).then((tokenResponse) => {
+//     // if (tokenResponse) {
+//     //   this.http.get<any>('https://graph.microsoft.com/v1.0/me', {
+//     //     headers: { Authorization: `Bearer ${tokenResponse.accessToken}` }
+//     //   }).subscribe({
+//     //     next: (user) => {
+//     //       // Emit basic user details
+//     //       this.userInfoSubject.next({ 
+//     //         email: user.mail || user.userPrincipalName, 
+//     //         roleName: '',  // Placeholder for roleName, to be populated later
+//     //         pageName: []   // Placeholder for pageName, to be populated later
+//     //       });
+//         if (tokenResponse) {
+//       this.http.get<any>('https://graph.microsoft.com/v1.0/me', {
+//         headers: { Authorization: `Bearer ${tokenResponse.accessToken}` }
+//       }).subscribe({
+//         next: (user) => {
+//           this.userDetailsSubject.next({ 
+//             displayName: user.displayName, 
+//             email: user.mail || user.userPrincipalName // Use `mail`, fallback to `userPrincipalName`
+   
+//           });
+          
+
+//           // Fetch admin users and match the logged-in user
+//           this.ielc.Getadminusers().subscribe({
+//             next: (users: User[]) => {
+//               const graphEmail = user.mail || user.userPrincipalName;
+          
+//               console.log("Logged-in Graph Email:", graphEmail);
+//               console.log("Admin Users List:", users.map(u => u.email));
+          
+//               const currentUser = users.find((u: User) => 
+//                 u.email?.toLowerCase() === graphEmail?.toLowerCase()
+//               );
+          
+//               if (currentUser) {
+//                 let pageNames: string[] = [];
+
+//                 if (Array.isArray(currentUser.pageName)) {
+//                   pageNames = currentUser.pageName;
+//                 } else if (typeof currentUser.pageName === 'string') {
+//                   pageNames = currentUser.pageName.split(',').map(p => p.trim());
+//                 }
+              
+//                 // If user found in the admin list, update the roleName and pageName
+//                 this.userInfoSubject.next({
+//                   email: graphEmail,
+//                   roleName: currentUser.roleName,  // Set the user's roleName
+//                   pageName: pageNames   // Set the user's pageName (default to empty array)
+//                 });
+//                 this.userInfoInitialized = true;
+//                 // Perform redirection based on the roleName
+//                 if (!this.hasRedirected) {
+//                   this.hasRedirected = true;
+                
+//                   // if (currentUser.roleName === 'SuperAdmin') {
+//                   //   if (this.router.url !== '/home') {
+//                   //     this.router.navigate(['/home']);
+//                   //   }
+//                   // } else if (currentUser.roleName === 'Admin') {
+//                   //   if (this.router.url !== '/home') {
+//                   //     this.router.navigate(['/home']);
+//                   //   }
+//                   // } else {
+//                   //   if (this.router.url !== '/registration') {
+//                   //     this.router.navigate(['/registration']);
+//                   //   }
+//                   // }
+//                   const lastRole = localStorage.getItem('userRole');
+//                   const currentRole = currentUser.roleName;
+
+//                   if (lastRole !== currentRole) {
+//                     // Role changed or first login — perform redirection
+//                     localStorage.setItem('userRole', currentRole);
+
+//                     if (currentRole === 'SuperAdmin' || currentRole === 'Admin') {
+//                       if (this.router.url === '/' || this.router.url === '/registration') {
+//                         this.router.navigate(['/home']);
+//                       }
+//                     } else {
+//                       if (this.router.url !== '/registration') {
+//                         this.router.navigate(['/registration']);
+//                       }
+//                     }
+//                   }
+
+//                   // const currentRole = currentUser.roleName;
+//                   // const currentUrl = this.router.url;
+
+//                   // localStorage.setItem('userRole', currentRole);
+
+//                   // if ((currentRole === 'SuperAdmin' || currentRole === 'Admin') && currentUrl === '/registration') {
+//                   //   // Admins currently on /registration should go to home
+//                   //   this.router.navigate(['/home']);
+//                   // } else if (currentRole === 'User' && currentUrl !== '/registration') {
+//                   //   // Users should never stay on /home or anywhere else
+//                   //   this.router.navigate(['/registration']);
+//                   // }
+                  
+//                 }
+                
+//               } else {
+//                 // If user is not found in the admin list, set default role and pageName
+//                 this.userInfoSubject.next({
+//                   email: graphEmail,
+//                   roleName: 'User',  // Default role for non-admin users
+//                   pageName: ['registration']
+//                     // Default page for non-admin users
+//                 });
+//                 this.userInfoInitialized = true;
+//                 // Redirect to registration for non-admin users
+//                 this.router.navigate(['/registration']);
+//               }
+//             },
+//             error: (err) => console.error('API error:', err),
+//           });
+          
+//         },
+//         error: (err) => console.error('Error fetching user details:', err)
+//       });
+//     }
+//   }).catch((error) => {
+//     console.error('Token acquisition failed:', error);
+//   });
+// }
+// private userInfoSubject = new BehaviorSubject<User | null>(null);
+async getUserInfo(): Promise<User | null> {
+  if (this.userInfoSubject.value) {
+    return this.userInfoSubject.value;
+  }
+  
+  try {
+    // Ensure user info is fetched (e.g., check localStorage or fetch from API)
+    await this.fetchUserDetails();
+    return this.userInfoSubject.value;
+  } catch (error) {
+    console.error('Error fetching user info:', error);
+    return null;
+  }
+}
+
+public fetchUserDetails(): Promise<'SuperAdmin' | 'Admin' | 'User'> {
+  return new Promise((resolve, reject) => {
+    const accessTokenRequest = { scopes: ['user.read'] };
+
+    this.msalService.instance.acquireTokenSilent(accessTokenRequest).then((tokenResponse) => {
+      if (!tokenResponse) return;
+
       this.http.get<any>('https://graph.microsoft.com/v1.0/me', {
         headers: { Authorization: `Bearer ${tokenResponse.accessToken}` }
       }).subscribe({
         next: (user) => {
-          this.userDetailsSubject.next({ 
-            displayName: user.displayName, 
-            email: user.mail || user.userPrincipalName // Use `mail`, fallback to `userPrincipalName`
-   
+          const graphEmail = user.mail || user.userPrincipalName;
+          this.userDetailsSubject.next({
+            displayName: user.displayName,
+            email: graphEmail
           });
-          
 
-          // Fetch admin users and match the logged-in user
           this.ielc.Getadminusers().subscribe({
             next: (users: User[]) => {
-              const graphEmail = user.mail || user.userPrincipalName;
-          
-              console.log("Logged-in Graph Email:", graphEmail);
-              console.log("Admin Users List:", users.map(u => u.email));
-          
-              const currentUser = users.find((u: User) => 
+              const currentUser = users.find((u: User) =>
                 u.email?.toLowerCase() === graphEmail?.toLowerCase()
               );
-          
+
+              let roleName: string = 'User';
+              let pageNames: string[] = ['registration'];
+
               if (currentUser) {
-                let pageNames: string[] = [];
-
-                if (Array.isArray(currentUser.pageName)) {
-                  pageNames = currentUser.pageName;
-                } else if (typeof currentUser.pageName === 'string') {
-                  pageNames = currentUser.pageName.split(',').map(p => p.trim());
-                }
-              
-                // If user found in the admin list, update the roleName and pageName
-                this.userInfoSubject.next({
-                  email: graphEmail,
-                  roleName: currentUser.roleName,  // Set the user's roleName
-                  pageName: pageNames   // Set the user's pageName (default to empty array)
-                });
-                this.userInfoInitialized = true;
-                // Perform redirection based on the roleName
-                if (!this.hasRedirected) {
-                  this.hasRedirected = true;
-                
-                  // if (currentUser.roleName === 'SuperAdmin') {
-                  //   if (this.router.url !== '/home') {
-                  //     this.router.navigate(['/home']);
-                  //   }
-                  // } else if (currentUser.roleName === 'Admin') {
-                  //   if (this.router.url !== '/home') {
-                  //     this.router.navigate(['/home']);
-                  //   }
-                  // } else {
-                  //   if (this.router.url !== '/registration') {
-                  //     this.router.navigate(['/registration']);
-                  //   }
-                  // }
-                  const lastRole = localStorage.getItem('userRole');
-                  const currentRole = currentUser.roleName;
-
-                  if (lastRole !== currentRole) {
-                    // Role changed or first login — perform redirection
-                    localStorage.setItem('userRole', currentRole);
-
-                    if (currentRole === 'SuperAdmin' || currentRole === 'Admin') {
-                      if (this.router.url === '/' || this.router.url === '/registration') {
-                        this.router.navigate(['/home']);
-                      }
-                    } else {
-                      if (this.router.url !== '/registration') {
-                        this.router.navigate(['/registration']);
-                      }
-                    }
-                  }
-                  
-                }
-                
-              } else {
-                // If user is not found in the admin list, set default role and pageName
-                this.userInfoSubject.next({
-                  email: graphEmail,
-                  roleName: 'User',  // Default role for non-admin users
-                  pageName: ['registration']
-                    // Default page for non-admin users
-                });
-                this.userInfoInitialized = true;
-                // Redirect to registration for non-admin users
-                this.router.navigate(['/registration']);
+                roleName = currentUser.roleName || 'User';
+                pageNames = Array.isArray(currentUser.pageName)
+                  ? currentUser.pageName
+                  : typeof currentUser.pageName === 'string'
+                  ? currentUser.pageName.split(',').map(p => p.trim())
+                  : [];
               }
+
+              this.userInfoSubject.next({
+                email: graphEmail,
+                roleName,
+                pageName: pageNames
+              });
+
+              this.userInfoInitialized = true;
+              resolve(roleName as 'SuperAdmin' | 'Admin' | 'User');
             },
-            error: (err) => console.error('API error:', err),
+            error: (err) => {
+              console.error('API error:', err);
+              reject(err);
+            }
           });
-          
         },
-        error: (err) => console.error('Error fetching user details:', err)
+        error: (err) => {
+          console.error('Graph fetch error:', err);
+          reject(err);
+        }
       });
-    }
-  }).catch((error) => {
-    console.error('Token acquisition failed:', error);
+    }).catch((error) => {
+      console.error('Token acquisition failed:', error);
+      reject(error);
+    });
   });
 }
+
 
 loginSuccess(userInfo: any): void {
   localStorage.setItem('userInfo', JSON.stringify(userInfo));
@@ -593,9 +684,9 @@ setUserInfo(user: User) {
   this.userInfoSubject.next(user);
 }
 
-getUserInfo(): User | null {
-  return this.userInfoSubject.value;
-}
+// getUserInfo(): User | null {
+//   return this.userInfoSubject.value;
+// }
 getUserRole(): string {
   return this.userRole;
 }
