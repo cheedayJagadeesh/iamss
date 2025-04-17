@@ -296,7 +296,7 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
 <div class="div">
     <div class="mb-3 formdiv">
         <label class="lblskill">Skill Name<span style="color: red;">*</span></label>
-        <select name="skillname" class="form-controlone" required [(ngModel)]="skillname" (change)="onSkillChange(skillname)">
+        <select name="skillname" class="form-controlone" required [(ngModel)]="skillname" (change)="onSkillChange(skillname); onBatchInputChange()">
             <option value="" disabled >- select -</option>
             <option *ngFor="let row of Enrolledskills" [value]="row">{{ row }}</option>
         </select>
@@ -311,12 +311,12 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
       </div>
       <div class="col-md-3">
         <label class="lbldate">Date<span style="color: red;">*</span></label>
-        <select name="date" class="form-controldate" required [(ngModel)]="date"  [disabled]="selectedVenue !== 'Teams'" >
+        <select name="date" class="form-controldate" required [(ngModel)]="date"  [disabled]="selectedVenue !== 'Teams'" (change)="onBatchInputChange()" >
             <option value="" disabled >- select -</option>
             <option *ngFor="let d of availableDates" [value]="d">{{ d }}</option>
         </select>
         <label class="lbltime">Time<span style="color: red;">*</span></label>
-        <select name="time" class="form-controltime" required [(ngModel)]="time" [disabled]="selectedVenue !== 'Teams'">
+        <select name="time" class="form-controltime" required [(ngModel)]="time" [disabled]="selectedVenue !== 'Teams'" (change)="onBatchInputChange()">
             <option value="" disabled >- select -</option>
             <option *ngFor="let t of availableTimes" [value]="t">{{ t }}</option>
         </select>
@@ -333,16 +333,18 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
       </div>
       <div class="mb-3 ">
         <label class="lblmbl">Mobile No.</label>
-        <input type="text" class="form-controlmbl" >
+        <input type="text" class="form-controlmbl" name="mobile" [(ngModel)]="mobile" >
       </div>
-      <div class="mb-3 ">
-        <label class="lblbatch">Batch Members - </label>
+      <div class="mb-3 " >
+        <label class="lblbatch">Batch Members - <a *ngIf="selectedVenue === 'Teams'">{{ batchMembersCount }}</a></label>
+        <!-- <label class="lblbatch">Batch Members - </label>
+        <span>{{ batchMembersCount }}</span> -->
       </div>
       <div>
         <label class="lblbatchpopup" *ngFor="let item of examlist">(Each Skill have only {{item.batchLimitMembers}} Members...)</label>
       </div>
       <div class="mb-3 ">
-        <button type="button" class="btn buttonsub btn-success" [disabled]="!registration.valid">Submit</button>
+        <button type="button" class="btn buttonsub btn-success"  (click)="allowEnrollment()"  [disabled]="!registration.valid">Submit</button>
         <button type="button" class="btn buttonlogout btn-danger" (click)="logout()">Logout</button>
       </div>
  </div>

@@ -86,6 +86,27 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.apiID}/${id}`);
     }
 
+    GetBatchMembers(skillName: string, date: string, time: string): Observable<any> {
+      const url = `${this.apiUrl}/Batchmembers?skillName=${encodeURIComponent(skillName)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}`;
+      return this.http.get<any>(url);
+    }
+    enrollUser(enrollmentData: any): Observable<any> {
+      const url = 'https://ielc-coreapi.azurewebsites.net/EnrollmentData';
+      return this.http.post<any>(url, enrollmentData);
+    }
+    
+    checkIfAlreadyEnrolled(skillName: string, date: string, time: string, mail: string) {
+      const params = {
+        skillName,
+        date,
+        time,
+        mail
+      };
+    
+      return this.http.get<boolean>('https://ielc-coreapi.azurewebsites.net/EnrollmentData/check', { params });
+    }
+    
+
     //---------------------------------------------------------------------------------------Add New Skills
 
     EnrolledskillsUrl='https://ielc-coreapi.azurewebsites.net/EnrollmentSessions';

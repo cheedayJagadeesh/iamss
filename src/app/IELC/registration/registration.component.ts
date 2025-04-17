@@ -52,6 +52,33 @@ interface crserest {
   coursesList: string;
 }
 
+interface EnrollmentData {
+  enrollmentID: number;
+  name: string;
+  firstName: string;
+  lastName: string;
+  mail: string;
+  mobile: number;
+  skillName: string;
+  date: string;
+  time: string;
+  venue: string;
+  batchmembers: number;
+  enrollmentDate: string;
+  startDate: string;
+  endDate: string;
+  result: string;
+  percentage: string;
+  testTakenDate: string;
+  subjectMatterKnowledge: string;
+  presentation: string;
+  communication: string;
+  handlingDoubts: string;
+  applicationtowork: string;
+  comments: string;
+}
+
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -84,6 +111,7 @@ export class RegistrationComponent implements OnInit {
  mode='';
  date:string = '';
  time:string = '';
+ mobile='';
  examdata:exam={
   id: 0,
   examTime: 0,
@@ -122,6 +150,8 @@ availableTimes: string[] = [];
 
 showDateTimeDropdowns: boolean = false;
 // submittedFeedbackIds: number[] = [];
+batchMemberCount: number = 0;
+currentUser: any = {};
 constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute){
    // this.selectedDate= new Date().toString()
    this.selectedDate= new Date().toISOString().split('T')[0]
@@ -144,8 +174,14 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
     }
   });
 
+  
+
  }
 
+ convertToISODate(dateStr: string): string {
+  const [dd, mm, yyyy] = dateStr.split('-');
+  return `${yyyy}-${mm}-${dd}`;
+}
 
 
  formatCustomDate(dateStr: string | null): string {
@@ -230,6 +266,7 @@ async ngOnInit() {
     this.authService.userDetails$.subscribe(userDetails => {
       // this.userName = userDetails?.displayName || 'Unknown User';
       // this.userEmail = userDetails?.email || 'No Email';
+      this.currentUser = userDetails;  
       this.userName = userDetails?.displayName ;
       this.userEmail = userDetails?.email;
 
@@ -384,6 +421,7 @@ onVenueChange(venue: string) {
         this.availableDates = [];
       }
     });
+    
 
     this.ielc.GetEnrolledSessionsbytime(this.skillname).subscribe({
       next: (res) => {
@@ -395,13 +433,142 @@ onVenueChange(venue: string) {
         this.availableTimes = [];
       }
     });
+    if (this.date && this.time) {
+      this.checkBatchAvailability();
+    }
   } else {
     this.availableDates = [];
     this.availableTimes = [];
     this.date = '';
     this.time = '';
+    this.batchMembersCount = 0;
   }
 }
+
+
+batchMembersCount: number = 0;
+
+
+onBatchInputChange() {
+  if (this.skillname && this.date && this.time) {
+    this.checkBatchAvailability();
+  } else {
+    this.batchMembersCount = 0;
+  }
+}
+
+checkBatchAvailability() {
+  if (!this.skillname || !this.date || !this.time) {
+    this.batchMembersCount = 0;
+    return;
+  }
+
+  this.ielc.GetBatchMembers(this.skillname, this.date, this.time).subscribe({
+    next: (count: number) => {
+      if (typeof count === 'number') {
+        this.batchMembersCount = count+1;
+        if (this.batchMembersCount >= 150) {
+          alert('Batch is full. Please choose another slot.');
+        }
+      } else {
+        console.warn('⚠️ Invalid count from API:', count);
+        this.batchMembersCount = 0;
+      }
+    },
+    error: (err) => {
+      if (err.status === 404) {
+        // No batch yet, set count to 0
+        this.batchMembersCount = 0;
+      } else {
+        console.error('❌ Error fetching batch count:', err);
+        this.batchMembersCount = 0;
+        alert('Error checking batch availability.');
+      }
+    }
+  });
+}
+
+
+
+
+
+allowEnrollment() {
+  const now = new Date();
+  const fullName = `${this.firstName} ${this.lastName}`;
+  const [startDate, endDate] = this.date?.split(' - ') || ['', ''];
+
+  const skill = this.skillname;
+  const date = this.date;
+  const time = this.time;
+  const mail = this.userEmail?? '';
+
+  this.ielc.checkIfAlreadyEnrolled(skill, date, time, mail).subscribe({
+    next: (alreadyEnrolled: boolean) => {
+      if (alreadyEnrolled) {
+        alert('You are already enrolled for this batch!');
+        return;
+      }
+
+      const batchCountToInsert = this.selectedVenue === 'Teams' ? this.batchMembersCount : 0;
+
+      // ✅ Proceed only if not already enrolled
+      const enrollmentData: EnrollmentData = {
+        enrollmentID: 0,
+        name: fullName,
+        firstName: this.firstName || '',
+        lastName: this.lastName || '',
+        mail: mail || '',
+        mobile: Number(this.mobile) || 0,
+        skillName: skill || '',
+        date: date || '',
+        time: time || '',
+        venue: this.selectedVenue || '',
+        batchmembers: batchCountToInsert,
+        enrollmentDate: now.toISOString(),
+        startDate: this.convertToISODate(startDate.trim()),
+        endDate: this.convertToISODate(endDate.trim()),
+        result: '',
+        percentage: '',
+        testTakenDate: '',
+        subjectMatterKnowledge: '',
+        presentation: '',
+        communication: '',
+        handlingDoubts: '',
+        applicationtowork: '',
+        comments: ''
+      };
+
+      this.ielc.enrollUser(enrollmentData).subscribe({
+        next: () => {
+          alert('Enrollment successful!');
+          this.resetForm();
+        },
+        error: (err) => {
+          console.error('Enrollment error:', err);
+          alert('Enrollment failed. Please try again.');
+        }
+      });
+    },
+    error: (err) => {
+      console.error('❌ Error checking enrollment status:', err);
+      alert('Failed to verify enrollment status. Please try again.');
+    }
+  });
+}
+
+
+resetForm(): void {
+  // this.firstName = '';
+  // this.lastName = '';
+  // this.userEmail = '';
+  this.mobile = '';
+  this.skillname = '';
+  this.date = '';
+  this.time = '';
+  this.selectedVenue = '';
+  this.batchMembersCount = 0;
+}
+
 
 
 

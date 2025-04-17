@@ -206,8 +206,8 @@ export class ExampageComponent implements OnInit, OnDestroy  {
       if (data && data.length > 0) {
         this.examdata = data[0];  // <-- only assign to examdata
         this.timeLeft = this.examdata.examTime * 60; 
-        console.log("Assigned timeLeft:", this.timeLeft);
-        console.log("Total Questions:", this.examdata.displayExamQuestions);
+        // console.log("Assigned timeLeft:", this.timeLeft);
+        // console.log("Total Questions:", this.examdata.displayExamQuestions);
   
         // if (this.timeLeft > 0) {
         //   this.startTimer(); 
