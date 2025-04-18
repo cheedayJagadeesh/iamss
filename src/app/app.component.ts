@@ -63,7 +63,8 @@ export class AppComponent implements OnInit {
         const currentRoute = this.router.url;
   
         if (role === 'SuperAdmin' || role === 'Admin') {
-          if (currentRoute === '/' || currentRoute === '/registration') {
+          // if (currentRoute === '/' || currentRoute === '/registration') {
+          if (currentRoute === '/' ) {
             this.router.navigate(['/home']);
           }
         } else {

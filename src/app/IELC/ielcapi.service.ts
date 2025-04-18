@@ -90,22 +90,24 @@ export class IelcapiService {
       const url = `${this.apiUrl}/Batchmembers?skillName=${encodeURIComponent(skillName)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}`;
       return this.http.get<any>(url);
     }
+
+    url = 'https://ielc-coreapi.azurewebsites.net/EnrollmentData';
     enrollUser(enrollmentData: any): Observable<any> {
-      const url = 'https://ielc-coreapi.azurewebsites.net/EnrollmentData';
-      return this.http.post<any>(url, enrollmentData);
+      return this.http.post<any>(this.url, enrollmentData);
     }
-    
+
+    checkurl='https://ielc-coreapi.azurewebsites.net/EnrollmentData/check'
     checkIfAlreadyEnrolled(skillName: string, date: string, time: string, mail: string) {
-      const params = {
-        skillName,
-        date,
-        time,
-        mail
-      };
-    
-      return this.http.get<boolean>('https://ielc-coreapi.azurewebsites.net/EnrollmentData/check', { params });
+      const params = {skillName,date,time,mail};
+      return this.http.get<boolean>(this.checkurl, { params });
     }
-    
+
+    checkvenueurl='https://ielc-coreapi.azurewebsites.net/EnrollmentData/checkself'
+    checkVenueEnrollment(skillName: string, venue: string, mail: string) {
+    const params = {skillName,venue,mail}
+      return this.http.get<boolean>(this.checkvenueurl, { params });
+    }
+
 
     //---------------------------------------------------------------------------------------Add New Skills
 
@@ -160,6 +162,10 @@ export class IelcapiService {
       return this.http.get<any>(this.AadUGroupUrl);
     }
  
+    getUsersOfGroup(groupName: string): Observable<any> {
+      return this.http.get(`https://ielc-coreapi.azurewebsites.net/AADGroupMails/group-users/${encodeURIComponent(groupName)}`);
+    }
+
     Enrolledsessionsurl='https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/skills/latest'
     GetEnrolledSessions(): Observable<any> {
         return this.http.get<any>(this.Enrolledsessionsurl);

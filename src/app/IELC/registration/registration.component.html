@@ -290,7 +290,7 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
 </div>
 <div>
     <!-- <h2 class="h2">ISO 9001-2015 Internal Auditor</h2> -->
-    <h2 class="h2"> {{ topSkillName }}</h2>
+    <h2 class="h2" *ngIf="topSkillName"> {{ topSkillName }}</h2>
    
 </div>
 <div class="div">
@@ -298,7 +298,7 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
         <label class="lblskill">Skill Name<span style="color: red;">*</span></label>
         <select name="skillname" class="form-controlone" required [(ngModel)]="skillname" (change)="onSkillChange(skillname); onBatchInputChange()">
             <option value="" disabled >- select -</option>
-            <option *ngFor="let row of Enrolledskills" [value]="row">{{ row }}</option>
+            <option *ngFor="let row of Enrolledskills" [value]="row.skillName">{{ row.skillName }}</option>
         </select>
       </div>
       <div class="mb-3">
@@ -333,7 +333,8 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
       </div>
       <div class="mb-3 ">
         <label class="lblmbl">Mobile No.</label>
-        <input type="text" class="form-controlmbl" name="mobile" [(ngModel)]="mobile" >
+        <input type="text" class="form-controlmbl" name="mobile" [(ngModel)]="mobile"   pattern="[0-9]*" maxlength="10" minlength="10"   (keypress)="allowOnlyDigits($event)"
+        (paste)="validatePastedMobile($event)">
       </div>
       <div class="mb-3 " >
         <label class="lblbatch">Batch Members - <a *ngIf="selectedVenue === 'Teams'">{{ batchMembersCount }}</a></label>

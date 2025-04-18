@@ -9,6 +9,7 @@ import { MsalService } from '@azure/msal-angular';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
+import { forkJoin, Observable } from 'rxjs';
 
 
 
@@ -50,6 +51,13 @@ interface Result{
 interface crserest {
   id: number;
   coursesList: string;
+}
+interface SkillSession {
+  sessionID: number;
+  skillName: string;
+  aadUsersData?: string; 
+  groups?: string;
+ 
 }
 
 interface EnrollmentData {
@@ -147,7 +155,7 @@ selectDate: string = '';
 selectedTime: string = '';
 availableDates: string[] = [];
 availableTimes: string[] = [];
-
+visibleSessionIds: SkillSession[] = [];
 showDateTimeDropdowns: boolean = false;
 // submittedFeedbackIds: number[] = [];
 batchMemberCount: number = 0;
@@ -160,9 +168,10 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
    this.GetEventsList();
    this.GetExamlist();
   //  this.GetAllUsers();
-  this.GetAllSkillSessions();
   this.GetCourseist();
-  this.GetEnrolledSessionsSkillsData();
+  this.GetAllSkillSessions();
+  // this.GetEnrolledSessionsSkillsData();
+  // this.loadUserRestrictionsAndSessions();
    if (this.eventslist && this.eventslist.length > 0) {
     this.eventslist = this.eventslist.sort((a, b) => Number(b.id) - Number(a.id));
   }
@@ -177,6 +186,46 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
   
 
  }
+//  currentUserEmail: string = '';
+// currentUserGroups: string[] = [];
+// aadUsers: any[] = [];
+// aadGroups: any[] = [];
+
+//  loadUserRestrictionsAndSessions() {
+//   forkJoin({
+//     users: this.ielc.GetAadUserslist(),
+//     groups: this.ielc.GetAadUserGroupslist()
+//   }).subscribe(({ users, groups }) => {
+//     this.aadUsers = users;
+//     this.aadGroups = groups;
+
+//     const userRecord = users.find((u: any) => u.email === this.currentUserEmail);
+//     this.currentUserGroups = groups
+//       .filter((g: any) => g.members?.includes(this.currentUserEmail)) // adjust as needed
+//       .map((g: any) => g.groupName);
+
+//     // Now load sessions after knowing user's groups
+//     this.GetAllSkillSessions();
+//     this.GetEnrolledSessionsSkillsData();
+//   });
+// }
+// filterSkillsByUserRestriction(data: any[]): any[] {
+//   return data.filter(session => {
+//     const assignedUsers = session.assignedUsers || [];
+//     const assignedGroups = session.assignedGroups || [];
+
+//     const isPublic = assignedUsers.length === 0 && assignedGroups.length === 0;
+//     const isUserAllowed = assignedUsers.includes(this.currentUserEmail);
+//     const isGroupAllowed = assignedGroups.some((g: string) =>
+//       this.currentUserGroups.includes(g)
+//     );
+
+//     return isPublic || isUserAllowed || isGroupAllowed;
+//   });
+// }
+
+
+
 
  convertToISODate(dateStr: string): string {
   const [dd, mm, yyyy] = dateStr.split('-');
@@ -269,6 +318,8 @@ async ngOnInit() {
       this.currentUser = userDetails;  
       this.userName = userDetails?.displayName ;
       this.userEmail = userDetails?.email;
+      // const loggedInEmail = userDetails?.email || '';
+    
 
       // this.authService.userInfo$.subscribe(userInfo => {
       //   if (userInfo?.email && userInfo?.roleName) {
@@ -288,6 +339,8 @@ async ngOnInit() {
       if (userDetails) {
         this.userEmail = userDetails.email; // Ensure the email is correctly assigned
         this.GetAllUsers(); // Call this AFTER we get the email
+        this.GetAllSkillSessions(); 
+        // this.GetEnrolledSessionsSkillsData()
       }
     });   
   }
@@ -388,11 +441,17 @@ hasSubmittedFeedback(enrollmentID: string): boolean {
   return this.submittedFeedbackIds.includes(enrollmentID);
 }
 
-GetEnrolledSessionsSkillsData(){
-  this.ielc.GetEnrolledSessions().subscribe((data) => {
-    this.Enrolledskills=data;
-  });
- }
+// GetEnrolledSessionsSkillsData(){
+//   this.ielc.GetEnrolledSessions().subscribe((data) => {
+//     this.Enrolledskills=data;
+//     // this.Enrolledskills = this.filterSkillsByUserRestriction(data);
+//   });
+//  }
+
+
+
+
+
 
  onSkillChange(skill: string) {
   if (skill) {
@@ -407,6 +466,11 @@ GetEnrolledSessionsSkillsData(){
   }
 }
 
+convertToDDMMYYYY(dateStr: string): string {
+  const [mm, dd, yyyy] = dateStr.split('-');
+  return `${dd}-${mm}-${yyyy}`;
+}
+
 onVenueChange(venue: string) {
   this.showDateTimeDropdowns = venue === 'Teams';
 
@@ -414,7 +478,11 @@ onVenueChange(venue: string) {
     this.ielc.GetEnrolledSessionsbydate(this.skillname).subscribe({
       next: (res) => {
         console.log('Date response:', res);
-        this.availableDates = Array.isArray(res) ? res : res.map((d: any) => d.date);
+        // this.availableDates = Array.isArray(res) ? res : res.map((d: any) => d.date);
+        this.availableDates = res.map((range: string) => {
+          const [start, end] = range.split(' - ');
+          return `${this.convertToDDMMYYYY(start)} - ${this.convertToDDMMYYYY(end)}`;
+        });
       },
       error: (err) => {
         console.error('Error fetching dates:', err);
@@ -492,6 +560,71 @@ checkBatchAvailability() {
 
 
 
+// allowEnrollment() {
+//   const now = new Date();
+//   const fullName = `${this.firstName} ${this.lastName}`;
+//   const [startDate, endDate] = this.date?.split(' - ') || ['', ''];
+
+//   const skill = this.skillname;
+//   const date = this.date;
+//   const time = this.time;
+//   const mail = this.userEmail?? '';
+
+//   this.ielc.checkIfAlreadyEnrolled(skill, date, time, mail).subscribe({
+//     next: (alreadyEnrolled: boolean) => {
+//       if (alreadyEnrolled) {
+//         alert('You are already enrolled for this batch!');
+//         return;
+//       }
+
+//       const batchCountToInsert = this.selectedVenue === 'Teams' ? this.batchMembersCount : 0;
+
+//       // ✅ Proceed only if not already enrolled
+//       const enrollmentData: EnrollmentData = {
+//         enrollmentID: 0,
+//         name: fullName,
+//         firstName: this.firstName || '',
+//         lastName: this.lastName || '',
+//         mail: mail || '',
+//         mobile: Number(this.mobile) || 0,
+//         skillName: skill || '',
+//         date: date || '',
+//         time: time || '',
+//         venue: this.selectedVenue || '',
+//         batchmembers: batchCountToInsert,
+//         enrollmentDate: now.toISOString(),
+//         startDate: this.convertToISODate(startDate.trim()),
+//         endDate: this.convertToISODate(endDate.trim()),
+//         result: '',
+//         percentage: '',
+//         testTakenDate: '',
+//         subjectMatterKnowledge: '',
+//         presentation: '',
+//         communication: '',
+//         handlingDoubts: '',
+//         applicationtowork: '',
+//         comments: ''
+//       };
+
+//       this.ielc.enrollUser(enrollmentData).subscribe({
+//         next: () => {
+//           alert('Enrollment successful!');
+//           this.resetForm();
+//         },
+//         error: (err) => {
+//           console.error('Enrollment error:', err);
+//           alert('Enrollment failed. Please try again.');
+//         }
+//       });
+//     },
+//     error: (err) => {
+//       console.error('❌ Error checking enrollment status:', err);
+//       alert('Failed to verify enrollment status. Please try again.');
+//     }
+//   });
+// }
+
+
 allowEnrollment() {
   const now = new Date();
   const fullName = `${this.firstName} ${this.lastName}`;
@@ -500,61 +633,94 @@ allowEnrollment() {
   const skill = this.skillname;
   const date = this.date;
   const time = this.time;
-  const mail = this.userEmail?? '';
+  const mail = this.userEmail ?? '';
 
-  this.ielc.checkIfAlreadyEnrolled(skill, date, time, mail).subscribe({
-    next: (alreadyEnrolled: boolean) => {
-      if (alreadyEnrolled) {
-        alert('You are already enrolled for this batch!');
-        return;
-      }
-
-      const batchCountToInsert = this.selectedVenue === 'Teams' ? this.batchMembersCount : 0;
-
-      // ✅ Proceed only if not already enrolled
-      const enrollmentData: EnrollmentData = {
-        enrollmentID: 0,
-        name: fullName,
-        firstName: this.firstName || '',
-        lastName: this.lastName || '',
-        mail: mail || '',
-        mobile: Number(this.mobile) || 0,
-        skillName: skill || '',
-        date: date || '',
-        time: time || '',
-        venue: this.selectedVenue || '',
-        batchmembers: batchCountToInsert,
-        enrollmentDate: now.toISOString(),
-        startDate: this.convertToISODate(startDate.trim()),
-        endDate: this.convertToISODate(endDate.trim()),
-        result: '',
-        percentage: '',
-        testTakenDate: '',
-        subjectMatterKnowledge: '',
-        presentation: '',
-        communication: '',
-        handlingDoubts: '',
-        applicationtowork: '',
-        comments: ''
-      };
-
-      this.ielc.enrollUser(enrollmentData).subscribe({
-        next: () => {
-          alert('Enrollment successful!');
-          this.resetForm();
-        },
-        error: (err) => {
-          console.error('Enrollment error:', err);
-          alert('Enrollment failed. Please try again.');
+  // If Teams, do the duplicate check
+  if (this.selectedVenue === 'Teams') {
+    this.ielc.checkIfAlreadyEnrolled(skill, date, time, mail).subscribe({
+      next: (alreadyEnrolled: boolean) => {
+        if (alreadyEnrolled) {
+          alert('You are already enrolled for this batch!');
+          return;
         }
-      });
+
+        const batchCountToInsert = this.batchMembersCount;
+
+        this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
+      },
+      error: (err) => {
+        console.error('❌ Error checking enrollment status:', err);
+        alert('Failed to verify enrollment status. Please try again.');
+      }
+    });
+  } else if (this.selectedVenue !== 'Teams') {
+    // Duplicate check for self-learning
+    this.ielc.checkVenueEnrollment(skill, this.selectedVenue, mail).subscribe({
+      next: (alreadyEnrolled: boolean) => {
+        if (alreadyEnrolled) {
+          alert('You are already enrolled for self-learning in this skill!');
+          return;
+        }
+
+        const batchCountToInsert = 0;
+        this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
+      },
+      error: (err) => {
+        console.error('❌ Error checking self-learning enrollment:', err);
+        alert('Failed to verify self-learning enrollment. Please try again.');
+      }
+    });
+
+  } else {
+    // For other venues, skip duplicate check for now
+    const batchCountToInsert = 0;
+
+    this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
+  }
+}
+
+proceedToEnroll(
+  fullName: string, mail: string, skill: string, date: string, time: string,
+  venue: string, batchCount: number, startDate: string, endDate: string, now: Date
+) {
+  const enrollmentData: EnrollmentData = {
+    enrollmentID: 0,
+    name: fullName,
+    firstName: this.firstName || '',
+    lastName: this.lastName || '',
+    mail: mail || '',
+    mobile: Number(this.mobile) || 0,
+    skillName: skill || '',
+    date: date || '',
+    time: time || '',
+    venue: venue || '',
+    batchmembers: batchCount,
+    enrollmentDate: now.toISOString(),
+    startDate: this.convertToISODate((startDate || '').trim()),
+    endDate: this.convertToISODate((endDate || '').trim()),    
+    result: '',
+    percentage: '',
+    testTakenDate: '',
+    subjectMatterKnowledge: '',
+    presentation: '',
+    communication: '',
+    handlingDoubts: '',
+    applicationtowork: '',
+    comments: ''
+  };
+
+  this.ielc.enrollUser(enrollmentData).subscribe({
+    next: () => {
+      alert('Enrollment successful!');
+      this.resetForm();
     },
     error: (err) => {
-      console.error('❌ Error checking enrollment status:', err);
-      alert('Failed to verify enrollment status. Please try again.');
+      console.error('Enrollment error:', err);
+      alert('Enrollment failed. Please try again.');
     }
   });
 }
+
 
 
 resetForm(): void {
@@ -569,6 +735,23 @@ resetForm(): void {
   this.batchMembersCount = 0;
 }
 
+allowOnlyDigits(event: KeyboardEvent) {
+  const charCode = event.which ? event.which : event.keyCode;
+
+  // Only allow digits (0–9)
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault();
+  }
+}
+
+validatePastedMobile(event: ClipboardEvent) {
+  const pastedInput: string = event.clipboardData?.getData('text') ?? '';
+  const isValid = /^[6-9]\d{9}$/.test(pastedInput.trim());
+
+  if (!isValid) {
+    event.preventDefault();
+  }
+}
 
 
 
@@ -627,15 +810,255 @@ sortRegisteredUsersbysession(data: any[]): any[] {
 
 Enrolledusers: any[] = []; 
 topSkillName: string = '';
- GetAllSkillSessions(){
-  this.ielc.GetSkillSessions().subscribe((data) => {
-    this.Enrolledusers=data;
-    this.Enrolledusers = this.sortRegisteredUsersbysession(data);
-    if (this.Enrolledusers.length > 0) {
-      this.topSkillName = this.Enrolledusers[0].skillName;
+//  GetAllSkillSessions(){
+//   this.ielc.GetSkillSessions().subscribe((data) => {
+//     this.Enrolledusers=data;
+//     this.Enrolledusers = this.sortRegisteredUsersbysession(data);
+//     // const filtered = this.filterSkillsByUserRestriction(data);
+//     // this.Enrolledusers = this.sortRegisteredUsers(filtered);
+    
+//     if (this.Enrolledusers.length > 0) {
+//       this.topSkillName = this.Enrolledusers[0].skillName;
+//     }
+//   });
+//  }
+// visibleSessionIds: number[] = [];
+GetAllSkillSessions() {
+  const loggedInEmail = (this.userEmail ?? '').toLowerCase();
+  console.log('🔐 Logged-in user:', loggedInEmail);
+
+  forkJoin({
+    sessions: this.ielc.GetSkillSessions(),
+    aadUsers: this.ielc.GetAadUserslist(),
+    aadGroups: this.ielc.GetAadUserGroupslist()
+  }).subscribe(async ({ sessions, aadUsers, aadGroups }) => {
+
+    const validGroups = aadGroups.map((g: any) => g.displayName?.trim()).filter(Boolean);
+    const visibleSessions: any[] = [];
+    const visibleSessionDetails: { sessionID: number, skillName: string }[] = [];
+    
+
+    for (const session of sessions) {
+      const skill = session.skillName;
+      
+      // Initialize sessionUsers before using it
+      const sessionUsers: string[] = (session.aadUsersData || '')
+        .split(',')
+        .map((u: string) => u.trim().toLowerCase())
+        .filter(Boolean);
+
+      console.log('📘 Checking session:', skill);
+      console.log('📍 Raw Users field:', session.aadUsersData);  // Check if Users is undefined
+      console.log('📍 Processed Users:', sessionUsers);
+
+      // Check if the logged-in user is assigned
+      let isUserAssigned = sessionUsers.includes(loggedInEmail);
+
+      // Process session groups
+      const sessionGroups: string[] = (session.groups || '')
+        .split(',')
+        .map((g: string) => g.trim())
+        .filter(Boolean);
+
+      let isGroupAssigned = false;
+      console.log('📍 Groups:', sessionGroups);
+
+      // Check if user is part of any assigned group
+      for (const group of sessionGroups) {
+        if (group && validGroups.includes(group)) {
+          try {
+            const groupMembers = await this.ielc.getUsersOfGroup(group).toPromise();
+            const lowerGroupMembers = groupMembers.map((m: any) => m.toLowerCase());
+
+            console.log(`📂 Group "${group}" members:`, lowerGroupMembers);
+
+            if (lowerGroupMembers.includes(loggedInEmail)) {
+              isGroupAssigned = true;
+              console.log(`✅ User is part of group "${group}"`);
+              break;
+            }
+          } catch (err) {
+            console.error(`❌ Failed to fetch members of group "${group}"`, err);
+          }
+        }
+      }
+
+      const isSessionPublic = sessionUsers.length === 0 && sessionGroups.length === 0;
+      const hasAccess = isUserAssigned || isGroupAssigned || isSessionPublic;
+
+      console.log('🔎 isUserAssigned:', isUserAssigned);
+      console.log('🔎 isGroupAssigned:', isGroupAssigned);
+      console.log('🔎 isSessionPublic:', isSessionPublic);
+      console.log('🔎 hasAccess:', hasAccess);
+
+      if (hasAccess) {
+        visibleSessions.push(session);
+        visibleSessionDetails.push({ sessionID: session.sessionID, skillName: skill });
+        console.log(`✔️ "${skill}" added to visible sessions`);
+      } else {
+        console.log(`🚫 "${skill}" hidden from this user`);
+      }
+    }
+    this.visibleSessionIds = visibleSessions
+    console.log('✅ Visible session IDs with skills:', visibleSessions);
+   
+    this.Enrolledusers = this.sortRegisteredUsersbysession(visibleSessions);
+    // this.GetEnrolledSessionsSkillsData();
+    if (!this.topSkillReady) {
+      this.GetEnrolledSessionsSkillsData();
+    }
+
+    // if (this.Enrolledusers.length > 0) {
+    //   this.topSkillName = this.Enrolledusers[0].skillName;
+    //   console.log('🏆 Top visible skill:', this.topSkillName);
+    // } else {
+    //   console.warn('⚠️ No visible skills for this user');
+    // }
+  });
+}
+topSkillReady = false;
+GetEnrolledSessionsSkillsData() {
+  const loggedInEmail = (this.userEmail ?? '').toLowerCase();
+  console.log('🔐 Logged-in user for enrolled sessions:', loggedInEmail);
+
+  this.ielc.GetEnrolledSessions().subscribe((data) => {
+    console.log('📦 Enrolled session data:', data);
+    console.log('🧩 Visible session IDs:', this.visibleSessionIds);
+    if (this.visibleSessionIds && this.visibleSessionIds.length > 0) {
+      
+      const enrolledSkillNames = data.map((name: string) => name.trim().toLowerCase());
+
+        this.Enrolledskills = this.visibleSessionIds.filter((session: any) => {
+          const sessionSkillName = (session.skillName ?? '').trim().toLowerCase();
+          const matched = enrolledSkillNames.includes(sessionSkillName);
+
+          console.log(`🔍 Matching visible skill "${session.skillName}" -> Match: ${matched}`);
+          return matched;
+        });
+
+        const enrolledNames = this.Enrolledskills.map((s: any) => s.skillName);
+        console.log('🎯 Enrolled skills visible to user:', enrolledNames);
+        if ( enrolledNames.length > 0) {
+          this.topSkillName = enrolledNames[0];
+          console.log('🏆 Final topSkillName:', this.topSkillName);
+        }
+      
+    } 
+    else {
+      console.warn('⚠️ No visible sessions stored from GetAllSkillSessions yet.');
+      this.Enrolledskills = [];
     }
   });
- }
+}
+// GetEnrolledSessionsSkillsData() {
+//   const loggedInEmail = (this.userEmail ?? '').toLowerCase();
+//   this.ielc.GetEnrolledSessions().subscribe((data) => {
+//     if (this.visibleSessionIds && this.visibleSessionIds.length > 0) {
+//       const enrolledSkillNames = data.map((name: string) => name.trim().toLowerCase());
+
+//       // Filter visible sessions based on enrolled skills
+//       this.Enrolledskills = this.visibleSessionIds.filter((session: SkillSession) => {
+//         const sessionSkillName = (session.skillName ?? '').trim().toLowerCase();
+//         return enrolledSkillNames.includes(sessionSkillName);
+//       });
+
+//       const enrolledNames = this.Enrolledskills.map((s: SkillSession) => s.skillName);
+//       console.log('🎯 Enrolled skills visible to user:', enrolledNames);
+
+//       // Set topSkillName based on first match from enrolled data
+//       const topFromEnrolled = data.find((enrolled: string) => {
+//         const enrolledLower = enrolled.trim().toLowerCase();
+//         return this.Enrolledskills.some((s: SkillSession) => 
+//           (s.skillName ?? '').trim().toLowerCase() === enrolledLower
+//         );
+//       });
+
+//       if (topFromEnrolled) {
+//         this.topSkillName = topFromEnrolled.trim();
+//       } else if (this.visibleSessionIds.length > 0) {
+//         this.topSkillName = this.visibleSessionIds[0].skillName;
+//       } else {
+//         this.topSkillName = '';
+//       }
+//     } else {
+//       this.topSkillName = '';
+//     }
+
+//     this.topSkillReady = true;
+//   });
+// }
+
+
+
+// GetEnrolledSessionsSkillsData(visibleSessions: any[]) {
+//   const loggedInEmail = (this.userEmail ?? '').toLowerCase();
+
+//   this.ielc.GetEnrolledSessions().subscribe((data) => {
+//     const enrolledSkillNames = data.map((s: any) => (s.skillName || '').trim().toLowerCase());
+
+//      this.Enrolledskills = this.visibleSessionIds.filter((session: any) => {
+//     const sessionSkillName = (session.skillName ?? '').trim().toLowerCase();
+//     const matched = enrolledSkillNames.includes(sessionSkillName);
+
+//     console.log(`🔍 Matching visible skill "${session.skillName}" -> Match: ${matched}`);
+//     return matched;
+//   });
+
+//   const enrolledNames = this.Enrolledskills.map((s: any) => s.skillName);
+//   console.log('🎯 Enrolled skills visible to user:', enrolledNames);
+
+//     // ✅ Set topSkillName only after full matching
+//     if (this.Enrolledskills.length > 0) {
+//       this.topSkillName = this.Enrolledskills[0].skillName;
+//       console.log('🏆 Final topSkillName:', this.topSkillName);
+//     }
+//   });
+// }
+
+
+// GetEnrolledSessionsSkillsData() {
+//   const loggedInEmail = (this.userEmail ?? '').toLowerCase();
+//   console.log('🔐 Logged-in user for enrolled sessions:', loggedInEmail);
+
+//   this.ielc.GetEnrolledSessions().subscribe((data: string[]) => {
+//     console.log('📦 Enrolled session data:', data);
+//     console.log('🧩 Visible session IDs:', this.visibleSessionIds);
+
+//     if (this.visibleSessionIds && this.visibleSessionIds.length > 0) {
+//       // Normalize enrolled skill names for comparison
+//       const enrolledSkillNames = data.map((name: string) =>
+//         name?.trim().toLowerCase()
+//       );
+
+//       // Filter visible sessions by matching skill names
+//       this.Enrolledskills = this.visibleSessionIds.filter((session: any) => {
+//         const sessionSkillName = (session.skillName ?? '').trim().toLowerCase();
+//         const matched = enrolledSkillNames.includes(sessionSkillName);
+
+//         console.log(`🔍 Matching visible skill "${session.skillName}" -> Match: ${matched}`);
+//         return matched;
+//       });
+
+//       // Extract just skill names for dropdown or display
+//       const enrolledNames = this.Enrolledskills.map((s: any) => s.skillName);
+//       console.log('🎯 Enrolled skills visible to user:', enrolledNames);
+//       if (this.Enrolledskills.length > 0) {
+//         this.topSkillName = this.Enrolledskills[0].skillName;
+//         console.log('🏆 Top enrolled skill set from enrolled list:', this.topSkillName);
+//       } else {
+//         console.warn('⚠️ No matched enrolled skills');
+//       }
+//     } else {
+//       console.warn('⚠️ No visible sessions stored from GetAllSkillSessions yet.');
+//       this.Enrolledskills = [];
+//     }
+//   });
+// }
+
+
+
+
+
 
  crserestlist: any[]=[];
  courseSkillNames: string[] = [];
