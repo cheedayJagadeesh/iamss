@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/authservice.service';
 import { MsalService } from '@azure/msal-angular';
 import { ActivatedRoute } from '@angular/router';
+import { forkJoin } from 'rxjs';
+declare var bootstrap: any;
+
 
 interface exam{
   id: number;
@@ -151,19 +154,96 @@ export class ExampageComponent implements OnInit, OnDestroy  {
       // this.userEmail = userDetails?.email || 'No Email';
       this.userName = userDetails?.displayName ;
       this.userEmail = userDetails?.email;
-    });
-    this.authService.userDetails$.subscribe(userDetails => {
       if (userDetails) {
         this.userEmail = userDetails.email; // Ensure the email is correctly assigned
         this.GetAllUsers(); // Call this AFTER we get the email
       }
-    });   
+    });
+    // this.authService.userDetails$.subscribe(userDetails => {
+    //   if (userDetails) {
+    //     this.userEmail = userDetails.email; // Ensure the email is correctly assigned
+    //     this.GetAllUsers(); // Call this AFTER we get the email
+    //   }
+    // });   
   }
   
    catch (error) {
     console.error("MSAL initialization error in HeaderComponent:", error);
   }
+
   }
+
+  // async ngOnInit() {
+  //   try {
+  //     console.log("Initializing MSAL...");
+  //     await this.msalService.instance.initialize();  
+  //     await this.msalService.instance.handleRedirectPromise();
+  
+  //     console.log("MSAL initialized successfully.");
+      
+  //     const activeAccount = this.msalService.instance.getActiveAccount();
+  //     if (!activeAccount) {
+  //       console.warn("No active account found. Redirecting to login...");
+  //       this.router.navigate(['/login']);
+  //       return;
+  //     }
+  
+  //     this.authService.setActiveAccount();
+  
+  //     this.authService.userDetails$.subscribe(userDetails => {
+  //       if (userDetails) {
+  //         this.userName = userDetails.displayName;
+  //         this.userEmail = userDetails.email;
+  //         this.GetAllUsers(); // Trigger only after user info is available
+  //       }
+  //     });
+  //   } catch (error) {
+  //     console.error("MSAL initialization error:", error);
+  //   }
+  
+  //   if (!this.selectedSkill) {
+  //     console.warn("No selected skill. Skipping question generation.");
+  //     return;
+  //   }
+  
+  //   forkJoin({
+  //     examinfo: this.ielc.Getexaminfo(),
+  //     allQuestions: this.ielc.Getskillqa()
+  //   }).subscribe(({ examinfo, allQuestions }) => {
+  //     this.examdata = examinfo[0];
+  //     this.timeLeft = this.examdata.examTime * 60;
+  
+  //     const standardSkillKey = `${this.selectedSkill}_StQuestions`;
+  //     const totalQuestions = this.examdata.displayExamQuestions || allQuestions.length;
+  //     const standardCount = this.examdata.standardExamQuestions || 0;
+  
+  //     const standardQuestions = allQuestions.filter((q: Question) => q.skillName === standardSkillKey);
+  //     const standardQuestionIds = new Set(standardQuestions.map((q: Question) => q.id)); // assuming `id` exists
+  
+  //     const remainingCount = totalQuestions - standardQuestions.length;
+  
+  //     const skillQuestions = allQuestions.filter(
+  //       (q: Question) => q.skillName === this.selectedSkill && !standardQuestionIds.has(q.id)
+  //     );
+  
+  //     const combined = this.shuffleArray([
+  //       ...this.shuffleArray(standardQuestions).slice(0, standardCount),
+  //       ...this.shuffleArray(skillQuestions).slice(0, remainingCount)
+  //     ]);
+  
+  //     this.questions = combined;
+  //     this.currentQuestionIndex = 0;
+  //     this.isLoading = false;
+  //     if (this.timeLeft > 0) {
+  //         this.startTimer(); 
+  //       }
+  //   });
+  // }
+  
+
+ 
+  
+
   sortRegisteredUsers(data: any[]): any[] {
     return data.sort((a, b) => (a.enrollmentID > b.enrollmentID ? -1 : a.enrollmentID < b.enrollmentID ? 1 : 0));
   }
@@ -246,6 +326,7 @@ export class ExampageComponent implements OnInit, OnDestroy  {
   // }
   
   GetAllSkillsQa() {
+   
     this.ielc.Getskillqa().subscribe((data: Question[]) => {
       this.examlist = data;
   
@@ -314,47 +395,102 @@ export class ExampageComponent implements OnInit, OnDestroy  {
   }
   
   
-  UpdateResult() {
-    if (this.Registeredusers.length > 0) {
-      // Match the user by skill, and if enrollmentID is available, use it too
-      const matchedUser = this.Registeredusers.find(user =>
-        user.skillName === this.selectedSkill &&
-        (this.enrollmentID ? user.enrollmentID === this.enrollmentID : true)
-      );
+  // UpdateResult() {
+  //   if (this.Registeredusers.length > 0) {
+  //     // Match the user by skill, and if enrollmentID is available, use it too
+  //     const matchedUser = this.Registeredusers.find(user =>
+  //       user.skillName === this.selectedSkill &&
+  //       (this.enrollmentID ? user.enrollmentID === this.enrollmentID : true)
+  //     );
   
-      if (!matchedUser) {
-        alert("⚠️ No matching registration found for this skill.");
-        return;
-      }
+  //     if (!matchedUser) {
+  //       alert("⚠️ No matching registration found for this skill.");
+  //       return;
+  //     }
   
-      const totalQuestions = this.examdata.displayExamQuestions;
-      const percentage = (this.correctAnswersCount / totalQuestions) * 100;
-      const formattedDate = this.formatDateToCustomString();
+  //     const totalQuestions = this.examdata.displayExamQuestions;
+  //     const percentage = (this.correctAnswersCount / totalQuestions) * 100;
+  //     const formattedDate = this.formatDateToCustomString();
   
-      this.resultdata = {
-        ...matchedUser,
-        testTakenDate: formattedDate,
-        percentage: percentage.toFixed(0),
-        result: "Completed"
-      };
+  //     this.resultdata = {
+  //       ...matchedUser,
+  //       testTakenDate: formattedDate,
+  //       percentage: percentage.toFixed(0),
+  //       result: "Completed"
+  //     };
      
-      this.ielc.Updatefeedback(matchedUser.enrollmentID, this.resultdata).subscribe(
-        (response) => {
-          // console.log('✅ Updated Successfully:', response);
-          alert("✅ Exam Completed!\nThank you for taking the test.");
-          // this.router.navigate(['/registration'], { queryParams: { submittedID: matchedUser.enrollmentID } });
-          this.router.navigate(['/registration']);
-        },
-        (error) => {
-          console.error('❌ Error updating Record:', error);
-          alert("❌ Failed to submit your result. Please try again.");
-        }
-      );
-    } else {
-      alert("⚠️ Registered users not loaded.");
-    }
-  }
+  //     this.ielc.Updatefeedback(matchedUser.enrollmentID, this.resultdata).subscribe(
+  //       (response) => {
+  //         // console.log('✅ Updated Successfully:', response);
+  //         alert("✅ Exam Completed!\nThank you for taking the test.");
+  //         // this.router.navigate(['/registration'], { queryParams: { submittedID: matchedUser.enrollmentID } });
+  //         this.router.navigate(['/registration']);
+  //       },
+  //       (error) => {
+  //         console.error('❌ Error updating Record:', error);
+  //         alert("❌ Failed to submit your result. Please try again.");
+  //       }
+  //     );
+  //   } else {
+  //     alert("⚠️ Registered users not loaded.");
+  //   }
+  // }
   
+
+  examPassed: boolean = false;
+percentage: number = 0;
+
+UpdateResult() {
+  if (this.Registeredusers.length > 0) {
+    const matchedUser = this.Registeredusers.find(user =>
+      user.skillName === this.selectedSkill &&
+      (this.enrollmentID ? user.enrollmentID === this.enrollmentID : true)
+    );
+
+    if (!matchedUser) {
+      alert("⚠️ No matching registration found for this skill.");
+      return;
+    }
+
+    const totalQuestions = this.examdata.displayExamQuestions;
+    this.percentage = (this.correctAnswersCount / totalQuestions) * 100;
+    const formattedDate = this.formatDateToCustomString();
+    this.examPassed = this.percentage >= this.examdata.examPercentage;
+
+    this.resultdata = {
+      ...matchedUser,
+      testTakenDate: formattedDate,
+      percentage: this.percentage.toFixed(0),
+      result: "Completed"
+    };
+
+    this.ielc.Updatefeedback(matchedUser.enrollmentID, this.resultdata).subscribe(
+      (response) => {
+        this.openModal(); // Show result modal
+      },
+      (error) => {
+        console.error('❌ Error updating Record:', error);
+        alert("❌ Failed to submit your result. Please try again.");
+      }
+    );
+  } else {
+    alert("⚠️ Registered users not loaded.");
+  }
+}
+
+
+openModal() {
+  const modal = new bootstrap.Modal(document.getElementById('resultModal')!);
+  modal.show();
+}
+
+closeModal() {
+  const modalElement = document.getElementById('resultModal')!;
+  const modalInstance = bootstrap.Modal.getInstance(modalElement);
+  modalInstance?.hide();
+  this.router.navigate(['/registration']);
+}
+
   
   
   submitExam() {

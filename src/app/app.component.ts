@@ -47,14 +47,62 @@ export class AppComponent implements OnInit {
   // }
   isLoading: boolean = true;
   currentRoute: string = '';
-  async ngOnInit() {
+  // async ngOnInit() {
     
+  //   try {
+  //     await this.msalService.instance.initialize();
+  //     console.log('MSAL initialized');
+  //     this.router.events.subscribe(() => {
+  //       this.currentRoute = this.router.url;
+  //     });
+  //     if (this.authService.isAuthenticated()) {
+  //       console.log('User is authenticated');
+  //       this.authService.setActiveAccount();
+  
+  //       const role = await this.authService.fetchUserDetails();
+  //       const currentRoute = this.router.url;
+  
+  //       if (role === 'SuperAdmin' || role === 'Admin') {
+  //         // if (currentRoute === '/' || currentRoute === '/registration') {
+  //         if (currentRoute === '/' ) {
+  //           this.router.navigate(['/home']);
+  //         }
+  //       } else {
+  //         if (currentRoute !== '/registration') {
+  //           this.router.navigate(['/registration']);
+  //         }
+  //       }
+  
+  //     } else {
+  //       console.log('User is not authenticated, starting login...');
+  //       await this.authService.login(); 
+  //     }
+  //   } catch (error) {
+  //     console.error('App init error:', error);
+  //     this.router.navigate(['/login']);
+  //   } finally {
+  //     this.isLoading = false;
+  //   }
+  // }
+
+  async ngOnInit() {
+    this.isLoading = true;
     try {
+      // Step 1: Handle MSAL redirect (if using redirect login)
       await this.msalService.instance.initialize();
-      console.log('MSAL initialized');
+      const redirectResult = await this.msalService.instance.handleRedirectPromise();
+  
+      if (redirectResult !== null && redirectResult.account) {
+        console.log('Redirect login successful. Setting active account.');
+        this.msalService.instance.setActiveAccount(redirectResult.account);
+      }
+  
+      // Step 2: Set current route watcher
       this.router.events.subscribe(() => {
         this.currentRoute = this.router.url;
       });
+  
+      // Step 3: Check if the user is authenticated
       if (this.authService.isAuthenticated()) {
         console.log('User is authenticated');
         this.authService.setActiveAccount();
@@ -63,8 +111,7 @@ export class AppComponent implements OnInit {
         const currentRoute = this.router.url;
   
         if (role === 'SuperAdmin' || role === 'Admin') {
-          // if (currentRoute === '/' || currentRoute === '/registration') {
-          if (currentRoute === '/' ) {
+          if (currentRoute === '/') {
             this.router.navigate(['/home']);
           }
         } else {
@@ -72,18 +119,27 @@ export class AppComponent implements OnInit {
             this.router.navigate(['/registration']);
           }
         }
-  
       } else {
-        console.log('User is not authenticated, starting login...');
-        await this.authService.login(); 
+        console.log('User is not authenticated. Starting login...');
+        await this.authService.login(); // Will trigger popup or redirect login
       }
-    } catch (error) {
+  
+    } catch (error: any) {
       console.error('App init error:', error);
-      this.router.navigate(['/login']);
+  
+      // Optional: Handle MSAL-specific interaction error
+      if (error instanceof InteractionRequiredAuthError) {
+        console.warn('Interaction required. Starting login popup...');
+        await this.authService.login(); // fallback to interactive login
+      } else {
+        this.router.navigate(['/login']);
+      }
+  
     } finally {
       this.isLoading = false;
     }
   }
+  
   
   
 

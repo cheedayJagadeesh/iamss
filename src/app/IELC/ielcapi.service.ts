@@ -1892,4 +1892,86 @@ skillnameurl='https://ielc-coreapi.azurewebsites.net/IELCQA/skillname'
       return this.http.get<any>(`${this.skillnameurl}/${skillName}`);
     }
 
+
+//================================================================================Compliance
+complianceismsUrl='https://ielc-coreapi.azurewebsites.net/ISMSInteqSoftware_Calendar';
+complianceqmsUrl='https://ielc-coreapi.azurewebsites.net/QMSInteqSoftware_Calendar';
+
+Getcomplianceismsdata(): Observable<any> {
+     return this.http.get<any>(this.complianceismsUrl);
+} 
+
+Getcomplianceqmsdata(): Observable<any> {
+  return this.http.get<any>(this.complianceqmsUrl);
+} 
+
+GetCCDisplayNames(): Observable<string[]> {
+  return this.http.get<string[]>(`${this.complianceismsUrl}/CCDisplayNames`);
+}
+
+GetToDisplayNames(): Observable<string[]> {
+  return this.http.get<string[]>(`${this.complianceismsUrl}/TODisplayNames`);
+}
+
+GetByProjects(): Observable<string[]> {
+  return this.http.get<string[]>(`${this.complianceismsUrl}/Team`)
+}
+
+Getcompliancefilterprojects(displayname: string): Observable<any> {
+  return this.http.get<any>(`${this.complianceismsUrl}/detailsbyDisplayName/${displayname}`);
+}
+
+GetUserByProjects(displayname: string): Observable<string[]> {
+  return this.http.get<string[]>(`${this.complianceismsUrl}/userprojectsbydisplayname/${displayname}`);
+}
+
+
+GetISMSUserByProjectTable(projectname: string): Observable<string[]> {
+  return this.http.get<string[]>(`${this.complianceismsUrl}/searchproject/${projectname}`)
+}
+
+GetCurrentMonth(projectname: string): Observable<string[]> {
+  return this.http.get<string[]>(`${this.complianceismsUrl}/currentmonthstatus/${projectname}`)
+}
+
+GetProjectIDISMS(projectname: string): Observable<string[]> {
+  return this.http.get<string[]>(`${this.complianceismsUrl}/projectids/search/${projectname}`)
+}
+
+UpdateISMSCompliance(id: number, updatedData: any): Observable<any> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put(`${this.complianceismsUrl}/update-month/${id}`, JSON.stringify(updatedData), { headers });
+}
+
+//QMS
+
+Getcompliancefilterprojectsqms(displayname: string): Observable<any> {
+  return this.http.get<any>(`${this.complianceqmsUrl}/detailsbyDisplayName/${displayname}`);
+}
+
+GetUserByProjectsqms(displayname: string): Observable<string[]> {
+  return this.http.get<string[]>(`${this.complianceqmsUrl}/userprojectsbydisplayname/${displayname}`);
+}
+
+
+GetQMSUserByProjectTable(projectname: string): Observable<string[]> {
+  return this.http.get<string[]>(`${this.complianceqmsUrl}/searchproject/${projectname}`)
+}
+
+GetCurrentMonthQMS(projectname: string): Observable<string[]> {
+  return this.http.get<string[]>(`${this.complianceqmsUrl}/currentmonthstatus/${projectname}`)
+}
+
+GetProjectIDQMS(projectname: string): Observable<string[]> {
+  return this.http.get<string[]>(`${this.complianceqmsUrl}/projectids/search/${projectname}`)
+}
+
+UpdateQMSCompliance(id: number, updatedData: any): Observable<any> {
+  const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  return this.http.put(`${this.complianceqmsUrl}/update-month/${id}`, JSON.stringify(updatedData), { headers });
+}
+
+GetUniqueName(): Observable<string[]> {
+  return this.http.get<string[]>(`${this.complianceismsUrl}/AllDisplayNames`);
+}
 }

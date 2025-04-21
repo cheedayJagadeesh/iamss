@@ -169,7 +169,7 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
    this.GetExamlist();
   //  this.GetAllUsers();
   this.GetCourseist();
-  this.GetAllSkillSessions();
+  // this.GetAllSkillSessions();
   // this.GetEnrolledSessionsSkillsData();
   // this.loadUserRestrictionsAndSessions();
    if (this.eventslist && this.eventslist.length > 0) {
@@ -827,103 +827,170 @@ GetAllSkillSessions() {
   const loggedInEmail = (this.userEmail ?? '').toLowerCase();
   console.log('🔐 Logged-in user:', loggedInEmail);
 
+  // forkJoin({
+  //   sessions: this.ielc.GetSkillSessions(),
+  //   aadUsers: this.ielc.GetAadUserslist(),
+  //   aadGroups: this.ielc.GetAadUserGroupslist()
+  // }).subscribe(async ({ sessions, aadUsers, aadGroups }) => {
+
+  //   const validGroups = aadGroups.map((g: any) => g.displayName?.trim()).filter(Boolean);
+  //   const visibleSessions: any[] = [];
+  //   const visibleSessionDetails: { sessionID: number, skillName: string }[] = [];
+    
+
+  //   for (const session of sessions) {
+  //     const skill = session.skillName;
+      
+  //     // Initialize sessionUsers before using it
+  //     const sessionUsers: string[] = (session.aadUsersData || '')
+  //       .split(',')
+  //       .map((u: string) => u.trim().toLowerCase())
+  //       .filter(Boolean);
+
+  //     console.log('📘 Checking session:', skill);
+  //     console.log('📍 Raw Users field:', session.aadUsersData);  // Check if Users is undefined
+  //     console.log('📍 Processed Users:', sessionUsers);
+
+  //     // Check if the logged-in user is assigned
+  //     let isUserAssigned = sessionUsers.includes(loggedInEmail);
+
+  //     // Process session groups
+  //     const sessionGroups: string[] = (session.groups || '')
+  //       .split(',')
+  //       .map((g: string) => g.trim())
+  //       .filter(Boolean);
+
+  //     let isGroupAssigned = false;
+  //     console.log('📍 Groups:', sessionGroups);
+
+  //     // Check if user is part of any assigned group
+  //     for (const group of sessionGroups) {
+  //       if (group && validGroups.includes(group)) {
+  //         try {
+  //           const groupMembers = await this.ielc.getUsersOfGroup(group).toPromise();
+  //           const lowerGroupMembers = groupMembers.map((m: any) => m.toLowerCase());
+
+  //           console.log(`📂 Group "${group}" members:`, lowerGroupMembers);
+
+  //           if (lowerGroupMembers.includes(loggedInEmail)) {
+  //             isGroupAssigned = true;
+  //             console.log(`✅ User is part of group "${group}"`);
+  //             break;
+  //           }
+  //         } catch (err) {
+  //           console.error(`❌ Failed to fetch members of group "${group}"`, err);
+  //         }
+  //       }
+  //     }
+
+
+  //   console.log('🔍 Initial visibleSessions length:', visibleSessions.length);
+
+
+  //         // Access checks
+  //         const isSessionPublic = sessionUsers.length === 0 && sessionGroups.length === 0;
+  //         const hasAccess = isUserAssigned || isGroupAssigned || isSessionPublic;
+
+  //         // Log access details
+  //         console.log(`Session "${session.skillName}" -> Access: ${hasAccess}`);
+          
+  //         if (hasAccess) {
+  //           visibleSessions.push(session);
+  //           visibleSessionDetails.push({ sessionID: session.sessionID, skillName: skill });
+  //           console.log(`✔️ "${session.skillName}" added to visible sessions`);
+  //         } else {
+  //           console.log(`🚫 "${session.skillName}" hidden from this user`);
+  //         }
+  //       }
+  
+
+  //       console.log('✅ Final visible session IDs with skills:', visibleSessions);
+  //       this.visibleSessionIds = visibleSessions;
+
+  //   console.log('✅ Visible session IDs with skills:', visibleSessions);
+   
+  //   this.Enrolledusers = this.sortRegisteredUsersbysession(visibleSessions);
+  //   // this.GetEnrolledSessionsSkillsData();
+  //   if (!this.topSkillReady) {
+  //     this.GetEnrolledSessionsSkillsData();
+  //   }
+
+  //   // if (this.Enrolledusers.length > 0) {
+  //   //   this.topSkillName = this.Enrolledusers[0].skillName;
+  //   //   console.log('🏆 Top visible skill:', this.topSkillName);
+  //   // } else {
+  //   //   console.warn('⚠️ No visible skills for this user');
+  //   // }
+  // });
+
   forkJoin({
     sessions: this.ielc.GetSkillSessions(),
     aadUsers: this.ielc.GetAadUserslist(),
     aadGroups: this.ielc.GetAadUserGroupslist()
-  }).subscribe(async ({ sessions, aadUsers, aadGroups }) => {
-
+  }).subscribe(({ sessions, aadUsers, aadGroups }) => {
     const validGroups = aadGroups.map((g: any) => g.displayName?.trim()).filter(Boolean);
     const visibleSessions: any[] = [];
-    const visibleSessionDetails: { sessionID: number, skillName: string }[] = [];
-    
-
-    for (const session of sessions) {
-      const skill = session.skillName;
-      
-      // Initialize sessionUsers before using it
-      const sessionUsers: string[] = (session.aadUsersData || '')
-        .split(',')
-        .map((u: string) => u.trim().toLowerCase())
-        .filter(Boolean);
-
-      console.log('📘 Checking session:', skill);
-      console.log('📍 Raw Users field:', session.aadUsersData);  // Check if Users is undefined
-      console.log('📍 Processed Users:', sessionUsers);
-
-      // Check if the logged-in user is assigned
-      let isUserAssigned = sessionUsers.includes(loggedInEmail);
-
-      // Process session groups
-      const sessionGroups: string[] = (session.groups || '')
-        .split(',')
-        .map((g: string) => g.trim())
-        .filter(Boolean);
-
-      let isGroupAssigned = false;
-      console.log('📍 Groups:', sessionGroups);
-
-      // Check if user is part of any assigned group
-      for (const group of sessionGroups) {
-        if (group && validGroups.includes(group)) {
-          try {
-            const groupMembers = await this.ielc.getUsersOfGroup(group).toPromise();
-            const lowerGroupMembers = groupMembers.map((m: any) => m.toLowerCase());
-
-            console.log(`📂 Group "${group}" members:`, lowerGroupMembers);
-
-            if (lowerGroupMembers.includes(loggedInEmail)) {
-              isGroupAssigned = true;
-              console.log(`✅ User is part of group "${group}"`);
-              break;
+  
+    const processSessions = async () => {
+      for (const session of sessions) {
+        const skill = session.skillName;
+        const sessionUsers: string[] = (session.aadUsersData || '')
+          .split(',').map((u: string) => u.trim().toLowerCase()).filter(Boolean);
+  
+        const sessionGroups: string[] = (session.groups || '')
+          .split(',').map((g: string) => g.trim()).filter(Boolean);
+  
+        let isUserAssigned = sessionUsers.includes(this.userEmail?.toLowerCase() ?? '');
+        let isGroupAssigned = false;
+  
+        for (const group of sessionGroups) {
+          if (group && validGroups.includes(group)) {
+            try {
+              const groupMembers = await this.ielc.getUsersOfGroup(group).toPromise();
+              const lowerGroupMembers = groupMembers.map((m: any) => m.toLowerCase());
+              if (lowerGroupMembers.includes(this.userEmail?.toLowerCase() ?? '')) {
+                isGroupAssigned = true;
+                break;
+              }
+            } catch (err) {
+              console.error(`❌ Failed to fetch members of group "${group}"`, err);
             }
-          } catch (err) {
-            console.error(`❌ Failed to fetch members of group "${group}"`, err);
           }
         }
+  
+        const isSessionPublic = sessionUsers.length === 0 && sessionGroups.length === 0;
+        const hasAccess = isUserAssigned || isGroupAssigned || isSessionPublic;
+  
+        if (hasAccess) {
+          visibleSessions.push(session);
+        }
       }
-
-      const isSessionPublic = sessionUsers.length === 0 && sessionGroups.length === 0;
-      const hasAccess = isUserAssigned || isGroupAssigned || isSessionPublic;
-
-      console.log('🔎 isUserAssigned:', isUserAssigned);
-      console.log('🔎 isGroupAssigned:', isGroupAssigned);
-      console.log('🔎 isSessionPublic:', isSessionPublic);
-      console.log('🔎 hasAccess:', hasAccess);
-
-      if (hasAccess) {
-        visibleSessions.push(session);
-        visibleSessionDetails.push({ sessionID: session.sessionID, skillName: skill });
-        console.log(`✔️ "${skill}" added to visible sessions`);
-      } else {
-        console.log(`🚫 "${skill}" hidden from this user`);
+  
+      this.visibleSessionIds = visibleSessions;
+      // console.log('✅ Final visible session IDs with skills:', visibleSessions);
+  
+      this.Enrolledusers = this.sortRegisteredUsersbysession(visibleSessions);
+  
+      if (!this.topSkillReady) {
+        this.GetEnrolledSessionsSkillsData();  // <-- now safe to call after filtering
       }
-    }
-    this.visibleSessionIds = visibleSessions
-    console.log('✅ Visible session IDs with skills:', visibleSessions);
-   
-    this.Enrolledusers = this.sortRegisteredUsersbysession(visibleSessions);
-    // this.GetEnrolledSessionsSkillsData();
-    if (!this.topSkillReady) {
-      this.GetEnrolledSessionsSkillsData();
-    }
-
-    // if (this.Enrolledusers.length > 0) {
-    //   this.topSkillName = this.Enrolledusers[0].skillName;
-    //   console.log('🏆 Top visible skill:', this.topSkillName);
-    // } else {
-    //   console.warn('⚠️ No visible skills for this user');
-    // }
+    };
+  
+    processSessions();  // trigger async function
   });
+  
 }
+
+
 topSkillReady = false;
+
 GetEnrolledSessionsSkillsData() {
   const loggedInEmail = (this.userEmail ?? '').toLowerCase();
-  console.log('🔐 Logged-in user for enrolled sessions:', loggedInEmail);
+  // console.log('🔐 Logged-in user for enrolled sessions:', loggedInEmail);
 
   this.ielc.GetEnrolledSessions().subscribe((data) => {
-    console.log('📦 Enrolled session data:', data);
-    console.log('🧩 Visible session IDs:', this.visibleSessionIds);
+    // console.log('📦 Enrolled session data:', data);
+    // console.log('🧩 Visible session IDs:', this.visibleSessionIds);
     if (this.visibleSessionIds && this.visibleSessionIds.length > 0) {
       
       const enrolledSkillNames = data.map((name: string) => name.trim().toLowerCase());
@@ -932,15 +999,21 @@ GetEnrolledSessionsSkillsData() {
           const sessionSkillName = (session.skillName ?? '').trim().toLowerCase();
           const matched = enrolledSkillNames.includes(sessionSkillName);
 
-          console.log(`🔍 Matching visible skill "${session.skillName}" -> Match: ${matched}`);
+          // console.log(`🔍 Matching visible skill "${session.skillName}" -> Match: ${matched}`);
           return matched;
         });
+      
 
         const enrolledNames = this.Enrolledskills.map((s: any) => s.skillName);
-        console.log('🎯 Enrolled skills visible to user:', enrolledNames);
+        // console.log('🎯 Enrolled skills visible to user:', enrolledNames);
+
+
+        
+
         if ( enrolledNames.length > 0) {
           this.topSkillName = enrolledNames[0];
-          console.log('🏆 Final topSkillName:', this.topSkillName);
+          // this.topSkillReady = true;
+          // console.log('🏆 Final topSkillName:', this.topSkillName);
         }
       
     } 
@@ -949,6 +1022,7 @@ GetEnrolledSessionsSkillsData() {
       this.Enrolledskills = [];
     }
   });
+  
 }
 // GetEnrolledSessionsSkillsData() {
 //   const loggedInEmail = (this.userEmail ?? '').toLowerCase();
@@ -1137,6 +1211,40 @@ GetExamlist() {
   });
   
 }
+
+checkUserExists() {
+
+  this.GetAllUniqueNames().subscribe((usernames: string[]) => {
+
+    // Ensure showButton is always a boolean value
+
+    this.showButton = !!(this.userName && usernames.includes(this.userName));
+
+    if (this.showButton) {
+
+      console.log('Your username exists in the list.');
+
+    } else {
+
+      console.log('Your username is NOT in the list.');
+
+    }
+
+  });
+
+}
+ 
+ 
+GetAllUniqueNames(): Observable<string[]> {
+
+  // Directly return the Observable from GetUniqueName() instead of subscribing inside
+
+  return this.ielc.GetUniqueName();
+
+}
+ 
+showButton: boolean = false;
+ 
 
 
 

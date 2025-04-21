@@ -6,12 +6,14 @@
   <div *ngIf="isLoading" class="loading-container">
     <span class="dot"></span>
 </div>
-  <div>
-   
-    <!-- <a type="button" class="btn btnlink " routerLink="/complianceform"><a class="blink" style="color: blue;">Go To:</a>  ISMS - QMS Monthly Task Status Update</a> -->
-   <a class="a">Go To:</a>
+  <!-- <div>
+      <a class="a">Go To:</a>
     <button type="button" class="btn btn-link btnlink" routerLink="/complianceform">ISMS - QMS Monthly Task Status Update</button>
-  </div>
+  </div> -->
+  <a *ngIf="showButton" class="a">Go To:</a>
+  <button *ngIf="showButton" type="button" class="btn btn-link btnlink" routerLink="/complianceform">
+        ISMS - QMS Monthly Task Status Update
+  </button>
  <div>
    <table class="tableleft">
     <tr>
@@ -355,7 +357,7 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
             <tr>
               <th scope="col">Skill Name</th>
               <th scope="col">Test Result</th>
-              <th scope="col">percentage(%)</th>
+              <th scope="col">Percentage(%)</th>
               <th scope="col">Test Taken Date</th>
               <th scope="col">Feedback</th>
             </tr>
