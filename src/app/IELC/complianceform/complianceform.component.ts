@@ -217,9 +217,9 @@ constructor(private ielc:IelcapiService, private authService: AuthService) {
     this.selectedCompliance = '';
     this.selectedProject = '';
     this.selectedStatus = '';
-    this.selectedTableData = [];
-    this.showTable = false;
-    this.isLoading = false;
+    // this.selectedTableData = [];
+    // this.showTable = false;
+    // this.isLoading = false;
   }
   
 
@@ -519,7 +519,7 @@ GetUserByProjectsListQMS(){
     //this.GetComplianceISMSDataAfterUpdate();
 
 
-    this.resetComplianceData();
+    // this.resetComplianceData();
   }
 
 // UpdateComplianceData() {

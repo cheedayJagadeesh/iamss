@@ -340,6 +340,7 @@ async ngOnInit() {
         this.userEmail = userDetails.email; // Ensure the email is correctly assigned
         this.GetAllUsers(); // Call this AFTER we get the email
         this.GetAllSkillSessions(); 
+        this.checkUserExists();
         // this.GetEnrolledSessionsSkillsData()
       }
     });   
@@ -658,7 +659,7 @@ allowEnrollment() {
     this.ielc.checkVenueEnrollment(skill, this.selectedVenue, mail).subscribe({
       next: (alreadyEnrolled: boolean) => {
         if (alreadyEnrolled) {
-          alert('You are already enrolled for self-learning in this skill!');
+          alert('You are already enrolled for this skill!');
           return;
         }
 
@@ -666,8 +667,8 @@ allowEnrollment() {
         this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
       },
       error: (err) => {
-        console.error('❌ Error checking self-learning enrollment:', err);
-        alert('Failed to verify self-learning enrollment. Please try again.');
+        console.error('❌ Error checking  enrollment:', err);
+        alert('Failed to verify enrollment. Please try again.');
       }
     });
 
