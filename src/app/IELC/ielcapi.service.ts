@@ -1893,7 +1893,7 @@ skillnameurl='https://ielc-coreapi.azurewebsites.net/IELCQA/skillname'
     }
 
 
-//================================================================================Compliance
+//===============================================================================================Compliance Isms
 complianceismsUrl='https://ielc-coreapi.azurewebsites.net/ISMSInteqSoftware_Calendar';
 complianceqmsUrl='https://ielc-coreapi.azurewebsites.net/QMSInteqSoftware_Calendar';
 
@@ -1943,7 +1943,7 @@ UpdateISMSCompliance(id: number, updatedData: any): Observable<any> {
     return this.http.put(`${this.complianceismsUrl}/update-month/${id}`, JSON.stringify(updatedData), { headers });
 }
 
-//QMS
+//==================================================================================================Compliance QMS
 
 Getcompliancefilterprojectsqms(displayname: string): Observable<any> {
   return this.http.get<any>(`${this.complianceqmsUrl}/detailsbyDisplayName/${displayname}`);
@@ -1951,6 +1951,14 @@ Getcompliancefilterprojectsqms(displayname: string): Observable<any> {
 
 GetUserByProjectsqms(displayname: string): Observable<string[]> {
   return this.http.get<string[]>(`${this.complianceqmsUrl}/userprojectsbydisplayname/${displayname}`);
+}
+
+GetCCDisplayNamesQMS(): Observable<string[]> {
+  return this.http.get<string[]>(`${this.complianceqmsUrl}/CCDisplayNames`);
+}
+ 
+GetToDisplayNamesQMS(): Observable<string[]> {
+  return this.http.get<string[]>(`${this.complianceqmsUrl}/TODisplayNames`);
 }
 
 
@@ -1972,6 +1980,7 @@ UpdateQMSCompliance(id: number, updatedData: any): Observable<any> {
 }
 
 GetUniqueName(): Observable<string[]> {
-  return this.http.get<string[]>(`${this.complianceismsUrl}/AllDisplayNames`);
+  return this.http.get<string[]>(`${this.complianceismsUrl}/AllUniqueDisplayNames`);
 }
+
 }

@@ -51,8 +51,12 @@ export class ComplianceformComponent {
   selectedTableData: any[] = [];
   ccDisplayNames: string[] = [];
   toDisplayNames: string[] = [];
+  ccDisplayNamesqms: string[] = [];
+  toDisplayNamesqms: string[] = [];
   matchedSuperOwner: boolean = false;
   matchedOwner: boolean = false;
+  matchedSuperOwnerqms: boolean = false;
+  matchedOwnerqms: boolean = false;
   superownerss: any[] = [];
   ownerss: any[] = [];
   userProjects: string[] = [];
@@ -64,6 +68,7 @@ status: any;
 form: any;
 idlist: any;
 updatedata: any[] = [];
+hasPermission: boolean = true;
 
 compliancedata:compliance={
   Id: 0,
@@ -84,30 +89,170 @@ compliancedata:compliance={
   }
 
   resetdata = {
-    // selectedCompliance: '',
+    selectedCompliance: '',
     selectedProject: '',
     selectedStatus: ''
   };
 
 
 //workingcode2
+// onComplianceChange(event: Event): void {
+//   const target = event.target as HTMLSelectElement;
+//   this.selectedCompliance = target.value;
+
+//   this.isLoading = true;
+//   this.selectedTableData = [];
+
+//   this.showProjectDropdown = true;
+//   this.selectedProject = '';
+//   this.showTable = true;
+
+// //   forkJoin({
+// //     ccData: this.ielc.GetCCDisplayNames(),
+// //     toData: this.ielc.GetToDisplayNames(),
+// //     ccDataqms: this.ielc.GetCCDisplayNamesqms(),
+// //     toDataqms: this.ielc.GetToDisplayNamesqms()
+// //   }).subscribe(({ ccData, toData }) => {
+// //     this.ccDisplayNames = ccData;
+// //     this.toDisplayNames = toData;
+
+// //     if (this.userName) {
+// //       const lowerUser = this.userName.toLowerCase();
+
+// //       this.matchedSuperOwner = this.ccDisplayNames.some(name =>
+// //         name.toLowerCase().includes(lowerUser)
+// //       );
+
+// //       this.matchedOwner = this.toDisplayNames.some(name =>
+// //         name.toLowerCase().includes(lowerUser)
+// //       );
+
+// //       let complianceData$: Observable<any[]> | undefined;
+
+// //       if (this.matchedSuperOwner) {
+// //         //console.log("✅ User is a Super Owner");
+// //         complianceData$ = this.selectedCompliance === 'ISMS'
+// //           ? this.ielc.Getcomplianceismsdata()
+// //           : this.selectedCompliance === 'QMS'
+// //             ? this.ielc.Getcomplianceqmsdata()
+// //             : undefined;
+// //       } else if (this.matchedOwner) {
+// //         //console.log("✅ User is a Normal Owner");
+// //         this.GetUserByProjectsList();
+// //         complianceData$ = this.selectedCompliance === 'ISMS'
+// //           ? this.GetFilteredISMSUserTable()
+// //           : this.selectedCompliance === 'QMS'
+// //             ? this.GetFilteredQMSUserTable()
+// //             : undefined;
+// //       } else {
+// //        // console.log("❌ User not found in either list.");
+// //         this.isLoading = false;
+// //         this.selectedTableData = [];
+// //         return;
+// //       }
+
+// //       if (complianceData$) {
+// //         complianceData$.subscribe({
+// //           next: (data) => {
+// //             this.selectedTableData = this.sortlist(data);
+// //             this.isLoading = false;
+// //           },
+// //           error: (err) => {
+// //            // console.error("❌ Error fetching compliance data:", err);
+// //             this.selectedTableData = [];
+// //             this.isLoading = false;
+// //           }
+// //         });
+// //       }
+// //     }
+// //   });
+// // }
+
+// forkJoin({
+//   ccData: this.ielc.GetCCDisplayNames(),
+//   toData: this.ielc.GetToDisplayNames(),
+//   ccDataqms: this.ielc.GetCCDisplayNamesQMS(),
+//   toDataqms: this.ielc.GetToDisplayNamesQMS(),
+// }).subscribe(({ ccData, toData }) => {
+//   this.ccDisplayNames = ccData;
+//   this.toDisplayNames = toData;
+
+//   if (this.userName) {
+//     const lowerUser = this.userName.toLowerCase();
+
+//     this.matchedSuperOwner = this.ccDisplayNames.some(name =>
+//       name.toLowerCase().includes(lowerUser)
+//     );
+
+//     this.matchedOwner = this.toDisplayNames.some(name =>
+//       name.toLowerCase().includes(lowerUser)
+//     );
+
+//     let complianceData$: Observable<any[]> | undefined;
+
+//     if (this.matchedSuperOwner) {
+//       complianceData$ = this.selectedCompliance === 'ISMS'
+//         ? this.ielc.Getcomplianceismsdata()
+//         : this.selectedCompliance === 'QMS'
+//           ? this.ielc.Getcomplianceqmsdata()
+//           : undefined;
+//           this.resetComplianceData();
+//     } else if (this.matchedOwner) {
+//       this.GetUserByProjectsList();
+//       complianceData$ = this.selectedCompliance === 'ISMS'
+//         ? this.GetFilteredISMSUserTable()
+//         : this.selectedCompliance === 'QMS'
+//           ? this.GetFilteredQMSUserTable()
+//           : undefined;
+//           this.resetComplianceData();
+//     } else {
+//       // No matching owner -> no permission
+//       this.hasPermission = false;
+//       this.isLoading = false;
+//       this.selectedTableData = [];
+//       return;
+//     }
+
+//     if (complianceData$) {
+//       complianceData$.subscribe({
+//         next: (data) => {
+//           this.selectedTableData = this.sortlist(data);
+//           this.hasPermission = this.selectedTableData.length > 0;
+//           this.isLoading = false;
+//         },
+//         error: (err) => {
+//           this.selectedTableData = [];
+//           this.hasPermission = false;
+//           this.isLoading = false;
+//         }
+//       });
+//     }
+//   }
+// });
+// }
+
+
 onComplianceChange(event: Event): void {
   const target = event.target as HTMLSelectElement;
   this.selectedCompliance = target.value;
 
   this.isLoading = true;
+  this.hasPermission = false;
+  this.showTable = false;
   this.selectedTableData = [];
-
   this.showProjectDropdown = true;
   this.selectedProject = '';
-  this.showTable = true;
 
   forkJoin({
     ccData: this.ielc.GetCCDisplayNames(),
-    toData: this.ielc.GetToDisplayNames()
-  }).subscribe(({ ccData, toData }) => {
+    toData: this.ielc.GetToDisplayNames(),
+    ccDataqms: this.ielc.GetCCDisplayNamesQMS(),
+    toDataqms: this.ielc.GetToDisplayNamesQMS(),
+  }).subscribe(({ ccData, toData, ccDataqms, toDataqms }) => {
     this.ccDisplayNames = ccData;
     this.toDisplayNames = toData;
+    this.ccDisplayNamesqms = ccDataqms;
+    this.toDisplayNamesqms = toDataqms;
 
     if (this.userName) {
       const lowerUser = this.userName.toLowerCase();
@@ -120,39 +265,77 @@ onComplianceChange(event: Event): void {
         name.toLowerCase().includes(lowerUser)
       );
 
+      this.matchedSuperOwnerqms = this.ccDisplayNamesqms.some(name =>
+        name.toLowerCase().includes(lowerUser)
+      );
+
+      this.matchedOwnerqms = this.toDisplayNamesqms.some(name =>
+        name.toLowerCase().includes(lowerUser)
+      );
+
+      // let complianceData$: Observable<any[]> | undefined;
+
+      // if (this.matchedSuperOwner) {
+      //   complianceData$ = this.selectedCompliance === 'ISMS'
+      //     ? this.ielc.Getcomplianceismsdata()
+      //     : this.selectedCompliance === 'QMS'
+      //       ? this.ielc.Getcomplianceqmsdata()
+      //       : undefined;
+      // } else if (this.matchedOwner) {
+      //   this.GetUserByProjectsList();
+      //   complianceData$ = this.selectedCompliance === 'ISMS'
+      //     ? this.GetFilteredISMSUserTable()
+      //     : this.selectedCompliance === 'QMS'
+      //       ? this.GetFilteredQMSUserTable()
+      //       : undefined;
+      // } else {
+      //   this.hasPermission = false;
+      //   this.showTable = false;
+      //   this.isLoading = false;
+      //   return;
+      // }
+
       let complianceData$: Observable<any[]> | undefined;
 
-      if (this.matchedSuperOwner) {
-        //console.log("✅ User is a Super Owner");
-        complianceData$ = this.selectedCompliance === 'ISMS'
-          ? this.ielc.Getcomplianceismsdata()
-          : this.selectedCompliance === 'QMS'
-            ? this.ielc.Getcomplianceqmsdata()
-            : undefined;
-      } else if (this.matchedOwner) {
-        //console.log("✅ User is a Normal Owner");
-        this.GetUserByProjectsList();
-        complianceData$ = this.selectedCompliance === 'ISMS'
-          ? this.GetFilteredISMSUserTable()
-          : this.selectedCompliance === 'QMS'
-            ? this.GetFilteredQMSUserTable()
-            : undefined;
-      } else {
-       // console.log("❌ User not found in either list.");
-        this.isLoading = false;
-        this.selectedTableData = [];
-        return;
-      }
+if (this.selectedCompliance === 'ISMS') {
+  if (this.matchedSuperOwner) {
+    complianceData$ = this.ielc.Getcomplianceismsdata();
+  } else if (this.matchedOwner) {
+    this.GetUserByProjectsList();
+    complianceData$ = this.GetFilteredISMSUserTable();
+  } else {
+    this.hasPermission = false;
+    this.showTable = false;
+    this.isLoading = false;
+    return;
+  }
+} else if (this.selectedCompliance === 'QMS') {
+  if (this.matchedSuperOwnerqms) {
+    complianceData$ = this.ielc.Getcomplianceqmsdata();
+  } else if (this.matchedOwnerqms) {
+    this.GetUserByProjectsListQMS();
+    complianceData$ = this.GetFilteredQMSUserTable();
+  } else {
+    this.hasPermission = false;
+    this.showTable = false;
+    this.isLoading = false;
+    return;
+  }
+}
+
 
       if (complianceData$) {
         complianceData$.subscribe({
           next: (data) => {
             this.selectedTableData = this.sortlist(data);
+            this.hasPermission = this.selectedTableData.length > 0;
+            this.showTable = this.selectedTableData.length > 0;
             this.isLoading = false;
           },
-          error: (err) => {
-           // console.error("❌ Error fetching compliance data:", err);
+          error: () => {
             this.selectedTableData = [];
+            this.hasPermission = false;
+            this.showTable = false;
             this.isLoading = false;
           }
         });
@@ -160,6 +343,7 @@ onComplianceChange(event: Event): void {
     }
   });
 }
+
 
 onProjectChange(event: Event): void {
   const target = event.target as HTMLSelectElement;
@@ -198,7 +382,7 @@ constructor(private ielc:IelcapiService, private authService: AuthService) {
  
   ngOnInit(): void {
     this.authService.userDetails$.subscribe(userDetails => {
-      // this.userName = 'Ramprasad .KP' ;
+      //this.userName = 'Ramprasad .KP' ;
        this.userName = userDetails?.displayName;
       this.userEmail = userDetails?.email ;
     });
@@ -214,7 +398,7 @@ constructor(private ielc:IelcapiService, private authService: AuthService) {
   }
 
   resetComplianceData() {
-    this.selectedCompliance = '';
+    //this.selectedCompliance = '';
     this.selectedProject = '';
     this.selectedStatus = '';
     // this.selectedTableData = [];
@@ -292,7 +476,7 @@ constructor(private ielc:IelcapiService, private authService: AuthService) {
   // }
 
   GetComplianceISMSDataAfterUpdate() {
-    this.isLoading = true;
+    // this.isLoading = true;
   
     this.GetFilteredISMSUserTable().subscribe((projectData: any[]) => {
       const sortedData = this.sortlist(projectData);
@@ -372,7 +556,7 @@ GetUserByProjectsListQMS(){
   // }
 
   GetComplianceQMSDataAfterUpdate() {
-    this.isLoading = true;
+    // this.isLoading = true;
   
     this.GetFilteredQMSUserTable().subscribe((projectData: any[]) => {
       const sortedData = this.sortlist(projectData);
@@ -411,23 +595,28 @@ GetUserByProjectsListQMS(){
 
 
    UpdateComplianceData() {
-    if (this.selectedCompliance === 'ISMS') {
-      const hasComplete = this.filterprojectisms.some(status => status === 'Complete');
-      if (hasComplete) {
-        alert('Task is already marked as complete.');
-        return;
-      }
-    } else if (this.selectedCompliance === 'QMS') {
-      const hasComplete = this.filterprojectqms.some(status => status === 'Complete');
-      if (hasComplete) {
-        alert('Task is already marked as complete.');
-        return;
-      }
-    }
+    // if (this.selectedCompliance === 'ISMS') {
+    //   const hasComplete = this.filterprojectisms.some(status => status === 'Complete');
+    //   if (hasComplete) {
+    //     alert('Task is already marked as complete.');
+    //     return;
+    //   }
+    // } else if (this.selectedCompliance === 'QMS') {
+    //   const hasComplete = this.filterprojectqms.some(status => status === 'Complete');
+    //   if (hasComplete) {
+    //     alert('Task is already marked as complete.');
+    //     return;
+    //   }
+    // }
   
-    if (this.selectedCompliance === 'ISMS') {
+     if (this.selectedCompliance === 'ISMS') {
      // console.log("Selected Status:", this.selectedStatus);
-  
+     const hasComplete = this.filterprojectisms.some(status => status.trim().toLowerCase() === 'complete');
+     if (hasComplete) {
+       alert('Task is already marked as complete.');
+       return;
+     }
+
       this.ielc.GetProjectIDISMS(this.selectedProject).subscribe({
         next: (idArray: string[]) => {
           const projectId = Number(idArray[0]);
@@ -471,6 +660,11 @@ GetUserByProjectsListQMS(){
       // }
   
     } else if (this.selectedCompliance === 'QMS') {
+      const hasComplete = this.filterprojectqms.some(status => status.trim().toLowerCase() === 'complete');
+      if (hasComplete) {
+        alert('Task is already marked as complete.');
+        return;
+      }
       this.ielc.GetProjectIDQMS(this.selectedProject).subscribe({
         next: (idArray: string[]) => {
           const projectId = Number(idArray[0]);
@@ -511,15 +705,11 @@ GetUserByProjectsListQMS(){
     } else {
       //console.log("⚠️ Unknown compliance type selected.");
     }
-    // if(this.matchedSuperOwner){
-    //   this.GetComplianceQMSData();
-    // } else{
-    //   this.GetComplianceQMSDataAfterUpdate();
-    // }
-    //this.GetComplianceISMSDataAfterUpdate();
-
-
-    // this.resetComplianceData();
+    setTimeout(() => {
+      this.resetComplianceData();
+    }, 3000);
+  
+ 
   }
 
 // UpdateComplianceData() {

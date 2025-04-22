@@ -5,6 +5,9 @@
     <div>
         <button class="btn btn-dark btnback" routerLink="/registration">Back</button>
     </div>
+    <div *ngIf="isLoading" class="loading-container">
+        <span class="dot"></span>
+    </div>
     <div>
         <div>
             <label for="compliance" class="form-label">Select Compliance</label>
@@ -17,24 +20,25 @@
           </div>
             <div class="div1">
                 <label for="project" class="form-label">Select Project</label>
-                <select class="form-control" [(ngModel)]="selectedProject" name="project" required #projectlistRef="ngModel" [disabled]="!selectedCompliance" (change)="onProjectChange($event)">
+                <select class="form-control" [(ngModel)]="selectedProject" name="project" required #projectlistRef="ngModel" [disabled]="!selectedCompliance || !hasPermission"  (change)="onProjectChange($event)">
           <option value="" disabled>- Select Project -</option>
           <option *ngFor="let project of projectlist" [value]="project">{{ project }}</option>
         </select>
               </div>              
               <div class="div2">
                 <label for="status" class="form-label">Select Status</label>
-                <select id="status" name="status" class="form-control" required #statusRef="ngModel" [(ngModel)]="selectedStatus">
+                <select id="status" name="status" class="form-control" required #statusRef="ngModel" [(ngModel)]="selectedStatus" [disabled]="!hasPermission">
                   <option value="" disabled selected>- Select Status -</option>
                   <option value="Complete">Complete</option>
                 </select>
               </div>
               <!-- <label class="lblbatchpopup" *ngIf="lblbatchpopup">{{ lblbatchpopup }}</label> -->
               <div class="col-md-12 text-center mt-3">
-                <button class="btn btn-info btnsrch" (click)="UpdateComplianceData()" [disabled]="form.invalid" >Submit</button> 
+                <button class="btn btn-info btnsrch" (click)="UpdateComplianceData()" [disabled]="form.invalid  || !hasPermission" >Submit</button> 
             </div>
            
     </div>
+    <div *ngIf="hasPermission && selectedTableData.length > 0">
     <div *ngIf="isLoading" class="loading-container">
         <span class="dot"></span>
     </div>
@@ -80,4 +84,8 @@
             </tbody>
         </table>
     </div>
+</div>
+<div *ngIf="!hasPermission && !isLoading" class="alert alert-warning" style="margin-top: 130px; text-align: center;">
+    You don't have permission to view this.
+  </div>  
 </form>
