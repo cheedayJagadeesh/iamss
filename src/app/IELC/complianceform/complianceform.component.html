@@ -27,7 +27,7 @@
               </div>              
               <div class="div2">
                 <label for="status" class="form-label">Select Status</label>
-                <select id="status" name="status" class="form-control" required #statusRef="ngModel" [(ngModel)]="selectedStatus" [disabled]="!hasPermission">
+                <select id="status" name="status" class="form-control" required #statusRef="ngModel" [(ngModel)]="selectedStatus" [disabled]="!selectedCompliance || !hasPermission">
                   <option value="" disabled selected>- Select Status -</option>
                   <option value="Complete">Complete</option>
                 </select>

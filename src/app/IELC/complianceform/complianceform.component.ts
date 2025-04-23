@@ -594,123 +594,270 @@ GetUserByProjectsListQMS(){
    }
 
 
-   UpdateComplianceData() {
-    // if (this.selectedCompliance === 'ISMS') {
-    //   const hasComplete = this.filterprojectisms.some(status => status === 'Complete');
-    //   if (hasComplete) {
-    //     alert('Task is already marked as complete.');
-    //     return;
-    //   }
-    // } else if (this.selectedCompliance === 'QMS') {
-    //   const hasComplete = this.filterprojectqms.some(status => status === 'Complete');
-    //   if (hasComplete) {
-    //     alert('Task is already marked as complete.');
-    //     return;
-    //   }
-    // }
+  //  UpdateComplianceData() {
+  //   // if (this.selectedCompliance === 'ISMS') {
+  //   //   const hasComplete = this.filterprojectisms.some(status => status === 'Complete');
+  //   //   if (hasComplete) {
+  //   //     alert('Task is already marked as complete.');
+  //   //     return;
+  //   //   }
+  //   // } else if (this.selectedCompliance === 'QMS') {
+  //   //   const hasComplete = this.filterprojectqms.some(status => status === 'Complete');
+  //   //   if (hasComplete) {
+  //   //     alert('Task is already marked as complete.');
+  //   //     return;
+  //   //   }
+  //   // }
   
-     if (this.selectedCompliance === 'ISMS') {
-     // console.log("Selected Status:", this.selectedStatus);
-     const hasComplete = this.filterprojectisms.some(status => status.trim().toLowerCase() === 'complete');
-     if (hasComplete) {
-       alert('Task is already marked as complete.');
-       return;
-     }
+  //    if (this.selectedCompliance === 'ISMS') {
+  //    // console.log("Selected Status:", this.selectedStatus);
+  //   //  const hasComplete = this.filterprojectisms.some(status => status.trim().toLowerCase() === 'complete');
+  //   //  if (hasComplete) {
+  //   //    alert('Task is already marked as complete.');
+  //   //    return;
+  //   //  }
 
-      this.ielc.GetProjectIDISMS(this.selectedProject).subscribe({
-        next: (idArray: string[]) => {
-          const projectId = Number(idArray[0]);
-          this.ielc.UpdateISMSCompliance(projectId, this.selectedStatus).subscribe({
-            next: (response) => {
-              //console.log("Raw response:", response);
-              if (typeof response === 'string') {
-                try {
-                  const parsedResponse = JSON.parse(response);
-                  //console.log("✅ Updated Successfully:", parsedResponse);
-                  alert("✅ Record updated successfully!");
-                } catch (error) {
-                  //console.log("❌ Response is not JSON:", response);
-                  alert("❌ Server message: " + response);
-                }
-              } else {
-                //console.log("✅ Updated Successfully:", response);
-                alert("✅ Record updated successfully!");
-                if(this.matchedSuperOwner){
-                  this.GetComplianceISMSData();
-                } else{
-                  this.GetComplianceISMSDataAfterUpdate();
-                }
-              }
-            },
-            error: (error) => {
-              //console.error("❌ Error updating Record:", error);
-              alert("❌ Failed to update record. Please try again.");
-            }
-          });
-        },
-        error: (error) => {
-          //console.error("❌ Error getting project ID:", error);
-          alert("❌ Failed to fetch project ID. Please try again.");
-        }
-      });
-      // if(this.matchedSuperOwner){
-      //   this.GetComplianceISMSData();
-      // } else{
-      //   this.GetComplianceISMSDataAfterUpdate();
-      // }
+  //     this.ielc.GetProjectIDISMS(this.selectedProject).subscribe({
+  //       next: (idArray: string[]) => {
+  //         const projectId = Number(idArray[0]);
+  //         this.ielc.UpdateISMSCompliance(projectId, this.selectedStatus).subscribe({
+  //           next: (response) => {
+  //             //console.log("Raw response:", response);
+  //             if (typeof response === 'string') {
+  //               try {
+  //                 const parsedResponse = JSON.parse(response);
+  //                 //console.log("✅ Updated Successfully:", parsedResponse);
+  //                 alert("✅ Record updated successfully!");
+  //               } catch (error) {
+  //                 //console.log("❌ Response is not JSON:", response);
+  //                 alert("❌ Server message: " + response);
+  //               }
+  //             } else {
+  //               //console.log("✅ Updated Successfully:", response);
+  //               alert("✅ Record updated successfully!");
+  //               if(this.matchedSuperOwner){
+  //                 this.GetComplianceISMSData();
+  //               } else{
+  //                 this.GetComplianceISMSDataAfterUpdate();
+  //               }
+  //             }
+  //           },
+  //           error: (error) => {
+  //             //console.error("❌ Error updating Record:", error);
+  //             alert("❌ Failed to update record. Please try again.");
+  //           }
+  //         });
+  //       },
+  //       error: (error) => {
+  //         //console.error("❌ Error getting project ID:", error);
+  //         alert("❌ Failed to fetch project ID. Please try again.");
+  //       }
+  //     });
+  //     // if(this.matchedSuperOwner){
+  //     //   this.GetComplianceISMSData();
+  //     // } else{
+  //     //   this.GetComplianceISMSDataAfterUpdate();
+  //     // }
   
-    } else if (this.selectedCompliance === 'QMS') {
-      const hasComplete = this.filterprojectqms.some(status => status.trim().toLowerCase() === 'complete');
-      if (hasComplete) {
-        alert('Task is already marked as complete.');
-        return;
-      }
-      this.ielc.GetProjectIDQMS(this.selectedProject).subscribe({
-        next: (idArray: string[]) => {
-          const projectId = Number(idArray[0]);
-          this.ielc.UpdateQMSCompliance(projectId, this.selectedStatus).subscribe({
-            next: (response) => {
-              //console.log("Raw response:", response);
-              if (typeof response === 'string') {
-                try {
-                  const parsedResponse = JSON.parse(response);
-                  //console.log("✅ Updated Successfully:", parsedResponse);
-                  alert("✅ Record updated successfully!");
-                } catch (error) {
-                  //console.log("❌ Response is not JSON:", response);
-                  alert("❌ Server message: " + response);
-                }
-              } else {
-                //console.log("✅ Updated Successfully:", response);
-                alert("✅ Record updated successfully!");
-                if(this.matchedSuperOwner){
-                  this.GetComplianceQMSData();
-                } else{
-                  this.GetComplianceQMSDataAfterUpdate();
-                }
-              }
-            },
-            error: (error) => {
-              //console.error("❌ Error updating Record:", error);
-              alert("❌ Failed to update record. Please try again.");
-            }
-          });
-        },
-        error: (error) => {
-          //console.error("❌ Error getting project ID:", error);
-          alert("❌ Failed to fetch project ID. Please try again.");
-        }
-      });
+  //   } else if (this.selectedCompliance === 'QMS') {
+  //     // const hasComplete = this.filterprojectqms.some(status => status.trim().toLowerCase() === 'complete');
+  //     // if (hasComplete) {
+  //     //   alert('Task is already marked as complete.');
+  //     //   return;
+  //     // }
+  //     this.ielc.GetProjectIDQMS(this.selectedProject).subscribe({
+  //       next: (idArray: string[]) => {
+  //         const projectId = Number(idArray[0]);
+  //         this.ielc.UpdateQMSCompliance(projectId, this.selectedStatus).subscribe({
+  //           next: (response) => {
+  //             //console.log("Raw response:", response);
+  //             if (typeof response === 'string') {
+  //               try {
+  //                 const parsedResponse = JSON.parse(response);
+  //                 //console.log("✅ Updated Successfully:", parsedResponse);
+  //                 alert("✅ Record updated successfully!");
+  //               } catch (error) {
+  //                 //console.log("❌ Response is not JSON:", response);
+  //                 alert("❌ Server message: " + response);
+  //               }
+  //             } else {
+  //               //console.log("✅ Updated Successfully:", response);
+  //               alert("✅ Record updated successfully!");
+  //               if(this.matchedSuperOwner){
+  //                 this.GetComplianceQMSData();
+  //               } else{
+  //                 this.GetComplianceQMSDataAfterUpdate();
+  //               }
+  //             }
+  //           },
+  //           error: (error) => {
+  //             //console.error("❌ Error updating Record:", error);
+  //             alert("❌ Failed to update record. Please try again.");
+  //           }
+  //         });
+  //       },
+  //       error: (error) => {
+  //         //console.error("❌ Error getting project ID:", error);
+  //         alert("❌ Failed to fetch project ID. Please try again.");
+  //       }
+  //     });
   
-    } else {
-      //console.log("⚠️ Unknown compliance type selected.");
-    }
-    setTimeout(() => {
-      this.resetComplianceData();
-    }, 3000);
+  //   } else {
+  //     //console.log("⚠️ Unknown compliance type selected.");
+  //   }
+  //   setTimeout(() => {
+  //     this.resetComplianceData();
+  //   }, 3000);
   
  
+  // }
+
+
+  UpdateComplianceData() {
+    const selectedStatusNormalized = this.selectedStatus.trim().toLowerCase();
+    console.log("🔍 Selected Compliance:", this.selectedCompliance);
+    console.log("🔍 Selected Status:", selectedStatusNormalized);
+    console.log("🔍 Selected Project:", this.selectedProject);
+  
+    if (this.selectedCompliance === 'ISMS') {
+      console.log("📋 Current ISMS Status List:", this.filterprojectisms);
+  
+      this.ielc.GetCurrentMonth(this.selectedProject).subscribe((currentStatuses: string[]) => {
+        console.log("📥 Fetched ISMS status list:", currentStatuses);
+
+        const selectedStatusNormalized = this.selectedStatus.trim().toLowerCase();
+        const hasComplete = currentStatuses.some(
+          status => status.trim().toLowerCase() === 'complete'
+        );
+        
+        console.log("✅ Is current ISMS status already 'complete'?", hasComplete);
+        
+        if (hasComplete && selectedStatusNormalized === 'complete') {
+          alert('⚠️ Task is already marked as complete.');
+          return;
+        }
+        
+  
+      this.ielc.GetProjectIDISMS(this.selectedProject).subscribe({
+        next: (idArray: string[]) => {
+          console.log("📌 ISMS Project ID array:", idArray);
+          const projectId = Number(idArray[0]);
+          console.log("➡️ Updating ISMS compliance with ID:", projectId);
+  
+          this.ielc.UpdateISMSCompliance(projectId, this.selectedStatus).subscribe({
+            next: (response) => {
+              console.log("📨 ISMS update response:", response);
+              if (typeof response === 'string') {
+                try {
+                  const parsedResponse = JSON.parse(response);
+                  console.log("✅ Parsed response:", parsedResponse);
+                  alert("✅ Record updated successfully!");
+                } catch {
+                  console.log("❌ Could not parse response. Raw:", response);
+                  alert("❌ Server message: " + response);
+                }
+              } else {
+                console.log("✅ Update successful (non-string response)");
+                alert("✅ Record updated successfully!");
+                this.matchedSuperOwner
+                  ? this.GetComplianceISMSData()
+                  : this.GetComplianceISMSDataAfterUpdate();
+              }
+            },
+            error: (err) => {
+              console.error("❌ ISMS update error:", err);
+              alert("❌ Failed to update record. Please try again.");
+            }
+          });
+        },
+        error: (err) => {
+          console.error("❌ Error fetching ISMS project ID:", err);
+          alert("❌ Failed to fetch project ID. Please try again.");
+        }
+      });
+    });
+  
+    } else if (this.selectedCompliance === 'QMS') {
+      console.log("📋 Current QMS Status List:", this.filterprojectqms);
+
+      // this.ielc.GetCurrentMonthQMS(this.selectedProject).subscribe((currentStatuses: string[]) => {
+      //   console.log("📥 Fetched QMS status list:", currentStatuses);
+
+      //   const selectedStatusNormalized = this.selectedStatus.trim().toLowerCase();
+  
+      // const hasComplete = this.filterprojectqms.some(status =>
+      //   status.trim().toLowerCase() === 'complete'
+      // );
+      // console.log("✅ Is current QMS status already 'complete'?", hasComplete);
+  
+      // if (hasComplete && selectedStatusNormalized === 'complete') {
+      //   alert('⚠️ Task is already marked as complete.');
+      //   return;
+      // }
+
+      this.ielc.GetCurrentMonthQMS(this.selectedProject).subscribe((currentStatuses: string[]) => {
+        console.log("📥 Fetched QMS status list:", currentStatuses);
+  
+        const hasComplete = currentStatuses.some(
+          status => status.trim().toLowerCase() === 'complete'
+        );
+  
+        console.log("✅ Is current QMS status already 'complete'?", hasComplete);
+  
+        if (hasComplete && selectedStatusNormalized === 'complete') {
+          alert('⚠️ Task is already marked as complete.');
+          return;
+        }   
+  
+      this.ielc.GetProjectIDQMS(this.selectedProject).subscribe({
+        next: (idArray: string[]) => {
+          console.log("📌 QMS Project ID array:", idArray);
+          const projectId = Number(idArray[0]);
+          console.log("➡️ Updating QMS compliance with ID:", projectId);
+  
+          this.ielc.UpdateQMSCompliance(projectId, this.selectedStatus).subscribe({
+            next: (response) => {
+              console.log("📨 QMS update response:", response);
+              if (typeof response === 'string') {
+                try {
+                  const parsedResponse = JSON.parse(response);
+                  console.log("✅ Parsed response:", parsedResponse);
+                  alert("✅ Record updated successfully!");
+                } catch {
+                  console.log("❌ Could not parse response. Raw:", response);
+                  alert("❌ Server message: " + response);
+                }
+              } else {
+                console.log("✅ Update successful (non-string response)");
+                alert("✅ Record updated successfully!");
+                this.matchedSuperOwner
+                  ? this.GetComplianceQMSData()
+                  : this.GetComplianceQMSDataAfterUpdate();
+              }
+            },
+            error: (err) => {
+              console.error("❌ QMS update error:", err);
+              alert("❌ Failed to update record. Please try again.");
+            }
+          });
+        },
+        error: (err) => {
+          console.error("❌ Error fetching QMS project ID:", err);
+          alert("❌ Failed to fetch project ID. Please try again.");
+        }
+      });
+    });
+    }
+  
+    setTimeout(() => {
+      console.log("🔄 Resetting compliance data...");
+      this.resetComplianceData();
+    }, 3000);
   }
+  
+  
+ 
+  
 
 // UpdateComplianceData() {
 //   const isISMS = this.selectedCompliance === 'ISMS';
