@@ -1983,4 +1983,18 @@ GetUniqueName(): Observable<string[]> {
   return this.http.get<string[]>(`${this.complianceismsUrl}/AllUniqueDisplayNames`);
 }
 
+//======================================================================== Send Email
+sendEmailFromBackend(payload: {
+  username: string;
+  password: string;
+  to: string;
+  cc: string;
+  subject: string;
+  body: string;
+}) {
+  const apiUrl = 'https://ielc-coreapi.azurewebsites.net/SendEmail/api/sendemail'; // 🔁 Replace with your actual backend API URL
+  return this.http.post(apiUrl, payload);
+}
+
+
 }

@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { forkJoin, Observable } from 'rxjs';
+declare var Email: any;
 
 
 
@@ -169,6 +170,7 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
    this.GetExamlist();
   //  this.GetAllUsers();
   this.GetCourseist();
+  this.GetSmtplist();
   // this.GetAllSkillSessions();
   // this.GetEnrolledSessionsSkillsData();
   // this.loadUserRestrictionsAndSessions();
@@ -714,6 +716,18 @@ proceedToEnroll(
     next: () => {
       alert('Enrollment successful!');
       this.resetForm();
+      // this.sendEmail(
+      //   this.userEmail ?? '', 
+      //   'Enrollment Confirmation',
+      //   `Hello ${fullName},<br><br>You have successfully enrolled for the "${skill}" session on ${date} at ${time}.<br><br>Thanks!`
+      // );
+
+      const subject = 'Enrollment Confirmation';
+      // const to = mail;
+      const body = `Hello ${fullName},<br><br>You have successfully enrolled for the "${skill}" session on ${date} at ${time}.<br><br>Thanks!`;
+      this.sendEmail(mail, subject, body);
+
+      
     },
     error: (err) => {
       console.error('Enrollment error:', err);
@@ -1246,6 +1260,75 @@ GetAllUniqueNames(): Observable<string[]> {
  
 showButton: boolean = false;
  
+
+smtplist: any[] = []; 
+GetSmtplist(){
+  this.ielc.Getsmtp().subscribe((data) => {
+    this.smtplist=data;
+    this.smtplist = this.sortlist(data)
+    this.isLoading = false;
+  });
+ }
+
+ decryptPassword(encodedPassword: string): string {
+  return atob(encodedPassword); // Base64 decode
+}
+
+
+
+// sendEmail(){
+// const smtp = this.smtplist[0];
+// const decryptedPassword = this.decryptPassword(smtp.password);
+
+// const payload = {
+//   username: smtp.username,
+//   password: decryptedPassword,
+//   to: 'akhilpasha.m@inteqsolutions.com', // or dynamic email
+//   cc: '',
+//   subject: 'Register Enrollment',
+//   body: 'You have successfully enrolled for the skill session.'
+// };
+
+// this.ielc.sendEmailFromBackend(payload).subscribe({
+//   next: () => {
+//     console.log('✅ Email sent from backend.');
+//     alert('📧 Confirmation email sent!');
+//   },
+//   error: (err) => {
+//     console.error('❌ Email error:', err);
+//     alert('❌ Failed to send email.');
+//   }
+// });
+// }
+
+sendEmail(to: string,cc: string, subject: string, body: string = '') {
+  const smtp = this.smtplist[0];
+  const decryptedPassword = this.decryptPassword(smtp.password);
+
+  const payload = {
+    username: smtp.username,
+    password: decryptedPassword,
+    to: 'akhilpasha.m@inteqsolutions.com',
+    cc,
+    subject,
+    body
+  };
+
+  this.ielc.sendEmailFromBackend(payload).subscribe({
+    next: () => {
+      console.log('✅ Email sent from backend.');
+      alert('📧 Confirmation email sent!');
+    },
+    error: (err) => {
+      console.error('❌ Email error:', err);
+      alert('❌ Failed to send email.');
+    }
+  });
+}
+
+
+
+
 
 
 
