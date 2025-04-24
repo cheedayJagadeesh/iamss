@@ -5,6 +5,7 @@ import { AuthService } from 'src/app/authservice.service';
 import { MsalService } from '@azure/msal-angular';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
+import { EmailService } from 'src/app/email.service';
 declare var bootstrap: any;
 
 
@@ -116,7 +117,7 @@ export class ExampageComponent implements OnInit, OnDestroy  {
    Registeredusers: any[] = []; 
    correctAnswersCount = 0;
    enrollmentID: number | null = null;
-  constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute) {
+  constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute,private emailService: EmailService) {
     // this.route.queryParams.subscribe(params => {
     //   this.selectedSkill = params['skill'];
     // });
@@ -465,8 +466,66 @@ UpdateResult() {
     };
 
     this.ielc.Updatefeedback(matchedUser.enrollmentID, this.resultdata).subscribe(
-      (response) => {
+     async (response) => {
         this.openModal(); // Show result modal
+
+
+        const to = matchedUser.email || this.userEmail;
+        const cc = '';
+        const subject = `Exam Test Status`;
+        let body =''
+
+        if (this.examPassed) {
+          // emailSubject = "🎉 Exam Completed - Congratulations!";
+          body = `
+            <p><strong>🎉 Wohoo! Congratulations! You passed the exam!</strong></p>
+            <p>Here is your result</p>
+            <table style="border: 1px solid #ddd; border-collapse: collapse; width: 100%;">
+              <thead>
+               <tr style="background-color: #f2f2f2;">
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">SkillName</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Percentage</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                 <td style="border: 1px solid #ddd; padding: 8px;">${this.selectedSkill}</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">${this.percentage.toFixed(0)}%</td>
+                <td style="border: 1px solid #ddd; padding: 8px;">Completed</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="margin-top: 15px;">Thank you for your effort and dedication!</p>
+              <br>
+          `;
+        } else {
+          // emailSubject = "📘 Exam Status - Reattempt Required";
+          body = `
+            <p><strong>🙁 Oh no! Better luck next time!</strong></p>
+            <p>Here is your result</p>
+            <table style="border: 1px solid #ddd; border-collapse: collapse; width: 100%;">
+              <thead>
+                  <tr style="background-color: #f2f2f2;">
+                  <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">SkillName</th>
+                  <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Percentage</th>
+                  <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">${this.selectedSkill}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">${this.percentage.toFixed(0)}%</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Pending</td>
+                </tr>
+              </tbody>
+            </table>
+            <p style="margin-top: 15px;">Please prepare and re-attempt the test again.</p>
+            <br>
+          `;
+        }
+        this.emailService.sendEmail(to,cc, subject, body);
+        alert("📩 You will receive your exam status via email shortly.");
       },
       (error) => {
         console.error('❌ Error updating Record:', error);
@@ -488,6 +547,7 @@ closeModal() {
   const modalElement = document.getElementById('resultModal')!;
   const modalInstance = bootstrap.Modal.getInstance(modalElement);
   modalInstance?.hide();
+  // alert("📩 You will receive your exam status via email shortly.");
   this.router.navigate(['/registration']);
 }
 

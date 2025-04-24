@@ -1985,15 +1985,15 @@ GetUniqueName(): Observable<string[]> {
 
 //======================================================================== Send Email
 sendEmailFromBackend(payload: {
-  username: string;
-  password: string;
+  smtpUserName: string;
+  smtpPassword: string;
   to: string;
   cc: string;
   subject: string;
   body: string;
 }) {
   const apiUrl = 'https://ielc-coreapi.azurewebsites.net/SendEmail/api/sendemail'; // 🔁 Replace with your actual backend API URL
-  return this.http.post(apiUrl, payload);
+  return this.http.post(apiUrl, payload, { responseType: 'text' });
 }
 
 

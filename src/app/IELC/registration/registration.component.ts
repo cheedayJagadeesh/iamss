@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { forkJoin, Observable } from 'rxjs';
+import { EmailService } from 'src/app/email.service';
 declare var Email: any;
 
 
@@ -86,6 +87,15 @@ interface EnrollmentData {
   applicationtowork: string;
   comments: string;
 }
+interface EmailPayload {
+  smtpUserName: string;
+  smtpPassword: string;
+  to: string;
+  cc: string;
+  subject: string;
+  body: string;
+}
+
 
 
 @Component({
@@ -161,7 +171,8 @@ showDateTimeDropdowns: boolean = false;
 // submittedFeedbackIds: number[] = [];
 batchMemberCount: number = 0;
 currentUser: any = {};
-constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute){
+allSkillSessions: any[] = [];
+constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute,private emailService: EmailService){
    // this.selectedDate= new Date().toString()
    this.selectedDate= new Date().toISOString().split('T')[0]
    this.isTimeInputDisabled=true;
@@ -170,7 +181,7 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
    this.GetExamlist();
   //  this.GetAllUsers();
   this.GetCourseist();
-  this.GetSmtplist();
+  
   // this.GetAllSkillSessions();
   // this.GetEnrolledSessionsSkillsData();
   // this.loadUserRestrictionsAndSessions();
@@ -343,6 +354,7 @@ async ngOnInit() {
         this.GetAllUsers(); // Call this AFTER we get the email
         this.GetAllSkillSessions(); 
         this.checkUserExists();
+       
         // this.GetEnrolledSessionsSkillsData()
       }
     });   
@@ -711,23 +723,50 @@ proceedToEnroll(
     applicationtowork: '',
     comments: ''
   };
-
+ 
   this.ielc.enrollUser(enrollmentData).subscribe({
     next: () => {
-      alert('Enrollment successful!');
+      // Immediately show alert and reset form
+      alert('Enrollment successful! A confirmation email will be sent shortly.');
       this.resetForm();
-      // this.sendEmail(
-      //   this.userEmail ?? '', 
-      //   'Enrollment Confirmation',
-      //   `Hello ${fullName},<br><br>You have successfully enrolled for the "${skill}" session on ${date} at ${time}.<br><br>Thanks!`
-      // );
 
-      const subject = 'Enrollment Confirmation';
-      // const to = mail;
-      const body = `Hello ${fullName},<br><br>You have successfully enrolled for the "${skill}" session on ${date} at ${time}.<br><br>Thanks!`;
-      this.sendEmail(mail, subject, body);
+      // Proceed with email sending (non-blocking)
+      const sessionDescription = this.getSessionDescription(skill, venue);
+      console.log('📘 Session Description:', sessionDescription); 
+      const subject = 'Session Invitation Link';
+      const body = `
+        <p>Thanks for the Registration!</p>
+        <p>Attend the meeting SkillName\\ Self-Learning\\ Recorded using below link:</p>
+        <p>
+        <a href="${sessionDescription}" target="_blank" style="color: #007bff; text-decoration: underline;">
+          Click here to access the session
+        </a>
+        </p>
+        <br>
+        <table style="border: 1px solid #ddd; border-collapse: collapse; width: 100%;">
+          <thead>
+            <tr style="background-color: #f2f2f2;">
+              <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Name</th>
+              <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">SkillName</th>
+              <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Date</th>
+              <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Time</th>
+              <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Venue</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="border: 1px solid #ddd; padding: 8px;">${fullName}</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">${skill}</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">${date}</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">${time}</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">${venue}</td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+      `;
 
-      
+      this.emailService.sendEmail(mail,'', subject, body);
     },
     error: (err) => {
       console.error('Enrollment error:', err);
@@ -749,6 +788,23 @@ resetForm(): void {
   this.selectedVenue = '';
   this.batchMembersCount = 0;
 }
+
+getSessionDescription(skill: string, venue: string): string {
+  console.log('🔍 Searching for session description using:', { skill, venue });
+
+  const matchedSession = this.allSkillSessions.find((session: any) =>
+    session.skillName?.trim().toLowerCase() === skill.trim().toLowerCase() &&
+    session.venue?.trim().toLowerCase() === venue.trim().toLowerCase()
+  );
+
+  console.log('📘 Matched session:', matchedSession);
+
+  return matchedSession?.skillDescription ?? 'No description available';
+}
+
+
+
+
 
 allowOnlyDigits(event: KeyboardEvent) {
   const charCode = event.which ? event.which : event.keyCode;
@@ -940,12 +996,15 @@ GetAllSkillSessions() {
 
   forkJoin({
     sessions: this.ielc.GetSkillSessions(),
+    
     aadUsers: this.ielc.GetAadUserslist(),
     aadGroups: this.ielc.GetAadUserGroupslist()
   }).subscribe(({ sessions, aadUsers, aadGroups }) => {
     const validGroups = aadGroups.map((g: any) => g.displayName?.trim()).filter(Boolean);
     const visibleSessions: any[] = [];
-  
+    this.allSkillSessions = sessions;
+    // console.log('🗃️ All sessions:', this.allSkillSessions);
+
     const processSessions = async () => {
       for (const session of sessions) {
         const skill = session.skillName;
@@ -1261,70 +1320,73 @@ GetAllUniqueNames(): Observable<string[]> {
 showButton: boolean = false;
  
 
-smtplist: any[] = []; 
-GetSmtplist(){
-  this.ielc.Getsmtp().subscribe((data) => {
-    this.smtplist=data;
-    this.smtplist = this.sortlist(data)
-    this.isLoading = false;
-  });
- }
+// smtplist: any[] = []; 
+// GetSmtplist(){
+//   this.ielc.Getsmtp().subscribe((data) => {
+//     this.smtplist=data;
+//     this.smtplist = this.sortlist(data)
+//     this.isLoading = false;
+//   });
+//  }
 
- decryptPassword(encodedPassword: string): string {
-  return atob(encodedPassword); // Base64 decode
-}
-
-
-
-// sendEmail(){
-// const smtp = this.smtplist[0];
-// const decryptedPassword = this.decryptPassword(smtp.password);
-
-// const payload = {
-//   username: smtp.username,
-//   password: decryptedPassword,
-//   to: 'akhilpasha.m@inteqsolutions.com', // or dynamic email
-//   cc: '',
-//   subject: 'Register Enrollment',
-//   body: 'You have successfully enrolled for the skill session.'
-// };
-
-// this.ielc.sendEmailFromBackend(payload).subscribe({
-//   next: () => {
-//     console.log('✅ Email sent from backend.');
-//     alert('📧 Confirmation email sent!');
-//   },
-//   error: (err) => {
-//     console.error('❌ Email error:', err);
-//     alert('❌ Failed to send email.');
-//   }
-// });
+//  decryptPassword(encodedPassword: string): string {
+//   return atob(encodedPassword); // Base64 decode
 // }
 
-sendEmail(to: string,cc: string, subject: string, body: string = '') {
-  const smtp = this.smtplist[0];
-  const decryptedPassword = this.decryptPassword(smtp.password);
+// // sendEmail(){
+// // const smtp = this.smtplist[0];
+// // const decryptedPassword = this.decryptPassword(smtp.password);
 
-  const payload = {
-    username: smtp.username,
-    password: decryptedPassword,
-    to: 'akhilpasha.m@inteqsolutions.com',
-    cc,
-    subject,
-    body
-  };
+// // const payload = {
+// //   username: smtp.username,
+// //   password: decryptedPassword,
+// //   to: 'akhilpasha.m@inteqsolutions.com', // or dynamic email
+// //   cc: '',
+// //   subject: 'Register Enrollment',
+// //   body: 'You have successfully enrolled for the skill session.'
+// // };
 
-  this.ielc.sendEmailFromBackend(payload).subscribe({
-    next: () => {
-      console.log('✅ Email sent from backend.');
-      alert('📧 Confirmation email sent!');
-    },
-    error: (err) => {
-      console.error('❌ Email error:', err);
-      alert('❌ Failed to send email.');
-    }
-  });
-}
+// // this.ielc.sendEmailFromBackend(payload).subscribe({
+// //   next: () => {
+// //     console.log('✅ Email sent from backend.');
+// //     alert('📧 Confirmation email sent!');
+// //   },
+// //   error: (err) => {
+// //     console.error('❌ Email error:', err);
+// //     alert('❌ Failed to send email.');
+// //   }
+// // });
+// // }
+
+// sendEmail(to: string, cc: string, subject: string, body: string): Promise<void> {
+//   return new Promise((resolve, reject) => {
+//     const smtp = this.smtplist[0];
+//     const decryptedPassword = this.decryptPassword(smtp.password);
+    
+//     const EmailPayload = {
+//       smtpUserName: smtp.userName,
+//       smtpPassword: decryptedPassword,
+//       to: to,
+//       cc: 'jagadeesh.c@inteqsolutions.com',
+//       // cc: 'akhilpasha.m@inteqsolutions.com',
+//       subject,
+//       body
+//     };
+
+//     console.log("🚀 Payload to backend:", EmailPayload);
+    
+//     this.ielc.sendEmailFromBackend(EmailPayload).subscribe({
+//       next: () => {
+//         console.log('✅ Email sent from backend.');
+//         resolve(); // Resolve when the email is successfully sent
+//       },
+//       error: (err) => {
+//         console.error('❌ Email error:', err);
+//         reject(err); // Reject if there's an error in sending email
+//       }
+//     });
+//   });
+// }
 
 
 

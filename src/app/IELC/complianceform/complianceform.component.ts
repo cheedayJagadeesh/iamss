@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { IelcapiService } from '../ielcapi.service';
 import { IsmsheaderComponent } from '../ismsheader/ismsheader.component';
 import { switchMap, forkJoin, Observable, of, map } from 'rxjs';
+import { EmailService } from 'src/app/email.service';
 
 
 interface compliance {
@@ -372,7 +373,7 @@ onProjectChange(event: Event): void {
   
 
   //constructor(private msalService: MsalService, private authService: AuthService, private router: Router) {}
-constructor(private ielc:IelcapiService, private authService: AuthService) {
+constructor(private ielc:IelcapiService, private authService: AuthService,private emailservice: EmailService) {
 }
 
   sortlist(data: any[]): any[] {
@@ -746,6 +747,35 @@ GetUserByProjectsListQMS(){
   
           this.ielc.UpdateISMSCompliance(projectId, this.selectedStatus).subscribe({
             next: (response) => {
+              const to = this.userEmail?? ''; // Or whoever should receive the email
+              const cc = ''; // Optional
+              const subject = `ISMS Monthly Task Status Update`;
+              const body = `
+                <p>Hello</p>
+                <p>Below are the details of ISMS monthly task status:</p>
+                <table style="border: 1px solid #ddd; border-collapse: collapse; width: 100%;">
+                  <thead>
+                       <tr style="background-color: #f2f2f2;">
+                      <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Compliance</th>
+                      <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Project</th>
+                      <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Updated By</th>
+                      <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="border: 1px solid #ddd; padding: 8px;">${this.selectedCompliance}</td>
+                      <td style="border: 1px solid #ddd; padding: 8px;">${this.selectedProject}</td>
+                      <td style="border: 1px solid #ddd; padding: 8px;">${this.userName}</td>
+                     <td style="border: 1px solid #ddd; padding: 8px;">${this.selectedStatus}</td>
+                    </tr>
+                  </tbody>
+                </table>
+               <br>
+              `;
+
+            
+
               console.log("📨 ISMS update response:", response);
               if (typeof response === 'string') {
                 try {
@@ -758,7 +788,10 @@ GetUserByProjectsListQMS(){
                 }
               } else {
                 console.log("✅ Update successful (non-string response)");
-                alert("✅ Record updated successfully!");
+                // alert("✅ Record updated successfully!");
+                alert("✅ Record updated successfully!\n📧 Compliance update notification email has been sent successfully!");
+                this.emailservice.sendEmail(to, cc, subject, body);
+                // alert("📧 Compliance update notification email has been sent successfully!");
                 this.matchedSuperOwner
                   ? this.GetComplianceISMSData()
                   : this.GetComplianceISMSDataAfterUpdate();
@@ -817,6 +850,34 @@ GetUserByProjectsListQMS(){
   
           this.ielc.UpdateQMSCompliance(projectId, this.selectedStatus).subscribe({
             next: (response) => {
+              const to = this.userEmail?? ''; // Or whoever should receive the email
+              const cc = ''; // Optional
+              const subject = `QMS Monthly Task Status Update`;
+              const body = `
+                <p>Hello</p>
+                <p>Below are the details of QMS monthly task status:</p>
+                <table style="border: 1px solid #ddd; border-collapse: collapse; width: 100%;">
+                  <thead>
+                       <tr style="background-color: #f2f2f2;">
+                      <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Compliance</th>
+                      <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Project</th>
+                      <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Updated By</th>
+                      <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td style="border: 1px solid #ddd; padding: 8px;">${this.selectedCompliance}</td>
+                      <td style="border: 1px solid #ddd; padding: 8px;">${this.selectedProject}</td>
+                      <td style="border: 1px solid #ddd; padding: 8px;">${this.userName}</td>
+                     <td style="border: 1px solid #ddd; padding: 8px;">${this.selectedStatus}</td>
+                    </tr>
+                  </tbody>
+                </table>
+               <br>
+              `;
+
+
               console.log("📨 QMS update response:", response);
               if (typeof response === 'string') {
                 try {
@@ -829,7 +890,10 @@ GetUserByProjectsListQMS(){
                 }
               } else {
                 console.log("✅ Update successful (non-string response)");
-                alert("✅ Record updated successfully!");
+                // alert("✅ Record updated successfully!");
+                alert("✅ Record updated successfully!\n📧 Compliance update notification email has been sent successfully!");
+                this.emailservice.sendEmail(to, cc, subject, body);
+                // alert("📧 Compliance update notification email has been sent successfully!");
                 this.matchedSuperOwner
                   ? this.GetComplianceQMSData()
                   : this.GetComplianceQMSDataAfterUpdate();
