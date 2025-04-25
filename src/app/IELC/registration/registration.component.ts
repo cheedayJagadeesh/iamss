@@ -1400,10 +1400,12 @@ showData(registration:any)
 }
 save()
 {
- // this.isTimeInputDisabled = !!this.time1;
-  if (this.time1) {
-   this.isTimeInputDisabled = true;
-   }
+//  // this.isTimeInputDisabled = !!this.time1;
+//  if (this.time1) {
+//   this.isTimeInputDisabled = true;
+//   }
+
+  alert('🚧 Feature under development. Implementation is currently in progress.');
   
 }
 

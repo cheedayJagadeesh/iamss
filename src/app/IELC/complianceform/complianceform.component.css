@@ -3,8 +3,10 @@
     width: 200px;
 }
 .btnback{
-    margin-left: 92%;
-    margin-top: -7%;
+    margin-left: 87%;
+    margin-top: -3.9%;
+    position: absolute;
+    width: 5%;
 }
 .lbllogin{
     margin-top: 1.5%;
@@ -114,7 +116,14 @@ select:disabled {
     color: #6c757d;
     cursor: not-allowed;
   }
-  
+
+  .buttonlogout{
+    margin-left: 93%;
+    margin-top: -4%;
+    position: absolute;
+    width: 5%;
+}
+
 .loading-container {
     position: fixed; /* Ensures it stays in place */
     top: 50%;

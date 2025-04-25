@@ -525,7 +525,7 @@ UpdateResult() {
           `;
         }
         this.emailService.sendEmail(to,cc, subject, body);
-        alert("📩 You will receive your exam status via email shortly.");
+        // alert("📩 You will receive your exam status via email shortly.");
       },
       (error) => {
         console.error('❌ Error updating Record:', error);
@@ -547,7 +547,7 @@ closeModal() {
   const modalElement = document.getElementById('resultModal')!;
   const modalInstance = bootstrap.Modal.getInstance(modalElement);
   modalInstance?.hide();
-  // alert("📩 You will receive your exam status via email shortly.");
+  alert("📩 You will receive your exam status via email shortly.");
   this.router.navigate(['/registration']);
 }
 

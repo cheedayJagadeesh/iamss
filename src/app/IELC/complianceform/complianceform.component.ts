@@ -982,6 +982,8 @@ GetUserByProjectsListQMS(){
 //     }
 //   });
 // }
-
+logout(): void {
+  this.authService.logout();
+}
 
  }
