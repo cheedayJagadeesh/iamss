@@ -314,13 +314,15 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
       </div>
       <div class="col-md-3">
         <label class="lbldate">Date<span style="color: red;">*</span></label>
-        <select name="date" class="form-controldate" required [(ngModel)]="date"  [disabled]="selectedVenue !== 'Teams'" (change)="onBatchInputChange()" >
+        <select name="date" class="form-controldate" required [(ngModel)]="date"  [disabled]="selectedVenue !== 'Teams'" (change)="onBatchInputChange(); onDateChange()" >
             <option value="" disabled >- select -</option>
             <option *ngFor="let d of availableDates" [value]="d">{{ d }}</option>
         </select>
         <label class="lbltime">Time<span style="color: red;">*</span></label>
-        <select name="time" class="form-controltime" required [(ngModel)]="time" [disabled]="selectedVenue !== 'Teams'" (change)="onBatchInputChange()">
-            <option value="" disabled >- select -</option>
+        <!-- <select name="time" class="form-controltime" required [(ngModel)]="time" [disabled]="selectedVenue !== 'Teams'" (change)="onBatchInputChange()"> -->
+          <select name="time" class="form-controltime" required [(ngModel)]="time" [disabled]="!date" (change)="onBatchInputChange()">
+ 
+          <option value="" disabled >- select -</option>
             <option *ngFor="let t of availableTimes" [value]="t">{{ t }}</option>
         </select>
       </div>

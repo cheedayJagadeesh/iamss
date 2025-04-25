@@ -52,7 +52,7 @@ export class EmailService {
       body
     };
 
-    console.log("🚀 Payload to backend:", EmailPayload);
+    // console.log("🚀 Payload to backend:", EmailPayload);
 
     // Send email through backend service
     try {

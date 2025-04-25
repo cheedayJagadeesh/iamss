@@ -177,13 +177,22 @@ export class IelcapiService {
     }
 
     datebyskill='https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Dates/search'
-    GetEnrolledSessionsbydate(skillName: string): Observable<any> {
-      return this.http.get<any>(`${this.datebyskill}/${skillName}`);
+    // GetEnrolledSessionsbydate(skillName: string): Observable<any> {
+    //   return this.http.get<any>(`${this.datebyskill}/${skillName}`);
+    // }
+    GetEnrolledSessionsbydate(skill: string, venue: string): Observable<any> {
+      const url = `https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Dates/search/${(skill)}/${(venue)}`;
+      return this.http.get<any>(url);
     }
     timebyskill='https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Times/search'
     GetEnrolledSessionsbytime(skillName: string): Observable<any> {
       return this.http.get<any>(`${this.timebyskill}/${skillName}`);
     }
+    getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): Observable<any> {
+      const url = `https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Times/search/${skillName}/${dateRange}`;
+      return this.http.get<any>(url);
+    }
+    
 
    //---------------------------------------------------------------------------------------Inteq IT Support
 

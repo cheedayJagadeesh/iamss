@@ -47,13 +47,13 @@
                     <td>{{row.skillEndTime}}</td>
                     <td>{{row.venue}}</td>
                     <!-- <td>{{row.skillDescription}}</td> -->
-                    <td style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    <td style="max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                         {{ row.skillDescription }}
                     </td>
-                    <td style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    <td style="max-width: 200px;  text-overflow: ellipsis;">
                         {{row.skillName}}
                     </td>
-                    <td style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                    <td style="max-width: 150px;  text-overflow: ellipsis;">
                         {{row.conductedBy}}
                     </td>
                     <td style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
@@ -86,14 +86,14 @@
                                     <div class="modal-body">
                                        <div class="divmodal">
                                         <label>Start Date<span style="color: red;">*</span></label>
-                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.fromDate" name="fromDate" required #skillNameRef="ngModel"  >
+                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.fromDate" name="fromDate"  [min]="today" required #skillNameRef="ngModel"  >
                                         <!-- <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;">
                                             Start Date is required!
                                           </div> -->
                                        </div>
                                        <div class="divmodal">
                                         <label>End Date<span style="color: red;">*</span></label>
-                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.toDate" name="toDate" required #skillNameRef="ngModel"  >
+                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.toDate" name="toDate"    [min]="skillSessionData.fromDate || today" required #skillNameRef="ngModel"  >
                                         <!-- <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;">
                                             End Date is required!
                                           </div> -->
@@ -195,11 +195,11 @@
                                     <div class="modal-body">
                                        <div class="divmodal">
                                         <label>Start Date<span style="color: red;">*</span></label>
-                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.fromDate" name="fromDate" required #skillNameRef="ngModel">
+                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.fromDate" name="fromDate" [min]="today" required #skillNameRef="ngModel">
                                        </div>
                                        <div class="divmodal">
                                         <label>End Date<span style="color: red;">*</span></label>
-                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.toDate" name="toDate" required #skillNameRef="ngModel" >
+                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.toDate" name="toDate"  [min]="skillSessionData.fromDate || today" required #skillNameRef="ngModel" >
                                        </div>
                                        <div class="divmodal">
                                         <label>Start Time<span style="color: red;">*</span></label>

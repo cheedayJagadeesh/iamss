@@ -55,7 +55,7 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
   
    skillname:string=''
    includeStQuestions:boolean=false;
-
+   today:string=''
    
   skillSessionData: NewSkillsInfo = {
     sessionID: '',
@@ -90,7 +90,8 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
     this.GetAllSkillsData();
     this.GetAadUsersData();
     this.GetAadUserGroupsData();
-    
+    const currentDate = new Date();
+    this.today = currentDate.toISOString().split('T')[0];
    }
 
    ngAfterViewInit() {
@@ -170,11 +171,13 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
       return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}:${seconds.padStart(2, '0')}`;
     };
     
-    
+    const today = new Date().toISOString().split('T')[0];
     const formattedSession = {
       ...this.skillSessionData,
-      fromDate: new Date(this.skillSessionData.fromDate).toISOString(),
-      toDate: new Date(this.skillSessionData.toDate).toISOString(),
+      // fromDate: new Date(this.skillSessionData.fromDate).toISOString(),
+      // toDate: new Date(this.skillSessionData.toDate).toISOString(),
+      fromDate: this.skillSessionData.fromDate ? new Date(this.skillSessionData.fromDate).toISOString() : this.today , // Default to today if not set
+      toDate: this.skillSessionData.toDate ? new Date(this.skillSessionData.toDate).toISOString() : this.today ,  // Default to today if not set
       skillStartTime: formatTime(this.skillSessionData.skillStartTime),
       skillEndTime: formatTime(this.skillSessionData.skillEndTime),
       aadUsersData: this.skillSessionData.aadUsersData , 

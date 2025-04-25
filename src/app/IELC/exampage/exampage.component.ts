@@ -327,7 +327,7 @@ export class ExampageComponent implements OnInit, OnDestroy  {
   // }
   
   GetAllSkillsQa() {
-   
+    this.isLoading = true; 
     this.ielc.Getskillqa().subscribe((data: Question[]) => {
       this.examlist = data;
   
@@ -363,6 +363,43 @@ export class ExampageComponent implements OnInit, OnDestroy  {
       }
     });
   }
+
+  // GetAllSkillsQa() {
+  //   this.isLoading = true; // Set loading state immediately
+  //   this.ielc.Getskillqa().subscribe((data: Question[]) => {
+  //     this.examlist = data;
+  
+  //     const standardSkillKey = `${this.selectedSkill}_StQuestions`;
+  //     const totalQuestions = this.examdata.displayExamQuestions || data.length;
+  //     const standardCount = this.examdata.standardExamQuestions || 0;
+  
+  //     // 🔹 Get and shuffle standard questions
+  //     const standardQuestions = this.shuffleArray(
+  //       data.filter(q => q.skillName === standardSkillKey)
+  //     ).slice(0, standardCount);
+  
+  //     // 🔹 Remaining questions count
+  //     const remainingCount = totalQuestions - standardQuestions.length;
+  
+  //     // 🔹 Filter and shuffle skill questions more efficiently using a Set
+  //     const skillQuestionsSet = new Set(data.filter(q => q.skillName === this.selectedSkill).map(q => q.id)); // Assuming `id` is unique for each question
+  //     const remainingQuestions = data.filter(q => !standardQuestions.includes(q) && skillQuestionsSet.has(q.id));
+  //     const shuffledSkillQuestions = this.shuffleArray(remainingQuestions).slice(0, remainingCount);
+  
+  //     // Combine standard + remaining
+  //     const combined = [...standardQuestions, ...shuffledSkillQuestions];
+  //     this.questions = this.shuffleArray(combined);
+  
+  //     // Final setup
+  //     this.currentQuestionIndex = 0;
+  //     this.isLoading = false;
+  
+  //     if (this.timeLeft > 0) {
+  //       this.startTimer();
+  //     }
+  //   });
+  // }
+  
   
 
   shuffleArray(array: any[]) {
