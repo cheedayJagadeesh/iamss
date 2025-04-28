@@ -122,6 +122,7 @@
            width="400"
            height="300" />
   
+
       <!-- Options -->
       <ul class="options-list">
         <li *ngFor="let option of ['a', 'b', 'c', 'd']">
@@ -144,7 +145,9 @@
                  [src]="'data:image/jpeg;base64,' + currentQuestion['i' + option]"
                  alt="Option Image"
                  width="200"
-                 height="100" />
+                 height="100" 
+                  />
+                
           </label>
         </li>
       </ul>

@@ -87,6 +87,7 @@ import { environment } from './IELC/environment';
 // import { environment } from './IELC/environment.prod';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AuthcallbackComponent } from './IELC/authcallback/authcallback.component';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
 
@@ -270,7 +271,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     BrowserAnimationsModule,
     NgbModule,
     NgbDatepickerModule,FormsModule,MatDatepickerModule,MatNativeDateModule,MatCardModule,FullCalendarModule,MatInputModule,
-    MatFormFieldModule,MatButtonModule,MatIconModule,HttpClientModule,NgxPaginationModule
+    MatFormFieldModule,MatButtonModule,MatIconModule,HttpClientModule,NgxPaginationModule,LazyLoadImageModule
     
   ],
   providers: [IelcapiService,HttpClient,AuthService,MsalModule,MsalGuard,MsalService,DatePipe,ExcelExportService,MsalBroadcastService, 

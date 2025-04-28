@@ -64,7 +64,11 @@ a.disabled {
 }
 
 .pagination{
-    margin-left: 56.5%;
+    /* margin-left: 56.5%;
+    margin-top: -1%; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: -1%;
 }
 .lbllogin{

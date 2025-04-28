@@ -6,6 +6,8 @@ import { MsalService } from '@azure/msal-angular';
 import { ActivatedRoute } from '@angular/router';
 import { forkJoin } from 'rxjs';
 import { EmailService } from 'src/app/email.service';
+import { NgZone } from '@angular/core';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 declare var bootstrap: any;
 
 
@@ -117,7 +119,7 @@ export class ExampageComponent implements OnInit, OnDestroy  {
    Registeredusers: any[] = []; 
    correctAnswersCount = 0;
    enrollmentID: number | null = null;
-  constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute,private emailService: EmailService) {
+  constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute,private emailService: EmailService,private zone: NgZone) {
     // this.route.queryParams.subscribe(params => {
     //   this.selectedSkill = params['skill'];
     // });
@@ -126,12 +128,24 @@ export class ExampageComponent implements OnInit, OnDestroy  {
       this.enrollmentID = params['enrollment'] ? Number(params['enrollment']) : null;
     });
   }
+ 
+
+  // preloadImages(imageData: string[]) {
+  //   // Only preload if image data exists
+  //   imageData.filter(image => image).forEach(image => {
+  //     const img = new Image();
+  //     img.src = 'data:image/jpeg;base64,' + image;
+  //   });
+  // }
+  
   
    async ngOnInit(){
     // this.startTimer();
     this.GetExamlist();
     this.GetAllSkillsQa();
+
     
+
   try {
     console.log("Initializing MSAL...");
     
@@ -325,7 +339,7 @@ export class ExampageComponent implements OnInit, OnDestroy  {
   //     }
   //   });
   // }
-  
+  //=======================================================working code
   GetAllSkillsQa() {
     this.isLoading = true; 
     this.ielc.Getskillqa().subscribe((data: Question[]) => {
@@ -399,6 +413,76 @@ export class ExampageComponent implements OnInit, OnDestroy  {
   //     }
   //   });
   // }
+
+  //========================================working scenario 2
+// GetAllSkillsQa() {
+//   this.isLoading = true;
+//   const getUsers$ = this.ielc.GetUsers();
+//   const getExamInfo$ = this.ielc.Getexaminfo();
+//   const getSkillQa$ = this.ielc.Getskillqa();
+
+//   forkJoin([getUsers$, getExamInfo$, getSkillQa$]).subscribe(
+//     ([usersData, examData, skillData]) => {
+//       const aadEmail = this.userEmail; // Use the retrieved AAD email
+//       if (aadEmail) {
+//         this.Registeredusers = this.sortRegisteredUsers(
+//           usersData.filter(user => user.mail === aadEmail)
+//         );
+//       } else {
+//         this.Registeredusers = []; // No users if email is missing
+//       }
+
+//       if (examData && examData.length > 0) {
+//         this.examdata = examData[0];
+//         this.timeLeft = this.examdata.examTime * 60;
+//       }
+
+//       const standardSkillKey = this.selectedSkill + '_StQuestions';
+//       const totalQuestions = this.examdata.displayExamQuestions || skillData.length;
+//       const standardCount = this.examdata.standardExamQuestions || 0;
+
+//       // 🔹 Get and shuffle standard questions
+//       const standardQuestions = this.shuffleArray(
+//         skillData.filter((q: Question) => q.skillName === standardSkillKey)
+//       ).slice(0, standardCount);
+
+//       // 🔹 Remaining questions count
+//       const remainingCount = totalQuestions - standardQuestions.length;
+
+//       const skillQuestions = skillData
+//         .filter((q: Question) => q.skillName === this.selectedSkill)
+//         .filter((q: Question) => !standardQuestions.includes(q)); // avoid duplicates
+//       const shuffledSkillQuestions = this.shuffleArray(skillQuestions).slice(0, remainingCount);
+
+//       // Combine standard + remaining
+//       const combined = [...standardQuestions, ...shuffledSkillQuestions];
+//       this.questions = this.shuffleArray(combined); 
+
+//         // 👉👉 ADD PRELOAD IMAGES HERE
+//         // const allImages: string[] = [];
+//         // this.questions.forEach(q => {
+//         //   if (q.iQuestion) allImages.push(q.iQuestion);
+//         //   if (q.ia) allImages.push(q.ia);
+//         //   if (q.ib) allImages.push(q.ib);
+//         //   if (q.ic) allImages.push(q.ic);
+//         //   if (q.id) allImages.push(q.id);
+//         // });
+//         // this.preloadImages(allImages);
+
+//       // Final setup
+//       this.currentQuestionIndex = 0;
+//       this.isLoading = false;
+
+//       if (this.timeLeft > 0) {
+//         this.startTimer();
+//       }
+//     },
+//     (error) => {
+//       console.error("Error fetching data", error);
+//       this.isLoading = false;
+//     }
+//   );
+// }
   
   
 
@@ -604,16 +688,30 @@ closeModal() {
     clearInterval(this.timer); 
   }
 
+  // startTimer() {
+  //   this.timer = setInterval(() => {
+  //     if (this.timeLeft > 0) {
+  //       this.timeLeft--;
+  //     } else {
+  //       clearInterval(this.timer);
+  //       alert("⏰ Time's up! Submitting your answers...");
+  //       // this.router.navigate(['/registration']);
+  //     }
+  //   }, 1000); // Update timer every second
+  // }
   startTimer() {
     this.timer = setInterval(() => {
       if (this.timeLeft > 0) {
         this.timeLeft--;
       } else {
         clearInterval(this.timer);
-        alert("Time's up! Exam ended.");
-        this.router.navigate(['/registration']);
+        alert("⏰ Time's up! Submitting your answers...");
+  
+        this.zone.run(() => {
+          this.submitExam(); // ✅ forcefully call inside Angular zone
+        });
       }
-    }, 1000); // Update timer every second
+    }, 1000);
   }
 
   get formattedTime(): string {
@@ -693,11 +791,34 @@ closeModal() {
       if (this.currentQuestionIndex < this.questions.length - 1) {
         this.currentQuestionIndex++;
       }
+      else {
+        // Last question, submit the exam
+        this.submitExam();
+      }
     } else {
       alert("⚠️ Please select an answer before proceeding.");
     }
   }
   
+  // forceSubmitExam() {
+  //   let correctAnswers = 0;
+  //   let totalQuestions = this.questions.length;
+  
+  //   this.questions.forEach(q => {
+  //     if (q.selectedAnswer) {  // only check if user selected an answer
+  //       if (q.selectedAnswer === q.correctAnswer) {
+  //         correctAnswers++;
+  //       }
+  //     }
+  //   });
+  
+  //   let percentage = (correctAnswers / totalQuestions) * 100;
+    
+  //   // Save or send the result
+  //   this.saveExamResult(correctAnswers, totalQuestions, percentage);
+  
+  //   // Navigate to result page or show result
+  // }
   
   
   
