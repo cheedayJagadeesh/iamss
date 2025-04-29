@@ -4,6 +4,14 @@
     <div *ngIf="isLoading" class="loading-container">
         <span class="dot"></span>
     </div>
+
+    <!-- <div *ngIf="isLoading" class="spinner-overlay">
+      <div class="spinner">
+        <div class="loader"></div>
+        <div class="loading-text">{{ fakePercent }}%</div>
+      </div>
+    </div> -->
+    
     <!-- <div>
         <label class="lbllogin">Login as </label>
     </div> -->
@@ -116,11 +124,13 @@
       <h3 style="font-size: 18px;"><strong>{{ currentQuestion.question }}</strong></h3>
   
       <!-- Question Image -->
+      
       <img *ngIf="currentQuestion.iQuestion" 
            [src]="'data:image/jpeg;base64,' + currentQuestion.iQuestion" 
            alt="Question Image" 
            width="400"
            height="300" />
+      
   
 
       <!-- Options -->
@@ -135,6 +145,7 @@
               [(ngModel)]="selectedAnswer"
             />
   
+           
             <!-- Display text if no image -->
             <span *ngIf="!currentQuestion['i' + option]">
               {{ currentQuestion[option] }}
@@ -142,12 +153,12 @@
   
             <!-- Display image if available -->
             <img *ngIf="currentQuestion['i' + option]"
-                 [src]="'data:image/jpeg;base64,' + currentQuestion['i' + option]"
+                [src]="'data:image/jpeg;base64,' + currentQuestion['i' + option]"
                  alt="Option Image"
                  width="200"
                  height="100" 
                   />
-                
+           
           </label>
         </li>
       </ul>

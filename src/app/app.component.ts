@@ -87,6 +87,10 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
     this.isLoading = true;
+      //  this.authService.startInactivityTimer();
+    this.router.events.subscribe(() => {
+      this.authService.startInactivityTimer();
+    });
     try {
       // Step 1: Handle MSAL redirect (if using redirect login)
       await this.msalService.instance.initialize();

@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { MsalService } from '@azure/msal-angular';
 import { AuthenticationResult, PublicClientApplication } from '@azure/msal-browser';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd  } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './IELC/environment';
@@ -19,7 +19,7 @@ interface User {
 export class AuthService {
   private inactivityTimeout: any;
   private countdownInterval: any;
-  private readonly TIMEOUT_DURATION = 5 * 60 * 1000; // 5 minutes
+  private readonly TIMEOUT_DURATION = 10 * 60 * 1000; // 5 minutes
   private remainingTime = this.TIMEOUT_DURATION / 1000; 
 
   // private userNameSubject = new BehaviorSubject<string | null>(null);
@@ -222,48 +222,112 @@ export class AuthService {
 //   }
 
 //   // ---------------- Inactivity Timer ----------------
-//   startInactivityTimer() {
-//     if (this.router.url === '/login') {
-//       console.log('Skipping inactivity timer on login page');
-//       return; // Do not start timer on login page
-//     }
-//     console.log('Inactivity timer started.');
-//     this.resetInactivityTimer();
-//   }
+  startInactivityTimer() {
+    // if (this.router.url === '/login') {
+    //   console.log('Skipping inactivity timer on login page');
+    //   return; // Do not start timer on login page
+    // }
+    // console.log('Inactivity timer started.');
+    this.resetInactivityTimer();
+  }
 
-//   private resetInactivityTimer() {
-//     clearTimeout(this.inactivityTimeout);
-//     clearInterval(this.countdownInterval);
-//     this.remainingTime = this.TIMEOUT_DURATION / 1000; // Reset countdown
+  // startInactivityTimer() {
+  //   const excludedRoutes = ['/login', '/exampage'];
+  
+  //   // Normalize route by removing hash and query parameters
+  //   const currentPath = this.router.url.replace(/^#/, '').split('?')[0];
+  
+  //   if (excludedRoutes.includes(currentPath)) {
+  //     console.log('Skipping inactivity timer on', currentPath);
+  //     return;
+  //   }
+  
+  //   console.log('Inactivity timer started.');
+  //   this.resetInactivityTimer();
+  // }
 
-//     this.countdownInterval = setInterval(() => {
-//       this.remainingTime--;
-//       console.log(`Time left before auto-logout: ${this.remainingTime} seconds`);
+  private resetInactivityTimer() {
+    const excludedRoutes = ['/login', '/exampage'];
+    const currentPath = this.router.url.replace(/^#/, '').split('?')[0];
+  
+    if (excludedRoutes.includes(currentPath)) {
+      // console.log('Skipping reset of inactivity timer on', currentPath);
+      return;
+    }
+  
+    clearTimeout(this.inactivityTimeout);
+    clearInterval(this.countdownInterval);
+    this.remainingTime = this.TIMEOUT_DURATION / 1000;
+  
+    this.countdownInterval = setInterval(() => {
+      this.remainingTime--;
+      // console.log(`Time left before auto-logout: ${this.remainingTime} seconds`);
+  
+      if (this.remainingTime <= 0) {
+        clearInterval(this.countdownInterval);
+      }
+    }, 1000);
+  
+    this.inactivityTimeout = setTimeout(() => {
+      // console.log("User inactive. Logging out...");
+      this.logout();
+    }, this.TIMEOUT_DURATION);
+  }
+  
+  
+  
 
-//       if (this.remainingTime <= 0) {
-//         clearInterval(this.countdownInterval);
-//       }
-//     }, 1000);
+  // private resetInactivityTimer() {
+  //   clearTimeout(this.inactivityTimeout);
+  //   clearInterval(this.countdownInterval);
+  //   this.remainingTime = this.TIMEOUT_DURATION / 1000; // Reset countdown
 
-//     this.inactivityTimeout = setTimeout(() => {
-//       console.log("User inactive. Logging out...");
-//       this.logout();
-//     }, this.TIMEOUT_DURATION);
-//   }
+  //   this.countdownInterval = setInterval(() => {
+  //     this.remainingTime--;
+  //     console.log(`Time left before auto-logout: ${this.remainingTime} seconds`);
 
-//   private setupActivityListeners() {
-//     ['mousemove', 'keydown', 'click'].forEach(event => {
-//       window.addEventListener(event, () => this.resetInactivityTimer());
-//     });
-//   }
+  //     if (this.remainingTime <= 0) {
+  //       clearInterval(this.countdownInterval);
+  //     }
+  //   }, 1000);
+
+  //   this.inactivityTimeout = setTimeout(() => {
+  //     console.log("User inactive. Logging out...");
+  //     this.logout();
+  //   }, this.TIMEOUT_DURATION);
+  // }
+  private handleRouteChanges() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const excludedRoutes = ['/login', '/exampage'];
+  
+        // Remove the hash and query parameters
+        const currentPath = event.urlAfterRedirects.replace(/^#?\/?/, '/').split('?')[0];
+  
+        if (excludedRoutes.includes(currentPath)) {
+          // console.log('Clearing timers on excluded route:', currentPath);
+          clearTimeout(this.inactivityTimeout);
+          clearInterval(this.countdownInterval);
+        }
+      }
+    });
+  }
+  
+  
+
+  private setupActivityListeners() {
+    ['mousemove', 'keydown', 'click'].forEach(event => {
+      window.addEventListener(event, () => this.resetInactivityTimer());
+    });
+  }
 
 private userDetailsSubject = new BehaviorSubject<{ displayName: string | null, email: string | null }>({ displayName: null, email: null });
 userDetails$ = this.userDetailsSubject.asObservable();
 
 constructor(private msalService: MsalService, private router: Router, private http: HttpClient,private ielc: IelcapiService) {
   this.initializeUser();
-  // this.setupActivityListeners();
- 
+  this.setupActivityListeners();
+  this.handleRouteChanges();
 }
 
 // private initializeUser() {

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/authservice.service';
 import { MsalService } from '@azure/msal-angular';
 import { ActivatedRoute } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { forkJoin, lastValueFrom, firstValueFrom   } from 'rxjs';
 import { EmailService } from 'src/app/email.service';
 import { NgZone } from '@angular/core';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
@@ -119,6 +119,10 @@ export class ExampageComponent implements OnInit, OnDestroy  {
    Registeredusers: any[] = []; 
    correctAnswersCount = 0;
    enrollmentID: number | null = null;
+
+loadingProgress: number = 0;
+fakePercent = 0;
+
   constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute,private emailService: EmailService,private zone: NgZone) {
     // this.route.queryParams.subscribe(params => {
     //   this.selectedSkill = params['skill'];
@@ -143,9 +147,7 @@ export class ExampageComponent implements OnInit, OnDestroy  {
     // this.startTimer();
     this.GetExamlist();
     this.GetAllSkillsQa();
-
-    
-
+   
   try {
     console.log("Initializing MSAL...");
     
@@ -174,7 +176,8 @@ export class ExampageComponent implements OnInit, OnDestroy  {
         this.GetAllUsers(); // Call this AFTER we get the email
       }
     });
-    // this.authService.userDetails$.subscribe(userDetails => {
+
+  // this.authService.userDetails$.subscribe(userDetails => {
     //   if (userDetails) {
     //     this.userEmail = userDetails.email; // Ensure the email is correctly assigned
     //     this.GetAllUsers(); // Call this AFTER we get the email
@@ -339,12 +342,37 @@ export class ExampageComponent implements OnInit, OnDestroy  {
   //     }
   //   });
   // }
-  //=======================================================working code
-  GetAllSkillsQa() {
-    this.isLoading = true; 
-    this.ielc.Getskillqa().subscribe((data: Question[]) => {
-      this.examlist = data;
+  async compressBase64Image(base64: string, maxWidth = 400, quality = 0.7): Promise<string> {
+    const img = new Image();
+    img.src = base64;
   
+    await new Promise<void>((resolve) => {
+      img.onload = () => resolve();
+    });
+  
+    const canvas = document.createElement('canvas');
+    const scale = maxWidth / img.width;
+    canvas.width = maxWidth;
+    canvas.height = img.height * scale;
+  
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error('Canvas context not available');
+  
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  
+    return canvas.toDataURL('image/jpeg', quality);
+  }
+  
+
+
+  //=======================================================working code
+  async GetAllSkillsQa() {
+    this.isLoading = true;
+
+    this.ielc.Getskillqa().subscribe((data: Question[]) => {
+  
+      this.examlist = data;
+   
       const standardSkillKey = this.selectedSkill + '_StQuestions';
       const totalQuestions = this.examdata.displayExamQuestions || data.length;
       const standardCount = this.examdata.standardExamQuestions || 0;
@@ -354,6 +382,7 @@ export class ExampageComponent implements OnInit, OnDestroy  {
         data.filter(q => q.skillName === standardSkillKey)
       ).slice(0, standardCount);
       
+    
       // 🔹 Remaining questions count
       const remainingCount = totalQuestions - standardQuestions.length;
   
@@ -367,16 +396,71 @@ export class ExampageComponent implements OnInit, OnDestroy  {
 
       const combined = [...standardQuestions, ...shuffledSkillQuestions];
       this.questions = this.shuffleArray(combined); 
-  
+
+
       // Final setup
       this.currentQuestionIndex = 0;
-      this.isLoading = false;
+      // this.isLoading = false;
   
       if (this.timeLeft > 0) {
         this.startTimer();
       }
+     
+      this.isLoading = false;
     });
   }
+
+
+
+
+// async GetAllSkillsQa() {
+//   this.isLoading = true;
+
+//   // ✅ Wait for observable to complete
+//   const data: Question[] = await firstValueFrom(this.ielc.Getskillqa());
+//   this.examlist = data;
+
+//   const standardSkillKey = this.selectedSkill + '_StQuestions';
+//   const totalQuestions = this.examdata.displayExamQuestions || data.length;
+//   const standardCount = this.examdata.standardExamQuestions || 0;
+
+//   const standardQuestions = this.shuffleArray(
+//     data.filter(q => q.skillName === standardSkillKey)
+//   ).slice(0, standardCount);
+
+//   const remainingCount = totalQuestions - standardQuestions.length;
+
+//   const skillQuestions = data
+//     .filter(q => q.skillName === this.selectedSkill)
+//     .filter(q => !standardQuestions.includes(q));
+//   const shuffledSkillQuestions = this.shuffleArray(skillQuestions).slice(0, remainingCount);
+
+//   const combined = [...standardQuestions, ...shuffledSkillQuestions];
+//   this.questions = this.shuffleArray(combined);
+
+//   // 🔥 Compress base64 images
+//   for (const question of this.questions) {
+//     if (question.iQuestion) {
+//       question.iQuestion = await this.compressBase64Image('data:image/jpeg;base64,' + question.iQuestion, 400, 0.7);
+//     }
+
+//     for (const opt of ['a', 'b', 'c', 'd']) {
+//       const imgKey = 'i' + opt;
+//       if (question[imgKey]) {
+//         question[imgKey] = await this.compressBase64Image('data:image/jpeg;base64,' + question[imgKey], 200, 0.7);
+//       }
+//     }
+//   }
+
+//   this.currentQuestionIndex = 0;
+
+//   if (this.timeLeft > 0) {
+//     this.startTimer();
+//   }
+
+//   this.isLoading = false;
+// }
+
 
   // GetAllSkillsQa() {
   //   this.isLoading = true; // Set loading state immediately
