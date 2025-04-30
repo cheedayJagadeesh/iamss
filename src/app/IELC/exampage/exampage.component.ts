@@ -364,10 +364,13 @@ fakePercent = 0;
   }
   
 
-
+  progressValue = 0;
+  circumference = 2 * Math.PI * 40;
   //=======================================================working code
   async GetAllSkillsQa() {
     this.isLoading = true;
+    this.progressValue = 0;
+    this.simulateLoading(); 
 
     this.ielc.Getskillqa().subscribe((data: Question[]) => {
   
@@ -397,7 +400,7 @@ fakePercent = 0;
       const combined = [...standardQuestions, ...shuffledSkillQuestions];
       this.questions = this.shuffleArray(combined); 
 
-
+     
       // Final setup
       this.currentQuestionIndex = 0;
       // this.isLoading = false;
@@ -406,11 +409,36 @@ fakePercent = 0;
         this.startTimer();
       }
      
+
+
+      // ✅ Now force the rest of the progress to finish
+    // const completeInterval = setInterval(() => {
+    //   this.progressValue += 5;
+    //   if (this.progressValue >= 100) {
+    //     this.progressValue = 100;
+    //     this.isLoading = false;
+    //     clearInterval(completeInterval);
+    //   }
+    // }, 50); 
+    this.progressValue = 100;
+    setTimeout(() => {
       this.isLoading = false;
+    }, 300); 
+      // this.isLoading = false;
     });
   }
 
-
+ 
+  simulateLoading() {
+    const interval = setInterval(() => {
+      if (this.progressValue < 95) {
+        this.progressValue += 3;
+      } else {
+        clearInterval(interval); // Let GetAllSkillsQa() finish it to 100
+      }
+    }, 200);
+  }
+  
 
 
 // async GetAllSkillsQa() {

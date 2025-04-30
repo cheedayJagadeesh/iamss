@@ -1,16 +1,15 @@
 <form class="row g-3">
     <app-sprtheader></app-sprtheader>
 <div class="exam-container">
-    <div *ngIf="isLoading" class="loading-container">
+    <!-- <div *ngIf="isLoading" class="loading-container">
         <span class="dot"></span>
-    </div>
-
-    <!-- <div *ngIf="isLoading" class="spinner-overlay">
-      <div class="spinner">
-        <div class="loader"></div>
-        <div class="loading-text">{{ fakePercent }}%</div>
-      </div>
     </div> -->
+    <div *ngIf="isLoading" class="loading-container">
+      <div class="loader-content">
+        <span class="dot"></span>
+        <div class="percentage">{{ progressValue }}%</div>
+      </div>
+    </div>
     
     <!-- <div>
         <label class="lbllogin">Login as </label>
