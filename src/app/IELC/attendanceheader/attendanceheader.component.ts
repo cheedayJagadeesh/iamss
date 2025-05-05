@@ -43,17 +43,17 @@ export class AttendanceheaderComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      console.log("Initializing MSAL...");
+      // console.log("Initializing MSAL...");
       
       // Ensure MSAL is properly initialized before proceeding
       await this.msalService.instance.initialize();  
       await this.msalService.instance.handleRedirectPromise();
   
-      console.log("MSAL initialized successfully.");
+      // console.log("MSAL initialized successfully.");
       
       const activeAccount = this.msalService.instance.getActiveAccount();
       if (!activeAccount) {
-        console.warn("No active account found. Redirecting to login...");
+        // console.warn("No active account found. Redirecting to login...");
         this.router.navigate(['/login']);
         return;
       }
@@ -66,7 +66,7 @@ export class AttendanceheaderComponent implements OnInit {
       });
   
     } catch (error) {
-      console.error("MSAL initialization error in HeaderComponent:", error);
+      // console.error("MSAL initialization error in HeaderComponent:", error);
     }
   }
   logout(): void {

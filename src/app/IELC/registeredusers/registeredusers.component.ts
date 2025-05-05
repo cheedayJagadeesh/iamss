@@ -101,11 +101,11 @@ export class RegisteredusersComponent implements OnInit {
       this.Registeredusers = (skillUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
         (venueUsers as UsersInfo[]).some((venueUser: UsersInfo) => venueUser.enrollmentID === skillUser.enrollmentID)
       );
-      console.log("Filtered Users:", this.Registeredusers);
+      // console.log("Filtered Users:", this.Registeredusers);
     },
     
     error: (err) => {
-      console.error("Error fetching data:", err);
+      // console.error("Error fetching data:", err);
     }
   });
  }
@@ -119,11 +119,11 @@ export class RegisteredusersComponent implements OnInit {
         this.Registeredusers = (skillUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
           (optedtimes as UsersInfo[]).some((optedtime: UsersInfo) => optedtime.enrollmentID === skillUser.enrollmentID)
         );
-        console.log("Filtered Users:", this.Registeredusers);
+        // console.log("Filtered Users:", this.Registeredusers);
       },
       
       error: (err) => {
-        console.error("Error fetching data:", err);
+        // console.error("Error fetching data:", err);
       }
     
     });
@@ -138,11 +138,11 @@ export class RegisteredusersComponent implements OnInit {
         this.Registeredusers = (skillUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
           (opteddates as UsersInfo[]).some((opteddate: UsersInfo) => opteddate.enrollmentID === skillUser.enrollmentID)
         );
-        console.log("Filtered Users:", this.Registeredusers);
+        // console.log("Filtered Users:", this.Registeredusers);
       },
       
       error: (err) => {
-        console.error("Error fetching data:", err);
+        // console.error("Error fetching data:", err);
       }
     
     });
@@ -157,11 +157,11 @@ export class RegisteredusersComponent implements OnInit {
       this.Registeredusers = (opteddates as UsersInfo[]).filter((opteddate: UsersInfo) =>
         (venueUsers as UsersInfo[]).some((venueUser: UsersInfo) => venueUser.enrollmentID === opteddate.enrollmentID)
       );
-      console.log("Filtered Users:", this.Registeredusers);
+      // console.log("Filtered Users:", this.Registeredusers);
     },
     
     error: (err) => {
-      console.error("Error fetching data:", err);
+      // console.error("Error fetching data:", err);
     }
   });
  }
@@ -175,11 +175,11 @@ export class RegisteredusersComponent implements OnInit {
         this.Registeredusers = (venueUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
           (optedtimes as UsersInfo[]).some((optedtime: UsersInfo) => optedtime.enrollmentID === skillUser.enrollmentID)
         );
-        console.log("Filtered Users:", this.Registeredusers);
+        // console.log("Filtered Users:", this.Registeredusers);
       },
       
       error: (err) => {
-        console.error("Error fetching data:", err);
+        // console.error("Error fetching data:", err);
       }
     
     });
@@ -194,11 +194,11 @@ export class RegisteredusersComponent implements OnInit {
         this.Registeredusers = (optedtimes as UsersInfo[]).filter((skillUser: UsersInfo) =>
           (opteddates as UsersInfo[]).some((opteddate: UsersInfo) => opteddate.enrollmentID === skillUser.enrollmentID)
         );
-        console.log("Filtered Users:", this.Registeredusers);
+        // console.log("Filtered Users:", this.Registeredusers);
       },
       
       error: (err) => {
-        console.error("Error fetching data:", err);
+        // console.error("Error fetching data:", err);
       }
     
     });
@@ -214,11 +214,11 @@ export class RegisteredusersComponent implements OnInit {
           (venueUsers as UsersInfo[]).some((venueUser: UsersInfo) => venueUser.enrollmentID === skillUser.enrollmentID)
         && skillUser.time === this.time
         );
-        console.log("Filtered Users:", this.Registeredusers);
+        // console.log("Filtered Users:", this.Registeredusers);
       },
       
       error: (err) => {
-        console.error("Error fetching data:", err);
+        // console.error("Error fetching data:", err);
       }
     });
   }
@@ -233,11 +233,11 @@ export class RegisteredusersComponent implements OnInit {
           (venueUsers as UsersInfo[]).some((venueUser: UsersInfo) => venueUser.enrollmentID === skillUser.enrollmentID)
         && new Date(skillUser.date).getTime() === new Date(this.selectedDate).getTime() 
         );
-        console.log("Filtered Users:", this.Registeredusers);
+        // console.log("Filtered Users:", this.Registeredusers);
       },
       
       error: (err) => {
-        console.error("Error fetching data:", err);
+        // console.error("Error fetching data:", err);
       }
     });
   }
@@ -252,11 +252,11 @@ export class RegisteredusersComponent implements OnInit {
           (venueUsers as UsersInfo[]).some((venueUser: UsersInfo) => venueUser.enrollmentID === optedtime.enrollmentID)
         && new Date(optedtime.date).getTime() === new Date(this.selectedDate).getTime() 
         );
-        console.log("Filtered Users:", this.Registeredusers);
+        // console.log("Filtered Users:", this.Registeredusers);
       },
       
       error: (err) => {
-        console.error("Error fetching data:", err);
+        // console.error("Error fetching data:", err);
       }
     });
   }
@@ -275,11 +275,11 @@ export class RegisteredusersComponent implements OnInit {
           (dateUsers as UsersInfo[]).some((dateUser: UsersInfo) => dateUser.enrollmentID === user.enrollmentID)
         );
   
-        console.log("Filtered Users:", this.Registeredusers);
+        // console.log("Filtered Users:", this.Registeredusers);
       },
   
       error: (err) => {
-        console.error("Error fetching data:", err);
+        // console.error("Error fetching data:", err);
       }
     });
   }
@@ -296,7 +296,7 @@ deleteItem(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetAllUSers(); // Call this only after successful deletion
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) => console.error('Error deleting item:', err)
     });
   }
 }

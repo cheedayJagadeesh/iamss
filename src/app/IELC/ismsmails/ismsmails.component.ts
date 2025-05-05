@@ -88,10 +88,10 @@ export class IsmsmailsComponent implements OnInit {
 // }
 
 EditIsmsMails(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetIsmsMailsById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -111,10 +111,10 @@ EditIsmsMails(id: number) {
         password: data.password || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -122,13 +122,13 @@ EditIsmsMails(id: number) {
 UpdateIsmsMails() {
   this.ielc.UpdateIsmsMails(this.ismsmailsdata.id, this.ismsmailsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetIsmsmailslist();
      
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }

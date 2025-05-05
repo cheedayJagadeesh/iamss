@@ -63,7 +63,7 @@ export class Soc2historyComponent implements OnInit {
         this.isLoading = false;
       },
       (error) => {
-        console.error('Error fetching data:', error);
+        // console.error('Error fetching data:', error);
         this.tableData = []; // Clear data on error
       }
     );

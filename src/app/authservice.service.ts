@@ -356,7 +356,7 @@ login(): void {
       this.router.navigate(['/home']);
     },
     error: (error) => {
-      console.error('Login Error:', error);
+      // console.error('Login Error:', error);
     }
   });
 }
@@ -393,7 +393,7 @@ logout(): void {
       window.location.href = environment.postLogoutRedirectUri;
     },
     error: (error) => {
-      console.error('Logout Error:', error);
+      // console.error('Logout Error:', error);
     }
   });
 }
@@ -670,7 +670,7 @@ async getUserInfo(): Promise<User | null> {
     await this.fetchUserDetails();
     return this.userInfoSubject.value;
   } catch (error) {
-    console.error('Error fetching user info:', error);
+    // console.error('Error fetching user info:', error);
     return null;
   }
 }
@@ -720,18 +720,18 @@ public fetchUserDetails(): Promise<'SuperAdmin' | 'Admin' | 'User'> {
               resolve(roleName as 'SuperAdmin' | 'Admin' | 'User');
             },
             error: (err) => {
-              console.error('API error:', err);
+              // console.error('API error:', err);
               reject(err);
             }
           });
         },
         error: (err) => {
-          console.error('Graph fetch error:', err);
+          // console.error('Graph fetch error:', err);
           reject(err);
         }
       });
     }).catch((error) => {
-      console.error('Token acquisition failed:', error);
+      // console.error('Token acquisition failed:', error);
       reject(error);
     });
   });
@@ -811,7 +811,7 @@ getAllowedPages(): string[] {
 handleRedirectCallback() {
   this.msalService.instance.handleRedirectPromise()
     .then((result: AuthenticationResult | null) => {
-      console.log("handleRedirectPromise result:", result);
+      // console.log("handleRedirectPromise result:", result);
       if (result) {
         this.msalService.instance.setActiveAccount(result.account);
         this.fetchUserDetails();
@@ -821,7 +821,7 @@ handleRedirectCallback() {
       }
     })
     .catch(error => {
-      console.error("Redirect Authentication Error:", error);
+      // console.error("Redirect Authentication Error:", error);
     });
 }
 

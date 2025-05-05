@@ -1906,7 +1906,7 @@ Getqmshistory(year: number): Observable<any> {
     // }
     Postevents(data: any): Observable<any> {
       const headers = new HttpHeaders({ 'Content-Type': 'application/json',
-       'x-api-key': this.apiKey
+       'Authorization': this.apiKey
        });
       
       return this.http.post<any>(this.eventsUrl, JSON.stringify(data), { headers });
@@ -1989,7 +1989,7 @@ Getskillqa(): Observable<any> {
 // }
 Postskillqa(data: any): Observable<any> {
   const headers = new HttpHeaders({ 'Content-Type': 'application/json',
-    'x-api-key': this.apiKey
+    'Authorization': this.apiKey
    });
 
   return this.http.post<any>(this.skillqaurl, JSON.stringify(data), { headers });
@@ -2064,7 +2064,7 @@ GetProjectIDISMS(projectname: string): Observable<string[]> {
 
 UpdateISMSCompliance(id: number, updatedData: any): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json',
-      'x-api-key': this.apiKey
+      'Authorization': this.apiKey
      });
     return this.http.put(`${this.complianceismsUrl}/update-month/${id}`, JSON.stringify(updatedData), { headers });
 }
@@ -2102,7 +2102,7 @@ GetProjectIDQMS(projectname: string): Observable<string[]> {
 
 UpdateQMSCompliance(id: number, updatedData: any): Observable<any> {
   const headers = new HttpHeaders({ 'Content-Type': 'application/json',
-    'x-api-key': this.apiKey
+    'Authorization': this.apiKey
    });
   return this.http.put(`${this.complianceqmsUrl}/update-month/${id}`, JSON.stringify(updatedData), { headers });
 }
@@ -2122,7 +2122,7 @@ sendEmailFromBackend(payload: {
 }) {
   const apiUrl = 'https://ielc-coreapi.azurewebsites.net/SendEmail/api/sendemail'; // 🔁 Replace with your actual backend API URL
   const headers = new HttpHeaders({ 'Content-Type': 'application/json',
-    'x-api-key': this.apiKey
+    'Authorization': this.apiKey
    });
   return this.http.post(apiUrl, payload, {headers, responseType: 'text' });
 }

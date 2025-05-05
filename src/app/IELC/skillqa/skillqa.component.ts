@@ -146,7 +146,7 @@ export class SkillqaComponent implements OnInit {
         this.resetlist();
       },
       (error) => {
-        console.error("Error:", error);
+        // console.error("Error:", error);
         alert('❌ Error adding Record. Please try again.');
       }
     );
@@ -163,7 +163,7 @@ export class SkillqaComponent implements OnInit {
           alert(`Record with ID ${id} deleted successfully!`);
           this.GetAllSkillsQa();
         },
-        error: (err) => console.error('Error deleting item:', err)
+        // error: (err) => console.error('Error deleting item:', err)
       });
     }
   }
@@ -192,17 +192,17 @@ export class SkillqaComponent implements OnInit {
           questionAnswer: data.questionAnswer || ''
         };
       } else {
-        console.warn("No data received for the given ID.");
+        // console.warn("No data received for the given ID.");
       }
     }, error => {
-      console.error("Error fetching record:", error);
+      // console.error("Error fetching record:", error);
     });
   }
   UpdateSkillsQa() {
     const currentPage = this.page;  // ✅ Save current page
     this.ielc.Updateskillqa(this.questiondata.questionId, this.questiondata).subscribe(
       (response) => {
-        console.log("Updated Successfully:", response);
+        // console.log("Updated Successfully:", response);
         alert(" ✅ Record updated successfully!");
   
         // ✅ Find the updated record and replace it locally
@@ -218,7 +218,7 @@ export class SkillqaComponent implements OnInit {
         this.page = currentPage;  
       },
       (error) => {
-        console.error("Error updating Record:", error);
+        // console.error("Error updating Record:", error);
       }
     );
   }

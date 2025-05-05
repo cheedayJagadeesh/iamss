@@ -154,11 +154,11 @@ export class ResultinfoComponent implements OnInit  {
         this.Enrollmentlist = (skillUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
           (statusUsers as UsersInfo[]).some((statusUsers: UsersInfo) => statusUsers.enrollmentID === skillUser.enrollmentID)
         );
-        console.log("Filtered Users:", this.Enrollmentlist);
+        // console.log("Filtered Users:", this.Enrollmentlist);
       },
       
       error: (err) => {
-        console.error("Error fetching data:", err);
+        // console.error("Error fetching data:", err);
       }
     });
    }
@@ -171,11 +171,11 @@ export class ResultinfoComponent implements OnInit  {
         this.Enrollmentlist = (skillUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
           (emailUsers as UsersInfo[]).some((emailUsers: UsersInfo) => emailUsers.enrollmentID === skillUser.enrollmentID)
         );
-        console.log("Filtered Users:", this.Enrollmentlist);
+        // console.log("Filtered Users:", this.Enrollmentlist);
       },
       
       error: (err) => {
-        console.error("Error fetching data:", err);
+        // console.error("Error fetching data:", err);
       }
     });
    }
@@ -188,11 +188,11 @@ export class ResultinfoComponent implements OnInit  {
         this.Enrollmentlist = (statusUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
           (emailUsers as UsersInfo[]).some((emailUsers: UsersInfo) => emailUsers.enrollmentID === skillUser.enrollmentID)
         );
-        console.log("Filtered Users:", this.Enrollmentlist);
+        // console.log("Filtered Users:", this.Enrollmentlist);
       },
       
       error: (err) => {
-        console.error("Error fetching data:", err);
+        // console.error("Error fetching data:", err);
       }
     });
    }
@@ -208,11 +208,11 @@ export class ResultinfoComponent implements OnInit  {
           (skillUsers as UsersInfo[]).some((skillUser: UsersInfo) => skillUser.enrollmentID === user.enrollmentID) 
         );
   
-        console.log("Filtered Users:", this.Enrollmentlist);
+        // console.log("Filtered Users:", this.Enrollmentlist);
       },
   
       error: (err) => {
-        console.error("Error fetching data:", err);
+        // console.error("Error fetching data:", err);
       }
     });
   }
@@ -254,7 +254,7 @@ exportExcel(): void {
 
   // Ensure columns is an array
   if (!Array.isArray(this.columns)) {
-    console.error("columns is not an array:", this.columns);
+    // console.error("columns is not an array:", this.columns);
     return;
   }
 

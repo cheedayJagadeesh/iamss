@@ -149,17 +149,17 @@ fakePercent = 0;
     this.GetAllSkillsQa();
    
   try {
-    console.log("Initializing MSAL...");
+    // console.log("Initializing MSAL...");
     
     // Ensure MSAL is properly initialized before proceeding
     await this.msalService.instance.initialize();  
     await this.msalService.instance.handleRedirectPromise();
 
-    console.log("MSAL initialized successfully.");
+    // console.log("MSAL initialized successfully.");
     
     const activeAccount = this.msalService.instance.getActiveAccount();
     if (!activeAccount) {
-      console.warn("No active account found. Redirecting to login...");
+      // console.warn("No active account found. Redirecting to login...");
       this.router.navigate(['/login']);
       return;
     }
@@ -186,7 +186,7 @@ fakePercent = 0;
   }
   
    catch (error) {
-    console.error("MSAL initialization error in HeaderComponent:", error);
+    // console.error("MSAL initialization error in HeaderComponent:", error);
   }
 
   }
@@ -300,7 +300,7 @@ fakePercent = 0;
   // }
   GetExamlist() {
     this.ielc.Getexaminfo().subscribe((data) => {
-      console.log("Exam data received:", data);
+      // console.log("Exam data received:", data);
       if (data && data.length > 0) {
         this.examdata = data[0];  // <-- only assign to examdata
         this.timeLeft = this.examdata.examTime * 60; 
@@ -313,7 +313,7 @@ fakePercent = 0;
       }
      
     }, (error) => {
-      console.error("Error fetching exam data", error);
+      // console.error("Error fetching exam data", error);
      
     });
     
@@ -761,7 +761,7 @@ UpdateResult() {
         // alert("📩 You will receive your exam status via email shortly.");
       },
       (error) => {
-        console.error('❌ Error updating Record:', error);
+        // console.error('❌ Error updating Record:', error);
         alert("❌ Failed to submit your result. Please try again.");
       }
     );

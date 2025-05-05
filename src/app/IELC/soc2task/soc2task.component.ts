@@ -82,10 +82,10 @@ export class Soc2taskComponent implements OnInit {
 
 
 EditQmscalendar(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetqmscalendarById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -107,10 +107,10 @@ EditQmscalendar(id: number) {
         dec: data.dec || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -118,13 +118,13 @@ EditQmscalendar(id: number) {
 UpdateQmscalendar() {
   this.ielc.Updateqmscalendar(this.calendardata.id, this.calendardata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetQmscalendarlist();
       this.resetlist();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }

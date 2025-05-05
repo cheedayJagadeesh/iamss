@@ -17,11 +17,11 @@ export class AuthcallbackComponent implements OnInit {
         this.msalService.instance.setActiveAccount(response.account);
         this.router.navigate(['/home']); // Redirect after successful login
       } else {
-        console.error('MSAL Redirect Error: No response found');
+        // console.error('MSAL Redirect Error: No response found');
         this.router.navigate(['/login']); // Redirect to login if there's an issue
       }
     }).catch(error => {
-      console.error('MSAL Redirect Error:', error);
+      // console.error('MSAL Redirect Error:', error);
       this.router.navigate(['/login']);
     });
   }

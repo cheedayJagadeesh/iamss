@@ -99,7 +99,7 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
     const modalElement = document.getElementById('exampleModal');
     if (modalElement) {
       modalElement.addEventListener('hidden.bs.modal', () => {
-        console.log('Modal closed, reloading skill sessions...');
+        // console.log('Modal closed, reloading skill sessions...');
         this.GetAllSkillSessions();
       });
     }
@@ -141,7 +141,7 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
     const selectedValues = Array.from(target.selectedOptions).map((option: HTMLOptionElement) => option.value);
     
     this.skillSessionData.aadUsersData = selectedValues.join(', '); // Convert array to comma-separated string
-    console.log('Selected Users:', this.skillSessionData.aadUsersData);
+    // console.log('Selected Users:', this.skillSessionData.aadUsersData);
   }
   
   updateSelectedGroups(event: Event) {
@@ -149,7 +149,7 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
     const selectedValues = Array.from(target.selectedOptions).map((option: HTMLOptionElement) => option.value);
     
     this.skillSessionData.aadGroupsData = selectedValues.join(', '); // Convert array to comma-separated string
-    console.log('Selected Users:', this.skillSessionData.aadGroupsData);
+    // console.log('Selected Users:', this.skillSessionData.aadGroupsData);
   }
   
   
@@ -188,7 +188,7 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
       sessionID:this.skillSessionData.sessionID ? this.skillSessionData.sessionID : 0,
 
     };
-    console.log('Sending Data:', formattedSession); 
+    // console.log('Sending Data:', formattedSession); 
     this.ielc.PostEnrolledSessions(formattedSession).subscribe(
       (response) => {
         alert('✅ Skill Added Successfully!');
@@ -205,7 +205,7 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
   EditSkillSession(id: string){
     //const id = this.skillSessionData.sessionID; 
     this.ielc.GetSkillSessionById(id).subscribe(data => {
-      console.log("Fetched Skill Session:", data);
+      // console.log("Fetched Skill Session:", data);
       // this.GetAllSkillSessions();
       this.skillSessionData = { ...data }; 
       if (this.skillSessionData.fromDate) {
@@ -221,14 +221,14 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
   UpdateSkillSession() {
     this.ielc.UpdateSkillSession(this.skillSessionData.sessionID, this.skillSessionData).subscribe(
       (response) => {
-        console.log("Updated Successfully:", response);
+        // console.log("Updated Successfully:", response);
         alert(" ✅ Skill session updated successfully!");
         this.GetAllSkillsData();
         this.GetAllSkillSessions();
         this.resetSkillSession();
       },
       (error) => {
-        console.error("Error updating skill session:", error);
+        // console.error("Error updating skill session:", error);
       }
     );
   }
@@ -289,7 +289,7 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
       },
       (error) => {
         alert('❌ Error adding skill(s). Please try again.');
-        console.error('API Error:', error);
+        // console.error('API Error:', error);
       }
     );
   }
@@ -430,7 +430,8 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
           alert(`Record with ID ${id} deleted successfully!`);
           this.GetAllSkillSessions();
         },
-        error: (err) => console.error('Error deleting item:', err)
+        // error: (err) => 
+        //   console.error('Error deleting item:', err)
       });
     }
   }

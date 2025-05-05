@@ -117,20 +117,20 @@ export class FeedbackComponent {
             applicationtowork: this.feedbackdata.applicationtowork,
             comments: this.feedbackdata.comments
           };
-     console.log('📦 Final Data to Submit:', updatedData);
+    //  console.log('📦 Final Data to Submit:', updatedData);
           this.ielc.Updatefeedback(id, updatedData).subscribe(
             (response) => {
-              console.log('Updated Successfully:', response);
+              // console.log('Updated Successfully:', response);
               alert('✅ Thank you for submitting the feedback!');
               this.router.navigate(['/registration']);
             },
             (error) => {
-              console.error('Error updating Record:', error);
+              // console.error('Error updating Record:', error);
             }
           );
         },
         (error) => {
-          console.error('Error fetching existing exam data:', error);
+          // console.error('Error fetching existing exam data:', error);
         }
       );
     } else {

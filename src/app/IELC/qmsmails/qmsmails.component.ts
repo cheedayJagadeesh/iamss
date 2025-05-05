@@ -81,10 +81,10 @@ export class QmsmailsComponent implements OnInit {
 
 
 EditQmsMails(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetqmsMailsById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -104,10 +104,10 @@ EditQmsMails(id: number) {
         password: data.password || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -115,13 +115,13 @@ EditQmsMails(id: number) {
 UpdateQmsMails() {
   this.ielc.UpdateqmsMails(this.qmsmailsdata.id, this.qmsmailsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetQmsmailslist();
      
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }

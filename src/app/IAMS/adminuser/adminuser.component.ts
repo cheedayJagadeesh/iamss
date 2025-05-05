@@ -38,7 +38,7 @@ export class AdminuserComponent {
 
   submitdata(adminform:any)
   {
-    console.log(adminform);
+    // console.log(adminform);
   }
   clearData()
   {
@@ -89,7 +89,7 @@ export class AdminuserComponent {
  
 
   addholiday() {
-    console.log(this.adminform.value);
+    // console.log(this.adminform.value);
     this.adminform.resetForm();
   }
 
@@ -104,7 +104,7 @@ export class AdminuserComponent {
 
   editholiday()
   {
-    console.log(this.adminform.value);
+    // console.log(this.adminform.value);
     this.adminform.resetForm();
   }
   isSecondSelectDisabled: boolean = false;

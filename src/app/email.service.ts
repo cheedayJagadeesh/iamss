@@ -35,7 +35,7 @@ export class EmailService {
   // Send the email, but only if the SMTP settings are loaded
   async sendEmail(to: string, cc: string, subject: string, body: string): Promise<void> {
     if (this.isLoading) {
-      console.log("🔄 Waiting for SMTP settings to load...");
+      // console.log("🔄 Waiting for SMTP settings to load...");
       return; // If SMTP settings are still loading, don't proceed
     }
 
@@ -57,9 +57,9 @@ export class EmailService {
     // Send email through backend service
     try {
       await firstValueFrom(this.ielc.sendEmailFromBackend(EmailPayload));
-      console.log('✅ Email sent from backend.');
+      // console.log('✅ Email sent from backend.');
     } catch (error) {
-      console.error('❌ Email error:', error);
+      // console.error('❌ Email error:', error);
       throw error;
     }
   }

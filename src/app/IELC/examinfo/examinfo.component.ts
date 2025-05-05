@@ -72,10 +72,10 @@ export class ExaminfoComponent {
     }
 
     EditExamlist(id: number) {
-      console.log("Edit button clicked, fetching ID:", id); 
+      // console.log("Edit button clicked, fetching ID:", id); 
       this.ielc.GetexaminfoById(id).subscribe(data => {
     
-        console.log("Fetched Record Session:", data); 
+        // console.log("Fetched Record Session:", data); 
     
         if (data) {
           // Assign data only if it's valid
@@ -88,10 +88,10 @@ export class ExaminfoComponent {
             examPercentage: data.examPercentage || 0,
           };
         } else {
-          console.warn("No data received for the given ID.");
+          // console.warn("No data received for the given ID.");
         }
       }, error => {
-        console.error("Error fetching record:", error);
+        // console.error("Error fetching record:", error);
       });
     }
     
@@ -99,13 +99,13 @@ export class ExaminfoComponent {
     UpdateExamlist() {
       this.ielc.Updateexaminfo(this.examdata.id, this.examdata).subscribe(
         (response) => {
-          console.log("Updated Successfully:", response);
+          // console.log("Updated Successfully:", response);
           alert(" ✅ Record updated successfully!");
           this.GetExamlist();
          
         },
         (error) => {
-          console.error("Error updating Record:", error);
+          // console.error("Error updating Record:", error);
         }
       );
     }

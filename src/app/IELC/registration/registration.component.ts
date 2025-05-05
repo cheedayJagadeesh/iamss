@@ -307,17 +307,17 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
 async ngOnInit() {
   
   try {
-    console.log("Initializing MSAL...");
+    // console.log("Initializing MSAL...");
     
     // Ensure MSAL is properly initialized before proceeding
     await this.msalService.instance.initialize();  
     await this.msalService.instance.handleRedirectPromise();
 
-    console.log("MSAL initialized successfully.");
+    // console.log("MSAL initialized successfully.");
     
     const activeAccount = this.msalService.instance.getActiveAccount();
     if (!activeAccount) {
-      console.warn("No active account found. Redirecting to login...");
+      // console.warn("No active account found. Redirecting to login...");
       this.router.navigate(['/login']);
       return;
     }
@@ -362,7 +362,7 @@ async ngOnInit() {
   
   
    catch (error) {
-    console.error("MSAL initialization error in HeaderComponent:", error);
+    // console.error("MSAL initialization error in HeaderComponent:", error);
   }
   // this.GetAllUsers();
   
@@ -471,7 +471,7 @@ hasSubmittedFeedback(enrollmentID: string): boolean {
  onSkillChange(skill: string) {
   if (skill) {
     this.ielc.GetEnrolledSessionsbyvenue(skill).subscribe((venues) => {
-      console.log('Venue response:', venues);
+      // console.log('Venue response:', venues);
       this.venueList = venues; // adjust based on API shape
       this.selectedVenue = '';
       this.showDateTimeDropdowns = false;
@@ -561,7 +561,7 @@ onVenueChange(venue: string) {
     const trimmedSkillname = this.skillname.trim();
     this.ielc.GetEnrolledSessionsbydate(trimmedSkillname,venue).subscribe({
       next: (res) => {
-        console.log('Date response:', res);
+        // console.log('Date response:', res);
         // Process the date range data (Convert to DD-MM-YYYY)
         // this.availableDates = res.map((range: string) => {
         //   const [start, end] = range.split(' - ');
@@ -569,10 +569,10 @@ onVenueChange(venue: string) {
         // });
         this.availableDates=res;
         // Print available dates
-        console.log('Available Dates:', this.availableDates);
+        // console.log('Available Dates:', this.availableDates);
       },
       error: (err) => {
-        console.error('Error fetching dates:', err);
+        // console.error('Error fetching dates:', err);
         this.availableDates = [];
       }
     });
@@ -592,17 +592,17 @@ onDateChange() {
     
     this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, this.date).subscribe({
       next: (res) => {
-        console.log('✅ Time slots for selected range:', res);
+        // console.log('✅ Time slots for selected range:', res);
         // Map response to available time slots
         this.availableTimes = Array.isArray(res) ? res : res.map((t: any) => t.time);
       },
       error: (err) => {
-        console.error('❌ Error fetching time slots:', err);
+        // console.error('❌ Error fetching time slots:', err);
         this.availableTimes = [];
       }
     });
   } else {
-    console.warn('⚠️ No date selected for fetching time slots!');
+    // console.warn('⚠️ No date selected for fetching time slots!');
   }
 }
 
@@ -640,7 +640,7 @@ checkBatchAvailability() {
           alert('Batch is full. Please choose another Date/Time slot.');
         }
       } else {
-        console.warn('⚠️ Invalid count from API:', count);
+        // console.warn('⚠️ Invalid count from API:', count);
         this.batchMembersCount = 0;
       }
     },
@@ -649,7 +649,7 @@ checkBatchAvailability() {
         // No batch yet, set count to 0
         this.batchMembersCount = 0;
       } else {
-        console.error('❌ Error fetching batch count:', err);
+        // console.error('❌ Error fetching batch count:', err);
         this.batchMembersCount = 0;
         alert('Error checking batch availability.');
       }
@@ -750,7 +750,7 @@ allowEnrollment() {
         this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
       },
       error: (err) => {
-        console.error('❌ Error checking enrollment status:', err);
+        // console.error('❌ Error checking enrollment status:', err);
         alert('Failed to verify enrollment status. Please try again.');
       }
     });
@@ -767,7 +767,7 @@ allowEnrollment() {
         this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
       },
       error: (err) => {
-        console.error('❌ Error checking  enrollment:', err);
+        // console.error('❌ Error checking  enrollment:', err);
         alert('Failed to verify enrollment. Please try again.');
       }
     });
@@ -818,7 +818,7 @@ proceedToEnroll(
 
       // Proceed with email sending (non-blocking)
       const sessionDescription = this.getSessionDescription(skill, venue, date, time);
-      console.log('📘 Session Description:', sessionDescription); 
+      // console.log('📘 Session Description:', sessionDescription); 
       const subject = 'Session Invitation Link';
       const body = `
         <p>Thanks for the Registration!</p>
@@ -855,7 +855,7 @@ proceedToEnroll(
       this.emailService.sendEmail(mail,'', subject, body);
     },
     error: (err) => {
-      console.error('Enrollment error:', err);
+      // console.error('Enrollment error:', err);
       alert('Enrollment failed. Please try again.');
     }
   });
@@ -1047,7 +1047,7 @@ topSkillName: string = '';
 // visibleSessionIds: number[] = [];
 GetAllSkillSessions() {
   const loggedInEmail = (this.userEmail ?? '').toLowerCase();
-  console.log('🔐 Logged-in user:', loggedInEmail);
+  // console.log('🔐 Logged-in user:', loggedInEmail);
 
   // forkJoin({
   //   sessions: this.ielc.GetSkillSessions(),
@@ -1178,7 +1178,7 @@ GetAllSkillSessions() {
                 break;
               }
             } catch (err) {
-              console.error(`❌ Failed to fetch members of group "${group}"`, err);
+              // console.error(`❌ Failed to fetch members of group "${group}"`, err);
             }
           }
         }
@@ -1489,11 +1489,11 @@ checkUserExists() {
 
     if (this.showButton) {
 
-      console.log('Your username exists in the list.');
+      // console.log('Your username exists in the list.');
 
     } else {
 
-      console.log('Your username is NOT in the list.');
+      // console.log('Your username is NOT in the list.');
 
     }
 
@@ -1589,7 +1589,7 @@ showButton: boolean = false;
 
 showData(registration:any)
 {
- console.log(registration)
+//  console.log(registration)
 }
 save()
 {
@@ -1631,7 +1631,7 @@ onFirsttimechange()
  checktime(){
    if(this.time2==="23:59"){
      this.showEaxtraHoursLabel=true;
-     console.log(this.time2)
+    //  console.log(this.time2)
    }else{
      this.showEaxtraHoursLabel=false;
    }

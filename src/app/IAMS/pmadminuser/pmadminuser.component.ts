@@ -18,7 +18,7 @@ export class PmadminuserComponent {
 
   submitdata(pmadminform:any)
   {
-    console.log(pmadminform);
+    // console.log(pmadminform);
   }
   clearData()
   {

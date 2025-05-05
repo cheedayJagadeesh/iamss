@@ -376,7 +376,7 @@ onSelection3Change() {
         this.resetsmtp();
       },
       (error) => {
-        console.error('❌ Error adding record:', error);
+        // // console.error('❌ Error adding record:', error);
         alert('❌ Error adding Record. Please try again.');
       }
     );
@@ -394,7 +394,7 @@ onSelection3Change() {
           alert(`Record with ID ${id} deleted successfully!`);
           this.GetSmtplist();
         },
-        error: (err) => console.error('Error deleting item:', err)
+        // // error: (err) =>  console.error('Error deleting item:', err)
       });
     }
   }
@@ -432,16 +432,16 @@ deleteitsprt(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetItSprtlist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditItSprt(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetITSprtById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -453,10 +453,11 @@ EditItSprt(id: number) {
         email:  data.email || '',
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // // console.warn("No data received for the given ID.");
     }
-  }, error => {
-    console.error("Error fetching record:", error);
+  },
+   error => {
+    // // console.error("Error fetching record:", error);
   });
 }
 
@@ -464,13 +465,13 @@ EditItSprt(id: number) {
 UpdateItSprt() {
   this.ielc.UpdateITSprt(this.itsprtdata.id, this.itsprtdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItSprtlist();
       this.resetItSprt();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // // console.error("Error updating Record:", error);
     }
   );
 }
@@ -513,16 +514,17 @@ deleteOssprt(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetOsSprtlist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) => 
+      //   // console.error('Error deleting item:', err)
     });
   }
 }
 
 EditOsSprt(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetOsSprtById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -534,10 +536,11 @@ EditOsSprt(id: number) {
         email:  data.email || '',
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
-  }, error => {
-    console.error("Error fetching record:", error);
+  },
+   error => {
+    // // console.error("Error fetching record:", error);
   });
 }
 
@@ -545,13 +548,13 @@ EditOsSprt(id: number) {
 UpdateOsSprt() {
   this.ielc.UpdateOsSprt(this.ossprtdata.id, this.ossprtdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsSprtlist();
       this.resetOsSprt();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // // console.error("Error updating Record:", error);
     }
   );
 }
@@ -594,16 +597,16 @@ deleteHrsprt(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetHrSprtlist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditHrSprt(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrSprtById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -615,10 +618,10 @@ EditHrSprt(id: number) {
         email:  data.email || '',
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // // console.error("Error fetching record:", error);
   });
 }
 
@@ -626,13 +629,13 @@ EditHrSprt(id: number) {
 UpdateHrSprt() {
   this.ielc.UpdateHrSprt(this.hrsprtdata.id, this.hrsprtdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrSprtlist();
       this.resetHrSprt();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -674,16 +677,16 @@ deleteEmersprt(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetEmerSprtlist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+    //  error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditEmerSprt(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetEmerSprtById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -695,10 +698,10 @@ EditEmerSprt(id: number) {
         email:  data.email || '',
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -706,13 +709,13 @@ EditEmerSprt(id: number) {
 UpdateEmerSprt() {
   this.ielc.UpdateEmerSprt(this.emersprtdata.id, this.emersprtdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetEmerSprtlist();
       this.resetEmerSprt();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -756,16 +759,16 @@ deleteISO27001sprt(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetIsoSprtlist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+     // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditISO27001Sprt(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetIso27001SprtById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -777,10 +780,10 @@ EditISO27001Sprt(id: number) {
         email:  data.email || '',
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -788,13 +791,13 @@ EditISO27001Sprt(id: number) {
 UpdateISO27001Sprt() {
   this.ielc.UpdateIso27001Sprt(this.isosprtdata.id, this.isosprtdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetIsoSprtlist();
       this.resetISO27001Sprt();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -837,16 +840,16 @@ deleteISO9001sprt(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetIso9001Sprtlist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+     // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditISO9001Sprt(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetIso9001SprtById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -858,10 +861,10 @@ EditISO9001Sprt(id: number) {
         email:  data.email || '',
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -869,13 +872,13 @@ EditISO9001Sprt(id: number) {
 UpdateISO9001Sprt() {
   this.ielc.UpdateIso9001Sprt(this.isosprtdata.id, this.isosprtdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetIso9001Sprtlist();
       this.resetISO9001Sprt();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -918,16 +921,16 @@ deleteHrISMSGeneral(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetHrISMSGenerallist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+     // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditHrISMSGeneral(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrismsgeneralById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -937,10 +940,10 @@ EditHrISMSGeneral(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -948,13 +951,13 @@ EditHrISMSGeneral(id: number) {
 UpdateHrISMSGeneral() {
   this.ielc.UpdateHrismsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrISMSGenerallist();
       this.resetHrISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -991,16 +994,16 @@ deleteHrISMSGuidelines(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetHrISMSGuidelineslist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+     // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditHrISMSGuidelines(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrismsguidelineById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1010,10 +1013,10 @@ EditHrISMSGuidelines(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -1021,13 +1024,13 @@ EditHrISMSGuidelines(id: number) {
 UpdateHrISMSGuidelines() {
   this.ielc.UpdateHrismsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrISMSGuidelineslist();
       this.resetHrISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -1058,16 +1061,16 @@ deleteHrISMSPolicy(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetHrISMSPolicylist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+     // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditHrISMSPolicy(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrismspolicyById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1077,10 +1080,10 @@ EditHrISMSPolicy(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -1088,13 +1091,13 @@ EditHrISMSPolicy(id: number) {
 UpdateHrISMSPolicy() {
   this.ielc.UpdateHrismspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrISMSPolicylist();
       this.resetHrISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -1125,16 +1128,16 @@ deleteHrISMSProcedure(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetHrISMSProcedurelist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+   //   error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditHrISMSProcedure(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrismsprocedureById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1144,10 +1147,10 @@ EditHrISMSProcedure(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -1155,13 +1158,13 @@ EditHrISMSProcedure(id: number) {
 UpdateHrISMSProcedure() {
   this.ielc.UpdateHrismsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrISMSProcedurelist();
       this.resetHrISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -1192,16 +1195,16 @@ deleteHrISMSFormat(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetHrISMSFormatlist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+     // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditHrISMSFormat(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrismsformatById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1211,10 +1214,10 @@ EditHrISMSFormat(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -1222,13 +1225,13 @@ EditHrISMSFormat(id: number) {
 UpdateHrISMSFormat() {
   this.ielc.UpdateHrismsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrISMSFormatlist();
       this.resetHrISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -1261,16 +1264,16 @@ deleteHrQMSGeneral(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetHrQMSGenerallist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+    //  error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditHrQMSGeneral(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrqmsgeneralById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1280,10 +1283,10 @@ EditHrQMSGeneral(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -1291,13 +1294,13 @@ EditHrQMSGeneral(id: number) {
 UpdateHrQMSGeneral() {
   this.ielc.UpdateHrqmsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrQMSGenerallist();
       this.resetHrQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -1334,16 +1337,16 @@ deleteHrQMSGuidelines(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetHrQMSGuidelineslist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+    //  error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditHrQMSGuidelines(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrqmsguidelineById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1353,10 +1356,10 @@ EditHrQMSGuidelines(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -1364,13 +1367,13 @@ EditHrQMSGuidelines(id: number) {
 UpdateHrQMSGuidelines() {
   this.ielc.UpdateHrqmsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrQMSGuidelineslist();
       this.resetHrQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -1401,16 +1404,16 @@ deleteHrQMSPolicy(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetHrQMSPolicylist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+     // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditHrQMSPolicy(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrqmspolicyById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1420,10 +1423,10 @@ EditHrQMSPolicy(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -1431,13 +1434,13 @@ EditHrQMSPolicy(id: number) {
 UpdateHrQMSPolicy() {
   this.ielc.UpdateHrqmspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrQMSPolicylist();
       this.resetHrQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -1468,16 +1471,16 @@ deleteHrQMSProcedure(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetHrQMSProcedurelist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+   //   error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditHrQMSProcedure(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrqmsprocedureById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1487,10 +1490,10 @@ EditHrQMSProcedure(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -1498,13 +1501,13 @@ EditHrQMSProcedure(id: number) {
 UpdateHrQMSProcedure() {
   this.ielc.UpdateHrqmsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrQMSProcedurelist();
       this.resetHrQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -1535,16 +1538,16 @@ deleteHrQMSFormat(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetHrQMSFormatlist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+     // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditHrQMSFormat(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrqmsformatById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1554,10 +1557,10 @@ EditHrQMSFormat(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -1565,13 +1568,13 @@ EditHrQMSFormat(id: number) {
 UpdateHrQMSFormat() {
   this.ielc.UpdateHrqmsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrQMSFormatlist();
       this.resetHrQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -1604,16 +1607,16 @@ deleteOsISMSGeneral(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetOsISMSGenerallist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+    //  error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditOsISMSGeneral(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosismsgeneralById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1623,10 +1626,10 @@ EditOsISMSGeneral(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -1634,13 +1637,13 @@ EditOsISMSGeneral(id: number) {
 UpdateOsISMSGeneral() {
   this.ielc.Updateosismsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsISMSGenerallist();
       this.resetOsISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -1677,16 +1680,16 @@ deleteOsISMSGuidelines(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetOsISMSGuidelineslist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+    //  error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditOsISMSGuidelines(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosismsguidelineById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1696,10 +1699,10 @@ EditOsISMSGuidelines(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -1707,13 +1710,13 @@ EditOsISMSGuidelines(id: number) {
 UpdateOsISMSGuidelines() {
   this.ielc.Updateosismsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsISMSGuidelineslist();
       this.resetOsISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -1744,16 +1747,16 @@ deleteOsISMSPolicy(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetOsISMSPolicylist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+    //  error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditOsISMSPolicy(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosismspolicyById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1763,10 +1766,10 @@ EditOsISMSPolicy(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -1774,13 +1777,13 @@ EditOsISMSPolicy(id: number) {
 UpdateOsISMSPolicy() {
   this.ielc.Updateosismspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsISMSPolicylist();
       this.resetOsISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -1811,16 +1814,16 @@ deleteOsISMSProcedure(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetOsISMSProcedurelist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+    //  error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditOsISMSProcedure(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosismsprocedureById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1830,10 +1833,10 @@ EditOsISMSProcedure(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -1841,13 +1844,13 @@ EditOsISMSProcedure(id: number) {
 UpdateOsISMSProcedure() {
   this.ielc.Updateosismsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsISMSProcedurelist();
       this.resetOsISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -1878,16 +1881,16 @@ deleteOsISMSFormat(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetOsISMSFormatlist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditOsISMSFormat(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosismsformatById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1897,10 +1900,10 @@ EditOsISMSFormat(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -1908,13 +1911,13 @@ EditOsISMSFormat(id: number) {
 UpdateOsISMSFormat() {
   this.ielc.Updateosismsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsISMSFormatlist();
       this.resetOsISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -1949,16 +1952,16 @@ deleteOsQMSGeneral(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetOsQMSGenerallist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditOsQMSGeneral(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosqmsgeneralById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1968,10 +1971,10 @@ EditOsQMSGeneral(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -1979,13 +1982,13 @@ EditOsQMSGeneral(id: number) {
 UpdateOsQMSGeneral() {
   this.ielc.Updateosqmsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsQMSGenerallist();
       this.resetOsQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -2021,16 +2024,16 @@ deleteOsQMSGuidelines(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetOsQMSGuidelineslist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditOsQMSGuidelines(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosqmsguidelineById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2040,10 +2043,10 @@ EditOsQMSGuidelines(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -2051,13 +2054,13 @@ EditOsQMSGuidelines(id: number) {
 UpdateOsQMSGuidelines() {
   this.ielc.Updateosqmsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsQMSGuidelineslist();
       this.resetOsQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -2088,16 +2091,16 @@ deleteOsQMSPolicy(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetOsQMSPolicylist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditOsQMSPolicy(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosqmspolicyById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2107,10 +2110,10 @@ EditOsQMSPolicy(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -2118,13 +2121,13 @@ EditOsQMSPolicy(id: number) {
 UpdateOsQMSPolicy() {
   this.ielc.Updateosqmspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsQMSPolicylist();
       this.resetOsQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -2155,16 +2158,16 @@ deleteOsQMSProcedure(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetOsQMSProcedurelist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditOsQMSProcedure(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosqmsprocedureById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2174,10 +2177,10 @@ EditOsQMSProcedure(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -2185,13 +2188,13 @@ EditOsQMSProcedure(id: number) {
 UpdateOsQMSProcedure() {
   this.ielc.Updateosqmsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsQMSProcedurelist();
       this.resetOsQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -2223,16 +2226,16 @@ deleteOsQMSFormat(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetOsQMSFormatlist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditOsQMSFormat(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosqmsformatById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2242,10 +2245,10 @@ EditOsQMSFormat(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -2253,13 +2256,13 @@ EditOsQMSFormat(id: number) {
 UpdateOsQMSFormat() {
   this.ielc.Updateosqmsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsQMSFormatlist();
       this.resetOsQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -2291,16 +2294,16 @@ deleteIsmsSprt(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetIsmsSprt();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditIsmsSprt(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetIsmsSprtById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2310,10 +2313,10 @@ EditIsmsSprt(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -2321,13 +2324,13 @@ EditIsmsSprt(id: number) {
 UpdateIsmsSprt() {
   this.ielc.UpdateIsmsSprt(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetIsmsSprt();
       this.resetIsmsSprt();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -2366,16 +2369,16 @@ deleteIsoSprt(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetIsoSprt();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditIsoSprt(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetisosprtById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2385,10 +2388,10 @@ EditIsoSprt(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -2396,13 +2399,13 @@ EditIsoSprt(id: number) {
 UpdateIsoSprt() {
   this.ielc.Updateisosprt(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetIsoSprt();
       this.resetIsoSprt();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -2441,16 +2444,16 @@ deleteIsoPolicy(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetIsoPolicy();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditIsoPolicy(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetispolicyById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2460,10 +2463,10 @@ EditIsoPolicy(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -2471,13 +2474,13 @@ EditIsoPolicy(id: number) {
 UpdateIsoPolicy() {
   this.ielc.Updateispolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetIsoPolicy();
       this.resetIsoPolicy();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -2517,16 +2520,16 @@ deleteItISMSGeneral(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetItISMSGenerallist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditItISMSGeneral(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitismsgeneralById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2536,10 +2539,10 @@ EditItISMSGeneral(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -2547,13 +2550,13 @@ EditItISMSGeneral(id: number) {
 UpdateItISMSGeneral() {
   this.ielc.Updateitismsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItISMSGenerallist();
       this.resetItISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -2590,16 +2593,16 @@ deleteItISMSGuidelines(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetItISMSGuidelineslist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditItISMSGuidelines(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitismsguidelineById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2609,10 +2612,10 @@ EditItISMSGuidelines(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -2620,13 +2623,13 @@ EditItISMSGuidelines(id: number) {
 UpdateItISMSGuidelines() {
   this.ielc.Updateitismsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItISMSGuidelineslist();
       this.resetItISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -2657,16 +2660,16 @@ deleteItISMSPolicy(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetItISMSPolicylist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditItISMSPolicy(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitismspolicyById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2676,10 +2679,10 @@ EditItISMSPolicy(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -2687,13 +2690,13 @@ EditItISMSPolicy(id: number) {
 UpdateItISMSPolicy() {
   this.ielc.Updateitismspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItISMSPolicylist();
       this.resetItISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -2724,16 +2727,16 @@ deleteItISMSProcedure(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetItISMSProcedurelist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditItISMSProcedure(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitismsprocedureById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2743,10 +2746,10 @@ EditItISMSProcedure(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -2754,13 +2757,13 @@ EditItISMSProcedure(id: number) {
 UpdateItISMSProcedure() {
   this.ielc.Updateitismsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItISMSProcedurelist();
       this.resetItISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -2791,16 +2794,16 @@ deleteItISMSFormat(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetItISMSFormatlist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditItISMSFormat(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitismsformatById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2810,10 +2813,10 @@ EditItISMSFormat(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -2821,13 +2824,13 @@ EditItISMSFormat(id: number) {
 UpdateItISMSFormat() {
   this.ielc.Updateitismsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItISMSFormatlist();
       this.resetItISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -2861,16 +2864,16 @@ deleteItQMSGeneral(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetItQMSGenerallist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditItQMSGeneral(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitqmsgeneralById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2880,10 +2883,10 @@ EditItQMSGeneral(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -2891,13 +2894,13 @@ EditItQMSGeneral(id: number) {
 UpdateItQMSGeneral() {
   this.ielc.Updateitqmsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItQMSGenerallist();
       this.resetItQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -2933,16 +2936,16 @@ deleteItQMSGuidelines(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetItQMSGuidelineslist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditItQMSGuidelines(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitqmsguidelineById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2952,10 +2955,10 @@ EditItQMSGuidelines(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -2963,13 +2966,13 @@ EditItQMSGuidelines(id: number) {
 UpdateItQMSGuidelines() {
   this.ielc.Updateitqmsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItQMSGuidelineslist();
       this.resetItQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -3000,16 +3003,16 @@ deleteItQMSPolicy(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetItQMSPolicylist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditItQMSPolicy(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitqmspolicyById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3019,10 +3022,10 @@ EditItQMSPolicy(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -3030,13 +3033,13 @@ EditItQMSPolicy(id: number) {
 UpdateItQMSPolicy() {
   this.ielc.Updateitqmspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItQMSPolicylist();
       this.resetItQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -3067,16 +3070,16 @@ deleteItQMSProcedure(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetItQMSProcedurelist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditItQMSProcedure(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitqmsprocedureById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3086,10 +3089,10 @@ EditItQMSProcedure(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -3097,13 +3100,13 @@ EditItQMSProcedure(id: number) {
 UpdateItQMSProcedure() {
   this.ielc.Updateitqmsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItQMSProcedurelist();
       this.resetItQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -3134,16 +3137,16 @@ deleteItQMSFormat(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetItQMSFormatlist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditItQMSFormat(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitqmsformatById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3153,10 +3156,10 @@ EditItQMSFormat(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -3164,13 +3167,13 @@ EditItQMSFormat(id: number) {
 UpdateItQMSFormat() {
   this.ielc.Updateitqmsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItQMSFormatlist();
       this.resetItQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -3203,16 +3206,16 @@ deletePrjtISMSGeneral(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetPrjtISMSGenerallist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditPrjtISMSGeneral(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtismsgeneralById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3222,10 +3225,10 @@ EditPrjtISMSGeneral(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -3233,13 +3236,13 @@ EditPrjtISMSGeneral(id: number) {
 UpdatePrjtISMSGeneral() {
   this.ielc.Updateprjtismsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtISMSGenerallist();
       this.resetPrjtISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -3276,16 +3279,16 @@ deletePrjtISMSGuidelines(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetPrjtISMSGuidelineslist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditPrjtISMSGuidelines(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtismsguidelineById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3295,10 +3298,10 @@ EditPrjtISMSGuidelines(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -3306,13 +3309,13 @@ EditPrjtISMSGuidelines(id: number) {
 UpdatePrjtISMSGuidelines() {
   this.ielc.Updateprjtismsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtISMSGuidelineslist();
       this.resetPrjtISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -3343,16 +3346,16 @@ deletePrjtISMSPolicy(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetPrjtISMSPolicylist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditPrjtISMSPolicy(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtismspolicyById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3362,10 +3365,10 @@ EditPrjtISMSPolicy(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -3373,13 +3376,13 @@ EditPrjtISMSPolicy(id: number) {
 UpdatePrjtISMSPolicy() {
   this.ielc.Updateprjtismspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtISMSPolicylist();
       this.resetPrjtISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -3410,16 +3413,16 @@ deletePrjtISMSProcedure(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetPrjtISMSProcedurelist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditPrjtISMSProcedure(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtismsprocedureById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3429,10 +3432,10 @@ EditPrjtISMSProcedure(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -3440,13 +3443,13 @@ EditPrjtISMSProcedure(id: number) {
 UpdatePrjtISMSProcedure() {
   this.ielc.Updateprjtismsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtISMSProcedurelist();
       this.resetPrjtISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -3477,16 +3480,16 @@ deletePrjtISMSFormat(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetPrjtISMSFormatlist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditPrjtISMSFormat(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtismsformatById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3496,10 +3499,10 @@ EditPrjtISMSFormat(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -3507,13 +3510,13 @@ EditPrjtISMSFormat(id: number) {
 UpdatePrjtISMSFormat() {
   this.ielc.Updateprjtismsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtISMSFormatlist();
       this.resetPrjtISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -3545,16 +3548,16 @@ deletePrjtQMSGeneral(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetPrjtQMSGenerallist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditPrjtQMSGeneral(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtqmsgeneralById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3564,10 +3567,10 @@ EditPrjtQMSGeneral(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -3575,13 +3578,13 @@ EditPrjtQMSGeneral(id: number) {
 UpdatePrjtQMSGeneral() {
   this.ielc.Updateprjtqmsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtQMSGenerallist();
       this.resetPrjtQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -3618,16 +3621,16 @@ deletePrjtQMSGuidelines(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetPrjtQMSGuidelineslist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditPrjtQMSGuidelines(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtqmsguidelineById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3637,10 +3640,10 @@ EditPrjtQMSGuidelines(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -3648,13 +3651,13 @@ EditPrjtQMSGuidelines(id: number) {
 UpdatePrjtQMSGuidelines() {
   this.ielc.Updateprjtqmsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtQMSGuidelineslist();
       this.resetPrjtQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -3685,16 +3688,16 @@ deletePrjtQMSPolicy(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetPrjtQMSPolicylist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditPrjtQMSPolicy(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtqmspolicyById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3704,10 +3707,10 @@ EditPrjtQMSPolicy(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -3715,13 +3718,13 @@ EditPrjtQMSPolicy(id: number) {
 UpdatePrjtQMSPolicy() {
   this.ielc.Updateprjtqmspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtQMSPolicylist();
       this.resetPrjtQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -3752,16 +3755,16 @@ deletePrjtQMSProcedure(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetPrjtQMSProcedurelist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditPrjtQMSProcedure(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtqmsprocedureById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3771,10 +3774,10 @@ EditPrjtQMSProcedure(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -3782,13 +3785,13 @@ EditPrjtQMSProcedure(id: number) {
 UpdatePrjtQMSProcedure() {
   this.ielc.Updateprjtqmsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtQMSProcedurelist();
       this.resetPrjtQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -3819,16 +3822,16 @@ deletePrjtQMSFormat(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetPrjtQMSFormatlist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditPrjtQMSFormat(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtqmsformatById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3838,10 +3841,10 @@ EditPrjtQMSFormat(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -3849,13 +3852,13 @@ EditPrjtQMSFormat(id: number) {
 UpdatePrjtQMSFormat() {
   this.ielc.Updateprjtqmsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtQMSFormatlist();
       this.resetPrjtQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -3888,16 +3891,16 @@ deleteCisoISMSGeneral(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetCisoISMSGenerallist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditCisoISMSGeneral(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoismsgeneralById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3907,10 +3910,10 @@ EditCisoISMSGeneral(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -3918,13 +3921,13 @@ EditCisoISMSGeneral(id: number) {
 UpdateCisoISMSGeneral() {
   this.ielc.Updatecisoismsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoISMSGenerallist();
       this.resetCisoISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -3961,16 +3964,16 @@ deleteCisoISMSGuidelines(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetCisoISMSGuidelineslist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditCisoISMSGuidelines(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoismsguidelineById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3980,10 +3983,10 @@ EditCisoISMSGuidelines(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -3991,13 +3994,13 @@ EditCisoISMSGuidelines(id: number) {
 UpdateCisoISMSGuidelines() {
   this.ielc.Updatecisoismsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoISMSGuidelineslist();
       this.resetCisoISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -4028,16 +4031,16 @@ deleteCisoISMSPolicy(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetCisoISMSPolicylist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditCisoISMSPolicy(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoismspolicyById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4047,10 +4050,10 @@ EditCisoISMSPolicy(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -4058,13 +4061,13 @@ EditCisoISMSPolicy(id: number) {
 UpdateCisoISMSPolicy() {
   this.ielc.Updatecisoismspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoISMSPolicylist();
       this.resetCisoISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -4095,16 +4098,16 @@ deleteCisoISMSProcedure(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetCisoISMSProcedurelist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditCisoISMSProcedure(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoismsprocedureById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4114,10 +4117,10 @@ EditCisoISMSProcedure(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -4125,13 +4128,13 @@ EditCisoISMSProcedure(id: number) {
 UpdateCisoISMSProcedure() {
   this.ielc.Updatecisoismsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoISMSProcedurelist();
       this.resetCisoISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -4162,16 +4165,16 @@ deleteCisoISMSFormat(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetCisoISMSFormatlist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditCisoISMSFormat(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoismsformatById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4181,10 +4184,10 @@ EditCisoISMSFormat(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -4192,13 +4195,13 @@ EditCisoISMSFormat(id: number) {
 UpdateCisoISMSFormat() {
   this.ielc.Updatecisoismsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoISMSFormatlist();
       this.resetCisoISMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -4231,16 +4234,16 @@ deleteCisoQMSGeneral(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetCisoQMSGenerallist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditCisoQMSGeneral(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoqmsgeneralById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4250,10 +4253,10 @@ EditCisoQMSGeneral(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -4261,13 +4264,13 @@ EditCisoQMSGeneral(id: number) {
 UpdateCisoQMSGeneral() {
   this.ielc.Updatecisoqmsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoQMSGenerallist();
       this.resetCisoQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -4304,16 +4307,16 @@ deleteCisoQMSGuidelines(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetCisoQMSGuidelineslist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditCisoQMSGuidelines(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoqmsguidelineById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4323,10 +4326,10 @@ EditCisoQMSGuidelines(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -4334,13 +4337,13 @@ EditCisoQMSGuidelines(id: number) {
 UpdateCisoQMSGuidelines() {
   this.ielc.Updatecisoqmsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoQMSGuidelineslist();
       this.resetCisoQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -4371,16 +4374,16 @@ deleteCisoQMSPolicy(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetCisoQMSPolicylist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditCisoQMSPolicy(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoqmspolicyById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4390,10 +4393,10 @@ EditCisoQMSPolicy(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -4401,13 +4404,13 @@ EditCisoQMSPolicy(id: number) {
 UpdateCisoQMSPolicy() {
   this.ielc.Updatecisoqmspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoQMSPolicylist();
       this.resetCisoQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -4438,16 +4441,16 @@ deleteCisoQMSProcedure(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetCisoQMSProcedurelist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditCisoQMSProcedure(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoqmsprocedureById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4457,10 +4460,10 @@ EditCisoQMSProcedure(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -4468,13 +4471,13 @@ EditCisoQMSProcedure(id: number) {
 UpdateCisoQMSProcedure() {
   this.ielc.Updatecisoqmsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoQMSProcedurelist();
       this.resetCisoQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -4505,16 +4508,16 @@ deleteCisoQMSFormat(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetCisoQMSFormatlist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditCisoQMSFormat(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoqmsformatById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4524,10 +4527,10 @@ EditCisoQMSFormat(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -4535,13 +4538,13 @@ EditCisoQMSFormat(id: number) {
 UpdateCisoQMSFormat() {
   this.ielc.Updatecisoqmsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoQMSFormatlist();
       this.resetCisoQMS();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -4573,16 +4576,16 @@ deleteEmerGeneral(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetEmerGenerallist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditEmerGeneral(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetemergeneralById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4592,10 +4595,10 @@ EditEmerGeneral(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -4603,13 +4606,13 @@ EditEmerGeneral(id: number) {
 UpdateEmerGeneral() {
   this.ielc.Updateemergeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetEmerGenerallist();
       this.resetEmer();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -4649,16 +4652,16 @@ deleteVarCmtGeneral(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetVarCmtGenerallist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditVarCmtGeneral(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetvarcmtById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4668,10 +4671,10 @@ EditVarCmtGeneral(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -4679,13 +4682,13 @@ EditVarCmtGeneral(id: number) {
 UpdateVarCmtGeneral() {
   this.ielc.Updatevarcmt(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetVarCmtGenerallist();
       this.resetVarCmt();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -4724,16 +4727,16 @@ deleteHipaaGeneral(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetHipaaGenerallist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditHipaaGeneral(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GethippaById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4743,10 +4746,10 @@ EditHipaaGeneral(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -4754,13 +4757,13 @@ EditHipaaGeneral(id: number) {
 UpdateHipaaGeneral() {
   this.ielc.Updatehippa(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHipaaGenerallist();
       this.resetHipaa();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -4799,16 +4802,16 @@ deleteSocGeneral(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetSocGenerallist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditSocGeneral(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetsocById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4818,10 +4821,10 @@ EditSocGeneral(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -4829,13 +4832,13 @@ EditSocGeneral(id: number) {
 UpdateSocGeneral() {
   this.ielc.Updatesoc(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetSocGenerallist();
       this.resetSoc();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -4874,16 +4877,16 @@ deleteGdprGeneral(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetGdprGenerallist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditGdprGeneral(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetgdprById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4893,10 +4896,10 @@ EditGdprGeneral(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -4904,13 +4907,13 @@ EditGdprGeneral(id: number) {
 UpdateGdprGeneral() {
   this.ielc.Updategdpr(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetGdprGenerallist();
       this.resetGdpr();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -4949,16 +4952,16 @@ deleteDpdpGeneral(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetDpdpGenerallist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditDpdpGeneral(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetdpdpById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4968,10 +4971,10 @@ EditDpdpGeneral(id: number) {
         url:  data.url || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -4979,13 +4982,13 @@ EditDpdpGeneral(id: number) {
 UpdateDpdpGeneral() {
   this.ielc.Updatedpdp(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetDpdpGenerallist();
       this.resetDpdp();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -5022,7 +5025,7 @@ deleteAdminusers(email: any) {
         alert(`Record with ${email} deleted successfully!`);
         this.GetAdminuserslist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
@@ -5064,7 +5067,7 @@ deleteHolidays(content: any) {
         alert(`Record with  ${content} deleted successfully!`);
         this.GetHolidaysist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
@@ -5106,13 +5109,13 @@ GetEventsist(){
 //   this.ielc.Postevents(eventPayload).subscribe(
 //     response => {
 //       alert('✅ Event Added Successfully!');
-//       console.log('Response:', response);
+//       // console.log('Response:', response);
 //       this.GetEventsist();
 //       this.resetEvents();
 //     },
 //     error => {
 //       alert('❌ Error adding event. Please try again.');
-//       console.error('Error:', error);
+//       // console.error('Error:', error);
 //     }
 //   );
 // }
@@ -5122,17 +5125,17 @@ AddEvents() {
     eventData: this.eventsdata.eventData, // Base64 Image Data
     eventName: this.eventsdata.eventName  // Event Name
   };
-  // console.log("🚀 Sending Payload:", eventPayload); 
+  // // console.log("🚀 Sending Payload:", eventPayload); 
   this.ielc.Postevents(eventPayload).subscribe(
     response => {
       alert('✅ Event Added Successfully!');
-      console.log('Response:', response);
+      // console.log('Response:', response);
       this.GetEventsist();
       this.resetEvents();
     },
     error => {
       alert('❌ Error adding event. Please try again.');
-      console.error('Error:', error);
+      // console.error('Error:', error);
     }
   );
 }
@@ -5222,16 +5225,16 @@ deleteEvents(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetEventsist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditEvents(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GeteventsById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -5241,10 +5244,10 @@ EditEvents(id: number) {
         eventName:  data.eventName || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -5252,13 +5255,13 @@ EditEvents(id: number) {
 UpdateEvents() {
   this.ielc.Updateevents(this.eventsdata.id, this.eventsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetEventsist();
       this.resetEvents();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -5299,16 +5302,16 @@ deleteCourse(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetCourseist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditCourse(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcourseById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -5317,10 +5320,10 @@ EditCourse(id: number) {
         coursesList: data.coursesList || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -5328,13 +5331,13 @@ EditCourse(id: number) {
 UpdateCourse() {
   this.ielc.Updatecourse(this.crserestdata.id, this.crserestdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCourseist();
       this.resetCourse();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }
@@ -5374,16 +5377,16 @@ deleteEventAlerts(id: number) {
         alert(`Record with ID ${id} deleted successfully!`);
         this.GetEventAlertsist();
       },
-      error: (err) => console.error('Error deleting item:', err)
+      // error: (err) =>  console.error('Error deleting item:', err)
     });
   }
 }
 
 EditEventAlerts(id: number) {
-  console.log("Edit button clicked, fetching ID:", id); 
+  // console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GeteventalertsById(id).subscribe(data => {
 
-    console.log("Fetched Record Session:", data); 
+    // console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -5399,10 +5402,10 @@ EditEventAlerts(id: number) {
         alertAttachment: data.alertAttachment || ''
       };
     } else {
-      console.warn("No data received for the given ID.");
+      // console.warn("No data received for the given ID.");
     }
   }, error => {
-    console.error("Error fetching record:", error);
+    // console.error("Error fetching record:", error);
   });
 }
 
@@ -5410,13 +5413,13 @@ EditEventAlerts(id: number) {
 UpdateEventAlerts() {
   this.ielc.Updateeventalerts(this.eventalertsdata.alertID, this.eventalertsdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetEventAlertsist();
       this.resetEventAlerts();
     },
     (error) => {
-      console.error("Error updating Record:", error);
+      // console.error("Error updating Record:", error);
     }
   );
 }

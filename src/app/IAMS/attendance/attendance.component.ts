@@ -33,7 +33,7 @@ export class AttendanceComponent  {
   }
  showData(attendanceform:any)
  {
-  console.log(attendanceform)
+  // console.log(attendanceform)
  }
  save()
  {
@@ -45,7 +45,7 @@ export class AttendanceComponent  {
  }
 
  modaldatasave(){
-  console.log(this.attendanceform.value);
+  // console.log(this.attendanceform.value);
   this.attendanceform.resetForm();
  }
 
@@ -73,7 +73,7 @@ export class AttendanceComponent  {
   checktime(){
     if(this.time2==="23:59"){
       this.showEaxtraHoursLabel=true;
-      console.log(this.time2)
+      // console.log(this.time2)
     }else{
       this.showEaxtraHoursLabel=false;
     }

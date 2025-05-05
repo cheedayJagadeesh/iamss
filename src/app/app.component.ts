@@ -97,7 +97,7 @@ export class AppComponent implements OnInit {
       const redirectResult = await this.msalService.instance.handleRedirectPromise();
   
       if (redirectResult !== null && redirectResult.account) {
-        console.log('Redirect login successful. Setting active account.');
+        // console.log('Redirect login successful. Setting active account.');
         this.msalService.instance.setActiveAccount(redirectResult.account);
       }
   
@@ -108,7 +108,7 @@ export class AppComponent implements OnInit {
   
       // Step 3: Check if the user is authenticated
       if (this.authService.isAuthenticated()) {
-        console.log('User is authenticated');
+        // console.log('User is authenticated');
         this.authService.setActiveAccount();
   
         const role = await this.authService.fetchUserDetails();
@@ -124,16 +124,16 @@ export class AppComponent implements OnInit {
           }
         }
       } else {
-        console.log('User is not authenticated. Starting login...');
+        // console.log('User is not authenticated. Starting login...');
         await this.authService.login(); // Will trigger popup or redirect login
       }
   
     } catch (error: any) {
-      console.error('App init error:', error);
+      // console.error('App init error:', error);
   
       // Optional: Handle MSAL-specific interaction error
       if (error instanceof InteractionRequiredAuthError) {
-        console.warn('Interaction required. Starting login popup...');
+        // console.warn('Interaction required. Starting login popup...');
         await this.authService.login(); // fallback to interactive login
       } else {
         this.router.navigate(['/login']);
