@@ -447,7 +447,7 @@ GetAllUsers() {
     } else {
       this.Registeredusers = [];
     }
-
+    // console.log("✅ Final Registered Users:", this.Registeredusers);
     this.feedbackLoaded = true;
   });
 }
@@ -468,18 +468,112 @@ hasSubmittedFeedback(enrollmentID: string): boolean {
 
 
 
- onSkillChange(skill: string) {
+//  onSkillChange(skill: string) {
+//   if (skill) {
+//     this.ielc.GetEnrolledSessionsbyvenue(skill).subscribe((venues) => {
+//       // console.log('Venue response:', venues);
+//       this.venueList = venues; // adjust based on API shape
+//       this.selectedVenue = '';
+//       this.showDateTimeDropdowns = false;
+//       this.availableDates = [];
+//       this.availableTimes = [];
+//     });
+//   }
+// }
+
+// onSkillChange(skill: string) {
+//   if (skill) {
+//     this.ielc.GetEnrolledSessionsbyvenue(skill).subscribe((venues: any[]) => {
+//       const today = new Date();
+//       console.log("🎯 Raw venue response:", venues);
+
+//       // Filter out expired venues
+//       // const validVenues = venues.filter(venue => new Date(venue.toDate) >= today);
+
+      
+//         // Filter out expired venues
+//         const validVenues = venues.filter(venue => {
+//           console.log('🔍 Venue:', venue); // Debug log to check the structure of each venue
+//           if (!venue.toDate) {
+//             console.warn('⚠️ Missing toDate for venue:', venue);
+//             return true; // Treat missing toDate as valid
+//           }
+  
+//           const toDate = new Date(venue.toDate);
+//           console.log('🔍 Parsed toDate:', toDate);
+  
+//           return toDate >= today;  // Filter only venues that are valid
+//         });
+
+//       // Map to venue names and remove duplicates
+//       this.venueList = validVenues
+//         .map(v => v.venueName)
+//         .filter((value, index, self) => self.indexOf(value) === index);
+
+//         console.log("✅ Filtered venue list:", this.venueList);
+
+//       this.selectedVenue = '';
+//       this.showDateTimeDropdowns = false;
+//       this.availableDates = [];
+//       this.availableTimes = [];
+//     });
+//   }
+// }
+
+onSkillChange(skill: string) {
   if (skill) {
-    this.ielc.GetEnrolledSessionsbyvenue(skill).subscribe((venues) => {
-      // console.log('Venue response:', venues);
-      this.venueList = venues; // adjust based on API shape
-      this.selectedVenue = '';
-      this.showDateTimeDropdowns = false;
-      this.availableDates = [];
-      this.availableTimes = [];
+    this.ielc.GetEnrolledSessions().subscribe((data: any[]) => {
+      const today = new Date();
+      // console.log('🎯 Raw session data:', data);
+      // console.log('🧩 Visible session IDs:', this.visibleSessionIds);
+
+      // Group sessions by skill name
+      const skillSessionMap = new Map<string, any[]>();
+
+      // Group the sessions based on skill name and filter by active sessions
+      this.visibleSessionIds.forEach((session: any) => {
+        // console.log('🧩 Session being processed:', session); // Log session structure
+        
+        const skillName = (session.skillName ?? '').trim();
+        const skillKey = skillName.toLowerCase();
+        const sessionEndDate = new Date(session.toDate);
+        const isActive = sessionEndDate >= today;
+
+        if (skill.toLowerCase() === skillKey && isActive) {
+          // Add active sessions to the map for this skill
+          if (!skillSessionMap.has(skillKey)) {
+            skillSessionMap.set(skillKey, []);
+          }
+          skillSessionMap.get(skillKey)!.push(session);
+        }
+      });
+
+      // Now filter out the sessions based on the selected skill and only active ones
+      const activeSkillSessions = skillSessionMap.get(skill.toLowerCase()) || [];
+
+      // Only active venues for this skill will be considered
+      if (activeSkillSessions.length > 0) {
+        // Extract venue names directly from the `venue` property
+        const venues = activeSkillSessions.map(session => session.venue).filter((value, index, self) => self.indexOf(value) === index);
+
+        // console.log('✅ Filtered venue list for active sessions:', venues);
+
+        // Update venue list based on filtered venues
+        this.venueList = venues;
+        this.selectedVenue = ''; // Reset selected venue
+        this.showDateTimeDropdowns = false;
+        this.availableDates = [];
+        this.availableTimes = [];
+      } else {
+        // No active sessions for the selected skill
+        this.venueList = [];
+      }
     });
   }
 }
+
+
+
 
 convertToDDMMYYYY(dateStr: string): string {
   const [mm, dd, yyyy] = dateStr.split('-');
@@ -754,6 +848,7 @@ allowEnrollment() {
         const batchCountToInsert = this.batchMembersCount;
 
         this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
+        // window.location.reload();
       },
       error: (err) => {
         // console.error('❌ Error checking enrollment status:', err);
@@ -771,6 +866,7 @@ allowEnrollment() {
 
         const batchCountToInsert = 0;
         this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
+        // window.location.reload();
       },
       error: (err) => {
         // console.error('❌ Error checking  enrollment:', err);
@@ -821,6 +917,7 @@ proceedToEnroll(
       // Immediately show alert and reset form
       alert('Enrollment successful! A confirmation email will be sent shortly.');
       this.resetForm();
+      this.GetAllUsers();
 
       // Proceed with email sending (non-blocking)
       const sessionDescription = this.getSessionDescription(skill, venue, date, time);
@@ -1284,6 +1381,52 @@ topSkillReady = false;
   
 // }
 
+// GetEnrolledSessionsSkillsData() {
+//   const loggedInEmail = (this.userEmail ?? '').toLowerCase();
+
+//   this.ielc.GetEnrolledSessions().subscribe((data) => {
+//     console.log('📦 Enrolled session data:', data);
+//     console.log('🧩 Visible session IDs:', this.visibleSessionIds);
+
+//     if (this.visibleSessionIds && this.visibleSessionIds.length > 0) {
+//       const enrolledSkillNames = data.map((name: string) => name.trim().toLowerCase());
+
+//       const today = new Date(); 
+//       // Filter by match
+//       let filtered = this.visibleSessionIds.filter((session: any) => {
+//         const sessionSkillName = (session.skillName ?? '').trim().toLowerCase();
+//         const matched = enrolledSkillNames.includes(sessionSkillName);
+
+//         const sessionEndDate = new Date(session.toDate);
+//         const isActiveSession = sessionEndDate >= today;
+
+//         console.log(`🔍 Matching visible skill "${session.skillName}" -> Match: ${matched}`);
+//         return matched && isActiveSession;
+//       });
+
+//       // Remove duplicates by skillName (case-insensitive)
+//       const uniqueSkillsMap = new Map<string, any>();
+//       filtered.forEach((session: any) => {
+//         const skillNameKey = (session.skillName ?? '').trim().toLowerCase();
+//         if (!uniqueSkillsMap.has(skillNameKey)) {
+//           uniqueSkillsMap.set(skillNameKey, session);
+//         }
+//       });
+
+//       this.Enrolledskills = Array.from(uniqueSkillsMap.values());
+//       const enrolledNames = this.Enrolledskills.map((s: any) => s.skillName);
+//       console.log('🎯 Enrolled skills visible to user (unique):', enrolledNames);
+
+//       if (enrolledNames.length > 0) {
+//         this.topSkillName = enrolledNames[0];
+//       }
+//     } else {
+//       console.warn('⚠️ No visible sessions stored from GetAllSkillSessions yet.');
+//       this.Enrolledskills = [];
+//     }
+//   });
+// }
+
 GetEnrolledSessionsSkillsData() {
   const loggedInEmail = (this.userEmail ?? '').toLowerCase();
 
@@ -1293,27 +1436,38 @@ GetEnrolledSessionsSkillsData() {
 
     if (this.visibleSessionIds && this.visibleSessionIds.length > 0) {
       const enrolledSkillNames = data.map((name: string) => name.trim().toLowerCase());
+      const today = new Date();
 
-      // Filter by match
-      let filtered = this.visibleSessionIds.filter((session: any) => {
-        const sessionSkillName = (session.skillName ?? '').trim().toLowerCase();
-        const matched = enrolledSkillNames.includes(sessionSkillName);
-        // console.log(`🔍 Matching visible skill "${session.skillName}" -> Match: ${matched}`);
-        return matched;
-      });
+      // Group sessions by skill name
+      const skillSessionMap = new Map<string, any[]>();
 
-      // Remove duplicates by skillName (case-insensitive)
-      const uniqueSkillsMap = new Map<string, any>();
-      filtered.forEach((session: any) => {
-        const skillNameKey = (session.skillName ?? '').trim().toLowerCase();
-        if (!uniqueSkillsMap.has(skillNameKey)) {
-          uniqueSkillsMap.set(skillNameKey, session);
+      this.visibleSessionIds.forEach((session: any) => {
+        const skillName = (session.skillName ?? '').trim();
+        const skillKey = skillName.toLowerCase();
+        const sessionEndDate = new Date(session.toDate);
+        const isActive = sessionEndDate >= today;
+
+        if (!enrolledSkillNames.includes(skillKey)) return; // Not an enrolled skill
+
+        if (!skillSessionMap.has(skillKey)) {
+          skillSessionMap.set(skillKey, []);
+        }
+
+        if (isActive) {
+          skillSessionMap.get(skillKey)!.push(session); // Add only active sessions
         }
       });
 
-      this.Enrolledskills = Array.from(uniqueSkillsMap.values());
+      // Final enrolled skills with at least one active session
+      this.Enrolledskills = Array.from(skillSessionMap.entries())
+        .filter(([_, sessions]) => sessions.length > 0) // Ensure at least one valid session
+        .map(([skillKey, sessions]) => ({
+          skillName: sessions[0].skillName,
+          sessions: sessions // only non-expired sessions
+        }));
+
       const enrolledNames = this.Enrolledskills.map((s: any) => s.skillName);
-      // console.log('🎯 Enrolled skills visible to user (unique):', enrolledNames);
+      // console.log('🎯 Enrolled skills visible to user (unique, with active sessions):', enrolledNames);
 
       if (enrolledNames.length > 0) {
         this.topSkillName = enrolledNames[0];
@@ -1324,6 +1478,7 @@ GetEnrolledSessionsSkillsData() {
     }
   });
 }
+
 
 // GetEnrolledSessionsSkillsData() {
 //   const loggedInEmail = (this.userEmail ?? '').toLowerCase();
