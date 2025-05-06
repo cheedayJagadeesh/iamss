@@ -687,7 +687,39 @@ UpdateResult() {
     }
 
     const totalQuestions = this.examdata.displayExamQuestions;
+    // console.log('🧮 Total Questions:', totalQuestions);
+    
+    const attemptedQuestions = this.questions.filter(q => q['userAnswer']?.toString().trim() !== '').length;
+    // console.log('✏️ Attempted Questions:', attemptedQuestions);
+
+// const matchedAnswers: { question: string; userAnswer: string; correctAnswer: string; isCorrect: boolean }[] = [];
+  // this.correctAnswersCount = 0; 
+  this.correctAnswersCount++;
+  // this.questions.forEach((q: any, index: number) => {
+  //   const userAnswer = q['userAnswer']?.toString().trim().toUpperCase();
+  //   const correctAnswer = q['questionAnswer']?.toString().trim().toUpperCase();
+
+  //   const isCorrect = userAnswer && userAnswer === correctAnswer;
+
+  //   if (isCorrect) this.correctAnswersCount++;
+
+  //   if (userAnswer) {
+  //     matchedAnswers.push({
+  //       question: q['questionText'] || q['question'],
+  //       userAnswer: userAnswer,
+  //       correctAnswer: correctAnswer,
+  //       isCorrect: isCorrect
+  //     });
+  //   }
+  // });
+
+  // console.log('📝 Matched Answers:', matchedAnswers);
+
+    // console.log('✅ Correct Answers:', this.correctAnswersCount);
     this.percentage = (this.correctAnswersCount / totalQuestions) * 100;
+
+
+    // console.log('📊 Calculated Percentage:', this.percentage);
     const formattedDate = this.formatDateToCustomString();
     this.examPassed = this.percentage >= this.examdata.examPercentage;
 
@@ -729,7 +761,7 @@ UpdateResult() {
                 </tr>
               </tbody>
             </table>
-            <p style="margin-top: 15px;">Thank you for your effort and dedication!</p>
+            <p style="margin-top: 15px; color: Green;">Thank you for your effort and dedication!</p>
               <br>
           `;
         } else {
@@ -753,7 +785,7 @@ UpdateResult() {
                 </tr>
               </tbody>
             </table>
-            <p style="margin-top: 15px;">Please prepare and re-attempt the test again.</p>
+            <p style="margin-top: 15px; color: red;">Please prepare and re-attempt the test again.</p>
             <br>
           `;
         }
@@ -912,6 +944,42 @@ closeModal() {
     }
   }
   
+
+  // matchedAnswers: any[] = [];
+  // nextQuestion() {
+  //   if (this.selectedAnswer) {
+  //     const correctAnswer = this.currentQuestion.questionAnswer;
+  
+  //     const selected = this.selectedAnswer.trim().toUpperCase();
+  //     const correct = correctAnswer.trim().toUpperCase();
+  
+  //     // ✅ Track correct answers with details
+  //     if (selected === correct) {
+  //       this.correctAnswersCount++;
+  //       this.matchedAnswers.push({
+  //         question: this.currentQuestion['questionText'] || this.currentQuestion['question'],
+  //         userAnswer: this.selectedAnswer,
+  //         correctAnswer: correctAnswer
+  //       });
+        
+  //     }
+  
+  //     this.selectedAnswer = null; // Reset for next question
+  
+  //     if (this.currentQuestionIndex < this.questions.length - 1) {
+  //       this.currentQuestionIndex++;
+  //     } else {
+  //       // Last question, submit the exam
+  //       console.log('✅ Matched Answers List:', this.matchedAnswers); // 📋 Log matched answers
+  //       this.submitExam();
+  //     }
+  //   } else {
+  //     alert("⚠️ Please select an answer before proceeding.");
+  //   }
+  // }
+  
+
+
   // forceSubmitExam() {
   //   let correctAnswers = 0;
   //   let totalQuestions = this.questions.length;

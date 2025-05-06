@@ -607,10 +607,16 @@ onDateChange() {
 }
 
 
-convertToYYYYMMDD(date: string): string {
-  const [day, month, year] = date.split('-');
-  return `${year}-${month}-${day}`;
-}
+// convertToYYYYMMDD(date: string): string {
+//   const [day, month, year] = date.split('-');
+//   return `${year}-${month}-${day}`;
+// }
+
+// convertToYYYYMMDD(dateStr: string): string {
+//   const [dd, mm, yyyy] = dateStr.split('-');
+//   return `${yyyy}-${mm}-${dd}`; // correct ISO format
+// }
+
 
 
 
@@ -918,9 +924,9 @@ getSessionDescription(skill: string, venue: string, date: string, time: string):
   // console.log('🔍 Searching for session description using:', { skill, venue, date, time });
 
   // Convert the selected date to the format (YYYY-MM-DD)
-  const [selectedStartDate, selectedEndDate] = date.split(' - ').map(this.convertToYYYYMMDD);
+  const [selectedStartDate, selectedEndDate] = date.split(' - ').map(this.convertDDMMYYYYToYYYYMMDD);
 
-  // Loop through allSkillSessions and find the matching session
+  // // Loop through allSkillSessions and find the matching session
   const matchedSession = this.allSkillSessions.find((session: any) => {
     // Convert session dates to the same format (YYYY-MM-DD)
     const sessionStartDate = this.convertToYYYYMMDD(session.fromDate);
@@ -929,12 +935,26 @@ getSessionDescription(skill: string, venue: string, date: string, time: string):
     // Format the session time range (if necessary)
     const sessionTime = `${this.convertTo12HourFormat(session.skillStartTime)} - ${this.convertTo12HourFormat(session.skillEndTime)}`;
 
+    // console.log('🧪 Comparing:', {
+    //   skillSessionName: session.skillName,
+    //   skillParam: skill,
+    //   venueSession: session.venue,
+    //   venueParam: venue,
+    //   sessionDateRange: [sessionStartDate, sessionEndDate],
+    //   selectedDateRange: [selectedStartDate, selectedEndDate],
+    //   sessionTime,
+    //   paramTime: time
+    // });
+    
+
+
     if (venue === 'Teams') {
       // Compare skill, venue, date range, and time for "Teams" venue
       return session.skillName?.trim().toLowerCase() === skill.trim().toLowerCase() &&
              session.venue?.trim().toLowerCase() === venue.trim().toLowerCase() &&
              (selectedStartDate >= sessionStartDate && selectedEndDate <= sessionEndDate) &&
              time === sessionTime;
+             
     } else {
       // Compare only skill and venue for non-"Teams" venue
       return session.skillName?.trim().toLowerCase() === skill.trim().toLowerCase() &&
@@ -942,6 +962,7 @@ getSessionDescription(skill: string, venue: string, date: string, time: string):
     }
   });
 
+  
   // console.log('📘 Matched session:', matchedSession);
 
   return matchedSession?.skillDescription ?? 'No description available';
@@ -954,6 +975,19 @@ convertTo12HourFormat(time: string): string {
   const hour12 = +hour % 12 || 12; // convert hour to 12-hour format, 0 becomes 12
   return `${hour12}:${minute} ${period}`;
 }
+convertDDMMYYYYToYYYYMMDD(dateStr: string): string {
+  const [dd, mm, yyyy] = dateStr.split('-');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+convertToYYYYMMDD(dateStr: string): string {
+  const date = new Date(dateStr);
+  const yyyy = date.getFullYear();
+  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = String(date.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
 
 
 
