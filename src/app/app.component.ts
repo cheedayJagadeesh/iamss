@@ -89,7 +89,7 @@ export class AppComponent implements OnInit {
     this.isLoading = true;
       //  this.authService.startInactivityTimer();
     this.router.events.subscribe(() => {
-      this.authService.startInactivityTimer();
+      // this.authService.startInactivityTimer();
     });
     try {
       // Step 1: Handle MSAL redirect (if using redirect login)
