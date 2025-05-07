@@ -1,9 +1,56 @@
-import { CanActivateFn } from '@angular/router';
+// import { CanActivateFn } from '@angular/router';
 
 
-export const authGuard: CanActivateFn = (route, state) => {
-  return true;
-};
+// export const authGuard: CanActivateFn = (route, state) => {
+//   return true;
+// };
+
+
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { AuthService } from './authservice.service';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) {}
+
+  // async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
+  //   const allowedRoles = route.data['roles'] as string[];
+  //   const userRole = await this.authService.fetchUserDetails();
+
+  //   if (allowedRoles.includes(userRole)) {
+  //     return true;
+  //   } else {
+  //     this.router.navigate(['/registration']);
+  //     return false;
+  //   }
+  // }
+  async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
+    const allowedRoles = route.data['roles'] as string[];
+
+    // Wait for MSAL to fully initialize
+    await this.authService.ensureMsalInitialized();
+
+    // If no active account, redirect to login
+    if (!this.authService.hasActiveAccount()) {
+      await this.authService.login(); // or redirect
+      return false;
+    }
+
+    const userRole = await this.authService.fetchUserDetails();
+
+    if (allowedRoles.includes(userRole)) {
+      return true;
+    } else {
+      this.router.navigate(['/registration']);
+      return false;
+    }
+  }
+  
+}
+
 
 // import { inject } from '@angular/core';
 // import { CanActivateFn, Router } from '@angular/router';

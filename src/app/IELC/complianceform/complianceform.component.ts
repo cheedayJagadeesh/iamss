@@ -373,7 +373,7 @@ onProjectChange(event: Event): void {
   
 
   //constructor(private msalService: MsalService, private authService: AuthService, private router: Router) {}
-constructor(private ielc:IelcapiService, private authService: AuthService,private emailservice: EmailService) {
+constructor(private ielc:IelcapiService, private authService: AuthService,private emailservice: EmailService,private router: Router) {
 }
 
   sortlist(data: any[]): any[] {
@@ -382,11 +382,14 @@ constructor(private ielc:IelcapiService, private authService: AuthService,privat
 
  
   ngOnInit(): void {
+  
     this.authService.userDetails$.subscribe(userDetails => {
       //this.userName = 'Ramprasad .KP' ;
        this.userName = userDetails?.displayName;
       this.userEmail = userDetails?.email ;
     });
+
+   
 
   this.GetComplianceISMSData();
   this.GetComplianceQMSData();
@@ -396,6 +399,7 @@ constructor(private ielc:IelcapiService, private authService: AuthService,privat
    this.GetUserByProjectsList();
   this.GetFilteredISMSUserTable();
   this.GetFilteredQMSUserTable();
+ 
   }
 
   resetComplianceData() {

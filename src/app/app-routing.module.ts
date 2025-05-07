@@ -45,7 +45,7 @@ import { ExampageComponent } from './IELC/exampage/exampage.component';
 import { AdmindeptComponent } from './IELC/admindept/admindept.component';
 import { HrdeptComponent } from './IELC/hrdept/hrdept.component';
 import { ItdeptComponent } from './IELC/itdept/itdept.component';
-import { authGuard } from './auth.guard';
+import { AuthGuard } from './auth.guard';
 import { AuthcallbackComponent } from './IELC/authcallback/authcallback.component';
 
 
@@ -57,34 +57,34 @@ const routes: Routes = [
   {path:'projectreports',component:ProjectreportsComponent,canActivate: [MsalGuard]},
   {path:'configuration',component:ConfigurationsComponent,canActivate: [MsalGuard]},
   {path:'attendance',component:AttendanceComponent,canActivate: [MsalGuard]},
-  {path:'registered',component:RegisteredusersComponent,canActivate: [MsalGuard]},
+  {path:'registered',component:RegisteredusersComponent,canActivate: [MsalGuard,AuthGuard],data: { roles: ['Admin', 'SuperAdmin'] }},
   // {path:'home',component:HomeComponent,canActivate:[MsalGuard]},
   // {path:'',redirectTo:'login', pathMatch:'full'},
   // {path:'login',component:LoginComponent},
   // {path: '**', redirectTo: '/login'},
 
-  { path: 'home', component: HomeComponent, canActivate: [MsalGuard] },
+  { path: 'home', component: HomeComponent, canActivate: [MsalGuard,AuthGuard],data: { roles: ['Admin', 'SuperAdmin'] } },
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   // { path: '**', redirectTo: 'login' },
 
 
   {path:'registration',component:RegistrationComponent, canActivate: [MsalGuard]},
-  {path:'addskill',component:AddnewskillComponent,canActivate: [MsalGuard]},
-  {path:'skillqa',component:SkillqaComponent,canActivate: [MsalGuard]},
-  {path:'examinfo',component:ExaminfoComponent,canActivate: [MsalGuard]},
-  {path:'resultinfo',component:ResultinfoComponent,canActivate: [MsalGuard]},
-  {path:'ismstask',component:IsmstaskComponent,canActivate: [MsalGuard]},
-  {path:'ismshistory',component:IsmshistoryComponent,canActivate: [MsalGuard]},
-  {path:'ismsmails',component:IsmsmailsComponent,canActivate: [MsalGuard]},
-  {path:'qmstask',component:QmstaskComponent,canActivate: [MsalGuard]},
-  {path:'qmshistory',component:QmshistoryComponent,canActivate: [MsalGuard]},
-  {path:'qmsmails',component:QmsmailsComponent,canActivate: [MsalGuard]},
-  {path:'soc2task',component:Soc2taskComponent,canActivate: [MsalGuard]},
-  {path:'soc2history',component:Soc2historyComponent,canActivate: [MsalGuard]},
-  {path:'soc2mails',component:Soc2mailsComponent,canActivate: [MsalGuard]},
-  {path:'complianceform',component:ComplianceformComponent,canActivate: [MsalGuard]},
-  {path:'adminusers',component:AdminusersComponent,canActivate: [MsalGuard]},
+  {path:'addskill',component:AddnewskillComponent,canActivate: [MsalGuard,AuthGuard],data: { roles: ['Admin', 'SuperAdmin'] }},
+  {path:'skillqa',component:SkillqaComponent,canActivate: [MsalGuard,AuthGuard],data: { roles: ['Admin', 'SuperAdmin'] }},
+  {path:'examinfo',component:ExaminfoComponent,canActivate: [MsalGuard, AuthGuard],data: { roles: ['Admin', 'SuperAdmin'] }},
+  {path:'resultinfo',component:ResultinfoComponent,canActivate: [MsalGuard, AuthGuard],data: { roles: ['Admin', 'SuperAdmin'] }},
+  {path:'ismstask',component:IsmstaskComponent,canActivate: [MsalGuard,AuthGuard],data: { roles: ['Admin', 'SuperAdmin'] }},
+  {path:'ismshistory',component:IsmshistoryComponent,canActivate: [MsalGuard,AuthGuard],data: { roles: ['Admin', 'SuperAdmin'] }},
+  {path:'ismsmails',component:IsmsmailsComponent,canActivate: [MsalGuard,AuthGuard],data: { roles: ['Admin', 'SuperAdmin'] }},
+  {path:'qmstask',component:QmstaskComponent,canActivate: [MsalGuard,AuthGuard],data: { roles: ['Admin', 'SuperAdmin'] }},
+  {path:'qmshistory',component:QmshistoryComponent,canActivate: [MsalGuard,AuthGuard],data: { roles: ['Admin', 'SuperAdmin'] }},
+  {path:'qmsmails',component:QmsmailsComponent,canActivate: [MsalGuard,AuthGuard],data: { roles: ['Admin', 'SuperAdmin'] }},
+  {path:'soc2task',component:Soc2taskComponent,canActivate: [MsalGuard,AuthGuard],data: { roles: ['Admin', 'SuperAdmin'] }},
+  {path:'soc2history',component:Soc2historyComponent,canActivate: [MsalGuard,AuthGuard],data: { roles: ['Admin', 'SuperAdmin'] }},
+  {path:'soc2mails',component:Soc2mailsComponent,canActivate: [MsalGuard,AuthGuard],data: { roles: ['Admin', 'SuperAdmin'] }},
+  {path:'complianceform',component:ComplianceformComponent,canActivate: [MsalGuard],data: { roles: ['Admin', 'SuperAdmin'] }},
+  {path:'adminusers',component:AdminusersComponent,canActivate: [MsalGuard,AuthGuard],data: { roles: ['Admin', 'SuperAdmin'] }},
   {path:'ithelpsprt',component:IthelpsprtComponent,canActivate: [MsalGuard]},
   {path:'adminsprt',component:AdminsprtComponent,canActivate: [MsalGuard]},
   {path:'hrsprt',component:HrsprtComponent,canActivate: [MsalGuard]},

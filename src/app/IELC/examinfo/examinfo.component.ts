@@ -39,6 +39,11 @@ export class ExaminfoComponent {
   constructor(private msalService: MsalService, private authService: AuthService, private router: Router,private ielc:IelcapiService) {}
  
    async ngOnInit() {
+    // const hasAccess = await this.authService.hasAccess(['Admin', 'SuperAdmin']);
+    // if (!hasAccess && this.router.url !== '/registration') {
+    //   this.router.navigate(['/registration']);
+    //   return;
+    // }
     // try {
     //   await this.msalService.instance.handleRedirectPromise(); // Ensure MSAL is initialized
     //   this.authService.setActiveAccount(); // Ensure an account is set

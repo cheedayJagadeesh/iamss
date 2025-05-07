@@ -737,6 +737,11 @@ public fetchUserDetails(): Promise<'SuperAdmin' | 'Admin' | 'User'> {
   });
 }
 
+async hasAccess(allowedRoles: string[]): Promise<boolean> {
+  const role = await this.fetchUserDetails();
+  return allowedRoles.includes(role);
+}
+
 
 loginSuccess(userInfo: any): void {
   localStorage.setItem('userInfo', JSON.stringify(userInfo));
@@ -757,6 +762,19 @@ getUserRole(): string {
 getAllowedPages(): string[] {
   return this.allowedPages;
 }
+
+public hasActiveAccount(): boolean {
+  return !!this.msalService.instance.getActiveAccount();
+}
+
+public async ensureMsalInitialized(): Promise<void> {
+  await this.msalService.instance.initialize();
+  const result = await this.msalService.instance.handleRedirectPromise();
+  if (result && result.account) {
+    this.msalService.instance.setActiveAccount(result.account);
+  }
+}
+
 
 // Get user information from the service
 // public getUserInfo(): User | null {

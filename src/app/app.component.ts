@@ -113,16 +113,24 @@ export class AppComponent implements OnInit {
   
         const role = await this.authService.fetchUserDetails();
         const currentRoute = this.router.url;
-  
-        if (role === 'SuperAdmin' || role === 'Admin') {
-          if (currentRoute === '/') {
-            this.router.navigate(['/home']);
-          }
-        } else {
-          if (currentRoute !== '/registration') {
-            this.router.navigate(['/registration']);
-          }
-        }
+        
+
+        // const hasAccess = await this.authService.hasAccess(['Admin', 'SuperAdmin']);
+        // if (!hasAccess && this.router.url !== '/registration') {
+        //   this.router.navigate(['/registration']);
+        //   return;
+        // }
+        
+
+        // if (role === 'SuperAdmin' || role === 'Admin') {
+        //   if (currentRoute === '/') {
+        //     this.router.navigate(['/home']);
+        //   }
+        // } else {
+        //   if (currentRoute !== 'SuperAdmin' && currentRoute !== 'Admin' && currentRoute !== '/registration') {
+        //     this.router.navigate(['/registration']);
+        //   }
+        // }
       } else {
         // console.log('User is not authenticated. Starting login...');
         await this.authService.login(); // Will trigger popup or redirect login
