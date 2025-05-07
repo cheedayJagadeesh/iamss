@@ -19,7 +19,7 @@ interface User {
 export class AuthService {
   private inactivityTimeout: any;
   private countdownInterval: any;
-  private readonly TIMEOUT_DURATION = 10 * 60 * 1000; // 5 minutes
+  private readonly TIMEOUT_DURATION = 30 * 60 * 1000; // 5 minutes
   private remainingTime = this.TIMEOUT_DURATION / 1000; 
 
   // private userNameSubject = new BehaviorSubject<string | null>(null);
@@ -717,6 +717,9 @@ public fetchUserDetails(): Promise<'SuperAdmin' | 'Admin' | 'User'> {
               });
 
               this.userInfoInitialized = true;
+              // console.log('[fetchUserDetails] userInfoInitialized set to:', this.userInfoInitialized);
+              // console.log('[fetchUserDetails] Resolved with role:', roleName);
+              // console.log('[fetchUserDetails] pages:', pageNames);
               resolve(roleName as 'SuperAdmin' | 'Admin' | 'User');
             },
             error: (err) => {
@@ -762,6 +765,30 @@ getUserRole(): string {
 getAllowedPages(): string[] {
   return this.allowedPages;
 }
+
+
+getUserPageNames(): string[] {
+  const pageName = this.userInfoSubject.value?.pageName;
+  
+  // console.log('userInfoSubject value:', this.userInfoSubject.value); // Debug log
+
+  // Ensure that we always return an array
+  if (Array.isArray(pageName)) {
+    return pageName;
+  }
+
+  if (typeof pageName === 'string') {
+    return pageName.split(',').map(p => p.trim());
+  }
+
+  // Log the situation where the pageName is neither a string nor an array
+  // console.warn('Page name is not defined or not a string/array. Returning an empty array.');
+
+  return []; // Return an empty array if pageName is undefined or any other unexpected type
+}
+
+
+
 
 public hasActiveAccount(): boolean {
   return !!this.msalService.instance.getActiveAccount();

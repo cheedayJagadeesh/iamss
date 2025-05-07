@@ -27,27 +27,109 @@ export class AuthGuard implements CanActivate {
   //     return false;
   //   }
   // }
+  // async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
+  //   const allowedRoles = route.data['roles'] as string[];
+
+  //   // Wait for MSAL to fully initialize
+  //   await this.authService.ensureMsalInitialized();
+
+  //   // If no active account, redirect to login
+  //   if (!this.authService.hasActiveAccount()) {
+  //     await this.authService.login(); // or redirect
+  //     return false;
+  //   }
+
+  //   const userRole = await this.authService.fetchUserDetails();
+
+  //   if (allowedRoles.includes(userRole)) {
+  //     return true;
+  //   } else {
+  //     this.router.navigate(['/registration']);
+  //     return false;
+  //   }
+  // }
+  // async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
+  //   const allowedPageNames = route.data['pageNames'] as string[];
+  
+  //   console.log('Allowed page names:', allowedPageNames); // Debug log
+  
+  //   // Wait for MSAL to fully initialize
+  //   await this.authService.ensureMsalInitialized();
+  
+  //   // If no active account, redirect to login
+  //   if (!this.authService.hasActiveAccount()) {
+  //     await this.authService.login(); // or redirect
+  //     return false;
+  //   }
+  
+  //   // Get the user's page names
+  //   const userPageNames = await this.authService.getUserPageNames();
+  
+  //   console.log('User page names:', userPageNames); // Debug log
+  
+  //   // Ensure userPageNames is always an array
+  //   if (!userPageNames || !Array.isArray(userPageNames)) {
+  //     console.error('User page names are not valid:', userPageNames); // Debug log
+  //     return false;
+  //   }
+  
+  //   // Check if the user has access to any of the allowed pages
+  //   const hasAccess = allowedPageNames.some(page => userPageNames.includes(page));
+  
+  //   if (hasAccess) {
+  //     return true;
+  //   } else {
+  //     this.router.navigate(['/registration']);
+  //     return false;
+  //   }
+  // }
+  
   async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
-    const allowedRoles = route.data['roles'] as string[];
-
-    // Wait for MSAL to fully initialize
+    const allowedPageNames = route.data['pageNames'] as string[] || [];
+  
     await this.authService.ensureMsalInitialized();
-
-    // If no active account, redirect to login
+  
     if (!this.authService.hasActiveAccount()) {
-      await this.authService.login(); // or redirect
+      await this.authService.login();
       return false;
     }
-
-    const userRole = await this.authService.fetchUserDetails();
-
-    if (allowedRoles.includes(userRole)) {
+  
+    const userRole = await this.authService.fetchUserDetails(); // This also populates userInfoSubject
+    const userPageNames = await this.authService.getUserPageNames();
+  
+    // console.log('User Role:', userRole);
+    // console.log('User page names from backend:', userPageNames);
+    // console.log('Route allowed pages:', allowedPageNames);
+  
+    // Add default allowed pages based on role
+    let effectiveAllowedPages: string[] = [];
+  
+    if (userRole === 'SuperAdmin') {
+      // SuperAdmin can access everything
       return true;
+    } else if (userRole === 'Admin') {
+      effectiveAllowedPages = ['home', 'registration', ...userPageNames];
+    } else if (userRole === 'User') {
+      effectiveAllowedPages = ['registration'];
+    }
+  
+    // Now check access
+    const hasAccess = allowedPageNames.some(page => effectiveAllowedPages.includes(page));
+  
+   
+  if (hasAccess) {
+    return true;
+  } else {
+    // Redirect Admins to home, Users to registration
+    if (userRole === 'Admin') {
+      this.router.navigate(['/home']);
     } else {
       this.router.navigate(['/registration']);
-      return false;
     }
+    return false;
   }
+  }
+  
   
 }
 
