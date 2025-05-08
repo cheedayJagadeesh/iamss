@@ -539,6 +539,7 @@ onSkillChange(skill: string) {
         const sessionEndDate = new Date(session.toDate);
         const isActive = sessionEndDate >= today;
 
+
         if (skill.toLowerCase() === skillKey && isActive) {
           // Add active sessions to the map for this skill
           if (!skillSessionMap.has(skillKey)) {
@@ -648,7 +649,8 @@ convertToDDMMYYYY(dateStr: string): string {
 // }
 
 onVenueChange(venue: string) {
-  this.showDateTimeDropdowns = venue === 'Teams';
+  // this.showDateTimeDropdowns = venue === 'Teams';
+  this.showDateTimeDropdowns = ['Teams', 'Offline'].includes(venue);
 
   if (this.showDateTimeDropdowns && this.skillname) {
     // Fetch available dates first
@@ -1432,20 +1434,66 @@ GetEnrolledSessionsSkillsData() {
 
   this.ielc.GetEnrolledSessions().subscribe((data) => {
     // console.log('📦 Enrolled session data:', data);
-    // console.log('🧩 Visible session IDs:', this.visibleSessionIds);
+    console.log('🧩 Visible session IDs:', this.visibleSessionIds);
 
     if (this.visibleSessionIds && this.visibleSessionIds.length > 0) {
       const enrolledSkillNames = data.map((name: string) => name.trim().toLowerCase());
       const today = new Date();
+      const now = new Date();
+      const currentTime = now.toTimeString().split(' ')[0];
+   
+      // Normalize current date to midnight (00:00:00)
+    const currentDateOnly = new Date(now.setHours(0, 0, 0, 0));  
 
+    
       // Group sessions by skill name
       const skillSessionMap = new Map<string, any[]>();
 
       this.visibleSessionIds.forEach((session: any) => {
         const skillName = (session.skillName ?? '').trim();
         const skillKey = skillName.toLowerCase();
-        const sessionEndDate = new Date(session.toDate);
-        const isActive = sessionEndDate >= today;
+        // const sessionEndDate = new Date(session.toDate);
+        // const isActive = sessionEndDate >= today;
+
+      //   const sessionEndDate = new Date(session.toDate);
+      //    // Normalize session end date to midnight (00:00:00)
+      // const sessionDateOnly = new Date(sessionEndDate.setHours(0, 0, 0, 0)); // Sets time to 00:00:00
+
+      // const sessionSkillEndTime = session.skillEndTime;
+
+      // // // Convert session skill end time to minutes from midnight
+      // // const [sessionEndHour, sessionEndMinute] = sessionSkillEndTime.split(':').map((x: string) => parseInt(x, 10));
+      // // const sessionTimeInMinutes = sessionEndHour * 60 + sessionEndMinute;
+
+      // // Check if the session end date is valid
+      // const isDateValid = sessionDateOnly >= currentDateOnly;
+
+      // // Log the comparison details for date
+      // console.log(`🗓️ Comparing session end date with current date: ${sessionDateOnly} >= ${currentDateOnly} -> ${isDateValid}`);
+
+      // // Check if the session end time is valid (only if date is valid)
+      // let isTimeValid = false;
+      // if (isDateValid) {
+      //   isTimeValid = sessionSkillEndTime >= currentTime;
+      // }
+
+      // // Log the comparison details for time
+      // console.log(`⏰ Comparing session skill end time with current time: ${sessionSkillEndTime}  >= ${currentTime}  -> ${isTimeValid}`);
+
+      // const isActive = isDateValid && isTimeValid;
+
+      
+  // Combine session.toDate and session.skillEndTime into full DateTime
+  const [hour, minute, second] = (session.skillStartTime ?? '00:00:00').split(':').map(Number);
+  const sessionEndDateTime = new Date(session.toDate);
+  sessionEndDateTime.setHours(hour || 0, minute || 0, second || 0, 0);
+
+  const now = new Date();
+
+  const isActive = sessionEndDateTime >= now;
+
+  // console.log(`📅🕒 Comparing session end datetime with now: ${sessionEndDateTime.toLocaleString()} >= ${now.toLocaleString()} -> ${isActive}`);
+
 
         if (!enrolledSkillNames.includes(skillKey)) return; // Not an enrolled skill
 

@@ -6,9 +6,22 @@
     <div class="container">
         <div >
                 <label for="skillname" class="form-label">Skill Name</label>
-                <input type="text" class="form-controlsearchname" name="skillname" id="skillname"  (keyup.enter)="searchSkills()" [(ngModel)]="skillname">
-                <label class="lblcal">Choose Date</label>
-                <input class="inputcal" type="date" name="selectedDate" [(ngModel)]="selectedDate" >
+                <!-- <input type="text" class="form-controlsearchname" name="skillname" id="skillname"  (keyup.enter)="searchSkills()" [(ngModel)]="skillname"> -->
+                <select  id="select2"  class="drpyear1" name="skillname" [(ngModel)]="skillname">                    
+                    <option value="">- select skill -</option>
+                    <option *ngFor="let item of Enrolledskills" [value]="item">{{ item }}</option>
+                </select>
+                <label class="lbltime">Email</label>
+                <input type="text" class="form-control" id="time" name="mail" [(ngModel)]="mail">
+                <!-- <label class="lblcal">Choose Date</label>
+                <input class="inputcal" type="date" name="selectedDate" [(ngModel)]="selectedDate" > -->
+                <div >
+                      <label class="lblcal" for="fromDate">Choose Date Range</label>
+                      <input type="date" class="inputcal" name="fromdate" id="fromDate" [(ngModel)]="fromDate">
+                      <!-- <label class="cal1" for="toDate">To Date</label> -->
+                      <input type="date" class="inputcal1" name="todate" id="toDate" [(ngModel)]="toDate">
+                  </div>
+                  
                 <button class="btn btnsearch">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                       <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
@@ -18,13 +31,12 @@
          <div>
                 <label for="Modeoftraining" class="labelid-role1">Mode of Training</label>
                 <select id="select1" name="modetype" class="drpyear" [(ngModel)]="modetype">
-                     <option value=""  >- Select Mode -</option>
+                     <option value="">- Select Mode -</option>
                      <option >Offline</option>
                      <option >Self-Learning</option>
                      <option >Teams</option>
                 </select>
-                <label class="lbltime">Time</label>
-                <input type="text" class="form-control" id="time" name="time" [(ngModel)]="time">
+              
                 <!-- <button class="buttonclr" (click)="clear()">Clear</button> -->
                 <button class="btn btn-clear buttonclr" (click)="clear()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
@@ -52,7 +64,7 @@
                   <th scope="col">Skill Type</th>
                   <th scope="col">Batch Members</th>
                   <th scope="col">Registered Date</th>
-                  <th scope="col">Action</th>
+                  <!-- <th scope="col">Action</th> -->
                 </tr>
               </thead>
               <tbody *ngIf="!isLoading">
@@ -71,13 +83,13 @@
                     <td>{{row.venue}}</td>
                     <td>{{row.batchmembers}}</td>
                     <td>{{row.enrollmentDate}}</td>
-                    <td>
+                    <!-- <td>
                         <button class="btn btn-info me-1" (click)="deleteItem(row.enrollmentID)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
                               <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
                             </svg>
                         </button>
-                    </td>
+                    </td> -->
                 </tr>
             <!-- </ng-template> -->
               </tbody>

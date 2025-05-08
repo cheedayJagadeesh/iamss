@@ -4,7 +4,8 @@ import { UsersInfo } from '../users-info';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable, of  } from 'rxjs';
+import { ChangeDetectorRef } from '@angular/core';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class RegisteredusersComponent implements OnInit {
  formatdate:string=''
  skillname:string=''
  modetype:string='';
- time:string=''
+ mail:string=''
  isLoading = true;
 
  //Registeredusers:any
@@ -26,19 +27,22 @@ export class RegisteredusersComponent implements OnInit {
     this.skillname = '';
     this.modetype = '';
     this.selectedDate = '';
-    this.time = '';
+    this.mail = '';
     // this.Registeredusers;
    this.GetAllUSers()
  }
 
 
  
-
+  Enrolledskills: any[]=[];
   Registeredusers: any[] = []; 
   page: number = 1;  
   itemsPerPage: number = 10; 
 
-  constructor(private ielc:IelcapiService, private datePipe: DatePipe) {
+  fromDate: string = '';
+  toDate: string = '';
+
+  constructor(private ielc:IelcapiService, private datePipe: DatePipe,private cdr: ChangeDetectorRef) {
     for (let i = 1; i <= 100; i++) {
       // this.Registeredusers.push({ id: i, name: `item ${i}` });
       this.Registeredusers.push({ id: i });
@@ -48,9 +52,14 @@ export class RegisteredusersComponent implements OnInit {
 
  ngOnInit() {
   this.GetAllUSers();
+  this.GetAllSkillsData();
  }
 
-
+ GetAllSkillsData(){
+  this.ielc.GetEnrolledSessions().subscribe((data) => {
+    this.Enrolledskills=data;
+  });
+ }
 
  sortRegisteredUsers(data: any[]): any[] {
   return data.sort((a, b) => (a.enrollmentID > b.enrollmentID ? -1 : a.enrollmentID < b.enrollmentID ? 1 : 0));
@@ -67,239 +76,273 @@ export class RegisteredusersComponent implements OnInit {
 
  searchSkills() {
   this.page = 1; 
-  if (this.skillname.trim()) {
-    this.ielc.GetUsersBySkill(this.skillname).subscribe((data) => {
-      this.Registeredusers = data;
-      this.Registeredusers = this.sortRegisteredUsers(data);
-    });
-  }
-  if (this.selectedDate) {
-    this.ielc.GetUsersByDate(this.selectedDate).subscribe((data) => {
-      this.Registeredusers = data;
-      this.Registeredusers = this.sortRegisteredUsers(data);
-    });
-  }
- if (this.modetype) {
-    this.ielc.GetUsersByVenue(this.modetype).subscribe((data)=>{
-      this.Registeredusers = data;
-      this.Registeredusers = this.sortRegisteredUsers(data);
-    });
-  }
- if (this.time) {
-    this.ielc.GetUsersByTime(this.time).subscribe((data) => {
-      this.Registeredusers = data;
-      this.Registeredusers = this.sortRegisteredUsers(data);
-    });
-  }
+//   if (this.skillname.trim()) {
+//     this.ielc.GetUsersBySkill(this.skillname).subscribe((data) => {
+//       this.Registeredusers = data;
+//       this.Registeredusers = this.sortRegisteredUsers(data);
+//     });
+//   }
+//   if (this.selectedDate) {
+//     this.ielc.GetUsersByDate(this.selectedDate).subscribe((data) => {
+//       this.Registeredusers = data;
+//       this.Registeredusers = this.sortRegisteredUsers(data);
+//     });
+//   }
+//  if (this.modetype) {
+//     this.ielc.GetUsersByVenue(this.modetype).subscribe((data)=>{
+//       this.Registeredusers = data;
+//       this.Registeredusers = this.sortRegisteredUsers(data);
+//     });
+//   }
+//  if (this.mail) {
+//     this.ielc.GetUsersByEmail(this.mail).subscribe((data) => {
+//       this.Registeredusers = data;
+//       this.Registeredusers = this.sortRegisteredUsers(data);
+//     });
+//   }
   
- if(this.skillname && this.modetype) {
-  forkJoin([
-    this.ielc.GetUsersBySkill(this.skillname),
-    this.ielc.GetUsersByVenue(this.modetype)
-  ]).subscribe({
-    next: ([skillUsers, venueUsers]) => {
-      this.Registeredusers = (skillUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
-        (venueUsers as UsersInfo[]).some((venueUser: UsersInfo) => venueUser.enrollmentID === skillUser.enrollmentID)
-      );
-      // console.log("Filtered Users:", this.Registeredusers);
-    },
+//  if(this.skillname && this.modetype) {
+//   forkJoin([
+//     this.ielc.GetUsersBySkill(this.skillname),
+//     this.ielc.GetUsersByVenue(this.modetype)
+//   ]).subscribe({
+//     next: ([skillUsers, venueUsers]) => {
+//       this.Registeredusers = (skillUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
+//         (venueUsers as UsersInfo[]).some((venueUser: UsersInfo) => venueUser.enrollmentID === skillUser.enrollmentID)
+//       );
+//       this.cdr.detectChanges();
+//       // console.log("Filtered Users:", this.Registeredusers);
+//     },
     
-    error: (err) => {
-      // console.error("Error fetching data:", err);
-    }
-  });
- }
+//     error: (err) => {
+//       // console.error("Error fetching data:", err);
+//     }
+//   });
+//  }
 
-  if (this.skillname && this.time) {
-    forkJoin([
-      this.ielc.GetUsersBySkill(this.skillname),
-      this.ielc.GetUsersByTime(this.time)
-    ]).subscribe({
-      next: ([skillUsers, optedtimes]) => {
-        this.Registeredusers = (skillUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
-          (optedtimes as UsersInfo[]).some((optedtime: UsersInfo) => optedtime.enrollmentID === skillUser.enrollmentID)
-        );
-        // console.log("Filtered Users:", this.Registeredusers);
-      },
+//   if (this.skillname && this.mail) {
+//     forkJoin([
+//       this.ielc.GetUsersBySkill(this.skillname),
+//       this.ielc.GetUsersByEmail(this.mail)
+//     ]).subscribe({
+//       next: ([skillUsers, optedtimes]) => {
+//         this.Registeredusers = (skillUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
+//           (optedtimes as UsersInfo[]).some((optedtime: UsersInfo) => optedtime.enrollmentID === skillUser.enrollmentID)
+//         );
+//         // console.log("Filtered Users:", this.Registeredusers);
+//       },
       
-      error: (err) => {
-        // console.error("Error fetching data:", err);
-      }
+//       error: (err) => {
+//         // console.error("Error fetching data:", err);
+//       }
     
-    });
-  }
+//     });
+//   }
 
-  if (this.skillname && this.selectedDate) {
-    forkJoin([
-      this.ielc.GetUsersBySkill(this.skillname),
-      this.ielc.GetUsersByDate(this.selectedDate),
-    ]).subscribe({
-      next: ([skillUsers, opteddates]) => {
-        this.Registeredusers = (skillUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
-          (opteddates as UsersInfo[]).some((opteddate: UsersInfo) => opteddate.enrollmentID === skillUser.enrollmentID)
-        );
-        // console.log("Filtered Users:", this.Registeredusers);
-      },
+//   if (this.skillname && this.selectedDate) {
+//     forkJoin([
+//       this.ielc.GetUsersBySkill(this.skillname),
+//       this.ielc.GetUsersByDate(this.selectedDate),
+//     ]).subscribe({
+//       next: ([skillUsers, opteddates]) => {
+//         this.Registeredusers = (skillUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
+//           (opteddates as UsersInfo[]).some((opteddate: UsersInfo) => opteddate.enrollmentID === skillUser.enrollmentID)
+//         );
+//         // console.log("Filtered Users:", this.Registeredusers);
+//       },
       
-      error: (err) => {
-        // console.error("Error fetching data:", err);
-      }
+//       error: (err) => {
+//         // console.error("Error fetching data:", err);
+//       }
     
-    });
-  }
+//     });
+//   }
 
- if(this.selectedDate && this.modetype) {
-  forkJoin([
-    this.ielc.GetUsersBySkill(this.selectedDate),
-    this.ielc.GetUsersByVenue(this.modetype)
-  ]).subscribe({
-    next: ([opteddates, venueUsers]) => {
-      this.Registeredusers = (opteddates as UsersInfo[]).filter((opteddate: UsersInfo) =>
-        (venueUsers as UsersInfo[]).some((venueUser: UsersInfo) => venueUser.enrollmentID === opteddate.enrollmentID)
-      );
-      // console.log("Filtered Users:", this.Registeredusers);
-    },
+//  if(this.selectedDate && this.modetype) {
+//   forkJoin([
+//     this.ielc.GetUsersBySkill(this.selectedDate),
+//     this.ielc.GetUsersByVenue(this.modetype)
+//   ]).subscribe({
+//     next: ([opteddates, venueUsers]) => {
+//       this.Registeredusers = (opteddates as UsersInfo[]).filter((opteddate: UsersInfo) =>
+//         (venueUsers as UsersInfo[]).some((venueUser: UsersInfo) => venueUser.enrollmentID === opteddate.enrollmentID)
+//       );
+//       // console.log("Filtered Users:", this.Registeredusers);
+//     },
     
-    error: (err) => {
-      // console.error("Error fetching data:", err);
-    }
-  });
- }
+//     error: (err) => {
+//       // console.error("Error fetching data:", err);
+//     }
+//   });
+//  }
 
-  if (this.modetype && this.time) {
-    forkJoin([
-      this.ielc.GetUsersByVenue(this.modetype),
-      this.ielc.GetUsersByTime(this.time)
-    ]).subscribe({
-      next: ([venueUsers, optedtimes]) => {
-        this.Registeredusers = (venueUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
-          (optedtimes as UsersInfo[]).some((optedtime: UsersInfo) => optedtime.enrollmentID === skillUser.enrollmentID)
-        );
-        // console.log("Filtered Users:", this.Registeredusers);
-      },
+//   if (this.modetype && this.mail) {
+//     forkJoin([
+//       this.ielc.GetUsersByVenue(this.modetype),
+//       this.ielc.GetUsersByEmail(this.mail)
+//     ]).subscribe({
+//       next: ([venueUsers, optedtimes]) => {
+//         this.Registeredusers = (venueUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
+//           (optedtimes as UsersInfo[]).some((optedtime: UsersInfo) => optedtime.enrollmentID === skillUser.enrollmentID)
+//         );
+//         // console.log("Filtered Users:", this.Registeredusers);
+//       },
       
-      error: (err) => {
-        // console.error("Error fetching data:", err);
-      }
+//       error: (err) => {
+//         // console.error("Error fetching data:", err);
+//       }
     
-    });
-  }
+//     });
+//   }
 
-  if (this.time && this.selectedDate) {
-    forkJoin([
-      this.ielc.GetUsersByTime(this.time),
-      this.ielc.GetUsersByDate(this.selectedDate),
-    ]).subscribe({
-      next: ([optedtimes, opteddates]) => {
-        this.Registeredusers = (optedtimes as UsersInfo[]).filter((skillUser: UsersInfo) =>
-          (opteddates as UsersInfo[]).some((opteddate: UsersInfo) => opteddate.enrollmentID === skillUser.enrollmentID)
-        );
-        // console.log("Filtered Users:", this.Registeredusers);
-      },
+//   if (this.mail && this.selectedDate) {
+//     forkJoin([
+//       this.ielc.GetUsersByEmail(this.mail),
+//       this.ielc.GetUsersByDate(this.selectedDate),
+//     ]).subscribe({
+//       next: ([optedtimes, opteddates]) => {
+//         this.Registeredusers = (optedtimes as UsersInfo[]).filter((skillUser: UsersInfo) =>
+//           (opteddates as UsersInfo[]).some((opteddate: UsersInfo) => opteddate.enrollmentID === skillUser.enrollmentID)
+//         );
+//         // console.log("Filtered Users:", this.Registeredusers);
+//       },
       
-      error: (err) => {
-        // console.error("Error fetching data:", err);
-      }
+//       error: (err) => {
+//         // console.error("Error fetching data:", err);
+//       }
     
-    });
-  }
+//     });
+//   }
 
-  if(this.skillname && this.modetype && this.time) {
-    forkJoin([
-      this.ielc.GetUsersBySkill(this.skillname),
-      this.ielc.GetUsersByVenue(this.modetype)
-    ]).subscribe({
-      next: ([skillUsers, venueUsers]) => {
-        this.Registeredusers = (skillUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
-          (venueUsers as UsersInfo[]).some((venueUser: UsersInfo) => venueUser.enrollmentID === skillUser.enrollmentID)
-        && skillUser.time === this.time
-        );
-        // console.log("Filtered Users:", this.Registeredusers);
-      },
+//   if(this.skillname && this.modetype && this.mail) {
+//     forkJoin([
+//       this.ielc.GetUsersBySkill(this.skillname),
+//       this.ielc.GetUsersByVenue(this.modetype)
+//     ]).subscribe({
+//       next: ([skillUsers, venueUsers]) => {
+//         this.Registeredusers = (skillUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
+//           (venueUsers as UsersInfo[]).some((venueUser: UsersInfo) => venueUser.enrollmentID === skillUser.enrollmentID)
+//         && skillUser.time === this.mail
+//         );
+//         // console.log("Filtered Users:", this.Registeredusers);
+//       },
       
-      error: (err) => {
-        // console.error("Error fetching data:", err);
-      }
-    });
-  }
+//       error: (err) => {
+//         // console.error("Error fetching data:", err);
+//       }
+//     });
+//   }
 
-  if(this.skillname && this.modetype && this.selectedDate) {
-    forkJoin([
-      this.ielc.GetUsersBySkill(this.skillname),
-      this.ielc.GetUsersByVenue(this.modetype)
-    ]).subscribe({
-      next: ([skillUsers, venueUsers]) => {
-        this.Registeredusers = (skillUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
-          (venueUsers as UsersInfo[]).some((venueUser: UsersInfo) => venueUser.enrollmentID === skillUser.enrollmentID)
-        && new Date(skillUser.date).getTime() === new Date(this.selectedDate).getTime() 
-        );
-        // console.log("Filtered Users:", this.Registeredusers);
-      },
+//   if(this.skillname && this.modetype && this.selectedDate) {
+//     forkJoin([
+//       this.ielc.GetUsersBySkill(this.skillname),
+//       this.ielc.GetUsersByVenue(this.modetype)
+//     ]).subscribe({
+//       next: ([skillUsers, venueUsers]) => {
+//         this.Registeredusers = (skillUsers as UsersInfo[]).filter((skillUser: UsersInfo) =>
+//           (venueUsers as UsersInfo[]).some((venueUser: UsersInfo) => venueUser.enrollmentID === skillUser.enrollmentID)
+//         && new Date(skillUser.date).getTime() === new Date(this.selectedDate).getTime() 
+//         );
+//         // console.log("Filtered Users:", this.Registeredusers);
+//       },
       
-      error: (err) => {
-        // console.error("Error fetching data:", err);
-      }
-    });
-  }
+//       error: (err) => {
+//         // console.error("Error fetching data:", err);
+//       }
+//     });
+//   }
 
-  if(this.time && this.modetype && this.selectedDate) {
-    forkJoin([
-      this.ielc.GetUsersByTime(this.time),
-      this.ielc.GetUsersByVenue(this.modetype)
-    ]).subscribe({
-      next: ([optedtimes, venueUsers]) => {
-        this.Registeredusers = (optedtimes as UsersInfo[]).filter((optedtime: UsersInfo) =>
-          (venueUsers as UsersInfo[]).some((venueUser: UsersInfo) => venueUser.enrollmentID === optedtime.enrollmentID)
-        && new Date(optedtime.date).getTime() === new Date(this.selectedDate).getTime() 
-        );
-        // console.log("Filtered Users:", this.Registeredusers);
-      },
+//   if(this.mail && this.modetype && this.selectedDate) {
+//     forkJoin([
+//       this.ielc.GetUsersByEmail(this.mail),
+//       this.ielc.GetUsersByVenue(this.modetype)
+//     ]).subscribe({
+//       next: ([optedtimes, venueUsers]) => {
+//         this.Registeredusers = (optedtimes as UsersInfo[]).filter((optedtime: UsersInfo) =>
+//           (venueUsers as UsersInfo[]).some((venueUser: UsersInfo) => venueUser.enrollmentID === optedtime.enrollmentID)
+//         && new Date(optedtime.date).getTime() === new Date(this.selectedDate).getTime() 
+//         );
+//         // console.log("Filtered Users:", this.Registeredusers);
+//       },
       
-      error: (err) => {
-        // console.error("Error fetching data:", err);
-      }
-    });
-  }
+//       error: (err) => {
+//         // console.error("Error fetching data:", err);
+//       }
+//     });
+//   }
 
-  if (this.modetype && this.time && this.skillname && this.selectedDate) {
-    forkJoin([
-      this.ielc.GetUsersByVenue(this.modetype),
-      this.ielc.GetUsersByTime(this.time),
-      this.ielc.GetUsersBySkill(this.skillname),
-      this.ielc.GetUsersByDate(this.selectedDate)
-    ]).subscribe({
-      next: ([venueUsers, optedtimes, skillUsers, dateUsers]) => {
-        this.Registeredusers = (venueUsers as UsersInfo[]).filter((user: UsersInfo) =>
-          (optedtimes as UsersInfo[]).some((optedtime: UsersInfo) => optedtime.enrollmentID === user.enrollmentID) &&
-          (skillUsers as UsersInfo[]).some((skillUser: UsersInfo) => skillUser.enrollmentID === user.enrollmentID) &&
-          (dateUsers as UsersInfo[]).some((dateUser: UsersInfo) => dateUser.enrollmentID === user.enrollmentID)
-        );
+//   if (this.modetype && this.mail && this.skillname && this.selectedDate) {
+//     forkJoin([
+//       this.ielc.GetUsersByVenue(this.modetype),
+//       this.ielc.GetUsersByEmail(this.mail),
+//       this.ielc.GetUsersBySkill(this.skillname),
+//       this.ielc.GetUsersByDate(this.selectedDate)
+//     ]).subscribe({
+//       next: ([venueUsers, optedtimes, skillUsers, dateUsers]) => {
+//         this.Registeredusers = (venueUsers as UsersInfo[]).filter((user: UsersInfo) =>
+//           (optedtimes as UsersInfo[]).some((optedtime: UsersInfo) => optedtime.enrollmentID === user.enrollmentID) &&
+//           (skillUsers as UsersInfo[]).some((skillUser: UsersInfo) => skillUser.enrollmentID === user.enrollmentID) &&
+//           (dateUsers as UsersInfo[]).some((dateUser: UsersInfo) => dateUser.enrollmentID === user.enrollmentID)
+//         );
   
-        // console.log("Filtered Users:", this.Registeredusers);
-      },
+//         // console.log("Filtered Users:", this.Registeredusers);
+//       },
   
-      error: (err) => {
-        // console.error("Error fetching data:", err);
-      }
-    });
-  }
+//       error: (err) => {
+//         // console.error("Error fetching data:", err);
+//       }
+//     });
+//   }
   
-
-
- }
-
-
-deleteItem(id: number) {
-  if (confirm('Are you sure you want to delete this record?')) {
-    this.ielc.DeleteDataById(id).subscribe({
-      next: () => {
-        alert(`Record with ID ${id} deleted successfully!`);
-        this.GetAllUSers(); // Call this only after successful deletion
-      },
-      // error: (err) => console.error('Error deleting item:', err)
-    });
-  }
+if (!this.skillname && !this.modetype && !this.mail) {
+  return;
 }
+
+const observables = [
+  this.skillname.trim() ? this.ielc.GetUsersBySkill(this.skillname) : of(null),
+  this.modetype ? this.ielc.GetUsersByVenue(this.modetype) : of(null),
+  this.mail ? this.ielc.GetUsersByEmail(this.mail) : of(null)
+];
+
+forkJoin(observables).subscribe(([skillUsers, venueUsers, emailUsers]) => {
+  let filtered: UsersInfo[] | null = null;
+
+  if (skillUsers) {
+    filtered = skillUsers;
+  }
+  if (venueUsers) {
+    filtered = filtered
+      ? filtered.filter((user: UsersInfo) =>
+          venueUsers.some((v: UsersInfo) => v.enrollmentID === user.enrollmentID)
+        )
+      : venueUsers;
+  }
+  if (emailUsers) {
+    filtered = filtered
+      ? filtered.filter((user: UsersInfo) =>
+          emailUsers.some((e: UsersInfo) => e.enrollmentID === user.enrollmentID)
+        )
+      : emailUsers;
+  }
+
+  this.Registeredusers = this.sortRegisteredUsers(filtered ?? []);
+});
+
+
+ }
+
+
+// deleteItem(id: number) {
+//   if (confirm('Are you sure you want to delete this record?')) {
+//     this.ielc.DeleteDataById(id).subscribe({
+//       next: () => {
+//         alert(`Record with ID ${id} deleted successfully!`);
+//         this.GetAllUSers(); // Call this only after successful deletion
+//       },
+//       // error: (err) => console.error('Error deleting item:', err)
+//     });
+//   }
+// }
 
 
 
