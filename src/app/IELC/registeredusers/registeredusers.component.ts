@@ -28,6 +28,8 @@ export class RegisteredusersComponent implements OnInit {
     this.modetype = '';
     this.selectedDate = '';
     this.mail = '';
+    this.fromDate = '';
+    this.toDate = '';
     // this.Registeredusers;
    this.GetAllUSers()
  }
@@ -294,39 +296,148 @@ export class RegisteredusersComponent implements OnInit {
 //     });
 //   }
   
-if (!this.skillname && !this.modetype && !this.mail) {
-  return;
-}
+// if (!this.skillname && !this.modetype && !this.mail) {
+//   return;
+// }
 
-const observables = [
-  this.skillname.trim() ? this.ielc.GetUsersBySkill(this.skillname) : of(null),
-  this.modetype ? this.ielc.GetUsersByVenue(this.modetype) : of(null),
-  this.mail ? this.ielc.GetUsersByEmail(this.mail) : of(null)
-];
+// const observables = [
+//   this.skillname.trim() ? this.ielc.GetUsersBySkill(this.skillname) : of(null),
+//   this.modetype ? this.ielc.GetUsersByVenue(this.modetype) : of(null),
+//   this.mail ? this.ielc.GetUsersByEmail(this.mail) : of(null)
+// ];
 
-forkJoin(observables).subscribe(([skillUsers, venueUsers, emailUsers]) => {
-  let filtered: UsersInfo[] | null = null;
+// forkJoin(observables).subscribe(([skillUsers, venueUsers, emailUsers]) => {
+//   let filtered: UsersInfo[] | null = null;
 
-  if (skillUsers) {
-    filtered = skillUsers;
-  }
-  if (venueUsers) {
-    filtered = filtered
-      ? filtered.filter((user: UsersInfo) =>
-          venueUsers.some((v: UsersInfo) => v.enrollmentID === user.enrollmentID)
-        )
-      : venueUsers;
-  }
-  if (emailUsers) {
-    filtered = filtered
-      ? filtered.filter((user: UsersInfo) =>
-          emailUsers.some((e: UsersInfo) => e.enrollmentID === user.enrollmentID)
-        )
-      : emailUsers;
-  }
+//   if (skillUsers) {
+//     filtered = skillUsers;
+//   }
+//   if (venueUsers) {
+//     filtered = filtered
+//       ? filtered.filter((user: UsersInfo) =>
+//           venueUsers.some((v: UsersInfo) => v.enrollmentID === user.enrollmentID)
+//         )
+//       : venueUsers;
+//   }
+//   if (emailUsers) {
+//     filtered = filtered
+//       ? filtered.filter((user: UsersInfo) =>
+//           emailUsers.some((e: UsersInfo) => e.enrollmentID === user.enrollmentID)
+//         )
+//       : emailUsers;
+//   }
+//   if (!this.fromDate || !this.toDate) return;
 
-  this.Registeredusers = this.sortRegisteredUsers(filtered ?? []);
-});
+// this.ielc.GetUsersByDate(this.fromDate).subscribe(startResults => {
+//   this.ielc.GetUsersBytoDate(this.toDate).subscribe(endResults => {
+//     // Combine both filtered results
+//     const combinedResults = startResults.filter((startItem: any) =>
+//       endResults.some((endItem: any) => endItem.email === startItem.email)
+//     );
+
+//     this.Registeredusers = combinedResults; // You can now show this in UI
+//   });
+// });
+
+
+//   this.Registeredusers = this.sortRegisteredUsers(filtered ?? []);
+// });
+
+
+  // Return early if all filters are empty
+  // if (!this.skillname && !this.modetype && !this.mail && (!this.fromDate || !this.toDate)) return;
+
+  // const observables = [
+  //   this.skillname?.trim() ? this.ielc.GetUsersBySkill(this.skillname.trim()) : of(null),
+  //   this.modetype ? this.ielc.GetUsersByVenue(this.modetype) : of(null),
+  //   this.mail ? this.ielc.GetUsersByEmail(this.mail) : of(null),
+  //   this.fromDate && this.toDate ? this.ielc.GetUsersByDate(this.fromDate) : of(null),
+  //   this.fromDate && this.toDate ? this.ielc.GetUsersBytoDate(this.toDate) : of(null)
+  // ];
+
+  // forkJoin(observables).subscribe(([skillUsers, venueUsers, emailUsers, startResults, endResults]) => {
+  //   let filtered: UsersInfo[] = [];
+
+  //   // Merge initial non-null result
+  //   [skillUsers, venueUsers, emailUsers].forEach(source => {
+  //     if (source) {
+  //       filtered = filtered.length
+  //         ? filtered.filter(user =>
+  //             source.some((s: UsersInfo) => s.enrollmentID === user.enrollmentID)
+  //           )
+  //         : source;
+  //     }
+  //   });
+
+  //   // Apply date range filter if both start and end results exist
+  //   if (startResults && endResults) {
+  //     const dateFiltered = startResults.filter((startItem: UsersInfo) =>
+  //       endResults.some((endItem: UsersInfo) => endItem.enrollmentID === startItem.enrollmentID)
+  //     );
+
+  //     filtered = filtered.length
+  //       ? filtered.filter(user =>
+  //           dateFiltered.some((d: UsersInfo) => d.enrollmentID === user.enrollmentID)
+  //         )
+  //       : dateFiltered;
+  //   }
+
+  //   this.Registeredusers = this.sortRegisteredUsers(filtered);
+  // });
+
+  if (!this.skillname && !this.modetype && !this.mail && (!this.fromDate || !this.toDate)) return;
+
+  console.log('🔎 Filters - Skill:', this.skillname, ' | Venue:', this.modetype, ' | Email:', this.mail);
+  console.log('📅 Date range - From:', this.fromDate, ' To:', this.toDate);
+  
+  const observables = [
+    this.skillname?.trim() ? this.ielc.GetUsersBySkill(this.skillname.trim()) : of(null),
+    this.modetype ? this.ielc.GetUsersByVenue(this.modetype) : of(null),
+    this.mail ? this.ielc.GetUsersByEmail(this.mail) : of(null),
+    this.fromDate && this.toDate ? this.ielc.GetUsersByDate(this.fromDate) : of(null),
+    this.fromDate && this.toDate ? this.ielc.GetUsersBytoDate(this.toDate) : of(null)
+  ];
+  
+  forkJoin(observables).subscribe(([skillUsers, venueUsers, emailUsers, startResults, endResults]) => {
+    console.log('✅ Skill Filter Results:', skillUsers);
+    console.log('✅ Venue Filter Results:', venueUsers);
+    console.log('✅ Email Filter Results:', emailUsers);
+    console.log('📤 Start Date Filter Results:', startResults);
+    console.log('📤 End Date Filter Results:', endResults);
+  
+    let filtered: UsersInfo[] = [];
+  
+    // Merge initial non-null result
+    [skillUsers, venueUsers, emailUsers].forEach(source => {
+      if (source) {
+        filtered = filtered.length
+          ? filtered.filter(user =>
+              source.some((s: UsersInfo) => s.enrollmentID === user.enrollmentID)
+            )
+          : source;
+      }
+    });
+  
+    // Apply date range filter if both start and end results exist
+    if (startResults && endResults) {
+      const dateFiltered = startResults.filter((startItem: UsersInfo) =>
+        endResults.some((endItem: UsersInfo) => endItem.enrollmentID === startItem.enrollmentID)
+      );
+  
+      console.log('📅 Filtered by Date Range (intersection):', dateFiltered);
+  
+      filtered = filtered.length
+        ? filtered.filter(user =>
+            dateFiltered.some((d: UsersInfo) => d.enrollmentID === user.enrollmentID)
+          )
+        : dateFiltered;
+    }
+  
+    console.log('📦 Final Filtered Registered Users:', filtered);
+    this.Registeredusers = this.sortRegisteredUsers(filtered);
+  });
+  
+
 
 
  }

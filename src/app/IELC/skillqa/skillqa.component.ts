@@ -240,6 +240,19 @@ export class SkillqaComponent implements OnInit {
       id: '',
       questionAnswer: ''
     }
+    this.selectedSkill=''
+  }
+
+  hasMinimumOptions(): boolean {
+    const options = [
+      this.questiondata.a || this.questiondata.ia,
+      this.questiondata.b || this.questiondata.ib,
+      this.questiondata.c || this.questiondata.ic,
+      this.questiondata.d || this.questiondata.id
+    ];
+    // Filter out null/empty strings and count non-empty options
+    const validOptions = options.filter(opt => !!opt && opt.trim() !== '');
+    return validOptions.length >= 2;
   }
 
   // onFileSelected(event: any, field: string) {

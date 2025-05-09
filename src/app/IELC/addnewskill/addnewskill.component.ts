@@ -258,18 +258,50 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
   //     );
     
   // }
+  // AddSkill(): void {
+  //   // Ensure you have the current skills list loaded in this.allSkills beforehand
+  //   const currentSkillNames = this.Enrolledskills.map(s => s.skillName.toLowerCase());
+  
+  //   let skillsToInsert = [];
+  
+  //   // Add base skill if not exists
+  //   if (this.skillData.skillName && !currentSkillNames.includes(this.skillData.skillName.toLowerCase())) {
+  //     skillsToInsert.push({ skillName: this.skillData.skillName });
+  //   }
+  
+  //   // Add _StQuestions if checkbox is checked and doesn't already exist
+  //   const stQuestionsSkill = this.skillData.skillName + '_StQuestions';
+  //   if (this.includeStQuestions && !currentSkillNames.includes(stQuestionsSkill.toLowerCase())) {
+  //     skillsToInsert.push({ skillName: stQuestionsSkill });
+  //   }
+  
+  //   if (skillsToInsert.length === 0) {
+  //     alert('⚠️ Skill(s) already exist. Nothing to insert.');
+  //     return;
+  //   }
+  
+  //   forkJoin(skillsToInsert.map(skill => this.ielc.PostEnrolledSkill(skill))).subscribe(
+  //     () => {
+  //       alert('✅ Skill(s) Added Successfully!');
+  //       this.GetAllSkillsData(); // Refresh data
+  //       this.skillData.skillName = ''; // Clear input
+  //       this.includeStQuestions = false; // Reset checkbox
+  //     },
+  //     (error) => {
+  //       alert('❌ Error adding skill(s). Please try again.');
+  //       // console.error('API Error:', error);
+  //     }
+  //   );
+  // }
+
   AddSkill(): void {
-    // Ensure you have the current skills list loaded in this.allSkills beforehand
     const currentSkillNames = this.Enrolledskills.map(s => s.skillName.toLowerCase());
+    let skillsToInsert: any[] = [];
   
-    let skillsToInsert = [];
-  
-    // Add base skill if not exists
     if (this.skillData.skillName && !currentSkillNames.includes(this.skillData.skillName.toLowerCase())) {
       skillsToInsert.push({ skillName: this.skillData.skillName });
     }
   
-    // Add _StQuestions if checkbox is checked and doesn't already exist
     const stQuestionsSkill = this.skillData.skillName + '_StQuestions';
     if (this.includeStQuestions && !currentSkillNames.includes(stQuestionsSkill.toLowerCase())) {
       skillsToInsert.push({ skillName: stQuestionsSkill });
@@ -282,17 +314,40 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
   
     forkJoin(skillsToInsert.map(skill => this.ielc.PostEnrolledSkill(skill))).subscribe(
       () => {
+        // Step 1: Show success message
         alert('✅ Skill(s) Added Successfully!');
-        this.GetAllSkillsData(); // Refresh data
-        this.skillData.skillName = ''; // Clear input
-        this.includeStQuestions = false; // Reset checkbox
+  
+        // Step 2: Post default questions
+        forkJoin(skillsToInsert.map(skill => {
+          const defaultQuestion = {
+            questionId: 0,
+            skillName: skill.skillName,
+            question: `What is ${skill.skillName}?`,
+            a: 'A',
+            b: 'B',
+            c: 'C',
+            d: 'D',
+            questionAnswer: 'A' // You can change this logic if needed
+          };
+          return this.ielc.PostEnrolledSkillQuestions(defaultQuestion);
+        })).subscribe(
+          () => {
+            alert('✅ Default question(s) added!');
+            this.GetAllSkillsData();
+            this.skillData.skillName = '';
+            this.includeStQuestions = false;
+          },
+          (error) => {
+            alert('⚠️ Skill(s) added, but failed to add default question(s).');
+          }
+        );
       },
       (error) => {
         alert('❌ Error adding skill(s). Please try again.');
-        // console.error('API Error:', error);
       }
     );
   }
+  
   
 
   // DeleteSkill(): void {

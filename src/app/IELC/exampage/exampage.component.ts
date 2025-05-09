@@ -816,6 +816,12 @@ closeModal() {
   this.router.navigate(['/registration']);
 }
 
+get availableOptions(): string[] {
+  return ['a', 'b', 'c', 'd'].filter(option =>
+    this.currentQuestion?.[option] || this.currentQuestion?.['i' + option]
+  );
+}
+
   
   
   submitExam() {

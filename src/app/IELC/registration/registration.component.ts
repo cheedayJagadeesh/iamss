@@ -240,10 +240,35 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
 
 
 
- convertToISODate(dateStr: string): string {
-  const [dd, mm, yyyy] = dateStr.split('-');
-  return `${yyyy}-${mm}-${dd}`;
+//  convertToISODate(dateStr: string): string {
+//   const [dd, mm, yyyy] = dateStr.split('-');
+//   return `${yyyy}-${mm}-${dd}`;
+// }
+
+convertToISODate(dateStr: string): string {
+  if (!dateStr) return '';
+  const [day, month, year] = dateStr.split('-');
+  return `${year}-${month}-${day}`;  // Adding time part for consistency
 }
+
+// convertToISODate(dateStr: string): string {
+//   if (!dateStr) {
+//     console.warn('Invalid date string:', dateStr);
+//     return ''; // or return null based on backend requirements
+//   }
+//   const [day, month, year] = dateStr.split('-');
+//   if (day && month && year) {
+//     const formattedDate = `${year}-${month}-${day}`;
+//     console.log('Formatted Date:', formattedDate);
+//     return formattedDate;
+//   }
+//   console.error('Invalid date format:', dateStr);
+//   return ''; // or null if backend expects null for invalid dates
+// }
+
+
+
+
 
 
  formatCustomDate(dateStr: string | null): string {
@@ -832,6 +857,9 @@ allowEnrollment() {
   const now = new Date();
   const fullName = `${this.firstName} ${this.lastName}`;
   const [startDate, endDate] = this.date?.split(' - ') || ['', ''];
+  console.log('📅 Original date range:', this.date);
+  console.log('➡️ Parsed startDate:', startDate);
+  console.log('➡️ Parsed endDate:', endDate);
 
   const skill = this.skillname;
   const date = this.date;
@@ -887,7 +915,14 @@ allowEnrollment() {
 proceedToEnroll(
   fullName: string, mail: string, skill: string, date: string, time: string,
   venue: string, batchCount: number, startDate: string, endDate: string, now: Date
-) {
+)
+ {
+  const convertedStart = this.convertToISODate((startDate || '').trim()) || new Date().toISOString();
+const convertedEnd = this.convertToISODate((endDate || '').trim()) || new Date().toISOString();
+
+  console.log('✅ Converted Start Date:', convertedStart);
+  console.log('✅ Converted End Date:', convertedEnd);
+
   const enrollmentData: EnrollmentData = {
     enrollmentID: 0,
     name: fullName,
@@ -901,8 +936,8 @@ proceedToEnroll(
     venue: venue || '',
     batchmembers: batchCount,
     enrollmentDate: now.toISOString(),
-    startDate: this.convertToISODate((startDate || '').trim()),
-    endDate: this.convertToISODate((endDate || '').trim()),    
+    startDate: convertedStart,
+    endDate: convertedEnd,    
     result: '',
     percentage: '',
     testTakenDate: '',
@@ -913,7 +948,8 @@ proceedToEnroll(
     applicationtowork: '',
     comments: ''
   };
- 
+  console.log('📤 Final enrollment payload:', enrollmentData);
+
   this.ielc.enrollUser(enrollmentData).subscribe({
     next: () => {
       // Immediately show alert and reset form
@@ -957,7 +993,7 @@ proceedToEnroll(
         <br>
       `;
 
-      this.emailService.sendEmail(mail,'', subject, body);
+      // this.emailService.sendEmail(mail,'', subject, body);
     },
     error: (err) => {
       // console.error('Enrollment error:', err);
@@ -1434,7 +1470,7 @@ GetEnrolledSessionsSkillsData() {
 
   this.ielc.GetEnrolledSessions().subscribe((data) => {
     // console.log('📦 Enrolled session data:', data);
-    console.log('🧩 Visible session IDs:', this.visibleSessionIds);
+    // console.log('🧩 Visible session IDs:', this.visibleSessionIds);
 
     if (this.visibleSessionIds && this.visibleSessionIds.length > 0) {
       const enrolledSkillNames = data.map((name: string) => name.trim().toLowerCase());

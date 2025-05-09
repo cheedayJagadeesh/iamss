@@ -13,6 +13,7 @@ import { HttpHeaders } from '@angular/common/http';
 export class IelcapiService {
 
   private apiKey = 'V5JSQXNizKDHHaeGhGBRDiHrF9rCvRYZUCCGdkmXXvfsb7mRz7KdISKOCCwGJH28MeP0jDjqLbLMFMMZ2onu36JCxK520U82dP7MJ6yX9wPV9HkKfqGauFQs0ANSONMn'
+ 
 
   constructor(private http:HttpClient,private datepipe:DatePipe) {}
 
@@ -94,6 +95,26 @@ export class IelcapiService {
       return `${year}-${month}-${day}`; // Return "YYYY-MM-DD"
     }
 
+    GetUsersBytoDate(date: string): Observable<any> {
+      // Convert input date to DD-MM-YYYY format
+      const formattedDate = this.convertDateFormat(date);
+      const url = `https://ielc-coreapi.azurewebsites.net/EnrollmentData/EndDate/${formattedDate}`;
+    
+      return this.http.get(url, { headers: this.getHeaders() }).pipe(
+        map((response: any) => {
+          return response.filter((user: any) => {
+            // Ensure the date range is in the expected format "DD-MM-YYYY to DD-MM-YYYY"
+            if (user.date && user.date.includes(" to ")) {
+              const endDate = user.date.split(" to ")[1].trim(); // Extract end date
+              const formattedEndDate = this.convertDateFormatForComparison(endDate); // Convert end date to YYYY-MM-DD
+              return formattedEndDate === formattedDate; // Compare both dates
+            }
+            return false;
+          });
+        })
+      );
+    }
+    
     
     apiTime="https://ielc-coreapi.azurewebsites.net/EnrollmentData/Time"
     GetUsersByTime(Time: string): Observable<any> {
@@ -116,7 +137,10 @@ export class IelcapiService {
 
     url = 'https://ielc-coreapi.azurewebsites.net/EnrollmentData';
     enrollUser(enrollmentData: any): Observable<any> {
-      return this.http.post<any>(this.url, enrollmentData,{ headers: this.getHeaders() });
+      const headers = this.getHeaders();
+      headers.append('Content-Type', 'application/json');
+      headers.append('Accept', 'application/json');
+      return this.http.post<any>(this.url, enrollmentData,{ headers: headers });
     }
 
     checkurl='https://ielc-coreapi.azurewebsites.net/EnrollmentData/check'
@@ -172,6 +196,14 @@ export class IelcapiService {
     PostEnrolledSkill(skillData: any): Observable<any> {
       // const headers = { 'Content-Type': 'application/json' };
       return this.http.post<any>(this.EnrolledskillDataUrl, skillData, {
+        headers: this.getHeaders()
+      });
+    }
+
+    skillquestionsurl='https://ielc-coreapi.azurewebsites.net/IELCQA/create'
+    PostEnrolledSkillQuestions(skillData: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.skillquestionsurl, skillData, {
         headers: this.getHeaders()
       });
     }
