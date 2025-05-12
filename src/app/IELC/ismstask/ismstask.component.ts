@@ -68,18 +68,18 @@ export class IsmstaskComponent implements OnInit  {
    }
 
    
- AddIsmscalendar(): void {
-  this.ielc.PostIsmscalendar(this.calendardata).subscribe(
-    (response) => {
-      alert('✅ Record Added Successfully!');
-      this.GetIsmscalendarlist();
-      this.resetlist();
-    },
-    (error) => {
-      alert('❌ Error adding Record. Please try again.');
-    }
-  );
-}
+//  AddIsmscalendar(): void {
+//   this.ielc.PostIsmscalendar(this.calendardata).subscribe(
+//     (response) => {
+//       alert('✅ Record Added Successfully!');
+//       this.GetIsmscalendarlist();
+//       this.resetlist();
+//     },
+//     (error) => {
+//       alert('❌ Error adding Record. Please try again.');
+//     }
+//   );
+// }
 
 
 EditIsmscalendar(id: number) {
@@ -151,5 +151,7 @@ resetlist(){
     dec: '',
   }
 }
+
+
 
 }

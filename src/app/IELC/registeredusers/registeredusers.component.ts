@@ -385,28 +385,82 @@ export class RegisteredusersComponent implements OnInit {
   //   this.Registeredusers = this.sortRegisteredUsers(filtered);
   // });
 
-  if (!this.skillname && !this.modetype && !this.mail && (!this.fromDate || !this.toDate)) return;
+//   if (!this.skillname && !this.modetype && !this.mail && (!this.fromDate || !this.toDate)) return;
 
-  console.log('🔎 Filters - Skill:', this.skillname, ' | Venue:', this.modetype, ' | Email:', this.mail);
-  console.log('📅 Date range - From:', this.fromDate, ' To:', this.toDate);
+//   console.log('🔎 Filters - Skill:', this.skillname, ' | Venue:', this.modetype, ' | Email:', this.mail);
+//   console.log('📅 Date range - From:', this.fromDate, ' To:', this.toDate);
   
-  const observables = [
-    this.skillname?.trim() ? this.ielc.GetUsersBySkill(this.skillname.trim()) : of(null),
-    this.modetype ? this.ielc.GetUsersByVenue(this.modetype) : of(null),
-    this.mail ? this.ielc.GetUsersByEmail(this.mail) : of(null),
-    this.fromDate && this.toDate ? this.ielc.GetUsersByDate(this.fromDate) : of(null),
-    this.fromDate && this.toDate ? this.ielc.GetUsersBytoDate(this.toDate) : of(null)
-  ];
+//   const observables = [
+//     this.skillname?.trim() ? this.ielc.GetUsersBySkill(this.skillname.trim()) : of(null),
+//     this.modetype ? this.ielc.GetUsersByVenue(this.modetype) : of(null),
+//     this.mail ? this.ielc.GetUsersByEmail(this.mail) : of(null),
+//     this.fromDate && this.toDate ? this.ielc.GetUsersByDate(this.fromDate) : of(null),
+//     this.fromDate && this.toDate ? this.ielc.GetUsersBytoDate(this.toDate) : of(null)
+//   ];
   
-  forkJoin(observables).subscribe(([skillUsers, venueUsers, emailUsers, startResults, endResults]) => {
-    console.log('✅ Skill Filter Results:', skillUsers);
-    console.log('✅ Venue Filter Results:', venueUsers);
-    console.log('✅ Email Filter Results:', emailUsers);
-    console.log('📤 Start Date Filter Results:', startResults);
-    console.log('📤 End Date Filter Results:', endResults);
+//   forkJoin(observables).subscribe(([skillUsers, venueUsers, emailUsers, startResults, endResults]) => {
+//     console.log('✅ Skill Filter Results:', skillUsers);
+//     console.log('✅ Venue Filter Results:', venueUsers);
+//     console.log('✅ Email Filter Results:', emailUsers);
+//     console.log('📤 Start Date Filter Results:', startResults);
+//     console.log('📤 End Date Filter Results:', endResults);
   
+//     let filtered: UsersInfo[] = [];
+  
+//     // Merge initial non-null result
+//     [skillUsers, venueUsers, emailUsers].forEach(source => {
+//       if (source) {
+//         filtered = filtered.length
+//           ? filtered.filter(user =>
+//               source.some((s: UsersInfo) => s.enrollmentID === user.enrollmentID)
+//             )
+//           : source;
+//       }
+//     });
+  
+//     // Apply date range filter if both start and end results exist
+//     if (startResults && endResults) {
+//       const dateFiltered = startResults.filter((startItem: UsersInfo) =>
+//         endResults.some((endItem: UsersInfo) => endItem.enrollmentID === startItem.enrollmentID)
+//       );
+  
+//       console.log('📅 Filtered by Date Range (intersection):', dateFiltered);
+  
+//       filtered = filtered.length
+//         ? filtered.filter(user =>
+//             dateFiltered.some((d: UsersInfo) => d.enrollmentID === user.enrollmentID)
+//           )
+//         : dateFiltered;
+//     }
+  
+//     console.log('📦 Final Filtered Registered Users:', filtered);
+//     this.Registeredusers = this.sortRegisteredUsers(filtered);
+//   });
+  
+
+
+
+//  }
+
+if (!this.skillname && !this.modetype && !this.mail && (!this.fromDate || !this.toDate)) return;
+const observables = [
+  this.skillname?.trim() ? this.ielc.GetUsersBySkill(this.skillname.trim()) : of(null),
+  this.modetype ? this.ielc.GetUsersByVenue(this.modetype) : of(null),
+  this.mail ? this.ielc.GetUsersByEmail(this.mail) : of(null),
+  this.fromDate && this.toDate ? this.ielc.GetUsersByDate(this.fromDate) : of(null),
+  this.fromDate && this.toDate ? this.ielc.GetUsersBytoDate(this.toDate) : of(null)
+];
+
+forkJoin(observables).subscribe(
+  ([skillUsers, venueUsers, emailUsers, startResults, endResults]) => {
+    // console.log('✅ Skill Filter Results:', skillUsers);
+    // console.log('✅ Venue Filter Results:', venueUsers);
+    // console.log('✅ Email Filter Results:', emailUsers);
+    // console.log('📤 Start Date Filter Results:', startResults);
+    // console.log('📤 End Date Filter Results:', endResults);
+
     let filtered: UsersInfo[] = [];
-  
+
     // Merge initial non-null result
     [skillUsers, venueUsers, emailUsers].forEach(source => {
       if (source) {
@@ -417,30 +471,44 @@ export class RegisteredusersComponent implements OnInit {
           : source;
       }
     });
-  
+
     // Apply date range filter if both start and end results exist
     if (startResults && endResults) {
       const dateFiltered = startResults.filter((startItem: UsersInfo) =>
         endResults.some((endItem: UsersInfo) => endItem.enrollmentID === startItem.enrollmentID)
       );
-  
-      console.log('📅 Filtered by Date Range (intersection):', dateFiltered);
-  
+
+      // console.log('📅 Filtered by Date Range (intersection):', dateFiltered);
+
       filtered = filtered.length
         ? filtered.filter(user =>
             dateFiltered.some((d: UsersInfo) => d.enrollmentID === user.enrollmentID)
           )
         : dateFiltered;
     }
-  
-    console.log('📦 Final Filtered Registered Users:', filtered);
+
+    // Log and set filtered data
+    // console.log('📦 Final Filtered Registered Users:', filtered);
+
+    // Check if no data was found
+    if (filtered.length === 0) {
+      // console.log('🔍 No users found for the given filters');
+    }
+
     this.Registeredusers = this.sortRegisteredUsers(filtered);
-  });
-  
-
-
-
- }
+  },
+  error => {
+    // Handle HTTP errors here
+    if (error.status === 404) {
+      // console.log('🚫 Error: No data found for the given date range (404 Not Found)');
+      this.Registeredusers = []; // Empty the table when data is not found
+    } else {
+      console.error('❌ Error occurred:', error);
+      this.Registeredusers = []; // Empty the table in case of other errors
+    }
+  }
+);
+}
 
 
 // deleteItem(id: number) {

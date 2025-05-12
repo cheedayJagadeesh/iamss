@@ -58,7 +58,7 @@ export class IelcapiService {
       });
     }
 
-    //apidate="https://ielc-coreapi.azurewebsites.net/EnrollmentData/StartDate"
+    apidate="https://ielc-coreapi.azurewebsites.net/EnrollmentData/StartDate"
     GetUsersByDate(date: string): Observable<any> {
       // Convert input date to DD-MM-YYYY format
       const formattedDate = this.convertDateFormat(date);
@@ -68,8 +68,16 @@ export class IelcapiService {
         map((response: any) => {
           return response.filter((user: any) => {
             // Ensure the date range is in the expected format "DD-MM-YYYY to DD-MM-YYYY"
-            if (user.date && user.date.includes(" to ")) {
-              const startDate = user.date.split(" to ")[0].trim(); // Extract start date
+            if (user.date && (user.date.includes(" - ") || user.date.includes(" to "))) {
+              // const startDate = user.date.split(" - ")[0].trim(); // Extract start date
+              let dateRange;
+              if (user.date.includes(" - ")) {
+                dateRange = user.date.split(" - "); // Split by " - "
+              } else {
+                dateRange = user.date.split(" to "); // Split by " to "
+              }
+              
+              const startDate = dateRange[0].trim(); // Extract start date
               const formattedStartDate = this.convertDateFormatForComparison(startDate); // Convert start date to YYYY-MM-DD for comparison
               return formattedStartDate === formattedDate; // Compare both dates
             }
@@ -78,6 +86,11 @@ export class IelcapiService {
         })
       );
     }
+    
+
+   
+    
+    
     
     // Convert input date to DD-MM-YYYY format
     convertDateFormat(dateString: string): string {
@@ -95,6 +108,9 @@ export class IelcapiService {
       return `${year}-${month}-${day}`; // Return "YYYY-MM-DD"
     }
 
+   
+
+
     GetUsersBytoDate(date: string): Observable<any> {
       // Convert input date to DD-MM-YYYY format
       const formattedDate = this.convertDateFormat(date);
@@ -104,8 +120,16 @@ export class IelcapiService {
         map((response: any) => {
           return response.filter((user: any) => {
             // Ensure the date range is in the expected format "DD-MM-YYYY to DD-MM-YYYY"
-            if (user.date && user.date.includes(" to ")) {
-              const endDate = user.date.split(" to ")[1].trim(); // Extract end date
+            if (user.date && (user.date.includes(" - ") || user.date.includes(" to "))) {
+              // const endDate = user.date.split(" - ")[1].trim(); // Extract end date
+              let dateRange;
+              if (user.date.includes(" - ")) {
+                dateRange = user.date.split(" - "); // Split by " - "
+              } else {
+                dateRange = user.date.split(" to "); // Split by " to "
+              }
+              
+              const endDate = dateRange[1].trim(); // Extract start date
               const formattedEndDate = this.convertDateFormatForComparison(endDate); // Convert end date to YYYY-MM-DD
               return formattedEndDate === formattedDate; // Compare both dates
             }
@@ -114,6 +138,10 @@ export class IelcapiService {
         })
       );
     }
+
+   
+   
+
     
     
     apiTime="https://ielc-coreapi.azurewebsites.net/EnrollmentData/Time"
@@ -1865,7 +1893,7 @@ Getqmshistory(year: number): Observable<any> {
     
     PostIsmsMails(skillSessions: any): Observable<any> {
       // const headers = { 'Content-Type': 'application/json' };
-      return this.http.post<any>(this.ismsmailsUrl, skillSessions, { headers: this.getHeaders() });
+      return this.http.post<any>(this.ismsmailsUrl, skillSessions, { headers: this.getHeaders(), responseType: 'text' as 'json' });
     }
 
     GetIsmsMailsById(id: number): Observable<any> {
@@ -1875,6 +1903,10 @@ Getqmshistory(year: number): Observable<any> {
     UpdateIsmsMails(id: number, updatedData: any): Observable<any> {
       const headers = this.getHeaders();
       return this.http.put<any>(`${this.ismsmailsUrl}/${id}`, updatedData,{headers, observe: 'response' });
+    }
+
+    DeleteismsById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.ismsmailsUrl}/${id}`, { headers: this.getHeaders() });
     }
  
 //---------------------------------------------------------------------------------------QMS mails
@@ -1886,7 +1918,7 @@ Getqmshistory(year: number): Observable<any> {
     
     PostqmsMails(skillSessions: any): Observable<any> {
       // const headers = { 'Content-Type': 'application/json' };
-      return this.http.post<any>(this.qmsmailsUrl, skillSessions, { headers: this.getHeaders() });
+      return this.http.post<any>(this.qmsmailsUrl, skillSessions, { headers: this.getHeaders(), responseType: 'text' as 'json' });
     }
 
     GetqmsMailsById(id: number): Observable<any> {
@@ -1895,6 +1927,9 @@ Getqmshistory(year: number): Observable<any> {
 
     UpdateqmsMails(id: number, updatedData: any): Observable<any> {
       return this.http.put<any>(`${this.qmsmailsUrl}/${id}`, updatedData, { headers: this.getHeaders() });
+    }
+    DeleteqmsById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.qmsmailsUrl}/${id}`, { headers: this.getHeaders() });
     }
 
 //---------------------------------------------------------------------------------------SMTP Admin

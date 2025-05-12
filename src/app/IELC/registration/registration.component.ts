@@ -857,9 +857,9 @@ allowEnrollment() {
   const now = new Date();
   const fullName = `${this.firstName} ${this.lastName}`;
   const [startDate, endDate] = this.date?.split(' - ') || ['', ''];
-  console.log('📅 Original date range:', this.date);
-  console.log('➡️ Parsed startDate:', startDate);
-  console.log('➡️ Parsed endDate:', endDate);
+  // console.log('📅 Original date range:', this.date);
+  // console.log('➡️ Parsed startDate:', startDate);
+  // console.log('➡️ Parsed endDate:', endDate);
 
   const skill = this.skillname;
   const date = this.date;
@@ -867,7 +867,7 @@ allowEnrollment() {
   const mail = this.userEmail ?? '';
 
   // If Teams, do the duplicate check
-  if (this.selectedVenue === 'Teams') {
+  if (this.selectedVenue === 'Teams' || this.selectedVenue === 'Offline') {
     this.ielc.checkIfAlreadyEnrolled(skill, date, time, mail).subscribe({
       next: (alreadyEnrolled: boolean) => {
         if (alreadyEnrolled) {
@@ -920,8 +920,8 @@ proceedToEnroll(
   const convertedStart = this.convertToISODate((startDate || '').trim()) || new Date().toISOString();
 const convertedEnd = this.convertToISODate((endDate || '').trim()) || new Date().toISOString();
 
-  console.log('✅ Converted Start Date:', convertedStart);
-  console.log('✅ Converted End Date:', convertedEnd);
+  // console.log('✅ Converted Start Date:', convertedStart);
+  // console.log('✅ Converted End Date:', convertedEnd);
 
   const enrollmentData: EnrollmentData = {
     enrollmentID: 0,
@@ -948,7 +948,7 @@ const convertedEnd = this.convertToISODate((endDate || '').trim()) || new Date()
     applicationtowork: '',
     comments: ''
   };
-  console.log('📤 Final enrollment payload:', enrollmentData);
+  // console.log('📤 Final enrollment payload:', enrollmentData);
 
   this.ielc.enrollUser(enrollmentData).subscribe({
     next: () => {
@@ -993,7 +993,7 @@ const convertedEnd = this.convertToISODate((endDate || '').trim()) || new Date()
         <br>
       `;
 
-      // this.emailService.sendEmail(mail,'', subject, body);
+      this.emailService.sendEmail(mail,'', subject, body);
     },
     error: (err) => {
       // console.error('Enrollment error:', err);

@@ -67,18 +67,18 @@ export class QmstaskComponent implements OnInit {
    }
 
    
- AddQmscalendar(): void {
-  this.ielc.Postqsmscalendar(this.calendardata).subscribe(
-    (response) => {
-      alert('✅ Record Added Successfully!');
-      this.GetQmscalendarlist();
-      this.resetlist();
-    },
-    (error) => {
-      alert('❌ Error adding Record. Please try again.');
-    }
-  );
-}
+//  AddQmscalendar(): void {
+//   this.ielc.Postqsmscalendar(this.calendardata).subscribe(
+//     (response) => {
+//       alert('✅ Record Added Successfully!');
+//       this.GetQmscalendarlist();
+//       this.resetlist();
+//     },
+//     (error) => {
+//       alert('❌ Error adding Record. Please try again.');
+//     }
+//   );
+// }
 
 
 EditQmscalendar(id: number) {

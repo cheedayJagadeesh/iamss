@@ -4,6 +4,7 @@ import { IelcapiService } from '../ielcapi.service';
 interface qmsmailsinfo{
     id: number;
     department: string;
+    process_Owner: string;
     toaddress: string;
     cc: string;
     sharePath: string;
@@ -26,6 +27,7 @@ export class Soc2mailsComponent {
   qmsmailsdata:qmsmailsinfo={
     id: 0,
     department: '',
+    process_Owner: '',
     toaddress: '',
     cc: '',
     sharePath: '',
@@ -90,6 +92,7 @@ EditQmsMails(id: number) {
       this.qmsmailsdata = { 
         id: data.id || 0,
         department: data.department || '',
+        process_Owner: data.process_Owner || '',
         toaddress: data.toaddress || '',
         cc: data.cc || '',
         sharePath: data.sharePath || '',
@@ -129,6 +132,7 @@ resetlist(){
   this.qmsmailsdata={
     id: 0,
     department: '',
+    process_Owner: '',
     toaddress: '',
     cc: '',
     sharePath: '',
@@ -142,4 +146,16 @@ resetlist(){
     password: '',
   }
 }
+deleteItem(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteqmsById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetQmsmailslist(); // Call this only after successful deletion
+      },
+      // error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
 }

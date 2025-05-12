@@ -6,6 +6,7 @@ declare var bootstrap: any;
 interface ismsmailsinfo{
     id: number;
     department: string;
+    process_Owner: string;
     toaddress: string;
     cc: string;
     sharePath: string;
@@ -27,6 +28,7 @@ export class IsmsmailsComponent implements OnInit {
   ismsmailsdata:ismsmailsinfo={
     id: 0,
     department: '',
+    process_Owner: '',
     toaddress: '',
     cc: '',
     sharePath: '',
@@ -76,6 +78,7 @@ export class IsmsmailsComponent implements OnInit {
       this.resetlist();
     },
     (error) => {
+      // console.error('❌ Error details:', error);
       alert('❌ Error adding Record. Please try again.');
     }
   );
@@ -98,6 +101,7 @@ EditIsmsMails(id: number) {
       this.ismsmailsdata = { 
         id: data.id || 0,
         department: data.department || '',
+        process_Owner: data.process_Owner || '',
         toaddress: data.toaddress || '',
         cc: data.cc || '',
         sharePath: data.sharePath || '',
@@ -128,7 +132,7 @@ UpdateIsmsMails() {
      
     },
     (error) => {
-      // console.error("Error updating Record:", error);
+      console.error("Error updating Record:", error);
     }
   );
 }
@@ -138,6 +142,7 @@ resetlist(){
   this.ismsmailsdata={
     id: 0,
     department: '',
+    process_Owner: '',
     toaddress: '',
     cc: '',
     sharePath: '',
@@ -149,6 +154,18 @@ resetlist(){
     incidentMailDate: 0,
     fromaddress: '',
     password: '',
+  }
+}
+
+deleteItem(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteismsById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetIsmsmailslist(); // Call this only after successful deletion
+      },
+      // error: (err) => console.error('Error deleting item:', err)
+    });
   }
 }
 

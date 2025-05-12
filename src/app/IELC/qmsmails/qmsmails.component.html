@@ -9,6 +9,7 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Department</th>
+                    <th scope="col">Process Owner</th>
                     <th scope="col">To Address</th>
                     <th scope="col">CC Address</th>
                     <th scope="col">SharePath</th>
@@ -27,6 +28,7 @@
                 <tr *ngFor="let row of qmsmailslist">
                     <td >{{row.id}}</td>
                     <td>{{row.department}}</td>
+                    <td>{{row.process_Owner}}</td>
                     <td>{{row.toaddress}}</td>
                     <td>{{row.cc}}</td>
                     <td>{{row.sharePath}}</td>
@@ -69,6 +71,10 @@
                                         <div class="divmodal">
                                             <label>Department</label>
                                             <input type="text" class="form-control" name="department" [(ngModel)]="qmsmailsdata.department" > 
+                                           </div>
+                                           <div class="divmodal">
+                                            <label>Process Owner</label>
+                                            <input type="text" class="form-control" name="processowner" [(ngModel)]="qmsmailsdata.process_Owner">
                                            </div>
                                            <div class="divmodal">
                                             <label>To Address</label>
@@ -148,6 +154,10 @@
                                          <input type="text" class="form-control" name="department" [(ngModel)]="qmsmailsdata.department" > 
                                         </div>
                                         <div class="divmodal">
+                                            <label>Process Owner</label>
+                                            <input type="text" class="form-control" name="processowner" [(ngModel)]="qmsmailsdata.process_Owner">
+                                           </div>
+                                        <div class="divmodal">
                                          <label>To Address</label>
                                          <input type="text" class="form-control" name="toaddress" [(ngModel)]="qmsmailsdata.toaddress">
                                         </div>
@@ -200,6 +210,11 @@
                              </div>
                          </div>
                      </div>
+                  <button class="btn btn-info me-1" style="margin: 2px" (click)="deleteItem(row.id)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                      <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0"/>
+                    </svg>
+                </button>
                     </td>
                 </tr>
             </tbody>
