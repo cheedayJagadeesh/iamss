@@ -245,11 +245,44 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
 //   return `${yyyy}-${mm}-${dd}`;
 // }
 
+// convertToISODate(dateStr: string): string {
+//   if (!dateStr) return '';
+//   const [day, month, year] = dateStr.split('-');
+//   return `${year}-${month}-${day}`;  // Adding time part for consistency
+// }
 convertToISODate(dateStr: string): string {
-  if (!dateStr) return '';
-  const [day, month, year] = dateStr.split('-');
-  return `${year}-${month}-${day}`;  // Adding time part for consistency
+  // console.log('🔍 Converting date:', dateStr);
+
+  if (!dateStr || typeof dateStr !== 'string') {
+    // console.warn('⚠️ Invalid date input:', dateStr);
+    return '';
+  }
+
+  const isoDate = new Date(dateStr);
+  if (!isNaN(isoDate.getTime())) {
+    const result = isoDate.toISOString().split('T')[0];
+    // console.log('✅ Parsed ISO Date:', result);
+    return result;
+  }
+
+  const parts = dateStr.split('-');
+  if (parts.length === 3) {
+    const [day, month, year] = parts;
+    if (day.length <= 2 && month.length <= 2 && year.length === 4) {
+      const result = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+      // console.log('✅ Reconstructed Date:', result);
+      return result;
+    }
+  }
+
+  // console.warn('❌ Failed to parse date:', dateStr);
+  return '';
 }
+
+
+
+
+
 
 // convertToISODate(dateStr: string): string {
 //   if (!dateStr) {
@@ -288,6 +321,8 @@ convertToISODate(dateStr: string): string {
   // Format the date as required
   return parsedDate.format('MMM D, YYYY'); // Example: "Oct 3, 2024"
 }
+
+
 
 
 
@@ -688,8 +723,37 @@ onVenueChange(venue: string) {
         //   const [start, end] = range.split(' - ');
         //   return `${this.convertToDDMMYYYY(start)} - ${this.convertToDDMMYYYY(end)}`;
         // });
-        this.availableDates=res;
-        // Print available dates
+        
+        const now = new Date();
+        // console.log('📥 Raw available date ranges from backend:', res);
+
+        const activeRanges = new Set<string>();
+
+        this.visibleSessionIds.forEach((session: any) => {
+          const skillName = (session.skillName ?? '').trim().toLowerCase();
+          if (skillName !== trimmedSkillname.toLowerCase()) return;
+
+          const [hour, minute, second] = (session.skillStartTime ?? '00:00:00').split(':').map(Number);
+          const sessionEndDateTime = new Date(session.toDate);
+          sessionEndDateTime.setHours(hour || 0, minute || 0, second || 0, 0);
+
+          const isActive = sessionEndDateTime >= now;
+          // console.log(`📅🕒 Comparing session end datetime with now: ${sessionEndDateTime.toLocaleString()} >= ${now.toLocaleString()} -> ${isActive}`);
+
+          if (isActive) {
+            const formattedFrom = this.formatDate(session.fromDate);
+            const formattedTo = this.formatDate(session.toDate);
+            const range = `${formattedFrom} - ${formattedTo}`;
+            activeRanges.add(range);
+          }
+        });
+
+        // Filter backend dates using active ranges
+        this.availableDates = res.filter((range: string) => activeRanges.has(range));
+        // console.log('✅ Filtered Available Dates (active only):', this.availableDates);
+
+        // this.availableDates=res;
+        // // Print available dates
         // console.log('Available Dates:', this.availableDates);
       },
       error: (err) => {
@@ -704,6 +768,14 @@ onVenueChange(venue: string) {
     this.time = '';
     this.batchMembersCount = 0;
   }
+}
+
+formatDate(dateStr: string): string {
+  const d = new Date(dateStr);
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  return `${day}-${month}-${year}`;
 }
 
 // Method to fetch time slots based on selected date range
@@ -856,15 +928,35 @@ checkBatchAvailability() {
 allowEnrollment() {
   const now = new Date();
   const fullName = `${this.firstName} ${this.lastName}`;
-  const [startDate, endDate] = this.date?.split(' - ') || ['', ''];
+  // const [startDate, endDate] = this.date?.split(' - ') || ['', ''];
   // console.log('📅 Original date range:', this.date);
   // console.log('➡️ Parsed startDate:', startDate);
   // console.log('➡️ Parsed endDate:', endDate);
+
+  let startDate = '';
+  let endDate = '';
+
+  // console.log('Selected Venue:', this.selectedVenue);
+  // console.log('Date before processing:', this.date);
+
+  if (this.date?.includes(' - ')) {
+    [startDate, endDate] = this.date.split(' - ');
+  } else {
+    startDate = this.date || '';
+    endDate = this.date || '';
+  }
+  const formattedNow = now.toISOString().split('T')[0]; 
+  // If startDate or endDate empty, assign current date
+  if (!startDate) startDate = formattedNow;
+  if (!endDate) endDate = formattedNow;
+
 
   const skill = this.skillname;
   const date = this.date;
   const time = this.time;
   const mail = this.userEmail ?? '';
+
+  
 
   // If Teams, do the duplicate check
   if (this.selectedVenue === 'Teams' || this.selectedVenue === 'Offline') {
@@ -875,7 +967,9 @@ allowEnrollment() {
           return;
         }
 
-        const batchCountToInsert = this.batchMembersCount;
+        // const batchCountToInsert = this.batchMembersCount;
+        const batchCountToInsert = this.selectedVenue === 'Teams' ? this.batchMembersCount : 0;
+
 
         this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
         // window.location.reload();
@@ -885,7 +979,8 @@ allowEnrollment() {
         alert('Failed to verify enrollment status. Please try again.');
       }
     });
-  } else if (this.selectedVenue !== 'Teams') {
+  // } else if (this.selectedVenue !== 'Teams') {
+  } else if (this.selectedVenue === 'Self-Learning') {
     // Duplicate check for self-learning
     this.ielc.checkVenueEnrollment(skill, this.selectedVenue, mail).subscribe({
       next: (alreadyEnrolled: boolean) => {
@@ -899,7 +994,15 @@ allowEnrollment() {
         // window.location.reload();
       },
       error: (err) => {
-        // console.error('❌ Error checking  enrollment:', err);
+        console.error('❌ Error checking  enrollment:', err);
+        if (err.error?.errors) {
+          // Log detailed field-level validation issues
+          for (const field in err.error.errors) {
+            if (err.error.errors.hasOwnProperty(field)) {
+              console.error(`❌ Validation failed: ${field} -> ${err.error.errors[field]}`);
+            }
+          }
+        }
         alert('Failed to verify enrollment. Please try again.');
       }
     });
@@ -912,13 +1015,21 @@ allowEnrollment() {
   }
 }
 
+
 proceedToEnroll(
   fullName: string, mail: string, skill: string, date: string, time: string,
   venue: string, batchCount: number, startDate: string, endDate: string, now: Date
 )
  {
-  const convertedStart = this.convertToISODate((startDate || '').trim()) || new Date().toISOString();
-const convertedEnd = this.convertToISODate((endDate || '').trim()) || new Date().toISOString();
+  // const convertedStart = this.convertToISODate((startDate || '').trim()) || new Date().toISOString();
+  // const convertedEnd = this.convertToISODate((endDate || '').trim()) || new Date().toISOString();
+
+  // console.log('📦 Raw Start Date before conversion:', startDate);
+  // console.log('📦 Raw End Date before conversion:', endDate);
+
+  const convertedStart = this.convertToISODate(startDate?.trim());
+const convertedEnd = this.convertToISODate(endDate?.trim());
+
 
   // console.log('✅ Converted Start Date:', convertedStart);
   // console.log('✅ Converted End Date:', convertedEnd);
@@ -1001,6 +1112,10 @@ const convertedEnd = this.convertToISODate((endDate || '').trim()) || new Date()
     }
   });
 }
+
+
+
+
 
 
 

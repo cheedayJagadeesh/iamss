@@ -761,6 +761,28 @@ UpdateResult() {
                 </tr>
               </tbody>
             </table>
+            <br>
+            <div style="border: 4px solid #0d6efd; padding: 30px; font-family: Arial, sans-serif; max-width: 600px; margin: auto; background-color: #fff;">
+              <div style="text-align: center;">
+                <h2 style="color: #0d6efd; margin: 0; font-size: 35px">INTEQ SOFTWARE LLP</h2>
+                <h5 style="color: #999; margin-top: 5px;margin-left:40%">Innovation through people</h5>
+                <h3 style="color: #999; margin-top: 10px;">Certificate of Completion</h3>
+                <p style="color: #444; font-size: 16px;">This certificate is issued to</p>
+                <h2 style="margin: 10px 0; color: #333;">${this.userName}</h2>
+                <p style="font-size: 16px;">For successfully completing of the <strong>${this.selectedSkill}</strong> online test on <strong>${new Date().toLocaleDateString()}</strong>.</p>
+                
+                <img src="https://img.icons8.com/color/96/medal.png" alt="Medal" style="margin-top: 20px;" width="80" height="80"/><br>
+             <div style="display: flex; margin-top: 20px; ">
+              <img src="https://th.bing.com/th/id/OLC.rH1hOQll17Ivig480x360?&rs=1&pid=ImgDetMain" alt="Italian Trulli" style="margin-left: 0%;" width="150" height="100" style="margin-right: 20px;" />
+              <p style="font-size: 18px; color: #666; margin: 30;margin-left: 30%;">
+                C V Prasad <br> CISO, Program Manager
+              </p>
+            </div>
+            </div>
+              <p style="color: #999; font-size: 10px; margin-top: 10px;">INTEQ SOFTWARE LLP, 1-10-75-1 to 6, 1st Floor, Saptagiri Towers, Begumpet, HYDERABAD 500016, INDIA </p>
+                  <p style="color: #999; font-size: 10px; margin-top: 10px; text-align:center">www.inteqsolutions.com</p>    
+            </div>
+            <br>
             <p style="margin-top: 15px; color: Green;">Thank you for your effort and dedication!</p>
               <br>
           `;
