@@ -779,7 +779,7 @@ UpdateResult() {
               </p>
             </div>
             </div>
-              <p style="color: #999; font-size: 10px; margin-top: 10px;">INTEQ SOFTWARE LLP, 1-10-75-1 to 6, 1st Floor, Saptagiri Towers, Begumpet, HYDERABAD 500016, INDIA </p>
+              <p style="color: #999; font-size: 10px; margin-top: 10px;text-align:center">INTEQ SOFTWARE LLP, 1-10-75-1 to 6, 1st Floor, Saptagiri Towers, Begumpet, HYDERABAD 500016, INDIA </p>
                   <p style="color: #999; font-size: 10px; margin-top: 10px; text-align:center">www.inteqsolutions.com</p>    
             </div>
             <br>
