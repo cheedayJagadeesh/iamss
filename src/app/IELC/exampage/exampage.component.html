@@ -23,7 +23,10 @@
       <!-- <h2>Your Test: <strong>Cloud Computing</strong></h2> -->
       <!-- <h2 *ngFor="let item of Registeredusers">Your Test: <strong>{{item.skillName}}</strong></h2> -->
       <h2 *ngIf="selectedSkill">Your Test: <strong>{{ selectedSkill }}</strong></h2>
-      <p>Time Left:  <strong>{{ formattedTime }}</strong></p>
+      <p>
+        <span style="font-size: 18px; margin-right: 5px;">⏰</span>
+        Time Left:  <strong>{{ formattedTime }}</strong>
+      </p>
     </div>
 <!--   
     <div *ngIf="currentQuestion">

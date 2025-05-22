@@ -330,6 +330,7 @@ convertToISODate(dateStr: string): string {
  userName: string | null = null;
  userEmail: string | null = null;
  firstName: string = '';
+ middleName: string = '';
  lastName: string = '';
 //  async ngOnInit() {
 //    try {
@@ -400,12 +401,21 @@ async ngOnInit() {
       //     this.userName = userInfo?.displayName;
       //     this.userEmail = userInfo.email;
        
-      if (this.userEmail) {
-        const emailPrefix = this.userEmail.split('@')[0]; // Get the part before '@'
-        const nameParts = emailPrefix.split(/[._]/); // Split by dot (.) or underscore (_)
-        this.firstName = nameParts[0] || ''; // First part as first name
-        this.lastName = nameParts.length > 1 ? nameParts[1] : ''; // Second part as last name (if exists)
+      // if (this.userEmail) {
+      //   const emailPrefix = this.userEmail.split('@')[0]; // Get the part before '@'
+      //   const nameParts = emailPrefix.split(/[._]/); // Split by dot (.) or underscore (_)
+      //   this.firstName = nameParts[0] || ''; // First part as first name
+      //   this.lastName = nameParts.length > 1 ? nameParts[1] : ''; // Second part as last name (if exists)
+      // }
+
+      if (userDetails?.displayName) {
+        const nameParts = userDetails.displayName.trim().split(' ');
+        this.firstName = nameParts[0] || '';
+        this.lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
+        this.middleName = nameParts.length > 2 ? nameParts.slice(1, -1).join(' ') : '';
+        this.userName = `${this.firstName} ${this.middleName} ${this.lastName}`.trim();
       }
+      
     
     });
     this.authService.userDetails$.subscribe(userDetails => {
