@@ -600,7 +600,9 @@ onSkillChange(skill: string) {
         const isActive = sessionEndDate >= today;
 
 
-        if (skill.toLowerCase() === skillKey && isActive) {
+        // if (skill.toLowerCase() === skillKey && isActive) {
+          if (skill.trim().toLowerCase() === skillKey && isActive) {
+
           // Add active sessions to the map for this skill
           if (!skillSessionMap.has(skillKey)) {
             skillSessionMap.set(skillKey, []);
@@ -610,8 +612,8 @@ onSkillChange(skill: string) {
       });
 
       // Now filter out the sessions based on the selected skill and only active ones
-      const activeSkillSessions = skillSessionMap.get(skill.toLowerCase()) || [];
-
+      const activeSkillSessions = skillSessionMap.get(skill.trim().toLowerCase()) || [];
+      
       // Only active venues for this skill will be considered
       if (activeSkillSessions.length > 0) {
         // Extract venue names directly from the `venue` property

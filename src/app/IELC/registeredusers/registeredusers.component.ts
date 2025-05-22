@@ -503,7 +503,7 @@ forkJoin(observables).subscribe(
       // console.log('🚫 Error: No data found for the given date range (404 Not Found)');
       this.Registeredusers = []; // Empty the table when data is not found
     } else {
-      console.error('❌ Error occurred:', error);
+      // console.error('❌ Error occurred:', error);
       this.Registeredusers = []; // Empty the table in case of other errors
     }
   }
