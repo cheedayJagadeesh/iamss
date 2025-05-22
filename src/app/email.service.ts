@@ -47,7 +47,8 @@ export class EmailService {
       smtpPassword: decryptedPassword,
       to,
       // cc: 'jagadeesh.c@inteqsolutions.com',
-      cc: 'akhilpasha.m@inteqsolutions.com',
+      // cc: 'akhilpasha.m@inteqsolutions.com',
+      cc: 'ramprasadh@inteqsolutions.com',
       subject,
       body
     };
