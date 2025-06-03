@@ -413,7 +413,7 @@ async ngOnInit() {
         this.firstName = nameParts[0] || '';
         this.lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
         this.middleName = nameParts.length > 2 ? nameParts.slice(1, -1).join(' ') : '';
-        this.userName = `${this.firstName} ${this.middleName} ${this.lastName}`.trim();
+        // this.userName = `${this.firstName} ${this.middleName} ${this.lastName}`.trim();
       }
       
     
@@ -1889,11 +1889,11 @@ checkUserExists() {
 
     if (this.showButton) {
 
-      // console.log('Your username exists in the list.');
+      console.log('Your username exists in the list.');
 
     } else {
 
-      // console.log('Your username is NOT in the list.');
+      console.log('Your username is NOT in the list.');
 
     }
 
@@ -1907,6 +1907,7 @@ GetAllUniqueNames(): Observable<string[]> {
   // Directly return the Observable from GetUniqueName() instead of subscribing inside
 
   return this.ielc.GetUniqueName();
+  
 
 }
  
