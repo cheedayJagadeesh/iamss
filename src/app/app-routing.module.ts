@@ -47,6 +47,7 @@ import { HrdeptComponent } from './IELC/hrdept/hrdept.component';
 import { ItdeptComponent } from './IELC/itdept/itdept.component';
 import { AuthGuard } from './auth.guard';
 import { AuthcallbackComponent } from './IELC/authcallback/authcallback.component';
+import { EventschedulerComponent } from './IELC/eventscheduler/eventscheduler.component';
 
 
 const routes: Routes = [
@@ -102,6 +103,7 @@ const routes: Routes = [
   {path:'admindept',component:AdmindeptComponent,canActivate: [MsalGuard]},
   {path:'hrdept',component:HrdeptComponent,canActivate: [MsalGuard]},
   {path:'itdept',component:ItdeptComponent,canActivate: [MsalGuard]},
+  {path:'eventscheduler',component:EventschedulerComponent,canActivate: [MsalGuard]},
   {path:'authcallback', component:AuthcallbackComponent}
 ];
 

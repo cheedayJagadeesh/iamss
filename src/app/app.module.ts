@@ -88,6 +88,7 @@ import { environment } from './IELC/environment';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AuthcallbackComponent } from './IELC/authcallback/authcallback.component';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { EventschedulerComponent } from './IELC/eventscheduler/eventscheduler.component';
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
 
@@ -263,7 +264,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     HrdeptComponent,
     ItdeptComponent,
     SprtheaderComponent,
-    AuthcallbackComponent
+    AuthcallbackComponent,
+    EventschedulerComponent
   ],
   imports: [
     BrowserModule,

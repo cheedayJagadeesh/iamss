@@ -1,0 +1,47 @@
+<form class="event-schedule-container" #form="ngForm">
+
+  <h1 class="h1">EVENT SCHEDULE PLANNER</h1>
+
+  <div class="info-table">
+    <div class="row">
+      <div class="cell header">PROJECT/EVENT</div>
+      <div class="cell value">INTERNAL AUDIT</div>
+      <div class="cell value">QMS (ISO 9001:2015)</div>
+      <div class="cell value">ISMS (ISO 27001:2022)</div>
+      <div class="cell note height">KINDLY MAKE YOURSELVES AVAILABLE ON THESE DAYS</div>
+    </div>
+    <div class="row">
+      <div class="cell header">ORGANIZER</div>
+      <div class="cell value">INTEQ SOFTWARE LLP</div>
+      <div class="cell value">PLANNING SCHEDULE</div>
+      <div class="cell value">JULY 14<sup>TH</sup> - JULY 27<sup>TH</sup></div>
+    </div>
+  </div>
+
+  <div class="schedule-form">
+    <div class="form-header">
+      <div class="focus-title">FOCUS AREA / AUDITEE DEPARTMENT</div>
+      <div class="form-label">DATE</div>
+      <div class="form-label">TIME</div>
+    </div>
+
+    <div class="form-row">
+      
+   <select class="input-select1" name="department" required [(ngModel)]="selectedDept">
+  <option value="" disabled>- AUDITEE DEPARTMENT -</option>
+  <option *ngFor="let dept of AuditeesDept" [value]="dept">{{ dept }}</option>
+</select>
+
+      <input type="date" class="input-date" name="selectedDate" required [(ngModel)]="selectedDate" />
+
+      <select class="input-select" name="Time" required [(ngModel)]="selectedTime">
+        <option value="" disabled>- Select TIME -</option>
+        <option *ngFor="let time of Time" [value]="time">{{ time }}</option>
+      </select>
+    </div>
+
+    <div class="submit-row">
+      <button type="submit" class="submit-btn" [disabled]="form.invalid">SUBMIT</button>
+    </div>
+  </div>
+</form>

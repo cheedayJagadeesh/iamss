@@ -1,0 +1,182 @@
+/* Container and Header */
+.event-schedule-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', sans-serif;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+/* Top Info Table */
+.info-table {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2px;
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+
+.info-table .row {
+  display: contents;
+}
+
+.info-table .cell {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.info-table .header {
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+
+.info-table .value {
+  background-color: #c6e2c7; /* Light green */
+  font-weight: bold;
+}
+
+.info-table .note {
+  background-color: #e6f1fc;
+  color: #2a4d79;
+  font-weight: bold;
+}
+
+/* Form Section */
+.schedule-form {
+  border: 2px solid black;
+  padding: 15px;
+}
+
+.form-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  background-color: #000;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  padding: 10px;
+  gap: 10px;
+}
+
+.input-select,
+.input-date,
+.input-time,
+.input-full,
+textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.input-select1{
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Requested Date Row */
+.schedule-form label.form-label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.schedule-form .form-row:nth-child(3),
+.schedule-form .form-row:nth-child(4) {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff2e6; /* Soft orange background */
+  margin: 10px 0;
+}
+
+/* Submit Button */
+.submit-row {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.submit-btn {
+  padding: 8px 24px;
+  background-color: #6c8edb;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #3e68b0;
+}
+
+.height{
+    height: 164%;
+}
+
+.h1{
+    text-align: center;
+    font-weight: bold;
+    margin-left: 17%;
+    color: #166ebf;
+    margin-top: -4%;
+    font-size: 30px;
+    position: absolute;
+}
+
+.date1{
+    width: 24%;
+    margin-left: 50%;
+     padding: 8px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.time1{
+    width: 24%;
+    margin-left: 75%;
+     padding: 8px;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.reason{
+        width: 50%;
+    margin-left: 50%;
+}
+.event-schedule-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px 30px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.input-select option[disabled] {
+  color: #888;
+}
+

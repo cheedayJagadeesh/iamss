@@ -6,7 +6,11 @@ interface smtpinfo {
   userName: string;
   password: string;
 }
-
+interface eventscadmininfo {
+  id: number;
+  auditee: string;
+  procedure: string;
+}
 
 interface itsprtinfo{
   id: number;
@@ -132,6 +136,12 @@ onSelection3Change() {
    id: 0,
    userName: '',
    password: '',
+  }
+  eventschadminlist: any[] = []; 
+  eventschadmin:eventscadmininfo={
+   id: 0,
+   auditee: '',
+   procedure: '',
   }
   itsprtlist: any[] = []; 
   itsprtdata:itsprtinfo={
@@ -271,6 +281,7 @@ onSelection3Change() {
  adminuserslist: any[]=[];
  holidayslist: any[]=[];
  eventslist: any[]=[];
+ eventscheduleradmin: any[]=[];
  crserestlist: any[]=[];
  eventalertslist: any[]=[];
   
@@ -354,9 +365,83 @@ onSelection3Change() {
     this.GetEventsist();
     this.GetCourseist();
     this.GetEventAlertsist();
+    this.GetEventSchedulerAdmin();
     
   }
+ //-------------------------------------------------------------------------------EventSchedulerAdmin
+GetEventSchedulerAdmin(){
+  this.ielc.GetEventSchedulerAdmin().subscribe((data) => {
+    this.eventscheduleradmin=data;
+    this.eventscheduleradmin = this.sortlist(data)
+    this.isLoading = false;
+    console.log(this.eventscheduleradmin);
+  });
+ }
  
+ AddEventSchedulerAdmin(): void {
+  this.ielc.PostEventSchedulerAdmin(this.eventschadmin).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetEventSchedulerAdmin();
+      //this.resetItSprt();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+
+  deleteEventSchedulerAdmin(id: number) {
+    if (confirm('Are you sure you want to delete this record?')) {
+      this.ielc.DeleteEventSchedulerAdmin(id).subscribe({
+        next: () => {
+          alert(`Record with ID ${id} deleted successfully!`);
+          this.GetEventSchedulerAdmin();
+        },
+        // // error: (err) =>  console.error('Error deleting item:', err)
+      });
+    }
+  }
+
+  EditEventSchedulerAdmin(id: number) { 
+  this.ielc.GetEventSchedulerAdminId(id).subscribe(data => {
+    if (data) {
+      this.eventschadmin = { 
+        id: data.id || 0,
+        auditee: data.auditee || '',
+        procedure:  data.procedure || '',
+      };
+    } else {
+      // // console.warn("No data received for the given ID.");
+    }
+  },
+   error => {
+    // // console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateEventSchedulerAdmin() {
+  this.ielc.UpdateITSprt(this.eventschadmin.id, this.eventschadmin).subscribe(
+    (response) => {
+      // // console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetEventSchedulerAdmin();
+      //this.resetItSprt();
+    },
+    (error) => {
+      // // console.error("Error updating Record:", error);
+    }
+  );
+}
+
+  resetEventSchedulerAdmin(){
+    this.eventschadmin={
+    id: 0,
+    auditee: '',
+    procedure: '',
+    }
+  }
 
  
 //-------------------------------------------------------------------------------SMTP
@@ -5077,6 +5162,9 @@ resetHolidays(){
   content: ''
   }
 }
+
+
+
 
 //=====================================================================================Events 
 GetEventsist(){
