@@ -8,8 +8,16 @@ interface smtpinfo {
 }
 interface eventscadmininfo {
   id: number;
-  auditee: string;
-  procedure: string;
+  auditeedepartment: string;
+  procedures: string;
+}
+interface eventscuserinfo {
+  id: number;
+  auditeedepartment: string;
+  auditees: string;
+  starting: string;
+  time: string;
+  auditors: string;
 }
 
 interface itsprtinfo{
@@ -137,12 +145,23 @@ onSelection3Change() {
    userName: '',
    password: '',
   }
-  eventschadminlist: any[] = []; 
-  eventschadmin:eventscadmininfo={
-   id: 0,
-   auditee: '',
-   procedure: '',
-  }
+  eventschadlist: any[] = []; 
+eventschadmin: eventscadmininfo = {
+  id: 0,
+  auditeedepartment: '',
+  procedures: '',
+};
+
+  eventschuserlist: any[] = []; 
+eventschuser: eventscuserinfo = {
+  id: 0,
+  auditeedepartment: '',
+  auditees: '',
+  starting: '',
+  time: '',
+  auditors: '',
+};
+
   itsprtlist: any[] = []; 
   itsprtdata:itsprtinfo={
   id: 0,
@@ -282,6 +301,7 @@ onSelection3Change() {
  holidayslist: any[]=[];
  eventslist: any[]=[];
  eventscheduleradmin: any[]=[];
+ eventscheduleruser: any[]=[];
  crserestlist: any[]=[];
  eventalertslist: any[]=[];
   
@@ -366,6 +386,7 @@ onSelection3Change() {
     this.GetCourseist();
     this.GetEventAlertsist();
     this.GetEventSchedulerAdmin();
+    this.GetEventSchedulerUser();
     
   }
  //-------------------------------------------------------------------------------EventSchedulerAdmin
@@ -378,18 +399,24 @@ GetEventSchedulerAdmin(){
   });
  }
  
- AddEventSchedulerAdmin(): void {
-  this.ielc.PostEventSchedulerAdmin(this.eventschadmin).subscribe(
+AddEventSchedulerAdmin(): void {
+  const payload = {
+    auditeedepartment: this.eventschadmin.auditeedepartment,
+    procedures: this.eventschadmin.procedures
+  };
+  this.ielc.PostEventSchedulerAdmin(payload).subscribe(
     (response) => {
       alert('✅ Record Added Successfully!');
       this.GetEventSchedulerAdmin();
-      //this.resetItSprt();
+      this.resetEventSchedulerAdmin();
     },
     (error) => {
       alert('❌ Error adding Record. Please try again.');
     }
   );
 }
+
+
 
   deleteEventSchedulerAdmin(id: number) {
     if (confirm('Are you sure you want to delete this record?')) {
@@ -403,45 +430,162 @@ GetEventSchedulerAdmin(){
     }
   }
 
-  EditEventSchedulerAdmin(id: number) { 
+EditEventSchedulerAdmin(id: number) { 
   this.ielc.GetEventSchedulerAdminId(id).subscribe(data => {
     if (data) {
       this.eventschadmin = { 
         id: data.id || 0,
-        auditee: data.auditee || '',
-        procedure:  data.procedure || '',
+        auditeedepartment: data.auditeedepartment || '',
+        procedures:  data.procedures || '',
       };
     } else {
-      // // console.warn("No data received for the given ID.");
+      console.warn("No data received for the given ID.");
     }
   },
    error => {
-    // // console.error("Error fetching record:", error);
+     console.error("Error fetching record:", error);
   });
 }
 
-
 UpdateEventSchedulerAdmin() {
-  this.ielc.UpdateITSprt(this.eventschadmin.id, this.eventschadmin).subscribe(
+  const payload = {
+    id: this.eventschadmin.id,
+    auditeedepartment: this.eventschadmin.auditeedepartment,
+    procedures: this.eventschadmin.procedures
+  };
+  this.ielc.UpdateEventSchedulerAdmin(this.eventschadmin.id, payload).subscribe(
     (response) => {
-      // // console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetEventSchedulerAdmin();
-      //this.resetItSprt();
+       this.resetEventSchedulerAdmin();
     },
     (error) => {
-      // // console.error("Error updating Record:", error);
+      console.error("Error updating Record:", error);
     }
   );
 }
 
+
   resetEventSchedulerAdmin(){
     this.eventschadmin={
     id: 0,
-    auditee: '',
-    procedure: '',
+    auditeedepartment: '',
+    procedures: '',
     }
   }
+   //-------------------------------------------------------------------------------EventSchedulerAdmin
+GetEventSchedulerUser(){
+  this.ielc.GetEventSchedulerUser().subscribe((data) => {
+    this.eventscheduleruser=data;
+    this.eventscheduleruser = this.sortlist(data)
+    this.isLoading = false;
+    //console.log(this.eventscheduleruser);
+  });
+ }
+ 
+AddEventSchedulerUser(): void {
+  const payload: any = {};
+
+  if (this.eventschuser.auditeedepartment) {
+    payload.auditeedepartment = this.eventschuser.auditeedepartment;
+  }
+
+  if (this.eventschuser.auditees) {
+    payload.auditees = this.eventschuser.auditees;
+  }
+
+  if (this.eventschuser.starting) {
+    payload.starting = this.eventschuser.starting;
+  }
+
+  if (this.eventschuser.time) {
+    payload.time = this.eventschuser.time;
+  }
+
+  if (this.eventschuser.auditors) {
+    payload.auditors = this.eventschuser.auditors;
+  }
+
+  this.ielc.PostEventSchedulerUser(payload).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetEventSchedulerUser();
+      this.resetEventSchedulerUser();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+
+
+
+
+  deleteEventSchedulerUser(id: number) {
+    if (confirm('Are you sure you want to delete this record?')) {
+      this.ielc.DeleteEventSchedulerUser(id).subscribe({
+        next: () => {
+          alert(`Record with ID ${id} deleted successfully!`);
+          this.GetEventSchedulerUser();
+        },
+        error: (err) =>  console.error('Error deleting item:', err)
+      });
+    }
+  }
+
+EditEventSchedulerUser(id: number) { 
+  this.ielc.GetEventSchedulerUserId(id).subscribe(data => {
+    if (data) {
+      this.eventschuser = { 
+        id: data.id || 0,
+        auditeedepartment: data.auditeedepartment || '',
+        auditees:  data.auditees || '',
+        starting: data.starting || '',
+        time:  data.time || '',
+        auditors: data.auditors || ''
+      };
+    } else {
+      console.warn("No data received for the given ID.");
+    }
+  },
+   error => {
+     console.error("Error fetching record:", error);
+  });
+}
+
+UpdateEventSchedulerUser() {
+  const payload = {
+    id: this.eventschuser.id,
+    auditeedepartment: this.eventschuser.auditeedepartment,
+    auditees: this.eventschuser.auditees,
+    starting: this.eventschuser.starting,
+    time: this.eventschuser.time,
+    auditors: this.eventschuser.auditors
+  };
+  this.ielc.UpdateEventSchedulerUser(this.eventschuser.id, payload).subscribe(
+    (response) => {
+      alert(" ✅ Record updated successfully!");
+      this.GetEventSchedulerUser();
+       this.resetEventSchedulerUser();
+    },
+    (error) => {
+      console.error("Error updating Record:", error);
+    }
+  );
+}
+
+
+  resetEventSchedulerUser(){
+    this.eventschuser={
+    id: 0,
+    auditeedepartment: '',
+    auditees: '',
+    starting: '',
+    time: '',
+    auditors: ''
+    }
+  }
+
 
  
 //-------------------------------------------------------------------------------SMTP

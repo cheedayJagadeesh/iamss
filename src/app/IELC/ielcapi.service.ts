@@ -2195,7 +2195,7 @@ sendEmailFromBackend(payload: {
 }
 //---------------------------------------------------------------------------------------Events Alerts
 eventschedulerUrl='https://coreappi.azurewebsites.net';
-eventschedulerAdminUrl='https://coreappi.azurewebsites.net/EventSchedulerAdmin';
+eventschedulerAdminUrl='https://coreappi.azurewebsites.net/EventSchedulerAdmin/';
 
 
 GetEventSchedulerUserAuditeesDept(): Observable<string[]> {
@@ -2214,10 +2214,6 @@ GetEventSchedulerAdmin(): Observable<string[]> {
       return this.http.get<any>(`${this.eventschedulerAdminUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-GetEventSchedulerUser(): Observable<string[]> {
-  return this.http.get<string[]>(`${this.eventschedulerUrl}/EventSchedulerUser`, { headers: this.getHeaders() });
-}
-
  PostEventSchedulerAdmin(data: any): Observable<any> {
       return this.http.post<any>(this.eventschedulerAdminUrl, data, { headers: this.getHeaders() });
     }
@@ -2231,6 +2227,31 @@ GetEventSchedulerUser(): Observable<string[]> {
     'Authorization': this.apiKey
    });
   return this.http.put(`${this.eventschedulerAdminUrl}/${id}`, JSON.stringify(updatedData), { headers });
+}
+//---------------------------------------------------------------------------------------
+eventschedulerUserUrl='https://coreappi.azurewebsites.net/EventSchedulerUser/';
+
+GetEventSchedulerUser(): Observable<string[]> {
+  return this.http.get<string[]>(`${this.eventschedulerUserUrl}`, { headers: this.getHeaders() });
+}
+
+  GetEventSchedulerUserId(id: number): Observable<any> {
+      return this.http.get<any>(`${this.eventschedulerUserUrl}/${id}`, { headers: this.getHeaders() });
+    }
+
+ PostEventSchedulerUser(data: any): Observable<any> {
+      return this.http.post<any>(this.eventschedulerUserUrl, data, { headers: this.getHeaders() });
+    }
+
+  DeleteEventSchedulerUser(id: any): Observable<void> {
+      return this.http.delete<void>(`${this.eventschedulerUserUrl}/${id}`, { headers: this.getHeaders() });
+    } 
+
+  UpdateEventSchedulerUser(id: number, updatedData: any): Observable<any> {
+  const headers = new HttpHeaders({ 'Content-Type': 'application/json',
+    'Authorization': this.apiKey
+   });
+  return this.http.put(`${this.eventschedulerUserUrl}/${id}`, JSON.stringify(updatedData), { headers });
 }
 
 }
