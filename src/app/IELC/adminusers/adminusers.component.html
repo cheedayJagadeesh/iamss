@@ -11237,11 +11237,11 @@
 
 <div class="tablebottom"  *ngIf="selectedOption1 === 'EventScheduler'">
         <table *ngIf="!isLoading" class="table table-striped table-bordered" name="eventschdule"  >
-            <thead class="table-primary">
+            <thead class="table-primary eventscadmin">
                 <tr>
                     <!-- <th class="eventscad" scope="col">ID</th> -->
                     <th class="eventscad" scope="col">AUDITEE DEPARTMENT</th>
-  		            <th scope="col">PROCEDURE</th>
+  		            <th scope="col" class="eventscadmincol">PROCEDURE</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -11340,13 +11340,13 @@
     </div> 
 
 <div class="tablebottom"  *ngIf="selectedOption1 === 'EventScheduler'">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="eventschduleruser"  >
+        <table *ngIf="!isLoading" class="table table-striped table-bordered eventsscuser" name="eventschduleruser"  >
             <thead class="table-primary">
                <tr>
-                    <th class="eventscad" scope="col">ID</th>
-                    <th class="eventscad" scope="col">AUDITEE DEPARTMENT</th>
+                    <!-- <th class="eventscad" scope="col">ID</th> -->
+                    <th scope="col">AUDITEE DEPARTMENT</th>
   		            <th scope="col">AUDITEES</th>
-                    <th class="eventscad" scope="col">STARTING</th>
+                    <th scope="col">STARTING</th>
   		            <th scope="col">TIME</th>
                     <th scope="col">AUDITORS</th>
                     <th scope="col">Action</th>
@@ -11354,7 +11354,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let eventscuser of eventscheduleruser" >
-                    <td>{{eventscuser.id}}</td>
+                    <!-- <td>{{eventscuser.id}}</td> -->
                     <td>{{eventscuser.auditeedepartment}}</td>
                     <td>{{eventscuser.auditees}}</td>
                      <td>{{eventscuser.starting}}</td>

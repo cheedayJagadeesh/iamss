@@ -1,4 +1,4 @@
-<form class="event-schedule-container" #form="ngForm">
+<form class="event-schedule-container" (ngSubmit)="onSubmit()" #form="ngForm">
 
   <h1 class="h1">EVENT SCHEDULE PLANNER</h1>
 
@@ -27,21 +27,46 @@
 
     <div class="form-row">
       
-   <select class="input-select1" name="department" required [(ngModel)]="selectedDept">
+<select class="input-select1" name="department" required [(ngModel)]="selectedDept" (change)="onDepartmentChange()">
   <option value="" disabled>- AUDITEE DEPARTMENT -</option>
   <option *ngFor="let dept of AuditeesDept" [value]="dept">{{ dept }}</option>
 </select>
 
-      <input type="date" class="input-date" name="selectedDate" required [(ngModel)]="selectedDate" />
-
-      <select class="input-select" name="Time" required [(ngModel)]="selectedTime">
-        <option value="" disabled>- Select TIME -</option>
-        <option *ngFor="let time of Time" [value]="time">{{ time }}</option>
-      </select>
+<input type="date" class="input-date" name="selectedDate" required [(ngModel)]="selectedDate"  (change)="onDateChange()" />
+  
+<select class="input-select" name="Time" required [(ngModel)]="selectedTime">
+  <option value="" disabled>- Select TIME -</option>
+  <option *ngFor="let time of filteredTimes" [value]="time">{{ time }}</option>
+</select>
     </div>
 
     <div class="submit-row">
       <button type="submit" class="submit-btn" [disabled]="form.invalid">SUBMIT</button>
     </div>
   </div>
+
+<!-- Display selected department info -->
+ <div *ngIf="selectedAuditee" class="auditee-table-wrapper">
+  <table class="selected-auditee-table">
+    <thead>
+      <tr>
+        <th>DEPARTMENT</th>
+        <th>AUDITEES</th>
+        <th>DATE</th>
+        <th>TIME</th>
+        <th>AUDITORS</th>
+      </tr>
+    </thead>
+      <tbody>
+  <tr>
+    <td>{{ selectedAuditee.auditeedepartment }}</td>
+    <td>{{ selectedAuditee.auditees }}</td>
+    <td>{{ selectedAuditee.starting }}</td>
+    <td>{{ selectedAuditee.time }}</td>
+    <td>{{ selectedAuditee.auditors }}</td>
+  </tr>
+</tbody>
+  </table>
+</div>
+
 </form>

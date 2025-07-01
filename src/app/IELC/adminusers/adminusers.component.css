@@ -165,6 +165,15 @@
   .eventscad{
     width: 200px;
 }
-
+  .eventscadmin{
+    width: 100%;
+}
+  .eventscadmincol{
+    width: 50%;
+}
+.eventsscuser{
+    width: 145%;
+    margin-left: -20%;
+}
   
   

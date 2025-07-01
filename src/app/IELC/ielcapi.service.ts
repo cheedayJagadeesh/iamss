@@ -1,3 +1,4 @@
+import { EventSchedulerUserModel } from './event-scheduler-user.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -6,6 +7,7 @@ import { DatePipe } from '@angular/common';
 import { map } from 'rxjs';
 import { RegisteredusersComponent } from './registeredusers/registeredusers.component';
 import { HttpHeaders } from '@angular/common/http';
+
 
 @Injectable({
   providedIn: 'root'
@@ -2252,6 +2254,68 @@ GetEventSchedulerUser(): Observable<string[]> {
     'Authorization': this.apiKey
    });
   return this.http.put(`${this.eventschedulerUserUrl}/${id}`, JSON.stringify(updatedData), { headers });
+}
+
+//-----------------------------------------------------
+
+GetEventScheduler(): Observable<string[]> {
+  return this.http.get<string[]>(`${this.eventschedulerUserUrl}`, { headers: this.getHeaders() });
+}
+
+  GetEventSchedulerId(id: number): Observable<any> {
+      return this.http.get<any>(`${this.eventschedulerUserUrl}/${id}`, { headers: this.getHeaders() });
+    }
+
+
+  UpdateEventScheduler(id: number, updatedData: any): Observable<any> {
+  const headers = new HttpHeaders({ 'Content-Type': 'application/json',
+    'Authorization': this.apiKey
+   });
+  return this.http.put(`${this.complianceqmsUrl}/update-month/${id}`, JSON.stringify(updatedData), { headers });
+}
+//--------------------------------------------------------------
+EventSchedulerUser = "https://coreappi.azurewebsites.net/";
+GetEventSchedulerUserByDept(department: string): Observable<EventSchedulerUserModel> {
+  return this.http.get<EventSchedulerUserModel>(`${this.eventschedulerUrl}/EventSchedulerUser/auditee`, {
+    params: { department },
+    headers: this.getHeaders()
+  });
+}
+
+checkScheduleExists(department: string, starting: string, time: string): Observable<boolean> {
+  return this.http.get<boolean>(`${this.eventschedulerUrl}/EventSchedulerUser/check`, {
+    params: { department, starting, time },
+    headers: this.getHeaders()
+  });
+}
+
+// GetEventSchedulerTime(): Observable<string[]> {
+//   return this.http.get<string[]>(`${this.eventschedulerUrl}/times`, { headers: this.getHeaders() });
+// }
+
+UpdateEventScheduleByDepartment(data: {
+  ID: number;
+  AUDITEEDEPARTMENT: string;
+  STARTING: string;
+  TIME: string;
+  AUDITEES?: string | null;
+  AUDITORS?: string | null;
+}): Observable<any> {
+  return this.http.put(
+    `${this.eventschedulerUrl}/EventSchedulerUser/update-by-department`,
+    data,
+    { headers: this.getHeaders() }
+  );
+}
+
+GetBookedTimes(date: string): Observable<string[]> {
+  return this.http.get<string[]>(
+    `${this.eventschedulerUrl}/EventSchedulerUser/booked-times`,
+    {
+      headers: this.getHeaders(),
+      params: { date }
+    }
+  );
 }
 
 }

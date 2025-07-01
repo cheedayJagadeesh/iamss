@@ -139,7 +139,7 @@ textarea {
     font-weight: bold;
     margin-left: 17%;
     color: #166ebf;
-    margin-top: -4%;
+    margin-top: -3%;
     font-size: 30px;
     position: absolute;
 }
@@ -167,7 +167,7 @@ textarea {
     margin-left: 50%;
 }
 .event-schedule-container {
-  max-width: 900px;
+  max-width: 980px;
   margin: 40px auto;
   padding: 20px 30px;
   background-color: #ffffff;
@@ -179,4 +179,47 @@ textarea {
 .input-select option[disabled] {
   color: #888;
 }
+
+.auditee-table-wrapper {
+  margin-top: 30px;
+  overflow-x: auto; /* horizontal scroll on small screens */
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+}
+
+.selected-auditee-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.selected-auditee-table thead {
+  background-color: #166ebf;
+  color: white;
+  font-weight: bold;
+}
+
+.selected-auditee-table th,
+.selected-auditee-table td {
+  border: 1px solid #ccc;
+  padding: 10px 12px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.selected-auditee-table tbody tr:hover {
+  background-color: #e6f1fc;
+}
+
+.selected-auditee-table tbody tr {
+  background-color: white;
+}
+
+.selected-auditee-table td {
+  color: #333;
+}
+
 
