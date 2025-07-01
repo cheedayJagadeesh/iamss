@@ -139,7 +139,7 @@ textarea {
     font-weight: bold;
     margin-left: 17%;
     color: #166ebf;
-    margin-top: -3%;
+    margin-top: -4%;
     font-size: 30px;
     position: absolute;
 }
@@ -220,6 +220,10 @@ textarea {
 
 .selected-auditee-table td {
   color: #333;
+}
+
+.layout{
+      margin-top: 3%;
 }
 
 

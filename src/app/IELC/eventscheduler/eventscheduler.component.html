@@ -58,7 +58,7 @@
       </tr>
     </thead>
       <tbody>
-  <tr>
+  <tr *ngFor="let eventscadmin of eventscheduleradmin" >
     <td>{{ selectedAuditee.auditeedepartment }}</td>
     <td>{{ selectedAuditee.auditees }}</td>
     <td>{{ selectedAuditee.starting }}</td>
@@ -68,5 +68,23 @@
 </tbody>
   </table>
 </div>
+
+<table class="table table-striped table-bordered layout" name="eventschdule"  >
+            <thead class="table-primary eventscadmin">
+                <tr>
+                    <!-- <th class="eventscad" scope="col">ID</th> -->
+                    <th class="eventscad" scope="col">AUDITEE DEPARTMENT</th>
+  		            <th scope="col" class="eventscadmincol">PROCEDURE</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let eventscadmin of eventscheduleradmin" >
+                    <!-- <td>{{eventscadmin.id}}</td> -->
+                    <td>{{eventscadmin.auditeedepartment}}</td>
+                    <td>{{eventscadmin.procedures}}</td>                      
+                </tr>
+               
+            </tbody>
+        </table>
 
 </form>

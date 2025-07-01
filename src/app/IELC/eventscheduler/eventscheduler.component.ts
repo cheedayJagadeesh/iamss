@@ -3,11 +3,18 @@ import { AuthService } from './../../authservice.service';
 import { Component, OnInit } from '@angular/core';
 import { IelcapiService } from '../ielcapi.service';
 
+interface eventscadmininfo {
+  id: number;
+  auditeedepartment: string;
+  procedures: string;
+}
+
 @Component({
   selector: 'app-eventscheduler',
   templateUrl: './eventscheduler.component.html',
   styleUrls: ['./eventscheduler.component.css']
 })
+
 export class EventschedulerComponent implements OnInit{
 //departments = ['HR', 'IT', 'Finance', 'Operations', 'Sales'];
 AuditeesDept: any[]=[];
@@ -20,15 +27,36 @@ selectedDept =  '';
 selectedTime =  '';
 selectedDate = '';
 selectedAuditee: any | null = null;
+ eventscheduleradmin: any[]=[];
+
+   eventschadlist: any[] = []; 
+eventschadmin: eventscadmininfo = {
+  id: 0,
+  auditeedepartment: '',
+  procedures: '',
+};
 
  constructor(private ielc:IelcapiService, private authService: AuthService) {
+  }
+    sortlist(data: any[]): any[] {
+    return data.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
   }
 
   ngOnInit(): void {
     this.GetEventscheduleData();
     this.GetEventscheduleTime();
     this.loadAllTimes();
+    this.GetEventSchedulerAdmin();
   }
+
+GetEventSchedulerAdmin(){
+  this.ielc.GetEventSchedulerAdmin().subscribe((data) => {
+    this.eventscheduleradmin=data;
+    this.eventscheduleradmin = this.sortlist(data)
+    // this.isLoading = false;
+    console.log(this.eventscheduleradmin);
+  });
+ }
 
  GetEventscheduleData(){
   this.ielc.GetEventSchedulerUserAuditeesDept().subscribe((data) => {
