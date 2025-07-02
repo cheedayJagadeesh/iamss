@@ -1,90 +1,109 @@
-<form class="event-schedule-container" (ngSubmit)="onSubmit()" #form="ngForm">
+<div *ngIf="hasPermission; else noAccess">
+  <form class="event-schedule-container" (ngSubmit)="onSubmit()" #form="ngForm">
 
-  <h1 class="h1">EVENT SCHEDULE PLANNER</h1>
+    <h1 class="h1">EVENT SCHEDULE PLANNER</h1>
 
-  <div class="info-table">
+    <div class="info-table">
     <div class="row">
       <div class="cell header">PROJECT/EVENT</div>
-      <div class="cell value">INTERNAL AUDIT</div>
-      <div class="cell value">QMS (ISO 9001:2015)</div>
-      <div class="cell value">ISMS (ISO 27001:2022)</div>
-      <div class="cell note height">KINDLY MAKE YOURSELVES AVAILABLE ON THESE DAYS</div>
+      <div class="cell value">{{event.projectInternalAudit}}</div>
+      <div class="cell value">{{ event.projectQMS}}</div>
+      <div class="cell value">{{ event.projectISMS }}</div>
+      <div class="cell note height">{{ event.notes }}</div>
     </div>
     <div class="row">
       <div class="cell header">ORGANIZER</div>
-      <div class="cell value">INTEQ SOFTWARE LLP</div>
-      <div class="cell value">PLANNING SCHEDULE</div>
-      <div class="cell value">JULY 14<sup>TH</sup> - JULY 27<sup>TH</sup></div>
+      <div class="cell value">{{ event.organizerCompany}}</div>
+      <div class="cell value">{{ event.organizerSchedule }}</div>
+      <div class="cell value">{{event.organizerDateRange}}</div>
     </div>
   </div>
 
-  <div class="schedule-form">
-    <div class="form-header">
-      <div class="focus-title">FOCUS AREA / AUDITEE DEPARTMENT</div>
-      <div class="form-label">DATE</div>
-      <div class="form-label">TIME</div>
+    <div class="schedule-form">
+      <div class="form-header">
+        <div class="focus-title">FOCUS AREA / AUDITEE DEPARTMENT</div>
+        <div class="form-label">DATE</div>
+        <div class="form-label">TIME</div>
+      </div>
+
+      <div class="form-row">
+        <select
+          class="input-select1"
+          name="department"
+          required
+          [(ngModel)]="selectedDept"
+          (change)="onDepartmentChange()"
+        >
+          <option value="" disabled>- AUDITEE DEPARTMENT -</option>
+          <option *ngFor="let dept of projectlist" [value]="dept">{{ dept }}</option>
+        </select>
+
+        <input
+          type="date"
+          class="input-date"
+          name="selectedDate"
+          required
+          [(ngModel)]="selectedDate"
+          (change)="onDateChange()"
+        />
+
+        <select
+          class="input-select"
+          name="Time"
+          required
+          [(ngModel)]="selectedTime"
+        >
+          <option value="" disabled>- Select TIME -</option>
+          <option *ngFor="let time of filteredTimes" [value]="time">{{ time }}</option>
+        </select>
+      </div>
+
+      <div class="submit-row">
+        <button type="submit" class="submit-btn" [disabled]="form.invalid">SUBMIT</button>
+      </div>
     </div>
 
-    <div class="form-row">
-      
-<select class="input-select1" name="department" required [(ngModel)]="selectedDept" (change)="onDepartmentChange()">
-  <option value="" disabled>- AUDITEE DEPARTMENT -</option>
-  <option *ngFor="let dept of AuditeesDept" [value]="dept">{{ dept }}</option>
-</select>
-
-<input type="date" class="input-date" name="selectedDate" required [(ngModel)]="selectedDate"  (change)="onDateChange()" />
-  
-<select class="input-select" name="Time" required [(ngModel)]="selectedTime">
-  <option value="" disabled>- Select TIME -</option>
-  <option *ngFor="let time of filteredTimes" [value]="time">{{ time }}</option>
-</select>
+    <!-- Display selected department info -->
+    <div *ngIf="selectedAuditee" class="auditee-table-wrapper">
+      <table class="selected-auditee-table">
+        <thead>
+          <tr>
+            <th>DEPARTMENT</th>
+            <th>AUDITEES</th>
+            <th>DATE</th>
+            <th>TIME</th>
+            <th>AUDITORS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ selectedAuditee.auditeedepartment }}</td>
+            <td>{{ selectedAuditee.auditees }}</td>
+            <td>{{ selectedAuditee.starting }}</td>
+            <td>{{ selectedAuditee.time }}</td>
+            <td>{{ selectedAuditee.auditors }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="submit-row">
-      <button type="submit" class="submit-btn" [disabled]="form.invalid">SUBMIT</button>
-    </div>
-  </div>
-
-<!-- Display selected department info -->
- <div *ngIf="selectedAuditee" class="auditee-table-wrapper">
-  <table class="selected-auditee-table">
-    <thead>
-      <tr>
-        <th>DEPARTMENT</th>
-        <th>AUDITEES</th>
-        <th>DATE</th>
-        <th>TIME</th>
-        <th>AUDITORS</th>
-      </tr>
-    </thead>
+    <table class="table table-striped table-bordered layout" name="eventschdule">
+      <thead class="table-primary eventscadmin">
+        <tr>
+          <th class="eventscad" scope="col">AUDITEE DEPARTMENT</th>
+          <th scope="col" class="eventscadmincol">PROCEDURE</th>
+        </tr>
+      </thead>
       <tbody>
-  <tr *ngFor="let eventscadmin of eventscheduleradmin" >
-    <td>{{ selectedAuditee.auditeedepartment }}</td>
-    <td>{{ selectedAuditee.auditees }}</td>
-    <td>{{ selectedAuditee.starting }}</td>
-    <td>{{ selectedAuditee.time }}</td>
-    <td>{{ selectedAuditee.auditors }}</td>
-  </tr>
-</tbody>
-  </table>
+        <tr *ngFor="let eventscadmin of eventscheduleradmin">
+          <td>{{ eventscadmin.auditeedepartment }}</td>
+          <td>{{ eventscadmin.procedures }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
 </div>
 
-<table class="table table-striped table-bordered layout" name="eventschdule"  >
-            <thead class="table-primary eventscadmin">
-                <tr>
-                    <!-- <th class="eventscad" scope="col">ID</th> -->
-                    <th class="eventscad" scope="col">AUDITEE DEPARTMENT</th>
-  		            <th scope="col" class="eventscadmincol">PROCEDURE</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let eventscadmin of eventscheduleradmin" >
-                    <!-- <td>{{eventscadmin.id}}</td> -->
-                    <td>{{eventscadmin.auditeedepartment}}</td>
-                    <td>{{eventscadmin.procedures}}</td>                      
-                </tr>
-               
-            </tbody>
-        </table>
-
-</form>
+<ng-template #noAccess>
+  <p>You do not have permission to access this page.</p>
+</ng-template>

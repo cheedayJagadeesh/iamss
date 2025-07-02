@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IelcapiService } from '../ielcapi.service';
 
+
 interface smtpinfo {
   id: number;
   userName: string;
@@ -301,9 +302,11 @@ eventschuser: eventscuserinfo = {
  holidayslist: any[]=[];
  eventslist: any[]=[];
  eventscheduleradmin: any[]=[];
+ eventscheduleadmin: any[]=[];
  eventscheduleruser: any[]=[];
  crserestlist: any[]=[];
  eventalertslist: any[]=[];
+ event: any | null = null;
   
   constructor(private ielc:IelcapiService) {
 
@@ -387,6 +390,7 @@ eventschuser: eventscuserinfo = {
     this.GetEventAlertsist();
     this.GetEventSchedulerAdmin();
     this.GetEventSchedulerUser();
+    this.GetLatestEvent();
     
   }
  //-------------------------------------------------------------------------------EventSchedulerAdmin
@@ -473,6 +477,36 @@ UpdateEventSchedulerAdmin() {
     procedures: '',
     }
   }
+
+  GetLatestEvent() {
+    this.ielc.GetLatestEvent().subscribe({
+      next: (data) => {
+        this.event = data;
+            console.log(this.event);
+      },
+      error: (err) => console.error('Failed to load event schedule', err)
+    });
+  }
+
+
+
+ 
+UpdateEventScheduleadmin() {
+  if (!this.event || !this.event.eventScheduleId) {
+    alert("No event selected for update.");
+    return;
+  }
+  console.log("Updating event:", this.event);
+  this.ielc.UpdateEventScheduleadmin(this.event.eventScheduleId, this.event).subscribe({
+    next: () => {
+      alert("✅ Event updated successfully.");
+      this.GetLatestEvent();
+    },
+    error: (err) => {
+      console.error("Update failed:", err);
+    }
+  });
+}
    //-------------------------------------------------------------------------------EventSchedulerAdmin
 GetEventSchedulerUser(){
   this.ielc.GetEventSchedulerUser().subscribe((data) => {

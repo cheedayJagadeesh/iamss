@@ -546,6 +546,9 @@ The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing 
    </div>
    <div >
     <label class="lblevents blink">Latest Events:</label>
+  <button *ngIf="showButton" type="button" class="btn btn-link btnlink1" routerLink="/eventscheduler">
+        Event Scheduler
+  </button>
     <!-- <img  *ngFor="let item of eventslist | slice:0:1" class="imgevents" [src]="'data:image/jpeg;base64,' + item.eventData" alt="Latest Event Image" > -->
     <img  
     *ngIf="latestEvent"
