@@ -43,14 +43,27 @@
           <option *ngFor="let dept of projectlist" [value]="dept">{{ dept }}</option>
         </select>
 
-        <input
+        <!-- <input
           type="date"
           class="input-date"
           name="selectedDate"
           required
           [(ngModel)]="selectedDate"
           (change)="onDateChange()"
-        />
+        /> -->
+
+<input
+  type="date"
+  class="input-date"
+  name="selectedDate"
+  required
+  [(ngModel)]="selectedDate"
+  [attr.min]="minDate"
+  [attr.max]="maxDate"
+  (change)="onDateChange()"
+/>
+
+
 
         <select
           class="input-select"
