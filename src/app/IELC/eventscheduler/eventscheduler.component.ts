@@ -126,6 +126,7 @@ userProjects: string[] = [];
 ngOnInit(): void {
   this.authService.userDetails$.subscribe(userDetails => {
     this.userName = userDetails?.displayName;
+    //this.userName = "Venkat Merla";
     this.userEmail = userDetails?.email;
 
     if (!this.userName) {
@@ -296,84 +297,6 @@ onDepartmentChange() {
 
 
 
-// onComplianceChange(event: Event): void {
-//   const target = event.target as HTMLSelectElement;
-//   this.selectedCompliance = target.value;
-
-//   this.isLoading = true;
-//   this.hasPermission = false;
-//   this.showTable = false;
-//   this.selectedTableData = [];
-//   this.showProjectDropdown = true;
-//   this.selectedProject = '';
-
-//   forkJoin({
-//     ccData: this.ielc.GetCCDisplayNames(),
-//     toData: this.ielc.GetToDisplayNames(),
-//     ccDataqms: this.ielc.GetCCDisplayNamesQMS(),
-//     toDataqms: this.ielc.GetToDisplayNamesQMS(),
-//   }).subscribe(({ ccData, toData, ccDataqms, toDataqms }) => {
-//     this.ccDisplayNames = ccData;
-//     this.toDisplayNames = toData;
-//     this.ccDisplayNamesqms = ccDataqms;
-//     this.toDisplayNamesqms = toDataqms;
-
-//     if (this.userName) {
-//       const lowerUser = this.userName.toLowerCase();
-
-//       this.matchedSuperOwner = this.ccDisplayNames.some(name =>
-//         name.toLowerCase().includes(lowerUser)
-//       );
-
-//       this.matchedOwner = this.toDisplayNames.some(name =>
-//         name.toLowerCase().includes(lowerUser)
-//       );
-
-//       this.matchedSuperOwnerqms = this.ccDisplayNamesqms.some(name =>
-//         name.toLowerCase().includes(lowerUser)
-//       );
-
-//       this.matchedOwnerqms = this.toDisplayNamesqms.some(name =>
-//         name.toLowerCase().includes(lowerUser)
-//       );
-
-//       let complianceData$: Observable<any[]> | undefined;
-
-//   if (this.matchedSuperOwner) {
-//     this.GetAllProjectsList();
-//     complianceData$ = this.ielc.GetEventSchedulerUserAuditeesDept();
-//         this.hasPermission = true;
-//   } else if (this.matchedOwner) {
-//     this.GetUserByProjectsList();
-//     complianceData$ = this.GetFilteredISMSUserTable();
-//   } else {
-//     this.hasPermission = false;
-//     this.showTable = false;
-//     this.isLoading = false;
-//     return;
-//   }
-
-//       if (complianceData$) {
-//         complianceData$.subscribe({
-//           next: (data) => {
-//             this.selectedTableData = this.sortlist(data);
-//             this.hasPermission = this.selectedTableData.length > 0;
-//             this.showTable = this.selectedTableData.length > 0;
-//             this.isLoading = false;
-//           },
-//           error: () => {
-//             this.selectedTableData = [];
-//             this.hasPermission = false;
-//             this.showTable = false;
-//             this.isLoading = false;
-//           }
-//         });
-//       }
-//     }
-//   });
-// }
-
-
 onComplianceChange(event: Event): void {
   const target = event.target as HTMLSelectElement;
   this.selectedCompliance = target.value;
@@ -388,43 +311,134 @@ onComplianceChange(event: Event): void {
   forkJoin({
     ccData: this.ielc.GetCCDisplayNames(),
     toData: this.ielc.GetToDisplayNames(),
-  }).subscribe(({ ccData, toData }) => {
-    const lowerUser = this.userName!.toLowerCase();
+    ccDataqms: this.ielc.GetCCDisplayNamesQMS(),
+    toDataqms: this.ielc.GetToDisplayNamesQMS(),
+  }).subscribe(({ ccData, toData, ccDataqms, toDataqms }) => {
+    this.ccDisplayNames = ccData;
+    this.toDisplayNames = toData;
+    this.ccDisplayNamesqms = ccDataqms;
+    this.toDisplayNamesqms = toDataqms;
 
-    this.matchedSuperOwner = ccData.some(name => name.toLowerCase().includes(lowerUser));
-    this.matchedOwner = toData.some(name => name.toLowerCase().includes(lowerUser));
+    if (this.userName) {
+      const lowerUser = this.userName.toLowerCase();
 
-    let complianceData$: Observable<any[]> | undefined;
+      this.matchedSuperOwner = this.ccDisplayNames.some(name =>
+        name.toLowerCase().includes(lowerUser)
+      );
 
-    if (this.matchedSuperOwner) {
-      complianceData$ = this.ielc.GetEventSchedulerUserAuditeesDept();
-    } else if (this.matchedOwner) {
-      complianceData$ = this.GetFilteredISMSUserTable();
-    } else {
-      this.hasPermission = false;
-      this.showTable = false;
-      this.isLoading = false;
-      return;
-    }
+      this.matchedOwner = this.toDisplayNames.some(name =>
+        name.toLowerCase().includes(lowerUser)
+      );
 
-    if (complianceData$) {
-      complianceData$.subscribe({
-        next: (data) => {
-          this.selectedTableData = this.sortlist(data);
-          this.hasPermission = this.selectedTableData.length > 0;
-          this.showTable = this.selectedTableData.length > 0;
-          this.isLoading = false;
-        },
-        error: () => {
-          this.selectedTableData = [];
-          this.hasPermission = false;
-          this.showTable = false;
-          this.isLoading = false;
-        }
-      });
+      this.matchedSuperOwnerqms = this.ccDisplayNamesqms.some(name =>
+        name.toLowerCase().includes(lowerUser)
+      );
+
+      this.matchedOwnerqms = this.toDisplayNamesqms.some(name =>
+        name.toLowerCase().includes(lowerUser)
+      );
+
+      let complianceData$: Observable<any[]> | undefined;
+
+  if (this.matchedSuperOwner) {
+    this.GetAllProjectsList();
+    complianceData$ = this.ielc.GetEventSchedulerUserAuditeesDept();
+        this.hasPermission = true;
+  } else if (this.matchedOwner) {
+    this.GetUserByProjectsList();
+    complianceData$ = this.GetFilteredISMSUserTable();
+  } else {
+    this.hasPermission = false;
+    this.showTable = false;
+    this.isLoading = false;
+    return;
+  }
+
+      if (complianceData$) {
+        complianceData$.subscribe({
+          next: (data) => {
+            this.selectedTableData = this.sortlist(data);
+            this.hasPermission = this.selectedTableData.length > 0;
+            this.showTable = this.selectedTableData.length > 0;
+            this.isLoading = false;
+          },
+          error: () => {
+            this.selectedTableData = [];
+            this.hasPermission = false;
+            this.showTable = false;
+            this.isLoading = false;
+          }
+        });
+      }
     }
   });
 }
+
+
+// onComplianceChange(event: Event): void {
+//   const target = event.target as HTMLSelectElement;
+//   this.selectedCompliance = target.value;
+
+//   this.isLoading = true;
+//   this.hasPermission = false;
+//   this.showTable = false;
+//   this.selectedTableData = [];
+//   this.showProjectDropdown = true;
+//   this.selectedProject = '';
+
+//   // ✅ Add extraToData observable here
+//   forkJoin({
+//     ccData: this.ielc.GetCCDisplayNames(),
+//     toData: this.ielc.GetToDisplayNames(),
+//     extraToData: this.ielc.Getextratouser()   // <--- your extra TO users from API
+//   }).subscribe(({ ccData, toData, extraToData }) => {
+//     const lowerUser = this.userName!.toLowerCase();
+
+//     // ✅ Combine toData with extraToData
+//     const combinedToData = [...toData, ...extraToData];
+
+//     console.log(combinedToData);
+
+//     // ✅ Matching logic
+//     this.matchedSuperOwner = ccData.some(name =>
+//       name.toLowerCase().includes(lowerUser)
+//     );
+//     this.matchedOwner = combinedToData.some(name =>
+//       name.toLowerCase().includes(lowerUser)
+//     );
+
+//     let complianceData$: Observable<any[]> | undefined;
+
+//     if (this.matchedSuperOwner) {
+//       complianceData$ = this.ielc.GetEventSchedulerUserAuditeesDept();
+//     } else if (this.matchedOwner) {
+//       complianceData$ = this.GetFilteredISMSUserTable();
+//     } else {
+//       this.hasPermission = false;
+//       this.showTable = false;
+//       this.isLoading = false;
+//       return;
+//     }
+
+//     if (complianceData$) {
+//       complianceData$.subscribe({
+//         next: (data) => {
+//           this.selectedTableData = this.sortlist(data);
+//           this.hasPermission = this.selectedTableData.length > 0;
+//           this.showTable = this.selectedTableData.length > 0;
+//           this.isLoading = false;
+//         },
+//         error: () => {
+//           this.selectedTableData = [];
+//           this.hasPermission = false;
+//           this.showTable = false;
+//           this.isLoading = false;
+//         }
+//       });
+//     }
+//   });
+// }
+
 
 
 
@@ -450,6 +464,8 @@ onComplianceChange(event: Event): void {
          map((complianceLists: any[][]) => complianceLists.flat())
        );
      }
+
+
 
      
 
@@ -502,4 +518,8 @@ onComplianceChange(event: Event): void {
     this.projectlist=Teamsdata;
     });
    }
+
+   logout(): void {
+  this.authService.logout();
+}
 }

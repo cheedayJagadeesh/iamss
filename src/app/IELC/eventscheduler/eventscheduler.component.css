@@ -13,6 +13,22 @@ h2 {
   margin-bottom: 20px;
   letter-spacing: 1px;
 }
+.btnback{
+    margin-left: 87%;
+    margin-top: -1.9%;
+    position: absolute;
+    width: 5%;
+}
+  .buttonlogout{
+    margin-left: 93%;
+    margin-top: -1.9%;
+    position: absolute;
+    width: 5%;
+}
+.img{
+      margin-top: -34px;
+    width: 9%;
+}
 
 /* Top Info Table */
 .info-table {

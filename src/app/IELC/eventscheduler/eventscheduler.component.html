@@ -1,8 +1,13 @@
 <div *ngIf="hasPermission; else noAccess">
+  <app-sprtheader></app-sprtheader>
+      <img class="img" src="/assets/images/Inteq logo.png">
+    <div>
+        <button class="btn btn-dark btnback" routerLink="/registration">Back</button>
+        <button type="button" class="btn buttonlogout btn-danger" (click)="logout()">Logout</button>
+    </div>
   <form class="event-schedule-container" (ngSubmit)="onSubmit()" #form="ngForm">
 
     <h1 class="h1">EVENT SCHEDULE PLANNER</h1>
-
     <div class="info-table">
     <div class="row">
       <div class="cell header">PROJECT/EVENT</div>
