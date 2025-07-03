@@ -202,7 +202,7 @@ checkCCPermission(): void {
     this.eventscheduleradmin=data;
     this.eventscheduleradmin = this.sortlist(data)
     // this.isLoading = false;
-    console.log(this.eventscheduleradmin);
+   /// console.log(this.eventscheduleradmin);
   });
  }
 
@@ -445,7 +445,7 @@ onComplianceChange(event: Event): void {
    GetUserByProjectsList(){
     this.ielc.GetEventsscfilterprojects(this.userName!).subscribe((userbyprojectsdata) => {
     this.projectlist=userbyprojectsdata;
-    console.log("l",userbyprojectsdata);
+    //console.log("l",userbyprojectsdata);
     });
    }
 
@@ -504,7 +504,7 @@ onComplianceChange(event: Event): void {
     GetSuperOwners(userName: string | null){
     this.ielc.GetCCDisplayNames().subscribe((superowners) => {
     this.superownerss=superowners;
-    console.log("l",superowners);
+    //console.log("l",superowners);
     });
    }
 
