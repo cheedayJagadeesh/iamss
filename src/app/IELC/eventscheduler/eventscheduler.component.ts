@@ -521,47 +521,68 @@ onDateChange() {
 
 
 
- onSubmit() {
+ onSubmit(): void {
+  // ✅ 1. Check if all fields are filled
   if (!this.selectedDept || !this.selectedDate || !this.selectedTime) {
     alert('Please complete all fields.');
     return;
   }
 
-  // Step 1: Check if schedule exists first
+  // ✅ 2. Compare today to cutoff date
+  if (this.lastAllowedDate) {
+    const today = new Date();
+    const cutoff = new Date(this.lastAllowedDate);
+
+    // Remove time portion
+    today.setHours(0, 0, 0, 0);
+    cutoff.setHours(0, 0, 0, 0);
+
+    console.log("Today:", today, "Last allowed date:", cutoff);
+
+    if (today > cutoff) {
+      alert("Schedule update time is over. You cannot submit after " + this.lastAllowedDate + ".");
+      return;
+    }
+  }
+
+  // ✅ 3. Check if schedule already exists
   this.ielc.checkScheduleExists(this.selectedDept, this.selectedDate, this.selectedTime).subscribe({
-    next: (exists) => {
+    next: (exists: boolean) => {
       if (exists) {
         alert('Schedule already created for this date and time.');
-      } else {
-        // Step 2: If not exists, create the schedule
-        const updateData = {
-          ID: 0,
-          AUDITEEDEPARTMENT: this.selectedDept,
-          STARTING: this.selectedDate,
-          TIME: this.selectedTime,
-          AUDITEES: null,
-          AUDITORS: null
-        };
-
-        this.ielc.UpdateEventScheduleByDepartment(updateData).subscribe({
-          next: (res) => {
-            alert('Schedule created successfully');
-            this.onDateChange();
-            this.onDepartmentChange();
-          },
-          error: (err) => {
-            console.error(err);
-            alert('Failed to update schedule.');
-          }
-        });
+        return;
       }
+
+      // ✅ 4. Prepare and submit schedule
+      const updateData = {
+        ID: 0,
+        AUDITEEDEPARTMENT: this.selectedDept,
+        STARTING: this.selectedDate,
+        TIME: this.selectedTime,
+        AUDITEES: null,
+        AUDITORS: null
+      };
+
+      this.ielc.UpdateEventScheduleByDepartment(updateData).subscribe({
+        next: () => {
+          alert('Schedule created successfully.');
+          this.onDateChange();
+          this.onDepartmentChange();
+        },
+        error: (err) => {
+          console.error('Failed to update schedule:', err);
+          alert('Failed to update schedule.');
+        }
+      });
     },
     error: (err) => {
-      console.error('Failed to check schedule existence', err);
+      console.error('Failed to check schedule existence:', err);
       alert('Error occurred while checking schedule.');
     }
   });
 }
+
+
 
 onDepartmentChange() {
   if (this.selectedDept) {
