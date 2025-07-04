@@ -254,6 +254,15 @@ textarea {
 .last-date-text {
   text-align: left;
   font-size: 17px;
+  margin-left: -33%;
+  color: black;
+  font-weight: 400; /* Thin/Normal */
+  white-space: nowrap;
+  font-weight: bold;
+}
+.last-date-text1 {
+  text-align: left;
+  font-size: 17px;
   margin-left: 11px;
   color: red;
   font-weight: 400; /* Thin/Normal */

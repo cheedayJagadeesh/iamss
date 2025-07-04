@@ -5,6 +5,7 @@ import { IelcapiService } from '../ielcapi.service';
 import { forkJoin, map, Observable, of, switchMap } from 'rxjs';
 
 
+
 @Component({
   selector: 'app-eventscheduler',
   templateUrl: './eventscheduler.component.html',
