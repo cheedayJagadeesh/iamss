@@ -86,6 +86,7 @@ const routes: Routes = [
   {path:'soc2mails',component:Soc2mailsComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['soc2mails'], roles: ['Admin', 'SuperAdmin']}},
   {path:'complianceform',component:ComplianceformComponent,canActivate: [MsalGuard],data: { pageNames: ['complianceform'], roles: ['Admin', 'SuperAdmin']}},
   {path:'adminusers',component:AdminusersComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['adminusers'], roles: ['Admin', 'SuperAdmin']}},
+  {path:'eventscheduler',component:EventschedulerComponent,canActivate: [MsalGuard],data: { pageNames: ['adminusers'], roles: ['Admin', 'SuperAdmin']}},
   {path:'ithelpsprt',component:IthelpsprtComponent,canActivate: [MsalGuard]},
   {path:'adminsprt',component:AdminsprtComponent,canActivate: [MsalGuard]},
   {path:'hrsprt',component:HrsprtComponent,canActivate: [MsalGuard]},
@@ -103,7 +104,6 @@ const routes: Routes = [
   {path:'admindept',component:AdmindeptComponent,canActivate: [MsalGuard]},
   {path:'hrdept',component:HrdeptComponent,canActivate: [MsalGuard]},
   {path:'itdept',component:ItdeptComponent,canActivate: [MsalGuard]},
-  {path:'eventscheduler',component:EventschedulerComponent,canActivate: [MsalGuard]},
   {path:'authcallback', component:AuthcallbackComponent}
 ];
 

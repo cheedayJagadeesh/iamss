@@ -147,7 +147,7 @@ textarea {
 }
 
 .height{
-    height: 164%;
+    height: 170%;
 }
 
 .h1{
@@ -183,7 +183,7 @@ textarea {
     margin-left: 50%;
 }
 .event-schedule-container {
-  max-width: 980px;
+  max-width: 1132px;
   margin: 40px auto;
   padding: 20px 30px;
   background-color: #ffffff;
@@ -242,4 +242,21 @@ textarea {
       margin-top: 3%;
 }
 
-
+/* Submit Button */
+.submit-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+ 
+ 
+.last-date-text {
+  text-align: left;
+  font-size: 17px;
+  margin-left: 11px;
+  color: red;
+  font-weight: 400; /* Thin/Normal */
+  white-space: nowrap;
+  font-weight: bold;
+}

@@ -8,4 +8,5 @@
   organizerDateRange: string;
   notes: string;
   createdOn: string;
+  organizerLastDate:string;
 }

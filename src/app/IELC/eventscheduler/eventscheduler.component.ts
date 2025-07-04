@@ -46,7 +46,9 @@ userProjects: string[] = [];
   ownerss: any[] = [];
   event: any | null = null;
   minDate!: string;
-maxDate!: string;
+  maxDate!: string;
+  lastAllowedDate!: string;
+
 
  
  constructor(private ielc:IelcapiService, private authService: AuthService) {
@@ -166,6 +168,102 @@ maxDate!: string;
 //   });
 // }
 
+// ngOnInit(): void {
+//   this.authService.userDetails$.subscribe(userDetails => {
+//     this.userName = userDetails?.displayName;
+//     // For testing:
+//     // this.userName = "Venkat Merla";
+//     // this.userName = "Ramprasad .KP";
+//     this.userEmail = userDetails?.email;
+
+//     if (!this.userName) {
+//       this.hasPermission = false;
+//       this.showTable = false;
+//       this.isLoading = false;
+//       return;
+//     }
+
+//     this.ielc.GetEventsscfilterprojects(this.userName).subscribe({
+//       next: (userbyprojectsdata) => {
+//         if (userbyprojectsdata && userbyprojectsdata.length > 0) {
+//           this.projectlist = userbyprojectsdata;
+//           this.hasPermission = true;
+
+//           // Load other necessary data
+//           this.GetEventscheduleTime();
+//           this.loadAllTimes();
+//           this.GetEventSchedulerAdmin();
+//           this.GetAllProjectsList();
+//           this.GetSuperOwners(this.userName);
+//           this.GetOwners();
+//           this.GetUserByProjectsList();
+//           this.GetLatestEvent();
+
+//           // ✅ Parse event.organizerDateRange if available
+//           if (this.event && this.event.organizerDateRange) {
+//             const parts = this.event.organizerDateRange.split("–");
+//             if (parts.length === 2) {
+//               const parseDatePart = (part: string): string | null => {
+//                 const trimmed = part.trim().toUpperCase();
+//                 // Ex: "JULY 21TH"
+//                 const match = trimmed.match(/^([A-Z]+)\s+(\d{1,2})/);
+//                 if (match) {
+//                   const monthName = match[1];
+//                   const day = match[2].padStart(2, "0");
+//                   const monthMap: { [key: string]: string } = {
+//                     JANUARY: "01",
+//                     FEBRUARY: "02",
+//                     MARCH: "03",
+//                     APRIL: "04",
+//                     MAY: "05",
+//                     JUNE: "06",
+//                     JULY: "07",
+//                     AUGUST: "08",
+//                     SEPTEMBER: "09",
+//                     OCTOBER: "10",
+//                     NOVEMBER: "11",
+//                     DECEMBER: "12"
+//                   };
+//                   const month = monthMap[monthName];
+//                   if (month) {
+//                     const year = new Date().getFullYear(); // Use current year
+//                     return `${year}-${month}-${day}`;
+//                   }
+//                 }
+//                 return null;
+//               };
+
+//               const start = parseDatePart(parts[0]);
+//               const end = parseDatePart(parts[1]);
+
+//               if (start && end) {
+//                 this.minDate = start;
+//                 this.maxDate = end;
+
+//                 // Optionally prefill selectedDate if today is in range
+//                 const today = new Date().toISOString().substring(0, 10);
+//                 if (today >= this.minDate && today <= this.maxDate) {
+//                   this.selectedDate = today;
+//                 }
+//               } else {
+//                 console.warn("Could not parse organizerDateRange:", this.event.organizerDateRange);
+//               }
+//             } else {
+//               console.warn("Invalid organizerDateRange format:", this.event.organizerDateRange);
+//             }
+//           }
+//         } else {
+//           this.checkCCPermission();
+//         }
+//       },
+//       error: (err) => {
+//         this.checkCCPermission();
+//       }
+//     });
+//   });
+// }
+
+
 ngOnInit(): void {
   this.authService.userDetails$.subscribe(userDetails => {
     this.userName = userDetails?.displayName;
@@ -250,6 +348,44 @@ ngOnInit(): void {
               console.warn("Invalid organizerDateRange format:", this.event.organizerDateRange);
             }
           }
+
+          // ✅ Parse organizerLastDate
+if (this.event && this.event.organizerLastDate) {
+  const text = this.event.organizerLastDate.trim();
+  // Example: "Last date for updating schedule inputs on before 3rd July 2025."
+  const match = text.match(/(\d{1,2})(?:st|nd|rd|th)?\s+([A-Za-z]+)\s+(\d{4})/);
+  if (match) {
+    const day = match[1].padStart(2, "0");
+    const monthName = match[2].toUpperCase();
+    const year = match[3];
+
+    const monthMap: { [key: string]: string } = {
+      JANUARY: "01",
+      FEBRUARY: "02",
+      MARCH: "03",
+      APRIL: "04",
+      MAY: "05",
+      JUNE: "06",
+      JULY: "07",
+      AUGUST: "08",
+      SEPTEMBER: "09",
+      OCTOBER: "10",
+      NOVEMBER: "11",
+      DECEMBER: "12"
+    };
+
+    const month = monthMap[monthName];
+    if (month) {
+      this.lastAllowedDate = `${year}-${month}-${day}`;
+    } else {
+      console.warn("Unknown month in organizerLastDate:", monthName);
+    }
+  } else {
+    console.warn("Could not parse organizerLastDate:", text);
+  }
+}
+
+
         } else {
           this.checkCCPermission();
         }
@@ -287,6 +423,15 @@ checkCCPermission(): void {
     }
   });
 }
+
+
+isSubmitDisabled(): boolean {
+  if (!this.selectedDate || !this.lastAllowedDate) {
+    return false; // or true, depending on if you want to force disabling
+  }
+  return this.selectedDate >= this.lastAllowedDate;
+}
+
 
 
     GetLatestEvent() {

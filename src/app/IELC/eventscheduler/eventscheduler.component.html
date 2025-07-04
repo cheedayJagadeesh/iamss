@@ -14,13 +14,14 @@
       <div class="cell value">{{event.projectInternalAudit}}</div>
       <div class="cell value">{{ event.projectQMS}}</div>
       <div class="cell value">{{ event.projectISMS }}</div>
-      <div class="cell note height">{{ event.notes }}</div>
+      <div class="cell value height">{{ event.notes }}</div>
     </div>
     <div class="row">
       <div class="cell header">ORGANIZER</div>
       <div class="cell value">{{ event.organizerCompany}}</div>
       <div class="cell value">{{ event.organizerSchedule }}</div>
       <div class="cell value">{{event.organizerDateRange}}</div>
+      <!-- <div class="cell value"></div> -->
     </div>
   </div>
 
@@ -76,10 +77,21 @@
         </select>
       </div>
 
-      <div class="submit-row">
+      <!-- <div class="submit-row">
         <button type="submit" class="submit-btn" [disabled]="form.invalid">SUBMIT</button>
       </div>
-    </div>
+    </div> -->
+
+<div class="submit-row">
+  <strong class="last-date-text">{{ event.organizerLastDate }}</strong>
+  <button
+    type="submit"
+    class="submit-btn"
+    [disabled]="form.invalid || isSubmitDisabled">
+    SUBMIT
+  </button>
+</div>
+</div>
 
     <!-- Display selected department info -->
     <div *ngIf="selectedAuditee" class="auditee-table-wrapper">

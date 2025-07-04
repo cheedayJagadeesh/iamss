@@ -166,14 +166,21 @@
     width: 200px;
 }
   .eventscadmin{
-    width: 100%;
+    width: 145%;
+  margin-left: -20%;
 }
-  .eventscadmincol{
-    width: 50%;
-}
+
 .eventsscuser{
     width: 145%;
     margin-left: -20%;
+}
+.schedules{
+    margin-left: -20%;
+    width: 145%;
+}
+.eventusertable{
+  width: 87%;
+  margin-left: 8%;
 }
   
   
