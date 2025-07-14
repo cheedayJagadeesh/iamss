@@ -7,10 +7,34 @@ interface smtpinfo {
   userName: string;
   password: string;
 }
+  interface eventschdetails {
+  eventScheduleId: number;
+  projectInternalAudit: string;
+  projectQMS: string;
+  projectISMS: string;
+  organizerCompany: string;
+  organizerSchedule: string;
+  organizerDateRange: string;
+  notes: string;
+  createdOn: string;
+  organizerLastDate:string;
+}
+interface eventsscuserdt {
+    id: number;
+  auditeedepartment?: string;
+  auditees?: string;
+  starting?: string;
+  time?: string;
+  auditors?: string;
+}
 interface eventscadmininfo {
   id: number;
   auditeedepartment: string;
   procedures: string;
+}
+interface eventsctimeinfo {
+  id: number;
+  time: string;
 }
 interface eventscuserinfo {
   id: number;
@@ -146,11 +170,41 @@ onSelection3Change() {
    userName: '',
    password: '',
   }
+  eventschadslist: any[] = []; 
+eventschadmindet: eventschdetails = {
+  eventScheduleId: 0,
+  projectInternalAudit: '',
+  projectQMS: '',
+  projectISMS: '',
+  organizerCompany: '',
+  organizerSchedule: '',
+  organizerDateRange: '',
+  notes: '',
+  createdOn: '',
+  organizerLastDate: '',
+};
+
+  eventschadtlist: any[] = []; 
+eventschadmindets: eventsscuserdt = {
+   id: 0,
+  auditeedepartment: '',
+  auditees: '',
+  starting: '',
+  time: '',
+  auditors: '',
+};
+
   eventschadlist: any[] = []; 
 eventschadmin: eventscadmininfo = {
   id: 0,
   auditeedepartment: '',
   procedures: '',
+};
+
+  eventschadtimelist: any[] = []; 
+eventschtime: eventsctimeinfo = {
+  id: 0,
+  time: '',
 };
 
   eventschuserlist: any[] = []; 
@@ -304,6 +358,7 @@ eventschuser: eventscuserinfo = {
  eventscheduleradmin: any[]=[];
  eventscheduleadmin: any[]=[];
  eventscheduleruser: any[]=[];
+ eventschedulertime: any[]=[];
  crserestlist: any[]=[];
  eventalertslist: any[]=[];
  event: any | null = null;
@@ -391,15 +446,143 @@ eventschuser: eventscuserinfo = {
     this.GetEventSchedulerAdmin();
     this.GetEventSchedulerUser();
     this.GetLatestEvent();
+    this.GetEventSchedulerTimeslots();
     
   }
+//--------------------------------------------------------------------------------EventSchedulerTime
+GetEventSchedulerTimeslots() {
+  this.ielc.GetEventSchedulerTimeIds().subscribe((data) => {
+    this.eventschedulertime = this.sortlist(data);
+    console.log(this.eventschedulertime); // Should show IDs
+    this.isLoading = false;
+  });
+}
+
+
+
+// AddEventSchedulerTime(): void {
+//   const payload = {
+//     time: this.eventschtime.time, // contains "10:00 AM – 11:30 AM"
+//   };
+
+//   this.ielc.PostEventSchedulerTime(payload).subscribe({
+//     next: (response) => {
+//       console.log('Server response:', response);
+//       alert('✅ ' + response);
+//       this.GetEventSchedulerTimeslots();
+//       this.resetEventSchedulerTime();
+//     },
+//     error: (error) => {
+//       console.error('Error adding record:', error);
+//       alert('❌ Error adding record. Please try again.');
+//     }
+//   });
+// }
+
+AddEventSchedulerTime(): void {
+  const time = this.eventschtime.time;
+
+  if (!time || time.trim() === '') {
+    alert('❌ Time cannot be empty');
+    return;
+  }
+
+  this.ielc.PostEventSchedulerTime(time).subscribe({
+    next: () => {
+      alert('✅ Record Added Successfully!');
+      this.GetEventSchedulerTimeslots();
+      this.resetEventSchedulerTime();
+    },
+    error: (error) => {
+      console.error('❌ Error adding record:', error);
+      alert('❌ Error adding record. Please try again.');
+    }
+  });
+}
+
+
+    deleteEventSchedulerTime(id: number) {
+    if (confirm('Are you sure you want to delete this record?')) {
+      this.ielc.DeleteEventSchedulerTime(id).subscribe({
+        next: () => {
+          alert(`Record with ID ${id} deleted successfully!`);
+          this.GetEventSchedulerTimeslots();
+        },
+         error: (err) =>  console.error('Error deleting item:', err)
+      });
+    }
+  }
+
+EditEventSchedulerTime(id: number) { 
+  this.ielc.GetEventSchedulerTimeId(id).subscribe(
+    data => {
+      if (data && typeof data === 'object' && 'id' in data && 'time' in data) {
+        this.eventschtime = { 
+          id: data.id,
+          time: data.time,
+        };
+      } else {
+        console.warn("Unexpected data format received:", data);
+      }
+    },
+    error => {
+      console.error("Error fetching record:", error);
+    }
+  );
+}
+
+
+UpdateEventSchedulerTime(): void {
+  const id = this.eventschtime.id;
+  const time = this.eventschtime.time;
+
+  console.log("Updating:", {id, time});
+
+  if (!id || id === 0) {
+    alert("Invalid ID");
+    return;
+  }
+
+  if (!time || time.trim() === "") {
+    alert("Time is empty");
+    return;
+  }
+
+  this.ielc.UpdateEventSchedulerTime(id, time).subscribe({
+    next: () => {
+      alert(`Record with ID ${id} updated successfully!`);
+      this.GetEventSchedulerTimeslots();
+      this.resetEventSchedulerTime();
+    },
+    error: (err) => {
+      console.error('Update failed:', err);
+      alert('Error updating record.');
+    }
+  });
+}
+
+
+
+
+
+
+
+
+
+  resetEventSchedulerTime(){
+    this.eventschtime={
+    id: 0,
+    time: '',
+    }
+  }
+
  //-------------------------------------------------------------------------------EventSchedulerAdmin
 GetEventSchedulerAdmin(){
   this.ielc.GetEventSchedulerAdmin().subscribe((data) => {
     this.eventscheduleradmin=data;
     this.eventscheduleradmin = this.sortlist(data)
     this.isLoading = false;
-    console.log(this.eventscheduleradmin);
+    //////console.log(this.eventscheduleradmin);
   });
  }
  
@@ -482,7 +665,7 @@ UpdateEventSchedulerAdmin() {
     this.ielc.GetLatestEvent().subscribe({
       next: (data) => {
         this.event = data;
-            console.log(this.event);
+            //////console.log(this.event);
       },
       error: (err) => console.error('Failed to load event schedule', err)
     });
@@ -496,7 +679,7 @@ UpdateEventScheduleadmin() {
     alert("No event selected for update.");
     return;
   }
-  console.log("Updating event:", this.event);
+  ////console.log("Updating event:", this.event);
   this.ielc.UpdateEventScheduleadmin(this.event.eventScheduleId, this.event).subscribe({
     next: () => {
       alert("✅ Event updated successfully.");
@@ -513,7 +696,7 @@ GetEventSchedulerUser(){
     this.eventscheduleruser=data;
     this.eventscheduleruser = this.sortlist(data)
     this.isLoading = false;
-    //console.log(this.eventscheduleruser);
+    //////console.log(this.eventscheduleruser);
   });
  }
  
@@ -701,10 +884,10 @@ deleteitsprt(id: number) {
 }
 
 EditItSprt(id: number) {
-  // // console.log("Edit button clicked, fetching ID:", id); 
+  // // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetITSprtById(id).subscribe(data => {
 
-    // // console.log("Fetched Record Session:", data); 
+    // // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -728,7 +911,7 @@ EditItSprt(id: number) {
 UpdateItSprt() {
   this.ielc.UpdateITSprt(this.itsprtdata.id, this.itsprtdata).subscribe(
     (response) => {
-      // // console.log("Updated Successfully:", response);
+      // // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItSprtlist();
       this.resetItSprt();
@@ -784,10 +967,10 @@ deleteOssprt(id: number) {
 }
 
 EditOsSprt(id: number) {
-  // // console.log("Edit button clicked, fetching ID:", id); 
+  // // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetOsSprtById(id).subscribe(data => {
 
-    // // console.log("Fetched Record Session:", data); 
+    // // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -811,7 +994,7 @@ EditOsSprt(id: number) {
 UpdateOsSprt() {
   this.ielc.UpdateOsSprt(this.ossprtdata.id, this.ossprtdata).subscribe(
     (response) => {
-      // // console.log("Updated Successfully:", response);
+      // // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsSprtlist();
       this.resetOsSprt();
@@ -866,10 +1049,10 @@ deleteHrsprt(id: number) {
 }
 
 EditHrSprt(id: number) {
-  // // console.log("Edit button clicked, fetching ID:", id); 
+  // // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrSprtById(id).subscribe(data => {
 
-    // // console.log("Fetched Record Session:", data); 
+    // // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -892,7 +1075,7 @@ EditHrSprt(id: number) {
 UpdateHrSprt() {
   this.ielc.UpdateHrSprt(this.hrsprtdata.id, this.hrsprtdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrSprtlist();
       this.resetHrSprt();
@@ -946,10 +1129,10 @@ deleteEmersprt(id: number) {
 }
 
 EditEmerSprt(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetEmerSprtById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -972,7 +1155,7 @@ EditEmerSprt(id: number) {
 UpdateEmerSprt() {
   this.ielc.UpdateEmerSprt(this.emersprtdata.id, this.emersprtdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetEmerSprtlist();
       this.resetEmerSprt();
@@ -1028,10 +1211,10 @@ deleteISO27001sprt(id: number) {
 }
 
 EditISO27001Sprt(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetIso27001SprtById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1054,7 +1237,7 @@ EditISO27001Sprt(id: number) {
 UpdateISO27001Sprt() {
   this.ielc.UpdateIso27001Sprt(this.isosprtdata.id, this.isosprtdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetIsoSprtlist();
       this.resetISO27001Sprt();
@@ -1109,10 +1292,10 @@ deleteISO9001sprt(id: number) {
 }
 
 EditISO9001Sprt(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetIso9001SprtById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1135,7 +1318,7 @@ EditISO9001Sprt(id: number) {
 UpdateISO9001Sprt() {
   this.ielc.UpdateIso9001Sprt(this.isosprtdata.id, this.isosprtdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetIso9001Sprtlist();
       this.resetISO9001Sprt();
@@ -1190,10 +1373,10 @@ deleteHrISMSGeneral(id: number) {
 }
 
 EditHrISMSGeneral(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrismsgeneralById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1214,7 +1397,7 @@ EditHrISMSGeneral(id: number) {
 UpdateHrISMSGeneral() {
   this.ielc.UpdateHrismsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrISMSGenerallist();
       this.resetHrISMS();
@@ -1263,10 +1446,10 @@ deleteHrISMSGuidelines(id: number) {
 }
 
 EditHrISMSGuidelines(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrismsguidelineById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1287,7 +1470,7 @@ EditHrISMSGuidelines(id: number) {
 UpdateHrISMSGuidelines() {
   this.ielc.UpdateHrismsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrISMSGuidelineslist();
       this.resetHrISMS();
@@ -1330,10 +1513,10 @@ deleteHrISMSPolicy(id: number) {
 }
 
 EditHrISMSPolicy(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrismspolicyById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1354,7 +1537,7 @@ EditHrISMSPolicy(id: number) {
 UpdateHrISMSPolicy() {
   this.ielc.UpdateHrismspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrISMSPolicylist();
       this.resetHrISMS();
@@ -1397,10 +1580,10 @@ deleteHrISMSProcedure(id: number) {
 }
 
 EditHrISMSProcedure(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrismsprocedureById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1421,7 +1604,7 @@ EditHrISMSProcedure(id: number) {
 UpdateHrISMSProcedure() {
   this.ielc.UpdateHrismsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrISMSProcedurelist();
       this.resetHrISMS();
@@ -1464,10 +1647,10 @@ deleteHrISMSFormat(id: number) {
 }
 
 EditHrISMSFormat(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrismsformatById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1488,7 +1671,7 @@ EditHrISMSFormat(id: number) {
 UpdateHrISMSFormat() {
   this.ielc.UpdateHrismsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrISMSFormatlist();
       this.resetHrISMS();
@@ -1533,10 +1716,10 @@ deleteHrQMSGeneral(id: number) {
 }
 
 EditHrQMSGeneral(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrqmsgeneralById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1557,7 +1740,7 @@ EditHrQMSGeneral(id: number) {
 UpdateHrQMSGeneral() {
   this.ielc.UpdateHrqmsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrQMSGenerallist();
       this.resetHrQMS();
@@ -1606,10 +1789,10 @@ deleteHrQMSGuidelines(id: number) {
 }
 
 EditHrQMSGuidelines(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrqmsguidelineById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1630,7 +1813,7 @@ EditHrQMSGuidelines(id: number) {
 UpdateHrQMSGuidelines() {
   this.ielc.UpdateHrqmsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrQMSGuidelineslist();
       this.resetHrQMS();
@@ -1673,10 +1856,10 @@ deleteHrQMSPolicy(id: number) {
 }
 
 EditHrQMSPolicy(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrqmspolicyById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1697,7 +1880,7 @@ EditHrQMSPolicy(id: number) {
 UpdateHrQMSPolicy() {
   this.ielc.UpdateHrqmspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrQMSPolicylist();
       this.resetHrQMS();
@@ -1740,10 +1923,10 @@ deleteHrQMSProcedure(id: number) {
 }
 
 EditHrQMSProcedure(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrqmsprocedureById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1764,7 +1947,7 @@ EditHrQMSProcedure(id: number) {
 UpdateHrQMSProcedure() {
   this.ielc.UpdateHrqmsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrQMSProcedurelist();
       this.resetHrQMS();
@@ -1807,10 +1990,10 @@ deleteHrQMSFormat(id: number) {
 }
 
 EditHrQMSFormat(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetHrqmsformatById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1831,7 +2014,7 @@ EditHrQMSFormat(id: number) {
 UpdateHrQMSFormat() {
   this.ielc.UpdateHrqmsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHrQMSFormatlist();
       this.resetHrQMS();
@@ -1876,10 +2059,10 @@ deleteOsISMSGeneral(id: number) {
 }
 
 EditOsISMSGeneral(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosismsgeneralById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1900,7 +2083,7 @@ EditOsISMSGeneral(id: number) {
 UpdateOsISMSGeneral() {
   this.ielc.Updateosismsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsISMSGenerallist();
       this.resetOsISMS();
@@ -1949,10 +2132,10 @@ deleteOsISMSGuidelines(id: number) {
 }
 
 EditOsISMSGuidelines(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosismsguidelineById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -1973,7 +2156,7 @@ EditOsISMSGuidelines(id: number) {
 UpdateOsISMSGuidelines() {
   this.ielc.Updateosismsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsISMSGuidelineslist();
       this.resetOsISMS();
@@ -2016,10 +2199,10 @@ deleteOsISMSPolicy(id: number) {
 }
 
 EditOsISMSPolicy(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosismspolicyById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2040,7 +2223,7 @@ EditOsISMSPolicy(id: number) {
 UpdateOsISMSPolicy() {
   this.ielc.Updateosismspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsISMSPolicylist();
       this.resetOsISMS();
@@ -2083,10 +2266,10 @@ deleteOsISMSProcedure(id: number) {
 }
 
 EditOsISMSProcedure(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosismsprocedureById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2107,7 +2290,7 @@ EditOsISMSProcedure(id: number) {
 UpdateOsISMSProcedure() {
   this.ielc.Updateosismsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsISMSProcedurelist();
       this.resetOsISMS();
@@ -2150,10 +2333,10 @@ deleteOsISMSFormat(id: number) {
 }
 
 EditOsISMSFormat(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosismsformatById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2174,7 +2357,7 @@ EditOsISMSFormat(id: number) {
 UpdateOsISMSFormat() {
   this.ielc.Updateosismsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsISMSFormatlist();
       this.resetOsISMS();
@@ -2221,10 +2404,10 @@ deleteOsQMSGeneral(id: number) {
 }
 
 EditOsQMSGeneral(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosqmsgeneralById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2245,7 +2428,7 @@ EditOsQMSGeneral(id: number) {
 UpdateOsQMSGeneral() {
   this.ielc.Updateosqmsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsQMSGenerallist();
       this.resetOsQMS();
@@ -2293,10 +2476,10 @@ deleteOsQMSGuidelines(id: number) {
 }
 
 EditOsQMSGuidelines(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosqmsguidelineById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2317,7 +2500,7 @@ EditOsQMSGuidelines(id: number) {
 UpdateOsQMSGuidelines() {
   this.ielc.Updateosqmsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsQMSGuidelineslist();
       this.resetOsQMS();
@@ -2360,10 +2543,10 @@ deleteOsQMSPolicy(id: number) {
 }
 
 EditOsQMSPolicy(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosqmspolicyById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2384,7 +2567,7 @@ EditOsQMSPolicy(id: number) {
 UpdateOsQMSPolicy() {
   this.ielc.Updateosqmspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsQMSPolicylist();
       this.resetOsQMS();
@@ -2427,10 +2610,10 @@ deleteOsQMSProcedure(id: number) {
 }
 
 EditOsQMSProcedure(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosqmsprocedureById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2451,7 +2634,7 @@ EditOsQMSProcedure(id: number) {
 UpdateOsQMSProcedure() {
   this.ielc.Updateosqmsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsQMSProcedurelist();
       this.resetOsQMS();
@@ -2495,10 +2678,10 @@ deleteOsQMSFormat(id: number) {
 }
 
 EditOsQMSFormat(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetosqmsformatById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2519,7 +2702,7 @@ EditOsQMSFormat(id: number) {
 UpdateOsQMSFormat() {
   this.ielc.Updateosqmsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetOsQMSFormatlist();
       this.resetOsQMS();
@@ -2563,10 +2746,10 @@ deleteIsmsSprt(id: number) {
 }
 
 EditIsmsSprt(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetIsmsSprtById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2587,7 +2770,7 @@ EditIsmsSprt(id: number) {
 UpdateIsmsSprt() {
   this.ielc.UpdateIsmsSprt(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetIsmsSprt();
       this.resetIsmsSprt();
@@ -2638,10 +2821,10 @@ deleteIsoSprt(id: number) {
 }
 
 EditIsoSprt(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetisosprtById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2662,7 +2845,7 @@ EditIsoSprt(id: number) {
 UpdateIsoSprt() {
   this.ielc.Updateisosprt(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetIsoSprt();
       this.resetIsoSprt();
@@ -2713,10 +2896,10 @@ deleteIsoPolicy(id: number) {
 }
 
 EditIsoPolicy(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetispolicyById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2737,7 +2920,7 @@ EditIsoPolicy(id: number) {
 UpdateIsoPolicy() {
   this.ielc.Updateispolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetIsoPolicy();
       this.resetIsoPolicy();
@@ -2789,10 +2972,10 @@ deleteItISMSGeneral(id: number) {
 }
 
 EditItISMSGeneral(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitismsgeneralById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2813,7 +2996,7 @@ EditItISMSGeneral(id: number) {
 UpdateItISMSGeneral() {
   this.ielc.Updateitismsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItISMSGenerallist();
       this.resetItISMS();
@@ -2862,10 +3045,10 @@ deleteItISMSGuidelines(id: number) {
 }
 
 EditItISMSGuidelines(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitismsguidelineById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2886,7 +3069,7 @@ EditItISMSGuidelines(id: number) {
 UpdateItISMSGuidelines() {
   this.ielc.Updateitismsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItISMSGuidelineslist();
       this.resetItISMS();
@@ -2929,10 +3112,10 @@ deleteItISMSPolicy(id: number) {
 }
 
 EditItISMSPolicy(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitismspolicyById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -2953,7 +3136,7 @@ EditItISMSPolicy(id: number) {
 UpdateItISMSPolicy() {
   this.ielc.Updateitismspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItISMSPolicylist();
       this.resetItISMS();
@@ -2996,10 +3179,10 @@ deleteItISMSProcedure(id: number) {
 }
 
 EditItISMSProcedure(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitismsprocedureById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3020,7 +3203,7 @@ EditItISMSProcedure(id: number) {
 UpdateItISMSProcedure() {
   this.ielc.Updateitismsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItISMSProcedurelist();
       this.resetItISMS();
@@ -3063,10 +3246,10 @@ deleteItISMSFormat(id: number) {
 }
 
 EditItISMSFormat(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitismsformatById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3087,7 +3270,7 @@ EditItISMSFormat(id: number) {
 UpdateItISMSFormat() {
   this.ielc.Updateitismsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItISMSFormatlist();
       this.resetItISMS();
@@ -3133,10 +3316,10 @@ deleteItQMSGeneral(id: number) {
 }
 
 EditItQMSGeneral(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitqmsgeneralById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3157,7 +3340,7 @@ EditItQMSGeneral(id: number) {
 UpdateItQMSGeneral() {
   this.ielc.Updateitqmsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItQMSGenerallist();
       this.resetItQMS();
@@ -3205,10 +3388,10 @@ deleteItQMSGuidelines(id: number) {
 }
 
 EditItQMSGuidelines(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitqmsguidelineById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3229,7 +3412,7 @@ EditItQMSGuidelines(id: number) {
 UpdateItQMSGuidelines() {
   this.ielc.Updateitqmsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItQMSGuidelineslist();
       this.resetItQMS();
@@ -3272,10 +3455,10 @@ deleteItQMSPolicy(id: number) {
 }
 
 EditItQMSPolicy(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitqmspolicyById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3296,7 +3479,7 @@ EditItQMSPolicy(id: number) {
 UpdateItQMSPolicy() {
   this.ielc.Updateitqmspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItQMSPolicylist();
       this.resetItQMS();
@@ -3339,10 +3522,10 @@ deleteItQMSProcedure(id: number) {
 }
 
 EditItQMSProcedure(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitqmsprocedureById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3363,7 +3546,7 @@ EditItQMSProcedure(id: number) {
 UpdateItQMSProcedure() {
   this.ielc.Updateitqmsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItQMSProcedurelist();
       this.resetItQMS();
@@ -3406,10 +3589,10 @@ deleteItQMSFormat(id: number) {
 }
 
 EditItQMSFormat(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetitqmsformatById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3430,7 +3613,7 @@ EditItQMSFormat(id: number) {
 UpdateItQMSFormat() {
   this.ielc.Updateitqmsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetItQMSFormatlist();
       this.resetItQMS();
@@ -3475,10 +3658,10 @@ deletePrjtISMSGeneral(id: number) {
 }
 
 EditPrjtISMSGeneral(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtismsgeneralById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3499,7 +3682,7 @@ EditPrjtISMSGeneral(id: number) {
 UpdatePrjtISMSGeneral() {
   this.ielc.Updateprjtismsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtISMSGenerallist();
       this.resetPrjtISMS();
@@ -3548,10 +3731,10 @@ deletePrjtISMSGuidelines(id: number) {
 }
 
 EditPrjtISMSGuidelines(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtismsguidelineById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3572,7 +3755,7 @@ EditPrjtISMSGuidelines(id: number) {
 UpdatePrjtISMSGuidelines() {
   this.ielc.Updateprjtismsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtISMSGuidelineslist();
       this.resetPrjtISMS();
@@ -3615,10 +3798,10 @@ deletePrjtISMSPolicy(id: number) {
 }
 
 EditPrjtISMSPolicy(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtismspolicyById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3639,7 +3822,7 @@ EditPrjtISMSPolicy(id: number) {
 UpdatePrjtISMSPolicy() {
   this.ielc.Updateprjtismspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtISMSPolicylist();
       this.resetPrjtISMS();
@@ -3682,10 +3865,10 @@ deletePrjtISMSProcedure(id: number) {
 }
 
 EditPrjtISMSProcedure(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtismsprocedureById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3706,7 +3889,7 @@ EditPrjtISMSProcedure(id: number) {
 UpdatePrjtISMSProcedure() {
   this.ielc.Updateprjtismsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtISMSProcedurelist();
       this.resetPrjtISMS();
@@ -3749,10 +3932,10 @@ deletePrjtISMSFormat(id: number) {
 }
 
 EditPrjtISMSFormat(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtismsformatById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3773,7 +3956,7 @@ EditPrjtISMSFormat(id: number) {
 UpdatePrjtISMSFormat() {
   this.ielc.Updateprjtismsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtISMSFormatlist();
       this.resetPrjtISMS();
@@ -3817,10 +4000,10 @@ deletePrjtQMSGeneral(id: number) {
 }
 
 EditPrjtQMSGeneral(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtqmsgeneralById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3841,7 +4024,7 @@ EditPrjtQMSGeneral(id: number) {
 UpdatePrjtQMSGeneral() {
   this.ielc.Updateprjtqmsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtQMSGenerallist();
       this.resetPrjtQMS();
@@ -3890,10 +4073,10 @@ deletePrjtQMSGuidelines(id: number) {
 }
 
 EditPrjtQMSGuidelines(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtqmsguidelineById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3914,7 +4097,7 @@ EditPrjtQMSGuidelines(id: number) {
 UpdatePrjtQMSGuidelines() {
   this.ielc.Updateprjtqmsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtQMSGuidelineslist();
       this.resetPrjtQMS();
@@ -3957,10 +4140,10 @@ deletePrjtQMSPolicy(id: number) {
 }
 
 EditPrjtQMSPolicy(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtqmspolicyById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -3981,7 +4164,7 @@ EditPrjtQMSPolicy(id: number) {
 UpdatePrjtQMSPolicy() {
   this.ielc.Updateprjtqmspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtQMSPolicylist();
       this.resetPrjtQMS();
@@ -4024,10 +4207,10 @@ deletePrjtQMSProcedure(id: number) {
 }
 
 EditPrjtQMSProcedure(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtqmsprocedureById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4048,7 +4231,7 @@ EditPrjtQMSProcedure(id: number) {
 UpdatePrjtQMSProcedure() {
   this.ielc.Updateprjtqmsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtQMSProcedurelist();
       this.resetPrjtQMS();
@@ -4091,10 +4274,10 @@ deletePrjtQMSFormat(id: number) {
 }
 
 EditPrjtQMSFormat(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetprjtqmsformatById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4115,7 +4298,7 @@ EditPrjtQMSFormat(id: number) {
 UpdatePrjtQMSFormat() {
   this.ielc.Updateprjtqmsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetPrjtQMSFormatlist();
       this.resetPrjtQMS();
@@ -4160,10 +4343,10 @@ deleteCisoISMSGeneral(id: number) {
 }
 
 EditCisoISMSGeneral(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoismsgeneralById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4184,7 +4367,7 @@ EditCisoISMSGeneral(id: number) {
 UpdateCisoISMSGeneral() {
   this.ielc.Updatecisoismsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoISMSGenerallist();
       this.resetCisoISMS();
@@ -4233,10 +4416,10 @@ deleteCisoISMSGuidelines(id: number) {
 }
 
 EditCisoISMSGuidelines(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoismsguidelineById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4257,7 +4440,7 @@ EditCisoISMSGuidelines(id: number) {
 UpdateCisoISMSGuidelines() {
   this.ielc.Updatecisoismsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoISMSGuidelineslist();
       this.resetCisoISMS();
@@ -4300,10 +4483,10 @@ deleteCisoISMSPolicy(id: number) {
 }
 
 EditCisoISMSPolicy(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoismspolicyById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4324,7 +4507,7 @@ EditCisoISMSPolicy(id: number) {
 UpdateCisoISMSPolicy() {
   this.ielc.Updatecisoismspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoISMSPolicylist();
       this.resetCisoISMS();
@@ -4367,10 +4550,10 @@ deleteCisoISMSProcedure(id: number) {
 }
 
 EditCisoISMSProcedure(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoismsprocedureById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4391,7 +4574,7 @@ EditCisoISMSProcedure(id: number) {
 UpdateCisoISMSProcedure() {
   this.ielc.Updatecisoismsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoISMSProcedurelist();
       this.resetCisoISMS();
@@ -4434,10 +4617,10 @@ deleteCisoISMSFormat(id: number) {
 }
 
 EditCisoISMSFormat(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoismsformatById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4458,7 +4641,7 @@ EditCisoISMSFormat(id: number) {
 UpdateCisoISMSFormat() {
   this.ielc.Updatecisoismsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoISMSFormatlist();
       this.resetCisoISMS();
@@ -4503,10 +4686,10 @@ deleteCisoQMSGeneral(id: number) {
 }
 
 EditCisoQMSGeneral(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoqmsgeneralById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4527,7 +4710,7 @@ EditCisoQMSGeneral(id: number) {
 UpdateCisoQMSGeneral() {
   this.ielc.Updatecisoqmsgeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoQMSGenerallist();
       this.resetCisoQMS();
@@ -4576,10 +4759,10 @@ deleteCisoQMSGuidelines(id: number) {
 }
 
 EditCisoQMSGuidelines(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoqmsguidelineById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4600,7 +4783,7 @@ EditCisoQMSGuidelines(id: number) {
 UpdateCisoQMSGuidelines() {
   this.ielc.Updatecisoqmsguideline(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoQMSGuidelineslist();
       this.resetCisoQMS();
@@ -4643,10 +4826,10 @@ deleteCisoQMSPolicy(id: number) {
 }
 
 EditCisoQMSPolicy(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoqmspolicyById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4667,7 +4850,7 @@ EditCisoQMSPolicy(id: number) {
 UpdateCisoQMSPolicy() {
   this.ielc.Updatecisoqmspolicy(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoQMSPolicylist();
       this.resetCisoQMS();
@@ -4710,10 +4893,10 @@ deleteCisoQMSProcedure(id: number) {
 }
 
 EditCisoQMSProcedure(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoqmsprocedureById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4734,7 +4917,7 @@ EditCisoQMSProcedure(id: number) {
 UpdateCisoQMSProcedure() {
   this.ielc.Updatecisoqmsprocedure(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoQMSProcedurelist();
       this.resetCisoQMS();
@@ -4777,10 +4960,10 @@ deleteCisoQMSFormat(id: number) {
 }
 
 EditCisoQMSFormat(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcisoqmsformatById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4801,7 +4984,7 @@ EditCisoQMSFormat(id: number) {
 UpdateCisoQMSFormat() {
   this.ielc.Updatecisoqmsformat(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCisoQMSFormatlist();
       this.resetCisoQMS();
@@ -4845,10 +5028,10 @@ deleteEmerGeneral(id: number) {
 }
 
 EditEmerGeneral(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetemergeneralById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4869,7 +5052,7 @@ EditEmerGeneral(id: number) {
 UpdateEmerGeneral() {
   this.ielc.Updateemergeneral(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetEmerGenerallist();
       this.resetEmer();
@@ -4921,10 +5104,10 @@ deleteVarCmtGeneral(id: number) {
 }
 
 EditVarCmtGeneral(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetvarcmtById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -4945,7 +5128,7 @@ EditVarCmtGeneral(id: number) {
 UpdateVarCmtGeneral() {
   this.ielc.Updatevarcmt(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetVarCmtGenerallist();
       this.resetVarCmt();
@@ -4996,10 +5179,10 @@ deleteHipaaGeneral(id: number) {
 }
 
 EditHipaaGeneral(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GethippaById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -5020,7 +5203,7 @@ EditHipaaGeneral(id: number) {
 UpdateHipaaGeneral() {
   this.ielc.Updatehippa(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetHipaaGenerallist();
       this.resetHipaa();
@@ -5071,10 +5254,10 @@ deleteSocGeneral(id: number) {
 }
 
 EditSocGeneral(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetsocById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -5095,7 +5278,7 @@ EditSocGeneral(id: number) {
 UpdateSocGeneral() {
   this.ielc.Updatesoc(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetSocGenerallist();
       this.resetSoc();
@@ -5146,10 +5329,10 @@ deleteGdprGeneral(id: number) {
 }
 
 EditGdprGeneral(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetgdprById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -5170,7 +5353,7 @@ EditGdprGeneral(id: number) {
 UpdateGdprGeneral() {
   this.ielc.Updategdpr(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetGdprGenerallist();
       this.resetGdpr();
@@ -5221,10 +5404,10 @@ deleteDpdpGeneral(id: number) {
 }
 
 EditDpdpGeneral(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetdpdpById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -5245,7 +5428,7 @@ EditDpdpGeneral(id: number) {
 UpdateDpdpGeneral() {
   this.ielc.Updatedpdp(this.docsdata.documentID, this.docsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetDpdpGenerallist();
       this.resetDpdp();
@@ -5375,7 +5558,7 @@ GetEventsist(){
 //   this.ielc.Postevents(eventPayload).subscribe(
 //     response => {
 //       alert('✅ Event Added Successfully!');
-//       // console.log('Response:', response);
+//       // ////console.log('Response:', response);
 //       this.GetEventsist();
 //       this.resetEvents();
 //     },
@@ -5391,11 +5574,11 @@ AddEvents() {
     eventData: this.eventsdata.eventData, // Base64 Image Data
     eventName: this.eventsdata.eventName  // Event Name
   };
-  // // console.log("🚀 Sending Payload:", eventPayload); 
+  // // ////console.log("🚀 Sending Payload:", eventPayload); 
   this.ielc.Postevents(eventPayload).subscribe(
     response => {
       alert('✅ Event Added Successfully!');
-      // console.log('Response:', response);
+      // ////console.log('Response:', response);
       this.GetEventsist();
       this.resetEvents();
     },
@@ -5497,10 +5680,10 @@ deleteEvents(id: number) {
 }
 
 EditEvents(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GeteventsById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -5521,7 +5704,7 @@ EditEvents(id: number) {
 UpdateEvents() {
   this.ielc.Updateevents(this.eventsdata.id, this.eventsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetEventsist();
       this.resetEvents();
@@ -5574,10 +5757,10 @@ deleteCourse(id: number) {
 }
 
 EditCourse(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GetcourseById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -5597,7 +5780,7 @@ EditCourse(id: number) {
 UpdateCourse() {
   this.ielc.Updatecourse(this.crserestdata.id, this.crserestdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetCourseist();
       this.resetCourse();
@@ -5649,10 +5832,10 @@ deleteEventAlerts(id: number) {
 }
 
 EditEventAlerts(id: number) {
-  // console.log("Edit button clicked, fetching ID:", id); 
+  // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GeteventalertsById(id).subscribe(data => {
 
-    // console.log("Fetched Record Session:", data); 
+    // ////console.log("Fetched Record Session:", data); 
 
     if (data) {
       // Assign data only if it's valid
@@ -5679,7 +5862,7 @@ EditEventAlerts(id: number) {
 UpdateEventAlerts() {
   this.ielc.Updateeventalerts(this.eventalertsdata.alertID, this.eventalertsdata).subscribe(
     (response) => {
-      // console.log("Updated Successfully:", response);
+      // ////console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetEventAlertsist();
       this.resetEventAlerts();

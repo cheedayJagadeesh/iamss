@@ -1,4 +1,3 @@
-import { EventSchedulerUserModel } from './../event-scheduler-user.model';
 import { AuthService } from './../../authservice.service';
 import { Component, OnInit } from '@angular/core';
 import { IelcapiService } from '../ielcapi.service';
@@ -267,10 +266,11 @@ userProjects: string[] = [];
 
 ngOnInit(): void {
   this.authService.userDetails$.subscribe(userDetails => {
-    this.userName = userDetails?.displayName;
+    //this.userName = userDetails?.displayName;
     // For testing:
     // this.userName = "Venkat Merla";
     // this.userName = "Ramprasad .KP";
+    this.userName = "Nivedita Merla";
     this.userEmail = userDetails?.email;
 
     if (!this.userName) {

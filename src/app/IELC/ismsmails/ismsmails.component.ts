@@ -157,11 +157,24 @@ resetlist(){
   }
 }
 
-deleteItem(id: number) {
+// deleteItem(id: number) {
+//   if (confirm('Are you sure you want to delete this record?')) {
+//     this.ielc.DeleteismsById(id).subscribe({
+//       next: () => {
+//         alert(`Record with ID ${id} deleted successfully!`);
+//         this.GetIsmsmailslist(); // Call this only after successful deletion
+//       },
+//       // error: (err) => console.error('Error deleting item:', err)
+//     });
+//   }
+// }
+
+
+deleteItem(process_Owner: string) {
   if (confirm('Are you sure you want to delete this record?')) {
-    this.ielc.DeleteismsById(id).subscribe({
+    this.ielc.DeleteismsByOwner(process_Owner).subscribe({
       next: () => {
-        alert(`Record with ID ${id} deleted successfully!`);
+        alert(`Record with Process Owner ${process_Owner} deleted successfully!`);
         this.GetIsmsmailslist(); // Call this only after successful deletion
       },
       // error: (err) => console.error('Error deleting item:', err)
