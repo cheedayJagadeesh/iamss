@@ -362,6 +362,8 @@ eventschuser: eventscuserinfo = {
  crserestlist: any[]=[];
  eventalertslist: any[]=[];
  event: any | null = null;
+ fileError: string = "";
+
   
   constructor(private ielc:IelcapiService) {
 
@@ -5588,9 +5590,6 @@ AddEvents() {
     }
   );
 }
-showFileInput: boolean = true;
-fileError: string = ''; // Variable to store error message
-
 onEventFileSelected(event: any) {
   const file = event.target.files[0]; // Get selected file
   this.fileError = ""; // Reset error
@@ -5615,45 +5614,81 @@ onEventFileSelected(event: any) {
     return;
   }
 
-  // If file is valid, process it
   const reader = new FileReader();
   reader.onload = (e: any) => {
-    const img = new Image();
-    img.src = e.target.result;
-
-    img.onload = () => {
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-
-      // Resize Image (Set max width & height)
-      const maxWidth = 300;
-      const maxHeight = 300;
-      let width = img.width;
-      let height = img.height;
-
-      if (width > maxWidth || height > maxHeight) {
-        if (width > height) {
-          height *= maxWidth / width;
-          width = maxWidth;
-        } else {
-          width *= maxHeight / height;
-          height = maxHeight;
-        }
-      }
-
-      canvas.width = width;
-      canvas.height = height;
-      ctx?.drawImage(img, 0, 0, width, height);
-
-      const fileType = file.type === "image/png" ? "image/png" : "image/jpeg";
-      const base64String = canvas.toDataURL(fileType).split(",")[1]; // Remove the prefix
-
-      this.eventsdata.eventData = base64String; // Store Base64 in your object
-    };
+    const base64String = e.target.result.split(",")[1]; // Keep full resolution
+    this.eventsdata.eventData = base64String;
   };
 
   reader.readAsDataURL(file);
 }
+
+// showFileInput: boolean = true;
+// fileError: string = ''; // Variable to store error message
+
+// onEventFileSelected(event: any) {
+//   const file = event.target.files[0]; // Get selected file
+//   this.fileError = ""; // Reset error
+
+//   if (!file) {
+//     this.fileError = "Please select a file.";
+//     return;
+//   }
+
+//   // Validate file type (Only allow images)
+//   if (!file.type.startsWith("image/")) {
+//     this.fileError = "Only image files are allowed.";
+//     event.target.value = ""; // Reset file input
+//     return;
+//   }
+
+//   // Validate file size (Max: 2MB)
+//   const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+//   if (file.size > maxSize) {
+//     this.fileError = "File size must be less than 2MB.";
+//     event.target.value = ""; // Reset file input
+//     return;
+//   }
+
+//   // If file is valid, process it
+//   const reader = new FileReader();
+//   reader.onload = (e: any) => {
+//     const img = new Image();
+//     img.src = e.target.result;
+
+//     img.onload = () => {
+//       const canvas = document.createElement("canvas");
+//       const ctx = canvas.getContext("2d");
+
+//       // Resize Image (Set max width & height)
+//       const maxWidth = 300;
+//       const maxHeight = 300;
+//       let width = img.width;
+//       let height = img.height;
+
+//       if (width > maxWidth || height > maxHeight) {
+//         if (width > height) {
+//           height *= maxWidth / width;
+//           width = maxWidth;
+//         } else {
+//           width *= maxHeight / height;
+//           height = maxHeight;
+//         }
+//       }
+
+//       canvas.width = width;
+//       canvas.height = height;
+//       ctx?.drawImage(img, 0, 0, width, height);
+
+//       const fileType = file.type === "image/png" ? "image/png" : "image/jpeg";
+//       const base64String = canvas.toDataURL(fileType).split(",")[1]; // Remove the prefix
+
+//       this.eventsdata.eventData = base64String; // Store Base64 in your object
+//     };
+//   };
+
+//   reader.readAsDataURL(file);
+// }
 
 
 removeEventImage() {
