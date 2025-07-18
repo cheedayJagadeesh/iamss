@@ -50,13 +50,13 @@ export class LoginComponent implements OnInit  {
 
   ngOnInit(): void {
     // Check if user is already authenticated, then redirect to home
-    // if (this.authService.isAuthenticated()) {
-    //   this.router.navigate(['/home']);
-    // }
-       const account = this.msalService.instance.getAllAccounts();
-  if (account) {
-    this.router.navigate(['/home']);
-  }
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/home']);
+    }
+  //      const account = this.msalService.instance.getAllAccounts();
+  // if (account) {
+  //   this.router.navigate(['/home']);
+  // }
   }
 
   login(): void {
