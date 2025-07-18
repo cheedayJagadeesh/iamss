@@ -424,6 +424,7 @@ async ngOnInit() {
         this.GetAllUsers(); // Call this AFTER we get the email
         this.GetAllSkillSessions(); 
         this.checkUserExists();
+        this.checkCoOwnerUserExists();
        
         // this.GetEnrolledSessionsSkillsData()
       }
@@ -1880,38 +1881,38 @@ GetExamlist() {
 }
 
 checkUserExists() {
-
   this.GetAllUniqueNames().subscribe((usernames: string[]) => {
-
-    // Ensure showButton is always a boolean value
-
     this.showButton = !!(this.userName && usernames.includes(this.userName));
-
     if (this.showButton) {
-
       console.log('Your username exists in the list.');
-
     } else {
-
       console.log('Your username is NOT in the list.');
-
     }
-
   });
-
 }
  
+checkCoOwnerUserExists() {
+  this.GetCOwnersAllUniqueNames().subscribe((usernames: string[]) => {
+    this.coownersshowButton = !!(this.userName && usernames.includes(this.userName));
+    if (this.coownersshowButton) {
+      //console.log(this.coownersshowButton);
+      console.log('Your username exists in the list.');
+    } else {
+      console.log('Your username is NOT in the list.');
+    }
+  });
+}
  
 GetAllUniqueNames(): Observable<string[]> {
-
-  // Directly return the Observable from GetUniqueName() instead of subscribing inside
-
   return this.ielc.GetUniqueName();
-  
+}
 
+GetCOwnersAllUniqueNames(): Observable<string[]> {
+  return this.ielc.GetCoOwnersUniqueName();
 }
  
 showButton: boolean = false;
+coownersshowButton: boolean = false;
  
 
 // smtplist: any[] = []; 

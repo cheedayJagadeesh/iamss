@@ -3,7 +3,18 @@ import { Component, OnInit } from '@angular/core';
 import { IelcapiService } from '../ielcapi.service';
 import { forkJoin, map, Observable, of, switchMap } from 'rxjs';
 
-
+interface eventschdetails {
+  eventScheduleId: number;
+  projectInternalAudit: string;
+  projectQMS: string;
+  projectISMS: string;
+  organizerCompany: string;
+  organizerSchedule: string;
+  organizerDateRange: string;
+  notes: string;
+  createdOn: string;
+  organizerLastDate:string;
+}
 
 @Component({
   selector: 'app-eventscheduler',
@@ -36,7 +47,7 @@ selectedAuditee: any | null = null;
   toDisplayNames: string[] = [];
   ccDisplayNamesqms: string[] = [];
   toDisplayNamesqms: string[] = [];
-    matchedSuperOwner: boolean = false;
+  matchedSuperOwner: boolean = false;
   matchedOwner: boolean = false;
   matchedSuperOwnerqms: boolean = false;
   matchedOwnerqms: boolean = false;
@@ -49,228 +60,35 @@ userProjects: string[] = [];
   maxDate!: string;
   lastAllowedDate!: string;
 
+    eventschadslist: any[] = []; 
+eventschadmindet: eventschdetails = {
+  eventScheduleId: 0,
+  projectInternalAudit: '',
+  projectQMS: '',
+  projectISMS: '',
+  organizerCompany: '',
+  organizerSchedule: '',
+  organizerDateRange: '',
+  notes: '',
+  createdOn: '',
+  organizerLastDate: '',
+};
 
- 
  constructor(private ielc:IelcapiService, private authService: AuthService) {
   }
       sortlist(data: any[]): any[] {
     return data.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
   }
 
-  // ngOnInit(): void {
-  //   this.GetEventscheduleData();
-  //   this.GetEventscheduleTime();
-  //   this.loadAllTimes();
-  //   this.GetEventSchedulerAdmin();
-  // }
-
-  //   ngOnInit(): void {
-  
-  //   this.authService.userDetails$.subscribe(userDetails => {
-  //     //this.userName = 'Ramprasad .KP' ;
-  //      this.userName = userDetails?.displayName;
-  //     this.userEmail = userDetails?.email ;
-  //   });
-  //   this.GetEventscheduleData();
-  //   this.GetEventscheduleTime();
-  //   this.loadAllTimes();
-  //   this.GetEventSchedulerAdmin();
-
-  // this.GetAllProjectsList();
-  // this.GetSuperOwners(this.userName);
-  // this.GetOwners();
-  //  this.GetUserByProjectsList();
-  // this.GetFilteredISMSUserTable();
-  //   }
-
-// ngOnInit(): void {
-//   this.authService.userDetails$.subscribe(userDetails => {
-//     this.userName = userDetails?.displayName;
-//     // this.userName = "Ramprasad .KP";
-//     this.userEmail = userDetails?.email;
-
-//     if (this.userName) {
-//       this.ielc.GetEventsscfilterprojects(this.userName).subscribe({
-//         next: (userbyprojectsdata) => {
-//           if (!userbyprojectsdata || userbyprojectsdata.length === 0) {
-//             this.hasPermission = false;
-//             this.showTable = false;
-//             this.isLoading = false;
-//           } else {
-//             this.projectlist = userbyprojectsdata;
-//             this.hasPermission = true;
-
-//             // Only load these if user has access:
-//             this.GetEventscheduleData();
-//             this.GetEventscheduleTime();
-//             this.loadAllTimes();
-//             this.GetEventSchedulerAdmin();
-//             this.GetAllProjectsList();
-//             this.GetSuperOwners(this.userName);
-//             this.GetOwners();
-//             this.GetFilteredISMSUserTable();
-//             this.GetUserByProjectsList();
-//           }
-//         },
-//         error: (err) => {
-//           //console.error("GetUserByProjects error:", err);
-//           this.hasPermission = false;
-//           this.showTable = false;
-//           this.isLoading = false;
-//         }
-//       });
-//     } else {
-//       this.hasPermission = false;
-//       this.showTable = false;
-//       this.isLoading = false;
-//     }
-//   });
-// }
-
-// ngOnInit(): void {
-
-//   this.authService.userDetails$.subscribe(userDetails => {
-//     this.userName = userDetails?.displayName;
-//     //this.userName = "Venkat Merla";
-//     // this.userName = "Ramprasad .KP";
-//     this.userEmail = userDetails?.email;
-
-//     if (!this.userName) {
-//       this.hasPermission = false;
-//       this.showTable = false;
-//       this.isLoading = false;
-//       return;
-//     }
-
-//     this.ielc.GetEventsscfilterprojects(this.userName).subscribe({
-//       next: (userbyprojectsdata) => {
-//         if (userbyprojectsdata && userbyprojectsdata.length > 0) {
-//           this.projectlist = userbyprojectsdata;
-//           this.hasPermission = true;
-
-//           // Only basic setup
-//           this.GetEventscheduleTime();
-//           this.loadAllTimes();
-//           this.GetEventSchedulerAdmin();
-//           this.GetAllProjectsList();
-//           this.GetSuperOwners(this.userName);
-//           this.GetOwners();
-//           this.GetUserByProjectsList();
-//           this.GetLatestEvent();
-//         } else {
-//           this.checkCCPermission();
-//         }
-//       },
-//       error: (err) => {
-//         this.checkCCPermission();
-//       }
-//     });
-//   });
-// }
-
-// ngOnInit(): void {
-//   this.authService.userDetails$.subscribe(userDetails => {
-//     this.userName = userDetails?.displayName;
-//     // For testing:
-//     // this.userName = "Venkat Merla";
-//     // this.userName = "Ramprasad .KP";
-//     this.userEmail = userDetails?.email;
-
-//     if (!this.userName) {
-//       this.hasPermission = false;
-//       this.showTable = false;
-//       this.isLoading = false;
-//       return;
-//     }
-
-//     this.ielc.GetEventsscfilterprojects(this.userName).subscribe({
-//       next: (userbyprojectsdata) => {
-//         if (userbyprojectsdata && userbyprojectsdata.length > 0) {
-//           this.projectlist = userbyprojectsdata;
-//           this.hasPermission = true;
-
-//           // Load other necessary data
-//           this.GetEventscheduleTime();
-//           this.loadAllTimes();
-//           this.GetEventSchedulerAdmin();
-//           this.GetAllProjectsList();
-//           this.GetSuperOwners(this.userName);
-//           this.GetOwners();
-//           this.GetUserByProjectsList();
-//           this.GetLatestEvent();
-
-//           // ✅ Parse event.organizerDateRange if available
-//           if (this.event && this.event.organizerDateRange) {
-//             const parts = this.event.organizerDateRange.split("–");
-//             if (parts.length === 2) {
-//               const parseDatePart = (part: string): string | null => {
-//                 const trimmed = part.trim().toUpperCase();
-//                 // Ex: "JULY 21TH"
-//                 const match = trimmed.match(/^([A-Z]+)\s+(\d{1,2})/);
-//                 if (match) {
-//                   const monthName = match[1];
-//                   const day = match[2].padStart(2, "0");
-//                   const monthMap: { [key: string]: string } = {
-//                     JANUARY: "01",
-//                     FEBRUARY: "02",
-//                     MARCH: "03",
-//                     APRIL: "04",
-//                     MAY: "05",
-//                     JUNE: "06",
-//                     JULY: "07",
-//                     AUGUST: "08",
-//                     SEPTEMBER: "09",
-//                     OCTOBER: "10",
-//                     NOVEMBER: "11",
-//                     DECEMBER: "12"
-//                   };
-//                   const month = monthMap[monthName];
-//                   if (month) {
-//                     const year = new Date().getFullYear(); // Use current year
-//                     return `${year}-${month}-${day}`;
-//                   }
-//                 }
-//                 return null;
-//               };
-
-//               const start = parseDatePart(parts[0]);
-//               const end = parseDatePart(parts[1]);
-
-//               if (start && end) {
-//                 this.minDate = start;
-//                 this.maxDate = end;
-
-//                 // Optionally prefill selectedDate if today is in range
-//                 const today = new Date().toISOString().substring(0, 10);
-//                 if (today >= this.minDate && today <= this.maxDate) {
-//                   this.selectedDate = today;
-//                 }
-//               } else {
-//                 console.warn("Could not parse organizerDateRange:", this.event.organizerDateRange);
-//               }
-//             } else {
-//               console.warn("Invalid organizerDateRange format:", this.event.organizerDateRange);
-//             }
-//           }
-//         } else {
-//           this.checkCCPermission();
-//         }
-//       },
-//       error: (err) => {
-//         this.checkCCPermission();
-//       }
-//     });
-//   });
-// }
 
 
 ngOnInit(): void {
   this.authService.userDetails$.subscribe(userDetails => {
-    //this.userName = userDetails?.displayName;
+    this.userName = userDetails?.displayName;
     // For testing:
     // this.userName = "Venkat Merla";
     // this.userName = "Ramprasad .KP";
-    this.userName = "Nivedita Merla";
+    //this.userName = "Nivedita Merla";
     this.userEmail = userDetails?.email;
 
     if (!this.userName) {
@@ -280,21 +98,23 @@ ngOnInit(): void {
       return;
     }
 
-    this.ielc.GetEventsscfilterprojects(this.userName).subscribe({
+    this.ielc.GetCoOwnersUserByProjects(this.userName).subscribe({
       next: (userbyprojectsdata) => {
         if (userbyprojectsdata && userbyprojectsdata.length > 0) {
           this.projectlist = userbyprojectsdata;
           this.hasPermission = true;
+          //console.log(this.projectlist);
 
           // Load other necessary data
           this.GetEventscheduleTime();
           this.loadAllTimes();
           this.GetEventSchedulerAdmin();
-          this.GetAllProjectsList();
+          //this.GetAllProjectsList();
           this.GetSuperOwners(this.userName);
           this.GetOwners();
-          this.GetUserByProjectsList();
+          //this.GetUserByProjectsList();
           this.GetLatestEvent();
+          this.GetProjectsListBasedOnUser
 
           // ✅ Parse event.organizerDateRange if available
           if (this.event && this.event.organizerDateRange) {
@@ -385,8 +205,6 @@ if (this.event && this.event.organizerLastDate) {
     console.warn("Could not parse organizerLastDate:", text);
   }
 }
-
-
         } else {
           this.checkCCPermission();
         }
@@ -399,17 +217,15 @@ if (this.event && this.event.organizerLastDate) {
 }
 
 
-
-
 // This checks if user is a CC
 checkCCPermission(): void {
-  this.ielc.GetCCDisplayNames().subscribe({
+  this.ielc.GetCoOwnersSuperOwners().subscribe({
     next: (ccNames) => {
       const lowerUser = this.userName!.toLowerCase();
       const isCC = ccNames.some(name => name.toLowerCase().includes(lowerUser));
       if (isCC) {
         this.hasPermission = true;
-        this.GetAllProjectsList();
+        this.GetProjectsListBasedOnUser();
       } else {
         this.hasPermission = false;
         this.showTable = false;
@@ -417,7 +233,7 @@ checkCCPermission(): void {
       }
     },
     error: (err) => {
-      console.error("GetCCDisplayNames error:", err);
+      console.error("GetCoOwnersSuperOwners error:", err);
       this.hasPermission = false;
       this.showTable = false;
       this.isLoading = false;
@@ -433,54 +249,16 @@ isSubmitDisabled(): boolean {
   return this.selectedDate >= this.lastAllowedDate;
 }
 
-
-
     GetLatestEvent() {
     this.ielc.GetLatestEvent().subscribe({
       next: (data) => {
         this.event = data;
+        //console.log("Events",this.event);
       },
       error: (err) => console.error('Failed to load event schedule', err)
     });
   }
 
-//    GetLatestEvent() {
-//   this.ielc.GetLatestEvent().subscribe({
-//     next: (data) => {
-//       this.event = data;
-
-//       if (this.event.organizerDateRange) {
-//         this.parseDateRange(this.event.organizerDateRange);
-//         this.selectedDate = this.minDate;
-//       }
-//     },
-//     error: (err) => console.error('Failed to load event schedule', err)
-//   });
-// }
-
-// parseDateRange(range: string) {
-//   const [start, end] = range.toUpperCase().split('–').map(s => s.trim());
-//   const currentYear = new Date().getFullYear();
-
-//   const parseToDate = (str: string) => {
-//     const clean = str.replace(/(ST|ND|RD|TH)/, ''); // Remove suffix
-//     return new Date(`${clean} ${currentYear}`);
-//   };
-
-//   const startDate = parseToDate(start);
-//   const endDate = parseToDate(end);
-
-// this.minDate = this.formatDateToInput(startDate);
-// this.maxDate = this.formatDateToInput(endDate);
-
-// }
-
-// formatDateToInput(date: Date): string {
-//   const year = date.getFullYear();
-//   const month = String(date.getMonth() + 1).padStart(2, '0');
-//   const day = String(date.getDate()).padStart(2, '0');
-//   return `${year}-${month}-${day}`;
-// }
 
   GetEventSchedulerAdmin(){
   this.ielc.GetEventSchedulerAdmin().subscribe((data) => {
@@ -509,7 +287,6 @@ loadAllTimes() {
   });
 }
 
-
 onDateChange() {
   if (this.selectedDate) {
     this.ielc.GetBookedTimes(this.selectedDate).subscribe((booked: string[]) => {
@@ -519,8 +296,6 @@ onDateChange() {
     this.filteredTimes = [...this.Time]; // reset
   }
 }
-
-
 
  onSubmit(): void {
   // ✅ 1. Check if all fields are filled
@@ -583,8 +358,6 @@ onDateChange() {
   });
 }
 
-
-
 onDepartmentChange() {
   if (this.selectedDept) {
     this.ielc.GetEventSchedulerUserByDept(this.selectedDept).subscribe({
@@ -601,8 +374,6 @@ onDepartmentChange() {
   }
 }
 
-
-
 onComplianceChange(event: Event): void {
   const target = event.target as HTMLSelectElement;
   this.selectedCompliance = target.value;
@@ -615,15 +386,13 @@ onComplianceChange(event: Event): void {
   this.selectedProject = '';
 
   forkJoin({
-    ccData: this.ielc.GetCCDisplayNames(),
-    toData: this.ielc.GetToDisplayNames(),
-    ccDataqms: this.ielc.GetCCDisplayNamesQMS(),
-    toDataqms: this.ielc.GetToDisplayNamesQMS(),
-  }).subscribe(({ ccData, toData, ccDataqms, toDataqms }) => {
+    ccData: this.ielc.GetCoOwnersSuperOwners(),
+    toData: this.ielc.GetCoOwnersAllAuditees(),
+
+  }).subscribe(({ ccData, toData }) => {
     this.ccDisplayNames = ccData;
     this.toDisplayNames = toData;
-    this.ccDisplayNamesqms = ccDataqms;
-    this.toDisplayNamesqms = toDataqms;
+
 
     if (this.userName) {
       const lowerUser = this.userName.toLowerCase();
@@ -636,23 +405,15 @@ onComplianceChange(event: Event): void {
         name.toLowerCase().includes(lowerUser)
       );
 
-      this.matchedSuperOwnerqms = this.ccDisplayNamesqms.some(name =>
-        name.toLowerCase().includes(lowerUser)
-      );
-
-      this.matchedOwnerqms = this.toDisplayNamesqms.some(name =>
-        name.toLowerCase().includes(lowerUser)
-      );
-
       let complianceData$: Observable<any[]> | undefined;
 
   if (this.matchedSuperOwner) {
-    this.GetAllProjectsList();
+    this.GetProjectsListBasedOnUser();
     complianceData$ = this.ielc.GetEventSchedulerUserAuditeesDept();
         this.hasPermission = true;
   } else if (this.matchedOwner) {
-    this.GetUserByProjectsList();
-    complianceData$ = this.GetFilteredISMSUserTable();
+    this.GetProjectsListBasedOnUser();
+    complianceData$ = this.GetFilteredCoOwnersUserTable();
   } else {
     this.hasPermission = false;
     this.showTable = false;
@@ -681,89 +442,15 @@ onComplianceChange(event: Event): void {
 }
 
 
-// onComplianceChange(event: Event): void {
-//   const target = event.target as HTMLSelectElement;
-//   this.selectedCompliance = target.value;
-
-//   this.isLoading = true;
-//   this.hasPermission = false;
-//   this.showTable = false;
-//   this.selectedTableData = [];
-//   this.showProjectDropdown = true;
-//   this.selectedProject = '';
-
-//   // ✅ Add extraToData observable here
-//   forkJoin({
-//     ccData: this.ielc.GetCCDisplayNames(),
-//     toData: this.ielc.GetToDisplayNames(),
-//     extraToData: this.ielc.Getextratouser()   // <--- your extra TO users from API
-//   }).subscribe(({ ccData, toData, extraToData }) => {
-//     const lowerUser = this.userName!.toLowerCase();
-
-//     // ✅ Combine toData with extraToData
-//     const combinedToData = [...toData, ...extraToData];
-
-//     console.log(combinedToData);
-
-//     // ✅ Matching logic
-//     this.matchedSuperOwner = ccData.some(name =>
-//       name.toLowerCase().includes(lowerUser)
-//     );
-//     this.matchedOwner = combinedToData.some(name =>
-//       name.toLowerCase().includes(lowerUser)
-//     );
-
-//     let complianceData$: Observable<any[]> | undefined;
-
-//     if (this.matchedSuperOwner) {
-//       complianceData$ = this.ielc.GetEventSchedulerUserAuditeesDept();
-//     } else if (this.matchedOwner) {
-//       complianceData$ = this.GetFilteredISMSUserTable();
-//     } else {
-//       this.hasPermission = false;
-//       this.showTable = false;
-//       this.isLoading = false;
-//       return;
-//     }
-
-//     if (complianceData$) {
-//       complianceData$.subscribe({
-//         next: (data) => {
-//           this.selectedTableData = this.sortlist(data);
-//           this.hasPermission = this.selectedTableData.length > 0;
-//           this.showTable = this.selectedTableData.length > 0;
-//           this.isLoading = false;
-//         },
-//         error: () => {
-//           this.selectedTableData = [];
-//           this.hasPermission = false;
-//           this.showTable = false;
-//           this.isLoading = false;
-//         }
-//       });
-//     }
-//   });
-// }
-
-
-
-
-   GetUserByProjectsList(){
-    this.ielc.GetEventsscfilterprojects(this.userName!).subscribe((userbyprojectsdata) => {
-    this.projectlist=userbyprojectsdata;
-    //console.log("l",userbyprojectsdata);
-    });
-   }
-
-      GetFilteredISMSUserTable(): Observable<any[]> {
+      GetFilteredCoOwnersUserTable(): Observable<any[]> {
        if (!this.userName) return of([]);
      
-       return this.ielc.Getcompliancefilterprojects(this.userName).pipe(
-         switchMap(() => this.ielc.GetEventsscfilterprojects(this.userName!)),
+       return this.ielc.GetCoOwnersUserByProjects(this.userName).pipe(
+         switchMap(() => this.ielc.GetCoOwnersUserByProjects(this.userName!)),
          switchMap((userProjects: string[]) => {
            this.userProjects = userProjects;
            const requests = userProjects.map(project =>
-             this.ielc.GetEventsscfilterprojects(project)
+             this.ielc.GetCoOwnersUserByProjects(project)
            );
            return forkJoin(requests);
          }),
@@ -771,59 +458,43 @@ onComplianceChange(event: Event): void {
        );
      }
 
-
-
-     
-
-  // GetUserByProjectsLists(): void {
-  // if (!this.userName) {
-  //   // If no username, block access immediately
-  //   this.hasPermission = false;
-  //   this.showTable = false;
-  //   this.isLoading = false;
-  //   return;
-  // }
-//   this.ielc.GetUserByProjects(this.userName).subscribe({
-//     next: (userbyprojectsdata) => {
-//       if (!userbyprojectsdata || userbyprojectsdata.length === 0) {
-//         // User has no projects, restrict access
-//         this.hasPermission = false;
-//         this.showTable = false;
-//         this.isLoading = false;
-//       } else {
-//         // User has projects, proceed
-//         this.projectlist = userbyprojectsdata;
-//         this.hasPermission = true;
-//       }
-//     },
-//     error: (err) => {
-//       console.error("GetUserByProjects error:", err);
-//       // If 404 or any error, restrict access
-//       this.hasPermission = false;
-//       this.showTable = false;
-//       this.isLoading = false;
-//     }
-//   });
-// }
-
-
     GetSuperOwners(userName: string | null){
-    this.ielc.GetCCDisplayNames().subscribe((superowners) => {
+    this.ielc.GetCoOwnersSuperOwners().subscribe((superowners) => {
     this.superownerss=superowners;
     //console.log("l",superowners);
     });
    }
 
    GetOwners(){
-    this.ielc.GetToDisplayNames().subscribe((owners) => {
+    this.ielc.GetCoOwnersAllAuditees().subscribe((owners) => {
     this.ownerss=owners;
     });
    }
-     GetAllProjectsList(){
-    this.ielc.GetByProjectsevents().subscribe((Teamsdata) => {
-    this.projectlist=Teamsdata;
+  //    GetAllProjectsList(){
+  //   this.ielc.GetCoOwnersAllProjectsList().subscribe((Teamsdata) => {
+  //   this.projectlist=Teamsdata;
+  //   //console.log(this.projectlist);
+  //   });
+  //  }
+  //     GetUserByProjectsList(){
+  //   this.ielc.GetCoOwnersUserByProjects(this.userName!).subscribe((userbyprojectsdatas) => {
+  //   this.projectlist=userbyprojectsdatas;
+  //   console.log("l",userbyprojectsdatas);
+  //   });
+  //  }
+
+  GetProjectsListBasedOnUser() {
+  if (this.superownerss) {
+    this.ielc.GetCoOwnersAllProjectsList().subscribe((data) => {
+      this.projectlist = data;
     });
-   }
+  } else {
+    this.ielc.GetCoOwnersUserByProjects(this.userName!).subscribe((data) => {
+      this.projectlist = data;
+    });
+  }
+}
+
 
    logout(): void {
   this.authService.logout();

@@ -11,16 +11,16 @@
     <div class="info-table">
     <div class="row">
       <div class="cell header">PROJECT/EVENT</div>
-      <div class="cell value">{{event.projectInternalAudit}}</div>
-      <div class="cell value">{{ event.projectQMS}}</div>
-      <div class="cell value">{{ event.projectISMS }}</div>
-      <div class="cell value height">{{ event.notes }}</div>
+      <div class="cell value">{{event?.projectInternalAudit}}</div>
+      <div class="cell value">{{ event?.projectQMS}}</div>
+      <div class="cell value">{{ event?.projectISMS }}</div>
+      <div class="cell value height">{{ event?.notes }}</div>
     </div>
     <div class="row">
       <div class="cell header">ORGANIZER</div>
-      <div class="cell value">{{ event.organizerCompany}}</div>
-      <div class="cell value">{{ event.organizerSchedule }}</div>
-      <div class="cell value">{{event.organizerDateRange}}</div>
+      <div class="cell value">{{ event?.organizerCompany}}</div>
+      <div class="cell value">{{ event?.organizerSchedule }}</div>
+      <div class="cell value">{{event?.organizerDateRange}}</div>
       <!-- <div class="cell value"></div> -->
     </div>
   </div>
@@ -83,7 +83,7 @@
     </div> -->
 
 <div class="submit-row">
-  <strong class="last-date-text1">Note:</strong><strong class="last-date-text">{{ event.organizerLastDate }}</strong>
+  <strong class="last-date-text1">Note:</strong><strong class="last-date-text">{{ event?.organizerLastDate }}</strong>
   <!-- <button
     type="submit"
     class="submit-btn"
@@ -116,11 +116,11 @@
         </thead>
         <tbody>
           <tr>
-            <td>{{ selectedAuditee.auditeedepartment }}</td>
-            <td>{{ selectedAuditee.auditees }}</td>
-            <td>{{ selectedAuditee.starting }}</td>
-            <td>{{ selectedAuditee.time }}</td>
-            <td>{{ selectedAuditee.auditors }}</td>
+            <td>{{ selectedAuditee?.auditeedepartment }}</td>
+            <td>{{ selectedAuditee?.auditees }}</td>
+            <td>{{ selectedAuditee?.starting }}</td>
+            <td>{{ selectedAuditee?.time }}</td>
+            <td>{{ selectedAuditee?.auditors }}</td>
           </tr>
         </tbody>
       </table>

@@ -1,564 +1,477 @@
 <div class="p-3 mb-2">
-    <img class="img" src="/assets/images/Inteq logo.png">
-    <h1 class="h1" >INTEQ EMPLOYEE LEARNING CENTER</h1>
+  <div class="row">
+    <div class="col-sm-3">
+      <img class="img" src="/assets/images/Inteq logo.png">
+    </div>
+
+    <div class="col-sm-7">
+      <h1 class="h1">INTEQ EMPLOYEE LEARNING CENTER</h1>
+    </div>
+
+    <div class="col-sm-2 log_out_btn">
+      <button type="button" class="btn buttonlogout btn-danger" (click)="logout()">Logout</button>
+    </div>
+
+  </div>
+
+  <div class="login_label">
+    <label class="lbllogin">Login as <strong>{{ userName }}</strong></label>
+  </div>
+
 </div>
-<form #registration="ngForm"  (ngSubmit)="showData(registration.value)" >
+<form #registration="ngForm" (ngSubmit)="showData(registration.value)">
   <div *ngIf="isLoading" class="loading-container">
     <span class="dot"></span>
-</div>
-  <!-- <div>
-      <a class="a">Go To:</a>
-    <button type="button" class="btn btn-link btnlink" routerLink="/complianceform">ISMS - QMS Monthly Task Status Update</button>
-  </div> -->
+  </div>
   <a *ngIf="showButton" class="a">Go To:</a>
   <button *ngIf="showButton" type="button" class="btn btn-link btnlink" routerLink="/complianceform">
-        ISMS - QMS Monthly Task Status Update
+    ISMS - QMS Monthly Task Status Update
   </button>
- <div>
-   <table class="tableleft">
-    <tr>
-        <td>
-      <label style="font-weight: bold;">INTEQ Help and Support:</label>
-        </td>
-    </tr>
-    <tr>
-        <td>
-           IT Help and Support:
-        </td>
-        <td>
+  <div class="row">
+
+
+    <div class="col-sm-4 div-left-align">
+      <table class="tableleft">
+        <tr>
+          <td>
+            <label style="font-weight: bold;">INTEQ Help and Support:</label>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            IT Help and Support:
+          </td>
+          <td class="td-clickhere">
             <button type="button" class="btn btn-link" routerLink="/ithelpsprt">Click Here</button>
-        </td>
-    </tr>
-    <tr>
-        <td>
-             Admin Dept. Support:
-        </td>
-        <td>
-            <button type="button" class="btn btn-link" routerLink="/adminsprt" >Click Here</button>
-        </td>
-    </tr>
-    <tr>
-        <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Admin Dept. Support:
+          </td>
+          <td class="td-clickhere">
+            <button type="button" class="btn btn-link" routerLink="/adminsprt">Click Here</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
             HR Dept. Support:
-        </td>
-        <td>
+          </td>
+          <td class="td-clickhere">
             <button type="button" class="btn btn-link" routerLink="/hrsprt">Click Here</button>
-        </td>
-    </tr>
-    <tr>
-        <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
             Projects Support:
-        </td>
-        <td>
+          </td>
+          <td class="td-clickhere">
             <button type="button" class="btn btn-link" routerLink="/prjsprt">Click Here</button>
-        </td>
-    </tr>
-    <tr>
-        <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
             Emergency Contact List:
-        </td>
-        <td>
+          </td>
+          <td class="td-clickhere">
             <button type="button" class="btn btn-link" routerLink="/emercntctlst">Click Here</button>
-        </td>
-    </tr>
-    <tr>
-        <td>
+          </td>
+        </tr>
+        <tr>
+          <td>
             Various Committees:
-        </td>
-        <td>
-            <button type="button" class="btn btn-link" routerLink="/varcmts" >Click Here</button>
-        </td>
-    </tr>
-  </table>
-  <table class="tableleft-2">
-    <tr>
-        <th>
-            ISO 27001:</th>
-        <th>
-             <button type="button" class="btn btnknwb btn-link" routerLink="/iso27001">Knowledge Base</button>
-        </th>
-    </tr>
-    <tr>
-        <td>
-           “The scope of the Information Security Management system (ISMS) of INTEQ Software LLP applies to the activities related to protection of information assets of the company and it’s clients in providing Analysis, Design, Development, Testing, Installation & Maintenance of Software Products, Projects and Services within the physical boundaries of Inteq Software LLP, at the below stated Locations.
-            <label style="color: red;font-weight: bold;margin-top: 3%;" class="blink">Security Incidents reporting email id:</label>
-            <a type="button" class="btn btnincident btn-link" href="mailto:incidents@inteqsolutions.com">{{email}}</a>
-        </td>
-    </tr>
-</table>
-<table class="tableleft-3">
-    <tr>
-        <th>
+          </td>
+          <td class="td-clickhere">
+            <button type="button" class="btn btn-link" routerLink="/varcmts">Click Here</button>
+          </td>
+        </tr>
+      </table>
+      <table class="tableleft-2">
+        <tr>
+          <td colspan="2" class="td-header">
+            <strong>ISO 27001:</strong>
+            <button type="button" class="btn btn-link knowledge-link" routerLink="/iso27001">Knowledge Base</button>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            “The scope of the Information Security Management system (ISMS) of INTEQ Software LLP applies to the
+            activities related to protection of information assets of the company and its clients in providing
+            Analysis, Design, Development, Testing, Installation & Maintenance of Software Products, Projects and
+            Services within the physical boundaries of Inteq Software LLP, at the below stated Locations.
+            <br />
+            <label class="incident-label blink">Security Incidents reporting email id:</label>
+            <a type="button" class="btn btnincident btn-link" href="mailto:incidents@inteqsolutions.com">
+              {{email}}
+            </a>
+          </td>
+        </tr>
+      </table>
+      <table class="tableleft-3">
+        <tr>
+          <th>
             ISO 9001:</th>
-        <th>
+          <th class="th-knowledgebase">
             <button type="button" class="btn btnknwb btn-link" routerLink="/iso9001">Knowledge Base</button>
-        </th>
-    </tr>
-    <tr>
-        <td>
+          </th>
+        </tr>
+        <tr>
+          <td colspan="2">
             <label style="font-weight: bold;">Quality Policy:</label>
             <br>
             Maximize stakeholders value, through continuous improvement.
             <br>
             <label style="font-weight: bold;">Quality Objective:</label>
             <br>
-                Customer Expectations are not met or exceeded at each stage.
-                Timely delivery of Quality assured work to the internal customer.
-                Continuous up-gradation of resources for optimum performance.
-                Strive continuously to improve the system methodology
-        </td>
-    </tr>
-</table>
-<table class="tableleft-4">
-    <tr>
-        <th>
+            Customer Expectations are not met or exceeded at each stage.
+            Timely delivery of Quality assured work to the internal customer.
+            Continuous up-gradation of resources for optimum performance.
+            Strive continuously to improve the system methodology
+          </td>
+        </tr>
+      </table>
+      <table class="tableleft-4">
+        <tr>
+          <th>
             HIPAA:</th>
-        <th>
+          <th class="th-knowledgebase">
             <button type="button" class="btn btnknwb btn-link" routerLink="/hippa">Knowledge Base</button>
-        </th>
-    </tr>
-    <tr>
-        <td>
-                The Health Insurance Portability and Accountability Act (HIPAA) of 1996 is a set of regulatory standards that intend to protect private and sensitive patient data from hospitals, insurance companies, and healthcare providers.
-        </td>
-    </tr>
-</table>
-  <br />
-<table class="tableleft-5">
-    <tr>
-        <th>
+          </th>
+        </tr>
+        <tr>
+          <td colspan="2">
+            The Health Insurance Portability and Accountability Act (HIPAA) of 1996 is a set of regulatory standards
+            that intend to protect private and sensitive patient data from hospitals, insurance companies, and
+            healthcare providers.
+          </td>
+        </tr>
+      </table>
+      <br />
+      <table class="tableleft-5">
+        <tr>
+          <th>
             GDPR:</th>
-        <th>
+          <th class="th-knowledgebase">
             <button type="button" class="btn btnknwb btn-link" routerLink="/gdpr">Knowledge Base</button>
-        </th>
-    </tr>
-    <tr>
-        <td>
-The General Data Protection Regulation is a European Union regulation on Information privacy in the European Union and the European Economic Area. The GDPR is an important component of EU privacy law and human rights law, in particular Article 8 of the Charter of Fundamental Rights of the European Union.                    
-   </td>
-    </tr>
-</table>
-  <br />
-<table class="tableleft-6">
-    <tr>
-        <th>
+          </th>
+        </tr>
+        <tr>
+          <td colspan="2">
+            The General Data Protection Regulation is a European Union regulation on Information privacy in the European
+            Union and the European Economic Area. The GDPR is an important component of EU privacy law and human rights
+            law, in particular Article 8 of the Charter of Fundamental Rights of the European Union.
+          </td>
+        </tr>
+      </table>
+      <br />
+      <table class="tableleft-6">
+        <tr>
+          <th>
             SOC:</th>
-        <th>
+          <th class="th-knowledgebase">
             <button type="button" class="btn btnknwb btn-link" routerLink="/soc">Knowledge Base</button>
-        </th>
-    </tr>
-    <tr>
-        <td>
-SOC is a voluntary compliance standard for service organizations, developed by the American Institute of CPAs (AICPA), which specifies how organizations should manage customer data. The standard is based on the following Trust Services Criteria: security, availability, processing integrity, confidentiality, privacy.             
-      </tr>
-</table>
-<br />
-<table class="tableleft-7">
-    <tr>
-        <th>
+          </th>
+        </tr>
+        <tr>
+          <td colspan="2">
+            SOC is a voluntary compliance standard for service organizations, developed by the American Institute of
+            CPAs (AICPA), which specifies how organizations should manage customer data. The standard is based on the
+            following Trust Services Criteria: security, availability, processing integrity, confidentiality, privacy.
+        </tr>
+      </table>
+      <br />
+      <table class="tableleft-7">
+        <tr>
+          <th>
             DPDP:</th>
-        <th>
+          <th class="th-knowledgebase">
             <button type="button" class="btn btnknwb btn-link" routerLink="/dpdp">Knowledge Base</button>
-        </th>
-    </tr>
-    <tr>
-        <td>
+          </th>
+        </tr>
+        <tr>
+          <td colspan="2">
             <label style="font-weight: bold;">India DPDP Act 2023:</label>
             <br>
-The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing of digital personal data within the territory of India collected online or collected offline and later digitized.</tr>
-</table>
-<table class="tableleft-8">
-    <tr>
-        <th style="font-weight: bold;">
+            The Digital Personal Data Protection (DPDP) Act, 2023 applies to the processing of digital personal data
+            within the territory of India collected online or collected offline and later digitized.
+        </tr>
+      </table>
+      <table class="tableleft-8">
+        <tr>
+          <th style="font-weight: bold;">
             Registered Office and Delivery Centre:
-        </th>
-    </tr>
-    <tr>
+          </th>
+        </tr>
+        <tr>
           <td>
-                1st Floor, Sapthagiri Towers, 
-              <br>
-              1-10-75/1/1-6, Begumpet, Hyderabad-500016,
-              <br>
-                 Telangana, India
+            1st Floor, Sapthagiri Towers,
             <br>
-                Telefax: 91-40-27765332
-                <br>
-            Website: <a type="button" class="btn btn-link" href="https://www.inteqsolutions.com" target="_blank" rel="noopener noreferrer">www.inteqsolutions.com</a>
-        </td>
-    </tr>
-</table>
- </div>
-    <div class="container-main">
-        <!-- <h3 class="main">{{currentDate | date:'longDate'}}</h3>  -->
-        <h3 class="main">{{selectedDate | date:'longDate'}}</h3> 
-        <div class="form-outline datepicker">
-         <!-- <label class="lblcal">Choose Date</label> -->
-         <!-- <input class="formcontrolcalendar" type="date" [(ngModel)]="selectedDate" (ngModelChange)="onDatechange($event)" > -->
-         <input class="formcontrolcalendar" type="date" name="selectedDate" [(ngModel)]="selectedDate" required >
-       </div>
-       <div>
-        <label class="labeldrp1">Leave</label>
-       </div>
-        <div>
-         <select id="select1" name="leavetype" class="drpdwn1" [(ngModel)]="leave" (change)="onSelect1Change()" [disabled]="isfirstSelectDisabled">
-           <!-- <option value="" disabled selected>- select leave type -</option>
-           <option *ngFor="let leaves of leavetype">
-               {{ leaves.name }}
-           </option> -->
-            <option value="" selected >- select leave type -</option>
-            <option value="Full Day">Full Day</option>
-            <option value="Half Day">Half Day</option>
-            <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
-       </select>
-         <!-- <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" name="leavetype" [(ngModel)]="leavetype">
-           - select leave type -
-         </button>
-         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-           <li><a class="dropdown-item" href="#">Full Day</a></li>
-           <li><a class="dropdown-item" href="#">Half Day</a></li>
-           <li><a class="dropdown-item" href="#">OH(Optional Holiday)</a></li>
-         </ul> -->
-       </div>
-     
-     <div>
-       <label class="labeldrp2">Work Location</label>
-    
-       <div>
-         <select id="select2" name="worktype" class="drpdwn2" [(ngModel)]="work" [disabled]="isSecondSelectDisabled" (change)="onSelect2Change()">
-           <option value="" >- select work type -</option>
-           <option *ngFor="let work of worktype">
-               {{ work.name }}
-           </option>
-       </select>
-         <!-- <button class="btn btndrp2 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-           - select work type -
-         </button>
-         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-           <li><a class="dropdown-item" href="#">WFH</a></li>
-           <li><a class="dropdown-item" href="#">WFO</a></li>
-           <li><a class="dropdown-item" href="#">WFH/WFO</a></li>
-         </ul> -->
-       </div>
-     </div>
-     <div>
-       <label class="labeltime1">Login Time</label>
-       <input class="time" type="time" name="time1" [(ngModel)]="time1" [disabled]="isSecondSelectDisabled" (change)="onFirsttimechange()" >
-       <label class="labeltime2">Logout Time</label>
-       <!-- <input class="time" type="time" [(ngModel)]="inputtime" (change)="checktime()"> -->
-       <input class="time" type="time" name="time2" [(ngModel)]="time2" (change)="checktime()" [disabled]="isSecondSelectDisabled" [disabled]="!isTimeInputDisabled" >
-       <!-- {{time2}} -->
-        <!-- Button trigger modal -->
-        
- <!-- <button type="button" class="tasksbtn" data-bs-toggle="modal" data-bs-target="#exampleModal" [disabled]="isSecondSelectDisabled">
-   Tasks
- </button> -->
- 
- <!-- Modal -->
- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-   <div class="modal-dialog">
-     <div class="modal-content">
-       <div class="modal-header">
-         <h5 class="modal-title" id="exampleModalLabel">Tasks Details</h5>
-         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-       </div>
-       <div class="modal-body">
-         <div class="mb-3">
-           <label  class="form-label">Tasks Description</label>
-           <textarea class="modal-form-control" name="taskslist" [(ngModel)]="taskslist" rows="3" ></textarea>
-         </div>
-       </div>
-       <div class="modal-footer">
-         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-         <button type="button" class="btn btn-primary" (click)="modaldatasave()">Save changes</button>
-       </div>
-     </div>
-   </div>
- </div>
- 
-       <div *ngIf="showEaxtraHoursLabel">
-         <label class="labeltime3" >Extra Hours</label>
-         <input class="timeextra"  type="time" name="extratime" ngModel>
-       </div>
-     </div>
-       <div>
-         <!-- <button class="button" (click)="save()"  [disabled]="!time1" >Save</button> -->
-         <button class="button" (click)="save()" >Save</button>
-       </div>
-     </div>
-<div>
-    <label class="lbllogin">Login as <strong>{{ userName }}</strong></label>
-</div>
-<div>
-    <label class="lblsessions blink" >New / Upcomimg Sessions</label>
-</div>
-<div>
-    <!-- <h2 class="h2">ISO 9001-2015 Internal Auditor</h2> -->
-    <h2 class="h2" *ngIf="topSkillName"> {{ topSkillName }}</h2>
-   
-</div>
-<div class="div">
-    <div class="mb-3 formdiv">
-        <label class="lblskill">Skill Name<span style="color: red;">*</span></label>
-        <select name="skillname" class="form-controlone" required [(ngModel)]="skillname" (change)="onSkillChange(skillname); onBatchInputChange()">
-            <option value="" disabled >- select -</option>
-            <option *ngFor="let row of Enrolledskills" [value]="row.skillName">{{ row.skillName }}</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label class="lblmode">Mode of Training<span style="color: red;">*</span></label>
-        <select name="selectedVenue" class="form-controlone" required [(ngModel)]="selectedVenue" (change)="onVenueChange(selectedVenue)" >
-            <option value="" disabled >- select -</option>
-            <option *ngFor="let venue of venueList" [value]="venue"> {{ venue }} </option>
-        </select>
-      </div>
-      <div class="col-md-3">
-        <label class="lbldate">Date<span style="color: red;">*</span></label>
-        <!-- <select name="date" class="form-controldate" required [(ngModel)]="date"  [disabled]="selectedVenue !== 'Teams'" (change)="onBatchInputChange(); onDateChange()" > -->
-          <select name="date" class="form-controldate" required [(ngModel)]="date"  [disabled]="!['Teams', 'Offline'].includes(selectedVenue)"  (change)="onBatchInputChange(); onDateChange()" > 
-          <option value="" disabled >- select -</option>
-            <option *ngFor="let d of availableDates" [value]="d">{{ d }}</option>
-        </select>
-        <label class="lbltime">Time<span style="color: red;">*</span></label>
-        <!-- <select name="time" class="form-controltime" required [(ngModel)]="time" [disabled]="selectedVenue !== 'Teams'" (change)="onBatchInputChange()"> -->
-          <select name="time" class="form-controltime" required [(ngModel)]="time" [disabled]="!date" (change)="onBatchInputChange()">
- 
-          <option value="" disabled >- select -</option>
-            <option *ngFor="let t of availableTimes" [value]="t">{{ t }}</option>
-        </select>
-      </div>
-      <div class="col-md-3">
-        <label class="lblfname">First Name<span style="color: red;">*</span></label>
-        <input type="text" class="form-controlfname" name="firstName" [(ngModel)]="firstName" readonly required>
-        <label class="lbllname">Last Name<span style="color: red;">*</span></label>
-        <input type="text" class="form-controllname" name="lastName" [(ngModel)]="lastName" readonly required>
-      </div>
-      <div class="mb-3 ">
-        <label class="lblemail">Email<span style="color: red;">*</span></label>
-        <input type="text" class="form-controlemail" name="email" [(ngModel)]="userEmail" readonly required>
-      </div>
-      <div class="mb-3 ">
-        <label class="lblmbl">Mobile No.</label>
-        <input type="text" class="form-controlmbl" name="mobile" [(ngModel)]="mobile"   pattern="[0-9]*" maxlength="10" minlength="10"   (keypress)="allowOnlyDigits($event)"
-        (paste)="validatePastedMobile($event)">
-      </div>
-      <div class="mb-3 " >
-        <label class="lblbatch">Batch Members - <a *ngIf="selectedVenue === 'Teams'">{{ batchMembersCount }}</a></label>
-        <!-- <label class="lblbatch">Batch Members - </label>
-        <span>{{ batchMembersCount }}</span> -->
+            1-10-75/1/1-6, Begumpet, Hyderabad-500016,
+            <br>
+            Telangana, India
+            <br>
+            Telefax: 91-40-27765332
+            <br>
+            Website: <a type="button" class="btn btn-link" href="https://www.inteqsolutions.com" target="_blank"
+              rel="noopener noreferrer">www.inteqsolutions.com</a>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-sm-8">
+      <div class="row">
+        <div class="col-sm-7">
+          <div class="container-main">
+            <h3 class="main">{{selectedDate | date:'longDate'}}</h3>
+
+            <div class="row mb-3 align-items-center justify-content-center">
+
+              <div class="drdwn-align row">
+                <div class="col-sm-4 leave_label">
+                  <label class="labeldrp1">Leave</label>
+                </div>
+                <div class="col-sm-6">
+                  <select id="select1" name="leavetype" class="drpdwn1" [(ngModel)]="leave" (change)="onSelect1Change()"
+                    [disabled]="isfirstSelectDisabled">
+                    <option value="" selected>- select leave type -</option>
+                    <option value="Full Day">Full Day</option>
+                    <option value="Half Day">Half Day</option>
+                    <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
+                  </select>
+                </div>
+
+                <div class="col-sm-2">
+                  <div class="form-outline datepicker">
+                    <input class="formcontrolcalendar" type="date" name="selectedDate" [(ngModel)]="selectedDate"
+                      required>
+                  </div>
+                </div>
+
+              </div>
+              <div>
+                <div class="row drdwn-align">
+                  <div class="col-sm-4 leave_label">
+                    <label class="labeldrp2">Work Location</label>
+                  </div>
+                  <div class="col-sm-6 drdwn-worktype">
+                    <select id="select2" name="worktype" class="drpdwn2" [(ngModel)]="work"
+                      [disabled]="isSecondSelectDisabled" (change)="onSelect2Change()">
+                      <option value="">- select work type -</option>
+                      <option *ngFor="let work of worktype">
+                        {{ work.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+            </div>
+            <div>
+              <div class="row mb-3 justify-content-center">
+                <div class="col-auto">
+                  <label class="labeltime1">Login Time</label>
+                  <input type="time" class="time" name="time1" [(ngModel)]="time1" [disabled]="isSecondSelectDisabled"
+                    (change)="onFirsttimechange()">
+                </div>
+                <div class="col-auto">
+                  <label class="labeltime2">Logout Time</label>
+                  <input type="time" class="time" name="time2" [(ngModel)]="time2" (change)="checktime()"
+                    [disabled]="isSecondSelectDisabled" [disabled]="!isTimeInputDisabled">
+                </div>
+              </div>
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Tasks Details</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="mb-3">
+                        <label class="form-label">Tasks Description</label>
+                        <textarea class="modal-form-control" name="taskslist" [(ngModel)]="taskslist"
+                          rows="3"></textarea>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary" (click)="modaldatasave()">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="showEaxtraHoursLabel">
+                <label class="labeltime3">Extra Hours</label>
+                <input class="timeextra" type="time" name="extratime" ngModel>
+              </div>
+            </div>
+            <div class="div-btnSave">
+              <button class="button" (click)="save()">Save</button>
+            </div>
+          </div>
+          <div class="tablebottom">
+            <table class="table  table-striped table-bordered tabletop">
+              <thead class="table-primary">
+                <tr>
+                  <th scope="col">Skill Name</th>
+                  <th scope="col">Test Result</th>
+                  <th scope="col">Percentage(%)</th>
+                  <th scope="col">Test Taken Date</th>
+                  <th scope="col">Feedback</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="!isLoading">
+                <tr *ngFor="let item of Registeredusers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+                  <td>{{ item.skillName }}</td>
+                  <td>
+                    <ng-container *ngIf="!isSkillRestricted(item.skillName)">
+                      <ng-container
+                        *ngIf="!item.result || item.percentage === null || !item.testTakenDate; else showResult">
+                        <a routerLink="/exampage" class="btn btn-link"
+                          (click)="setSelectedSkill(item.skillName, item.enrollmentID)">
+                          StartTest
+                        </a>
+                      </ng-container>
+                    </ng-container>
+
+                    <ng-template #showResult>
+                      <ng-container *ngIf="item.percentage >= getExamPercentage(); else pendingTest">
+                        <span>Completed</span>
+                      </ng-container>
+
+                      <ng-template #pendingTest>
+                        <span>Pending - </span>
+                        <a routerLink="/exampage" class="btn btn-link"
+                          (click)="setSelectedSkill(item.skillName, item.enrollmentID)">
+                          StartTest
+                        </a>
+                      </ng-template>
+                    </ng-template>
+                  </td>
+                  <td>{{ item.percentage }}</td>
+                  <td>
+                    <ng-container *ngIf="item.testTakenDate">
+                      {{ item.testTakenDate }}
+                    </ng-container>
+                  </td>
+                  <td *ngIf="feedbackLoaded">
+                    <ng-container *ngIf="item.hasFeedback; else showFeedbackLink">
+                      Yes
+                    </ng-container>
+                    <ng-template #showFeedbackLink>
+                      <a [routerLink]="['/feedback']"
+                        [queryParams]="{ skill: item.skillName, enrollment: item.enrollmentID }" class="btn btn-link">
+                        Feedback
+                      </a>
+                    </ng-template>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="pagination">
+              <pagination-controls (pageChange)="page = $event"></pagination-controls>
+            </div>
+          </div>
+          <div class="container-div">
+            <div>
+              <h2 class="notify">Inteq Holidays</h2>
+            </div>
+            <div id="newsTicker" class="newsinfo">
+              <ul class="newsList">
+                <li *ngFor="let item of holidayslist">{{item.date | date: 'dd-MM-yyyy'}}: {{item.content}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div class="blink_label">
+            <label class="lblsessions blink">New / Upcomimg Sessions</label>
+          </div>
+          <div>
+            <h2 class="skill_label" *ngIf="topSkillName"> {{ topSkillName }}</h2>
+          </div>
+          <div class="div">
+            <div class="mb-3 formdiv">
+              <label class="lblskill">Skill Name<span style="color: red;">*</span></label>
+              <select name="skillname" class="form-controlone" required [(ngModel)]="skillname"
+                (change)="onSkillChange(skillname); onBatchInputChange()">
+                <option value="" disabled>- select -</option>
+                <option *ngFor="let row of Enrolledskills" [value]="row.skillName">{{ row.skillName }}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="lblmode">Mode of Training<span style="color: red;">*</span></label>
+              <select name="selectedVenue" class="form-controlone" required [(ngModel)]="selectedVenue"
+                (change)="onVenueChange(selectedVenue)">
+                <option value="" disabled>- select -</option>
+                <option *ngFor="let venue of venueList" [value]="venue"> {{ venue }} </option>
+              </select>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 mb-3">
+                <label class="lbldate">Date<span style="color: red;">*</span></label>
+                <select name="date" class="form-controldate" required [(ngModel)]="date"
+                  [disabled]="!['Teams', 'Offline'].includes(selectedVenue)"
+                  (change)="onBatchInputChange(); onDateChange()">
+                  <option value="" disabled>- select -</option>
+                  <option *ngFor="let d of availableDates" [value]="d">{{ d }}</option>
+                </select>
+              </div>
+              <div class="col-sm-6 mb-3">
+                <label class="lbltime">Time<span style="color: red;">*</span></label>
+                <select name="time" class="form-controltime" required [(ngModel)]="time" [disabled]="!date"
+                  (change)="onBatchInputChange()">
+                  <option value="" disabled>- select -</option>
+                  <option *ngFor="let t of availableTimes" [value]="t">{{ t }}</option>
+                </select>
+              </div>
+              <div class="col-sm-6 mb-3">
+                <label class="lblfname">First Name<span style="color: red;">*</span></label>
+                <input type="text" class="form-controlfname" name="firstName" [(ngModel)]="firstName" readonly required>
+              </div>
+
+              <div class="col-sm-6 mb-3">
+                <label class="lbllname">Last Name<span style="color: red;">*</span></label>
+                <input type="text" class="form-controllname" name="lastName" [(ngModel)]="lastName" readonly required>
+              </div>
+              <div class="mb-3 ">
+                <label class="lblemail">Email<span style="color: red;">*</span></label>
+                <input type="text" class="form-controlemail" name="email" [(ngModel)]="userEmail" readonly required>
+              </div>
+              <div class="mb-3 ">
+                <label class="lblmbl">Mobile No.</label>
+                <input type="text" class="form-controlmbl" name="mobile" [(ngModel)]="mobile" pattern="[0-9]*"
+                  maxlength="10" minlength="10" (keypress)="allowOnlyDigits($event)"
+                  (paste)="validatePastedMobile($event)">
+              </div>
+              <div class="mb-3 ">
+                <label class="lblbatch">Batch Members - <a *ngIf="selectedVenue === 'Teams'">{{ batchMembersCount
+                    }}</a></label>
+              </div>
+              <div>
+                <label class="lblbatchpopup" *ngFor="let item of examlist">(Each Skill have only
+                  {{item.batchLimitMembers}}
+                  Members...)</label>
+              </div>
+              <div class="mb-3 ">
+                <button type="button" class="btn buttonsub btn-success" (click)="allowEnrollment()"
+                  [disabled]="!registration.valid">Submit</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div>
-        <label class="lblbatchpopup" *ngFor="let item of examlist">(Each Skill have only {{item.batchLimitMembers}} Members...)</label>
-      </div>
-      <div class="mb-3 ">
-        <button type="button" class="btn buttonsub btn-success"  (click)="allowEnrollment()"  [disabled]="!registration.valid">Submit</button>
-        <button type="button" class="btn buttonlogout btn-danger" (click)="logout()">Logout</button>
-      </div>
- </div>
-<div class="tablebottom">
-    <table class="table  table-striped table-bordered">
-        <thead class="table-primary">
-            <tr>
-              <th scope="col">Skill Name</th>
-              <th scope="col">Test Result</th>
-              <th scope="col">Percentage(%)</th>
-              <th scope="col">Test Taken Date</th>
-              <th scope="col">Feedback</th>
-            </tr>
-          </thead>
-          <tbody *ngIf="!isLoading">
-            <tr *ngFor="let item of Registeredusers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
-                
-                <td>{{ item.skillName }}</td>
-                <!-- <td> 
-                  <ng-container *ngIf="item.percentage !== null && item.percentage !== undefined; else startTest">
-                    <span *ngIf="item.percentage >= getExamPercentage(); else pendingTest">
-                      Completed
-                    </span>
-                  </ng-container>
-                
-                  <ng-template #pendingTest>
-                    <span>Pending - </span>
-                    <span>
-                    <a routerLink="/exampage" class="btn btn-link" (click)="setSelectedSkill(item.skillName)">StartTest</a>
-                  </span>
-                  </ng-template>
-                
-                  <ng-template #startTest>
-                    <ng-container *ngIf="hasSubmittedResult(item.enrollmentID); else showFeedbackLink">
-                      Yes
-                  </ng-container>
-                  </ng-template>
-                </td> -->
-                <!-- <td>
-                  <ng-container *ngIf="!item.result || item.percentage === null || !item.testTakenDate; else showResult">
-                    <a
-                      routerLink="/exampage"
-                      class="btn btn-link"
-                      (click)="setSelectedSkill(item.skillName, item.enrollmentID)"
-                    >
-                      StartTest
-                    </a>
-                  </ng-container>
-                
-                  <ng-template #showResult>
-                    <ng-container *ngIf="item.percentage >= getExamPercentage(); else pendingTest">
-                      <span>Completed</span>
-                    </ng-container>
-                
-                    <ng-template #pendingTest>
-                      <span>Pending - </span>
-                      <a
-                        routerLink="/exampage"
-                        class="btn btn-link"
-                        (click)="setSelectedSkill(item.skillName, item.enrollmentID)"
-                      >
-                        StartTest
-                      </a>
-                    </ng-template>
-                  </ng-template>
-                </td> -->
-                <td>
-                  <ng-container *ngIf="!isSkillRestricted(item.skillName)">
-                    <ng-container *ngIf="!item.result || item.percentage === null || !item.testTakenDate; else showResult">
-                      <a
-                        routerLink="/exampage"
-                        class="btn btn-link"
-                        (click)="setSelectedSkill(item.skillName, item.enrollmentID)"
-                      >
-                        StartTest
-                      </a>
-                    </ng-container>
-                  </ng-container>
-                
-                  <ng-template #showResult>
-                    <ng-container *ngIf="item.percentage >= getExamPercentage(); else pendingTest">
-                      <span>Completed</span>
-                    </ng-container>
-                
-                    <ng-template #pendingTest>
-                      <span>Pending - </span>
-                      <a
-                        routerLink="/exampage"
-                        class="btn btn-link"
-                        (click)="setSelectedSkill(item.skillName, item.enrollmentID)"
-                      >
-                        StartTest
-                      </a>
-                    </ng-template>
-                  </ng-template>
-                </td>
-                
-                
-                <!-- <td>
-                  <ng-container *ngIf="isTestCompleted(item); else showStartTest">
-                    <ng-container *ngIf="isTestPassed(item); else pendingTest">
-                      <span>Completed</span>
-                    </ng-container>
-                    <ng-template #pendingTest>
-                      <span>Pending - <a class="btn btn-link" (click)="setSelectedSkill(item.skillName, item.enrollmentID)">StartTest</a></span>
-                    </ng-template>
-                  </ng-container>
-                  <ng-template #showStartTest>
-                    <a class="btn btn-link" (click)="setSelectedSkill(item.skillName, item.enrollmentID)">StartTest</a>
-                  </ng-template>
-                  
-                </td> -->
-                
-                
-      <td>{{ item.percentage }}</td>
-      <td> 
-        <ng-container *ngIf="item.testTakenDate">
-          <!-- {{ item.testTakenDate  }} -->
-          {{ item.testTakenDate }}
-        </ng-container>
-        <!-- <ng-container *ngIf="item.testTakenDate && item.testTakenDate.trim() !== '';">
-        {{ item.testTakenDate }}
-      </ng-container> -->
-     </td>
-      <!-- <td>
-          <ng-container *ngIf="hasSubmittedFeedback(item.enrollmentID); else showFeedbackLink">
-            Yes
-        </ng-container>
-        <ng-template #showFeedbackLink>
-          <a [routerLink]="['/feedback']" [queryParams]="{ skill: item.skillName, enrollment: item.enrollmentID }" class="btn btn-link">
-            Feedback
-          </a>
-        </ng-template>
-      </td> -->
-      <td *ngIf="feedbackLoaded">
-        <ng-container *ngIf="item.hasFeedback; else showFeedbackLink">
-          Yes
-        </ng-container>
-        <ng-template #showFeedbackLink>
-          <a [routerLink]="['/feedback']"
-             [queryParams]="{ skill: item.skillName, enrollment: item.enrollmentID }"
-             class="btn btn-link">
-            Feedback
-          </a>
-        </ng-template>
-      </td>
-      
-      <!-- <td>
-        <ng-container *ngIf="getFeedbackStatus(item) === 'Yes'; else showFeedbackLink">
-          Yes
-        </ng-container>
-        <ng-template #showFeedbackLink>
-          <a [routerLink]="['/feedback']" [queryParams]="{ skill: item.skillName, enrollment: item.enrollmentID }" class="btn btn-link">
-            Feedback
-          </a>
-        </ng-template>
-      </td> -->
-      
-      <!-- <td>
-        <ng-container *ngIf="hasSubmittedFeedback(item.enrollmentID); else feedbackLink">
-          Yes
-        </ng-container>
-      
-        <ng-template #feedbackLink>
-          <a
-           
-            (click)="handleFeedbackClick(item)"
-            class="btn btn-link"
-            [ngClass]="{ 'text-muted': item.result !== 'Completed' }"
-            [attr.title]="item.result !== 'Completed' ? 'Please complete the test before giving feedback' : ''">
-            Feedback
-          </a>
-        </ng-template>
-      </td> -->
-      
-      
-      </tr>
-      </tbody>
-    </table>
-    <div class="pagination">
-      <pagination-controls (pageChange)="page = $event"></pagination-controls>
-  </div>
-</div>
-<div class="container">
-    <div>
-       <h2 class="notify">Inteq Holidays</h2>
-    </div>
-    <div id="newsTicker" class="newsinfo" >
-       <ul class="newsList">
-           <li *ngFor="let item of holidayslist">{{item.date | date: 'dd-MM-yyyy'}}: {{item.content}}</li>
-       </ul>
-    </div>
-   </div>
-   <div >
-    <label class="lblevents blink">Latest Events:</label>
-  <button *ngIf="showButton" type="button" class="btn btn-link btnlink1" routerLink="/eventscheduler">
+        <label class="lblevents blink">Latest Events:</label>
+          <button *ngIf="coownersshowButton" type="button" class="btn btn-link btnlink1 textmode" routerLink="/eventscheduler">
         Event Scheduler
   </button>
-    <!-- <img  *ngFor="let item of eventslist | slice:0:1" class="imgevents" [src]="'data:image/jpeg;base64,' + item.eventData" alt="Latest Event Image" > -->
-    <img  
-    *ngIf="latestEvent"
-    class="imgevents" 
-    [src]="'data:image/jpeg;base64,' + latestEvent.eventData" 
-    alt="Latest Event Image" 
-  >
-   
+        <img *ngFor="let item of eventslist | slice:0:1" class="imgevents"
+          [src]="'data:image/jpeg;base64,' + item.eventData" alt="Latest Event Image">
+      </div>
+    </div>
   </div>
-  
-   </form>
- 
-
+</form>

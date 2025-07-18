@@ -348,18 +348,21 @@ private initializeUser() {
   }, 1000);
 }
 
-login(): void {
-  this.msalService.loginPopup().subscribe({
-    next: (response: AuthenticationResult) => {
-      this.msalService.instance.setActiveAccount(response.account);
-      this.fetchUserDetails(); // Fetch user details after login
-      this.router.navigate(['/home']);
-    },
-    error: (error) => {
-      // console.error('Login Error:', error);
-    }
-  });
-}
+// login(): void {
+//   this.msalService.loginPopup().subscribe({
+//     next: (response: AuthenticationResult) => {
+//       this.msalService.instance.setActiveAccount(response.account);
+//       this.fetchUserDetails(); // Fetch user details after login
+//       this.router.navigate(['/home']);
+//     },
+//     error: (error) => {
+//       // console.error('Login Error:', error);
+//     }
+//   });
+// }
+
+
+
 // login(): void {
 //   this.msalService.loginPopup().subscribe({
 //     next: (response: AuthenticationResult) => {
@@ -909,7 +912,25 @@ handleRedirectCallback() {
 //   });
 // }
 
-
+isLoginInProgress = false;
+login(): void {
+  if (this.isLoginInProgress) {
+    return; // Prevent multiple simultaneous login attempts
+  }
+  this.isLoginInProgress = true;
+  this.msalService.loginPopup().subscribe({
+    next: (response: AuthenticationResult) => {
+      this.msalService.instance.setActiveAccount(response.account);
+      this.fetchUserDetails(); // optional, for registration checks
+      this.router.navigate(['/home']);
+      this.isLoginInProgress = false;
+    },
+    error: (error) => {
+      console.error('Login Error:', error);
+      this.isLoginInProgress = false; // Reset flag even on error
+    }
+  });
+}
 
 
 }
