@@ -86,19 +86,11 @@
                                             <option value="" disabled selected>- select skill -</option>
                                             <option *ngFor="let row of Enrolledskills">{{ row.skillName }}</option>
                                         </select>
-                                        <!-- <div *ngIf="submitted && (!questiondata.skillName || questiondata.skillName === '')" class="text-danger">
-                                            Please select a skill.
-                                          </div> -->
                                        </div>
                                        <div class="divmodal">
                                         <label>Question </label>
                                         <input type="file" id="myFile" name="iQuestion" class="form-control" (change)="onFileSelected($event, 'iQuestion')" >
                                         <input type="text" class="form-control" name="question" [(ngModel)]="questiondata.question" >
-                                        <!-- <img *ngIf="questiondata.iQuestion" [src]="questiondata.iQuestion" alt="Question Image" width="200" height="100"> -->
-                                        <!-- <div *ngIf="submitted && (!questiondata.question || questiondata.question.trim() === '') && (!questiondata.iQuestion || questiondata.iQuestion.trim() === '')" class="text-danger">
-                                            Either image or text for the question is required.
-                                          </div> -->
-                                        <!-- <img *ngIf="questiondata.iQuestion" [src]="'data:image/jpeg;base64,' + questiondata.iQuestion" alt="Question Image" width="200" height="100"> -->
                                         <div class="image-container" *ngIf="questiondata.iQuestion">
                                             <img [src]="'data:image/jpeg;base64,' + questiondata.iQuestion" alt="Question Image">
                                             <button class="close-btn" (click)="removeImage('iQuestion')">✖</button>
@@ -109,10 +101,6 @@
                                         <label>Option A </label>
                                         <input type="file" id="fileA" name="a" class="form-control" (change)="onFileSelected($event, 'ia')" >
                                         <input type="text" class="form-control" name="a" [(ngModel)]="questiondata.a" >
-                                        <!-- <div *ngIf="submitted && (!questiondata.ia || questiondata.ia.length === 0) && (!questiondata.a || questiondata.a.trim().length === 0)" class="text-danger">
-                                            Either image or text for Option A is required.
-                                          </div> -->
-                                        <!-- <img *ngIf="this.questiondata.ia" [src]="'data:image/jpeg;base64,' + questiondata.ia"  alt="Option A Image" width="100" height="50"> -->
                                         <div class="image-container" *ngIf="questiondata.ia">
                                             <img [src]="'data:image/jpeg;base64,' + questiondata.ia" alt="Option A  Image">
                                             <button class="close-btn" (click)="removeImage('ia')">✖</button>
@@ -123,10 +111,6 @@
                                         <label>Option B </label>
                                         <input type="file" id="fileB" name="b" class="form-control" (change)="onFileSelected($event, 'ib')" >
                                         <input type="text" class="form-control" name="b" [(ngModel)]="questiondata.b" >
-                                        <!-- <div *ngIf="submitted && (!questiondata.ib || questiondata.ib.length === 0) && (!questiondata.b || questiondata.b.trim().length === 0)" class="text-danger">
-                                            Either image or text for Option B is required.
-                                          </div> -->
-                                        <!-- <img *ngIf="this.questiondata.ib" [src]="'data:image/jpeg;base64,' + questiondata.ib"  alt="Option B Image" width="100" height="50"> -->
                                         <div class="image-container" *ngIf="questiondata.ib">
                                             <img [src]="'data:image/jpeg;base64,' + questiondata.ib" alt="Option B  Image">
                                             <button class="close-btn" (click)="removeImage('ib')">✖</button>
@@ -137,10 +121,6 @@
                                         <label>Option C </label>
                                         <input type="file" id="fileC" name="c" class="form-control" (change)="onFileSelected($event, 'ic')" >
                                         <input type="text" class="form-control" name="c" [(ngModel)]="questiondata.c" >
-                                        <!-- <div *ngIf="submitted && (!questiondata.ic || questiondata.ic.length === 0) && (!questiondata.c || questiondata.c.trim().length === 0)" class="text-danger">
-                                            Either image or text for Option C is required.
-                                          </div> -->
-                                        <!-- <img *ngIf="this.questiondata.ic" [src]="'data:image/jpeg;base64,' + questiondata.ic"  alt="Option C Image" width="100" height="50"> -->
                                         <div class="image-container" *ngIf="questiondata.ic">
                                             <img [src]="'data:image/jpeg;base64,' + questiondata.ic" alt="Option C  Image">
                                             <button class="close-btn" (click)="removeImage('ic')">✖</button>
@@ -151,10 +131,6 @@
                                         <label>Option D </label>
                                         <input type="file" id="fileD" name="d" class="form-control" (change)="onFileSelected($event, 'id')" >
                                         <input type="text" class="form-control" name="d" [(ngModel)]="questiondata.d" >
-                                        <!-- <div *ngIf="submitted && (!questiondata.id || questiondata.id.length === 0) && (!questiondata.d || questiondata.d.trim().length === 0)" class="text-danger">
-                                            Either image or text for Option D is required.
-                                          </div> -->
-                                        <!-- <img *ngIf="this.questiondata.id" [src]="'data:image/jpeg;base64,' + questiondata.id"  alt="Option D Image" width="100" height="50"> -->
                                         <div class="image-container" *ngIf="questiondata.id">
                                             <img [src]="'data:image/jpeg;base64,' + questiondata.id" alt="Option D  Image">
                                             <button class="close-btn" (click)="removeImage('id')">✖</button>
@@ -164,9 +140,6 @@
                                     <div class="divmodal">
                                         <label>Answer</label>
                                         <input type="text" class="form-control" name="answer" [(ngModel)]="questiondata.questionAnswer" >
-                                        <!-- <div *ngIf="submitted && (!questiondata.questionAnswer || questiondata.questionAnswer.trim() === '')" class="text-danger">
-                                            Answer is required.
-                                          </div> -->
                                     </div>
                                   </div>
                                 <div class="modal-footer">
@@ -207,19 +180,11 @@
                                             <option value="" disabled selected>- select skill -</option>
                                             <option *ngFor="let row of Enrolledskills">{{ row.skillName }}</option>
                                         </select>
-                                        <!-- <div *ngIf="submitted && (!questiondata.skillName || questiondata.skillName === '')" class="text-danger">
-                                            Please select a skill.
-                                          </div> -->
                                        </div>
                                        <div class="divmodal">
                                         <label>Question </label>
                                         <input type="file" id="myFile" name="iQuestion" class="form-control" (change)="onFileSelected($event, 'iQuestion')" >
                                         <input type="text" class="form-control" name="question" [(ngModel)]="questiondata.question" >
-                                        <!-- <img *ngIf="questiondata.iQuestion" [src]="questiondata.iQuestion" alt="Question Image" width="200" height="100"> -->
-                                        <!-- <div *ngIf="submitted && (!questiondata.question || questiondata.question.trim() === '') && (!questiondata.iQuestion || questiondata.iQuestion.trim() === '')" class="text-danger">
-                                            Either image or text for the question is required.
-                                          </div> -->
-                                        <!-- <img *ngIf="questiondata.iQuestion" [src]="'data:image/jpeg;base64,' + questiondata.iQuestion" alt="Question Image" width="200" height="100"> -->
                                         <div class="image-container" *ngIf="questiondata.iQuestion">
                                             <img [src]="'data:image/jpeg;base64,' + questiondata.iQuestion" alt="Question Image">
                                             <button class="close-btn" (click)="removeImage('iQuestion')">✖</button>
@@ -230,10 +195,6 @@
                                         <label>Option A </label>
                                         <input type="file" id="fileA" name="a" class="form-control" (change)="onFileSelected($event, 'ia')" >
                                         <input type="text" class="form-control" name="a" [(ngModel)]="questiondata.a" >
-                                        <!-- <div *ngIf="submitted && (!questiondata.ia || questiondata.ia.length === 0) && (!questiondata.a || questiondata.a.trim().length === 0)" class="text-danger">
-                                            Either image or text for Option A is required.
-                                          </div> -->
-                                        <!-- <img *ngIf="this.questiondata.ia" [src]="'data:image/jpeg;base64,' + questiondata.ia"  alt="Option A Image" width="100" height="50"> -->
                                         <div class="image-container" *ngIf="questiondata.ia">
                                             <img [src]="'data:image/jpeg;base64,' + questiondata.ia" alt="Option A  Image">
                                             <button class="close-btn" (click)="removeImage('ia')">✖</button>
@@ -244,10 +205,6 @@
                                         <label>Option B </label>
                                         <input type="file" id="fileB" name="b" class="form-control" (change)="onFileSelected($event, 'ib')" >
                                         <input type="text" class="form-control" name="b" [(ngModel)]="questiondata.b" >
-                                        <!-- <div *ngIf="submitted && (!questiondata.ib || questiondata.ib.length === 0) && (!questiondata.b || questiondata.b.trim().length === 0)" class="text-danger">
-                                            Either image or text for Option B is required.
-                                          </div> -->
-                                        <!-- <img *ngIf="this.questiondata.ib" [src]="'data:image/jpeg;base64,' + questiondata.ib"  alt="Option B Image" width="100" height="50"> -->
                                         <div class="image-container" *ngIf="questiondata.ib">
                                             <img [src]="'data:image/jpeg;base64,' + questiondata.ib" alt="Option B  Image">
                                             <button class="close-btn" (click)="removeImage('ib')">✖</button>
@@ -258,10 +215,6 @@
                                         <label>Option C </label>
                                         <input type="file" id="fileC" name="c" class="form-control" (change)="onFileSelected($event, 'ic')" >
                                         <input type="text" class="form-control" name="c" [(ngModel)]="questiondata.c" >
-                                        <!-- <div *ngIf="submitted && (!questiondata.ic || questiondata.ic.length === 0) && (!questiondata.c || questiondata.c.trim().length === 0)" class="text-danger">
-                                            Either image or text for Option C is required.
-                                          </div> -->
-                                        <!-- <img *ngIf="this.questiondata.ic" [src]="'data:image/jpeg;base64,' + questiondata.ic"  alt="Option C Image" width="100" height="50"> -->
                                         <div class="image-container" *ngIf="questiondata.ic">
                                             <img [src]="'data:image/jpeg;base64,' + questiondata.ic" alt="Option C  Image">
                                             <button class="close-btn" (click)="removeImage('ic')">✖</button>
@@ -272,10 +225,6 @@
                                         <label>Option D </label>
                                         <input type="file" id="fileD" name="d" class="form-control" (change)="onFileSelected($event, 'id')" >
                                         <input type="text" class="form-control" name="d" [(ngModel)]="questiondata.d" >
-                                        <!-- <div *ngIf="submitted && (!questiondata.id || questiondata.id.length === 0) && (!questiondata.d || questiondata.d.trim().length === 0)" class="text-danger">
-                                            Either image or text for Option D is required.
-                                          </div> -->
-                                        <!-- <img *ngIf="this.questiondata.id" [src]="'data:image/jpeg;base64,' + questiondata.id"  alt="Option D Image" width="100" height="50"> -->
                                         <div class="image-container" *ngIf="questiondata.id">
                                             <img [src]="'data:image/jpeg;base64,' + questiondata.id" alt="Option D  Image">
                                             <button class="close-btn" (click)="removeImage('id')">✖</button>
@@ -285,9 +234,6 @@
                                     <div class="divmodal">
                                         <label>Answer</label>
                                         <input type="text" class="form-control" name="answer" [(ngModel)]="questiondata.questionAnswer" >
-                                        <!-- <div *ngIf="submitted && (!questiondata.questionAnswer || questiondata.questionAnswer.trim() === '')" class="text-danger">
-                                            Answer is required.
-                                          </div> -->
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
