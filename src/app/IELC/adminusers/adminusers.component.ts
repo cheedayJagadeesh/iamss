@@ -19,6 +19,13 @@ interface smtpinfo {
   createdOn: string;
   organizerLastDate:string;
 }
+  interface CoOwners {
+  id: number;
+  auditeeDepartment?: string;
+  auditees?: string;
+  superOwners?: string;
+}
+
 interface eventsscuserdt {
     id: number;
   auditeedepartment?: string;
@@ -183,6 +190,15 @@ eventschadmindet: eventschdetails = {
   createdOn: '',
   organizerLastDate: '',
 };
+
+coownerslist: any[] = []; 
+coownersdept: CoOwners = {
+  id: 0,
+  auditeeDepartment: '',
+  auditees: '',
+  superOwners: '',
+};
+
 
   eventschadtlist: any[] = []; 
 eventschadmindets: eventsscuserdt = {
@@ -363,7 +379,7 @@ eventschuser: eventscuserinfo = {
  eventalertslist: any[]=[];
  event: any | null = null;
  fileError: string = "";
-
+ coownerss: any[]=[];
   
   constructor(private ielc:IelcapiService) {
 
@@ -449,8 +465,103 @@ eventschuser: eventscuserinfo = {
     this.GetEventSchedulerUser();
     this.GetLatestEvent();
     this.GetEventSchedulerTimeslots();
+    this.GetCoOnwers();
     
   }
+//--------------------------------------------------------------------------------EventSchedulerTime
+GetCoOnwers() {
+  this.ielc.GetCoOwners().subscribe((data) => {
+    this.coownerss = this.sortlist(data);
+    console.log(this.coownerss); // Should show IDs
+    this.isLoading = false;
+  });
+}
+
+  AddCoOnwers(): void {
+  this.ielc.PostCoOwners(this.coownerss).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetCoOnwers();
+      this.resetCoOwners();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+
+    deleteCoOwners(id: number) {
+    if (confirm('Are you sure you want to delete this record?')) {
+      this.ielc.DeleteCoOwners(id).subscribe({
+        next: () => {
+          alert(`Record with ID ${id} deleted successfully!`);
+          this.GetCoOnwers();
+        },
+         error: (err) =>  console.error('Error deleting item:', err)
+      });
+    }
+  }
+
+// EditCoOwners(id: number) { 
+//   this.ielc.GetCoOwnersId(id).subscribe(
+//     data => {
+//       if (data && typeof data === 'object' && 'id' in data && 'auditeedepartment' in data && 'auditees' in data && 'superowners' in data) {
+//         this.coownersdept = { 
+//           id: data.id,
+//           auditeedepartment: data.auditeedepartment,
+//           auditees: data.auditees,
+//           superowners:data.superowners
+//         };
+//       } else {
+//         console.warn("Unexpected data format received:", data);
+//       }
+//     },
+//     error => {
+//       console.error("Error fetching record:", error);
+//     }
+//   );
+// }
+EditCoOwners(id: number) {
+  this.ielc.GetCoOwnersId(id).subscribe(data => {
+    if (data) {
+      this.coownersdept = { 
+        id: data.id || 0,
+        auditeeDepartment: data.auditeeDepartment || '',
+        auditees: data.auditees || '',
+       superOwners:data.superOwners || ''
+      };
+      console.log("API Response:", data);
+    } else {
+      // console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    // console.error("Error fetching record:", error);
+  });
+}
+
+UpdateCoOwners() {
+  this.ielc.UpdateCoOwners(this.coownersdept.id, this.coownersdept).subscribe(
+    (response) => {
+      // ////console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetCoOnwers();
+      this.resetCoOwners();
+    },
+    (error) => {
+      // console.error("Error updating Record:", error);
+    }
+  );
+}
+
+  resetCoOwners(){
+    this.coownersdept={
+    id: 0,
+    auditeeDepartment: '',
+    auditees: '',
+    superOwners: '',
+    }
+  }
+
 //--------------------------------------------------------------------------------EventSchedulerTime
 GetEventSchedulerTimeslots() {
   this.ielc.GetEventSchedulerTimeIds().subscribe((data) => {
@@ -459,27 +570,6 @@ GetEventSchedulerTimeslots() {
     this.isLoading = false;
   });
 }
-
-
-
-// AddEventSchedulerTime(): void {
-//   const payload = {
-//     time: this.eventschtime.time, // contains "10:00 AM – 11:30 AM"
-//   };
-
-//   this.ielc.PostEventSchedulerTime(payload).subscribe({
-//     next: (response) => {
-//       console.log('Server response:', response);
-//       alert('✅ ' + response);
-//       this.GetEventSchedulerTimeslots();
-//       this.resetEventSchedulerTime();
-//     },
-//     error: (error) => {
-//       console.error('Error adding record:', error);
-//       alert('❌ Error adding record. Please try again.');
-//     }
-//   });
-// }
 
 AddEventSchedulerTime(): void {
   const time = this.eventschtime.time;
@@ -533,7 +623,6 @@ EditEventSchedulerTime(id: number) {
   );
 }
 
-
 UpdateEventSchedulerTime(): void {
   const id = this.eventschtime.id;
   const time = this.eventschtime.time;
@@ -562,14 +651,6 @@ UpdateEventSchedulerTime(): void {
     }
   });
 }
-
-
-
-
-
-
-
-
 
   resetEventSchedulerTime(){
     this.eventschtime={

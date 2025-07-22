@@ -2444,5 +2444,18 @@ GetCoOwnersUniqueName(): Observable<string[]> {
   return this.http.get<string[]>(`${this.coownersurl}/uniqueusers`, { headers: this.getHeaders() });
 }
 
+PostCoOwners(data: any): Observable<any> {
+      return this.http.post<any>(this.coownersurl, data, { headers: this.getHeaders() });
+    }
+    DeleteCoOwners(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.coownersurl}/${id}`, {
+        headers: this.getHeaders()
+      });
+    }
+
+   UpdateCoOwners(id: number, updatedData: any): Observable<any> {
+      const headers = this.getHeaders();
+      return this.http.put<any>(`${this.coownersurl}/${id}`, updatedData,{headers, observe: 'response' });
+    }
 
 }
