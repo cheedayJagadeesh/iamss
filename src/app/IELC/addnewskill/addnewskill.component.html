@@ -1,42 +1,46 @@
 <app-header></app-header>
 <form class="row g-3" #addskillsform="ngForm" novalidate >
  
-  <div class="center-form-wrapper">
-  <div class="container-fluid mt-3">
+ <!-- Wrapper to center horizontally and keep content at the top -->
+<div class="d-flex justify-content-center bg-light pt-5">
+  <div class="container" style="max-width: 600px;">
+    <div  class="container p-4 rounded shadow-sm bg-light border border-secondary">
     <!-- Form Row -->
-    <div class="row align-items-center justify-content-start gx-2 gy-2">
-      <!-- Label -->
-      <div class="col-auto">
-        <label for="Empname" class="form-label mb-0">Skill Name</label>
+      <div class="row justify-content-center align-items-center gx-2 gy-2 mb-3">
+        <!-- Label -->
+        <div class="col-auto">
+          <label for="Empname" class="form-label mb-0">Skill Name</label>
+        </div>
+
+        <!-- Input -->
+        <div class="col-md-6 col-sm-8">
+          <input type="text" class="form-control text-center" id="Empname" name="skillName"
+                 [(ngModel)]="skillData.skillName" required #skillNameRef="ngModel">
+        </div>
+
+        <!-- Buttons -->
+        <div class="col-auto">
+          <button type="button" class="btn btn-info me-2"
+                  [disabled]="!skillNameRef.valid" (click)="AddSkill()">Insert</button>
+          <button type="button" class="btn btn-danger"
+                  [disabled]="!skillNameRef.valid" (click)="DeleteSkill()">Delete</button>
+        </div>
       </div>
 
-      <!-- Input -->
-      <div class="col-md-6 col-sm-6">
-        <input type="text" class="form-control" id="Empname" name="skillName"
-               [(ngModel)]="skillData.skillName" required #skillNameRef="ngModel">
+      <!-- Checkbox Row -->
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-sm-8">
+          <div class="form-check text-start">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="includeStQuestions"
+                   name="includeStQuestions" id="includeStQuestions">
+            <label class="form-check-label" for="includeStQuestions">
+              Include _stQuestions column
+            </label>
+          </div>
+        </div>
       </div>
 
-      <!-- Buttons -->
-      <div class="col-auto">
-        <button type="button" class="btn btn-info me-2"
-                [disabled]="!skillNameRef.valid" (click)="AddSkill()">Insert</button>
-        <button type="button" class="btn btn-danger"
-                [disabled]="!skillNameRef.valid" (click)="DeleteSkill()">Delete</button>
-      </div>
     </div>
-
-   <!-- Checkbox Row -->
-<div class="row mt-3">
-  <div class="col-md-3 offset-md-1 col-sm-6">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" [(ngModel)]="includeStQuestions"
-             name="includeStQuestions" id="includeStQuestions">
-      <label class="form-check-label" for="includeStQuestions">
-        Include _stQuestions column
-      </label>
-    </div>
-  </div>
-</div>
   </div>
 </div>
     <div *ngIf="isLoading" class="loading-container">

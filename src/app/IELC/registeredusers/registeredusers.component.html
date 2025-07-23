@@ -1,73 +1,73 @@
 <app-header></app-header>
- <div>
-        <label class="lbllogin"></label>
-    </div>
-<form class="row g-3" #searchform="ngForm" (ngSubmit)="searchSkills()">
-  <div class="container formcont">
-    <div class="row mb-3">
-      <!-- Skill Name -->
-      <div class="col-md-4 col-sm-6 d-flex align-items-center">
-        <label for="skillname" class="form-label me-2 mb-0" style="white-space: nowrap;">Skill Name</label>
-        <select id="select2" class="form-select form-select-sm text skillName" name="skillname" [(ngModel)]="skillname">
-          <option value="">- select skill -</option>
-          <option *ngFor="let item of Enrolledskills" [value]="item">{{ item }}</option>
-        </select>
-      </div>
+<!-- <div>
+  <label class="lbllogin"></label>
+</div> -->
+<form class="row" #searchform="ngForm" (ngSubmit)="searchSkills()">
+  <div class="d-flex justify-content-center bg-light pt-5">
+    <div class="container p-4 rounded shadow-sm bg-light border border-secondary mb-4" style="max-width: 1000px;">
+      <div class="row g-3">
+        <!-- Skill Name -->
+        <div class="col-md-4 col-sm-6">
+          <label for="skillname" class="form-label">Skill Name</label>
+          <select id="select2" class="form-select form-select-sm" name="skillname" [(ngModel)]="skillname">
+            <option value="">- Select Skill -</option>
+            <option *ngFor="let item of Enrolledskills" [value]="item">{{ item }}</option>
+          </select>
+        </div>
 
+        <!-- Email -->
+        <div class="col-md-4 col-sm-6">
+          <label for="time" class="form-label">Email</label>
+          <input type="text" class="form-control form-control-sm" id="time" name="mail" [(ngModel)]="mail">
+        </div>
 
-      <!-- Email -->
-      <div class="col-md-5 col-sm-6 d-flex align-items-center">
-        <label for="time" class="form-label me-2 mb-0" style="white-space: nowrap;">Email</label>
-        <input type="text" class="form-control form-control-sm text email" id="time" name="mail" [(ngModel)]="mail">
-      </div>
-
-
-      <!-- Search Button -->
-      <div class="col-md-1 d-flex align-items-end">
-        <button class="btn btnsearch">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
-            viewBox="0 0 16 16">
-            <path
-              d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <div class="row mb-3">
-      <!-- Mode of Training -->
-      <div class="col-md-4 col-sm-6 d-flex align-items-center">
-        <label for="modetype" class="form-label me-2 mb-0" style="white-space: nowrap;">Mode of Training</label>
-        <select id="select1" name="modetype" class="form-select form-select-sm text" [(ngModel)]="modetype">
-          <option value="">- Select Mode -</option>
-          <option>Offline</option>
-          <option>Self-Learning</option>
-          <option>Teams</option>
-        </select>
-      </div>
-
-
-      <!-- Choose Date Range -->
-      <div class="col-md-5 col-sm-12">
-        <div class="d-flex align-items-center gap-2">
-          <label class="form-label mb-1 range" for="fromDate">Choose Date Range</label>
-          <input type="date" class="form-control text" id="fromDate" name="fromdate" [(ngModel)]="fromDate" />
-          <input type="date" class="form-control text" id="toDate" name="todate" [(ngModel)]="toDate" />
+        <!-- Mode of Training + Buttons in one row -->
+        <div class="col-md-4 col-sm-12 d-flex align-items-end">
+          <!-- Mode of Training dropdown -->
+          <div class="me-2 flex-grow-1">
+            <label for="modetype" class="form-label">Mode of Training</label>
+            <select id="select1" name="modetype" class="form-select form-select-sm" [(ngModel)]="modetype">
+              <option value="">- Select Mode -</option>
+              <option>Offline</option>
+              <option>Self-Learning</option>
+              <option>Teams</option>
+            </select>
+          </div>
+          <!-- Buttons beside dropdown -->
+          <div class="d-flex align-items-end">
+            <button class="btn btnsearch me-1" type="submit">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                viewBox="0 0 16 16">
+                <path
+                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+              </svg>
+            </button>
+            <button class="btn btnsearch" type="button" (click)="clear()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z" />
+                <path
+                  d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
-      <!-- Clear Button -->
-      <div class="col-md-1 d-flex align-items-end">
-     <button class="btn btnsearch" (click)="clear()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise"
-          viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z" />
-          <path
-            d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
-        </svg>
-      </button>
+      <!-- Date Range -->
+      <div class="row mt-4">
+        <div class="col-sm-4">
+          <label for="fromDate" class="form-label">Choose Date Range From</label>
+          <input type="date" class="form-control form-control-sm" name="fromdate" [(ngModel)]="fromDate">
+        </div>
+        <div class="col-sm-4">
+          <label for="toDate" class="form-label">Choose Date Range To</label>
+          <input type="date" class="form-control form-control-sm" name="todate" [(ngModel)]="toDate">
+        </div>
+      </div>
+
     </div>
   </div>
-  </div>
+
   <div *ngIf="isLoading" class="loading-container">
     <span class="dot"></span>
   </div>

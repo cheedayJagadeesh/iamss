@@ -1,20 +1,9 @@
 /* Ensure container doesn't stretch too much */
 .lbllogin {
-    margin-top: 2.5%;
+   margin-top: 1.5%;
+    margin-left: 85%;
     font-size: 16px;
-    text-align: right;
-    width: 92%;
 }
-.formcont {
-  margin: 40px auto;              /* Top-bottom margin and center horizontally */
-  max-width: 85%;                 /* Optional: control how wide it gets */
-  padding: 20px;                  /* Optional: space inside */
-  background-color: #fff;         /* Optional: if you want background */
-  border-radius: 8px;             /* Optional: rounded corners */
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1); /* Optional: subtle shadow */
-}
-
-
 /* Buttons styling */
 .btnsearch, .buttonclr {
   background-color: rgb(13, 152, 233);
@@ -23,22 +12,23 @@
   border-radius: 4px;
   border: none;
 }
+ .text{
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    font-family: Roboto, sans-serif;
+    letter-spacing: .0178571429em;
+}
+ .main_container{
+padding-left: 49px;
+ } 
+ .tablebottom {
+    margin-top: 1%;
+}
+.pagination {
+    margin-left: 72%;
+}
 
-/* Fix label margin conflicts */
-label.form-label {
-  margin-left: 0;
-  margin-top: 0;
-  position: static;
-}
-.text{
-  text-align:center;
-}
-.range{
-  width: 88%;
-}
-.skillName{
-  margin-left: 36px;
-}
-.email{
-  margin-left: 109px;
+th {
+    white-space: nowrap;
 }
