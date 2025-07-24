@@ -134,6 +134,8 @@ export class AdminusersComponent {
   selectedOption1: string = '';
   selectedOption2: string = '';
   selectedOption3: string = '';
+  selectedOption4: string = '';
+  selectedOption5: string = '';
   isContactSelected: boolean = false;
   isHRSelected: boolean = false;
   isOSSelected: boolean = false;
@@ -141,6 +143,8 @@ export class AdminusersComponent {
   isPRJTSelected: boolean = false;
   isCISOSelected: boolean = false;
   showContactTable: boolean = false;
+  isEventSchedulerSelected: boolean = false;
+  isEventYearSelected: boolean = false;
 
 onSelection1Change() {
   this.isContactSelected = this.selectedOption1 === 'Contact';
@@ -149,6 +153,7 @@ onSelection1Change() {
   this.isITSelected = this.selectedOption1 === 'ITSupport';
   this.isPRJTSelected = this.selectedOption1 === 'ProjectsSupport';
   this.isCISOSelected = this.selectedOption1 === 'CISO_MR_Support';
+  this.isEventSchedulerSelected = this.selectedOption1 === 'EventScheduler';
 
   if (this.selectedOption1 !== 'Contact') {
     this.showContactTable = false;
@@ -168,7 +173,12 @@ onSelection3Change() {
  
 }
 
+onSelection4Change() {
+    this.isEventYearSelected = this.selectedOption4 === 'Year';
+}
 
+onSelection5Change() {
+}
 
   isLoading = true;
   smtplist: any[] = []; 
@@ -380,6 +390,11 @@ eventschuser: eventscuserinfo = {
  event: any | null = null;
  fileError: string = "";
  coownerss: any[]=[];
+ years: number[] = [];
+selectedYear: string = new Date().getFullYear().toString();
+ tableData: any[] = [];
+ availableMonths: string[] = [];
+ selectedMonth: string = '';
   
   constructor(private ielc:IelcapiService) {
 
@@ -466,7 +481,79 @@ eventschuser: eventscuserinfo = {
     this.GetLatestEvent();
     this.GetEventSchedulerTimeslots();
     this.GetCoOnwers();
-    
+    this.populateYears();
+    this.selectedYear = new Date().getFullYear().toString();
+    // this.fetchData(this.selectedYear);
+  }
+
+  //--------------------------------------------------------------------------------Years
+GetMonthsByYear(year: string): void {
+  this.ielc.GetAvailableMonthsByYear(year).subscribe({
+    next: (months) => {
+      this.availableMonths = months;
+    },
+    error: (err) => {
+      console.error('Failed to load months:', err);
+      this.availableMonths = [];
+    }
+  });
+}
+onYearChange(): void {
+  if (this.selectedYear) {
+    this.isEventYearSelected = true;
+    this.GetMonthsByYear(this.selectedYear);
+  } else {
+    this.availableMonths = [];
+    this.isEventYearSelected = false;
+  }
+}
+onMonthChange(): void {
+  console.log('Selected Month:', this.selectedMonth);
+}
+  populateYears(): void {
+    const startYear = 2025;
+    const currentYear = new Date().getFullYear();
+    const today = new Date();
+  
+    // Always include years up to the current year
+    this.years = [];
+    for (let year = startYear; year <= currentYear; year++) {
+      this.years.push(year);
+    }
+  
+    // Only add next year if today is January 1st
+    if (today.getMonth() === 0 && today.getDate() === 1) {
+      this.years.push(currentYear + 1);
+    }
+  }
+
+  // fetchData(year: number): void {
+  //   this.ielc.Getismshistory(year).subscribe(
+  //     (data) => {
+  //       this.tableData = data;
+  //       this.tableData = this.sortlist(data);
+  //       this.isLoading = false;
+  //     },
+  //     (error) => {
+  //       // console.error('Error fetching data:', error);
+  //       this.tableData = []; // Clear data on error
+  //     }
+  //   );
+  // }
+  //--------------------------------------------------------------------------------CreateTables
+
+  createEventTables(): void {
+    if (confirm('Are you sure you want to create the Event DB tables?')) {
+      this.ielc.createEventTables().subscribe({
+        next: (res: any) => {
+          alert('✅ Tables created successfully!');
+        },
+        error: (err: any) => {
+          console.error('Error creating tables:', err);
+          alert('❌ Failed to create tables.');
+        }
+      });
+    }
   }
 //--------------------------------------------------------------------------------EventSchedulerTime
 GetCoOnwers() {

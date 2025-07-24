@@ -2402,6 +2402,13 @@ UpdateEventSchedulerTime(id: number, time: string): Observable<void> {
     { headers: this.getHeaders() }
   );
 }
+
+
+
+  GetAvailableMonthsByYear(year: string): Observable<string[]> {
+  return this.http.get<any[]>(`${this.eventschedulertime}/getmonthsfromtables/${year}`, { headers: this.getHeaders() })
+}
+
 //---------------------------------------------------------------------------------------CoOwners
 coownersurl = 'https://ielc-coreapi1.azurewebsites.net/CoOwners';
 
@@ -2457,5 +2464,22 @@ PostCoOwners(data: any): Observable<any> {
       const headers = this.getHeaders();
       return this.http.put<any>(`${this.coownersurl}/${id}`, updatedData,{headers, observe: 'response' });
     }
+
+//---------------------------------------------------------------------------------------CreateTables
+createeventtablesurl = 'https://ielc-coreapi1.azurewebsites.net/AddNewTables/createeventtables';
+
+//   createEventTables(): Observable<any> {
+//   return this.http.post<any>(this.createeventtablesurl, {}, { headers: this.getHeaders() });
+// }
+
+createEventTables(): Observable<any> {
+  return this.http.post(this.createeventtablesurl, {}, {
+    headers: this.getHeaders(),
+    responseType: 'text' as 'json' // 🛠️ trick to let Angular parse string as JSON
+  });
+}
+//---------------------------------------------------------------------------------------CreateTables
+
+
 
 }
