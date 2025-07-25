@@ -76,9 +76,11 @@
         </div>
         <div class="">
          <select name="year" class="form-controlone" required [(ngModel)]="selectedYear" (change)="onYearChange()">
-            <option value="" selected>- select year -</option>
+             <option value="" selected>- select year -</option>
             <option *ngFor="let year of years" [value]="year">{{ year }}</option>
         </select>
+
+
         </div>
     </div>
 
@@ -11260,17 +11262,14 @@
     </div>
 
 <div class="tablebottom"  *ngIf="selectedOption1 === 'EventScheduler'">
-                <!-- need a button to create 3 database tables -->
-                  <!-- <button class="btn btn-success mb-2" (click)="createEventTables()">
-    Create Event DB Tables
-  </button> -->
-       <button class="btn btn-success mb-2" (click)="createEventTables()">
-            Create Event DB Tables
-        </button>
-        </div>
+    <button class="btn btn-success mb-2" (click)="createEventTables()">
+        Create Event DB Tables
+    </button>
+</div>
     
         <div class="tablebottom"  *ngIf="selectedOption1 === 'EventScheduler'">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="courserestriction">
+        <!-- <table *ngIf="!isLoading" class="table table-striped table-bordered" name="courserestriction"> -->
+            <table *ngIf="selectedYear && selectedMonth && eventschedulertime.length > 0" class="table table-striped table-bordered">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">ID</th>

@@ -2219,10 +2219,6 @@ GetEventSchedulerUserAuditeesDept(): Observable<string[]> {
   return this.http.get<string[]>(`${this.eventschedulerUrl}/EventSchedulerUser/auditees`, { headers: this.getHeaders() });
 }
 
-GetEventSchedulerTime(): Observable<string[]> {
-  return this.http.get<string[]>(`${this.eventschedulerUrl}/times`, { headers: this.getHeaders() });
-}
-
 GetEventSchedulerAdmin(): Observable<string[]> {
   return this.http.get<string[]>(`${this.eventschedulerAdminUrl}`, { headers: this.getHeaders() });
 }
@@ -2305,9 +2301,6 @@ checkScheduleExists(department: string, starting: string, time: string): Observa
   });
 }
 
-// GetEventSchedulerTime(): Observable<string[]> {
-//   return this.http.get<string[]>(`${this.eventschedulerUrl}/times`, { headers: this.getHeaders() });
-// }
 
 UpdateEventScheduleByDepartment(data: {
   ID: number;
@@ -2366,49 +2359,56 @@ Getextratouser(): Observable<string[]> {
 eventschedulertime = 'https://ielc-coreapi1.azurewebsites.net';
 eventschedulertimes = 'https://ielc-coreapi1.azurewebsites.net/times';
 
-GetEventSchedulerTimeIds(): Observable<string[]> {
-  return this.http.get<any[]>(`${this.eventschedulertime}/timesid`, { headers: this.getHeaders() })
+GetEventSchedulerTime(year: string, month: string): Observable<any[]> {
+  return this.http.get<any[]>(`${this.eventschedulertime}/Get/${year}/${month}`, {
+    headers: this.getHeaders()
+  });
 }
 
-GetEventSchedulerTimeId(id: number): Observable<any> {
+GetEventSchedulersTime(year: string, month: string): Observable<any[]> {
+  return this.http.get<any[]>(`${this.eventschedulertime}/geteventschedulertime/${year}/${month}`, {
+    headers: this.getHeaders()
+  });
+}
+
+GetEventSchedulerTimeIds(year: string, month: string): Observable<string[]> {
+  return this.http.get<any[]>(`${this.eventschedulertime}/timesid/${year}/${month}`, { headers: this.getHeaders() })
+}
+
+GetEventSchedulerTimeId(year: string, month: string, id: number): Observable<any> {
   return this.http.get<any>(
-    `${this.eventschedulertime}/times/${id}`,
+    `${this.eventschedulertime}/times/${year}/${month}/${id}`,
     { headers: this.getHeaders() }
   );
 }
 
-
-PostEventSchedulerTime(time: string): Observable<void> {
-  return this.http.post<void>(
-    `${this.eventschedulertime}/times`,
-    JSON.stringify(time), // ✅ Must be a raw JSON string
-    { headers: this.getHeaders() }
-  );
-}
-
-
-
-    DeleteEventSchedulerTime(id: number): Observable<void> {
-      return this.http.delete<void>(`${this.eventschedulertime}/times/${id}`, {
-        headers: this.getHeaders()
-      });
-    }
-
-
-UpdateEventSchedulerTime(id: number, time: string): Observable<void> {
-  return this.http.put<void>(
-    `${this.eventschedulertime}/times/${id}`,
-    JSON.stringify(time), // ✅ Must JSON.stringify to create quoted string
-    { headers: this.getHeaders() }
-  );
-}
-
-
-
-  GetAvailableMonthsByYear(year: string): Observable<string[]> {
+GetAvailableMonthsByYear(year: string): Observable<string[]> {
   return this.http.get<any[]>(`${this.eventschedulertime}/getmonthsfromtables/${year}`, { headers: this.getHeaders() })
 }
 
+PostEventSchedulerTime(year: string, month: string, time: string): Observable<void> {
+  return this.http.post<void>(
+    `${this.eventschedulertime}/times/${year}/${month}`,
+    time,
+    { headers: this.getHeaders() }
+  );
+}
+
+//https://ielc-coreapi1.azurewebsites.net/times?year=2025&month=july
+
+UpdateEventSchedulerTime(year: string, month: string, id: number, time: string): Observable<void> {
+  return this.http.put<void>(
+    `${this.eventschedulertime}/times/${year}/${month}/${id}`,
+    JSON.stringify(time),
+    { headers: this.getHeaders() }
+  );
+}
+
+DeleteEventSchedulerTime(year: string, month: string, id: number): Observable<void> {
+  return this.http.delete<void>(`${this.eventschedulertime}/times/${year}/${month}/${id}`, {
+  headers: this.getHeaders()
+  });
+}
 //---------------------------------------------------------------------------------------CoOwners
 coownersurl = 'https://ielc-coreapi1.azurewebsites.net/CoOwners';
 
@@ -2467,10 +2467,6 @@ PostCoOwners(data: any): Observable<any> {
 
 //---------------------------------------------------------------------------------------CreateTables
 createeventtablesurl = 'https://ielc-coreapi1.azurewebsites.net/AddNewTables/createeventtables';
-
-//   createEventTables(): Observable<any> {
-//   return this.http.post<any>(this.createeventtablesurl, {}, { headers: this.getHeaders() });
-// }
 
 createEventTables(): Observable<any> {
   return this.http.post(this.createeventtablesurl, {}, {

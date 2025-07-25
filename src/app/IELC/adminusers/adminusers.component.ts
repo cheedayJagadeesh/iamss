@@ -391,7 +391,8 @@ eventschuser: eventscuserinfo = {
  fileError: string = "";
  coownerss: any[]=[];
  years: number[] = [];
-selectedYear: string = new Date().getFullYear().toString();
+//selectedYear: string = new Date().getFullYear().toString();
+ selectedYear: string = '';
  tableData: any[] = [];
  availableMonths: string[] = [];
  selectedMonth: string = '';
@@ -482,8 +483,9 @@ selectedYear: string = new Date().getFullYear().toString();
     this.GetEventSchedulerTimeslots();
     this.GetCoOnwers();
     this.populateYears();
-    this.selectedYear = new Date().getFullYear().toString();
+    this.selectedYear = '';
     // this.fetchData(this.selectedYear);
+    
   }
 
   //--------------------------------------------------------------------------------Years
@@ -507,9 +509,23 @@ onYearChange(): void {
     this.isEventYearSelected = false;
   }
 }
+
 onMonthChange(): void {
-  console.log('Selected Month:', this.selectedMonth);
+  if (this.selectedYear && this.selectedMonth) {
+    this.ielc.GetEventSchedulerTime(this.selectedYear, this.selectedMonth)
+      .subscribe({
+        next: (data) => this.eventschedulertime = data,
+        error: (err) => {
+          console.error('Error loading times:', err);
+          this.eventschedulertime = [];
+        }
+      });
+  }
 }
+
+// onMonthChange(): void {
+//   console.log('Selected Month:', this.selectedMonth);
+// }
   populateYears(): void {
     const startYear = 2025;
     const currentYear = new Date().getFullYear();
@@ -555,7 +571,7 @@ onMonthChange(): void {
       });
     }
   }
-//--------------------------------------------------------------------------------EventSchedulerTime
+//--------------------------------------------------------------------------------CoOnwers
 GetCoOnwers() {
   this.ielc.GetCoOwners().subscribe((data) => {
     this.coownerss = this.sortlist(data);
@@ -651,22 +667,28 @@ UpdateCoOwners() {
 
 //--------------------------------------------------------------------------------EventSchedulerTime
 GetEventSchedulerTimeslots() {
-  this.ielc.GetEventSchedulerTimeIds().subscribe((data) => {
+  if (!this.selectedYear || !this.selectedMonth) {
+    console.warn("Year and Month must be selected before loading timeslots");
+    return;
+  }
+  this.isLoading = true;
+  this.ielc.GetEventSchedulerTime(this.selectedYear, this.selectedMonth).subscribe((data) => {
     this.eventschedulertime = this.sortlist(data);
-    console.log(this.eventschedulertime); // Should show IDs
     this.isLoading = false;
   });
 }
 
 AddEventSchedulerTime(): void {
   const time = this.eventschtime.time;
-
   if (!time || time.trim() === '') {
     alert('❌ Time cannot be empty');
     return;
   }
-
-  this.ielc.PostEventSchedulerTime(time).subscribe({
+  if (!this.selectedYear || !this.selectedMonth) {
+    alert('Please select year and month first!');
+    return;
+  }
+  this.ielc.PostEventSchedulerTime(this.selectedYear, this.selectedMonth, time).subscribe({
     next: () => {
       alert('✅ Record Added Successfully!');
       this.GetEventSchedulerTimeslots();
@@ -679,21 +701,12 @@ AddEventSchedulerTime(): void {
   });
 }
 
-
-    deleteEventSchedulerTime(id: number) {
-    if (confirm('Are you sure you want to delete this record?')) {
-      this.ielc.DeleteEventSchedulerTime(id).subscribe({
-        next: () => {
-          alert(`Record with ID ${id} deleted successfully!`);
-          this.GetEventSchedulerTimeslots();
-        },
-         error: (err) =>  console.error('Error deleting item:', err)
-      });
-    }
-  }
-
 EditEventSchedulerTime(id: number) { 
-  this.ielc.GetEventSchedulerTimeId(id).subscribe(
+  if (!this.selectedYear || !this.selectedMonth) {
+    alert('Please select year and month first!');
+    return;
+  }
+  this.ielc.GetEventSchedulerTimeId(this.selectedYear, this.selectedMonth, id).subscribe(
     data => {
       if (data && typeof data === 'object' && 'id' in data && 'time' in data) {
         this.eventschtime = { 
@@ -714,8 +727,6 @@ UpdateEventSchedulerTime(): void {
   const id = this.eventschtime.id;
   const time = this.eventschtime.time;
 
-  console.log("Updating:", {id, time});
-
   if (!id || id === 0) {
     alert("Invalid ID");
     return;
@@ -726,7 +737,12 @@ UpdateEventSchedulerTime(): void {
     return;
   }
 
-  this.ielc.UpdateEventSchedulerTime(id, time).subscribe({
+  if (!this.selectedYear || !this.selectedMonth) {
+    alert('Please select year and month first!');
+    return;
+  }
+
+  this.ielc.UpdateEventSchedulerTime(this.selectedYear, this.selectedMonth, id, time).subscribe({
     next: () => {
       alert(`Record with ID ${id} updated successfully!`);
       this.GetEventSchedulerTimeslots();
@@ -739,12 +755,29 @@ UpdateEventSchedulerTime(): void {
   });
 }
 
-  resetEventSchedulerTime(){
-    this.eventschtime={
-    id: 0,
-    time: '',
-    }
+deleteEventSchedulerTime(id: number) {
+  if (!this.selectedYear || !this.selectedMonth) {
+    alert('Please select year and month first!');
+    return;
   }
+
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteEventSchedulerTime(this.selectedYear, this.selectedMonth, id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetEventSchedulerTimeslots();
+      },
+      error: (err) => console.error('Error deleting item:', err)
+    });
+  }
+}
+
+resetEventSchedulerTime(){
+  this.eventschtime={
+  id: 0,
+  time: '',
+  }
+}
 
  //-------------------------------------------------------------------------------EventSchedulerAdmin
 GetEventSchedulerAdmin(){

@@ -107,8 +107,8 @@ ngOnInit(): void {
           //console.log(this.projectlist);
 
           // Load other necessary data
-          this.GetEventscheduleTime();
-          this.loadAllTimes();
+          // this.GetEventscheduleTime();
+          // this.loadAllTimes();
           this.GetEventSchedulerAdmin();
           //this.GetAllProjectsList();
           this.GetSuperOwners(this.userName);
@@ -276,17 +276,17 @@ isSubmitDisabled(): boolean {
   });
  }
 
- GetEventscheduleTime(){
-  this.ielc.GetEventSchedulerTime().subscribe((data) => {
-    this.Time=data;
-  });
- }
-loadAllTimes() {
-  this.ielc.GetEventSchedulerTime().subscribe((data: string[]) => {
-    this.Time = data;
-    this.filteredTimes = [...data]; // show all initially
-  });
-}
+//  GetEventscheduleTime(){
+//   this.ielc.GetEventSchedulerTime().subscribe((data) => {
+//     this.Time=data;
+//   });
+//  }
+// loadAllTimes() {
+//   this.ielc.GetEventSchedulerTime().subscribe((data: string[]) => {
+//     this.Time = data;
+//     this.filteredTimes = [...data]; // show all initially
+//   });
+// }
 
 onDateChange() {
   if (this.selectedDate) {
