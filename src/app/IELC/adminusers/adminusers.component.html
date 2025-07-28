@@ -1,74 +1,83 @@
 <app-header></app-header>
 <form class="row g-3" #form="ngForm">
-    <!-- <div>
-        <label class="lbllogin">Login as </label>
-    </div> -->
-    <div *ngIf="isLoading" class="loading-container">
-        <span class="dot"></span>
-    </div>
-    <div class="row g-3">
-        <div >
-        <div class="row-md-3">
-            <label for="Empname" class="form-label">Select Admin Users</label>
+    <div class="container mt-5">
+  <div class="d-flex justify-content-center">
+    <div class="col-md-6">
+      <div class="p-4 border rounded bg-light shadow-sm">
+        <div *ngIf="isLoading" class="text-center mb-3">
+          <span class="dot"></span>
         </div>
-        <div class="row-md-3">
-            <select name="skill" class="form-controlone" required [(ngModel)]="selectedOption1" (change)="onSelection1Change()">
-                <option value=""  >- select -</option>
-                <option value="SMTPAdmin">SMTPAdmin</option>
-                <option value="Contact">Contact</option>
-                <option value="HRSupport">HRSupport</option>
-                <option value="OperationsSupport">Admin/OperationsSupport</option>
-                <option value="ISMSSupport">ISMSSupport</option>
-                <option value="ISOSupport">ISOSupport</option>
-                <option value="ITSupport">ITSupport</option>
-                <option value="ISPolicy">ISPolicy</option>
-                <option value="ProjectsSupport">ProjectsSupport</option>
-                <option value="CISO_MR_Support">CISO_MR_Support</option>
-                <option value="Emergency">Emergency</option>
-                <option value="VariousCommittees">VariousCommittees</option>
-                <option value="SOC">SOC</option>
-                <option value="HIPAA">HIPAA</option>
-                <option value="GDPR">GDPR</option>
-                <option value="DPDP">DPDP</option>
-                <option value="AdminUsers">AdminUsers</option>
-                <option value="News">News</option>
-                <option value="Events">Events</option>
-                <option value="CoursesRestriction">CoursesRestriction</option>
-                <option value="EventAlerts">EventAlerts</option>
-                <option value="EventScheduler">EventScheduler</option>
+
+        <!-- Admin Users Dropdown -->
+        <div class="row mb-3">
+          <div>
+            <label for="Empname">Select Admin Users</label>
+          </div>
+          <div class="col-md-8">
+            <select name="skill" class="form-select" required [(ngModel)]="selectedOption1" (change)="onSelection1Change()">
+              <option value="">- select -</option>
+              <option value="SMTPAdmin">SMTPAdmin</option>
+              <option value="Contact">Contact</option>
+              <option value="HRSupport">HRSupport</option>
+              <option value="OperationsSupport">Admin/OperationsSupport</option>
+              <option value="ISMSSupport">ISMSSupport</option>
+              <option value="ISOSupport">ISOSupport</option>
+              <option value="ITSupport">ITSupport</option>
+              <option value="ISPolicy">ISPolicy</option>
+              <option value="ProjectsSupport">ProjectsSupport</option>
+              <option value="CISO_MR_Support">CISO_MR_Support</option>
+              <option value="Emergency">Emergency</option>
+              <option value="VariousCommittees">VariousCommittees</option>
+              <option value="SOC">SOC</option>
+              <option value="HIPAA">HIPAA</option>
+              <option value="GDPR">GDPR</option>
+              <option value="DPDP">DPDP</option>
+              <option value="AdminUsers">AdminUsers</option>
+              <option value="News">News</option>
+              <option value="Events">Events</option>
+              <option value="CoursesRestriction">CoursesRestriction</option>
+              <option value="EventAlerts">EventAlerts</option>
+              <option value="EventScheduler">EventScheduler</option>
             </select>
+          </div>
         </div>
-    </div>
-        <div  [hidden]="!isContactSelected">
-        <div class="">
-            <label for="Empname" class="form-label2">Select Contact List</label>
-        </div>
-        <div class="">
-            <select name="skill" class="form-controltwo" required [(ngModel)]="selectedOption2" (change)="onSelection2Change()" >
-                <option value="" >- select -</option>
-                <option value="INTEQITSupport">INTEQITSupport</option>
-                <option value="AdminHelpDesk">AdminHelpDesk</option>
-                <option value="HRHelpDesk">HRHelpDesk</option>
-                <option value="EmergencyContactList">EmergencyContactList</option>
-                <option value="ISO27001">ISO27001</option>
-                <option value="ISO9001">ISO9001</option>
+
+        <!-- Contact List Dropdown -->
+        <div class="row mb-3" *ngIf="isContactSelected">
+          <div>
+            <label>Select Contact List</label>
+          </div>
+          <div class="col-md-8">
+            <select name="skill" class="form-select" required [(ngModel)]="selectedOption2" (change)="onSelection2Change()">
+              <option value="">- select -</option>
+              <option value="INTEQITSupport">INTEQITSupport</option>
+              <option value="AdminHelpDesk">AdminHelpDesk</option>
+              <option value="HRHelpDesk">HRHelpDesk</option>
+              <option value="EmergencyContactList">EmergencyContactList</option>
+              <option value="ISO27001">ISO27001</option>
+              <option value="ISO9001">ISO9001</option>
             </select>
+          </div>
         </div>
-        </div>
-        <div  [hidden]="!(isHRSelected || isOSSelected || isITSelected || isPRJTSelected || isCISOSelected)">
-        <!-- <div  *ngIf="isHRSelected || isOSSelected"> -->
-        <div class="">
-            <label for="Empname" class="form-label2">Select Type</label>
-        </div>
-        <div class="">
-            <select name="skill" class="form-controltwo"required [(ngModel)]="selectedOption3" (change)="onSelection3Change()">
-                <option value="">- select -</option>
-                <option value="ISMS">ISMS</option>
-                <option value="QMS">QMS</option>
+
+        <!-- Type Dropdown -->
+        <div class="row mb-3" *ngIf="isHRSelected || isOSSelected || isITSelected || isPRJTSelected || isCISOSelected">
+          <div>
+            <label>Select Type</label>
+          </div>
+          <div class="col-md-8">
+            <select name="skill" class="form-select" required [(ngModel)]="selectedOption3" (change)="onSelection3Change()">
+              <option value="">- select -</option>
+              <option value="ISMS">ISMS</option>
+              <option value="QMS">QMS</option>
             </select>
+          </div>
         </div>
+      </div>
     </div>
   </div>
+</div>
+
 
     <div class="tablebottom"  *ngIf="selectedOption1 === 'SMTPAdmin'">
         <table *ngIf="!isLoading" class="table table-striped table-bordered" name="smptadmin"  >

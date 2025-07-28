@@ -1,270 +1,273 @@
-<!-- <div class="p-3 mb-2 bg-light">
-<h1 class="h1" >INTEQ ATTENDANCE MANAGEMENT SYSTEM</h1>
-</div> -->
-<!-- <app-header></app-header> -->
- <app-attendanceheader></app-attendanceheader>
+<app-attendanceheader></app-attendanceheader>
 <form class="row g-3" #attendanceform="ngForm" (ngSubmit)="showData(attendanceform.value)">
-    <div class="col-md-3">
-        <label for="Empname" class="form-label">Emp.Name</label>
-    </div>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="Empname">
-    </div>
-    <div class="col-md-3">
-        <label for="Empid" class="labelid-role">Emp.ID</label>
-    </div>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="Empid">
-    </div>
-    <div class="col-md-3">
-        <label for="projname" class="form-label">Project Name</label>
-    </div>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="projname">
-    </div>
-    <div class="col-md-3">
-        <label for="Role" class="labelid-role">Role</label>
-    </div>
-    <div class="col-md-3">
-        <input type="text" class="form-control" id="Role">
-    </div>
-    <div class="container">
-     <div>
-        <h2 class="notify">Inteq Holidays</h2>
-     </div>
-     <div id="newsTicker" class="newsinfo">
-        <ul class="newsList">
-            <li>12-10-2024: Dasara</li>
-            <li>31-10-2024: Diwali</li>
-        </ul>
-     </div>
-    </div>
+  <div class="mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-10">
+        <div class="p-4 border rounded bg-light shadow-sm">
 
-    <div class="container-main">
-       <!-- <h3 class="main">{{currentDate | date:'longDate'}}</h3>  -->
-       <h3 class="main">{{selectedDate | date:'longDate'}}</h3> 
-       <div class="form-outline datepicker">
-        <!-- <label class="lblcal">Choose Date</label> -->
-        <!-- <input class="formcontrolcalendar" type="date" [(ngModel)]="selectedDate" (ngModelChange)="onDatechange($event)" > -->
-        <input class="formcontrolcalendar" type="date" name="selectedDate" [(ngModel)]="selectedDate" required >
-      </div>
-      <div>
-       <label class="labeldrp1">Leave</label>
-      </div>
-       <div>
-        <select id="select1" name="leavetype" class="drpdwn1" [(ngModel)]="leave" (change)="onSelect1Change()" [disabled]="isfirstSelectDisabled">
-          <!-- <option value="" disabled selected>- select leave type -</option>
-          <option *ngFor="let leaves of leavetype">
-              {{ leaves.name }}
-          </option> -->
-           <option value="" selected >- select leave type -</option>
-           <option value="Full Day">Full Day</option>
-           <option value="Half Day">Half Day</option>
-           <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
-      </select>
-        <!-- <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" name="leavetype" [(ngModel)]="leavetype">
-          - select leave type -
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" href="#">Full Day</a></li>
-          <li><a class="dropdown-item" href="#">Half Day</a></li>
-          <li><a class="dropdown-item" href="#">OH(Optional Holiday)</a></li>
-        </ul> -->
-      </div>
-    
-    <div>
-      <label class="labeldrp2">Work Location</label>
-   
-      <div>
-        <select id="select2" name="worktype" class="drpdwn2" [(ngModel)]="work" [disabled]="isSecondSelectDisabled" (change)="onSelect2Change()">
-          <option value="" >- select work type -</option>
-          <option *ngFor="let work of worktype">
-              {{ work.name }}
-          </option>
-      </select>
-        <!-- <button class="btn btndrp2 dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          - select work type -
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" href="#">WFH</a></li>
-          <li><a class="dropdown-item" href="#">WFO</a></li>
-          <li><a class="dropdown-item" href="#">WFH/WFO</a></li>
-        </ul> -->
-      </div>
-    </div>
-    <div>
-      <label class="labeltime1">Login Time</label>
-      <input class="time" type="time" name="time1" [(ngModel)]="time1" [disabled]="isSecondSelectDisabled" (change)="onFirsttimechange()" >
-      <label class="labeltime2">Logout Time</label>
-      <!-- <input class="time" type="time" [(ngModel)]="inputtime" (change)="checktime()"> -->
-      <input class="time" type="time" name="time2" [(ngModel)]="time2" (change)="checktime()" [disabled]="isSecondSelectDisabled" [disabled]="!isTimeInputDisabled" >
-      <!-- {{time2}} -->
-       <!-- Button trigger modal -->
-       
-<button type="button" class="tasksbtn" data-bs-toggle="modal" data-bs-target="#exampleModal" [disabled]="isSecondSelectDisabled">
-  Tasks
-</button>
+          <!-- Row for Emp Name and Emp ID -->
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="Empname" class="form-label">Emp.Name</label>
+              <input type="text" class="form-control" id="Empname">
+            </div>
+            <div class="col-md-6">
+              <label for="Empid" class="form-label">Emp.ID</label>
+              <input type="text" class="form-control" id="Empid">
+            </div>
+          </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tasks Details</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="mb-3">
-          <label  class="form-label">Tasks Description</label>
-          <textarea class="modal-form-control" name="taskslist" [(ngModel)]="taskslist" rows="3" ></textarea>
+          <!-- Row for Project Name and Role -->
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="projname" class="form-label">Project Name</label>
+              <input type="text" class="form-control" id="projname">
+            </div>
+            <div class="col-md-6">
+              <label for="Role" class="form-label">Role</label>
+              <input type="text" class="form-control" id="Role">
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="modaldatasave()">Save changes</button>
       </div>
     </div>
   </div>
-</div>
-
-      <div *ngIf="showEaxtraHoursLabel">
-        <label class="labeltime3" >Extra Hours</label>
-        <input class="timeextra"  type="time" name="extratime" ngModel>
-      </div>
-    </div>
-      <div>
-        <button class="button" (click)="save()"  [disabled]="!time1" >Save</button>
-      </div>
-    </div>
-
-    <div class="container-calendar">
-     <full-calendar class="calsize" [options]="calendarOptions"></full-calendar>
-    </div>
-    <div class="d-flex justify-content-center">
-        <div class="border rounded" data-coreui-toggle="calendar"></div>
-    </div>
-    <div class="container-bottom">
-      <label class="lbltwd">Total Working Days</label>
-      <input class="inputtwd" type="text">
-      <div>
-        <select name="month" class="drpmnth">
-           <option value="" disabled selected>- select month -</option>
-           <option value="jan">January</option>
-           <option value="feb">February</option>
-        </select>
-        <!-- <button class="btn dropdown-toggle btn-drp-mnth" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          - select month -
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" href="#">January</a></li>
-          <li><a class="dropdown-item" href="#">February</a></li>
-          <li><a class="dropdown-item" href="#">March</a></li>
-        </ul> -->
-      </div>
-      <div>
-        <select name="year" class="drpyear" >
-          <option value="" disabled selected>- select year -</option>
-          <option value="jan">2024</option>
-          <option value="feb">2023</option>
-     </select>
-        <!-- <button class="btn dropdown-toggle btn-drp-year " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-          - select year -
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-          <li><a class="dropdown-item" href="#">2024</a></li>
-          <li><a class="dropdown-item" href="#">2023</a></li>
-        </ul> -->
-      </div>
-      <label class="lbltlc">Total Leave Count</label>
-      <input class="inputtlc" type="text">
-      <div>
-        <button class="buttonprnt">Print\Export</button>
-      </div>
-      <div class="tablebottom">
-        <table class="table table-striped table-bordered">
-            <thead class="table-primary">
-                <tr>
-                  <th scope="col">Emp.ID</th>
-                  <th scope="col">Emp.Name</th>
-                  <th scope="col">Project Name</th>
-                  <th scope="col">Date</th>
-                  <th scope="col">Login</th>
-                  <th scope="col">Logout</th>
-                  <th scope="col">Extra Hours</th>
-                  <th scope="col">Total Working Hours</th>
-                  <th scope="col">Leaves</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                 
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                  
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                </tr>
-                <tr>
-                    <th scope="row">4</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                </tr>
-                <tr>
-                    <th scope="row">5</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                </tr>
-                <tr>
-                    <th scope="row">6</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                </tr>
-                <tr>
-                    <th scope="row">7</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                </tr>
-                <tr>
-                    <th scope="row">8</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                </tr>
-                <tr>
-                    <th scope="row">9</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                </tr>
-                <tr>
-                    <th scope="row">10</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                </tr>
-              </tbody>
-          </table>
-      </div>
-      <div class="pagination">
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-              <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">Next</a></li>
+  <div class="container-fluid mt-4">
+    <div class="row g-4">
+      <!-- Container 1 -->
+      <div class="col-lg-3 col-sm-3">
+        <div class="border rounded bg-light shadow-sm h-100">
+          <h2 class="notify">Inteq Holidays</h2>
+          <div id="newsTicker" class="newsinfo">
+            <ul class="newsList">
+              <li>12-10-2024: Dasara</li>
+              <li>31-10-2024: Diwali</li>
             </ul>
-          </nav>
+          </div>
+        </div>
+      </div>
+      <!-- Container 2 -->
+      <div class="col-lg-6 col-sm-6">
+        <div class="border rounded bg-light shadow-sm h-100">
+          <div>
+            <h3 class="main">{{selectedDate | date:'longDate'}}</h3>
+            <div class="form-outline datepicker">
+              <input class="formcontrolcalendar" type="date" name="selectedDate" [(ngModel)]="selectedDate" required>
+            </div>
+            <div class="mt-1">
+              <div class="row leave_container">
+                <!-- Leave -->
+                <div class="col-sm-4">
+                  <label for="select1" class="labeldrp1">Leave</label>
+                  <select id="select1" name="leavetype" class="form-select drpdwn1" [(ngModel)]="leave"
+                    (change)="onSelect1Change()" [disabled]="isfirstSelectDisabled">
+                    <option value="" selected>- select leave type -</option>
+                    <option value="Full Day">Full Day</option>
+                    <option value="Half Day">Half Day</option>
+                    <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
+                  </select>
+                </div>
+
+                <!-- Work Location -->
+                <div class="col-sm-4">
+                  <label for="select2" class="labeldrp2">Work Location</label>
+                  <select id="select2" name="worktype" class="form-select drpdwn2" [(ngModel)]="work"
+                    (change)="onSelect2Change()" [disabled]="isSecondSelectDisabled">
+                    <option value="">- select work type -</option>
+                    <option *ngFor="let work of worktype">{{ work.name }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="time_container" >
+                <!-- Login Time -->
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <label  for="time1">Login Time</label>
+                  <input id="time1" class="form-control time" type="time" name="time1" [(ngModel)]="time1"
+                    [disabled]="isSecondSelectDisabled" (change)="onFirsttimechange()">
+                </div>
+
+                <!-- Logout Time -->
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <label  for="time2">Logout Time</label>
+                  <input id="time2" class="form-control time" type="time" name="time2" [(ngModel)]="time2"
+                    (change)="checktime()" [disabled]="isSecondSelectDisabled || !isTimeInputDisabled">
+                </div>
+
+                <!-- Tasks Button -->
+                <div>
+                  <button type="button" class="btn btn-info tasksbtn" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal" [disabled]="isSecondSelectDisabled">
+                    Tasks
+                  </button>
+                </div>
+              </div>
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Tasks Details</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="mb-3">
+                        <label class="form-label">Tasks Description</label>
+                        <textarea class="modal-form-control" name="taskslist" [(ngModel)]="taskslist"
+                          rows="3"></textarea>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary" (click)="modaldatasave()">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="showEaxtraHoursLabel">
+                <label class="labeltime3">Extra Hours</label>
+                <input class="timeextra" type="time" name="extratime" ngModel>
+              </div>
+            </div>
+            <div>
+              <button class="button" (click)="save()" [disabled]="!time1">Save</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Container 3 -->
+      <div class="col-lg-3 col-sm-3">
+        <div class="container-calendar p-3 border rounded bg-light shadow-sm h-100">
+          <full-calendar class="calsize" [options]="calendarOptions"></full-calendar>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="mt-4">
+      <div class="p-3 border rounded bg-light shadow-sm">
+        <div class="row g-3">
+
+          <div class="col-md-2">
+            <label for="twd">Total Working Days</label>
+            <input id="twd" class="form-control" type="text">
+          </div>
+
+          <div class="col-md-3">
+            <label for="month">Month</label>
+            <select id="month" name="month" class="form-select">
+              <option value="" disabled selected>- select month -</option>
+              <option value="jan">January</option>
+              <option value="feb">February</option>
+            </select>
+          </div>
+
+          <div class="col-md-2">
+            <label for="year">Year</label>
+            <select id="year" name="year" class="form-select">
+              <option value="" disabled selected>- select year -</option>
+              <option value="2024">2024</option>
+              <option value="2023">2023</option>
+            </select>
+          </div>
+
+          <div class="col-md-2">
+            <label for="tlc">Total Leave Count</label>
+            <input id="tlc" class="form-control" type="text">
+          </div>
+
+          <div class="col-md-2">
+            <label class="d-block">&nbsp;</label>
+            <button class="btn btn-primary w-100">Print / Export</button>
+          </div>
+        </div>
       </div>
     </div>
 
-  </form>
+    <div class="tablebottom">
+      <table class="table table-striped table-bordered">
+        <thead class="table-primary">
+          <tr>
+            <th scope="col">Emp.ID</th>
+            <th scope="col">Emp.Name</th>
+            <th scope="col">Project Name</th>
+            <th scope="col">Date</th>
+            <th scope="col">Login</th>
+            <th scope="col">Logout</th>
+            <th scope="col">Extra Hours</th>
+            <th scope="col">Total Working Hours</th>
+            <th scope="col">Leaves</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
 
-  
-  
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Mark</td>
+            <td>Otto</td>
+
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>Mark</td>
+            <td>Otto</td>
+          </tr>
+          <tr>
+            <th scope="row">4</th>
+            <td>Mark</td>
+            <td>Otto</td>
+          </tr>
+          <tr>
+            <th scope="row">5</th>
+            <td>Mark</td>
+            <td>Otto</td>
+          </tr>
+          <tr>
+            <th scope="row">6</th>
+            <td>Mark</td>
+            <td>Otto</td>
+          </tr>
+          <tr>
+            <th scope="row">7</th>
+            <td>Mark</td>
+            <td>Otto</td>
+          </tr>
+          <tr>
+            <th scope="row">8</th>
+            <td>Mark</td>
+            <td>Otto</td>
+          </tr>
+          <tr>
+            <th scope="row">9</th>
+            <td>Mark</td>
+            <td>Otto</td>
+          </tr>
+          <tr>
+            <th scope="row">10</th>
+            <td>Mark</td>
+            <td>Otto</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row mt-4">
+      <div class="col">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</form>

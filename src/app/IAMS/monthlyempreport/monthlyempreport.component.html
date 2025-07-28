@@ -1,107 +1,100 @@
-<!-- <div class="p-3 mb-2 bg-light">
-    <h1 class="h1" >INTEQ ATTENDANCE MANAGEMENT SYSTEM</h1>
-</div> -->
-<!-- <app-header></app-header> -->
+
 <app-attendanceheader></app-attendanceheader>
-<!-- <div class="p-3 mb-2">
-    <h2 class="h2" >Monthly Emp Report</h2>
-</div> -->
 <form class="row g-3">
-    <div class="container">
-        <div class="col-md-3">
-            <label for="projname" class="lblprj">Project Name</label>
-        </div>
-        <!-- <div class="drpdwnbtmprj">
-          <button class="btn drpbtn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            - Select Project -
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#">NNA</a></li>
-          </ul>
-        </div> -->
-        <select name="project" class="drpdwnbtmprj"  name="project">
-          <!-- <option value="" disabled selected>- select leave type -</option>
-          <option *ngFor="let leaves of leavetype">
-              {{ leaves.name }}
-          </option> -->
-           <option value=""   >- select project -</option>
-           <option value="">NNA</option>
+  <div class="mt-4 border p-4 rounded shadow-sm bg-light border-secondary">
+  <div class="row g-3 align-items-end">
+    <!-- Project Name -->
+    <div class="col-md-2">
+      <label for="projname" class="fw-bold">Project Name</label>
+      <select name="project" id="projname" class="form-select">
+        <option value="">- Select Project -</option>
+        <option value="">NNA</option>
       </select>
-        <!-- <div class="drpmnth">
-          <button class="btn dropdown-toggle btn-drp-mnth" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            - Select Month -
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#">January</a></li>
-            <li><a class="dropdown-item" href="#">February</a></li>
-            <li><a class="dropdown-item" href="#">March</a></li>
-          </ul>
-        </div> -->
-        <select  name="mnth" class="drpmnth"  name="mnth">
-          <!-- <option value="" disabled selected>- select leave type -</option>
-          <option *ngFor="let leaves of leavetype">
-              {{ leaves.name }}
-          </option> -->
-           <option value=""   >- select month -</option>
-           <option value="">January</option>
-           <option value="">February</option>
-      </select>
-        <!-- <div class="drpyear">
-          <button class="btn dropdown-toggle btn-drp-year " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            - Select Year -
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#">2024</a></li>
-            <li><a class="dropdown-item" href="#">2023</a></li>
-          </ul>
-        </div> -->
-        <select  name="year" class="drpyear"  name="year">
-          <!-- <option value="" disabled selected>- select leave type -</option>
-          <option *ngFor="let leaves of leavetype">
-              {{ leaves.name }}
-          </option> -->
-           <option value=""   >- select year -</option>
-           <option value="">2024</option>
-           <option value="">2023</option>
-      </select>
-    
-    <div class="row g-3">
-        <div class="col-md-3">
-            <label for="Empname" class="form-label">Emp.Name</label>
-        </div>
-        <div class="col-md-3">
-            <input type="search" class="form-controlsearchname" id="Empname">
-        </div>
-        <div class="col-md-3">
-            <label for="Empid" class="labelid-role1">Emp.ID</label>
-        </div>
-        <!-- <div class="col-md-3">
-            <input type="text" class="form-control" id="Empid">
-        </div> -->
-        <div>
-            <div>
-              <input type="search" class="form-controlsearchid" />
-            </div>
-            <div>
-            <button class="btn btnsearch">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                  </svg>
-            </button>
-        </div>
-        </div>
     </div>
+
+    <!-- Month -->
+    <div class="col-md-2">
+      <label for="month" class="fw-bold">Month</label>
+      <select name="mnth" id="month" class="form-select">
+        <option value="">- Select Month -</option>
+        <option value="">January</option>
+        <option value="">February</option>
+      </select>
+    </div>
+
+    <!-- Year -->
+    <div class="col-md-2">
+      <label for="year" class="fw-bold">Year</label>
+      <select name="year" id="year" class="form-select">
+        <option value="">- Select Year -</option>
+        <option value="">2024</option>
+        <option value="">2023</option>
+      </select>
+    </div>
+
+    <!-- Employee Name -->
+    <div class="col-md-2">
+      <label for="Empname" class="fw-bold">Emp. Name</label>
+      <input type="search" class="form-control" id="Empname" />
+    </div>
+
+    <!-- Employee ID -->
+    <div class="col-md-2">
+      <label for="Empid" class="fw-bold">Emp. ID</label>
+      <input type="search" class="form-control" id="Empid" />
+    </div>
+
+    <!-- Search Button -->
+    <div class="col-md-2 d-grid">
+      <label class="invisible">Search</label>
+      <button class="btn btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+          class="bi bi-search" viewBox="0 0 16 16">
+          <path
+            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 
+            3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 
+            6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+        </svg>
+      </button>
+    </div>
+  </div>
 </div>
+
 <div class="container-bottom">
-    <label class="lbltwd">Total Working Days</label>
-    <input class="inputtwd" type="text">
-    <label class="lblEtwd">Emp Total Working Days</label>
-    <input class="inputEtwd" type="text">
-    <label class="lblEtwh">Emp Total Working Hours</label>
-    <input class="inputEtwh" type="text">
-    <label class="lblEtlc">Emp Total Leave Count</label>
-    <input class="inputEtlc" type="text">
-    <button class="buttonprnt">Print\Export</button>
+    <div class="mt-4 border p-4 rounded shadow-sm bg-light border-secondary">
+  <div class="row g-3 align-items-end">
+    <!-- Total Working Days -->
+    <div class="col-md-2">
+      <label for="totalWorkingDays" class="form-label fw-bold">Total Working Days</label>
+      <input type="text" class="form-control" id="totalWorkingDays">
+    </div>
+
+    <!-- Emp Total Working Days -->
+    <div class="col-md-2">
+      <label for="empWorkingDays" class="form-label fw-bold">Emp Total Working Days</label>
+      <input type="text" class="form-control" id="empWorkingDays">
+    </div>
+
+    <!-- Emp Total Working Hours -->
+    <div class="col-md-2">
+      <label for="empWorkingHours" class="form-label fw-bold">Emp Total Working Hours</label>
+      <input type="text" class="form-control" id="empWorkingHours">
+    </div>
+
+    <!-- Emp Total Leave Count -->
+    <div class="col-md-2">
+      <label for="empLeaveCount" class="form-label fw-bold">Emp Total Leave Count</label>
+      <input type="text" class="form-control" id="empLeaveCount">
+    </div>
+
+    <!-- Print/Export Button -->
+    <div class="col-md-2 d-grid">
+      <label class="form-label invisible">Print</label>
+      <button class="btn btn-outline-primary buttonprnt">Print\Export</button>
+    </div>
+  </div>
+</div>
+
     <div class="tablebottom">
       <table class="table table-striped table-bordered">
           <thead class="table-primary">
@@ -158,9 +151,10 @@
             </tbody>
         </table>
     </div>
-    <div class="pagination">
-      <nav aria-label="Page navigation example">
-          <ul class="pagination">
+    <div class="row">
+      <div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
             <li class="page-item"><a class="page-link" href="#">Previous</a></li>
             <li class="page-item"><a class="page-link" href="#">1</a></li>
             <li class="page-item"><a class="page-link" href="#">2</a></li>
@@ -168,6 +162,7 @@
             <li class="page-item"><a class="page-link" href="#">Next</a></li>
           </ul>
         </nav>
+      </div>
     </div>
   </div>
 </form>
