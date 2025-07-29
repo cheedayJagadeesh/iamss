@@ -11362,7 +11362,8 @@
     
 
 <div class="tablebottom" *ngIf="selectedOption1 === 'EventScheduler'">
-  <table *ngIf="!isLoading" class="table table-striped table-bordered schedules" name="event">
+  <!-- <table *ngIf="!isLoading" class="table table-striped table-bordered schedules" name="event"> -->
+    <table *ngIf="selectedYear && selectedMonth && eventschedules.length > 0" class="table table-striped table-bordered schedules">
     <thead class="table-primary eventscadmin">
       <tr>
         <th scope="col" class="eventscadmincol">ProjectInternalAudit</th>
@@ -11377,7 +11378,7 @@
       </tr>
     </thead>
     <tbody>
-      <!-- <tr *ngFor="let events of event"> -->
+      <tr *ngFor="let events of eventschedules">
         <tr>
         <td>{{ event.projectInternalAudit }}</td>
         <td>{{ event.projectQMS }}</td>
@@ -11474,7 +11475,7 @@
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
             (click)="resetEventSchedulerAdmin()">Close</button>
           <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-            (click)="UpdateEventScheduleadmin()">Update</button>
+            (click)="UpdateEventSchedules()">Update</button>
         </div>
       </div>
     </div>

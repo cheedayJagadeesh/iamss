@@ -2241,7 +2241,7 @@ GetEventSchedulerAdmin(): Observable<string[]> {
    });
   return this.http.put(`${this.eventschedulerAdminUrl}/${id}`, JSON.stringify(updatedData), { headers });
 }
-//---------------------------------------------------------------------------------------
+//---------------------------------------------------------------------------------------------------------EventSchedulerAdmin
 eventschedulerUserUrl='https://ielc-coreapi1.azurewebsites.net/EventSchedulerUser/';
 
 GetEventSchedulerUser(): Observable<string[]> {
@@ -2267,8 +2267,6 @@ GetEventSchedulerUser(): Observable<string[]> {
   return this.http.put(`${this.eventschedulerUserUrl}/${id}`, JSON.stringify(updatedData), { headers });
 }
 
-//-----------------------------------------------------
-
 GetEventScheduler(): Observable<string[]> {
   return this.http.get<string[]>(`${this.eventschedulerUserUrl}`, { headers: this.getHeaders() });
 }
@@ -2284,7 +2282,6 @@ GetEventScheduler(): Observable<string[]> {
    });
   return this.http.put(`${this.complianceqmsUrl}/update-month/${id}`, JSON.stringify(updatedData), { headers });
 }
-//--------------------------------------------------------------
 EventSchedulerUser = "https://ielc-coreapi1.azurewebsites.net/";
 
 GetEventSchedulerUserByDept(department: string): Observable<string[]> {
@@ -2300,7 +2297,6 @@ checkScheduleExists(department: string, starting: string, time: string): Observa
     headers: this.getHeaders()
   });
 }
-
 
 UpdateEventScheduleByDepartment(data: {
   ID: number;
@@ -2334,10 +2330,43 @@ GetEventsscfilterprojects(displayname: string): Observable<any> {
 GetByProjectsevents(): Observable<string[]> {
   return this.http.get<any[]>(`${this.EventSchedulerUser}EventSchedulerUser/auditees`, { headers: this.getHeaders() })
 }
+//-------------------------------------------------------------------------------------------------------EventSchedules
+eventscheduleUrls='https://ielc-coreapi1.azurewebsites.net/EventSchedules';
+GetEventSchedules(year: string, month: string): Observable<any[]> {
+  return this.http.get<any[]>(`${this.eventscheduleUrls}/${year}/${month}`, {
+    headers: this.getHeaders()
+  });
+}
+//https://ielc-coreapi1.azurewebsites.net/EventSchedules/2025/july
+GetEventSchedulesId(year: string, month: string, id: number): Observable<any> {
+  return this.http.get<any>(
+    `${this.eventscheduleUrls}/schedule/${year}/${month}/${id}`,
+    { headers: this.getHeaders() }
+  );
+}
 
-// GetUserByProjectsEventsc(displayname: string): Observable<string[]> {
-//   return this.http.get<string[]>(`${this.eventsUrl}/userprojectsbydisplayname/${displayname}`, { headers: this.getHeaders() });
+UpdateEventSchedules(year: string, month: string, id: number, data: string): Observable<void> {
+  return this.http.put<void>(
+    `${this.eventscheduleUrls}/schedule/${year}/${month}/${id}`,
+    JSON.stringify(data),
+    { headers: this.getHeaders() }
+  );
+}
+
+// UpdateEventSchedules(year: string, month: string, id: number, data: any): Observable<void> {
+//   return this.http.put<void>(
+//     `${this.eventscheduleUrls}/schedule/${year}/${month}/${id}`,
+//     JSON.stringify(data),
+//     { headers: this.getHeaders() }
+//   );
 // }
+// UpdateEventSchedulerTime(year: string, month: string, id: number, data: any): Observable<any> {
+//   const url = `${this.baseUrl}/UpdateEventSchedule/${year}/${month}/${id}`;
+//   return this.http.put(url, data);
+// }
+
+//-------------------------------------------------------------------------------------------------------EventSchedules
+//rough
 eventscheduleUrl='https://ielc-coreapi1.azurewebsites.net/';
  GetLatestEvent(): Observable<string[]> {
     return this.http.get<any[]>(`${this.eventscheduleUrl}/EventSchedulerUser/latest`, { headers: this.getHeaders() });
@@ -2348,6 +2377,7 @@ eventscheduleUrl='https://ielc-coreapi1.azurewebsites.net/';
       const headers = this.getHeaders();
       return this.http.put<any>(`${this.eventscheduleUrl}/EventSchedulerUser/schedule/${id}`, updatedData,{headers, observe: 'response' });
 }
+//-------------------------------------------------------------------------------------------------------EventSchedulerUser
 
 extratouser = "https://ielc-coreapi1.azurewebsites.net/ExtraTousers";
 
@@ -2355,18 +2385,18 @@ Getextratouser(): Observable<string[]> {
   return this.http.get<any[]>(`${this.extratouser}`, { headers: this.getHeaders() })
 }
 
-//-----------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------EventSchedulerUser
 eventschedulertime = 'https://ielc-coreapi1.azurewebsites.net';
 eventschedulertimes = 'https://ielc-coreapi1.azurewebsites.net/times';
 
 GetEventSchedulerTime(year: string, month: string): Observable<any[]> {
-  return this.http.get<any[]>(`${this.eventschedulertime}/Get/${year}/${month}`, {
+  return this.http.get<any[]>(`${this.eventschedulertime}/EventSchedulerTime/Get/${year}/${month}`, {
     headers: this.getHeaders()
   });
 }
 
 GetEventSchedulersTime(year: string, month: string): Observable<any[]> {
-  return this.http.get<any[]>(`${this.eventschedulertime}/geteventschedulertime/${year}/${month}`, {
+  return this.http.get<any[]>(`${this.eventschedulertime}/EventSchedulerTime/geteventschedulertime/${year}/${month}`, {
     headers: this.getHeaders()
   });
 }
@@ -2383,18 +2413,16 @@ GetEventSchedulerTimeId(year: string, month: string, id: number): Observable<any
 }
 
 GetAvailableMonthsByYear(year: string): Observable<string[]> {
-  return this.http.get<any[]>(`${this.eventschedulertime}/getmonthsfromtables/${year}`, { headers: this.getHeaders() })
+  return this.http.get<any[]>(`${this.eventschedulertime}/EventSchedulerTime/getmonthsfromtables/${year}`, { headers: this.getHeaders() })
 }
 
 PostEventSchedulerTime(year: string, month: string, time: string): Observable<void> {
   return this.http.post<void>(
     `${this.eventschedulertime}/times/${year}/${month}`,
-    time,
+    { time }, // wrap in object
     { headers: this.getHeaders() }
   );
 }
-
-//https://ielc-coreapi1.azurewebsites.net/times?year=2025&month=july
 
 UpdateEventSchedulerTime(year: string, month: string, id: number, time: string): Observable<void> {
   return this.http.put<void>(
@@ -2409,7 +2437,7 @@ DeleteEventSchedulerTime(year: string, month: string, id: number): Observable<vo
   headers: this.getHeaders()
   });
 }
-//---------------------------------------------------------------------------------------CoOwners
+//---------------------------------------------------------------------------------------EventSchedulerTime
 coownersurl = 'https://ielc-coreapi1.azurewebsites.net/CoOwners';
 
 GetCoOwners(): Observable<string[]> {
@@ -2464,8 +2492,7 @@ PostCoOwners(data: any): Observable<any> {
       const headers = this.getHeaders();
       return this.http.put<any>(`${this.coownersurl}/${id}`, updatedData,{headers, observe: 'response' });
     }
-
-//---------------------------------------------------------------------------------------CreateTables
+//---------------------------------------------------------------------------------------CoOwners 
 createeventtablesurl = 'https://ielc-coreapi1.azurewebsites.net/AddNewTables/createeventtables';
 
 createEventTables(): Observable<any> {

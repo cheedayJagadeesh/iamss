@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { IelcapiService } from '../ielcapi.service';
-
+import { forkJoin } from 'rxjs';
 
 interface smtpinfo {
   id: number;
   userName: string;
   password: string;
 }
-  interface eventschdetails {
+export interface EventScheduleDetails {
   eventScheduleId: number;
   projectInternalAudit: string;
   projectQMS: string;
@@ -16,9 +16,20 @@ interface smtpinfo {
   organizerSchedule: string;
   organizerDateRange: string;
   notes: string;
-  createdOn: string;
-  organizerLastDate:string;
+  organizerLastDate: string;
 }
+
+//   interface eventsschedulesdetails {
+//   eventScheduleId: number;
+//   projectInternalAudit: string;
+//   projectQMS: string;
+//   projectISMS: string;
+//   organizerCompany: string;
+//   organizerSchedule: string;
+//   organizerDateRange: string;
+//   notes: string;
+//   organizerLastDate:string;
+// }
   interface CoOwners {
   id: number;
   auditeeDepartment?: string;
@@ -187,8 +198,8 @@ onSelection5Change() {
    userName: '',
    password: '',
   }
-  eventschadslist: any[] = []; 
-eventschadmindet: eventschdetails = {
+  eventscheduledetailslist: any[] = []; 
+  eventschedulesdata: EventScheduleDetails = {
   eventScheduleId: 0,
   projectInternalAudit: '',
   projectQMS: '',
@@ -197,7 +208,6 @@ eventschadmindet: eventschdetails = {
   organizerSchedule: '',
   organizerDateRange: '',
   notes: '',
-  createdOn: '',
   organizerLastDate: '',
 };
 
@@ -385,6 +395,7 @@ eventschuser: eventscuserinfo = {
  eventscheduleadmin: any[]=[];
  eventscheduleruser: any[]=[];
  eventschedulertime: any[]=[];
+ eventschedules: any[]=[];
  crserestlist: any[]=[];
  eventalertslist: any[]=[];
  event: any | null = null;
@@ -479,7 +490,7 @@ eventschuser: eventscuserinfo = {
     this.GetEventAlertsist();
     this.GetEventSchedulerAdmin();
     this.GetEventSchedulerUser();
-    this.GetLatestEvent();
+    //this.GetEventSchedules();
     this.GetEventSchedulerTimeslots();
     this.GetCoOnwers();
     this.populateYears();
@@ -509,23 +520,42 @@ onYearChange(): void {
     this.isEventYearSelected = false;
   }
 }
-
 onMonthChange(): void {
   if (this.selectedYear && this.selectedMonth) {
-    this.ielc.GetEventSchedulerTime(this.selectedYear, this.selectedMonth)
-      .subscribe({
-        next: (data) => this.eventschedulertime = data,
-        error: (err) => {
-          console.error('Error loading times:', err);
-          this.eventschedulertime = [];
-        }
-      });
+    forkJoin({
+      scheduleTimes: this.ielc.GetEventSchedulerTime(this.selectedYear, this.selectedMonth),
+      eventschedules: this.ielc.GetEventSchedules(this.selectedYear, this.selectedMonth),
+      //userList: this.ielc.GetEventUsers(this.selectedYear, this.selectedMonth)
+    }).subscribe({
+      next: (results) => {
+        this.eventschedulertime = results.scheduleTimes;
+        this.eventschedules = results.eventschedules;
+        //this.eventUsers = results.userList;
+      },
+      error: (err) => {
+        console.error('Error loading month data:', err);
+        this.eventschedulertime = [];
+        this.eventschedules = [];
+       // this.eventUsers = [];
+      }
+    });
   }
 }
 
 // onMonthChange(): void {
-//   console.log('Selected Month:', this.selectedMonth);
+//   if (this.selectedYear && this.selectedMonth) {
+//     this.ielc.GetEventSchedulerTime(this.selectedYear, this.selectedMonth)
+//       .subscribe({
+//         next: (data) => this.eventschedulertime = data,
+//         error: (err) => {
+//           console.error('Error loading times:', err);
+//           this.eventschedulertime = [];
+//         }
+//       });
+//   }
 // }
+
+
   populateYears(): void {
     const startYear = 2025;
     const currentYear = new Date().getFullYear();
@@ -806,8 +836,6 @@ AddEventSchedulerAdmin(): void {
   );
 }
 
-
-
   deleteEventSchedulerAdmin(id: number) {
     if (confirm('Are you sure you want to delete this record?')) {
       this.ielc.DeleteEventSchedulerAdmin(id).subscribe({
@@ -855,7 +883,6 @@ UpdateEventSchedulerAdmin() {
   );
 }
 
-
   resetEventSchedulerAdmin(){
     this.eventschadmin={
     id: 0,
@@ -863,33 +890,69 @@ UpdateEventSchedulerAdmin() {
     procedures: '',
     }
   }
-
-  GetLatestEvent() {
-    this.ielc.GetLatestEvent().subscribe({
-      next: (data) => {
-        this.event = data;
-            //////console.log(this.event);
-      },
-      error: (err) => console.error('Failed to load event schedule', err)
-    });
-  }
-
-
-
- 
-UpdateEventScheduleadmin() {
-  if (!this.event || !this.event.eventScheduleId) {
-    alert("No event selected for update.");
+ //-------------------------------------------------------------------------------EventSchedules
+GetEventSchedules() {
+  if (!this.selectedYear || !this.selectedMonth) {
+    console.warn("Year and Month must be selected before loading timeslots");
     return;
   }
-  ////console.log("Updating event:", this.event);
-  this.ielc.UpdateEventScheduleadmin(this.event.eventScheduleId, this.event).subscribe({
+  this.isLoading = true;
+  this.ielc.GetEventSchedules(this.selectedYear, this.selectedMonth).subscribe((data) => {
+    this.eventschedules = this.sortlist(data);
+    this.isLoading = false;
+  });
+}
+
+EditEventSchedules(id: number): void {
+  if (!this.selectedYear || !this.selectedMonth) {
+    alert('Please select year and month first!');
+    return;
+  }
+  this.ielc.GetEventSchedulesId(this.selectedYear, this.selectedMonth, id).subscribe({
+    next: (data) => {
+      if (data) {
+        this.eventschedulesdata = {
+          eventScheduleId: data.eventScheduleId ?? null,
+          projectInternalAudit: data.projectInternalAudit ?? '',
+          projectQMS: data.projectQMS ?? '',
+          projectISMS: data.projectISMS ?? '',
+          organizerCompany: data.organizerCompany ?? '',
+          organizerSchedule: data.organizerSchedule ?? '',
+          organizerDateRange: data.organizerDateRange ?? '',
+          notes: data.notes ?? '',
+          organizerLastDate: data.organizerLastDate ?? null
+        };
+      } else {
+        console.warn("No data returned for the given ID.");
+      }
+    },
+    error: (error) => {
+      console.error("Error fetching record:", error);
+    }
+  });
+}
+
+UpdateEventSchedules(): void {
+  //const eventScheduleId = this.eventschedulesdata.eventScheduleId;
+  const payload = {
+    eventScheduleId: this.eventschedulesdata.eventScheduleId,
+    projectInternalAudit: this.eventschedulesdata.projectInternalAudit,
+    projectQMS: this.eventschedulesdata.projectQMS,
+    projectISMS: this.eventschedulesdata.projectISMS,
+    organizerCompany: this.eventschedulesdata.organizerCompany,
+    organizerSchedule: this.eventschedulesdata.organizerSchedule,
+    organizerDateRange: this.eventschedulesdata.organizerDateRange,
+    notes: this.eventschedulesdata.notes,
+    organizerLastDate: this.eventschedulesdata.organizerLastDate
+  };
+  this.ielc.UpdateEventSchedulerTime(this.selectedYear, this.selectedMonth, this.eventschedulesdata.eventScheduleId, JSON.stringify(payload)).subscribe({
     next: () => {
-      alert("✅ Event updated successfully.");
-      this.GetLatestEvent();
+      alert(`✅ Record with ID ${this.eventschedulesdata.eventScheduleId} updated successfully!`);
+      this.GetEventSchedules();
     },
     error: (err) => {
-      console.error("Update failed:", err);
+      console.error('❌ Update failed:', err);
+      alert('Error updating record.');
     }
   });
 }
@@ -937,9 +1000,6 @@ AddEventSchedulerUser(): void {
     }
   );
 }
-
-
-
 
   deleteEventSchedulerUser(id: number) {
     if (confirm('Are you sure you want to delete this record?')) {
@@ -1004,10 +1064,7 @@ UpdateEventSchedulerUser() {
     time: '',
     auditors: ''
     }
-  }
-
-
- 
+  } 
 //-------------------------------------------------------------------------------SMTP
   GetSmtplist(){
     this.ielc.Getsmtp().subscribe((data) => {
