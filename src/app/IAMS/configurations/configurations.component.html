@@ -1,66 +1,72 @@
-<!-- <div class="p-3 mb-2 bg-light">
-    <h1 class="h1" >INTEQ ATTENDANCE MANAGEMENT SYSTEM</h1>
-</div> -->
-<!-- <app-header></app-header> -->
 <app-attendanceheader></app-attendanceheader>
-<!-- <div class="p-3 mb-2">
-    <h2 class="h2" >Configurations</h2>
-</div> -->
 <form class="row g-3">
-    <div class="container">
-        <div class="col-md-3">
-            <label for="Empname" class="lbl1">Maximum edits are allowed by Admins for each Emp</label>
-            
-            <label for="Empname" class="lbl2">Add Admin Users</label>
-
-            <label for="Empname" class="lbl3">Add PM Admin Users</label>
-
-        </div>
+   <div class="container my-4">
+  <div class="row">
+    <div class="col-md-6">
+      <label  class="lbl1">Maximum edits are allowed by Admins for each Emp</label>
     </div>
-    <div class="container-bottomau">
-        <h3 class="h3">Add Admin users</h3>
-        <div class="col-md-3">
-            <label for="Empname" class="lblname">Employee Name</label>
-            <input type="search" class="form-controlsearchname" />
-        </div>
-        <div class="col-md-3">
-            <label for="Empid" class="labelid">Emp.ID</label>
-        </div>
-        <div>
-            <div>
-              <input type="search" class="form-controlsearchid" />
-            </div>
-            <div>
-            <button class="btn btnsearchbtm">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                  </svg>
-            </button>
-            </div>
-        </div>
-        <button class="buttonprnt">Add</button>
-        <div class="container-bottompmu">
-            <h3 class="h3">Add PM Admin users</h3>
-            <div class="col-md-3">
-                <label for="Empname" class="lblname">Employee Name</label>
-                <input type="search" class="form-controlsearchname" />
-            </div>
-            <div class="col-md-3">
-                <label for="Empid" class="labelid">Emp.ID</label>
-            </div>
-            <div>
-                <div>
-                  <input type="search" class="form-controlsearchid" />
-                </div>
-                <div>
-                <button class="btn btnsearchbtm">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                      </svg>
-                </button>
-                </div>
-            </div>
-            <button class="buttonprnt">Add</button>
-        </div>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col-md-6">
+      <label class="lbl2">Add Admin Users</label>
     </div>
+  </div>
+
+  <div class="row mt-2">
+    <div class="col-md-6">
+      <label class="lbl3">Add PM Admin Users</label>
+    </div>
+  </div>
+</div>
+
+    
+    <div class="container my-4">
+  <h3 class="mb-3">Add Admin Users</h3>
+  <div class="row g-3 align-items-end">
+    <div class="col-md-3">
+      <label for="adminEmpName" class="form-label">Employee Name</label>
+      <input type="search" class="form-control" id="adminEmpName" />
+    </div>
+    <div class="col-md-3">
+      <label for="adminEmpId" class="form-label">Emp.ID</label>
+      <input type="search" class="form-control" id="adminEmpId" />
+    </div>
+    <div class="col-md-2">
+      <label class="form-label d-block">&nbsp;</label>
+      <button class="btn btn-primary w-100">
+        <i class="bi bi-search"></i> Search
+      </button>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label d-block">&nbsp;</label>
+      <button class="btn btn-success w-100">Add</button>
+    </div>
+  </div>
+
+  <hr class="my-3">
+
+  <h3 class="mb-3">Add PM Admin Users</h3>
+  <div class="row g-3 align-items-end">
+    <div class="col-md-3">
+      <label for="pmEmpName" class="form-label">Employee Name</label>
+      <input type="search" class="form-control" id="pmEmpName" />
+    </div>
+    <div class="col-md-3">
+      <label for="pmEmpId" class="form-label">Emp.ID</label>
+      <input type="search" class="form-control" id="pmEmpId" />
+    </div>
+    <div class="col-md-2">
+      <label class="form-label d-block">&nbsp;</label>
+      <button class="btn btn-primary w-100">
+        <i class="bi bi-search"></i> Search
+      </button>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label d-block">&nbsp;</label>
+      <button class="btn btn-success w-100">Add</button>
+    </div>
+  </div>
+</div>
+
 </form>
