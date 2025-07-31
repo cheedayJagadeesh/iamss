@@ -51,17 +51,19 @@ selectedAuditee: any | null = null;
   matchedOwner: boolean = false;
   matchedSuperOwnerqms: boolean = false;
   matchedOwnerqms: boolean = false;
- projectlist: any[] = [];
-userProjects: string[] = [];
+  projectlist: any[] = [];
+  userProjects: string[] = [];
   superownerss: any[] = [];
   ownerss: any[] = [];
   event: any | null = null;
   minDate!: string;
   maxDate!: string;
   lastAllowedDate!: string;
+  selectedYear: string = '';
+  selectedMonth: string = '';
 
-    eventschadslist: any[] = []; 
-eventschadmindet: eventschdetails = {
+  eventschadslist: any[] = []; 
+  eventschadmindet: eventschdetails = {
   eventScheduleId: 0,
   projectInternalAudit: '',
   projectQMS: '',
@@ -80,14 +82,12 @@ eventschadmindet: eventschdetails = {
     return data.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
   }
 
-
-
 ngOnInit(): void {
   this.authService.userDetails$.subscribe(userDetails => {
     this.userName = userDetails?.displayName;
     // For testing:
     // this.userName = "Venkat Merla";
-    this.userName = "Ramprasad .KP";
+    //this.userName = "Ramprasad .KP";
     // this.userName = "Nivedita Merla";
     //  this.userName = "Praveen Kumar Alapana";
     this.userEmail = userDetails?.email;
@@ -254,7 +254,7 @@ isSubmitDisabled(): boolean {
     this.ielc.GetLatestEvent().subscribe({
       next: (data) => {
         this.event = data;
-        //console.log("Events",this.event);
+        console.log("Events",this.event);
       },
       error: (err) => console.error('Failed to load event schedule', err)
     });
@@ -290,7 +290,7 @@ isSubmitDisabled(): boolean {
 
 onDateChange() {
   if (this.selectedDate) {
-    this.ielc.GetBookedTimes(this.selectedDate).subscribe((booked: string[]) => {
+    this.ielc.GetBookedTimes(this.selectedYear, this.selectedMonth, this.selectedDate).subscribe((booked: string[]) => {
       this.filteredTimes = this.Time.filter(t => !booked.includes(t));
     });
   } else {
@@ -323,7 +323,7 @@ onDateChange() {
   }
 
   // ✅ 3. Check if schedule already exists
-  this.ielc.checkScheduleExists(this.selectedDept, this.selectedDate, this.selectedTime).subscribe({
+  this.ielc.checkScheduleExists(this.selectedYear, this.selectedMonth, this.selectedDept, this.selectedDate, this.selectedTime).subscribe({
     next: (exists: boolean) => {
       if (exists) {
         alert('Schedule already created for this date and time.');
@@ -340,7 +340,7 @@ onDateChange() {
         AUDITORS: null
       };
 
-      this.ielc.UpdateEventScheduleByDepartment(updateData).subscribe({
+      this.ielc.UpdateEventScheduleByDepartment(this.selectedYear, this.selectedMonth, updateData).subscribe({
         next: () => {
           alert('Schedule created successfully.');
           this.onDateChange();
@@ -359,9 +359,29 @@ onDateChange() {
   });
 }
 
+// onDepartmentChange() {
+//   if (this.selectedDept) {
+//     this.ielc.GetEventSchedulerUserByDept(this.selectedYear, this.selectedMonth, this.selectedDept).subscribe({
+//       next: (data) => {
+//         this.selectedAuditee = data;
+//       },
+//       error: (err) => {
+//         console.error('Failed to fetch auditee details', err);
+//         this.selectedAuditee = null;
+//       }
+//     });
+//   } else {
+//     this.selectedAuditee = null;
+//   }
+// }
+
 onDepartmentChange() {
   if (this.selectedDept) {
-    this.ielc.GetEventSchedulerUserByDept(this.selectedDept).subscribe({
+    this.ielc.GetEventSchedulerUserByDeptYearMonth(
+      this.selectedYear,
+      this.selectedMonth,
+      this.selectedDept
+    ).subscribe({
       next: (data) => {
         this.selectedAuditee = data;
       },
@@ -374,6 +394,7 @@ onDepartmentChange() {
     this.selectedAuditee = null;
   }
 }
+
 
 onComplianceChange(event: Event): void {
   const target = event.target as HTMLSelectElement;
