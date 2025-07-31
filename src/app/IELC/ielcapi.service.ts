@@ -325,7 +325,6 @@ export class IelcapiService {
       // const headers = { 'Content-Type': 'application/json' };
       return this.http.post<any>(this.itismsgeneralUrl, data, { headers: this.getHeaders() });
     }
-
     GetitismsgeneralById(id: number): Observable<any> {
       return this.http.get<any>(`${this.itismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
@@ -2056,6 +2055,11 @@ Getqmshistory(year: number): Observable<any> {
     Updateeventalerts(id: number, updatedData: any): Observable<any> {
       return this.http.put<any>(`${this.eventalertsUrl}/${id}`, updatedData, { headers: this.getHeaders() });
     } 
+   UpdateEventAlertStatus(data: any): Observable<any> {
+  const url = 'https://localhost:7154/EventAlerts/UpdateStatus';
+  return this.http.post<any>(url, data, { headers: this.getHeaders() });
+}
+
 //================================================================================Exam info
 
 examinfoUrl='https://coreappi.azurewebsites.net/ExamInfo';

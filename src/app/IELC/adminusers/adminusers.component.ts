@@ -5855,6 +5855,35 @@ GetEventAlertsist(){
   }
 }
 
+togglePlayPause(item: any): void {
+  debugger;
+  item.isPaused = !item.isPaused;
+  item.status = item.isPaused ? 'InActive' : 'Active';
+  console.log('Toggling status to:', item.status);
+
+  const payload = {
+    alertID: item.alertID,
+    status: item.status
+  };
+
+  this.ielc.UpdateEventAlertStatus(payload).subscribe({
+    next: () => {
+      console.log('✅ Status updated in DB');
+    },
+    error: (err) => {
+      console.error('❌ API failed:', err);
+      alert('Failed to update status.');
+
+      // Revert UI
+      item.isPaused = !item.isPaused;
+      item.status = item.isPaused ? 'InActive' : 'Active';
+    }
+  });
+}
+
+
+
+
 AddEventAlerts(): void {
 
     // alertAttachment already assigned in onFileChange
