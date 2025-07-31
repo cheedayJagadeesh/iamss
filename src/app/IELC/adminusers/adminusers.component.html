@@ -11726,18 +11726,29 @@
                     <td>{{item.mailAlertDay}}</td>
                     <td>{{item.mailType}}</td>
                     <td>{{item.frequency}}</td>
+                <td>
+                    <ng-container *ngIf="item.alertAttachment; else noFile">
+                        <img [src]="getFileIconFileupload(item.alertAttachment, item.fileName)" alt="File Icon" height="30"
+                            style="margin-right: 8px;">
+                        <a [href]="getDownloadLinkFileupload(item.alertAttachment, item.fileName)" [attr.download]="item.fileName">
+                            Download
+                        </a>
+                    </ng-container>
+                    <ng-template #noFile>
+                        <span>No Attachment</span>
+                    </ng-template>
+                </td>
+
                     <!-- <td>
-                        <img src="assets/images/text-icon.jpg" alt="Attachment Icon" height="50">
-                        <a [href]="'data:application/octet-stream;base64,' + item.alertAttachment" download="attachment.txt">
-                          Download
-                        </a>
-                    </td>-->
-                    <td>
-                        <img [src]="getFileIcon(item.alertAttachment)" alt="File Icon" height="50">
-                        <a [href]="getDownloadLink(item.alertAttachment)" download>
-                          Download
-                        </a>
-                    </td>
+                        <ng-container *ngIf="item.alertAttachment; else noFile">
+                            <img [src]="getFileIconFileupload(item.alertAttachment)" alt="File Icon" height="30" style="margin-right: 8px;">
+                            <a [href]="getDownloadLinkFileupload(item.alertAttachment, item.fileName)" [attr.download]="item.fileName">Download</a>
+                        </ng-container>
+                        <ng-template #noFile>
+                            <span>No Attachment</span>
+                        </ng-template>
+                    </td> -->
+
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
                             data-bs-target="#exampleModal71">
@@ -11781,7 +11792,7 @@
                                    </div>
                                    <div class="divmodal">
                                     <label>Mail Type</label>
-                                    <select name="malitype" class="form-control" required name="mailtype" [(ngModel)]="eventalertsdata.mailType"> 
+                                    <select name="malitype" class="form-control" required name="mailtype" [(ngModel)]="eventalertsdata.mailType">
                                         <option value="" disabled selected>- select -</option>
                                         <option>OneTime</option>
                                         <option>Continuous</option>
@@ -11799,7 +11810,7 @@
                                    </div>
                                    <div class="divmodal">
                                     <label>Attachment</label>
-                                    <input class="form-control" type="file" id="formFile" name="attachment" [(ngModel)]="eventalertsdata.alertAttachment">
+                                     <input class="form-control" type="file" (change)="onFileChange($event)" />
                                    </div>
                                    <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
@@ -11852,20 +11863,25 @@
                                        <div class="divmodal">
                                         <label>Mail Type</label>
                                         <select name="malitype" class="form-control" required name="mailtype" [(ngModel)]="eventalertsdata.mailType"> 
-                                            <option value="" disabled selected>- select -</option>
-                                            <option>azure</option>
+                                        <option value="" disabled selected>- select -</option>
+                                        <option>OneTime</option>
+                                        <option>Continuous</option>
                                         </select>
                                        </div>
                                        <div class="divmodal">
                                         <label>Frequency</label>
                                         <select name="frequency" class="form-control" required name="frequency" [(ngModel)]="eventalertsdata.frequency">
                                             <option value="" disabled selected>- select -</option>
-                                            <option>weekly</option>
+                                            <option>Daily</option>
+                                            <option>Weekly</option>
+                                            <option>Monthly</option>
+                                            <option>Yearly</option>
                                         </select>
                                        </div>
                                        <div class="divmodal">
                                         <label>Attachment</label>
-                                        <input class="form-control" type="file" id="formFile" name="attachment" [(ngModel)]="eventalertsdata.alertAttachment">
+                                        <input class="form-control" type="file" id="formFile" name="attachment" [(ngModel)]="eventalertsdata.fileName">
+                                          <span>{{ eventalertsdata.fileName }}</span>
                                        </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"

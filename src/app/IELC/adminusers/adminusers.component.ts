@@ -112,7 +112,8 @@ interface eventalertsinfo{
   mailAlertDay: number;
   mailType: string;
   frequency: string;
-  alertAttachment: string;
+  alertAttachment?: string;
+  fileName?: string; 
 }
 @Component({
   selector: 'app-adminusers',
@@ -290,7 +291,8 @@ eventschuser: eventscuserinfo = {
   mailAlertDay: 0,
   mailType: '',
   frequency: '',
-  alertAttachment: ''
+  alertAttachment: '',
+  fileName: ''
  }
  HrIsmsGeneraldata: any[] = []; 
  HrIsmsGuidelinesdata: any[] = []; 
@@ -5839,20 +5841,84 @@ GetEventAlertsist(){
     this.isLoading = false;
   });
  }
- 
- AddEventAlerts(): void {
-  this.ielc.Posteventalerts(this.eventalertsdata).subscribe(
-    (response) => {
-      alert('✅ Record Added Successfully!');
-      this.GetEventAlertsist();
-      this.resetEventAlerts();
-    },
-    (error) => {
-      alert('❌ Error adding Record. Please try again.');
-    }
-  );
+  selectedFileBase64: string = '';
+ onFileChange(event: any): void {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64String = (reader.result as string).split(',')[1];
+      this.eventalertsdata.alertAttachment = base64String;
+      this.eventalertsdata.fileName = file.name; // <-- Save the original filename
+    };
+    reader.readAsDataURL(file);
+  }
 }
 
+AddEventAlerts(): void {
+
+    // alertAttachment already assigned in onFileChange
+    this.ielc.Posteventalerts(this.eventalertsdata).subscribe(
+      (response) => {
+        alert('✅ Record Added Successfully!');
+        this.GetEventAlertsist();
+        this.resetEventAlerts();
+      },
+      (error) => {
+        alert('❌ Error adding Record. Please try again.');
+        console.error(error);
+      }
+    );
+  }
+getDownloadLinkFileupload(base64Data: string, fileName: string): string {
+  const extension = fileName?.split('.').pop()?.toLowerCase();
+
+  const mimeTypes: { [key: string]: string } = {
+    pdf: 'application/pdf',
+    jpg: 'image/jpeg',
+    jpeg: 'image/jpeg',
+    png: 'image/png',
+    doc: 'application/msword',
+    docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    xls: 'application/vnd.ms-excel',
+    xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    txt: 'text/plain',
+    csv: 'text/csv',
+  };
+
+  const mimeType = mimeTypes[extension || ''] || 'application/octet-stream';
+
+  return `data:${mimeType};base64,${base64Data}`;
+}
+
+getFileIconFileupload(base64String: string, fileName: string): string {
+  if (!base64String || !fileName) {
+    return 'assets/images/no-file.png';
+  }
+
+  const extension = fileName.split('.').pop()?.toLowerCase();
+
+  switch (extension) {
+    case 'pdf':
+      return 'assets/images/pdf.png';
+    case 'doc':
+    case 'docx':
+      return 'assets/images/word.png';
+    case 'xls':
+    case 'xlsx':
+      return 'assets/images/excel-icon.png';
+    case 'jpg':
+    case 'jpeg':
+    case 'png':
+      return 'assets/images/img.png';
+    case 'txt':
+      return 'assets/images/text-icon.jpg'; 
+    case 'csv':
+      return 'assets/images/csv.png';
+    default:
+      return 'assets/images/file.png';
+  }
+}
 
 deleteEventAlerts(id: number) {
   if (confirm('Are you sure you want to delete this record?')) {
@@ -5867,6 +5933,7 @@ deleteEventAlerts(id: number) {
 }
 
 EditEventAlerts(id: number) {
+  debugger;
   // ////console.log("Edit button clicked, fetching ID:", id); 
   this.ielc.GeteventalertsById(id).subscribe(data => {
 
@@ -5883,7 +5950,7 @@ EditEventAlerts(id: number) {
         mailAlertDay: data.mailAlertDay || 0,
         mailType: data.mailType || '',
         frequency: data.frequency || '',
-        alertAttachment: data.alertAttachment || ''
+        fileName: data.fileName || ''
       };
     } else {
       // console.warn("No data received for the given ID.");
@@ -5917,8 +5984,11 @@ resetEventAlerts(){
     mailAlertDay: 0,
     mailType: '',
     frequency: '',
-    alertAttachment: ''
-   }
+    alertAttachment: '',
+    fileName: ''
+   };
+       this.selectedFileBase64 = '';
+
 }
 getFileIcon(alertAttachment: string): string {
   if (!alertAttachment) {
