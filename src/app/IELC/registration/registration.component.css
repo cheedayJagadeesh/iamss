@@ -300,7 +300,6 @@ h2 {
     border-radius: var(--bs-border-radius);
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     border-color: black;
-    position: absolute;
     height: 53px;
 }
 .labeltime1 {
