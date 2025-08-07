@@ -2,6 +2,7 @@ import { AuthService } from './../../authservice.service';
 import { Component, OnInit } from '@angular/core';
 import { IelcapiService } from '../ielcapi.service';
 import { forkJoin, map, Observable, of, switchMap } from 'rxjs';
+import { ChangeDetectorRef } from '@angular/core';
 
 interface eventschdetails {
   eventScheduleId: number;
@@ -16,6 +17,15 @@ interface eventschdetails {
   organizerLastDate:string;
 }
 
+interface eventdetails {
+  ID: number;
+  AUDITEEDEPARTMENT: string;
+  AUDITEES: string;
+  STARTING: string;
+  TIME: string;
+  AUDITORS: string;
+}
+
 @Component({
   selector: 'app-eventscheduler',
   templateUrl: './eventscheduler.component.html',
@@ -26,6 +36,7 @@ export class EventschedulerComponent implements OnInit{
 AuditeesDept: any[]=[];
 Time: string[] = [];          
 filteredTimes: string[] = []; 
+bookedtimes: string[] = []; 
  //selectedAuditee = '';
  hasPermission: boolean = true;
  selectedStatus: string = '';
@@ -55,7 +66,8 @@ selectedAuditee: any | null = null;
   userProjects: string[] = [];
   superownerss: any[] = [];
   ownerss: any[] = [];
-  event: any | null = null;
+  // event: any | null = null;
+  event: any = {};
   minDate!: string;
   maxDate!: string;
   lastAllowedDate!: string;
@@ -76,7 +88,18 @@ selectedAuditee: any | null = null;
   organizerLastDate: '',
 };
 
- constructor(private ielc:IelcapiService, private authService: AuthService) {
+eventslist: any[] = []; 
+ eventsdet: eventdetails = {
+  ID: 0,
+  AUDITEEDEPARTMENT: '',
+  AUDITEES: '',
+  STARTING: '',
+  TIME: '',
+  AUDITORS: '',
+};
+
+
+ constructor(private ielc:IelcapiService, private authService: AuthService, private cdr: ChangeDetectorRef) {
   }
       sortlist(data: any[]): any[] {
     return data.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
@@ -104,20 +127,12 @@ ngOnInit(): void {
         if (userbyprojectsdata && userbyprojectsdata.length > 0) {
           this.projectlist = userbyprojectsdata;
           this.hasPermission = true;
-          //console.log(this.projectlist);
-
-          // Load other necessary data
-          // this.GetEventscheduleTime();
-          // this.loadAllTimes();
           this.GetEventSchedulerAdmin();
-          //this.GetAllProjectsList();
           this.GetSuperOwners(this.userName);
           this.GetOwners();
-          //this.GetUserByProjectsList();
-          this.GetLatestEvent();
+          this.GetLatestEvents();
           this.GetProjectsListBasedOnUser
 
-          // ✅ Parse event.organizerDateRange if available
           if (this.event && this.event.organizerDateRange) {
             const parts = this.event.organizerDateRange.split("–");
             if (parts.length === 2) {
@@ -161,8 +176,9 @@ ngOnInit(): void {
                 // Optionally prefill selectedDate if today is in range
                 const today = new Date().toISOString().substring(0, 10);
                 if (today >= this.minDate && today <= this.maxDate) {
-                  this.selectedDate = today;
-                }
+  this.selectedDate = today;
+  this.cdr.detectChanges();  // ✅ trigger change detection manually
+}
               } else {
                 console.warn("Could not parse organizerDateRange:", this.event.organizerDateRange);
               }
@@ -242,7 +258,6 @@ checkCCPermission(): void {
   });
 }
 
-
 isSubmitDisabled(): boolean {
   if (!this.selectedDate || !this.lastAllowedDate) {
     return false; // or true, depending on if you want to force disabling
@@ -250,16 +265,16 @@ isSubmitDisabled(): boolean {
   return this.selectedDate >= this.lastAllowedDate;
 }
 
-    GetLatestEvent() {
+    GetLatestEvents() {
     this.ielc.GetLatestEvent().subscribe({
       next: (data) => {
-        this.event = data;
-        console.log("Events",this.event);
+        this.eventschadslist = data;
+        this.event = data[0];
+        //console.log("Events",data);
       },
       error: (err) => console.error('Failed to load event schedule', err)
     });
   }
-
 
   GetEventSchedulerAdmin(){
   this.ielc.GetEventSchedulerAdmin().subscribe((data) => {
@@ -288,76 +303,179 @@ isSubmitDisabled(): boolean {
 //   });
 // }
 
+// onDateChange() {
+//   if (this.selectedDate) {
+//     this.ielc.GetBookedTimes(this.selectedDate).subscribe((booked: string[]) => {
+//       console.log("All Times:", this.Time);
+//       console.log("Booked Times from API:", booked);
+//       this.filteredTimes = this.Time.filter(t => !booked.includes(t));
+//       console.log("times",this.filteredTimes);
+//     });
+//   } else {
+//     this.filteredTimes = [...this.Time];
+//   }
+// }
+
 onDateChange() {
   if (this.selectedDate) {
-    this.ielc.GetBookedTimes(this.selectedYear, this.selectedMonth, this.selectedDate).subscribe((booked: string[]) => {
-      this.filteredTimes = this.Time.filter(t => !booked.includes(t));
+    this.ielc.GetBookedTimes(this.selectedDate).subscribe((bookedtimes: string[]) => {
+      console.log("All Times:", this.Time);
+      console.log("Booked Times from API:", bookedtimes);
+
+      if (bookedtimes.length === 0) {
+        alert('⚠️ No available times found for the selected date.');
+      }
+
+      this.bookedtimes = bookedtimes;
+    }, (error) => {
+      console.error('Error fetching booked times:', error);
+      alert('❌ Failed to load booked times. Please try again.');
     });
   } else {
-    this.filteredTimes = [...this.Time]; // reset
+    this.bookedtimes = [];
   }
 }
 
- onSubmit(): void {
-  // ✅ 1. Check if all fields are filled
+// onDateChange() {
+//   if (this.selectedDate) {
+//     this.ielc.GetBookedTimes(this.selectedDate).subscribe((booked: string[]) => {
+//       console.log("All Times:", this.Time);
+//       console.log("Booked Times from API:", booked);
+
+//       this.filteredTimes = this.Time.filter(t =>
+//         !booked.some(b => b.trim().toLowerCase() === t.trim().toLowerCase())
+//       );
+
+//       console.log("Filtered Available Times:", this.filteredTimes);
+//     });
+//   } else {
+//     this.filteredTimes = [...this.Time];
+//   }
+// }
+
+//  onSubmit(): void {
+//   if (!this.selectedDept || !this.selectedDate || !this.selectedTime) {
+//     alert('Please complete all fields.');
+//     return;
+//   }
+//   if (this.lastAllowedDate) {
+//     const today = new Date();
+//     const cutoff = new Date(this.lastAllowedDate);
+//     // Remove time portion
+//     today.setHours(0, 0, 0, 0);
+//     cutoff.setHours(0, 0, 0, 0);
+//     console.log("Today:", today, "Last allowed date:", cutoff);
+//     if (today > cutoff) {
+//       alert("Schedule update time is over. You cannot submit after " + this.lastAllowedDate + ".");
+//       return;
+//     }
+//   }
+//   // ✅ 3. Check if schedule already exists
+//   this.ielc.checkScheduleExists(this.selectedDept, this.selectedDate, this.selectedTime).subscribe({
+//     next: (exists: boolean) => {
+//       if (exists) {
+//         alert('Schedule already created for this date and time.');
+//         return;
+//       }
+//       // ✅ 4. Prepare and submit schedule
+//       const updateData = {
+//   ID: this.eventsdet.ID,
+//   AUDITEEDEPARTMENT: this.selectedDept,
+//   STARTING: this.selectedDate,
+//   TIME: this.selectedTime,
+//   AUDITEES: this.eventsdet.AUDITEES,
+//   AUDITORS: this.eventsdet.AUDITORS
+// };
+
+// this.ielc.UpdateEventScheduleslatest(this.eventsdet.ID, updateData).subscribe({
+//   next: () => {
+//     alert('Schedule updated successfully.');
+//     this.onDateChange();
+//     this.onDepartmentChange();
+//   },
+//   error: (err) => {
+//     console.error('Failed to update schedule:', err);
+//     alert('Failed to update schedule.');
+//   }
+// });
+//     },
+//     error: (err) => {
+//       console.error('Failed to check schedule existence:', err);
+//       alert('Error occurred while checking schedule.');
+//     }
+//   });
+// }
+onSubmit(): void {
+  debugger; 
   if (!this.selectedDept || !this.selectedDate || !this.selectedTime) {
     alert('Please complete all fields.');
     return;
   }
-
-  // ✅ 2. Compare today to cutoff date
+  console.log(this.selectedAuditee)
   if (this.lastAllowedDate) {
     const today = new Date();
     const cutoff = new Date(this.lastAllowedDate);
-
-    // Remove time portion
     today.setHours(0, 0, 0, 0);
     cutoff.setHours(0, 0, 0, 0);
-
     console.log("Today:", today, "Last allowed date:", cutoff);
-
     if (today > cutoff) {
       alert("Schedule update time is over. You cannot submit after " + this.lastAllowedDate + ".");
       return;
     }
   }
 
-  // ✅ 3. Check if schedule already exists
-  this.ielc.checkScheduleExists(this.selectedYear, this.selectedMonth, this.selectedDept, this.selectedDate, this.selectedTime).subscribe({
+  // Step 1: Check if schedule already exists
+  this.ielc.checkScheduleExists(this.selectedDept, this.selectedDate, this.selectedTime).subscribe({
     next: (exists: boolean) => {
       if (exists) {
         alert('Schedule already created for this date and time.');
         return;
       }
 
-      // ✅ 4. Prepare and submit schedule
-      const updateData = {
-        ID: 0,
-        AUDITEEDEPARTMENT: this.selectedDept,
-        STARTING: this.selectedDate,
-        TIME: this.selectedTime,
-        AUDITEES: null,
-        AUDITORS: null
-      };
+      // Step 2: Get latest schedule ID using API
+      this.ielc.GetEventScheduleruseryearbylatestId(this.selectedAuditee.id).subscribe({
+        next: (latestData) => {
+          if (!latestData || !latestData.id) {
+            alert("Invalid schedule ID. Cannot update schedule.");
+            return;
+          }
 
-      this.ielc.UpdateEventScheduleByDepartment(this.selectedYear, this.selectedMonth, updateData).subscribe({
-        next: () => {
-          alert('Schedule created successfully.');
-          this.onDateChange();
-          this.onDepartmentChange();
+          // Step 3: Build payload and update
+          const updateData = {
+            ID: this.selectedAuditee.id,
+            AUDITEEDEPARTMENT: this.selectedDept,
+            STARTING: this.selectedDate,
+            TIME: this.selectedTime,
+            AUDITEES: latestData.auditees,
+            AUDITORS: latestData.auditors
+          };
+          console.log(updateData)
+          this.ielc.UpdateEventScheduleByDepartment(updateData).subscribe({
+            next: () => {
+              alert('✅ Schedule updated successfully.');
+              this.onDateChange();
+              this.onDepartmentChange();
+            },
+            error: (err) => {
+              console.error('Failed to update schedule:', err);
+              alert('❌ Failed to update schedule.');
+            }
+          });
         },
         error: (err) => {
-          console.error('Failed to update schedule:', err);
-          alert('Failed to update schedule.');
+          console.error('Failed to fetch latest schedule by ID:', err);
+          alert('❌ Error occurred while fetching the schedule ID.');
         }
       });
+
     },
     error: (err) => {
       console.error('Failed to check schedule existence:', err);
-      alert('Error occurred while checking schedule.');
+      alert('❌ Error occurred while checking schedule.');
     }
   });
 }
+
 
 // onDepartmentChange() {
 //   if (this.selectedDept) {
@@ -378,8 +496,6 @@ onDateChange() {
 onDepartmentChange() {
   if (this.selectedDept) {
     this.ielc.GetEventSchedulerUserByDeptYearMonth(
-      this.selectedYear,
-      this.selectedMonth,
       this.selectedDept
     ).subscribe({
       next: (data) => {
@@ -426,6 +542,7 @@ onComplianceChange(event: Event): void {
       this.matchedOwner = this.toDisplayNames.some(name =>
         name.toLowerCase().includes(lowerUser)
       );
+
 
       let complianceData$: Observable<any[]> | undefined;
 

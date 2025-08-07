@@ -1,20 +1,48 @@
 <app-header></app-header>
 <form class="row g-3" #addskillsform="ngForm" novalidate >
-    <!-- <div>
-        <label class="lbllogin">Login as </label>
-    </div> -->
-    <div>
-        <label for="Empname" class="form-label">Skill Name</label>
-        <input type="text" class="form-controlsearchname" id="Empname" name="skillName" [(ngModel)]="skillData.skillName" required #skillNameRef="ngModel" >
-        <button type="button" class="btn btninsert btn-info" [disabled]="!skillNameRef.valid" (click)="AddSkill()" >Insert</button>
-        <button type="button" class="btn btndlt btn-danger" [disabled]="!skillNameRef.valid"  (click)="DeleteSkill()" >Delete</button>
+ 
+ <!-- Wrapper to center horizontally and keep content at the top -->
+<div class="d-flex justify-content-center bg-light pt-5">
+  <div class="container" style="max-width: 600px;">
+    <div  class="container p-4 rounded shadow-sm bg-light border border-secondary">
+    <!-- Form Row -->
+      <div class="row justify-content-center align-items-center gx-2 gy-2 mb-3">
+        <!-- Label -->
+        <div class="col-auto">
+          <label for="Empname" class="form-label mb-0">Skill Name</label>
+        </div>
+
+        <!-- Input -->
+        <div class="col-md-6 col-sm-8">
+          <input type="text" class="form-control text-center" id="Empname" name="skillName"
+                 [(ngModel)]="skillData.skillName" required #skillNameRef="ngModel">
+        </div>
+
+        <!-- Buttons -->
+        <div class="col-auto">
+          <button type="button" class="btn btn-info me-2"
+                  [disabled]="!skillNameRef.valid" (click)="AddSkill()">Insert</button>
+          <button type="button" class="btn btn-danger"
+                  [disabled]="!skillNameRef.valid" (click)="DeleteSkill()">Delete</button>
+        </div>
+      </div>
+
+      <!-- Checkbox Row -->
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-sm-8">
+          <div class="form-check text-start">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="includeStQuestions"
+                   name="includeStQuestions" id="includeStQuestions">
+            <label class="form-check-label" for="includeStQuestions">
+              Include _stQuestions column
+            </label>
+          </div>
+        </div>
+      </div>
+
     </div>
-    <div class="form-check div">
-        <input class="form-check-input" type="checkbox" [(ngModel)]="includeStQuestions" name="includeStQuestions">
-        <label class="lbl">
-            Include _StQuestions column
-        </label>
-    </div>
+  </div>
+</div>
     <div *ngIf="isLoading" class="loading-container">
         <span class="dot"></span>
     </div>
@@ -28,7 +56,6 @@
                     <th scope="col">Start Time</th>
                     <th scope="col">End Time</th>
                     <th scope="col">Venue</th>
-                    <!-- <th scope="col">Description</th> -->
                     <th style="width: 200px;">Description</th>
                     <th scope="col">Skill Name</th>
                     <th scope="col">Conducted By</th>
@@ -39,14 +66,12 @@
             </thead>
             <tbody *ngIf="!isLoading" >
                 <tr *ngFor="let row of Enrolledusers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
-                    <!-- <th scope="row">1</th> -->
                      <td>{{row.sessionID}}</td>
                     <td>{{row.fromDate}}</td>
                     <td>{{row.toDate}}</td>
                     <td>{{row.skillStartTime}}</td>
                     <td>{{row.skillEndTime}}</td>
                     <td>{{row.venue}}</td>
-                    <!-- <td>{{row.skillDescription}}</td> -->
                     <td style="max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                         {{ row.skillDescription }}
                     </td>
@@ -87,37 +112,22 @@
                                        <div class="divmodal">
                                         <label>Start Date<span style="color: red;">*</span></label>
                                         <input type="date" class="form-control" [(ngModel)]="skillSessionData.fromDate" name="fromDate"  [min]="today" required #skillNameRef="ngModel"  >
-                                        <!-- <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;">
-                                            Start Date is required!
-                                          </div> -->
                                        </div>
                                        <div class="divmodal">
                                         <label>End Date<span style="color: red;">*</span></label>
                                         <input type="date" class="form-control" [(ngModel)]="skillSessionData.toDate" name="toDate"    [min]="skillSessionData.fromDate || today" required #skillNameRef="ngModel"  >
-                                        <!-- <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;">
-                                            End Date is required!
-                                          </div> -->
                                        </div>
                                        <div class="divmodal">
                                         <label>Start Time<span style="color: red;">*</span></label>
                                         <input type="time" class="form-control" [(ngModel)]="skillSessionData.skillStartTime" name="skillStartTime" required #skillNameRef="ngModel"  >
-                                        <!-- <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;">
-                                            Start Time is required!
-                                          </div> -->
                                        </div>
                                        <div class="divmodal">
                                         <label>End Time<span style="color: red;">*</span></label>
                                         <input type="time" class="form-control" [(ngModel)]="skillSessionData.skillEndTime" name="skillEndTime" required #skillNameRef="ngModel"  >
-                                        <!-- <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;">
-                                            End Time is required!
-                                          </div> -->
                                        </div>
                                        <div class="divmodal">
                                         <label>Venue<span style="color: red;">*</span></label>
                                         <select id="select1"   class="form-control" name="modetype" [(ngModel)]="skillSessionData.venue" name="venue" required #skillNameRef="ngModel" >
-                                            <!-- <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;">
-                                                Venue is required!
-                                              </div> -->
                                             <option value=""  >- Select Mode -</option>
                                             <option >Offline</option>
                                             <option >Self-Learning</option>
@@ -127,16 +137,10 @@
                                        <div class="divmodal">
                                         <label>Description<span style="color: red;">*</span></label>
                                         <textarea  class="form-control" [(ngModel)]="skillSessionData.skillDescription" name="skillDescription" required #skillNameRef="ngModel" ></textarea>
-                                        <!-- <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;">
-                                            Skill Name is required!
-                                          </div> -->
                                        </div>
                                        <div class="divmodal">
                                         <label>Skill Name<span style="color: red;">*</span></label>
                                         <select  id="select2"  class="form-control" name="skillname" [(ngModel)]="skillSessionData.skillName" name="skillName" required #skillNameRef="ngModel" >
-                                            <!-- <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;">
-                                                Skill Name is required!
-                                              </div> -->
                                             <option value="">- select skill -</option>
                                             <option *ngFor="let item of Enrolledskills" [value]="item.skillName">{{ item.skillName }}</option>
                                         </select>
@@ -163,9 +167,6 @@
                                     </div>
                                     
                                     <div class="modal-footer">
-                                        <!-- <div *ngIf="skillNameRef.invalid && skillNameRef.touched" style="color: red;margin-right: 35%;font-weight: 500;">
-                                            All * Marks are required!
-                                        </div> -->
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal" (click)="resetSkillSession(); GetAllSkillSessions()" >Close</button>
                                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddSkillsession()" [disabled]="addskillsform.invalid" >Add</button>
@@ -271,17 +272,6 @@
                
             </tbody>
         </table>
-        <!-- <div class="pagination">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
-            </nav>
-        </div> -->
         <div class="pagination" >
             <pagination-controls (pageChange)="page = $event"></pagination-controls>
         </div>

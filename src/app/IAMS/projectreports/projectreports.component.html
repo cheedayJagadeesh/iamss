@@ -1,121 +1,167 @@
-<!-- <div class="p-3 mb-2 bg-light">
-    <h1 class="h1" >INTEQ ATTENDANCE MANAGEMENT SYSTEM</h1>
-</div> -->
-<!-- <app-header></app-header> -->
 <app-attendanceheader></app-attendanceheader>
-<!-- <div class="p-3 mb-2">
-    <h2 class="h2" >Project wise Reports</h2>
-</div> -->
 <form class="row g-3">
-    <div class="container">
-        <div class="col-md-3">
-            <label for="projname" class="lblprj">Project Name</label>
+  <div class="mt-4">
+    <div class="border p-4 rounded shadow-sm bg-light border-secondary" style="width: 100%;">
+      <div class="row g-3 align-items-end">
+        <!-- Project Name Label -->
+        <div class="col-md-2 col-12">
+          <label for="projname" class="form-label fw-bold">Project Name</label>
         </div>
-        <div class="drpdwnbtmprj">
-          <button class="btn drpbtn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            - Select Project -
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#">NNA</a></li>
-          </ul>
-        </div>
-        <div class="drpmnth">
-          <button class="btn dropdown-toggle btn-drp-mnth" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            - Select Month -
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#">January</a></li>
-            <li><a class="dropdown-item" href="#">February</a></li>
-            <li><a class="dropdown-item" href="#">March</a></li>
-          </ul>
-        </div>
-        <div class="drpyear">
-          <button class="btn dropdown-toggle btn-drp-year " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            - Select Year -
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#">2024</a></li>
-            <li><a class="dropdown-item" href="#">2023</a></li>
-          </ul>
-        </div>
-          <div>
-            <button class="btn btnsearch">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                  </svg>
+
+        <!-- Project Dropdown -->
+        <div class="col-md-2 col-6">
+          <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" id="dropdownProject"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              - Select Project -
             </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownProject">
+              <li><a class="dropdown-item" href="#">NNA</a></li>
+            </ul>
+          </div>
         </div>
+
+        <!-- Month Dropdown -->
+        <div class="col-md-2 col-6">
+          <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" id="dropdownMonth"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              - Select Month -
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMonth">
+              <li><a class="dropdown-item" href="#">January</a></li>
+              <li><a class="dropdown-item" href="#">February</a></li>
+              <li><a class="dropdown-item" href="#">March</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Year Dropdown -->
+        <div class="col-md-2 col-6">
+          <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" id="dropdownYear"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              - Select Year -
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownYear">
+              <li><a class="dropdown-item" href="#">2024</a></li>
+              <li><a class="dropdown-item" href="#">2023</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Search Button -->
+        <div class="col-md-2 col-6">
+          <button class="btn btn-primary w-100" title="Search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+              viewBox="0 0 16 16">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 
+                 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 
+                 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="container-bottom">
-        <label class="lbliwd">INTEQ Working Days</label>
-        <input class="inputiwd" type="text">
-        <label class="lblihd">INTEQ Holidays</label>
-        <input class="inputihd" type="text">
-        <label class="lblioh">INTEQ OH</label>
-        <input class="inputioh" type="text">
-        <button class="buttonprnt">Print\Export</button>
-        <div class="tablebottom">
-          <table class="table table-striped table-bordered">
-              <thead class="table-primary">
-                  <tr>
-                    <th scope="col">Emp.ID</th>
-                    <th scope="col">Emp.Name</th>
-                    <th scope="col">Project Name</th>
-                    <th scope="col">Total Leaves</th>
-                    <th scope="col">Total Working Days</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                   
-                  </tr>
-                  <tr>
-                      <th scope="row">2</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                    
-                  </tr>
-                  <tr>
-                      <th scope="row">3</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                  </tr>
-                  <tr>
-                      <th scope="row">4</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                  </tr>
-                  <tr>
-                      <th scope="row">5</th>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">6</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                </tr>
-                <tr>
-                    <th scope="row">7</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                </tr>
-                </tbody>
-            </table>
+  </div>
+
+
+  <div class="container-bottom">
+    <div class="border p-4 rounded shadow-sm bg-light border-secondary mt-4">
+      <div class="row g-3 align-items-end">
+
+        <!-- INTEQ Working Days -->
+        <div class="col-md-3">
+          <label for="iwd" class="form-label fw-bold">INTEQ Working Days</label>
+          <input type="text" id="iwd" class="form-control" />
         </div>
-        <div class="pagination">
-          <nav aria-label="Page navigation example">
-              <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-              </ul>
-            </nav>
+
+        <!-- INTEQ Holidays -->
+        <div class="col-md-3">
+          <label for="ihd" class="form-label fw-bold">INTEQ Holidays</label>
+          <input type="text" id="ihd" class="form-control" />
         </div>
+
+        <!-- INTEQ OH -->
+        <div class="col-md-3">
+          <label for="ioh" class="form-label fw-bold">INTEQ OH</label>
+          <input type="text" id="ioh" class="form-control" />
+        </div>
+
+        <!-- Print/Export Button -->
+        <div class="col-md-3 d-grid">
+          <label class="form-label fw-bold invisible">Print</label> <!-- for alignment -->
+          <button class="btn btn-outline-primary buttonprnt">Print\Export</button>
+        </div>
+
+      </div>
     </div>
+
+
+    <div class="tablebottom">
+      <table class="table table-striped table-bordered">
+        <thead class="table-primary">
+          <tr>
+            <th scope="col">Emp.ID</th>
+            <th scope="col">Emp.Name</th>
+            <th scope="col">Project Name</th>
+            <th scope="col">Total Leaves</th>
+            <th scope="col">Total Working Days</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td>Mark</td>
+            <td>Otto</td>
+
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td>Mark</td>
+            <td>Otto</td>
+          </tr>
+          <tr>
+            <th scope="row">4</th>
+            <td>Mark</td>
+            <td>Otto</td>
+          </tr>
+          <tr>
+            <th scope="row">5</th>
+            <td>Mark</td>
+            <td>Otto</td>
+          </tr>
+          <tr>
+            <th scope="row">6</th>
+            <td>Mark</td>
+            <td>Otto</td>
+          </tr>
+          <tr>
+            <th scope="row">7</th>
+            <td>Mark</td>
+            <td>Otto</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row">
+      <div>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
 </form>

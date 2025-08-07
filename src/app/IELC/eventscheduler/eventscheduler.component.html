@@ -11,7 +11,7 @@
     <div class="info-table">
     <div class="row">
       <div class="cell header">PROJECT/EVENT</div>
-      <div class="cell value">{{event?.projectInternalAudit}}</div>
+      <div class="cell value">{{event.projectInternalAudit}}</div>
       <div class="cell value">{{ event?.projectQMS}}</div>
       <div class="cell value">{{ event?.projectISMS }}</div>
       <div class="cell value height">{{ event?.notes }}</div>
@@ -53,7 +53,7 @@
           (change)="onDateChange()"
         /> -->
 
-<input
+<!-- <input
   type="date"
   class="input-date"
   name="selectedDate"
@@ -62,19 +62,20 @@
   [attr.min]="minDate"
   [attr.max]="maxDate"
   (change)="onDateChange()"
-/>
+/> -->
+
+<input type="date" class="input-date" name="selectedDate" [(ngModel)]="selectedDate" [min]="minDate" [max]="maxDate" class="form-control" (change)="onDateChange()" />
 
 
-
-        <select
-          class="input-select"
-          name="Time"
-          required
-          [(ngModel)]="selectedTime"
-        >
-          <option value="" disabled>- Select TIME -</option>
-          <option *ngFor="let time of filteredTimes" [value]="time">{{ time }}</option>
-        </select>
+<select
+  class="input-select"
+  name="Time"
+  required
+  [(ngModel)]="selectedTime"
+>
+  <option value="" disabled>- Select TIME -</option>
+  <option *ngFor="let time of bookedtimes" [value]="time">{{ time }}</option>
+</select>
       </div>
 
       <!-- <div class="submit-row">

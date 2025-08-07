@@ -1,92 +1,92 @@
 <form class="row g-3" #form="ngForm">
-    <!-- <div>
-        <label class="lbllogin">Login as <strong>{{ userName }}</strong></label>
-    </div> -->
-    <app-sprtheader></app-sprtheader>
-    <div *ngIf="isLoading" class="loading-container">
-        <span class="dot"></span>
+  <app-sprtheader></app-sprtheader>
+  <div class="container mt-4">
+    <div class="d-flex justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="p-3 border rounded bg-light shadow-sm">
+          <div class="row align-items-center g-3">
+            <div class="row g-3 align-items-end">
+              <div class="col-sm-4">
+                <label for="skillname" class="form-label">Skill Name</label>
+                <select class="form-select" required name="skillname" [(ngModel)]="skillname">
+                  <option value="" disabled selected>- select skill -</option>
+                  <option *ngFor="let row of Enrolledskills">{{ row.skillName }}</option>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label for="status" class="form-label">Status</label>
+                <select class="form-select" required name="status" [(ngModel)]="status">
+                  <option value="" disabled selected>- select status -</option>
+                  <option>Pending</option>
+                  <option>Completed</option>
+                </select>
+              </div>
+              <div class="col-sm-4">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control" id="email" name="email" [(ngModel)]="email">
+              </div>
+            </div>
+            <!-- Buttons and Checkbox -->
+            <div class="row g-3 mt-2 align-items-center">
+              <div class="col-md-auto">
+                <button class="btn btn-info" (click)="searchSkills()">Search</button>
+              </div>
+              <div class="col-md-auto">
+                <button class="btn btn-dark" (click)="clear()">Clear</button>
+              </div>
+              <div class="col-md-auto">
+                <button class="btn btn-primary" (click)="exportExcel()">Export to Excel</button>
+              </div>
+              <div class="col-md-auto">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="exportAllRecords"
+                    [(ngModel)]="exportAllRecords">
+                  <label class="form-check-label">Export All Records</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <img class="img" src="/assets/images/Inteq logo.png">
-    <div>
-        <button class="btn btn-dark btnback" routerLink="/skillqa">Back</button>
+  </div>
+  <div class="tablebottom">
+    <table class="table table-striped table-bordered">
+      <thead class="table-primary">
+        <tr>
+          <th scope="col">Mail</th>
+          <th scope="col">Skill Name</th>
+          <th scope="col">Venue</th>
+          <th scope="col">Result</th>
+          <th scope="col">Percentage</th>
+          <th scope="col">Test Taken Date</th>
+          <th scope="col">Knowledge</th>
+          <th scope="col">Presentation</th>
+          <th scope="col">Communication</th>
+          <th scope="col">Handling Doubts</th>
+          <th scope="col">Application to Work</th>
+          <th scope="col">Comments</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="!isLoading">
+        <tr *ngFor="let row of Enrollmentlist | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+          <td>{{row.mail}}</td>
+          <td style="max-width: 120px;">{{row.skillName}}</td>
+          <td>{{row.venue}}</td>
+          <td>{{row.result}}</td>
+          <td>{{row.percentage}}</td>
+          <td>{{row.testTakenDate}}</td>
+          <td>{{row.subjectMatterKnowledge}}</td>
+          <td>{{row.presentation}}</td>
+          <td>{{row.communication}}</td>
+          <td>{{row.handlingDoubts}}</td>
+          <td>{{row.applicationtowork}}</td>
+          <td>{{row.comments}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="pagination">
+      <pagination-controls (pageChange)="page = $event"></pagination-controls>
     </div>
-    <div class="row g-3">
-        <div class="col-md-3">
-            <label for="skillname" class="form-label">Skill Name</label>
-        </div>
-        <div class="col-md-3">
-            <select class="form-controlone" required name="skillname" [(ngModel)]="skillname">
-                <option value="" disabled selected>- select skill -</option>
-                <option *ngFor="let row of Enrolledskills">{{ row.skillName }}</option>
-            </select>
-        </div>
-        <div class="col-md-3">
-            <label for="status" class="form-label st">Status</label>
-        </div>
-        <div class="col-md-3">
-            <select class="form-controlst" required name="status" [(ngModel)]="status">
-                <option value="" disabled selected>- select status -</option>
-                <option>Pending</option>
-                <option>Completed</option>
-            </select>
-        </div>
-        <div class="col-md-3">
-            <label for="email" class="form-label email">Email</label>
-        </div>
-        <div class="col-md-3">
-            <input type="text" class="form-controlemail" id="email" name="email" [(ngModel)]="email">
-        </div>
-        <div class="col-md-3">
-            <button class="btn btn-info btnsrch" (click)="searchSkills()">Search</button>
-            <button class="btn btn-dark btnclr" (click)="clear()">Clear</button>
-            <button class="btn btn-primary btnexpt" (click)="exportExcel()">ExportToExcel</button>
-        </div>
-        <div class="form-check div">
-            <input class="form-check-input" type="checkbox" name="exportAllRecords" [(ngModel)]="exportAllRecords">
-            <label class="lbl">
-                Export All Records
-            </label>
-        </div>
-    </div>
-    <div class="tablebottom">
-        <table class="table table-striped table-bordered">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col">Mail</th>
-                    <th scope="col">Skill Name</th>
-                    <th scope="col">Venue</th>
-                    <th scope="col">Result</th>
-                    <th scope="col">Percentage</th>
-                    <th scope="col">Test Taken Date</th>
-                    <th scope="col">Knowledge</th>
-                    <th scope="col">Presentation</th>
-                    <th scope="col">Communication</th>
-                    <th scope="col">Handling Doubts</th>
-                    <th scope="col">Application to Work</th>
-                    <th scope="col">Comments</th>
-                </tr>
-            </thead>
-            <tbody *ngIf="!isLoading">
-                <tr *ngFor="let row of Enrollmentlist | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
-                    <td>{{row.mail}}</td>
-                    <td style="max-width: 120px;">{{row.skillName}}</td>
-                    <td>{{row.venue}}</td>
-                    <td>{{row.result}}</td>
-                    <td>{{row.percentage}}</td>
-                    <td>{{row.testTakenDate}}</td>
-                    <td>{{row.subjectMatterKnowledge}}</td>
-                    <td>{{row.presentation}}</td>
-                    <td>{{row.communication}}</td>
-                    <td>{{row.handlingDoubts}}</td>
-                    <td>{{row.applicationtowork}}</td>
-                    <td>{{row.comments}}</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="pagination">
-            <pagination-controls (pageChange)="page = $event"></pagination-controls>
-        </div>
-    </div>
+  </div>
 </form>
-
-

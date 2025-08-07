@@ -46,9 +46,9 @@ export class EmailService {
       smtpUserName: smtp.userName,
       smtpPassword: decryptedPassword,
       to,
-       cc: 'jagadeesh.c@inteqsolutions.com',
+      //  cc: 'jagadeesh.c@inteqsolutions.com',
       // cc: 'akhilpasha.m@inteqsolutions.com',
-      //cc: 'ramprasadh@inteqsolutions.com',
+      cc: 'ramprasadh@inteqsolutions.com',
       subject,
       body
     };

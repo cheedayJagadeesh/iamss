@@ -286,6 +286,7 @@ h2 {
     color: black;
     margin-top: 0%;
 }
+
 .formcontrolcalendar {
     display: block;
     width: 54px;
@@ -300,7 +301,7 @@ h2 {
     border-radius: var(--bs-border-radius);
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     border-color: black;
-    position: absolute;
+    /* position: absolute; */
     height: 53px;
 }
 .labeltime1 {

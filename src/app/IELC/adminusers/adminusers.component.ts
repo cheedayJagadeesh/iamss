@@ -130,7 +130,8 @@ interface eventalertsinfo{
   mailAlertDay: number;
   mailType: string;
   frequency: string;
-  alertAttachment: string;
+  alertAttachment?: string;
+  fileName?: string; 
 }
 @Component({
   selector: 'app-adminusers',
@@ -407,6 +408,8 @@ eventschuser: eventscuserinfo = {
  tableData: any[] = [];
  availableMonths: string[] = [];
  selectedMonth: string = '';
+
+ updatedFields: any;
   
   constructor(private ielc:IelcapiService) {
 
@@ -904,8 +907,8 @@ GetEventSchedules() {
   });
 }
 
-EditEventSchedules(id: number) { 
-  this.ielc.GetEventSchedulerUserId(this.selectedYear, this.selectedMonth, id).subscribe(data => {
+EditEventSchedules(eventScheduleId: number) { 
+  this.ielc.GetEventSchedulerUserId(this.selectedYear, this.selectedMonth, eventScheduleId).subscribe(data => {
     if (data) {
       this.eventschedulesdata = { 
         eventScheduleId: data.eventScheduleId || 0,
@@ -953,19 +956,36 @@ EditEventSchedules(id: number) {
 //   });
 // }
 
-UpdateEventSchedules() {
+// UpdateEventSchedules() {
+//   this.ielc.UpdateEventSchedules(this.selectedYear, this.selectedMonth, this.eventschedulesdata.eventScheduleId, this.eventschedulesdata).subscribe(
+//     (response) => {
+//       // // ////console.log("Updated Successfully:", response);
+//       alert(" ✅ Record updated successfully!");
+//       this.GetEventSchedules();
+//       //this.resetItSprt();
+//     },
+//     (error) => {
+//       // // console.error("Error updating Record:", error);
+//     }
+//   );
+// }
+
+editRecord(eitem:any){
+  this.updatedFields = eitem;
+}
+UpdateEventSchedules(item:any) {
   const payload = {
-    eventScheduleId: this.eventschedulesdata.eventScheduleId,
-    projectInternalAudit: this.eventschedulesdata.projectInternalAudit,
-    projectQMS: this.eventschedulesdata.projectQMS,
-    projectISMS: this.eventschedulesdata.projectISMS,
-    organizerCompany: this.eventschedulesdata.organizerCompany,
-    organizerSchedule: this.eventschedulesdata.organizerSchedule,
-    organizerDateRange: this.eventschedulesdata.organizerDateRange,
-    notes: this.eventschedulesdata.notes,
-    organizerLastDate: this.eventschedulesdata.organizerLastDate
+    eventScheduleId: item.eventScheduleId,
+    projectInternalAudit: item.projectInternalAudit,
+    projectQMS: item.projectQMS,
+    projectISMS: item.projectISMS,
+    organizerCompany: item.organizerCompany,
+    organizerSchedule: item.organizerSchedule,
+    organizerDateRange: item.organizerDateRange,
+    notes: item.notes,
+    organizerLastDate: item.organizerLastDate
   };
-  this.ielc.UpdateEventSchedules(this.selectedYear, this.selectedMonth, this.eventschedulesdata.eventScheduleId, payload).subscribe(
+  this.ielc.UpdateEventSchedules(this.selectedYear, this.selectedMonth,  item.eventScheduleId, payload).subscribe(
     (response) => {
       alert(" ✅ Record updated successfully!");
       this.GetEventSchedules();
@@ -6141,6 +6161,46 @@ GetEventAlertsist(){
     this.isLoading = false;
   });
  }
+
+   selectedFileBase64: string = '';
+ onFileChange(event: any): void {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const base64String = (reader.result as string).split(',')[1];
+      this.eventalertsdata.alertAttachment = base64String;
+      this.eventalertsdata.fileName = file.name; // <-- Save the original filename
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+togglePlayPause(item: any): void {
+  debugger;
+  item.isPaused = !item.isPaused;
+  item.status = item.isPaused ? 'InActive' : 'Active';
+  console.log('Toggling status to:', item.status);
+
+  const payload = {
+    alertID: item.alertID,
+    status: item.status
+  };
+
+  this.ielc.UpdateEventAlertStatus(payload).subscribe({
+    next: () => {
+      console.log('✅ Status updated in DB');
+    },
+    error: (err) => {
+      console.error('❌ API failed:', err);
+      alert('Failed to update status.');
+
+      // Revert UI
+      item.isPaused = !item.isPaused;
+      item.status = item.isPaused ? 'InActive' : 'Active';
+    }
+  });
+}
  
  AddEventAlerts(): void {
   this.ielc.Posteventalerts(this.eventalertsdata).subscribe(
@@ -6153,6 +6213,56 @@ GetEventAlertsist(){
       alert('❌ Error adding Record. Please try again.');
     }
   );
+}
+
+getDownloadLinkFileupload(base64Data: string, fileName: string): string {
+  const extension = fileName?.split('.').pop()?.toLowerCase();
+
+  const mimeTypes: { [key: string]: string } = {
+    pdf: 'application/pdf',
+    jpg: 'image/jpeg',
+    jpeg: 'image/jpeg',
+    png: 'image/png',
+    doc: 'application/msword',
+    docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    xls: 'application/vnd.ms-excel',
+    xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    txt: 'text/plain',
+    csv: 'text/csv',
+  };
+
+  const mimeType = mimeTypes[extension || ''] || 'application/octet-stream';
+
+  return `data:${mimeType};base64,${base64Data}`;
+}
+
+getFileIconFileupload(base64String: string, fileName: string): string {
+  if (!base64String || !fileName) {
+    return 'assets/images/no-file.png';
+  }
+
+  const extension = fileName.split('.').pop()?.toLowerCase();
+
+  switch (extension) {
+    case 'pdf':
+      return 'assets/images/pdf.png';
+    case 'doc':
+    case 'docx':
+      return 'assets/images/word.png';
+    case 'xls':
+    case 'xlsx':
+      return 'assets/images/excel-icon.png';
+    case 'jpg':
+    case 'jpeg':
+    case 'png':
+      return 'assets/images/img.png';
+    case 'txt':
+      return 'assets/images/text-icon.jpg'; 
+    case 'csv':
+      return 'assets/images/csv.png';
+    default:
+      return 'assets/images/file.png';
+  }
 }
 
 
@@ -6219,8 +6329,11 @@ resetEventAlerts(){
     mailAlertDay: 0,
     mailType: '',
     frequency: '',
-    alertAttachment: ''
-   }
+    alertAttachment: '',
+    fileName: ''
+   };
+       this.selectedFileBase64 = '';
+
 }
 getFileIcon(alertAttachment: string): string {
   if (!alertAttachment) {
