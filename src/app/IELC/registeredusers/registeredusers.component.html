@@ -2,6 +2,9 @@
 <!-- <div>
   <label class="lbllogin"></label>
 </div> -->
+ <div *ngIf="isLoading" class="loading-container">
+        <span class="dot"></span>
+    </div>
 <form class="row" #searchform="ngForm" (ngSubmit)="searchSkills()">
   <div class="d-flex justify-content-center bg-light pt-5">
     <div class="container p-4 rounded shadow-sm bg-light border border-secondary mb-4" style="max-width: 1000px;">
