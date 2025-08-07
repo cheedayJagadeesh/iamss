@@ -651,3 +651,10 @@ h2 {
     color: green;
     font-weight: bold;
 }
+.bottomtable{
+    overflow: auto;
+}
+ .leave_Container
+ {
+  padding-left: 20%;
+ }

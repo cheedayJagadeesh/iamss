@@ -94,9 +94,10 @@ export class SkillqaComponent implements OnInit {
     this.isLoading = true;
     this.ielc.Getskillqa().subscribe((data) => {
       this.Enrolledskillqa=data;
-      this.isLoading = false;
       this.filteredQuestions = [...this.Enrolledskillqa];
+         this.isLoading = false;
     });
+  
    }
    sortRegisteredUsers(data: any[]): any[] {
     return data.sort((a, b) => (a.questionId > b.questionId ? -1 : a.questionId < b.questionId ? 1 : 0));

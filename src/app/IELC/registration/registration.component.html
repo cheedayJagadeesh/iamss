@@ -190,48 +190,36 @@
         <div class="col-sm-7">
           <div class="container-main">
             <h3 class="main">{{selectedDate | date:'longDate'}}</h3>
+            <div class="row mb-3 align-items-end  leave_Container">
+              <!-- Leave Dropdown -->
+              <div class="col-md-4">
+                <label for="select1" class="form-label">Leave</label>
+                <select id="select1" name="leavetype" class="form-select" [(ngModel)]="leave"
+                  (change)="onSelect1Change()" [disabled]="isfirstSelectDisabled">
+                  <option value="" selected>- select leave -</option>
+                  <option value="Full Day">Full Day</option>
+                  <option value="Half Day">Half Day</option>
+                  <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
+                </select>
+              </div>
 
-            <div class="row mb-3 align-items-center justify-content-center">
+              <!-- Work Location Dropdown -->
+              <div class="col-md-4">
+                <label for="select2" class="form-label">Work Location</label>
+                <select id="select2" name="worktype" class="form-select" [(ngModel)]="work"
+                  [disabled]="isSecondSelectDisabled" (change)="onSelect2Change()">
+                  <option value="">- select work -</option>
+                  <option *ngFor="let work of worktype">{{ work.name }}</option>
+                </select>
+              </div>
 
-              <div class="drdwn-align row">
-                <div class="col-sm-4 leave_label">
-                  <label class="labeldrp1">Leave</label>
-                </div>
-                <div class="col-sm-6">
-                  <select id="select1" name="leavetype" class="drpdwn1" [(ngModel)]="leave" (change)="onSelect1Change()"
-                    [disabled]="isfirstSelectDisabled">
-                    <option value="" selected>- select leave type -</option>
-                    <option value="Full Day">Full Day</option>
-                    <option value="Half Day">Half Day</option>
-                    <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
-                  </select>
-                </div>
-
-                <div class="col-sm-2">
-                  <div class="form-outline datepicker">
-                    <input class="formcontrolcalendar" type="date" name="selectedDate" [(ngModel)]="selectedDate"
-                      required>
-                  </div>
+              <!-- Calendar Input -->
+              <div class="col-md-2">
+                <div class="form-outline datepicker">
+                  <input class="formcontrolcalendar" type="date" name="selectedDate" [(ngModel)]="selectedDate"
+                    required>
                 </div>
               </div>
-              <div>
-                <div class="row drdwn-align">
-                  <div class="col-sm-4 leave_label">
-                    <label class="labeldrp2">Work Location</label>
-                  </div>
-                  <div class="col-sm-6 drdwn-worktype">
-                    <select id="select2" name="worktype" class="drpdwn2" [(ngModel)]="work"
-                      [disabled]="isSecondSelectDisabled" (change)="onSelect2Change()">
-                      <option value="">- select work type -</option>
-                      <option *ngFor="let work of worktype">
-                        {{ work.name }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div>
             </div>
             <div>
               <div class="row mb-3 justify-content-center">
@@ -430,7 +418,7 @@
           </div>
         </div>
       </div>
-      <div>
+      <div class="bottomtable">
         <label class="lblevents blink">Latest Events:</label>
         <button *ngIf="coownersshowButton" type="button" class="btn btn-link btnlink1 textmode"
           routerLink="/eventscheduler">
