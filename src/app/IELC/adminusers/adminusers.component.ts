@@ -157,6 +157,7 @@ export class AdminusersComponent {
   showContactTable: boolean = false;
   isEventSchedulerSelected: boolean = false;
   isEventYearSelected: boolean = false;
+  isEventMonthSelected: boolean = false;
 
 onSelection1Change() {
   this.isContactSelected = this.selectedOption1 === 'Contact';
@@ -525,6 +526,7 @@ onYearChange(): void {
 }
   onMonthChange(): void {
     if (this.selectedYear && this.selectedMonth) {
+       this.isEventMonthSelected = true;
       forkJoin({
         scheduleTimes: this.ielc.GetEventSchedulerTime(this.selectedYear, this.selectedMonth),
         eventschedules: this.ielc.GetEventSchedules(this.selectedYear, this.selectedMonth),
@@ -543,6 +545,7 @@ onYearChange(): void {
           this.eventschedules = [];
         }
       });
+       this.isEventMonthSelected = false;
     }
   }
 
