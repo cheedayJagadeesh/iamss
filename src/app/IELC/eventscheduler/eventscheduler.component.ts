@@ -131,7 +131,8 @@ ngOnInit(): void {
           this.GetSuperOwners(this.userName);
           this.GetOwners();
           this.GetLatestEvents();
-          this.GetProjectsListBasedOnUser
+          this.GetProjectsListBasedOnUser();
+          this.GetEventscheduleData();
 
           if (this.event && this.event.organizerDateRange) {
             const parts = this.event.organizerDateRange.split("–");
@@ -288,6 +289,7 @@ isSubmitDisabled(): boolean {
  GetEventscheduleData(){
   this.ielc.GetEventSchedulerUserAuditeesDept().subscribe((data) => {
     this.projectlist=data;
+    //console.log("projectlist",data);
   });
  }
 

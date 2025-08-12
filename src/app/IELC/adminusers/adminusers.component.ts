@@ -409,6 +409,7 @@ eventschuser: eventscuserinfo = {
  tableData: any[] = [];
  availableMonths: string[] = [];
  selectedMonth: string = '';
+  items: any[] = [];
 
  updatedFields: any;
   
@@ -6158,12 +6159,43 @@ resetCourse(){
 }
 
 //=====================================================================================Event Alerts
-GetEventAlertsist(){
+// GetEventAlertsist(){
+//   this.ielc.Geteventalerts().subscribe((data) => {
+//     this.eventalertslist=data;
+//     this.isLoading = false;
+//      this.items = data.map((item: any) => ({
+//       ...item,
+//       isPaused: item.status === 'InActive'
+//     }));
+//   });
+//  }
+
+GetEventAlertsist() {
   this.ielc.Geteventalerts().subscribe((data) => {
+    console.log("Raw API data:", data); // 👈 Check here
     this.eventalertslist=data;
+    debugger
+    this.items = data.map((item: any) => ({
+      ...item,
+      isPaused: item.status?.trim().toLowerCase() === 'inactive'
+    }));
+
+    console.log("Processed items:", this.items);
     this.isLoading = false;
   });
- }
+}
+
+
+
+//  loadData() {
+//   debugger;
+//   this.ielc.Geteventalerts().subscribe(data => {
+//     this.items = data.map((item: any) => ({
+//       ...item,
+//       isPaused: item.status === 'InActive'
+//     }));
+//   });
+// }
 
    selectedFileBase64: string = '';
  onFileChange(event: any): void {
@@ -6179,15 +6211,40 @@ GetEventAlertsist(){
   }
 }
 
+// togglePlayPause(item: any): void {
+//   item.isPaused = !item.isPaused;
+//   item.status = item.isPaused ? 'InActive' : 'Active';
+//   console.log('Toggling status to:', item.status);
+
+//   const payload = {
+//     alertID: item.alertID,
+//     status: item.status
+//   };
+
+//   this.ielc.UpdateEventAlertStatus(payload).subscribe({
+//     next: () => {
+//       console.log('✅ Status updated in DB');
+//     },
+//     error: (err) => {
+//       console.error('❌ API failed:', err);
+//       alert('Failed to update status.');
+
+//       // Revert UI
+//       item.isPaused = !item.isPaused;
+//       item.status = item.isPaused ? 'InActive' : 'Active';
+//     }
+//   });
+// }
+
 togglePlayPause(item: any): void {
-  debugger;
   item.isPaused = !item.isPaused;
-  item.status = item.isPaused ? 'InActive' : 'Active';
+  item.status = item.isPaused ? 'InActive' : 'Active'; // Match DB casing
+
   console.log('Toggling status to:', item.status);
 
   const payload = {
-    alertID: item.alertID,
-    status: item.status
+    AlertID: item.alertID,
+    Status: item.status
   };
 
   this.ielc.UpdateEventAlertStatus(payload).subscribe({
@@ -6197,7 +6254,6 @@ togglePlayPause(item: any): void {
     error: (err) => {
       console.error('❌ API failed:', err);
       alert('Failed to update status.');
-
       // Revert UI
       item.isPaused = !item.isPaused;
       item.status = item.isPaused ? 'InActive' : 'Active';
