@@ -159,7 +159,7 @@ fakePercent = 0;
     
     const activeAccount = this.msalService.instance.getActiveAccount();
     if (!activeAccount) {
-      // console.warn("No active account found. Redirecting to login...");
+       console.warn("No active account found. Redirecting to login...");
       this.router.navigate(['/login']);
       return;
     }

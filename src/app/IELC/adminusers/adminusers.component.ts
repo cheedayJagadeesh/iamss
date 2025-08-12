@@ -533,8 +533,8 @@ onYearChange(): void {
         eventuser: this.ielc.GetEventSchedulerUser(this.selectedYear, this.selectedMonth)
       }).subscribe({
         next: (results) => {
-          console.log('✅ scheduleTimes:', results.scheduleTimes);
-          console.log('✅ eventschedules:', results.eventschedules);
+         // console.log('✅ scheduleTimes:', results.scheduleTimes);
+          //console.log('✅ eventschedules:', results.eventschedules);
           this.eventschedulertime = results.scheduleTimes;
           this.eventschedules = this.sortlist(results.eventschedules);
           this.eventscheduleruser = this.sortlist(results.eventuser);
@@ -602,7 +602,7 @@ onYearChange(): void {
           alert('✅ Tables created successfully!');
         },
         error: (err: any) => {
-          console.error('Error creating tables:', err);
+         // console.error('Error creating tables:', err);
           alert('❌ Failed to create tables.');
         }
       });
@@ -672,10 +672,10 @@ EditCoOwners(id: number) {
       };
       console.log("API Response:", data);
     } else {
-      // console.warn("No data received for the given ID.");
+       console.warn("No data received for the given ID.");
     }
   }, error => {
-    // console.error("Error fetching record:", error);
+     console.error("Error fetching record:", error);
   });
 }
 
@@ -688,7 +688,7 @@ UpdateCoOwners() {
       this.resetCoOwners();
     },
     (error) => {
-      // console.error("Error updating Record:", error);
+       console.error("Error updating Record:", error);
     }
   );
 }
@@ -850,7 +850,7 @@ AddEventSchedulerAdmin(): void {
           alert(`Record with ID ${id} deleted successfully!`);
           this.GetEventSchedulerAdmin();
         },
-        // // error: (err) =>  console.error('Error deleting item:', err)
+         error: (err) =>  console.error('Error deleting item:', err)
       });
     }
   }
@@ -1030,7 +1030,7 @@ GetEventSchedulerUser(){
     this.eventscheduleruser=data;
     this.eventscheduleruser = this.sortlist(data)
     this.isLoading = false;
-    console.log("user",this.eventscheduleruser);
+    //console.log("user",this.eventscheduleruser);
   });
  }
 
@@ -1167,7 +1167,7 @@ resetEventSchedulerUser(){
           alert(`Record with ID ${id} deleted successfully!`);
           this.GetSmtplist();
         },
-        // // error: (err) =>  console.error('Error deleting item:', err)
+         error: (err) =>  console.error('Error deleting item:', err)
       });
     }
   }
@@ -1488,7 +1488,7 @@ UpdateEmerSprt() {
       this.resetEmerSprt();
     },
     (error) => {
-      // console.error("Error updating Record:", error);
+       console.error("Error updating Record:", error);
     }
   );
 }

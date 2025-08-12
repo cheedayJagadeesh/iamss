@@ -93,10 +93,10 @@ export class ExaminfoComponent {
             examPercentage: data.examPercentage || 0,
           };
         } else {
-          // console.warn("No data received for the given ID.");
+           console.warn("No data received for the given ID.");
         }
       }, error => {
-        // console.error("Error fetching record:", error);
+         console.error("Error fetching record:", error);
       });
     }
     
@@ -110,7 +110,7 @@ export class ExaminfoComponent {
          
         },
         (error) => {
-          // console.error("Error updating Record:", error);
+           console.error("Error updating Record:", error);
         }
       );
     }
