@@ -190,18 +190,11 @@
     <div class="col-sm-8">
       <div class="row">
         <div class="col-sm-7">
-        <div class="container-main">
-            <!-- Date Header -->
-            <h3 class="text-center mb-4 main">{{ selectedDate | date: 'longDate' }}</h3>
-         
-            <!-- Date Picker -->
-            <div class="col-md-2 calender_container">
-              <input class="formcontrolcalendar" type="date" name="selectedDate" [(ngModel)]="selectedDate" required>
-            </div>
-            <!-- Leave & Work Location Row -->
-            <div class="row g-3 align-items-center mb-3 container_one">
+       <div class="container-main">
+            <h3 class="main">{{selectedDate | date:'longDate'}}</h3>
+            <div class="row mb-3 align-items-end  leave_Container">
               <!-- Leave Dropdown -->
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <label for="select1" class="form-label">Leave</label>
                 <select id="select1" name="leavetype" class="form-select" [(ngModel)]="leave"
                   (change)="onSelect1Change()" [disabled]="isfirstSelectDisabled">
@@ -213,7 +206,7 @@
               </div>
 
               <!-- Work Location Dropdown -->
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <label for="select2" class="form-label">Work Location</label>
                 <select id="select2" name="worktype" class="form-select" [(ngModel)]="work"
                   [disabled]="isSecondSelectDisabled" (change)="onSelect2Change()">
@@ -222,61 +215,59 @@
                 </select>
               </div>
 
-
-            </div>
-
-            <!-- Time Inputs -->
-            <div class="row g-3 align-items-center mb-3">
-              <div class="col-md-3 container_two">
-                <label class="form-label">Login Time</label>
-                <input type="time" name="time1" class="form-control" [(ngModel)]="time1"
-                  [disabled]="isSecondSelectDisabled" (change)="onFirsttimechange()">
-              </div>
-
-              <div class="col-md-3">
-                <label class="form-label">Logout Time</label>
-                <input type="time" name="time2" class="form-control" [(ngModel)]="time2" (change)="checktime()"
-                  [disabled]="isSecondSelectDisabled || !isTimeInputDisabled">
-              </div>
-            </div>
-
-            <!-- Extra Hours -->
-            <div *ngIf="showEaxtraHoursLabel" class="row g-3 mb-3">
-              <div class="col-md-6">
-                <label class="form-label">Extra Hours</label>
-                <input type="time" name="extratime" class="form-control" ngModel>
-              </div>
-            </div>
-
-            <!-- Save Button -->
-            <div class="text-center mt-4 btnSave">
-              <button class="btn btn-primary px-5" (click)="save()">Save</button>
-            </div>
-
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-              aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Tasks Details</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="mb-3">
-                      <label class="form-label">Tasks Description</label>
-                      <textarea class="form-control" name="taskslist" [(ngModel)]="taskslist" rows="3"></textarea>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" (click)="modaldatasave()">Save changes</button>
-                  </div>
+              <!-- Calendar Input -->
+              <div class="col-md-2">
+                <div class="form-outline datepicker">
+                  <input class="formcontrolcalendar" type="date" name="selectedDate" [(ngModel)]="selectedDate"
+                    required>
                 </div>
               </div>
             </div>
+            <div>
+              <div class="row mb-3 justify-content-center">
+                <div class="col-auto">
+                  <label class="labeltime1">Login Time</label>
+                  <input type="time" class="time" name="time1" [(ngModel)]="time1" [disabled]="isSecondSelectDisabled"
+                    (change)="onFirsttimechange()">
+                </div>
+                <div class="col-auto">
+                  <label class="labeltime2">Logout Time</label>
+                  <input type="time" class="time" name="time2" [(ngModel)]="time2" (change)="checktime()"
+                    [disabled]="isSecondSelectDisabled" [disabled]="!isTimeInputDisabled">
+                </div>
+              </div>
+              <!-- Modal -->
+              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Tasks Details</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="mb-3">
+                        <label class="form-label">Tasks Description</label>
+                        <textarea class="modal-form-control" name="taskslist" [(ngModel)]="taskslist"
+                          rows="3"></textarea>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary" (click)="modaldatasave()">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="showEaxtraHoursLabel">
+                <label class="labeltime3">Extra Hours</label>
+                <input class="timeextra" type="time" name="extratime" ngModel>
+              </div>
+            </div>
+            <div class="div-btnSave">
+              <button class="button" (click)="save()">Save</button>
+            </div>
           </div>
-
           
           <div class="tablebottom">
             <table class="table  table-striped table-bordered tabletop">
