@@ -12562,7 +12562,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let item of items">
+                <tr *ngFor="let item of eventalertslist">
                     <td>{{item.alertID}}</td>
                     <td>{{item.alertName}}</td>
                     <td>{{item.alertDate}}</td>
@@ -12616,63 +12616,68 @@
                                             aria-label="Close"
                                             (click)="resetEventAlerts(); GetEventAlertsist()"></button>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="divmodal">
-                                            <label>Alert Name</label>
-                                            <input type="text" class="form-control" name="alertname" required
-                                                #alertnameRef="ngModel" [(ngModel)]="eventalertsdata.alertName">
-                                        </div>
-                                        <div class="divmodal">
-                                            <label>Alert Date</label>
-                                            <input type="date" class="form-control" name="alertdate" required
-                                                #alertdateRef="ngModel" [(ngModel)]="eventalertsdata.alertDate">
-                                        </div>
-                                        <div class="divmodal">
-                                            <label>To Mails</label>
-                                            <input type="text" class="form-control" name="tomails" required
-                                                #tomailsRef="ngModel" [(ngModel)]="eventalertsdata.toMails">
-                                        </div>
-                                        <div class="divmodal">
-                                            <label>CC Mails</label>
-                                            <input type="text" class="form-control" name="ccmails"
-                                                [(ngModel)]="eventalertsdata.ccMails">
-                                        </div>
-                                        <div class="divmodal">
-                                            <label>Mail Alert Day</label>
-                                            <input type="text" class="form-control" name="mailalertday" required
-                                                #mailalertdayRef="ngModel" [(ngModel)]="eventalertsdata.mailAlertDay">
-                                        </div>
-                                        <div class="divmodal">
-                                            <label>Mail Type</label>
-                                            <select name="malitype" class="form-control" required name="mailtype"
-                                                [(ngModel)]="eventalertsdata.mailType">
-                                                <option value="" disabled selected>- select -</option>
-                                                <option>OneTime</option>
-                                                <option>Continuous</option>
-                                            </select>
-                                        </div>
-                                        <div class="divmodal">
-                                            <label>Frequency</label>
-                                            <select name="frequency" class="form-control" required name="frequency"
-                                                [(ngModel)]="eventalertsdata.frequency">
-                                                <option value="" disabled selected>- select -</option>
-                                                <option>Daily</option>
-                                                <option>Weekly</option>
-                                                <option>Monthly</option>
-                                                <option>Yearly</option>
-                                            </select>
-                                        </div>
-                                        <div class="divmodal">
-                                            <label>Attachment</label>
-                                            <input class="form-control" type="file" (change)="onFileChange($event)" />
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                                                (click)="resetEventAlerts(); GetEventAlertsist()">Close</button>
-                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddEventAlerts()">Add</button>
-                                        </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                        <label>Alert Name</label>
+                                        <input type="text" class="form-control" name="alertname" required #alertnameRef="ngModel"
+                                            [(ngModel)]="eventalertsdata.alertName">
                                     </div>
+                                
+                                    <div class="divmodal">
+                                        <label>Alert Date</label>
+                                        <input type="date" class="form-control" name="alertdate" required #alertdateRef="ngModel"
+                                            [(ngModel)]="eventalertsdata.alertDate">
+                                    </div>
+                                
+                                    <div class="divmodal">
+                                        <label>To Mails</label>
+                                        <input type="text" class="form-control" name="tomails" required #tomailsRef="ngModel"
+                                            [(ngModel)]="eventalertsdata.toMails">
+                                    </div>
+                                
+                                    <div class="divmodal">
+                                        <label>CC Mails</label>
+                                        <input type="text" class="form-control" name="ccmails" [(ngModel)]="eventalertsdata.ccMails">
+                                    </div>
+                                
+                                    <div class="divmodal">
+                                        <label>Mail Alert Day</label>
+                                        <input type="text" class="form-control" name="mailalertday" required #mailalertdayRef="ngModel"
+                                            [(ngModel)]="eventalertsdata.mailAlertDay">
+                                    </div>
+                                
+                                    <div class="divmodal">
+                                        <label>Mail Type</label>
+                                        <select class="form-control" required name="mailtype" [(ngModel)]="eventalertsdata.mailType">
+                                            <option value="" disabled>- select -</option>
+                                            <option>OneTime</option>
+                                            <option>Continuous</option>
+                                        </select>
+                                    </div>
+                                
+                                    <div class="divmodal">
+                                        <label>Frequency</label>
+                                        <select class="form-control" required name="frequency" [(ngModel)]="eventalertsdata.frequency">
+                                            <option value="" disabled>- select -</option>
+                                            <option>Daily</option>
+                                            <option>Weekly</option>
+                                            <option>Monthly</option>
+                                            <option>Yearly</option>
+                                        </select>
+                                    </div>
+                                
+                                    <div class="divmodal">
+                                        <label>Attachment</label>
+                                        <input class="form-control" type="file" (change)="onFileChange($event)" />
+                                    </div>
+                                
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                            (click)="resetEventAlerts(); GetEventAlertsist()">Close</button>
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" [disabled]="!eventalertsdata.alertName || !eventalertsdata.alertDate || !eventalertsdata.toMails || !eventalertsdata.mailAlertDay || !eventalertsdata.mailType || !eventalertsdata.frequency"
+                                            (click)="AddEventAlerts()">Add</button>
+                                    </div>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -12773,16 +12778,17 @@
                         <!-- In your *ngFor row -->
                         <!-- In your table row -->
                         <button class="btn btn-info me-1" (click)="togglePlayPause(item)">
-  <svg *ngIf="!item.isPaused" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-      fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
-    <path d="M11.596 8.697l-6 4A.5.5 0 0 1 5 12.5v-9a.5.5 0 0 1 .796-.401l6 4a.5.5 0 0 1 0 .798z" />
-  </svg>
-  <svg *ngIf="item.isPaused" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-      fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
-    <path d="M5.5 3.5A.5.5 0 0 1 6 3h1.5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H6a.5.5 0 0 1-.5-.5v-9zm4 0A.5.5 0 0 1 10 3h1.5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H10a.5.5 0 0 1-.5-.5v-9z" />
-  </svg>
-</button>
-
+                            <svg *ngIf="!item.isPaused" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                fill="currentColor" class="bi bi-play-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M11.596 8.697l-6 4A.5.5 0 0 1 5 12.5v-9a.5.5 0 0 1 .796-.401l6 4a.5.5 0 0 1 0 .798z" />
+                            </svg>
+                            <svg *ngIf="item.isPaused" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                fill="currentColor" class="bi bi-pause-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M5.5 3.5A.5.5 0 0 1 6 3h1.5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H6a.5.5 0 0 1-.5-.5v-9zm4 0A.5.5 0 0 1 10 3h1.5a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5H10a.5.5 0 0 1-.5-.5v-9z" />
+                            </svg>
+                        </button>
                     </td>
                 </tr>
             </tbody>

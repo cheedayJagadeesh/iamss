@@ -132,6 +132,7 @@ interface eventalertsinfo{
   frequency: string;
   alertAttachment?: string;
   fileName?: string; 
+   status:string;
 }
 @Component({
   selector: 'app-adminusers',
@@ -139,6 +140,7 @@ interface eventalertsinfo{
   styleUrls: ['./adminusers.component.css']
 })
 export class AdminusersComponent {
+isLoading=true;
   encodePassword (password: string): string {
     return btoa(password);
   }
@@ -193,7 +195,6 @@ onSelection4Change() {
 onSelection5Change() {
 }
 
-  isLoading = true;
   smtplist: any[] = []; 
   smtpdata:smtpinfo={
    id: 0,
@@ -328,7 +329,9 @@ eventschuser: eventscuserinfo = {
   mailAlertDay: 0,
   mailType: '',
   frequency: '',
-  alertAttachment: ''
+  alertAttachment: '',
+  fileName: '',
+  status:'',
  }
  HrIsmsGeneraldata: any[] = []; 
  HrIsmsGuidelinesdata: any[] = []; 
@@ -6174,14 +6177,13 @@ GetEventAlertsist() {
   this.ielc.Geteventalerts().subscribe((data) => {
     console.log("Raw API data:", data); // 👈 Check here
     this.eventalertslist=data;
-    debugger
-    this.items = data.map((item: any) => ({
+     this.isLoading = false;
+    this.eventalertslist = data.map((item: any) => ({
       ...item,
       isPaused: item.status?.trim().toLowerCase() === 'inactive'
     }));
 
-    console.log("Processed items:", this.items);
-    this.isLoading = false;
+    console.log("Processed items:", this.eventalertslist);
   });
 }
 
@@ -6354,7 +6356,9 @@ EditEventAlerts(id: number) {
         mailAlertDay: data.mailAlertDay || 0,
         mailType: data.mailType || '',
         frequency: data.frequency || '',
-        alertAttachment: data.alertAttachment || ''
+        alertAttachment: data.alertAttachment || '',
+       fileName: data.fileName || '',
+        status:data.status||'',
       };
     } else {
       // console.warn("No data received for the given ID.");
@@ -6389,7 +6393,8 @@ resetEventAlerts(){
     mailType: '',
     frequency: '',
     alertAttachment: '',
-    fileName: ''
+    fileName: '',
+    status:''
    };
        this.selectedFileBase64 = '';
 
