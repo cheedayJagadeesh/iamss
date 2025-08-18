@@ -12543,10 +12543,11 @@
         </table>
     </div> 
 
-
-
+ <div *ngIf="isLoading" class="loading-container">
+        <span class="dot"></span>
+    </div>
     <div class="tablebottom1" *ngIf="selectedOption1 === 'EventAlerts'">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="Eventalerts">
+        <table class="table table-striped table-bordered" name="Eventalerts">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">ID</th>
@@ -12561,7 +12562,7 @@
                     <th scope="col">Action</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="!isLoading">
                 <tr *ngFor="let item of eventalertslist">
                     <td>{{item.alertID}}</td>
                     <td>{{item.alertName}}</td>
@@ -12642,7 +12643,7 @@
                                 
                                     <div class="divmodal">
                                         <label>Mail Alert Day</label>
-                                        <input type="text" class="form-control" name="mailalertday" required #mailalertdayRef="ngModel"
+                                        <input type="number" class="form-control" name="mailalertday" required #mailalertdayRef="ngModel"
                                             [(ngModel)]="eventalertsdata.mailAlertDay">
                                     </div>
                                 

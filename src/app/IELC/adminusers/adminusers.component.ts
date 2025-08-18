@@ -6174,18 +6174,25 @@ resetCourse(){
 //  }
 
 GetEventAlertsist() {
+  this.isLoading = true;
   this.ielc.Geteventalerts().subscribe((data) => {
     console.log("Raw API data:", data); // 👈 Check here
-    this.eventalertslist=data;
-     this.isLoading = false;
+
     this.eventalertslist = data.map((item: any) => ({
       ...item,
       isPaused: item.status?.trim().toLowerCase() === 'inactive'
     }));
 
     console.log("Processed items:", this.eventalertslist);
+
+    this.isLoading = false; // 👈 set false only after mapping is done
+  },
+  (error) => {
+    console.error("Error fetching event alerts:", error);
+    this.isLoading = false; // 👈 important to stop loader on error also
   });
 }
+
 
 
 
@@ -6263,7 +6270,21 @@ togglePlayPause(item: any): void {
   });
 }
  
- AddEventAlerts(): void {
+//  AddEventAlerts(): void {
+//   this.ielc.Posteventalerts(this.eventalertsdata).subscribe(
+//     (response) => {
+//       alert('✅ Record Added Successfully!');
+//       this.GetEventAlertsist();
+//       this.resetEventAlerts();
+//     },
+//     (error) => {
+//       alert('❌ Error adding Record. Please try again.');
+//     }
+//   );
+// }
+
+AddEventAlerts(): void {
+  this.eventalertsdata.status = 'Active';
   this.ielc.Posteventalerts(this.eventalertsdata).subscribe(
     (response) => {
       alert('✅ Record Added Successfully!');
@@ -6275,6 +6296,7 @@ togglePlayPause(item: any): void {
     }
   );
 }
+
 
 getDownloadLinkFileupload(base64Data: string, fileName: string): string {
   const extension = fileName?.split('.').pop()?.toLowerCase();
