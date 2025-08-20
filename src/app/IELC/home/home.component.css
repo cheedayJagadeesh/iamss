@@ -6,7 +6,7 @@
 .h1{
     text-align: center;
     font-weight: bold;
-    margin-left: 0%;
+    margin-left: 2%;
     color: #166ebf;
     margin-top: 4%;
     font-size: 30px;
@@ -15,7 +15,7 @@
 .p1{
     text-align: justify;
     width: 1270px;
-    margin-left: 9%;
+    margin-left: 20%;
     font-size: 16px;
     position: absolute;
     margin-top: 7%;

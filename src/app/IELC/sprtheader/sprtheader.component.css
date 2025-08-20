@@ -1,10 +1,10 @@
-.lbllogin{
-    /* margin-top: 1.5%;
-    margin-left: 75%;
-    position: absolute; */
+.lbllogin {
     margin-top: 1.5%;
-    margin-left: 75%;
-    position: absolute;
+    margin-left: 80%;
     font-size: 16px;
-    position: absolute;
+    display: inline-block;   /* ✅ keeps it in one line */
+    white-space: nowrap;     /* ✅ prevents wrapping */
+}
+.lbllogin span {
+    display: inline; /* ✅ each word stays inline */
 }
