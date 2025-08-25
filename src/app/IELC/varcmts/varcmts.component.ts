@@ -14,6 +14,7 @@ interface docs{
 })
 export class VarcmtsComponent {
  isLoading = true;
+ isLoadingPdf: boolean = false;
   varcmtlist: any[] = []; 
  
   docsdata:docs={
@@ -34,17 +35,22 @@ export class VarcmtsComponent {
     });
    }
 pdfUrl: any = null;
+ loadingId: number | null = null;
 openDocument(id: number) {
-  this.ielc.getWordAsPdf(id).subscribe(blob => {
-    const pdfBlob = new Blob([blob], { type: 'application/pdf' });
-    const pdfUrl = URL.createObjectURL(pdfBlob);
-
-    // Open PDF in a new tab
-    window.open(pdfUrl, '_blank');
-
-    // Optional: revoke the URL after some time to free memory
-    // setTimeout(() => URL.revokeObjectURL(pdfUrl),);
+  this.loadingId = id; 
+  this.ielc.getWordAsPdf(id).subscribe({
+    next: (blob) => {
+      const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+      const pdfUrl = URL.createObjectURL(pdfBlob);
+      window.open(pdfUrl, '_blank');
+    },
+    error: (err) => {
+      console.error('Failed to load PDF:', err);
+      alert('Error loading PDF.');
+    },
+    complete: () => {
+      this.loadingId = null; 
+    }
   });
 }
 }
- 
