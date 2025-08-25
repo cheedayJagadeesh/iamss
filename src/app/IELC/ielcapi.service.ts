@@ -2373,7 +2373,7 @@ Getextratouser(): Observable<string[]> {
 }
 
 //-----------------------------------------------------------------------------------------
-eventschedulertime = 'https://coreappi.azurewebsites.net';
+eventschedulertime = 'https://coreappi.azurewebsites.net/';
 eventschedulertimes = 'https://coreappi.azurewebsites.net/times';
 
 GetEventSchedulerTimeIds(): Observable<string[]> {
@@ -2453,6 +2453,13 @@ GetCoOwnersAllProjectsList(): Observable<string[]> {
 GetCoOwnersUniqueName(): Observable<string[]> {
   return this.http.get<string[]>(`${this.coownersurl}/uniqueusers`, { headers: this.getHeaders() });
 }
-
-
+getWordAsPdf(id: number): Observable<Blob> {
+ const url = id 
+    ? `https://localhost:7154/VariousCommittees/GetWordAsPdf/${id}`
+    : `https://localhost:7154/VariousCommittees/GetWordAsPdf`;
+  return this.http.get(url, {
+    headers: this.getHeaders(),
+    responseType: 'blob'  // <-- Important, PDF is binary
+  });
+}
 }

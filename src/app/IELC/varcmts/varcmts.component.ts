@@ -13,7 +13,7 @@ interface docs{
   styleUrls: ['./varcmts.component.css']
 })
 export class VarcmtsComponent {
-  isLoading = true;
+ isLoading = true;
   varcmtlist: any[] = []; 
  
   docsdata:docs={
@@ -22,7 +22,6 @@ export class VarcmtsComponent {
    url: '',
   }
   constructor(private ielc:IelcapiService) {
-
   }
   ngOnInit(): void {
     this.GetVarcmtlist();
@@ -34,5 +33,18 @@ export class VarcmtsComponent {
       this.isLoading = false;
     });
    }
+pdfUrl: any = null;
+openDocument(id: number) {
+  this.ielc.getWordAsPdf(id).subscribe(blob => {
+    const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+    const pdfUrl = URL.createObjectURL(pdfBlob);
 
+    // Open PDF in a new tab
+    window.open(pdfUrl, '_blank');
+
+    // Optional: revoke the URL after some time to free memory
+    // setTimeout(() => URL.revokeObjectURL(pdfUrl),);
+  });
 }
+}
+ 
