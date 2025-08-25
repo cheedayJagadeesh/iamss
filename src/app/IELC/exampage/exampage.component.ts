@@ -12,7 +12,7 @@ declare var bootstrap: any;
 
 
 interface exam{
-  id: number;
+  sessionID: number;
   examTime: number;
   batchLimitMembers: number;
   displayExamQuestions: number;
@@ -64,6 +64,7 @@ interface Enrollment {
   handlingDoubts: string;
   applicationtowork: string;
   comments: string;
+  sessionID: number;
 }
 @Component({
   selector: 'app-exampage',
@@ -94,7 +95,17 @@ export class ExampageComponent implements OnInit, OnDestroy  {
     handlingDoubts: '',
     applicationtowork: '',
     comments: '',
+    sessionID: 0,
     }
+
+     examdata:exam={
+    sessionID: 0,
+    examTime: 0,
+    batchLimitMembers: 0,
+    displayExamQuestions: 0,
+    standardExamQuestions: 0,
+    examPercentage: 0
+   }
 
   currentQuestionIndex = 0;
   selectedAnswer: string | null = null;
@@ -102,14 +113,6 @@ export class ExampageComponent implements OnInit, OnDestroy  {
   isLoading = true;
   // examlist: any[] = []; 
   selectedSkill: string = '';
-  examdata:exam={
-    id: 0,
-    examTime: 0,
-    batchLimitMembers: 0,
-    displayExamQuestions: 0,
-    standardExamQuestions: 0,
-    examPercentage: 0
-   }
    timeLeft: number = this.examdata.examTime;
    timer: any;
    userName: string | null = null;
@@ -119,44 +122,29 @@ export class ExampageComponent implements OnInit, OnDestroy  {
    Registeredusers: any[] = []; 
    correctAnswersCount = 0;
    enrollmentID: number | null = null;
+   sessionID: number | null = null;
+   examdataList: exam[] = [];
+   //sessionID!: number;
+
 
 loadingProgress: number = 0;
 fakePercent = 0;
 
   constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute,private emailService: EmailService,private zone: NgZone) {
-    // this.route.queryParams.subscribe(params => {
-    //   this.selectedSkill = params['skill'];
-    // });
     this.route.queryParams.subscribe(params => {
       this.selectedSkill = params['skill'];
       this.enrollmentID = params['enrollment'] ? Number(params['enrollment']) : null;
+      this.sessionID = params['session'] ? Number(params['session']) : null;
     });
   }
- 
-
-  // preloadImages(imageData: string[]) {
-  //   // Only preload if image data exists
-  //   imageData.filter(image => image).forEach(image => {
-  //     const img = new Image();
-  //     img.src = 'data:image/jpeg;base64,' + image;
-  //   });
-  // }
-  
   
    async ngOnInit(){
-    // this.startTimer();
     this.GetExamlist();
     this.GetAllSkillsQa();
    
   try {
-    // console.log("Initializing MSAL...");
-    
-    // Ensure MSAL is properly initialized before proceeding
     await this.msalService.instance.initialize();  
     await this.msalService.instance.handleRedirectPromise();
-
-    // console.log("MSAL initialized successfully.");
-    
     const activeAccount = this.msalService.instance.getActiveAccount();
     if (!activeAccount) {
        console.warn("No active account found. Redirecting to login...");
@@ -167,100 +155,18 @@ fakePercent = 0;
     this.authService.setActiveAccount();
 
     this.authService.userDetails$.subscribe(userDetails => {
-      // this.userName = userDetails?.displayName || 'Unknown User';
-      // this.userEmail = userDetails?.email || 'No Email';
       this.userName = userDetails?.displayName ;
       this.userEmail = userDetails?.email;
       if (userDetails) {
-        this.userEmail = userDetails.email; // Ensure the email is correctly assigned
-        this.GetAllUsers(); // Call this AFTER we get the email
+        this.userEmail = userDetails.email;
+        this.GetAllUsers();
       }
-    });
-
-  // this.authService.userDetails$.subscribe(userDetails => {
-    //   if (userDetails) {
-    //     this.userEmail = userDetails.email; // Ensure the email is correctly assigned
-    //     this.GetAllUsers(); // Call this AFTER we get the email
-    //   }
-    // });   
+    }); 
   }
-  
    catch (error) {
     // console.error("MSAL initialization error in HeaderComponent:", error);
   }
-
   }
-
-  // async ngOnInit() {
-  //   try {
-  //     console.log("Initializing MSAL...");
-  //     await this.msalService.instance.initialize();  
-  //     await this.msalService.instance.handleRedirectPromise();
-  
-  //     console.log("MSAL initialized successfully.");
-      
-  //     const activeAccount = this.msalService.instance.getActiveAccount();
-  //     if (!activeAccount) {
-  //       console.warn("No active account found. Redirecting to login...");
-  //       this.router.navigate(['/login']);
-  //       return;
-  //     }
-  
-  //     this.authService.setActiveAccount();
-  
-  //     this.authService.userDetails$.subscribe(userDetails => {
-  //       if (userDetails) {
-  //         this.userName = userDetails.displayName;
-  //         this.userEmail = userDetails.email;
-  //         this.GetAllUsers(); // Trigger only after user info is available
-  //       }
-  //     });
-  //   } catch (error) {
-  //     console.error("MSAL initialization error:", error);
-  //   }
-  
-  //   if (!this.selectedSkill) {
-  //     console.warn("No selected skill. Skipping question generation.");
-  //     return;
-  //   }
-  
-  //   forkJoin({
-  //     examinfo: this.ielc.Getexaminfo(),
-  //     allQuestions: this.ielc.Getskillqa()
-  //   }).subscribe(({ examinfo, allQuestions }) => {
-  //     this.examdata = examinfo[0];
-  //     this.timeLeft = this.examdata.examTime * 60;
-  
-  //     const standardSkillKey = `${this.selectedSkill}_StQuestions`;
-  //     const totalQuestions = this.examdata.displayExamQuestions || allQuestions.length;
-  //     const standardCount = this.examdata.standardExamQuestions || 0;
-  
-  //     const standardQuestions = allQuestions.filter((q: Question) => q.skillName === standardSkillKey);
-  //     const standardQuestionIds = new Set(standardQuestions.map((q: Question) => q.id)); // assuming `id` exists
-  
-  //     const remainingCount = totalQuestions - standardQuestions.length;
-  
-  //     const skillQuestions = allQuestions.filter(
-  //       (q: Question) => q.skillName === this.selectedSkill && !standardQuestionIds.has(q.id)
-  //     );
-  
-  //     const combined = this.shuffleArray([
-  //       ...this.shuffleArray(standardQuestions).slice(0, standardCount),
-  //       ...this.shuffleArray(skillQuestions).slice(0, remainingCount)
-  //     ]);
-  
-  //     this.questions = combined;
-  //     this.currentQuestionIndex = 0;
-  //     this.isLoading = false;
-  //     if (this.timeLeft > 0) {
-  //         this.startTimer(); 
-  //       }
-  //   });
-  // }
-  
-
- 
-  
 
   sortRegisteredUsers(data: any[]): any[] {
     return data.sort((a, b) => (a.enrollmentID > b.enrollmentID ? -1 : a.enrollmentID < b.enrollmentID ? 1 : 0));
@@ -280,68 +186,24 @@ fakePercent = 0;
     });
   }
 
-  
- 
-  // GetExamlist() {
-  //   this.ielc.Getexaminfo().subscribe((data) => {
-  //     console.log("Exam data received:", data);
-  //     if (data && data.length > 0) {
-  //       this.examdata = this.examlist[0]; 
-  //       this.timeLeft = this.examdata.examTime * 60; 
-  //       console.log("Assigned timeLeft:", this.timeLeft);
-  //       console.log("Total Questions:", this.examdata.displayExamQuestions);
-  //       if (this.timeLeft > 0) {
-  //         this.startTimer(); 
-  //       }
-  //     }
-  //   }, (error) => {
-  //     console.error("Error fetching exam data", error);
-  //   });
-  // }
   GetExamlist() {
-    this.ielc.Getexaminfo().subscribe((data) => {
-      // console.log("Exam data received:", data);
+  this.ielc.GetSessionById(this.sessionID).subscribe(
+    (data: exam[]) => {
       if (data && data.length > 0) {
-        this.examdata = data[0];  // <-- only assign to examdata
+        this.examdataList = data;
+        this.examdata = data[0];  
         this.timeLeft = this.examdata.examTime * 60; 
-        // console.log("Assigned timeLeft:", this.timeLeft);
-        // console.log("Total Questions:", this.examdata.displayExamQuestions);
-  
-        // if (this.timeLeft > 0) {
-        //   this.startTimer(); 
-        // }
+        console.log("Exam list", data);
+        console.log("time left", this.timeLeft);
       }
-     
-    }, (error) => {
-      // console.error("Error fetching exam data", error);
-     
-    });
-    
-  }
-  
-  // GetAllSkillsQa() {
-  //   this.ielc.Getskillqa().subscribe((data: Question[]) => {
-  //     this.examlist = data;
-  
-  //     // Filter by selected skill
-  //     let filteredQuestions = this.selectedSkill
-  //       ? data.filter((q: Question) => q.skillName === this.selectedSkill)
-  //       : data;
-  
-  //     // Shuffle the filtered questions
-  //     filteredQuestions = this.shuffleArray(filteredQuestions);
-  
-  //     // Limit questions based on displayExamQuestions
-  //     const displayCount = this.examdata.displayExamQuestions || filteredQuestions.length;
-  //     this.questions = filteredQuestions.slice(0, displayCount);
-  
-  //     this.currentQuestionIndex = 0;
-  //     this.isLoading = false;
-  //     if (this.timeLeft > 0) {
-  //       this.startTimer(); 
-  //     }
-  //   });
-  // }
+    },
+    (error) => {
+      console.error("Error fetching exam data", error);
+    }
+  );
+}
+
+
   async compressBase64Image(base64: string, maxWidth = 400, quality = 0.7): Promise<string> {
     const img = new Image();
     img.src = base64;
@@ -409,17 +271,6 @@ fakePercent = 0;
         this.startTimer();
       }
      
-
-
-      // ✅ Now force the rest of the progress to finish
-    // const completeInterval = setInterval(() => {
-    //   this.progressValue += 5;
-    //   if (this.progressValue >= 100) {
-    //     this.progressValue = 100;
-    //     this.isLoading = false;
-    //     clearInterval(completeInterval);
-    //   }
-    // }, 50); 
     this.progressValue = 100;
     setTimeout(() => {
       this.isLoading = false;
@@ -438,165 +289,7 @@ fakePercent = 0;
       }
     }, 200);
   }
-  
 
-
-// async GetAllSkillsQa() {
-//   this.isLoading = true;
-
-//   // ✅ Wait for observable to complete
-//   const data: Question[] = await firstValueFrom(this.ielc.Getskillqa());
-//   this.examlist = data;
-
-//   const standardSkillKey = this.selectedSkill + '_StQuestions';
-//   const totalQuestions = this.examdata.displayExamQuestions || data.length;
-//   const standardCount = this.examdata.standardExamQuestions || 0;
-
-//   const standardQuestions = this.shuffleArray(
-//     data.filter(q => q.skillName === standardSkillKey)
-//   ).slice(0, standardCount);
-
-//   const remainingCount = totalQuestions - standardQuestions.length;
-
-//   const skillQuestions = data
-//     .filter(q => q.skillName === this.selectedSkill)
-//     .filter(q => !standardQuestions.includes(q));
-//   const shuffledSkillQuestions = this.shuffleArray(skillQuestions).slice(0, remainingCount);
-
-//   const combined = [...standardQuestions, ...shuffledSkillQuestions];
-//   this.questions = this.shuffleArray(combined);
-
-//   // 🔥 Compress base64 images
-//   for (const question of this.questions) {
-//     if (question.iQuestion) {
-//       question.iQuestion = await this.compressBase64Image('data:image/jpeg;base64,' + question.iQuestion, 400, 0.7);
-//     }
-
-//     for (const opt of ['a', 'b', 'c', 'd']) {
-//       const imgKey = 'i' + opt;
-//       if (question[imgKey]) {
-//         question[imgKey] = await this.compressBase64Image('data:image/jpeg;base64,' + question[imgKey], 200, 0.7);
-//       }
-//     }
-//   }
-
-//   this.currentQuestionIndex = 0;
-
-//   if (this.timeLeft > 0) {
-//     this.startTimer();
-//   }
-
-//   this.isLoading = false;
-// }
-
-
-  // GetAllSkillsQa() {
-  //   this.isLoading = true; // Set loading state immediately
-  //   this.ielc.Getskillqa().subscribe((data: Question[]) => {
-  //     this.examlist = data;
-  
-  //     const standardSkillKey = `${this.selectedSkill}_StQuestions`;
-  //     const totalQuestions = this.examdata.displayExamQuestions || data.length;
-  //     const standardCount = this.examdata.standardExamQuestions || 0;
-  
-  //     // 🔹 Get and shuffle standard questions
-  //     const standardQuestions = this.shuffleArray(
-  //       data.filter(q => q.skillName === standardSkillKey)
-  //     ).slice(0, standardCount);
-  
-  //     // 🔹 Remaining questions count
-  //     const remainingCount = totalQuestions - standardQuestions.length;
-  
-  //     // 🔹 Filter and shuffle skill questions more efficiently using a Set
-  //     const skillQuestionsSet = new Set(data.filter(q => q.skillName === this.selectedSkill).map(q => q.id)); // Assuming `id` is unique for each question
-  //     const remainingQuestions = data.filter(q => !standardQuestions.includes(q) && skillQuestionsSet.has(q.id));
-  //     const shuffledSkillQuestions = this.shuffleArray(remainingQuestions).slice(0, remainingCount);
-  
-  //     // Combine standard + remaining
-  //     const combined = [...standardQuestions, ...shuffledSkillQuestions];
-  //     this.questions = this.shuffleArray(combined);
-  
-  //     // Final setup
-  //     this.currentQuestionIndex = 0;
-  //     this.isLoading = false;
-  
-  //     if (this.timeLeft > 0) {
-  //       this.startTimer();
-  //     }
-  //   });
-  // }
-
-  //========================================working scenario 2
-// GetAllSkillsQa() {
-//   this.isLoading = true;
-//   const getUsers$ = this.ielc.GetUsers();
-//   const getExamInfo$ = this.ielc.Getexaminfo();
-//   const getSkillQa$ = this.ielc.Getskillqa();
-
-//   forkJoin([getUsers$, getExamInfo$, getSkillQa$]).subscribe(
-//     ([usersData, examData, skillData]) => {
-//       const aadEmail = this.userEmail; // Use the retrieved AAD email
-//       if (aadEmail) {
-//         this.Registeredusers = this.sortRegisteredUsers(
-//           usersData.filter(user => user.mail === aadEmail)
-//         );
-//       } else {
-//         this.Registeredusers = []; // No users if email is missing
-//       }
-
-//       if (examData && examData.length > 0) {
-//         this.examdata = examData[0];
-//         this.timeLeft = this.examdata.examTime * 60;
-//       }
-
-//       const standardSkillKey = this.selectedSkill + '_StQuestions';
-//       const totalQuestions = this.examdata.displayExamQuestions || skillData.length;
-//       const standardCount = this.examdata.standardExamQuestions || 0;
-
-//       // 🔹 Get and shuffle standard questions
-//       const standardQuestions = this.shuffleArray(
-//         skillData.filter((q: Question) => q.skillName === standardSkillKey)
-//       ).slice(0, standardCount);
-
-//       // 🔹 Remaining questions count
-//       const remainingCount = totalQuestions - standardQuestions.length;
-
-//       const skillQuestions = skillData
-//         .filter((q: Question) => q.skillName === this.selectedSkill)
-//         .filter((q: Question) => !standardQuestions.includes(q)); // avoid duplicates
-//       const shuffledSkillQuestions = this.shuffleArray(skillQuestions).slice(0, remainingCount);
-
-//       // Combine standard + remaining
-//       const combined = [...standardQuestions, ...shuffledSkillQuestions];
-//       this.questions = this.shuffleArray(combined); 
-
-//         // 👉👉 ADD PRELOAD IMAGES HERE
-//         // const allImages: string[] = [];
-//         // this.questions.forEach(q => {
-//         //   if (q.iQuestion) allImages.push(q.iQuestion);
-//         //   if (q.ia) allImages.push(q.ia);
-//         //   if (q.ib) allImages.push(q.ib);
-//         //   if (q.ic) allImages.push(q.ic);
-//         //   if (q.id) allImages.push(q.id);
-//         // });
-//         // this.preloadImages(allImages);
-
-//       // Final setup
-//       this.currentQuestionIndex = 0;
-//       this.isLoading = false;
-
-//       if (this.timeLeft > 0) {
-//         this.startTimer();
-//       }
-//     },
-//     (error) => {
-//       console.error("Error fetching data", error);
-//       this.isLoading = false;
-//     }
-//   );
-// }
-  
-  
 
   shuffleArray(array: any[]) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -628,48 +321,6 @@ fakePercent = 0;
     return `${month} ${day} ${year} ${formattedHour}:${minutes}${ampm}`;
   }
   
-  
-  // UpdateResult() {
-  //   if (this.Registeredusers.length > 0) {
-  //     // Match the user by skill, and if enrollmentID is available, use it too
-  //     const matchedUser = this.Registeredusers.find(user =>
-  //       user.skillName === this.selectedSkill &&
-  //       (this.enrollmentID ? user.enrollmentID === this.enrollmentID : true)
-  //     );
-  
-  //     if (!matchedUser) {
-  //       alert("⚠️ No matching registration found for this skill.");
-  //       return;
-  //     }
-  
-  //     const totalQuestions = this.examdata.displayExamQuestions;
-  //     const percentage = (this.correctAnswersCount / totalQuestions) * 100;
-  //     const formattedDate = this.formatDateToCustomString();
-  
-  //     this.resultdata = {
-  //       ...matchedUser,
-  //       testTakenDate: formattedDate,
-  //       percentage: percentage.toFixed(0),
-  //       result: "Completed"
-  //     };
-     
-  //     this.ielc.Updatefeedback(matchedUser.enrollmentID, this.resultdata).subscribe(
-  //       (response) => {
-  //         // console.log('✅ Updated Successfully:', response);
-  //         alert("✅ Exam Completed!\nThank you for taking the test.");
-  //         // this.router.navigate(['/registration'], { queryParams: { submittedID: matchedUser.enrollmentID } });
-  //         this.router.navigate(['/registration']);
-  //       },
-  //       (error) => {
-  //         console.error('❌ Error updating Record:', error);
-  //         alert("❌ Failed to submit your result. Please try again.");
-  //       }
-  //     );
-  //   } else {
-  //     alert("⚠️ Registered users not loaded.");
-  //   }
-  // }
-  
 
   examPassed: boolean = false;
 percentage: number = 0;
@@ -691,28 +342,7 @@ UpdateResult() {
     
     const attemptedQuestions = this.questions.filter(q => q['userAnswer']?.toString().trim() !== '').length;
     // console.log('✏️ Attempted Questions:', attemptedQuestions);
-
-// const matchedAnswers: { question: string; userAnswer: string; correctAnswer: string; isCorrect: boolean }[] = [];
-  // this.correctAnswersCount = 0; 
   this.correctAnswersCount++;
-  // this.questions.forEach((q: any, index: number) => {
-  //   const userAnswer = q['userAnswer']?.toString().trim().toUpperCase();
-  //   const correctAnswer = q['questionAnswer']?.toString().trim().toUpperCase();
-
-  //   const isCorrect = userAnswer && userAnswer === correctAnswer;
-
-  //   if (isCorrect) this.correctAnswersCount++;
-
-  //   if (userAnswer) {
-  //     matchedAnswers.push({
-  //       question: q['questionText'] || q['question'],
-  //       userAnswer: userAnswer,
-  //       correctAnswer: correctAnswer,
-  //       isCorrect: isCorrect
-  //     });
-  //   }
-  // });
-
   // console.log('📝 Matched Answers:', matchedAnswers);
 
     // console.log('✅ Correct Answers:', this.correctAnswersCount);
@@ -844,8 +474,6 @@ get availableOptions(): string[] {
   );
 }
 
-  
-  
   submitExam() {
     clearInterval(this.timer); // Stop timer when submitting
   
@@ -853,24 +481,10 @@ get availableOptions(): string[] {
     this.UpdateResult(); // This handles the alert + navigation
   }
   
-  
- 
-  
   ngOnDestroy(): void {
     clearInterval(this.timer); 
   }
 
-  // startTimer() {
-  //   this.timer = setInterval(() => {
-  //     if (this.timeLeft > 0) {
-  //       this.timeLeft--;
-  //     } else {
-  //       clearInterval(this.timer);
-  //       alert("⏰ Time's up! Submitting your answers...");
-  //       // this.router.navigate(['/registration']);
-  //     }
-  //   }, 1000); // Update timer every second
-  // }
   startTimer() {
     this.timer = setInterval(() => {
       if (this.timeLeft > 0) {
@@ -896,59 +510,6 @@ get availableOptions(): string[] {
     return this.questions[this.currentQuestionIndex];
   }
 
-  // nextQuestion() {
-  //   if (this.selectedAnswer) {
-  //     this.selectedAnswer = null; // Reset answer for next question
-  //     if (this.currentQuestionIndex < this.questions.length - 1) {
-  //       this.currentQuestionIndex++;
-  //     } else {
-  //       clearInterval(this.timer); // Stop timer when exam is completed
-  //       alert("Exam Completed!");
-  //       this.router.navigate(['/registration']);
-  //     }
-  //   }
-  // }
-  // nextQuestion() {
-  //   if (this.selectedAnswer) {
-  //     this.selectedAnswer = null; // Reset answer for next question
-  //     if (this.currentQuestionIndex < this.questions.length - 1) {
-  //       this.currentQuestionIndex++;
-  //     } else {
-  //       clearInterval(this.timer); // Stop timer when exam is completed
-  //       alert("Exam Completed!");
-  //       this.router.navigate(['/registration']);
-  //     }
-  //   }
-  // }
-  // nextQuestion() {
-  //   if (this.selectedAnswer) {
-  //     const correctAnswer = this.currentQuestion.questionAnswer;
-  
-  //     // ✅ Check if selected answer is correct
-  //     if (this.selectedAnswer.toUpperCase() === correctAnswer.toUpperCase()) {
-  //       this.correctAnswersCount++;
-  //     }
-  
-  //     this.selectedAnswer = null; // Reset for next question
-  
-  //     if (this.currentQuestionIndex < this.questions.length - 1) {
-  //       this.currentQuestionIndex++;
-  //     } else {
-  //       clearInterval(this.timer); // Stop timer
-  
-  //       const totalQuestions = this.examdata.displayExamQuestions;
-  //       const percentage = (this.correctAnswersCount / totalQuestions) * 100;
-  
-  //       alert(`Exam Completed!\nYour Score: ${percentage}`);
-  
-  //       // You can submit this result to backend here if needed
-  //       this.router.navigate(['/registration']);
-  //     }
-  //   } else {
-  //     alert("Please select an answer before proceeding.");
-  //   }
-  // }
-
   nextQuestion() {
     if (this.selectedAnswer) {
       const correctAnswer = this.currentQuestion.questionAnswer;
@@ -972,65 +533,6 @@ get availableOptions(): string[] {
     }
   }
   
-
-  // matchedAnswers: any[] = [];
-  // nextQuestion() {
-  //   if (this.selectedAnswer) {
-  //     const correctAnswer = this.currentQuestion.questionAnswer;
-  
-  //     const selected = this.selectedAnswer.trim().toUpperCase();
-  //     const correct = correctAnswer.trim().toUpperCase();
-  
-  //     // ✅ Track correct answers with details
-  //     if (selected === correct) {
-  //       this.correctAnswersCount++;
-  //       this.matchedAnswers.push({
-  //         question: this.currentQuestion['questionText'] || this.currentQuestion['question'],
-  //         userAnswer: this.selectedAnswer,
-  //         correctAnswer: correctAnswer
-  //       });
-        
-  //     }
-  
-  //     this.selectedAnswer = null; // Reset for next question
-  
-  //     if (this.currentQuestionIndex < this.questions.length - 1) {
-  //       this.currentQuestionIndex++;
-  //     } else {
-  //       // Last question, submit the exam
-  //       console.log('✅ Matched Answers List:', this.matchedAnswers); // 📋 Log matched answers
-  //       this.submitExam();
-  //     }
-  //   } else {
-  //     alert("⚠️ Please select an answer before proceeding.");
-  //   }
-  // }
-  
-
-
-  // forceSubmitExam() {
-  //   let correctAnswers = 0;
-  //   let totalQuestions = this.questions.length;
-  
-  //   this.questions.forEach(q => {
-  //     if (q.selectedAnswer) {  // only check if user selected an answer
-  //       if (q.selectedAnswer === q.correctAnswer) {
-  //         correctAnswers++;
-  //       }
-  //     }
-  //   });
-  
-  //   let percentage = (correctAnswers / totalQuestions) * 100;
-    
-  //   // Save or send the result
-  //   this.saveExamResult(correctAnswers, totalQuestions, percentage);
-  
-  //   // Navigate to result page or show result
-  // }
-  
-  
-  
-
   goBack() {
     if (confirm("Are you sure you want to exit the exam? Your progress will not be saved.")) {
     if (this.currentQuestionIndex > 0) {

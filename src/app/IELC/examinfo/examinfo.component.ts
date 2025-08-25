@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 
 interface exam{
   id: number;
+  skillName: string;
   examTime: number;
   batchLimitMembers: number;
   displayExamQuestions: number;
@@ -23,6 +24,7 @@ export class ExaminfoComponent {
   examlist: any[] = []; 
   examdata:exam={
     id: 0,
+    skillName: '',
     examTime: 0,
     batchLimitMembers: 0,
     displayExamQuestions: 0,
@@ -39,33 +41,6 @@ export class ExaminfoComponent {
   constructor(private msalService: MsalService, private authService: AuthService, private router: Router,private ielc:IelcapiService) {}
  
    async ngOnInit() {
-    // const hasAccess = await this.authService.hasAccess(['Admin', 'SuperAdmin']);
-    // if (!hasAccess && this.router.url !== '/registration') {
-    //   this.router.navigate(['/registration']);
-    //   return;
-    // }
-    // try {
-    //   await this.msalService.instance.handleRedirectPromise(); // Ensure MSAL is initialized
-    //   this.authService.setActiveAccount(); // Ensure an account is set
-
-    //   // this.authService.userName$.subscribe(username => {
-    //   //   if (username) {
-    //   //     this.userName = username;
-    //   //   } else {
-    //   //     this.authService.fetchUserDetails(); // Fetch from Microsoft Graph API if missing
-    //   //   }
-    //   // });
-    //   this.authService.userDetails$.subscribe(userDetails => {
-    //     this.userName = userDetails.displayName;
-    //     this.userEmail = userDetails.email;
-    //   });
-
-    //   if (!this.authService.isAuthenticated()) {
-    //     this.router.navigate(['/login']); // Redirect if not authenticated
-    //   }
-    // } catch (error) {
-    //   console.error('MSAL initialization error in HomeComponent:', error);
-    // }
     this.GetExamlist();
   }
    
@@ -86,6 +61,7 @@ export class ExaminfoComponent {
           // Assign data only if it's valid
           this.examdata = { 
             id: data.id || 0,
+            skillName: data.skillName || '',
             examTime: data.examTime || 0,
             batchLimitMembers: data.batchLimitMembers || 0,
             displayExamQuestions: data.displayExamQuestions || 0,
@@ -115,8 +91,30 @@ export class ExaminfoComponent {
       );
     }
     
+  AddExamInfo(): void {
+  this.ielc.Postexaminfo(this.examdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetExamlist();
+      this.resetExamInfo();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
   
-
+  resetExamInfo(){
+    this.examdata={
+    id: 0,
+    skillName: '',
+    examTime: 0,
+    batchLimitMembers: 0,
+    displayExamQuestions: 0,
+    standardExamQuestions: 0,
+    examPercentage: 0
+    }
+  }
   
   
 }

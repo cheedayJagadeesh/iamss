@@ -18,9 +18,11 @@ interface NewSkillsInfo {
   aadUsersData: any;  
   aadGroupsData: any; 
   conductedBy: string;
-  // skillID: string;
-  // mail: string;
-  // groupName:string;
+  examTime: string;
+  batchLimitMembers: string;
+  displayExamQuestions: string;
+  standardExamQuestions: string;
+  examPercentage: string
 }
 
 
@@ -69,6 +71,11 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
     aadUsersData: '',
     aadGroupsData: '',
     conductedBy: '',
+    examTime: '',
+    batchLimitMembers: '',
+    displayExamQuestions: '',
+    standardExamQuestions: '',
+    examPercentage: '',
   };
   
 
@@ -130,9 +137,11 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
       aadUsersData: '',
       aadGroupsData: '',
       conductedBy: '',
-      // skillID: '',
-      // mail: '',
-      // groupName: ''
+      examTime: '',
+      batchLimitMembers: '',
+      displayExamQuestions: '',
+      standardExamQuestions: '',
+      examPercentage: ''
     };
   }
   
@@ -214,7 +223,6 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
       if (this.skillSessionData.toDate) {
         this.skillSessionData.toDate = this.skillSessionData.toDate.split("T")[0];
       }
-
     });
   }
 
