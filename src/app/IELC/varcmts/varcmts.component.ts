@@ -34,23 +34,28 @@ export class VarcmtsComponent {
       this.isLoading = false;
     });
    }
-pdfUrl: any = null;
- loadingId: number | null = null;
+// pdfUrl: any = null;
+//  loadingId: number | null = null;
+//   openDocument(id: number) {
+//     this.ielc.getWordAsPdf(id).subscribe(blob => {
+//       const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+//       const pdfUrl = URL.createObjectURL(pdfBlob);
+//       // Open PDF in a new tab 
+//       window.open(pdfUrl, '_blank');
+//       // Optional: revoke the URL after some time to free memory // 
+//       setTimeout(() => URL.revokeObjectURL(pdfUrl),);
+//     });
+//   }
+pdfUrl: string | null = null;
+
 openDocument(id: number) {
-  this.loadingId = id; 
-  this.ielc.getWordAsPdf(id).subscribe({
-    next: (blob) => {
-      const pdfBlob = new Blob([blob], { type: 'application/pdf' });
-      const pdfUrl = URL.createObjectURL(pdfBlob);
-      window.open(pdfUrl, '_blank');
-    },
-    error: (err) => {
-      console.error('Failed to load PDF:', err);
-      alert('Error loading PDF.');
-    },
-    complete: () => {
-      this.loadingId = null; 
-    }
+  this.ielc.getWordAsPdf(id).subscribe(blob => {
+    const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+    this.pdfUrl = URL.createObjectURL(pdfBlob);
   });
+}
+
+closePdf() {
+  this.pdfUrl = null;
 }
 }

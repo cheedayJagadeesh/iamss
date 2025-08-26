@@ -90,7 +90,8 @@ import { AuthcallbackComponent } from './IELC/authcallback/authcallback.componen
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { EventschedulerComponent } from './IELC/eventscheduler/eventscheduler.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { DocumentViewerComponent } from './IAMS/document-viewer/document-viewer.component';
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
 
@@ -267,7 +268,9 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     ItdeptComponent,
     SprtheaderComponent,
     AuthcallbackComponent,
-    EventschedulerComponent
+    EventschedulerComponent,
+    DocumentViewerComponent
+    
   ],
   imports: [
     BrowserModule,
@@ -275,7 +278,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     BrowserAnimationsModule,
     NgbModule,
     NgbDatepickerModule,FormsModule,MatDatepickerModule,MatNativeDateModule,MatCardModule,FullCalendarModule,MatInputModule,
-    MatFormFieldModule,MatButtonModule,MatIconModule,HttpClientModule,NgxPaginationModule,LazyLoadImageModule,MatProgressSpinnerModule
+    MatFormFieldModule,MatButtonModule,MatIconModule,HttpClientModule,NgxPaginationModule,LazyLoadImageModule,MatProgressSpinnerModule,PdfViewerModule,
+
     
   ],
   providers: [IelcapiService,HttpClient,AuthService,MsalModule,MsalGuard,MsalService,DatePipe,ExcelExportService,MsalBroadcastService, 
