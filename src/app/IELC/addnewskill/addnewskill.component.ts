@@ -46,6 +46,9 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
   isLoading=true;
   Enrolledusers: any[] = []; 
   Enrolledskills: any[]=[];
+  Enrolledskillvenue: any[]=[];
+  Enrolledskillvenuedatetime: any[]=[];
+      value: number = 1;
   // AadUsers:any[]=[];
   // AadUserGroups:any[]=[];
   aadUsersData:any[]=[];
@@ -168,8 +171,42 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
     });
    }
 
-   AddSkillsession(): void {
+    GetAllSkillvenue(){
+    this.ielc.GetSkillnameVenue(this.skillSessionData.skillName, this.skillSessionData.venue).subscribe((data) => {
+      this.Enrolledskillvenue=data;
+      console.log("testes",this.Enrolledskillvenue);
+    });
+   }
 
+  //    GetAllSkillvenuedatetime(){
+  //   this.ielc.GetSkillnameVenueDateTime(this.skillSessionData.skillName, this.skillSessionData.venue, this.skillSessionData.skillName, this.skillSessionData.skillName).subscribe((data) => {
+  //     this.Enrolledskillvenuedatetime=data;
+  //   });
+  //  }
+
+
+  Postthevalues(){
+    debugger;
+    if (this.skillSessionData.venue === 'Self-Learning'){
+    this.ielc.GetSkillnameVenue(this.skillSessionData.skillName, this.skillSessionData.venue)
+      .subscribe((data) => {
+        this.Enrolledskillvenue = data;
+        console.log("testes", this.Enrolledskillvenue);
+        if (this.Enrolledskillvenue || this.Enrolledskillvenue > 0) {
+          alert('❌ A record with the same SkillName and Venue is already available. Kindly update it with the latest details.');
+        }
+        else{
+          this.AddSkillsession();
+        }
+      });
+    }
+    else{
+      this.AddSkillsession();
+      }
+  }
+
+
+   AddSkillsession(): void {
     const formatTime = (time: string | undefined | null): string => {
       if (!time) return '00:00:00'; // Default value if time is empty or undefined
     

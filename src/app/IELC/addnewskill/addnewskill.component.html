@@ -125,7 +125,7 @@
                                        </div>
                                        <div class="divmodal">
                                         <label>End Date<span style="color: red;">*</span></label>
-                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.toDate" name="toDate"    [min]="skillSessionData.fromDate || today" required #skillNameRef="ngModel"  >
+                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.toDate" name="toDate" [min]="skillSessionData.fromDate || today" required #skillNameRef="ngModel"  >
                                        </div>
                                        <div class="divmodal">
                                         <label>Start Time<span style="color: red;">*</span></label>
@@ -174,12 +174,33 @@
                                         </select>
                                        </div>
 
+                                        <div class="divmodal">
+                                    <label>Exam Time<span style="color: red;">*</span></label>
+                                    <input type="number" class="form-control" name="examtime" [(ngModel)]="skillSessionData.examTime" required #skillNameRef="ngModel" >
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>BatchLimit Members<span style="color: red;">*</span></label>
+                                    <input type="number" class="form-control" name="batchlimit" [(ngModel)]="skillSessionData.batchLimitMembers" required #skillNameRef="ngModel" >
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>Display Exam Questions<span style="color: red;">*</span></label>
+                                    <input type="number" class="form-control" name="displayqstns" [(ngModel)]="skillSessionData.displayExamQuestions" required #skillNameRef="ngModel" >
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>Standard Exam Questions<span style="color: red;">*</span></label>
+                                    <input type="number" class="form-control" name="standardqstns" [(ngModel)]="skillSessionData.standardExamQuestions" required #skillNameRef="ngModel" >
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>Exam Percentage<span style="color: red;">*</span></label>
+                                    <input type="number" class="form-control" name="examperc" [(ngModel)]="skillSessionData.examPercentage" required #skillNameRef="ngModel" >
+                                   </div>
+
                                     </div>
                                     
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal" (click)="resetSkillSession(); GetAllSkillSessions()" >Close</button>
-                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddSkillsession()" [disabled]="addskillsform.invalid" >Add</button>
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="Postthevalues()" [disabled]="addskillsform.invalid" >Add</button>
                                     </div>
                                 </div>
                             </div>
@@ -259,6 +280,27 @@
                                             <option *ngFor="let item of aadGroupsData" >{{ item.groupName }}</option>
                                         </select>
                                        </div>
+
+                                          <div class="divmodal">
+                                    <label>Exam Time<span style="color: red;">*</span></label>
+                                    <input type="number" class="form-control" name="examtime" [(ngModel)]="skillSessionData.examTime" required #skillNameRef="ngModel" >
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>BatchLimit Members<span style="color: red;">*</span></label>
+                                    <input type="number" class="form-control" name="batchlimit" [(ngModel)]="skillSessionData.batchLimitMembers" required #skillNameRef="ngModel" >
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>Display Exam Questions<span style="color: red;">*</span></label>
+                                    <input type="number" class="form-control" name="displayqstns" [(ngModel)]="skillSessionData.displayExamQuestions" required #skillNameRef="ngModel" >
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>Standard Exam Questions<span style="color: red;">*</span></label>
+                                    <input type="number" class="form-control" name="standardqstns" [(ngModel)]="skillSessionData.standardExamQuestions" required #skillNameRef="ngModel" >
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>Exam Percentage<span style="color: red;">*</span></label>
+                                    <input type="number" class="form-control" name="examperc" [(ngModel)]="skillSessionData.examPercentage" required #skillNameRef="ngModel" >
+                                   </div>
 
                                     </div>
                                     <div class="modal-footer">

@@ -75,8 +75,8 @@ interface EnrollmentData {
   venue: string;
   batchmembers: number;
   enrollmentDate: string;
-  startDate: string;
-  endDate: string;
+  startDate: string | null;
+  endDate: string | null;
   result: string;
   percentage: string;
   testTakenDate: string;
@@ -86,6 +86,7 @@ interface EnrollmentData {
   handlingDoubts: string;
   applicationtowork: string;
   comments: string;
+  sessionID: number;
 }
 interface EmailPayload {
   smtpUserName: string;
@@ -119,7 +120,6 @@ export class RegistrationComponent implements OnInit {
   loadingExamResults = true;
   @ViewChild('registration') registration!: NgForm;
  // currentDate:Date=new Date()
-
 
  selectedDate:string=''
  examlist: any[] = []; 
@@ -170,6 +170,7 @@ visibleSessionIds: SkillSession[] = [];
 showDateTimeDropdowns: boolean = false;
 // submittedFeedbackIds: number[] = [];
 batchMemberCount: number = 0;
+sessionID: number = 0;
 currentUser: any = {};
 allSkillSessions: any[] = [];
 constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute,private emailService: EmailService){
@@ -191,12 +192,12 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
   });
  }
 
-convertToISODate(dateStr: string): string {
+convertToISODate(dateStr: string): string | null {
   // console.log('🔍 Converting date:', dateStr);
 
   if (!dateStr || typeof dateStr !== 'string') {
     // console.warn('⚠️ Invalid date input:', dateStr);
-    return '';
+    return null;
   }
 
   const isoDate = new Date(dateStr);
@@ -215,7 +216,7 @@ convertToISODate(dateStr: string): string {
       return result;
     }
   }
-  return '';
+  return null;
 }
 
  formatCustomDate(dateStr: string | null): string {
@@ -388,7 +389,7 @@ convertToDDMMYYYY(dateStr: string): string {
 
 onVenueChange(venue: string) {
   this.showDateTimeDropdowns = ['Teams', 'Offline'].includes(venue);
-
+//debugger;
   if (this.showDateTimeDropdowns && this.skillname) {
     const trimmedSkillname = this.skillname.trim();
     this.ielc.GetEnrolledSessionsbydate(trimmedSkillname,venue).subscribe({
@@ -396,9 +397,17 @@ onVenueChange(venue: string) {
         const now = new Date();
         const activeRanges = new Set<string>();
 
+        // this.visibleSessionIds.forEach((session: any) => {
+        //   const skillName = (session.skillName ?? '').trim().toLowerCase();
+        //   if (skillName !== trimmedSkillname.toLowerCase()) return;
+
         this.visibleSessionIds.forEach((session: any) => {
-          const skillName = (session.skillName ?? '').trim().toLowerCase();
-          if (skillName !== trimmedSkillname.toLowerCase()) return;
+    const skillName = (session.skillName ?? '').trim().toLowerCase();
+    const venueName = (session.venue ?? '').trim().toLowerCase(); // get venue
+
+    // Check both skillName and venue
+    if (skillName !== trimmedSkillname.toLowerCase() || venueName !== venue.toLowerCase()) return;
+
 
           const [hour, minute, second] = (session.skillStartTime ?? '00:00:00').split(':').map(Number);
           const sessionEndDateTime = new Date(session.toDate);
@@ -410,11 +419,14 @@ onVenueChange(venue: string) {
           if (isActive) {
             const formattedFrom = this.formatDate(session.fromDate);
             const formattedTo = this.formatDate(session.toDate);
-            const range = `${formattedFrom} - ${formattedTo}`;
+            const range = `${formattedFrom} to ${formattedTo}`;
             activeRanges.add(range);
           }
         });
-        this.availableDates = res.filter((range: string) => activeRanges.has(range));
+        //this.availableDates = res.filter((range: string) => activeRanges.has(range));
+        this.availableDates = Array.from(activeRanges);
+        console.log(this.availableDates);
+        console.log(activeRanges);
       },
       error: (err) => {
         // console.error('Error fetching dates:', err);
@@ -435,25 +447,56 @@ formatDate(dateStr: string): string {
   const day = String(d.getDate()).padStart(2, '0');
   const month = String(d.getMonth() + 1).padStart(2, '0');
   const year = d.getFullYear();
-  return `${day}-${month}-${year}`;
+  //return `${day}-${month}-${year}`;
+  return `${year}-${month}-${day}`;
 }
 
+
 onDateChange() {
-  if (this.date) {
-    
-    this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, this.date).subscribe({
-      next: (res) => {
-        this.availableTimes = Array.isArray(res) ? res : res.map((t: any) => t.time);
+  if (!this.date) return;
+
+  this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, this.date)
+    .subscribe(
+      (res: string) => {
+        // If the backend returns a comma-separated string, split it into an array
+        this.availableTimes = res ? res.split(',').map(time => time.trim()) : [];
+        console.log('Available times:', this.availableTimes);
       },
-      error: (err) => {
-        // console.error('❌ Error fetching time slots:', err);
+      (err) => {
+        console.error('❌ Error fetching time slots:', err);
         this.availableTimes = [];
       }
-    });
-  } else {
-    // console.warn('⚠️ No date selected for fetching time slots!');
-  }
+    );
 }
+
+
+
+// onDateChange() {
+//   if (!this.date) return;
+// debugger;
+//   this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, this.date).subscribe({
+//     next: (res) => {
+//       if (Array.isArray(res)) {
+//         // Backend returned array of time slots
+//         this.availableTimes = res;
+//       } else if (typeof res === 'string') {
+//         // Backend returned "No time ranges found..."
+//         this.availableTimes = [];
+//         console.warn(res);
+//       } else {
+//         // Unexpected format
+//         this.availableTimes = [];
+//       }
+//     },
+//     error: (err) => {
+//       console.error('❌ Error fetching time slots:', err);
+//       this.availableTimes = [];
+//     }
+//   });
+// }
+
+
+
 batchMembersCount: number = 0;
 onBatchInputChange() {
   if (this.skillname && this.date && this.time) {
@@ -494,7 +537,75 @@ checkBatchAvailability() {
   });
 }
 
+// GetSessionID() {
+//   this.ielc.GetSkillnameVenueDateTimeDetails(
+//     this.selectedSkill,
+//     this.selectedVenue,
+//     this.selectedDate,
+//     this.selectedTime
+//   ).subscribe((data) => {
+//     this.sessionID = data;
+//     console.log("SessionID:", this.sessionID);
+//   });
+// }
+
+GetSessionIDAllDetails() {
+  //debugger;
+  if (!this.skillname || !this.selectedVenue || !this.date || !this.time) {
+    console.warn('Missing required parameters for getting session ID');
+    return;
+  }
+  this.ielc.GetSkillnameVenueDateTimeDetails(
+    this.skillname,
+    this.selectedVenue,
+    this.date,
+    this.time
+  ).subscribe({
+    next: (data) => {
+      // If data is an array, extract the first element and convert to number
+      if (Array.isArray(data) && data.length > 0) {
+        this.sessionID = Number(data[0]);
+      } else {
+        this.sessionID = Number(data);
+      }
+      console.log("SessionID:", this.sessionID);
+    },
+    error: (err) => {
+      console.error('Error getting session ID:', err);
+      this.sessionID = 0;
+    }
+  });
+}
+
+GetSessionIDSkillVenueDetails() {
+  debugger;
+  if (!this.skillname || !this.selectedVenue) {
+    console.warn('Missing required parameters for getting session ID');
+    return;
+  }
+  this.ielc.GetSkillnameVenueDetails(
+    this.skillname,
+    this.selectedVenue,
+  ).subscribe({
+    next: (data) => {
+      // If data is an array, extract the first element and convert to number
+      if (Array.isArray(data) && data.length > 0) {
+        this.sessionID = Number(data[0]);
+      } else {
+        this.sessionID = Number(data);
+      }
+      console.log("SessionID:", this.sessionID);
+    },
+    error: (err) => {
+      console.error('Error getting session ID:', err);
+      this.sessionID = 0;
+    }
+  });
+}
+
+
 allowEnrollment() {
+  //debugger;
   const now = new Date();
   const fullName = `${this.firstName} ${this.lastName}`;
   let startDate = '';
@@ -515,6 +626,7 @@ allowEnrollment() {
   const date = this.date;
   const time = this.time;
   const mail = this.userEmail ?? '';
+  
 
   if (this.selectedVenue === 'Teams' || this.selectedVenue === 'Offline') {
     this.ielc.checkIfAlreadyEnrolled(skill, date, time, mail).subscribe({
@@ -523,6 +635,7 @@ allowEnrollment() {
           alert('You are already enrolled for this batch!');
           return;
         }
+        //this.GetSessionIDAllDetails();
         const batchCountToInsert = this.selectedVenue === 'Teams' ? this.batchMembersCount : 0;
         this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
       },
@@ -534,6 +647,7 @@ allowEnrollment() {
   } else if (this.selectedVenue === 'Self-Learning') {
     this.ielc.checkVenueEnrollment(skill, this.selectedVenue, mail).subscribe({
       next: (alreadyEnrolled: boolean) => {
+      //this.GetSessionIDSkillVenueDetails();
         if (alreadyEnrolled) {
           alert('You are already enrolled for this skill!');
           return;
@@ -559,7 +673,6 @@ allowEnrollment() {
   } else {
     // For other venues, skip duplicate check for now
     const batchCountToInsert = 0;
-
     this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
   }
 }
@@ -568,9 +681,9 @@ proceedToEnroll(
   fullName: string, mail: string, skill: string, date: string, time: string,
   venue: string, batchCount: number, startDate: string, endDate: string, now: Date
 )
- {
-  const convertedStart = this.convertToISODate(startDate?.trim());
-const convertedEnd = this.convertToISODate(endDate?.trim());
+{
+  const convertedStart = this.convertToISODate(startDate?.trim()) || null;
+  const convertedEnd = this.convertToISODate(endDate?.trim()) || null;
 
   const enrollmentData: EnrollmentData = {
     enrollmentID: 0,
@@ -586,7 +699,7 @@ const convertedEnd = this.convertToISODate(endDate?.trim());
     batchmembers: batchCount,
     enrollmentDate: now.toISOString(),
     startDate: convertedStart,
-    endDate: convertedEnd,    
+    endDate: convertedEnd,
     result: '',
     percentage: '',
     testTakenDate: '',
@@ -595,8 +708,12 @@ const convertedEnd = this.convertToISODate(endDate?.trim());
     communication: '',
     handlingDoubts: '',
     applicationtowork: '',
-    comments: ''
+    comments: '',
+    //sessionID: this.sessionID,
+    sessionID: 100,
   };
+  // Log the full payload for debugging
+  console.log("Enrollment payload:", JSON.stringify(enrollmentData, null, 2));
   this.ielc.enrollUser(enrollmentData).subscribe({
     next: () => {
       alert('Enrollment successful! A confirmation email will be sent shortly.');
@@ -636,10 +753,18 @@ const convertedEnd = this.convertToISODate(endDate?.trim());
         <br>
       `;
 
-      this.emailService.sendEmail(mail,'', subject, body);
+      this.emailService.sendEmail(mail, '', subject, body);
     },
     error: (err) => {
-      // console.error('Enrollment error:', err);
+      console.error('❌ Enrollment error:', err);
+
+      if (err.error?.errors) {
+        for (const field in err.error.errors) {
+          if (err.error.errors.hasOwnProperty(field)) {
+            console.error(`❌ Validation failed: ${field} -> ${err.error.errors[field]}`);
+          }
+        }
+      }
       alert('Enrollment failed. Please try again.');
     }
   });
@@ -932,8 +1057,8 @@ GetExamlist() {
           ? moment(item.testTakenDate, 'MMM D YYYY hh:mmA').toDate()  // Convert to Date
           : null,
       }));
-      console.log("ex",data);
-      console.log("exam",this.examlist);
+      // console.log("ex",data);
+      // console.log("exam",this.examlist);
     }
     this.isLoading = false;
   });
@@ -944,9 +1069,9 @@ checkUserExists() {
   this.GetAllUniqueNames().subscribe((usernames: string[]) => {
     this.showButton = !!(this.userName && usernames.includes(this.userName));
     if (this.showButton) {
-      console.log('Your username exists in the list.');
+      //console.log('Your username exists in the list.');
     } else {
-      console.log('Your username is NOT in the list.');
+      //console.log('Your username is NOT in the list.');
     }
   });
 }
@@ -956,9 +1081,9 @@ checkCoOwnerUserExists() {
     this.coownersshowButton = !!(this.userName && usernames.includes(this.userName));
     if (this.coownersshowButton) {
       //console.log(this.coownersshowButton);
-      console.log('Your username exists in the list.');
+      //console.log('Your username exists in the list.');
     } else {
-      console.log('Your username is NOT in the list.');
+      //console.log('Your username is NOT in the list.');
     }
   });
 }
