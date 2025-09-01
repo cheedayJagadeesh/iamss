@@ -27,44 +27,44 @@ export class IelcapiService {
     });
   }
     //---------------------------------------------------------------------------------------- Registeredusers
-    apiUrl='https://coreappi.azurewebsites.net/EnrollmentData';
+    apiUrl='https://ielcapistage.azurewebsites.net/EnrollmentData';
     GetUsers(): Observable<UsersInfo[]> {
       return this.http.get<UsersInfo[]>(this.apiUrl, {
         headers: this.getHeaders()
       });
     }
 
-    apiskill='https://coreappi.azurewebsites.net/EnrollmentData/skillname'
+    apiskill='https://ielcapistage.azurewebsites.net/EnrollmentData/skillname'
     GetUsersBySkill(skillName: string): Observable<any> {
       return this.http.get<any>(`${this.apiskill}/${skillName}`, {
         headers: this.getHeaders()
       });
     }
-    apistatus='https://coreappi.azurewebsites.net/EnrollmentData/Status'
+    apistatus='https://ielcapistage.azurewebsites.net/EnrollmentData/Status'
     GetUsersByStatus(data: string): Observable<any> {
       return this.http.get<any>(`${this.apistatus}/${data}`, {
         headers: this.getHeaders()
       });
     }
-    apimail='https://coreappi.azurewebsites.net/EnrollmentData/Mail'
+    apimail='https://ielcapistage.azurewebsites.net/EnrollmentData/Mail'
     GetUsersByEmail(data: string): Observable<any> {
       return this.http.get<any>(`${this.apimail}/${data}`, {
         headers: this.getHeaders()
       });
     }
 
-    apivenue="https://coreappi.azurewebsites.net/EnrollmentData/Venue"
+    apivenue="https://ielcapistage.azurewebsites.net/EnrollmentData/Venue"
     GetUsersByVenue(Venue: string): Observable<any> {
       return this.http.get<any>(`${this.apivenue}/${Venue}`, {
         headers: this.getHeaders()
       });
     }
 
-    apidate="https://coreappi.azurewebsites.net/EnrollmentData/StartDate"
+    apidate="https://ielcapistage.azurewebsites.net/EnrollmentData/StartDate"
     GetUsersByDate(date: string): Observable<any> {
       // Convert input date to DD-MM-YYYY format
       const formattedDate = this.convertDateFormat(date);
-      const url = `https://coreappi.azurewebsites.net/EnrollmentData/StartDate/${formattedDate}`;
+      const url = `https://ielcapistage.azurewebsites.net/EnrollmentData/StartDate/${formattedDate}`;
     
       return this.http.get(url, { headers: this.getHeaders() }).pipe(
         map((response: any) => {
@@ -116,7 +116,7 @@ export class IelcapiService {
     GetUsersBytoDate(date: string): Observable<any> {
       // Convert input date to DD-MM-YYYY format
       const formattedDate = this.convertDateFormat(date);
-      const url = `https://coreappi.azurewebsites.net/EnrollmentData/EndDate/${formattedDate}`;
+      const url = `https://ielcapistage.azurewebsites.net/EnrollmentData/EndDate/${formattedDate}`;
     
       return this.http.get(url, { headers: this.getHeaders() }).pipe(
         map((response: any) => {
@@ -146,14 +146,14 @@ export class IelcapiService {
 
     
     
-    apiTime="https://coreappi.azurewebsites.net/EnrollmentData/Time"
+    apiTime="https://ielcapistage.azurewebsites.net/EnrollmentData/Time"
     GetUsersByTime(Time: string): Observable<any> {
       return this.http.get<any>(`${this.apiTime}/${Time}`, {
         headers: this.getHeaders()
       });
     }  
 
-    apiID='https://coreappi.azurewebsites.net/EnrollmentData'
+    apiID='https://ielcapistage.azurewebsites.net/EnrollmentData'
     DeleteDataById(id: number): Observable<void> {
       return this.http.delete<void>(`${this.apiID}/${id}`, {
         headers: this.getHeaders()
@@ -165,7 +165,7 @@ export class IelcapiService {
       return this.http.get<any>(url, { headers: this.getHeaders() });
     }
 
-    url = 'https://coreappi.azurewebsites.net/EnrollmentData';
+    url = 'https://ielcapistage.azurewebsites.net/EnrollmentData';
     enrollUser(enrollmentData: any): Observable<any> {
       const headers = this.getHeaders();
       headers.append('Content-Type', 'application/json');
@@ -173,13 +173,13 @@ export class IelcapiService {
       return this.http.post<any>(this.url, enrollmentData,{ headers: headers });
     }
 
-    checkurl='https://coreappi.azurewebsites.net/EnrollmentData/check'
+    checkurl='https://ielcapistage.azurewebsites.net/EnrollmentData/check'
     checkIfAlreadyEnrolled(skillName: string, date: string, time: string, mail: string) {
       const params = {skillName,date,time,mail};
       return this.http.get<boolean>(this.checkurl, { params , headers: this.getHeaders() });
     }
 
-    checkvenueurl='https://coreappi.azurewebsites.net/EnrollmentData/checkself'
+    checkvenueurl='https://ielcapistage.azurewebsites.net/EnrollmentData/checkself'
     checkVenueEnrollment(skillName: string, venue: string, mail: string) {
     const params = {skillName,venue,mail}
       return this.http.get<boolean>(this.checkvenueurl, { params , headers: this.getHeaders() });
@@ -188,7 +188,7 @@ export class IelcapiService {
 
     //---------------------------------------------------------------------------------------Add New Skills
 
-    EnrolledskillsUrl='https://coreappi.azurewebsites.net/EnrollmentSessions';
+    EnrolledskillsUrl='https://ielcapistage.azurewebsites.net/EnrollmentSessions';
     GetSkillSessions(): Observable<any> {
       return this.http.get<any>(this.EnrolledskillsUrl, { headers: this.getHeaders() });
     }
@@ -218,7 +218,7 @@ export class IelcapiService {
       });
     }
 
-    EnrolledskillDataUrl='https://coreappi.azurewebsites.net/EnrollmentSkillData';
+    EnrolledskillDataUrl='https://ielcapistage.azurewebsites.net/EnrollmentSkillData';
     GetEnrolledSkills(): Observable<any> {
       return this.http.get<any>(this.EnrolledskillDataUrl, { headers: this.getHeaders() });
     }
@@ -230,7 +230,7 @@ export class IelcapiService {
       });
     }
 
-    skillquestionsurl='https://coreappi.azurewebsites.net/IELCQA/create'
+    skillquestionsurl='https://ielcapistage.azurewebsites.net/IELCQA/create'
     PostEnrolledSkillQuestions(skillData: any): Observable<any> {
       // const headers = { 'Content-Type': 'application/json' };
       return this.http.post<any>(this.skillquestionsurl, skillData, {
@@ -248,53 +248,53 @@ export class IelcapiService {
       return this.http.delete(`${this.EnrolledskillDataUrl}/${skillName}`, { headers,observe: 'response' });
     }
     
-    AadUsersUrl='https://coreappi.azurewebsites.net/AADUsersData'
+    AadUsersUrl='https://ielcapistage.azurewebsites.net/AADUsersData'
     GetAadUserslist(): Observable<any> {
       return this.http.get<any>(this.AadUsersUrl, { headers: this.getHeaders() });
     }
 
-    AadUGroupUrl='https://coreappi.azurewebsites.net/AADGroupMails'
+    AadUGroupUrl='https://ielcapistage.azurewebsites.net/AADGroupMails'
     GetAadUserGroupslist(): Observable<any> {
       return this.http.get<any>(this.AadUGroupUrl, { headers: this.getHeaders() });
     }
  
     getUsersOfGroup(groupName: string): Observable<any> {
-      // return this.http.get(`https://coreappi.azurewebsites.net/AADGroupMails/group-users/${encodeURIComponent(groupName)}`);
-      const url = `https://coreappi.azurewebsites.net/AADGroupMails/group-users/${encodeURIComponent(groupName)}`;
+      // return this.http.get(`https://ielcapistage.azurewebsites.net/AADGroupMails/group-users/${encodeURIComponent(groupName)}`);
+      const url = `https://ielcapistage.azurewebsites.net/AADGroupMails/group-users/${encodeURIComponent(groupName)}`;
       return this.http.get(url, { headers: this.getHeaders() });
     }
 
-    Enrolledsessionsurl='https://coreappi.azurewebsites.net/EnrollmentSessions/skills/latest'
+    Enrolledsessionsurl='https://ielcapistage.azurewebsites.net/EnrollmentSessions/skills/latest'
     GetEnrolledSessions(): Observable<any> {
         return this.http.get<any>(this.Enrolledsessionsurl, { headers: this.getHeaders() });
     }
 
-    venuebyskill='https://coreappi.azurewebsites.net/EnrollmentSessions/venues/search/skillName'
+    venuebyskill='https://ielcapistage.azurewebsites.net/EnrollmentSessions/venues/search/skillName'
     GetEnrolledSessionsbyvenue(skillName: string): Observable<any> {
       return this.http.get<any>(`${this.venuebyskill}?skillName=${skillName}`, { headers: this.getHeaders() });
     }
 
-    datebyskill='https://coreappi.azurewebsites.net/EnrollmentSessions/Dates/search'
+    datebyskill='https://ielcapistage.azurewebsites.net/EnrollmentSessions/Dates/search'
     // GetEnrolledSessionsbydate(skillName: string): Observable<any> {
     //   return this.http.get<any>(`${this.datebyskill}/${skillName}`);
     // }
     GetEnrolledSessionsbydate(skill: string, venue: string): Observable<any> {
-      const url = `https://coreappi.azurewebsites.net/EnrollmentSessions/Dates/search/${(skill)}/${(venue)}`;
+      const url = `https://ielcapistage.azurewebsites.net/EnrollmentSessions/Dates/search/${(skill)}/${(venue)}`;
       return this.http.get<any>(url, { headers: this.getHeaders() });
     }
-    timebyskill='https://coreappi.azurewebsites.net/EnrollmentSessions/Times/search'
+    timebyskill='https://ielcapistage.azurewebsites.net/EnrollmentSessions/Times/search'
     GetEnrolledSessionsbytime(skillName: string): Observable<any> {
       return this.http.get<any>(`${this.timebyskill}/${skillName}`, { headers: this.getHeaders() });
     }
     getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): Observable<any> {
-      const url = `https://coreappi.azurewebsites.net/EnrollmentSessions/Times/search/${skillName}/${dateRange}`;
+      const url = `https://ielcapistage.azurewebsites.net/EnrollmentSessions/Times/search/${skillName}/${dateRange}`;
       return this.http.get<any>(url, { headers: this.getHeaders() });
     }
     
 
    //---------------------------------------------------------------------------------------Inteq IT Support
 
-    itsprtUrl='https://coreappi.azurewebsites.net/INTEQITSupport';
+    itsprtUrl='https://ielcapistage.azurewebsites.net/INTEQITSupport';
     GetItSprt(): Observable<any> {
       return this.http.get<any>(this.itsprtUrl, { headers: this.getHeaders() });
     }
@@ -317,7 +317,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.itsprtUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itismsgeneralUrl='https://coreappi.azurewebsites.net/ITSupport';
+    itismsgeneralUrl='https://ielcapistage.azurewebsites.net/ITSupport';
     Getitismsgeneral(): Observable<any> {
       return this.http.get<any>(this.itismsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -338,7 +338,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.itismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itismsguidelineUrl='https://coreappi.azurewebsites.net/ITSupportGuidelinessISMS';
+    itismsguidelineUrl='https://ielcapistage.azurewebsites.net/ITSupportGuidelinessISMS';
     Getitismsguidelines(): Observable<any> {
       return this.http.get<any>(this.itismsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -360,7 +360,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.itismsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itismspolicyUrl='https://coreappi.azurewebsites.net/ITSupportPolicyISMS';
+    itismspolicyUrl='https://ielcapistage.azurewebsites.net/ITSupportPolicyISMS';
     Getitismspolicy(): Observable<any> {
       return this.http.get<any>(this.itismspolicyUrl, { headers: this.getHeaders() });
     }
@@ -382,7 +382,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.itismspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itismsprocedureUrl='https://coreappi.azurewebsites.net/ITSupportProcedureISMS';
+    itismsprocedureUrl='https://ielcapistage.azurewebsites.net/ITSupportProcedureISMS';
     Getitismsprocedure(): Observable<any> {
       return this.http.get<any>(this.itismsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -404,7 +404,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.itismsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itismsformatUrl='https://coreappi.azurewebsites.net/ITSupportFormatsISMS';
+    itismsformatUrl='https://ielcapistage.azurewebsites.net/ITSupportFormatsISMS';
     Getitismsformat(): Observable<any> {
       return this.http.get<any>(this.itismsformatUrl, { headers: this.getHeaders() });
     }
@@ -426,7 +426,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.itismsformatUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itqmsgeneralUrl='https://coreappi.azurewebsites.net/ITSupportGeneralQMS';
+    itqmsgeneralUrl='https://ielcapistage.azurewebsites.net/ITSupportGeneralQMS';
     Getitqmsgeneral(): Observable<any> {
       return this.http.get<any>(this.itqmsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -448,7 +448,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.itqmsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itqmsguidelineUrl='https://coreappi.azurewebsites.net/ITSupportGuidelinessQMS';
+    itqmsguidelineUrl='https://ielcapistage.azurewebsites.net/ITSupportGuidelinessQMS';
     Getitqmsguidelines(): Observable<any> {
       return this.http.get<any>(this.itqmsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -471,7 +471,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.itqmsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itqmspolicyUrl='https://coreappi.azurewebsites.net/ITSupportPolicyQMS';
+    itqmspolicyUrl='https://ielcapistage.azurewebsites.net/ITSupportPolicyQMS';
     Getitqmspolicy(): Observable<any> {
       return this.http.get<any>(this.itqmspolicyUrl, { headers: this.getHeaders() });
     }
@@ -493,7 +493,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.itqmspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itqmsprocedureUrl='https://coreappi.azurewebsites.net/ITSupportProcedureQMS';
+    itqmsprocedureUrl='https://ielcapistage.azurewebsites.net/ITSupportProcedureQMS';
     Getitqmsprocedure(): Observable<any> {
       return this.http.get<any>(this.itqmsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -517,7 +517,7 @@ export class IelcapiService {
     }
 
 
-    itqmsformatUrl='https://coreappi.azurewebsites.net/ITSupportFormatsQMS';
+    itqmsformatUrl='https://ielcapistage.azurewebsites.net/ITSupportFormatsQMS';
     Getitqmsformat(): Observable<any> {
       return this.http.get<any>(this.itqmsformatUrl, { headers: this.getHeaders() });
     }
@@ -542,7 +542,7 @@ export class IelcapiService {
 
      //---------------------------------------------------------------------------------------Inteq Admin/OS Support
 
-     ossprtUrl='https://coreappi.azurewebsites.net/AdminHelpDesk';
+     ossprtUrl='https://ielcapistage.azurewebsites.net/AdminHelpDesk';
      GetosSprt(): Observable<any> {
        return this.http.get<any>(this.ossprtUrl, { headers: this.getHeaders() });
      }
@@ -565,7 +565,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.ossprtUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osismsgeneralUrl='https://coreappi.azurewebsites.net/OperationsSupport';
+    osismsgeneralUrl='https://ielcapistage.azurewebsites.net/OperationsSupport';
     Getosismsgeneral(): Observable<any> {
       return this.http.get<any>(this.osismsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -587,7 +587,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.osismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osismsguidelineUrl='https://coreappi.azurewebsites.net/OperationsSupportGuidelinessISMS';
+    osismsguidelineUrl='https://ielcapistage.azurewebsites.net/OperationsSupportGuidelinessISMS';
     Getosismsguidelines(): Observable<any> {
       return this.http.get<any>(this.osismsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -609,7 +609,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.osismsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osismspolicyUrl='https://coreappi.azurewebsites.net/OperationsSupportPolicyISMS';
+    osismspolicyUrl='https://ielcapistage.azurewebsites.net/OperationsSupportPolicyISMS';
     Getosismspolicy(): Observable<any> {
       return this.http.get<any>(this.osismspolicyUrl, { headers: this.getHeaders() });
     }
@@ -631,7 +631,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.osismspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osismsprocedureUrl='https://coreappi.azurewebsites.net/OperationsSupportProcedureISMS';
+    osismsprocedureUrl='https://ielcapistage.azurewebsites.net/OperationsSupportProcedureISMS';
     Getosismsprocedure(): Observable<any> {
       return this.http.get<any>(this.osismsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -653,7 +653,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.osismsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osismsformatUrl='https://coreappi.azurewebsites.net/OperationsSupportFormatsISMS';
+    osismsformatUrl='https://ielcapistage.azurewebsites.net/OperationsSupportFormatsISMS';
     Getosismsformat(): Observable<any> {
       return this.http.get<any>(this.osismsformatUrl, { headers: this.getHeaders() });
     }
@@ -675,7 +675,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.osismsformatUrl}/${id}`, { headers: this.getHeaders() });
     }
     
-    osqmsgeneralUrl='https://coreappi.azurewebsites.net/OperationsSupportGeneralQMS';
+    osqmsgeneralUrl='https://ielcapistage.azurewebsites.net/OperationsSupportGeneralQMS';
     Getosqmsgeneral(): Observable<any> {
       return this.http.get<any>(this.osqmsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -698,7 +698,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.osqmsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osqmsguidelineUrl='https://coreappi.azurewebsites.net/OperationsSupportGuidelinessQMS';
+    osqmsguidelineUrl='https://ielcapistage.azurewebsites.net/OperationsSupportGuidelinessQMS';
     Getosqmsguidelines(): Observable<any> {
       return this.http.get<any>(this.osqmsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -722,7 +722,7 @@ export class IelcapiService {
     }
 
 
-    osqmspolicyUrl='https://coreappi.azurewebsites.net/OperationsSupportPolicyQMS';
+    osqmspolicyUrl='https://ielcapistage.azurewebsites.net/OperationsSupportPolicyQMS';
     Getosqmspolicy(): Observable<any> {
       return this.http.get<any>(this.osqmspolicyUrl, { headers: this.getHeaders() });
     }
@@ -745,7 +745,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.osqmspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osqmsprocedureUrl='https://coreappi.azurewebsites.net/OperationsSupportProcedureQMS';
+    osqmsprocedureUrl='https://ielcapistage.azurewebsites.net/OperationsSupportProcedureQMS';
     Getosqmsprocedure(): Observable<any> {
       return this.http.get<any>(this.osqmsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -768,7 +768,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.osqmsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osqmsformatUrl='https://coreappi.azurewebsites.net/OperationsSupportFormatsQMS';
+    osqmsformatUrl='https://ielcapistage.azurewebsites.net/OperationsSupportFormatsQMS';
     Getosqmsformat(): Observable<any> {
       return this.http.get<any>(this.osqmsformatUrl, { headers: this.getHeaders() });
     }
@@ -792,7 +792,7 @@ export class IelcapiService {
     }
      //---------------------------------------------------------------------------------------Inteq HR Support
 
-     hrsprtUrl='https://coreappi.azurewebsites.net/HRHelpDesk';
+     hrsprtUrl='https://ielcapistage.azurewebsites.net/HRHelpDesk';
      GetHrSprt(): Observable<any> {
        return this.http.get<any>(this.hrsprtUrl, { headers: this.getHeaders() });
      }
@@ -815,7 +815,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.hrsprtUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrismsgeneralUrl='https://coreappi.azurewebsites.net/HRSupport';
+    hrismsgeneralUrl='https://ielcapistage.azurewebsites.net/HRSupport';
     Gethrismsgeneral(): Observable<any> {
       return this.http.get<any>(this.hrismsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -838,7 +838,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.hrismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrismsguidelineUrl='https://coreappi.azurewebsites.net/HRSupportGuidelinessISMS';
+    hrismsguidelineUrl='https://ielcapistage.azurewebsites.net/HRSupportGuidelinessISMS';
     Gethrismsguidelines(): Observable<any> {
       return this.http.get<any>(this.hrismsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -860,7 +860,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.hrismsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrismspolicyUrl='https://coreappi.azurewebsites.net/HRSupportPolicyISMS';
+    hrismspolicyUrl='https://ielcapistage.azurewebsites.net/HRSupportPolicyISMS';
     Gethrismspolicy(): Observable<any> {
       return this.http.get<any>(this.hrismspolicyUrl, { headers: this.getHeaders() });
     }
@@ -882,7 +882,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.hrismspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrismsprocedureUrl='https://coreappi.azurewebsites.net/HRSupportProcedureISMS';
+    hrismsprocedureUrl='https://ielcapistage.azurewebsites.net/HRSupportProcedureISMS';
     Gethrismsprocedure(): Observable<any> {
       return this.http.get<any>(this.hrismsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -904,7 +904,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.hrismsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrismsformatUrl='https://coreappi.azurewebsites.net/HRSupportFormatsISMS';
+    hrismsformatUrl='https://ielcapistage.azurewebsites.net/HRSupportFormatsISMS';
     Gethrismsformat(): Observable<any> {
       return this.http.get<any>(this.hrismsformatUrl, { headers: this.getHeaders() });
     }
@@ -926,7 +926,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.hrismsformatUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrqmsgeneralUrl='https://coreappi.azurewebsites.net/HRSupportGeneralQMS';
+    hrqmsgeneralUrl='https://ielcapistage.azurewebsites.net/HRSupportGeneralQMS';
     Gethrqmsgeneral(): Observable<any> {
       return this.http.get<any>(this.hrqmsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -949,7 +949,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.hrqmsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrqmsguidelineUrl='https://coreappi.azurewebsites.net/HRSupportGuidelinessQMS';
+    hrqmsguidelineUrl='https://ielcapistage.azurewebsites.net/HRSupportGuidelinessQMS';
     Gethrqmsguidelines(): Observable<any> {
       return this.http.get<any>(this.hrqmsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -973,7 +973,7 @@ export class IelcapiService {
     }
 
 
-    hrqmspolicyUrl='https://coreappi.azurewebsites.net/HRSupportPolicyQMS';
+    hrqmspolicyUrl='https://ielcapistage.azurewebsites.net/HRSupportPolicyQMS';
     Gethrqmspolicy(): Observable<any> {
       return this.http.get<any>(this.hrqmspolicyUrl, { headers: this.getHeaders() });
     }
@@ -996,7 +996,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.hrqmspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrqmsprocedureUrl='https://coreappi.azurewebsites.net/HRSupportProcedureQMS';
+    hrqmsprocedureUrl='https://ielcapistage.azurewebsites.net/HRSupportProcedureQMS';
     Gethrqmsprocedure(): Observable<any> {
       return this.http.get<any>(this.hrqmsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -1019,7 +1019,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.hrqmsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrqmsformatUrl='https://coreappi.azurewebsites.net/HRSupportFormatsQMS';
+    hrqmsformatUrl='https://ielcapistage.azurewebsites.net/HRSupportFormatsQMS';
     Gethrqmsformat(): Observable<any> {
       return this.http.get<any>(this.hrqmsformatUrl, { headers: this.getHeaders() });
     }
@@ -1044,12 +1044,12 @@ export class IelcapiService {
 
   //---------------------------------------------------------------------------------------Inteq Project Support
 
-    prjtsprtUrl='https://coreappi.azurewebsites.net/ProjectsList';
+    prjtsprtUrl='https://ielcapistage.azurewebsites.net/ProjectsList';
     GetprjtSprt(): Observable<any> {
      return this.http.get<any>(this.prjtsprtUrl, { headers: this.getHeaders() });
     }
 
-    prjtismsgeneralUrl='https://coreappi.azurewebsites.net/ProjectsSupport';
+    prjtismsgeneralUrl='https://ielcapistage.azurewebsites.net/ProjectsSupport';
     Getprjtismsgeneral(): Observable<any> {
       return this.http.get<any>(this.prjtismsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -1071,7 +1071,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.prjtismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtismsguidelineUrl='https://coreappi.azurewebsites.net/ProjectsSupportGuidelinessISMS';
+    prjtismsguidelineUrl='https://ielcapistage.azurewebsites.net/ProjectsSupportGuidelinessISMS';
     Getprjtismsguidelines(): Observable<any> {
       return this.http.get<any>(this.prjtismsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -1094,7 +1094,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.prjtismsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtismspolicyUrl='https://coreappi.azurewebsites.net/ProjectsSupportPolicyISMS';
+    prjtismspolicyUrl='https://ielcapistage.azurewebsites.net/ProjectsSupportPolicyISMS';
     Getprjtismspolicy(): Observable<any> {
       return this.http.get<any>(this.prjtismspolicyUrl, { headers: this.getHeaders() });
     }
@@ -1117,7 +1117,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.prjtismspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtismsprocedureUrl='https://coreappi.azurewebsites.net/ProjectsSupportProcedureISMS';
+    prjtismsprocedureUrl='https://ielcapistage.azurewebsites.net/ProjectsSupportProcedureISMS';
     Getprjtismsprocedure(): Observable<any> {
       return this.http.get<any>(this.prjtismsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -1140,7 +1140,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.prjtismsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtismsformatUrl='https://coreappi.azurewebsites.net/ProjectsSupportFormatsISMS';
+    prjtismsformatUrl='https://ielcapistage.azurewebsites.net/ProjectsSupportFormatsISMS';
     Getprjtismsformat(): Observable<any> {
       return this.http.get<any>(this.prjtismsformatUrl, { headers: this.getHeaders() });
     }
@@ -1163,7 +1163,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.prjtismsformatUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtqmsgeneralUrl='https://coreappi.azurewebsites.net/ProjectsSupportGeneralQMS';
+    prjtqmsgeneralUrl='https://ielcapistage.azurewebsites.net/ProjectsSupportGeneralQMS';
     Getprjtqmsgeneral(): Observable<any> {
       return this.http.get<any>(this.prjtqmsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -1186,7 +1186,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.prjtqmsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtqmsguidelineUrl='https://coreappi.azurewebsites.net/ProjectsSupportGuidelinessQMS';
+    prjtqmsguidelineUrl='https://ielcapistage.azurewebsites.net/ProjectsSupportGuidelinessQMS';
     Getprjtqmsguidelines(): Observable<any> {
       return this.http.get<any>(this.prjtqmsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -1210,7 +1210,7 @@ export class IelcapiService {
     }
 
 
-    prjtqmspolicyUrl='https://coreappi.azurewebsites.net/ProjectsSupportPolicyQMS';
+    prjtqmspolicyUrl='https://ielcapistage.azurewebsites.net/ProjectsSupportPolicyQMS';
     Getprjtqmspolicy(): Observable<any> {
       return this.http.get<any>(this.prjtqmspolicyUrl, { headers: this.getHeaders() });
     }
@@ -1233,7 +1233,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.prjtqmspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtqmsprocedureUrl='https://coreappi.azurewebsites.net/ProjectsSupportProcedureQMS';
+    prjtqmsprocedureUrl='https://ielcapistage.azurewebsites.net/ProjectsSupportProcedureQMS';
     Getprjtqmsprocedure(): Observable<any> {
       return this.http.get<any>(this.prjtqmsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -1255,7 +1255,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.prjtqmsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtqmsformatUrl='https://coreappi.azurewebsites.net/ProjectsSupportFormatsQMS';
+    prjtqmsformatUrl='https://ielcapistage.azurewebsites.net/ProjectsSupportFormatsQMS';
     Getprjtqmsformat(): Observable<any> {
       return this.http.get<any>(this.prjtqmsformatUrl, { headers: this.getHeaders() });
     }
@@ -1280,7 +1280,7 @@ export class IelcapiService {
 
 //---------------------------------------------------------------------------------------Inteq Emergency Support
   
-    emersprtUrl='https://coreappi.azurewebsites.net/EmergencyContactList';
+    emersprtUrl='https://ielcapistage.azurewebsites.net/EmergencyContactList';
     GetemerSprt(): Observable<any> {
      return this.http.get<any>(this.emersprtUrl, { headers: this.getHeaders() });
     }
@@ -1303,7 +1303,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.emersprtUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    emergeneralUrl='https://coreappi.azurewebsites.net/Emergency';
+    emergeneralUrl='https://ielcapistage.azurewebsites.net/Emergency';
     Getemergeneral(): Observable<any> {
       return this.http.get<any>(this.emergeneralUrl, { headers: this.getHeaders() });
     }
@@ -1327,7 +1327,7 @@ export class IelcapiService {
    
 //---------------------------------------------------------------------------------------Inteq Various committees Support  
      
-    varcmtsUrl='https://coreappi.azurewebsites.net/VariousCommittees';
+    varcmtsUrl='https://ielcapistage.azurewebsites.net/VariousCommittees';
     Getvarcmt(): Observable<any> {
      return this.http.get<any>(this.varcmtsUrl, { headers: this.getHeaders() });
     }
@@ -1351,7 +1351,7 @@ export class IelcapiService {
     }
 //---------------------------------------------------------------------------------------Inteq ISO 27001
 
-    iso27001Url='https://coreappi.azurewebsites.net/ISO27001';
+    iso27001Url='https://ielcapistage.azurewebsites.net/ISO27001';
     Getiso27001(): Observable<any> {
      return this.http.get<any>(this.iso27001Url, { headers: this.getHeaders() });
     }
@@ -1374,7 +1374,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.iso27001Url}/${id}`, { headers: this.getHeaders() });
     }
 
-    ismsinfoUrl='https://coreappi.azurewebsites.net/ISMSSupport';
+    ismsinfoUrl='https://ielcapistage.azurewebsites.net/ISMSSupport';
     Getismsinfo(): Observable<any> {
      return this.http.get<any>(this.ismsinfoUrl, { headers: this.getHeaders() });
     }
@@ -1397,7 +1397,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.ismsinfoUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    isosprtUrl='https://coreappi.azurewebsites.net/ISOSupport';
+    isosprtUrl='https://ielcapistage.azurewebsites.net/ISOSupport';
     Getisosprt(): Observable<any> {
      return this.http.get<any>(this.isosprtUrl, { headers: this.getHeaders() });
     }
@@ -1420,7 +1420,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.isosprtUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    ispolicyUrl='https://coreappi.azurewebsites.net/ISPolicy';
+    ispolicyUrl='https://ielcapistage.azurewebsites.net/ISPolicy';
     Getispolicy(): Observable<any> {
      return this.http.get<any>(this.ispolicyUrl, { headers: this.getHeaders() });
     }
@@ -1445,7 +1445,7 @@ export class IelcapiService {
 
 //---------------------------------------------------------------------------------------Inteq ISO 9001
     
-    iso9001Url='https://coreappi.azurewebsites.net/ISO9001';
+    iso9001Url='https://ielcapistage.azurewebsites.net/ISO9001';
     Getiso9001(): Observable<any> {
      return this.http.get<any>(this.iso9001Url, { headers: this.getHeaders() });
     }
@@ -1468,14 +1468,14 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.iso9001Url}/${id}`, { headers: this.getHeaders() });
     }
 
-    isoinfoUrl='https://coreappi.azurewebsites.net/ISOSupport';
+    isoinfoUrl='https://ielcapistage.azurewebsites.net/ISOSupport';
     Getisoinfo(): Observable<any> {
      return this.http.get<any>(this.isoinfoUrl, { headers: this.getHeaders() });
     }
 
 //---------------------------------------------------------------------------------------CISO Support
 
-    cisoismsgeneralUrl='https://coreappi.azurewebsites.net/CISO_MR_Support';
+    cisoismsgeneralUrl='https://ielcapistage.azurewebsites.net/CISO_MR_Support';
     Getcisoismsgeneral(): Observable<any> {
       return this.http.get<any>(this.cisoismsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -1497,7 +1497,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.cisoismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoismsguidelineUrl='https://coreappi.azurewebsites.net/CISO_MR_SupportGuidelinessISMS';
+    cisoismsguidelineUrl='https://ielcapistage.azurewebsites.net/CISO_MR_SupportGuidelinessISMS';
     Getcisoismsguidelines(): Observable<any> {
       return this.http.get<any>(this.cisoismsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -1519,7 +1519,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.cisoismsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoismspolicyUrl='https://coreappi.azurewebsites.net/CISO_MR_SupportPolicyISMS';
+    cisoismspolicyUrl='https://ielcapistage.azurewebsites.net/CISO_MR_SupportPolicyISMS';
     Getcisoismspolicy(): Observable<any> {
       return this.http.get<any>(this.cisoismspolicyUrl, { headers: this.getHeaders() });
     }
@@ -1541,7 +1541,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.cisoismspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoismsprocedureUrl='https://coreappi.azurewebsites.net/CISO_MR_SupportProcedureISMS';
+    cisoismsprocedureUrl='https://ielcapistage.azurewebsites.net/CISO_MR_SupportProcedureISMS';
     Getcisoismsprocedure(): Observable<any> {
       return this.http.get<any>(this.cisoismsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -1563,7 +1563,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.cisoismsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoismsformatUrl='https://coreappi.azurewebsites.net/CISO_MR_SupportFormatsISMS';
+    cisoismsformatUrl='https://ielcapistage.azurewebsites.net/CISO_MR_SupportFormatsISMS';
     Getcisoismsformat(): Observable<any> {
       return this.http.get<any>(this.cisoismsformatUrl, { headers: this.getHeaders() });
     }
@@ -1585,7 +1585,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.cisoismsformatUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoqmsgeneralUrl='https://coreappi.azurewebsites.net/CISO_MR_SupportGeneralQMS';
+    cisoqmsgeneralUrl='https://ielcapistage.azurewebsites.net/CISO_MR_SupportGeneralQMS';
     Getcisoqmsgeneral(): Observable<any> {
       return this.http.get<any>(this.cisoqmsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -1609,7 +1609,7 @@ export class IelcapiService {
     }
 
 
-    cisoqmsguidelineUrl='https://coreappi.azurewebsites.net/CISO_MR_SupportGuidelinessQMS';
+    cisoqmsguidelineUrl='https://ielcapistage.azurewebsites.net/CISO_MR_SupportGuidelinessQMS';
     Getcisoqmsguidelines(): Observable<any> {
       return this.http.get<any>(this.cisoqmsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -1632,7 +1632,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.cisoqmsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoqmspolicyUrl='https://coreappi.azurewebsites.net/CISO_MR_SupportPolicyQMS';
+    cisoqmspolicyUrl='https://ielcapistage.azurewebsites.net/CISO_MR_SupportPolicyQMS';
     Getcisoqmspolicy(): Observable<any> {
       return this.http.get<any>(this.cisoqmspolicyUrl, { headers: this.getHeaders() });
     }
@@ -1655,7 +1655,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.cisoqmspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoqmsprocedureUrl='https://coreappi.azurewebsites.net/CISO_MR_SupportProcedureQMS';
+    cisoqmsprocedureUrl='https://ielcapistage.azurewebsites.net/CISO_MR_SupportProcedureQMS';
     Getcisoqmsprocedure(): Observable<any> {
       return this.http.get<any>(this.cisoqmsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -1679,7 +1679,7 @@ export class IelcapiService {
     }
 
 
-    cisoqmsformatUrl='https://coreappi.azurewebsites.net/CISO_MR_SupportFormatsQMS';
+    cisoqmsformatUrl='https://ielcapistage.azurewebsites.net/CISO_MR_SupportFormatsQMS';
     Getcisoqmsformat(): Observable<any> {
       return this.http.get<any>(this.cisoqmsformatUrl, { headers: this.getHeaders() });
     }
@@ -1704,7 +1704,7 @@ export class IelcapiService {
     
 //---------------------------------------------------------------------------------------Hippa
 
-    hippaUrl='https://coreappi.azurewebsites.net/HIPAA';
+    hippaUrl='https://ielcapistage.azurewebsites.net/HIPAA';
     Gethippa(): Observable<any> {
      return this.http.get<any>(this.hippaUrl, { headers: this.getHeaders() });
     }
@@ -1729,7 +1729,7 @@ export class IelcapiService {
     
 //---------------------------------------------------------------------------------------GDPR
 
-    gdprUrl='https://coreappi.azurewebsites.net/GDPR';
+    gdprUrl='https://ielcapistage.azurewebsites.net/GDPR';
     Getgdpr(): Observable<any> {
      return this.http.get<any>(this.gdprUrl, { headers: this.getHeaders() });
     }
@@ -1753,7 +1753,7 @@ export class IelcapiService {
 
 //---------------------------------------------------------------------------------------SOC
 
-    socUrl='https://coreappi.azurewebsites.net/SOC';
+    socUrl='https://ielcapistage.azurewebsites.net/SOC';
     Getsoc(): Observable<any> {
      return this.http.get<any>(this.socUrl, { headers: this.getHeaders() });
     }
@@ -1777,7 +1777,7 @@ export class IelcapiService {
 
 //---------------------------------------------------------------------------------------DPDP
 
-    dpdpUrl='https://coreappi.azurewebsites.net/DPDP';
+    dpdpUrl='https://ielcapistage.azurewebsites.net/DPDP';
     Getdpdp(): Observable<any> {
      return this.http.get<any>(this.dpdpUrl, { headers: this.getHeaders() });
     }
@@ -1799,7 +1799,7 @@ export class IelcapiService {
       return this.http.delete<void>(`${this.dpdpUrl}/${id}`, { headers: this.getHeaders() });
     }
 //---------------------------------------------------------------------------------------feedback
-    feedbackUrl='https://coreappi.azurewebsites.net/EnrollmentData'
+    feedbackUrl='https://ielcapistage.azurewebsites.net/EnrollmentData'
     Updatefeedback(id: number, updatedData: any): Observable<any> {
       const headers = this.getHeaders();
       return this.http.put<any>(`${this.feedbackUrl}/${id}`, updatedData,{headers, observe: 'response' });
@@ -1810,7 +1810,7 @@ export class IelcapiService {
     }
 //---------------------------------------------------------------------------------------Inteq Holidays
 
-    holidaysUrl='https://coreappi.azurewebsites.net/HolidayList';
+    holidaysUrl='https://ielcapistage.azurewebsites.net/HolidayList';
     Getholidays(): Observable<any> {
      return this.http.get<any>(this.holidaysUrl, { headers: this.getHeaders() });
     } 
@@ -1824,7 +1824,7 @@ export class IelcapiService {
     }
     
 //---------------------------------------------------------------------------------------ISMS calendar
-    ismscalenarUrl='https://coreappi.azurewebsites.net/ISMSInteqSoftware_Calendar';
+    ismscalenarUrl='https://ielcapistage.azurewebsites.net/ISMSInteqSoftware_Calendar';
     Getismscalendar(): Observable<any> {
      return this.http.get<any>(this.ismscalenarUrl, { headers: this.getHeaders() });
     } 
@@ -1853,12 +1853,12 @@ export class IelcapiService {
     
 
 //---------------------------------------------------------------------------------------ISMS history
-    ismshistoryUrl='https://coreappi.azurewebsites.net/ISMSInteqSoftware_Calendar/GetHistoryCalendar';
+    ismshistoryUrl='https://ielcapistage.azurewebsites.net/ISMSInteqSoftware_Calendar/GetHistoryCalendar';
     Getismshistory(year: number): Observable<any> {
       return this.http.get<any>(`${this.ismshistoryUrl}?year=${year}`, { headers: this.getHeaders() });
     }
 //---------------------------------------------------------------------------------------QMS calendar
-qmscalenarUrl='https://coreappi.azurewebsites.net/QMSInteqSoftware_Calendar';
+qmscalenarUrl='https://ielcapistage.azurewebsites.net/QMSInteqSoftware_Calendar';
 Getqmscalendar(): Observable<any> {
  return this.http.get<any>(this.qmscalenarUrl, { headers: this.getHeaders() });
 } 
@@ -1881,13 +1881,13 @@ Updateqmscalendar(id: number, updatedData: any): Observable<any> {
 }
 
 //---------------------------------------------------------------------------------------QMS history
-qmshistoryUrl='https://coreappi.azurewebsites.net/QMSInteqSoftware_Calendar/GetHistoryCalendar';
+qmshistoryUrl='https://ielcapistage.azurewebsites.net/QMSInteqSoftware_Calendar/GetHistoryCalendar';
 Getqmshistory(year: number): Observable<any> {
   return this.http.get<any>(`${this.qmshistoryUrl}?year=${year}`, { headers: this.getHeaders() });
 }
 //---------------------------------------------------------------------------------------ISMS mails
 
-    ismsmailsUrl='https://coreappi.azurewebsites.net/ISMSEmails';
+    ismsmailsUrl='https://ielcapistage.azurewebsites.net/ISMSEmails';
     Getismsmails(): Observable<any> {
      return this.http.get<any>(this.ismsmailsUrl, { headers: this.getHeaders() });
     } 
@@ -1920,7 +1920,7 @@ Getqmshistory(year: number): Observable<any> {
  
 //---------------------------------------------------------------------------------------QMS mails
 
-    qmsmailsUrl='https://coreappi.azurewebsites.net/QMSEmails';
+    qmsmailsUrl='https://ielcapistage.azurewebsites.net/QMSEmails';
     Getqmsmails(): Observable<any> {
      return this.http.get<any>(this.qmsmailsUrl, { headers: this.getHeaders() });
     } 
@@ -1950,7 +1950,7 @@ Getqmshistory(year: number): Observable<any> {
 
 //---------------------------------------------------------------------------------------SMTP Admin
 
-    smtpUrl='https://coreappi.azurewebsites.net/SMPTAdmin';
+    smtpUrl='https://ielcapistage.azurewebsites.net/SMPTAdmin';
     Getsmtp(): Observable<any> {
      return this.http.get<any>(this.smtpUrl, { headers: this.getHeaders() });
     } 
@@ -1966,7 +1966,7 @@ Getqmshistory(year: number): Observable<any> {
     }
  //---------------------------------------------------------------------------------------ADmin users
  
- adminusersUrl='https://coreappi.azurewebsites.net/AdminUsersRoles';
+ adminusersUrl='https://ielcapistage.azurewebsites.net/AdminUsersRoles';
    Getadminusers(): Observable<any> {
      return this.http.get<any>(this.adminusersUrl, { headers: this.getHeaders() });
     } 
@@ -1980,7 +1980,7 @@ Getqmshistory(year: number): Observable<any> {
     }  
  //---------------------------------------------------------------------------------------Events
  
- eventsUrl='https://coreappi.azurewebsites.net/Events';
+ eventsUrl='https://ielcapistage.azurewebsites.net/Events';
    Getevents(): Observable<any> {
      return this.http.get<any>(this.eventsUrl, { headers: this.getHeaders() });
     } 
@@ -2009,7 +2009,7 @@ Getqmshistory(year: number): Observable<any> {
     
 //---------------------------------------------------------------------------------------Courses Restriction
  
- courseUrl='https://coreappi.azurewebsites.net/CoursesRestriction';
+ courseUrl='https://ielcapistage.azurewebsites.net/CoursesRestriction';
    Getcourse(): Observable<any> {
      return this.http.get<any>(this.courseUrl, { headers: this.getHeaders() });
     } 
@@ -2031,7 +2031,7 @@ Getqmshistory(year: number): Observable<any> {
 
 //---------------------------------------------------------------------------------------Events Alerts
 //  eventalertsUrl='https://localhost:7154/EventAlerts';
- eventalertsUrl='https://coreappi.azurewebsites.net/EventAlerts';
+ eventalertsUrl='https://ielcapistage.azurewebsites.net/EventAlerts';
    Geteventalerts(): Observable<any> {
     debugger;
      return this.http.get<any>(this.eventalertsUrl, { headers: this.getHeaders() });
@@ -2062,7 +2062,7 @@ Getqmshistory(year: number): Observable<any> {
 
 //================================================================================Exam info
 
-examinfoUrl='https://coreappi.azurewebsites.net/ExamInfo';
+examinfoUrl='https://ielcapistage.azurewebsites.net/ExamInfo';
 Getexaminfo(): Observable<any> {
      return this.http.get<any>(this.examinfoUrl, { headers: this.getHeaders() });
 }    
@@ -2074,7 +2074,7 @@ Updateexaminfo(id: number, updatedData: any): Observable<any> {
   return this.http.put<any>(`${this.examinfoUrl}/${id}`, updatedData, { headers: this.getHeaders() });
 } 
 //=================================================================================skillQA
-skillqaurl='https://coreappi.azurewebsites.net/IELCQA';
+skillqaurl='https://ielcapistage.azurewebsites.net/IELCQA';
 Getskillqa(): Observable<any> {
   return this.http.get<any>(this.skillqaurl, { headers: this.getHeaders() });
 }   
@@ -2105,15 +2105,15 @@ Updateskillqa(id: number, updatedData: any): Observable<any> {
   const headers = this.getHeaders();
   return this.http.put<any>(`${this.skillqaurl}/${id}`, updatedData, {headers, observe: 'response' });
 } 
-skillnameurl='https://coreappi.azurewebsites.net/IELCQA/skillname'
+skillnameurl='https://ielcapistage.azurewebsites.net/IELCQA/skillname'
     GetskillqaBySkill(skillName: string): Observable<any> {
       return this.http.get<any>(`${this.skillnameurl}/${skillName}`, { headers: this.getHeaders() });
     }
 
 
 //===============================================================================================Compliance Isms
-complianceismsUrl='https://coreappi.azurewebsites.net/ISMSInteqSoftware_Calendar';
-complianceqmsUrl='https://coreappi.azurewebsites.net/QMSInteqSoftware_Calendar';
+complianceismsUrl='https://ielcapistage.azurewebsites.net/ISMSInteqSoftware_Calendar';
+complianceqmsUrl='https://ielcapistage.azurewebsites.net/QMSInteqSoftware_Calendar';
 
 Getcomplianceismsdata(): Observable<any> {
      return this.http.get<any>(this.complianceismsUrl, { headers: this.getHeaders() });
@@ -2214,15 +2214,15 @@ sendEmailFromBackend(payload: {
   subject: string;
   body: string;
 }) {
-  const apiUrl = 'https://coreappi.azurewebsites.net/SendEmail/api/sendemail'; // 🔁 Replace with your actual backend API URL
+  const apiUrl = 'https://ielcapistage.azurewebsites.net/SendEmail/api/sendemail'; // 🔁 Replace with your actual backend API URL
   const headers = new HttpHeaders({ 'Content-Type': 'application/json',
     'Authorization': this.apiKey
    });
   return this.http.post(apiUrl, payload, {headers, responseType: 'text' });
 }
 //---------------------------------------------------------------------------------------Events Alerts
-eventschedulerUrl='https://coreappi.azurewebsites.net/';
-eventschedulerAdminUrl='https://coreappi.azurewebsites.net/EventSchedulerAdmin/';
+eventschedulerUrl='https://ielcapistage.azurewebsites.net/';
+eventschedulerAdminUrl='https://ielcapistage.azurewebsites.net/EventSchedulerAdmin/';
 
 
 GetEventSchedulerUserAuditeesDept(): Observable<string[]> {
@@ -2256,7 +2256,7 @@ GetEventSchedulerAdmin(): Observable<string[]> {
   return this.http.put(`${this.eventschedulerAdminUrl}/${id}`, JSON.stringify(updatedData), { headers });
 }
 //---------------------------------------------------------------------------------------
-eventschedulerUserUrl='https://coreappi.azurewebsites.net/EventSchedulerUser/';
+eventschedulerUserUrl='https://ielcapistage.azurewebsites.net/EventSchedulerUser/';
 
 GetEventSchedulerUser(): Observable<string[]> {
   return this.http.get<string[]>(`${this.eventschedulerUserUrl}`, { headers: this.getHeaders() });
@@ -2299,7 +2299,7 @@ GetEventScheduler(): Observable<string[]> {
   return this.http.put(`${this.complianceqmsUrl}/update-month/${id}`, JSON.stringify(updatedData), { headers });
 }
 //--------------------------------------------------------------
-EventSchedulerUser = "https://coreappi.azurewebsites.net/";
+EventSchedulerUser = "https://ielcapistage.azurewebsites.net/";
 
 GetEventSchedulerUserByDept(department: string): Observable<string[]> {
   return this.http.get<string[]>(`${this.eventschedulerUrl}/EventSchedulerUser/auditee`, {
@@ -2355,7 +2355,7 @@ GetByProjectsevents(): Observable<string[]> {
 // GetUserByProjectsEventsc(displayname: string): Observable<string[]> {
 //   return this.http.get<string[]>(`${this.eventsUrl}/userprojectsbydisplayname/${displayname}`, { headers: this.getHeaders() });
 // }
-eventscheduleUrl='https://coreappi.azurewebsites.net/';
+eventscheduleUrl='https://ielcapistage.azurewebsites.net/';
  GetLatestEvent(): Observable<string[]> {
     return this.http.get<any[]>(`${this.eventscheduleUrl}/EventSchedulerUser/latest`, { headers: this.getHeaders() });
 
@@ -2366,15 +2366,15 @@ eventscheduleUrl='https://coreappi.azurewebsites.net/';
       return this.http.put<any>(`${this.eventscheduleUrl}/EventSchedulerUser/schedule/${id}`, updatedData,{headers, observe: 'response' });
 }
 
-extratouser = "https://coreappi.azurewebsites.net/ExtraTousers";
+extratouser = "https://ielcapistage.azurewebsites.net/ExtraTousers";
 
 Getextratouser(): Observable<string[]> {
   return this.http.get<any[]>(`${this.extratouser}`, { headers: this.getHeaders() })
 }
 
 //-----------------------------------------------------------------------------------------
-eventschedulertime = 'https://coreappi.azurewebsites.net/';
-eventschedulertimes = 'https://coreappi.azurewebsites.net/times';
+eventschedulertime = 'https://ielcapistage.azurewebsites.net/';
+eventschedulertimes = 'https://ielcapistage.azurewebsites.net/times';
 
 GetEventSchedulerTimeIds(): Observable<string[]> {
   return this.http.get<any[]>(`${this.eventschedulertime}/timesid`, { headers: this.getHeaders() })
@@ -2413,7 +2413,7 @@ UpdateEventSchedulerTime(id: number, time: string): Observable<void> {
   );
 }
 //---------------------------------------------------------------------------------------CoOwners
-coownersurl = 'https://coreappi.azurewebsites.net/CoOwners';
+coownersurl = 'https://ielcapistage.azurewebsites.net/CoOwners';
 
 GetCoOwners(): Observable<string[]> {
   return this.http.get<any[]>(`${this.coownersurl}`, { headers: this.getHeaders() })
@@ -2453,13 +2453,22 @@ GetCoOwnersAllProjectsList(): Observable<string[]> {
 GetCoOwnersUniqueName(): Observable<string[]> {
   return this.http.get<string[]>(`${this.coownersurl}/uniqueusers`, { headers: this.getHeaders() });
 }
-getWordAsPdf(id: number): Observable<Blob> {
- const url = id 
-    ? `https://localhost:7154/VariousCommittees/GetWordAsPdf/${id}`
-    : `https://localhost:7154/VariousCommittees/GetWordAsPdf`;
+// getWordAsPdf(id: number): Observable<Blob> {
+//  const url = id 
+//     ? `https://localhost:7154/VariousCommittees/GetWordAsPdf/${id}`
+//     : `https://localhost:7154/VariousCommittees/GetWordAsPdf`;
+//   return this.http.get(url, {
+//     headers: this.getHeaders(),
+//     responseType: 'blob'  // <-- Important, PDF is binary
+//   });
+// }
+// }
+
+getWordAsPdf(fileName: string): Observable<Blob> {
+  const url = `https://localhost:7154/VariousCommittees/GetWordAsPdf?fileName=${encodeURIComponent(fileName)}`;
   return this.http.get(url, {
     headers: this.getHeaders(),
-    responseType: 'blob'  // <-- Important, PDF is binary
+    responseType: 'blob'
   });
 }
 }

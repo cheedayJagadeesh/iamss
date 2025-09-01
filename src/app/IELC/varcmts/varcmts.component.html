@@ -20,6 +20,7 @@
                     <th scope="col" style="width:30%">URL</th>
                 </tr>
             </thead>
+
             <!-- <tbody>
                 <tr *ngFor="let item of varcmtlist">
                     <td>{{ item.documentName }}</td>
@@ -29,12 +30,17 @@
                 </tr>
             </tbody> -->
 
-
             <tbody>
                 <tr *ngFor="let item of varcmtlist">
                     <td>{{ item.documentName }}</td>
                     <td>
-                        <a href="javascript:void(0)" (click)="openDocument(item.id)">Click Here</a>
+                        <a href="javascript:void(0)" (click)="openDocument('Restricted - Annexure Y - Agile Life cycle (Ver 1.0).docx')">Click Here</a>
+                        <!-- <br>
+                        <a href="javascript:void(0)" (click)="openDocument('Restricted - Annexure-Z--Agile Checklist (Ver 1.0).docx')">Click Here</a>
+                        <br>
+                         <a href="javascript:void(0)" (click)="openDocument('Restricted - Inteq Secured Software Development Procedure PP023 (Ver 1.0).docx')">Click Here</a>
+                         <br>
+                         <a href="javascript:void(0)" (click)="openDocument('Restricted - Operational Procedure for Operations Department PP020 (Ver 1.0).docx')">Click Here</a> -->
                     </td>
                 </tr>
             </tbody>

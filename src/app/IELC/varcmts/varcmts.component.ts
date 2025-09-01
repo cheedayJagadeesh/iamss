@@ -48,8 +48,15 @@ export class VarcmtsComponent {
 //   }
 pdfUrl: string | null = null;
 
-openDocument(id: number) {
-  this.ielc.getWordAsPdf(id).subscribe(blob => {
+// openDocument(id: number) {
+//   this.ielc.getWordAsPdf(id).subscribe(blob => {
+//     const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+//     this.pdfUrl = URL.createObjectURL(pdfBlob);
+//   });
+// }
+openDocument(fileName: string) {
+  debugger;
+  this.ielc.getWordAsPdf(fileName).subscribe(blob => {
     const pdfBlob = new Blob([blob], { type: 'application/pdf' });
     this.pdfUrl = URL.createObjectURL(pdfBlob);
   });
