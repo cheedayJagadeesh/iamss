@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/authservice.service';
 import { MsalService } from '@azure/msal-angular';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -23,6 +23,9 @@ userRole: string | null = null;
   //isSidebarClosed = false;
   openMenu: string | null = null;
   msalService: any;
+  activeDropdown: string | null = null;
+activeSubDropdown: string | null = null;
+isOpen: { [key: string]: boolean } = {};
 
 
   
@@ -79,17 +82,107 @@ userRole: string | null = null;
       this.userInfoInitialized = true;
     });
     
-  
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+         const url = event.urlAfterRedirects;
+
+        if (url.includes('isms')) {
+          this.isOpen['compliance'] = true;
+          this.isOpen['isms'] = true;
+        } else if (url.includes('qms')) {
+          this.isOpen['compliance'] = true;
+          this.isOpen['qms'] = true;
+        } else if (url.includes('soc2')) {
+          this.isOpen['compliance'] = true;
+          this.isOpen['soc2'] = true;
+        }
+      }
+    });
   }
   
+// private setActiveMenu(url: string) {
+//     // Reset all menus
+//     this.isOpen = {};
+
+//     // Expand based on active route
+//     if (url.startsWith('/isms')) {
+//       this.isOpen['compliance'] = true;
+//       this.isOpen['isms'] = true;
+//     } else if (url.startsWith('/qms')) {
+//       this.isOpen['compliance'] = true;
+//       this.isOpen['qms'] = true;
+//     } else if (url.startsWith('/soc2')) {
+//       this.isOpen['compliance'] = true;
+//       this.isOpen['soc2'] = true;
+//     }
+//   }
+
+//  private setActiveMenu(url: string) {
+//     // Reset
+//     this.isOpen = {};
+
+//     // Top level: Compliance
+//     if (url.startsWith('/isms') || url.startsWith('/qms') || url.startsWith('/soc2')) {
+//       this.isOpen['compliance'] = true;
+//     }
+
+//     // Expand ISMS sub menu
+//     if (url.startsWith('/isms')) {
+//       this.isOpen['isms'] = true;
+//     }
+
+//     // Expand QMS sub menu
+//     if (url.startsWith('/qms')) {
+//       this.isOpen['qms'] = true;
+//     }
+
+//     // Expand SOC2 sub menu
+//     if (url.startsWith('/soc2')) {
+//       this.isOpen['soc2'] = true;
+//     }
+//   }
+  
+setActiveDropdown(menu: string | null) {
+  this.activeDropdown = menu;
+  this.activeSubDropdown = null; // reset sub menus when switching main menu
+}
+
+setActiveSubDropdown(submenu: string | null) {
+  this.activeSubDropdown = submenu;
+}
+
+// toggleDropdown(menu: string) {
+//   this.isOpen[menu] = !this.isOpen[menu];
+// }
+
+// toggleDropdown(menu: string) {
+//   // Collapse siblings when expanding one submenu
+//   if (menu === 'isms' || menu === 'qms' || menu === 'soc2') {
+//     this.isOpen['isms'] = false;
+//     this.isOpen['qms'] = false;
+//     this.isOpen['soc2'] = false;
+//   }
+//   this.isOpen[menu] = !this.isOpen[menu];
+// }
+
+// toggleDropdown(menu: string) {
+//   this.openDropdown = this.openDropdown === menu ? null : menu;
+// }
+
+ toggleDropdown(menu: string) {
+    if (menu === 'isms' || menu === 'qms' || menu === 'soc2') {
+      this.isOpen['isms'] = false;
+      this.isOpen['qms'] = false;
+      this.isOpen['soc2'] = false;
+    }
+    this.isOpen[menu] = !this.isOpen[menu];
+  }
+
  
   toggleSidebar() {
   this.isSidebarClosed = !this.isSidebarClosed;
 }
 
-toggleDropdown(menu: string) {
-  this.openDropdown = this.openDropdown === menu ? null : menu;
-}
 
   canAccess(page: string): boolean {
     const pageLower = page.toLowerCase();
