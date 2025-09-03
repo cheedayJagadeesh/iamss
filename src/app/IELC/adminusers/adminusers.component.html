@@ -6716,7 +6716,7 @@
                         <span>{{ item.url }}</span>
                     </td>
                     <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click
+                        <a href="javascript:void(0)" (click)="openDocument(item.fileName)" style="margin-left: 10px;">Click
                             Here</a>
                     </td>
                     <td>
@@ -6813,6 +6813,9 @@
                         </button>
                     </td>
                 </tr>
+                   <!-- PDF Popup Component -->
+                <app-document-viewer [pdfUrl]="pdfUrl" (closePopup)="closePdf()">
+                </app-document-viewer>
             </tbody>
         </table>
     </div>

@@ -1,4 +1,4 @@
-import { Component,OnInit,ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { __values } from 'tslib';
@@ -16,16 +16,16 @@ declare var Email: any;
 
 
 
-interface holidaysinfo{
+interface holidaysinfo {
   date: string;
   content: string;
 }
-interface eventsinfo{
+interface eventsinfo {
   id: number;
   eventData: string;
   eventName: string;
 }
-interface exam{
+interface exam {
   id: number;
   examTime: number;
   batchLimitMembers: number;
@@ -33,10 +33,10 @@ interface exam{
   standardExamQuestions: number;
   examPercentage: number;
 }
-interface examlisinfot{
+interface examlisinfot {
   testTakenDate: string | null;
 }
-interface feedback{
+interface feedback {
   subjectMatterKnowledge: string;
   presentation: string;
   communication: string;
@@ -45,7 +45,7 @@ interface feedback{
   comments: string;
 }
 
-interface Result{
+interface Result {
   result: string;
   percentage: string;
   testTakenDate: string;
@@ -57,9 +57,9 @@ interface crserest {
 interface SkillSession {
   sessionID: number;
   skillName: string;
-  aadUsersData?: string; 
+  aadUsersData?: string;
   groups?: string;
- 
+
 }
 
 interface EnrollmentData {
@@ -106,61 +106,105 @@ interface EmailPayload {
 export class RegistrationComponent implements OnInit {
 
 
-  // @Input() enrollmentList: any[] = [];
-  // @Input() submittedFeedbackIds: string[] = [];
-  
-  // hasSubmittedFeedback(id: string): boolean {
-  //   return this.submittedFeedbackIds.includes(id);
-  // }
+  selectedValue: string = '';
+  showPopup: boolean = false;
+ selectedOption: any = null;
 
-  enrollmentList: any[] = [];
-  submittedFeedbackIds: any[] = [];
-  submittedResultIds: any[] = [];
-  loadingExamResults = true;
-  @ViewChild('registration') registration!: NgForm;
- // currentDate:Date=new Date()
+  modeOptions = [
+    { value: '1', label: 'Azure' },
+    { value: '2', label: 'ISO 9001 Documents and QMS Manual' },
+    { value: '3', label: 'Security Awareness - Online Frauds' },
+    { value: '4', label: 'QMS Awareness Training' },
+    { value: '5', label: 'ISMS Awareness Training' },
+    { value: '6', label: 'ISMS Awareness Training - Inteq' },
+    { value: '7', label: 'ISMS Training Module IV - Fire Extinguisher Usage' },
+    { value: '8', label: 'ISMS Training Module III' },
+    { value: '9', label: 'ISMS Training Module II' },
+    { value: '10', label: 'ISMS Training Module I' },
+  ];
+
+  Enrolledskill: { skillName: string }[] = [];
+
+  onVenueChange1(event: any) {
+    const value = event.target.value;
+    if (value === 'option1') {
+      this.showPopup = true;   // Open popup in center
+    } else {
+      this.showPopup = false;
+    }
+  }
+  // this will hold the available skills for the 2nd dropdown
+    // selectedOption: any = null;
+  closePopup() {
+    this.showPopup = false;
+    this.selectedValue = '';  // reset dropdown so change fires again next time
+ 
+    if (this.selectedOption) {
+    const label = this.selectedOption.label;
+
+    const exists = this.Enrolledskill.some(s => s.skillName === label);
+    if (!exists) {
+      this.Enrolledskill.push({ skillName: label });
+    }
+
+    this.skillname = label; // auto-select label
+  }
+}
+// @Input() enrollmentList: any[] = [];
+// @Input() submittedFeedbackIds: string[] = [];
+
+// hasSubmittedFeedback(id: string): boolean {
+//   return this.submittedFeedbackIds.includes(id);
+// }
+
+enrollmentList: any[] = [];
+submittedFeedbackIds: any[] = [];
+submittedResultIds: any[] = [];
+loadingExamResults = true;
+@ViewChild('registration') registration!: NgForm;
+// currentDate:Date=new Date()
 
 
- selectedDate:string=''
- examlist: any[] = []; 
- Registeredusers: any[] = []; 
- isLoading = true;
- feedbackLoaded = false;
- skillname='';
- mode='';
- date:string = '';
- time:string = '';
- mobile='';
- examdata:exam={
+selectedDate: string = ''
+examlist: any[] = [];
+Registeredusers: any[] = [];
+isLoading = true;
+feedbackLoaded = false;
+skillname = '';
+mode = '';
+date: string = '';
+time: string = '';
+mobile = '';
+examdata: exam = {
   id: 0,
   examTime: 0,
   batchLimitMembers: 0,
   displayExamQuestions: 0,
   standardExamQuestions: 0,
   examPercentage: 0
- }
- leave='';
- // month=''
- // year=''
- work='';
- taskslist=''
- email='incidents@inteqsolutions.com'
- holidayslist: any[] = []; 
- holidaysdata:holidaysinfo={
+}
+leave = '';
+// month=''
+// year=''
+work = '';
+taskslist = ''
+email = 'incidents@inteqsolutions.com'
+holidayslist: any[] = [];
+holidaysdata: holidaysinfo = {
   date: '',
   content: ''
- }
- eventslist: any[]=[];
- eventsdata:eventsinfo={
+}
+eventslist: any[] = [];
+eventsdata: eventsinfo = {
   id: 0,
   eventData: '',
   eventName: ''
- }
-latestEvent: any= null; 
-page: number = 1;  
-itemsPerPage: number = 5; 
-Enrolledskills: any[] = []; 
-venueList: any[]=[];   
+}
+latestEvent: any = null;
+page: number = 1;
+itemsPerPage: number = 5;
+Enrolledskills: any[] = [];
+venueList: any[] = [];
 selectedVenue: string = '';
 selectDate: string = '';
 selectedTime: string = '';
@@ -172,23 +216,23 @@ showDateTimeDropdowns: boolean = false;
 batchMemberCount: number = 0;
 currentUser: any = {};
 allSkillSessions: any[] = [];
-constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute,private emailService: EmailService){
-   // this.selectedDate= new Date().toString()
-   this.selectedDate= new Date().toISOString().split('T')[0]
-   this.isTimeInputDisabled=true;
-   this.GetHolidayslist();
-   this.GetEventsList();
-   this.GetExamlist();
+constructor(private ielc: IelcapiService, private msalService: MsalService, private authService: AuthService, private router: Router, private route: ActivatedRoute, private emailService: EmailService){
+  // this.selectedDate= new Date().toString()
+  this.selectedDate = new Date().toISOString().split('T')[0]
+  this.isTimeInputDisabled = true;
+  this.GetHolidayslist();
+  this.GetEventsList();
+  this.GetExamlist();
   //  this.GetAllUsers();
   this.GetCourseist();
-  
+
   // this.GetAllSkillSessions();
   // this.GetEnrolledSessionsSkillsData();
   // this.loadUserRestrictionsAndSessions();
-   if (this.eventslist && this.eventslist.length > 0) {
+  if (this.eventslist && this.eventslist.length > 0) {
     this.eventslist = this.eventslist.sort((a, b) => Number(b.id) - Number(a.id));
   }
-  
+
   this.Registeredusers.forEach((item) => {
     if (item.testTakenDate) {
       // Convert the string to a valid Date object
@@ -196,9 +240,9 @@ constructor(private ielc:IelcapiService,private msalService: MsalService, privat
     }
   });
 
-  
 
- }
+
+}
 //  currentUserEmail: string = '';
 // currentUserGroups: string[] = [];
 // aadUsers: any[] = [];
@@ -304,7 +348,7 @@ convertToISODate(dateStr: string): string {
 
 
 
- formatCustomDate(dateStr: string | null): string {
+formatCustomDate(dateStr: string | null): string {
   if (!dateStr) return 'Invalid Date';
 
   // Normalize spaces
@@ -326,12 +370,12 @@ convertToISODate(dateStr: string): string {
 
 
 
- 
- userName: string | null = null;
- userEmail: string | null = null;
- firstName: string = '';
- middleName: string = '';
- lastName: string = '';
+
+userName: string | null = null;
+userEmail: string | null = null;
+firstName: string = '';
+middleName: string = '';
+lastName: string = '';
 //  async ngOnInit() {
 //    try {
 //      await this.msalService.instance.handleRedirectPromise(); // Ensure MSAL is initialized
@@ -366,16 +410,16 @@ convertToISODate(dateStr: string): string {
 //    }
 //  }
 async ngOnInit() {
-  
+
   try {
     // console.log("Initializing MSAL...");
-    
+
     // Ensure MSAL is properly initialized before proceeding
-    await this.msalService.instance.initialize();  
+    await this.msalService.instance.initialize();
     await this.msalService.instance.handleRedirectPromise();
 
     // console.log("MSAL initialized successfully.");
-    
+
     const activeAccount = this.msalService.instance.getActiveAccount();
     if (!activeAccount) {
       // console.warn("No active account found. Redirecting to login...");
@@ -383,24 +427,24 @@ async ngOnInit() {
       return;
     }
 
-    
+
     this.authService.setActiveAccount();
 
     this.authService.userDetails$.subscribe(userDetails => {
       // this.userName = userDetails?.displayName || 'Unknown User';
       // this.userEmail = userDetails?.email || 'No Email';
-      this.currentUser = userDetails;  
-      this.userName = userDetails?.displayName ;
+      this.currentUser = userDetails;
+      this.userName = userDetails?.displayName;
       this.userEmail = userDetails?.email;
       // const loggedInEmail = userDetails?.email || '';
-    
+
 
       // this.authService.userInfo$.subscribe(userInfo => {
       //   if (userInfo?.email && userInfo?.roleName) {
       //     // console.log("User info received:", userInfo);
       //     this.userName = userInfo?.displayName;
       //     this.userEmail = userInfo.email;
-       
+
       // if (this.userEmail) {
       //   const emailPrefix = this.userEmail.split('@')[0]; // Get the part before '@'
       //   const nameParts = emailPrefix.split(/[._]/); // Split by dot (.) or underscore (_)
@@ -415,30 +459,30 @@ async ngOnInit() {
         this.middleName = nameParts.length > 2 ? nameParts.slice(1, -1).join(' ') : '';
         // this.userName = `${this.firstName} ${this.middleName} ${this.lastName}`.trim();
       }
-      
-    
+
+
     });
     this.authService.userDetails$.subscribe(userDetails => {
       if (userDetails) {
         this.userEmail = userDetails.email; // Ensure the email is correctly assigned
         this.GetAllUsers(); // Call this AFTER we get the email
-        this.GetAllSkillSessions(); 
+        this.GetAllSkillSessions();
         this.checkUserExists();
         this.checkCoOwnerUserExists();
-       
+
         // this.GetEnrolledSessionsSkillsData()
       }
-    });   
+    });
   }
-  
-  
-   catch (error) {
+
+
+  catch (error) {
     // console.error("MSAL initialization error in HeaderComponent:", error);
   }
   // this.GetAllUsers();
-  
+
 }
- logout(): void {
+logout(): void {
   this.authService.logout();
 }
 sortRegisteredUsers(data: any[]): any[] {
@@ -452,7 +496,7 @@ sortRegisteredUsers(data: any[]): any[] {
 //       this.Registeredusers = this.sortRegisteredUsers(
 //         data.filter(user => user.mail === aadEmail)
 //       );
-     
+
 //     } else {
 //       this.Registeredusers = []; // No users if email is missing
 //     }
@@ -472,7 +516,7 @@ sortRegisteredUsers(data: any[]): any[] {
 //     )
 //     .map(user => user.enrollmentID); 
 
-    
+
 
 //     if (aadEmail) {
 //       this.Registeredusers = this.sortRegisteredUsers(
@@ -481,12 +525,12 @@ sortRegisteredUsers(data: any[]): any[] {
 //         ...user,
 //         testTakenDate: user.testTakenDate ? this.formatCustomDate(user.testTakenDate) : null,
 //       }));
-      
+
 //     } else {
 //       this.Registeredusers = [];
 //     }
 //   });
-  
+
 // }
 
 GetAllUsers() {
@@ -498,10 +542,10 @@ GetAllUsers() {
         data.filter(user => user.mail === aadEmail)
       ).map(user => {
         const hasFeedback = user.subjectMatterKnowledge &&
-                            user.presentation &&
-                            user.communication &&
-                            user.handlingDoubts &&
-                            user.applicationtowork;
+          user.presentation &&
+          user.communication &&
+          user.handlingDoubts &&
+          user.applicationtowork;
 
         return {
           ...user,
@@ -561,7 +605,7 @@ hasSubmittedFeedback(enrollmentID: string): boolean {
 //       // Filter out expired venues
 //       // const validVenues = venues.filter(venue => new Date(venue.toDate) >= today);
 
-      
+
 //         // Filter out expired venues
 //         const validVenues = venues.filter(venue => {
 //           console.log('🔍 Venue:', venue); // Debug log to check the structure of each venue
@@ -569,10 +613,10 @@ hasSubmittedFeedback(enrollmentID: string): boolean {
 //             console.warn('⚠️ Missing toDate for venue:', venue);
 //             return true; // Treat missing toDate as valid
 //           }
-  
+
 //           const toDate = new Date(venue.toDate);
 //           console.log('🔍 Parsed toDate:', toDate);
-  
+
 //           return toDate >= today;  // Filter only venues that are valid
 //         });
 
@@ -604,7 +648,7 @@ onSkillChange(skill: string) {
       // Group the sessions based on skill name and filter by active sessions
       this.visibleSessionIds.forEach((session: any) => {
         // console.log('🧩 Session being processed:', session); // Log session structure
-        
+
         const skillName = (session.skillName ?? '').trim();
         const skillKey = skillName.toLowerCase();
         const sessionEndDate = new Date(session.toDate);
@@ -612,7 +656,7 @@ onSkillChange(skill: string) {
 
 
         // if (skill.toLowerCase() === skillKey && isActive) {
-          if (skill.trim().toLowerCase() === skillKey && isActive) {
+        if (skill.trim().toLowerCase() === skillKey && isActive) {
 
           // Add active sessions to the map for this skill
           if (!skillSessionMap.has(skillKey)) {
@@ -624,7 +668,7 @@ onSkillChange(skill: string) {
 
       // Now filter out the sessions based on the selected skill and only active ones
       const activeSkillSessions = skillSessionMap.get(skill.trim().toLowerCase()) || [];
-      
+
       // Only active venues for this skill will be considered
       if (activeSkillSessions.length > 0) {
         // Extract venue names directly from the `venue` property
@@ -674,7 +718,7 @@ convertToDDMMYYYY(dateStr: string): string {
 //         this.availableDates = [];
 //       }
 //     });
-    
+
 
 //     // this.ielc.GetEnrolledSessionsbytime(this.skillname).subscribe({
 //     //   next: (res) => {
@@ -693,7 +737,7 @@ convertToDDMMYYYY(dateStr: string): string {
 //         // Now that you have a selected date, fetch time slots for that date range
 //         const selectedDateRange = this.date; // This should be a selected date from availableDates (e.g., '11-04-2025 - 24-04-2025')
 //         const correctedDateRange = selectedDateRange.split(' - ').map(date => this.convertToDDMMYYYY(date)).join(' - '); // Convert to YYYY-MM-DD for the API
-    
+
 //       this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, encodeURIComponent(correctedDateRange)).subscribe({
 //         next: (res) => {
 //           console.log('✅ Time slots for selected range:', res);
@@ -707,7 +751,7 @@ convertToDDMMYYYY(dateStr: string): string {
 //     } else {
 //       console.warn('⚠️ Date range not selected before time fetch!');
 //     }
-    
+
 
 //     // if (this.date && this.time) {
 //     //   this.checkBatchAvailability();
@@ -728,7 +772,7 @@ onVenueChange(venue: string) {
   if (this.showDateTimeDropdowns && this.skillname) {
     // Fetch available dates first
     const trimmedSkillname = this.skillname.trim();
-    this.ielc.GetEnrolledSessionsbydate(trimmedSkillname,venue).subscribe({
+    this.ielc.GetEnrolledSessionsbydate(trimmedSkillname, venue).subscribe({
       next: (res) => {
         // console.log('Date response:', res);
         // Process the date range data (Convert to DD-MM-YYYY)
@@ -736,7 +780,7 @@ onVenueChange(venue: string) {
         //   const [start, end] = range.split(' - ');
         //   return `${this.convertToDDMMYYYY(start)} - ${this.convertToDDMMYYYY(end)}`;
         // });
-        
+
         const now = new Date();
         // console.log('📥 Raw available date ranges from backend:', res);
 
@@ -795,7 +839,7 @@ formatDate(dateStr: string): string {
 onDateChange() {
   // If a valid date is selected from the available dates
   if (this.date) {
-    
+
     this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, this.date).subscribe({
       next: (res) => {
         // console.log('✅ Time slots for selected range:', res);
@@ -847,7 +891,7 @@ checkBatchAvailability() {
   this.ielc.GetBatchMembers(this.skillname, this.date, this.time).subscribe({
     next: (count: number) => {
       if (typeof count === 'number') {
-        this.batchMembersCount = count+1;
+        this.batchMembersCount = count + 1;
         if (this.batchMembersCount >= 150) {
           alert('Batch is full. Please choose another Date/Time slot.');
         }
@@ -958,7 +1002,7 @@ allowEnrollment() {
     startDate = this.date || '';
     endDate = this.date || '';
   }
-  const formattedNow = now.toISOString().split('T')[0]; 
+  const formattedNow = now.toISOString().split('T')[0];
   // If startDate or endDate empty, assign current date
   if (!startDate) startDate = formattedNow;
   if (!endDate) endDate = formattedNow;
@@ -969,7 +1013,7 @@ allowEnrollment() {
   const time = this.time;
   const mail = this.userEmail ?? '';
 
-  
+
 
   // If Teams, do the duplicate check
   if (this.selectedVenue === 'Teams' || this.selectedVenue === 'Offline') {
@@ -992,7 +1036,7 @@ allowEnrollment() {
         alert('Failed to verify enrollment status. Please try again.');
       }
     });
-  // } else if (this.selectedVenue !== 'Teams') {
+    // } else if (this.selectedVenue !== 'Teams') {
   } else if (this.selectedVenue === 'Self-Learning') {
     // Duplicate check for self-learning
     this.ielc.checkVenueEnrollment(skill, this.selectedVenue, mail).subscribe({
@@ -1033,7 +1077,7 @@ proceedToEnroll(
   fullName: string, mail: string, skill: string, date: string, time: string,
   venue: string, batchCount: number, startDate: string, endDate: string, now: Date
 )
- {
+{
   // const convertedStart = this.convertToISODate((startDate || '').trim()) || new Date().toISOString();
   // const convertedEnd = this.convertToISODate((endDate || '').trim()) || new Date().toISOString();
 
@@ -1041,7 +1085,7 @@ proceedToEnroll(
   // console.log('📦 Raw End Date before conversion:', endDate);
 
   const convertedStart = this.convertToISODate(startDate?.trim());
-const convertedEnd = this.convertToISODate(endDate?.trim());
+  const convertedEnd = this.convertToISODate(endDate?.trim());
 
 
   // console.log('✅ Converted Start Date:', convertedStart);
@@ -1061,7 +1105,7 @@ const convertedEnd = this.convertToISODate(endDate?.trim());
     batchmembers: batchCount,
     enrollmentDate: now.toISOString(),
     startDate: convertedStart,
-    endDate: convertedEnd,    
+    endDate: convertedEnd,
     result: '',
     percentage: '',
     testTakenDate: '',
@@ -1117,7 +1161,7 @@ const convertedEnd = this.convertToISODate(endDate?.trim());
         <br>
       `;
 
-      this.emailService.sendEmail(mail,'', subject, body);
+      this.emailService.sendEmail(mail, '', subject, body);
     },
     error: (err) => {
       // console.error('Enrollment error:', err);
@@ -1150,7 +1194,7 @@ resetForm(): void {
 //   // const matchedSession = this.allSkillSessions.find((session: any) =>
 //   //   session.skillName?.trim().toLowerCase() === skill.trim().toLowerCase() &&
 //   //   session.venue?.trim().toLowerCase() === venue.trim().toLowerCase() 
-    
+
 //   // );
 //     // Convert the selected date to the format (YYYY-MM-DD)
 //     const [selectedStartDate, selectedEndDate] = date.split(' - ').map(this.convertToYYYYMMDD);
@@ -1160,10 +1204,10 @@ resetForm(): void {
 //       // Convert session dates to the same format (YYYY-MM-DD)
 //       const sessionStartDate = this.convertToYYYYMMDD(session.fromDate);
 //       const sessionEndDate = this.convertToYYYYMMDD(session.toDate);
-  
+
 //       // Format the session time range
 //       const sessionTime = `${this.convertTo12HourFormat(session.skillStartTime)} - ${this.convertTo12HourFormat(session.skillEndTime)}`;
-  
+
 //       // Compare skill, venue, date range, and time
 //       return session.skillName?.trim().toLowerCase() === skill.trim().toLowerCase() &&
 //              session.venue?.trim().toLowerCase() === venue.trim().toLowerCase() &&
@@ -1208,24 +1252,24 @@ getSessionDescription(skill: string, venue: string, date: string, time: string):
     //   sessionTime,
     //   paramTime: time
     // });
-    
+
 
 
     if (venue === 'Teams') {
       // Compare skill, venue, date range, and time for "Teams" venue
       return session.skillName?.trim().toLowerCase() === skill.trim().toLowerCase() &&
-             session.venue?.trim().toLowerCase() === venue.trim().toLowerCase() &&
-             (selectedStartDate >= sessionStartDate && selectedEndDate <= sessionEndDate) &&
-             time === sessionTime;
-             
+        session.venue?.trim().toLowerCase() === venue.trim().toLowerCase() &&
+        (selectedStartDate >= sessionStartDate && selectedEndDate <= sessionEndDate) &&
+        time === sessionTime;
+
     } else {
       // Compare only skill and venue for non-"Teams" venue
       return session.skillName?.trim().toLowerCase() === skill.trim().toLowerCase() &&
-             session.venue?.trim().toLowerCase() === venue.trim().toLowerCase();
+        session.venue?.trim().toLowerCase() === venue.trim().toLowerCase();
     }
   });
 
-  
+
   // console.log('📘 Matched session:', matchedSession);
 
   return matchedSession?.skillDescription ?? 'No description available';
@@ -1281,16 +1325,16 @@ validatePastedMobile(event: ClipboardEvent) {
 // }
 
 handleFeedbackClick(item: any): void {
-  if (item.result === 'Completed') {
-    this.router.navigate(['/feedback'], {
-      queryParams: {
-        skill: item.skillName,
-        enrollment: item.enrollmentID
-      }
-    });
-  } else {
-    alert('You must complete the test before giving feedback.');
-  }
+  if(item.result === 'Completed') {
+  this.router.navigate(['/feedback'], {
+    queryParams: {
+      skill: item.skillName,
+      enrollment: item.enrollmentID
+    }
+  });
+} else {
+  alert('You must complete the test before giving feedback.');
+}
 }
 
 
@@ -1327,7 +1371,7 @@ sortRegisteredUsersbysession(data: any[]): any[] {
   return data.sort((a, b) => (a.sessionID > b.sessionID ? -1 : a.sessionID < b.sessionID ? 1 : 0));
 }
 
-Enrolledusers: any[] = []; 
+Enrolledusers: any[] = [];
 topSkillName: string = '';
 //  GetAllSkillSessions(){
 //   this.ielc.GetSkillSessions().subscribe((data) => {
@@ -1335,7 +1379,7 @@ topSkillName: string = '';
 //     this.Enrolledusers = this.sortRegisteredUsersbysession(data);
 //     // const filtered = this.filterSkillsByUserRestriction(data);
 //     // this.Enrolledusers = this.sortRegisteredUsers(filtered);
-    
+
 //     if (this.Enrolledusers.length > 0) {
 //       this.topSkillName = this.Enrolledusers[0].skillName;
 //     }
@@ -1355,11 +1399,11 @@ GetAllSkillSessions() {
   //   const validGroups = aadGroups.map((g: any) => g.displayName?.trim()).filter(Boolean);
   //   const visibleSessions: any[] = [];
   //   const visibleSessionDetails: { sessionID: number, skillName: string }[] = [];
-    
+
 
   //   for (const session of sessions) {
   //     const skill = session.skillName;
-      
+
   //     // Initialize sessionUsers before using it
   //     const sessionUsers: string[] = (session.aadUsersData || '')
   //       .split(',')
@@ -1412,7 +1456,7 @@ GetAllSkillSessions() {
 
   //         // Log access details
   //         console.log(`Session "${session.skillName}" -> Access: ${hasAccess}`);
-          
+
   //         if (hasAccess) {
   //           visibleSessions.push(session);
   //           visibleSessionDetails.push({ sessionID: session.sessionID, skillName: skill });
@@ -1421,13 +1465,13 @@ GetAllSkillSessions() {
   //           console.log(`🚫 "${session.skillName}" hidden from this user`);
   //         }
   //       }
-  
+
 
   //       console.log('✅ Final visible session IDs with skills:', visibleSessions);
   //       this.visibleSessionIds = visibleSessions;
 
   //   console.log('✅ Visible session IDs with skills:', visibleSessions);
-   
+
   //   this.Enrolledusers = this.sortRegisteredUsersbysession(visibleSessions);
   //   // this.GetEnrolledSessionsSkillsData();
   //   if (!this.topSkillReady) {
@@ -1444,7 +1488,7 @@ GetAllSkillSessions() {
 
   forkJoin({
     sessions: this.ielc.GetSkillSessions(),
-    
+
     aadUsers: this.ielc.GetAadUserslist(),
     aadGroups: this.ielc.GetAadUserGroupslist()
   }).subscribe(({ sessions, aadUsers, aadGroups }) => {
@@ -1458,13 +1502,13 @@ GetAllSkillSessions() {
         const skill = session.skillName;
         const sessionUsers: string[] = (session.aadUsersData || '')
           .split(',').map((u: string) => u.trim().toLowerCase()).filter(Boolean);
-  
+
         const sessionGroups: string[] = (session.groups || '')
           .split(',').map((g: string) => g.trim()).filter(Boolean);
-  
+
         let isUserAssigned = sessionUsers.includes(this.userEmail?.toLowerCase() ?? '');
         let isGroupAssigned = false;
-  
+
         for (const group of sessionGroups) {
           if (group && validGroups.includes(group)) {
             try {
@@ -1479,28 +1523,28 @@ GetAllSkillSessions() {
             }
           }
         }
-  
+
         const isSessionPublic = sessionUsers.length === 0 && sessionGroups.length === 0;
         const hasAccess = isUserAssigned || isGroupAssigned || isSessionPublic;
-  
+
         if (hasAccess) {
           visibleSessions.push(session);
         }
       }
-  
+
       this.visibleSessionIds = visibleSessions;
       // console.log('✅ Final visible session IDs with skills:', visibleSessions);
-  
+
       this.Enrolledusers = this.sortRegisteredUsersbysession(visibleSessions);
-  
+
       if (!this.topSkillReady) {
         this.GetEnrolledSessionsSkillsData();  // <-- now safe to call after filtering
       }
     };
-  
+
     processSessions();  // trigger async function
   });
-  
+
 }
 
 
@@ -1514,7 +1558,7 @@ topSkillReady = false;
 //     console.log('📦 Enrolled session data:', data);
 //     console.log('🧩 Visible session IDs:', this.visibleSessionIds);
 //     if (this.visibleSessionIds && this.visibleSessionIds.length > 0) {
-      
+
 //       const enrolledSkillNames = data.map((name: string) => name.trim().toLowerCase());
 
 //         this.Enrolledskills = this.visibleSessionIds.filter((session: any) => {
@@ -1524,27 +1568,27 @@ topSkillReady = false;
 //           console.log(`🔍 Matching visible skill "${session.skillName}" -> Match: ${matched}`);
 //           return matched;
 //         });
-      
+
 
 //         const enrolledNames = this.Enrolledskills.map((s: any) => s.skillName);
 //         console.log('🎯 Enrolled skills visible to user:', enrolledNames);
 
 
-        
+
 
 //         if ( enrolledNames.length > 0) {
 //           this.topSkillName = enrolledNames[0];
 //           // this.topSkillReady = true;
 //           // console.log('🏆 Final topSkillName:', this.topSkillName);
 //         }
-      
+
 //     } 
 //     else {
 //       console.warn('⚠️ No visible sessions stored from GetAllSkillSessions yet.');
 //       this.Enrolledskills = [];
 //     }
 //   });
-  
+
 // }
 
 // GetEnrolledSessionsSkillsData() {
@@ -1605,11 +1649,11 @@ GetEnrolledSessionsSkillsData() {
       const today = new Date();
       const now = new Date();
       const currentTime = now.toTimeString().split(' ')[0];
-   
-      // Normalize current date to midnight (00:00:00)
-    const currentDateOnly = new Date(now.setHours(0, 0, 0, 0));  
 
-    
+      // Normalize current date to midnight (00:00:00)
+      const currentDateOnly = new Date(now.setHours(0, 0, 0, 0));
+
+
       // Group sessions by skill name
       const skillSessionMap = new Map<string, any[]>();
 
@@ -1619,44 +1663,44 @@ GetEnrolledSessionsSkillsData() {
         // const sessionEndDate = new Date(session.toDate);
         // const isActive = sessionEndDate >= today;
 
-      //   const sessionEndDate = new Date(session.toDate);
-      //    // Normalize session end date to midnight (00:00:00)
-      // const sessionDateOnly = new Date(sessionEndDate.setHours(0, 0, 0, 0)); // Sets time to 00:00:00
+        //   const sessionEndDate = new Date(session.toDate);
+        //    // Normalize session end date to midnight (00:00:00)
+        // const sessionDateOnly = new Date(sessionEndDate.setHours(0, 0, 0, 0)); // Sets time to 00:00:00
 
-      // const sessionSkillEndTime = session.skillEndTime;
+        // const sessionSkillEndTime = session.skillEndTime;
 
-      // // // Convert session skill end time to minutes from midnight
-      // // const [sessionEndHour, sessionEndMinute] = sessionSkillEndTime.split(':').map((x: string) => parseInt(x, 10));
-      // // const sessionTimeInMinutes = sessionEndHour * 60 + sessionEndMinute;
+        // // // Convert session skill end time to minutes from midnight
+        // // const [sessionEndHour, sessionEndMinute] = sessionSkillEndTime.split(':').map((x: string) => parseInt(x, 10));
+        // // const sessionTimeInMinutes = sessionEndHour * 60 + sessionEndMinute;
 
-      // // Check if the session end date is valid
-      // const isDateValid = sessionDateOnly >= currentDateOnly;
+        // // Check if the session end date is valid
+        // const isDateValid = sessionDateOnly >= currentDateOnly;
 
-      // // Log the comparison details for date
-      // console.log(`🗓️ Comparing session end date with current date: ${sessionDateOnly} >= ${currentDateOnly} -> ${isDateValid}`);
+        // // Log the comparison details for date
+        // console.log(`🗓️ Comparing session end date with current date: ${sessionDateOnly} >= ${currentDateOnly} -> ${isDateValid}`);
 
-      // // Check if the session end time is valid (only if date is valid)
-      // let isTimeValid = false;
-      // if (isDateValid) {
-      //   isTimeValid = sessionSkillEndTime >= currentTime;
-      // }
+        // // Check if the session end time is valid (only if date is valid)
+        // let isTimeValid = false;
+        // if (isDateValid) {
+        //   isTimeValid = sessionSkillEndTime >= currentTime;
+        // }
 
-      // // Log the comparison details for time
-      // console.log(`⏰ Comparing session skill end time with current time: ${sessionSkillEndTime}  >= ${currentTime}  -> ${isTimeValid}`);
+        // // Log the comparison details for time
+        // console.log(`⏰ Comparing session skill end time with current time: ${sessionSkillEndTime}  >= ${currentTime}  -> ${isTimeValid}`);
 
-      // const isActive = isDateValid && isTimeValid;
+        // const isActive = isDateValid && isTimeValid;
 
-      
-  // Combine session.toDate and session.skillEndTime into full DateTime
-  const [hour, minute, second] = (session.skillStartTime ?? '00:00:00').split(':').map(Number);
-  const sessionEndDateTime = new Date(session.toDate);
-  sessionEndDateTime.setHours(hour || 0, minute || 0, second || 0, 0);
 
-  const now = new Date();
+        // Combine session.toDate and session.skillEndTime into full DateTime
+        const [hour, minute, second] = (session.skillStartTime ?? '00:00:00').split(':').map(Number);
+        const sessionEndDateTime = new Date(session.toDate);
+        sessionEndDateTime.setHours(hour || 0, minute || 0, second || 0, 0);
 
-  const isActive = sessionEndDateTime >= now;
+        const now = new Date();
 
-  // console.log(`📅🕒 Comparing session end datetime with now: ${sessionEndDateTime.toLocaleString()} >= ${now.toLocaleString()} -> ${isActive}`);
+        const isActive = sessionEndDateTime >= now;
+
+        // console.log(`📅🕒 Comparing session end datetime with now: ${sessionEndDateTime.toLocaleString()} >= ${now.toLocaleString()} -> ${isActive}`);
 
 
         if (!enrolledSkillNames.includes(skillKey)) return; // Not an enrolled skill
@@ -1802,9 +1846,9 @@ GetEnrolledSessionsSkillsData() {
 
 
 
- crserestlist: any[]=[];
- courseSkillNames: string[] = [];
- GetCourseist() {
+crserestlist: any[] = [];
+courseSkillNames: string[] = [];
+GetCourseist() {
   this.ielc.Getcourse().subscribe((data: crserest[]) => {
     this.crserestlist = data;
 
@@ -1829,12 +1873,12 @@ isSkillRestricted(skillName: string): boolean {
 
 
 
- GetHolidayslist(){
+GetHolidayslist(){
   this.ielc.Getholidays().subscribe((data) => {
-    this.holidayslist=data;
+    this.holidayslist = data;
   });
- }
- sortlist(data: any[]): any[] {
+}
+sortlist(data: any[]): any[] {
   return data.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
 }
 
@@ -1847,7 +1891,7 @@ isSkillRestricted(skillName: string): boolean {
 //  GetExamlist(){
 //   this.ielc.Getexaminfo().subscribe((data) => {
 //     this.examlist=data;
-    
+
 //   });
 //  }
 
@@ -1868,7 +1912,7 @@ GetExamlist() {
     if (data) {
       this.examlist = data.map((item: any) => ({
         ...item,
-        skillName: item.skillName ?? '',  
+        skillName: item.skillName ?? '',
         examPercentage: Number(item.examPercentage),
         testTakenDate: item.testTakenDate
           ? moment(item.testTakenDate, 'MMM D YYYY hh:mmA').toDate()  // Convert to Date
@@ -1877,7 +1921,7 @@ GetExamlist() {
     }
     this.isLoading = false;
   });
-  
+
 }
 
 checkUserExists() {
@@ -1890,7 +1934,7 @@ checkUserExists() {
     }
   });
 }
- 
+
 checkCoOwnerUserExists() {
   this.GetCOwnersAllUniqueNames().subscribe((usernames: string[]) => {
     this.coownersshowButton = !!(this.userName && usernames.includes(this.userName));
@@ -1902,18 +1946,18 @@ checkCoOwnerUserExists() {
     }
   });
 }
- 
-GetAllUniqueNames(): Observable<string[]> {
+
+GetAllUniqueNames(): Observable < string[] > {
   return this.ielc.GetUniqueName();
 }
 
-GetCOwnersAllUniqueNames(): Observable<string[]> {
+GetCOwnersAllUniqueNames(): Observable < string[] > {
   return this.ielc.GetCoOwnersUniqueName();
 }
- 
+
 showButton: boolean = false;
 coownersshowButton: boolean = false;
- 
+
 
 // smtplist: any[] = []; 
 // GetSmtplist(){
@@ -1957,7 +2001,7 @@ coownersshowButton: boolean = false;
 //   return new Promise((resolve, reject) => {
 //     const smtp = this.smtplist[0];
 //     const decryptedPassword = this.decryptPassword(smtp.password);
-    
+
 //     const EmailPayload = {
 //       smtpUserName: smtp.userName,
 //       smtpPassword: decryptedPassword,
@@ -1969,7 +2013,7 @@ coownersshowButton: boolean = false;
 //     };
 
 //     console.log("🚀 Payload to backend:", EmailPayload);
-    
+
 //     this.ielc.sendEmailFromBackend(EmailPayload).subscribe({
 //       next: () => {
 //         console.log('✅ Email sent from backend.');
@@ -1989,105 +2033,119 @@ coownersshowButton: boolean = false;
 
 
 
-showData(registration:any)
+showData(registration: any)
 {
-//  console.log(registration)
+  //  console.log(registration)
 }
 save()
 {
-//  // this.isTimeInputDisabled = !!this.time1;
-//  if (this.time1) {
-//   this.isTimeInputDisabled = true;
-//   }
+  //  // this.isTimeInputDisabled = !!this.time1;
+  //  if (this.time1) {
+  //   this.isTimeInputDisabled = true;
+  //   }
 
   alert('🚧 Feature under development. Implementation is currently in progress.');
-  
+
 }
 
 modaldatasave(){
-//  console.log(this.attendanceform.value);
-//  this.attendanceform.resetForm();
+  //  console.log(this.attendanceform.value);
+  //  this.attendanceform.resetForm();
 }
 
 // ngOnInit(): void {
 //   this.checkiftimepassed()
 // }
-isTimeInputDisabled:boolean=true
-time1=''
-firsttimeentered:Date |null=null
- 
+isTimeInputDisabled: boolean = true
+time1 = ''
+firsttimeentered: Date | null=null
+
 onFirsttimechange()
 {
-  this.isTimeInputDisabled=!!this.time1
- //  this.calculatetime()
+  this.isTimeInputDisabled = !!this.time1
+  //  this.calculatetime()
   this.isTimeInputDisabled = false;
 }
 
-  calendarOptions: CalendarOptions = {
-   initialView: 'dayGridMonth',
-   plugins: [dayGridPlugin]
- };
+calendarOptions: CalendarOptions = {
+  initialView: 'dayGridMonth',
+  plugins: [dayGridPlugin]
+};
 
- time2:string=''
- showEaxtraHoursLabel:boolean=false
- checktime(){
-   if(this.time2==="23:59"){
-     this.showEaxtraHoursLabel=true;
+time2: string = ''
+showEaxtraHoursLabel: boolean = false
+checktime(){
+  if (this.time2 === "23:59") {
+    this.showEaxtraHoursLabel = true;
     //  console.log(this.time2)
-   }else{
-     this.showEaxtraHoursLabel=false;
-   }
- }
+  } else {
+    this.showEaxtraHoursLabel = false;
+  }
+}
 
- leavetype=[
-   {
-     name: 'Full Day'
-   },
-   {
-     name: 'Half Day'
-   },
-   {
-     name: 'OH(Optional Holiday)'
-   }
- ]
+leavetype = [
+  {
+    name: 'Full Day'
+  },
+  {
+    name: 'Half Day'
+  },
+  {
+    name: 'OH(Optional Holiday)'
+  }
+]
 
 
-worktype=[
- {
-   name: 'WFO(Work From Office)'
- },
- {
-   name: 'WFH(Work From Home)'
- },
- {
-   name: 'WFH/WFO'
- },
- {
-   name: 'WFC(Work From Client)'
- }
+worktype = [
+  {
+    name: 'WFO(Work From Office)'
+  },
+  {
+    name: 'WFH(Work From Home)'
+  },
+  {
+    name: 'WFH/WFO'
+  },
+  {
+    name: 'WFC(Work From Client)'
+  }
 ]
 
 isSecondSelectDisabled: boolean = false;
 isfirstSelectDisabled: boolean = false;
 
 
- onSelect1Change() {
-    this.isSecondSelectDisabled = !!this.leave
-   if(this.leave==='Half Day')
-     {
-      this.isSecondSelectDisabled=false
-     this.isTimeInputDisabled=false
-   } 
- }
- onSelect2Change() {
-   this.isfirstSelectDisabled = !!this.work;
-   if(this.work)
-   {
-     this.isTimeInputDisabled=false
-   }
-   
- }
+onSelect1Change() {
+  this.isSecondSelectDisabled = !!this.leave
+  if (this.leave === 'Half Day') {
+    this.isSecondSelectDisabled = false
+    this.isTimeInputDisabled = false
+  }
+}
+onSelect2Change() {
+  this.isfirstSelectDisabled = !!this.work;
+  if (this.work) {
+    this.isTimeInputDisabled = false
+  }
 
+}
+pdfUrl: string | null = null;
+openDocument(fileName: string) {
+  this.ielc.getWordAsPdf(fileName).subscribe(blob => {
+    const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+    this.pdfUrl = URL.createObjectURL(pdfBlob);
+  });
+}
+closePdf() {
+  this.pdfUrl = null;
+}
+prjtIsmsGeneraldatainfo = [
+  { displayName: "Annexure Y - Agile Life cycle", fileName: "Restricted - Annexure Y - Agile Life cycle (Ver 1.0).docx" },
+  { displayName: "Annexure-Z - Agile Checklist", fileName: "Restricted - Annexure-Z--Agile Checklist (Ver 1.0).docx" },
+  { displayName: "Clear Desk and Clear Screen Policy", fileName: "Restricted - Clear Desk and Clear Screen Policy (Ver 1.0).docx" },
+  { displayName: "Inteq Secured Software Development Procedure", fileName: "Restricted - Inteq Secured Software Development Procedure PP023 (Ver 1.0).docx" },
+  { displayName: "Tele Working Guidelines", fileName: "Restricted - Tele Working Guidelines (Ver 1.0).docx" }
+];
+}
 
  
-}
