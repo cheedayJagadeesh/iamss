@@ -408,11 +408,11 @@
                 <label class="lblbatch">Batch Members - <a *ngIf="selectedVenue === 'Teams'">{{ batchMembersCount
                     }}</a></label>
               </div>
-              <div>
+              <!-- <div>
                 <label class="lblbatchpopup" *ngFor="let item of examlist">(Each Skill have only
                   {{item.batchLimitMembers}}
                   Members...)</label>
-              </div>
+              </div> -->
               <div class="mb-3 ">
                 <button type="button" class="btn buttonsub btn-success" (click)="allowEnrollment()"
                   [disabled]="!registration.valid">Submit</button>

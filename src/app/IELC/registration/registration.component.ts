@@ -171,6 +171,7 @@ showDateTimeDropdowns: boolean = false;
 // submittedFeedbackIds: number[] = [];
 batchMemberCount: number = 0;
 sessionID: number = 0;
+ID: number = 0;
 currentUser: any = {};
 allSkillSessions: any[] = [];
 constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute,private emailService: EmailService){
@@ -549,10 +550,10 @@ checkBatchAvailability() {
 //   });
 // }
 
-GetSessionIDAllDetails() {
-  //debugger;
+GetSessionIDAllDetails(callback: (id: number) => void) {
   if (!this.skillname || !this.selectedVenue || !this.date || !this.time) {
     console.warn('Missing required parameters for getting session ID');
+    callback(0);
     return;
   }
   this.ielc.GetSkillnameVenueDateTimeDetails(
@@ -562,46 +563,74 @@ GetSessionIDAllDetails() {
     this.time
   ).subscribe({
     next: (data) => {
-      // If data is an array, extract the first element and convert to number
+      let sessionId: number;
       if (Array.isArray(data) && data.length > 0) {
-        this.sessionID = Number(data[0]);
+        sessionId = Number(data[0]);
       } else {
-        this.sessionID = Number(data);
+        sessionId = Number(data);
       }
-      console.log("SessionID:", this.sessionID);
+      this.ID = sessionId;
+      console.log("SessionID:", sessionId);
+      callback(sessionId);
     },
     error: (err) => {
       console.error('Error getting session ID:', err);
-      this.sessionID = 0;
+      this.ID = 0;
+      callback(0);
     }
   });
 }
 
-GetSessionIDSkillVenueDetails() {
-  debugger;
+// GetSessionIDSkillVenueDetails() {
+//   debugger;
+//   if (!this.skillname || !this.selectedVenue) {
+//     console.warn('Missing required parameters for getting session ID');
+//     return;
+//   }
+//   this.ielc.GetSkillnameVenueDetails(
+//     this.skillname,
+//     this.selectedVenue,
+//   ).subscribe({
+//     next: (data) => {
+//       // If data is an array, extract the first element and convert to number
+//       if (Array.isArray(data) && data.length > 0) {
+//         this.ID = Number(data[0]);
+//       } else {
+//         this.ID = Number(data);
+//       }
+//       console.log("SessionID:", this.ID);
+//     },
+//     error: (err) => {
+//       console.error('Error getting session ID:', err);
+//       this.ID = 0;
+//     }
+//   });
+// }
+
+GetSessionIDSkillVenueDetails(callback: (id: number) => void) {
   if (!this.skillname || !this.selectedVenue) {
     console.warn('Missing required parameters for getting session ID');
+    callback(0);
     return;
   }
-  this.ielc.GetSkillnameVenueDetails(
-    this.skillname,
-    this.selectedVenue,
-  ).subscribe({
+
+  this.ielc.GetSkillnameVenueDetails(this.skillname, this.selectedVenue).subscribe({
     next: (data) => {
-      // If data is an array, extract the first element and convert to number
+      let id = 0;
       if (Array.isArray(data) && data.length > 0) {
-        this.sessionID = Number(data[0]);
+        id = Number(data[0]);
       } else {
-        this.sessionID = Number(data);
+        id = Number(data);
       }
-      console.log("SessionID:", this.sessionID);
+      callback(id);
     },
     error: (err) => {
       console.error('Error getting session ID:', err);
-      this.sessionID = 0;
+      callback(0);
     }
   });
 }
+
 
 
 allowEnrollment() {
@@ -635,9 +664,11 @@ allowEnrollment() {
           alert('You are already enrolled for this batch!');
           return;
         }
-        //this.GetSessionIDAllDetails();
         const batchCountToInsert = this.selectedVenue === 'Teams' ? this.batchMembersCount : 0;
-        this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
+        this.GetSessionIDAllDetails((id: number) => {
+          this.ID = id;
+          this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
+        });
       },
       error: (err) => {
         // console.error('❌ Error checking enrollment status:', err);
@@ -647,13 +678,15 @@ allowEnrollment() {
   } else if (this.selectedVenue === 'Self-Learning') {
     this.ielc.checkVenueEnrollment(skill, this.selectedVenue, mail).subscribe({
       next: (alreadyEnrolled: boolean) => {
-      //this.GetSessionIDSkillVenueDetails();
         if (alreadyEnrolled) {
           alert('You are already enrolled for this skill!');
           return;
         }
         const batchCountToInsert = 0;
-        this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
+        this.GetSessionIDSkillVenueDetails((id: number) => {
+          this.ID = id;
+          this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
+        });
         // window.location.reload();
       },
       error: (err) => {
@@ -709,8 +742,8 @@ proceedToEnroll(
     handlingDoubts: '',
     applicationtowork: '',
     comments: '',
-    //sessionID: this.sessionID,
-    sessionID: 100,
+    //sessionID: 0,
+    sessionID: this.ID,
   };
   // Log the full payload for debugging
   console.log("Enrollment payload:", JSON.stringify(enrollmentData, null, 2));

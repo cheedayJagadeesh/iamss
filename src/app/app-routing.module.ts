@@ -73,7 +73,7 @@ const routes: Routes = [
   {path:'registration',component:RegistrationComponent, canActivate: [MsalGuard]},
   {path:'addskill',component:AddnewskillComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['addskill'], roles: ['Admin', 'SuperAdmin'] }},
   {path:'skillqa',component:SkillqaComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['skillqa'], roles: ['Admin', 'SuperAdmin'] }},
-  {path:'examinfo',component:ExaminfoComponent,canActivate: [MsalGuard, AuthGuard],data: { pageNames: ['examinfo'], roles: ['Admin', 'SuperAdmin'] }},
+  // {path:'examinfo',component:ExaminfoComponent,canActivate: [MsalGuard, AuthGuard],data: { pageNames: ['examinfo'], roles: ['Admin', 'SuperAdmin'] }},
   {path:'resultinfo',component:ResultinfoComponent,canActivate: [MsalGuard, AuthGuard],data: { pageNames: ['resultinfo'], roles: ['Admin', 'SuperAdmin'] }},
   {path:'ismstask',component:IsmstaskComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['ismstask'], roles: ['Admin', 'SuperAdmin'] }},
   {path:'ismshistory',component:IsmshistoryComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['ismshistory'], roles: ['Admin', 'SuperAdmin'] }},
