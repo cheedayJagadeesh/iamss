@@ -8,10 +8,23 @@
      <i>🏠</i><span>Home</span>
   </a>
 
-  <a *ngIf="canAccess('registered')" routerLink="/registered" routerLinkActive="active"
+  <!-- <a *ngIf="canAccess('registered')" routerLink="/registered" routerLinkActive="active"
      [routerLinkActiveOptions]="{ exact: true }" title="Registered User">
      <i>👥</i><span>RegisteredUser</span>
-  </a>
+  </a> -->
+
+    <div class="dropdown" *ngIf="canAccess('registered')">
+    <a class="dropdown-toggle" title="Compliance">
+      <i>📋</i><span>Registered User</span>
+      <span class="arrow">▶</span>
+    </a>
+    <div class="dropdown-content">
+        <div class="dropdown" *ngIf="canAccess('registered')">
+    <div class="dropdown-content">
+      <a *ngIf="canAccess('registered')" routerLink="/resultinfo" routerLinkActive="active" title="resultinfo">Result Info</a>
+    </div>
+        </div>
+    </div>
 
   <a *ngIf="canAccess('addskill')" routerLink="/addskill" routerLinkActive="active"
      [routerLinkActiveOptions]="{ exact: true }" title="Add New Skill">
@@ -30,9 +43,29 @@
       <span class="arrow">▶</span>
     </a>
     <div class="dropdown-content">
-      <a *ngIf="canAccess('ismstask')" routerLink="/ismstask" routerLinkActive="active" title="ISMS">ISMS Task</a>
-      <a *ngIf="canAccess('qmstask')" routerLink="/qmstask" routerLinkActive="active" title="QMS">QMS Task</a>
-      <a *ngIf="canAccess('soc2task')" routerLink="/soc2task" routerLinkActive="active" title="SOC2">SOC2 Task</a>
+      <a *ngIf="canAccess('ismstask')" routerLink="/ismstask" routerLinkActive="active" title="ISMS" class="dropdown-toggle">ISMS Task</a>
+        <div class="dropdown" *ngIf="canAccess('ismscalendar') || canAccess('ismshistory') || canAccess('ismsmails')">
+    <div class="dropdown-content">
+      <a *ngIf="canAccess('ismscalendar')" routerLink="/ismscalendar" routerLinkActive="active" title="ISMS">ISMS Calendar</a>
+      <a *ngIf="canAccess('ismshistory')" routerLink="/ismshistory" routerLinkActive="active" title="ISMS">ISMS History</a>
+      <a *ngIf="canAccess('ismsmails')" routerLink="/ismsmails" routerLinkActive="active" title="ISMS">ISMS Mails</a>
+    </div>
+  </div>
+      <a *ngIf="canAccess('qmstask')" routerLink="/qmstask" routerLinkActive="active" title="QMS" class="dropdown-toggle">QMS Task</a>
+           <div class="dropdown" *ngIf="canAccess('qmscalendar') || canAccess('qmshistory') || canAccess('qmsmails')">
+          <div class="dropdown-content">
+      <a *ngIf="canAccess('qmscalendar')" routerLink="/qmscalendar" routerLinkActive="active" title="QMS">QMS Calendar</a>
+      <a *ngIf="canAccess('qmshistory')" routerLink="/qmshistory" routerLinkActive="active" title="QMS">QMS History</a>
+      <a *ngIf="canAccess('qmsmails')" routerLink="/qmsmails" routerLinkActive="active" title="QMS">QMS Mails</a>
+    </div>
+      <a *ngIf="canAccess('soc2task')" routerLink="/soc2task" routerLinkActive="active" title="SOC2" class="dropdown-toggle">SOC2 Task</a>
+          <div class="dropdown" *ngIf="canAccess('soc2calendar') || canAccess('soc2history') || canAccess('soc2mails')">
+         <div class="dropdown-content">
+      <a *ngIf="canAccess('soc2calendar')" routerLink="/soc2calendar" routerLinkActive="active" title=">SOC2">SOC2 Calendar</a>
+      <a *ngIf="canAccess('soc2history')" routerLink="/soc2history" routerLinkActive="active" title=">SOC2">SOC2 History</a>
+      <a *ngIf="canAccess('soc2mails')" routerLink="/soc2mails" routerLinkActive="active" title=">SOC2">SOC2 Mails</a>
+            </div>
+    </div>
     </div>
   </div>
 

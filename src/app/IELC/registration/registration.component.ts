@@ -800,7 +800,11 @@ onDateChange() {
       next: (res) => {
         // console.log('✅ Time slots for selected range:', res);
         // Map response to available time slots
-        this.availableTimes = Array.isArray(res) ? res : res.map((t: any) => t.time);
+        this.availableTimes = Array.isArray(res)
+          ? res
+          : typeof res === 'string'
+            ? [res]
+            : [];
       },
       error: (err) => {
         // console.error('❌ Error fetching time slots:', err);
