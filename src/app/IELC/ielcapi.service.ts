@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UsersInfo } from './users-info';
 import { DatePipe } from '@angular/common';
@@ -88,12 +88,7 @@ export class IelcapiService {
         })
       );
     }
-    
-
-   
-    
-    
-    
+ 
     // Convert input date to DD-MM-YYYY format
     convertDateFormat(dateString: string): string {
       const parts = dateString.split('-');
@@ -109,9 +104,6 @@ export class IelcapiService {
       const [day, month, year] = parts;
       return `${year}-${month}-${day}`; // Return "YYYY-MM-DD"
     }
-
-   
-
 
     GetUsersBytoDate(date: string): Observable<any> {
       // Convert input date to DD-MM-YYYY format
@@ -141,11 +133,6 @@ export class IelcapiService {
       );
     }
 
-   
-   
-
-    
-    
     apiTime="https://ielc-coreapi.azurewebsites.net/EnrollmentData/Time"
     GetUsersByTime(Time: string): Observable<any> {
       return this.http.get<any>(`${this.apiTime}/${Time}`, {
@@ -173,6 +160,10 @@ export class IelcapiService {
       return this.http.post<any>(this.url, enrollmentData,{ headers: headers });
     }
 
+    PostRegistrationData(enrollmentData: any): Observable<any> {
+      return this.http.post<any>(this.url, enrollmentData, { headers: this.getHeaders() });
+    }
+
     checkurl='https://ielc-coreapi.azurewebsites.net/EnrollmentData/check'
     checkIfAlreadyEnrolled(skillName: string, date: string, time: string, mail: string) {
       const params = {skillName,date,time,mail};
@@ -191,7 +182,54 @@ export class IelcapiService {
     EnrolledskillsUrl='https://ielc-coreapi.azurewebsites.net/EnrollmentSessions';
     GetSkillSessions(): Observable<any> {
       return this.http.get<any>(this.EnrolledskillsUrl, { headers: this.getHeaders() });
-    }
+    } 
+
+    Getallexaminfo(skillname: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.EnrolledskillsUrl}/skillNameexamdetails?skillName=${skillname}`, { headers: this.getHeaders() });
+  }
+
+   GetSessionById(id: any): Observable<any[]> {
+  return this.http.get<any[]>(`${this.EnrolledskillsUrl}/sessionid/${id}`, {
+    headers: this.getHeaders()
+  });
+}
+
+  GetSkillnameVenue(skillname: string, venue: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.EnrolledskillsUrl}/${skillname}/${venue}`, { headers: this.getHeaders() });
+  }
+
+    GetSkillnameVenueDateTime(skillname: string, venue: string, date: string, time:string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.EnrolledskillsUrl}/${skillname}/${venue}/${date}/${time}`, { headers: this.getHeaders() });
+  }
+
+// GetSkillnameVenueDateTimeDetails(skillname: string, venue: string, dateRange: string, timeRange: string): Observable<number> {
+//   const params = new HttpParams()
+//     .set('skillName', skillname)
+//     .set('venue', venue)
+//     .set('dateRange', dateRange)
+//     .set('timeRange', timeRange);
+
+//   return this.http.get<number>(`${this.EnrolledskillsUrl}/check`, {
+//     headers: this.getHeaders(),
+//     params: params
+//   });
+// }
+
+    GetSkillnameVenueDateTimeDetails(skillname: string, venue: string, date: string, time:string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.EnrolledskillsUrl}/${skillname}/${venue}/${date}/${time}`, { headers: this.getHeaders() });
+  }
+
+    GetSkillnameVenueDetails(skillname: string, venue: string): Observable<string[]> {
+    return this.http.get<string[]>(`${this.EnrolledskillsUrl}/find/${skillname}/${venue}`, { headers: this.getHeaders() });
+  }
+
+GetExamInfos(): Observable<any> {
+  return this.http.get<any>(`${this.EnrolledskillsUrl}/sessionid`, { headers: this.getHeaders() });
+}
+
+
+//https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/skillNameexamdetails?skillName=azure
+//https://localhost:7154/EnrollmentSessions/sessionid/56
 
     GetSkillSessionById(id: string): Observable<any> {
       return this.http.get<any>(`${this.EnrolledskillsUrl}/${id}`, {
@@ -259,7 +297,6 @@ export class IelcapiService {
     }
  
     getUsersOfGroup(groupName: string): Observable<any> {
-      // return this.http.get(`https://ielc-coreapi.azurewebsites.net/AADGroupMails/group-users/${encodeURIComponent(groupName)}`);
       const url = `https://ielc-coreapi.azurewebsites.net/AADGroupMails/group-users/${encodeURIComponent(groupName)}`;
       return this.http.get(url, { headers: this.getHeaders() });
     }
@@ -279,17 +316,30 @@ export class IelcapiService {
     //   return this.http.get<any>(`${this.datebyskill}/${skillName}`);
     // }
     GetEnrolledSessionsbydate(skill: string, venue: string): Observable<any> {
-      const url = `https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Dates/search/${(skill)}/${(venue)}`;
+      const url = `https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Dates/search/${skill}/${venue}`;
       return this.http.get<any>(url, { headers: this.getHeaders() });
     }
+//https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Dates/search/azure/teams
+
     timebyskill='https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Times/search'
     GetEnrolledSessionsbytime(skillName: string): Observable<any> {
       return this.http.get<any>(`${this.timebyskill}/${skillName}`, { headers: this.getHeaders() });
     }
-    getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): Observable<any> {
-      const url = `https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Times/search/${skillName}/${dateRange}`;
-      return this.http.get<any>(url, { headers: this.getHeaders() });
-    }
+
+    // getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): Observable<any> {
+    //   const url = `https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Times/search/${skillName}/${dateRange}`;
+    //   return this.http.get<any>(url, { headers: this.getHeaders() });
+    // }
+
+getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): Observable<string> {
+    const encodedSkill = encodeURIComponent(skillName.trim());
+    const encodedDateRange = encodeURIComponent(dateRange.trim());
+
+    const url = `https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Times/search/${encodedSkill}/${encodedDateRange}`;
+    return this.http.get(url, { headers: this.getHeaders(), responseType: 'text' });
+}
+
+
     
 
    //---------------------------------------------------------------------------------------Inteq IT Support
@@ -2064,6 +2114,12 @@ Getexaminfo(): Observable<any> {
 GetexaminfoById(id: number): Observable<any> {
   return this.http.get<any>(`${this.examinfoUrl}/${id}`, { headers: this.getHeaders() });
 }
+
+   Postexaminfo(examinfo: any): Observable<any> {
+      return this.http.post<any>(this.examinfoUrl, examinfo, {
+        headers: this.getHeaders()
+      });
+    }
 
 Updateexaminfo(id: number, updatedData: any): Observable<any> {
   return this.http.put<any>(`${this.examinfoUrl}/${id}`, updatedData, { headers: this.getHeaders() });

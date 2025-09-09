@@ -11933,7 +11933,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCourse(); GetCourseist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddCourse()">Add</button>
+                                                [disabled]="!crserestdata.coursesList" (click)="AddCourse()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -11968,7 +11968,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCourse()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateCourse()">Update</button>
+                                                [disabled]="!crserestdata.coursesList" (click)="UpdateCourse()">Update</button>
                                         </div>
                                     </div>
                                 </div>
