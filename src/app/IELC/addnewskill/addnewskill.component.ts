@@ -494,5 +494,13 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
   showFullDescription(description: string) {
     alert(description); // Or open a modal to show the full text
   }
+onVenueChange(event: any) {
+  const selectedVenue = event.target.value;
+  if (selectedVenue === 'Self-Learning') {
+    this.skillSessionData.toDate = '2035-12-31';  
+  } else {
+    this.skillSessionData.toDate = '';
+  }
+}
 
 }
