@@ -105,51 +105,6 @@ interface EmailPayload {
 })
 export class RegistrationComponent implements OnInit {
 
-
-  selectedValue: string = '';
-  showPopup: boolean = false;
- selectedOption: any = null;
-
-  modeOptions = [
-    { value: '1', label: 'Azure' },
-    { value: '2', label: 'ISO 9001 Documents and QMS Manual' },
-    { value: '3', label: 'Security Awareness - Online Frauds' },
-    { value: '4', label: 'QMS Awareness Training' },
-    { value: '5', label: 'ISMS Awareness Training' },
-    { value: '6', label: 'ISMS Awareness Training - Inteq' },
-    { value: '7', label: 'ISMS Training Module IV - Fire Extinguisher Usage' },
-    { value: '8', label: 'ISMS Training Module III' },
-    { value: '9', label: 'ISMS Training Module II' },
-    { value: '10', label: 'ISMS Training Module I' },
-  ];
-
-  Enrolledskill: { skillName: string }[] = [];
-
-  onVenueChange1(event: any) {
-    const value = event.target.value;
-    if (value === 'option1') {
-      this.showPopup = true;   // Open popup in center
-    } else {
-      this.showPopup = false;
-    }
-  }
-  // this will hold the available skills for the 2nd dropdown
-    // selectedOption: any = null;
-  closePopup() {
-    this.showPopup = false;
-    this.selectedValue = '';  // reset dropdown so change fires again next time
- 
-    if (this.selectedOption) {
-    const label = this.selectedOption.label;
-
-    const exists = this.Enrolledskill.some(s => s.skillName === label);
-    if (!exists) {
-      this.Enrolledskill.push({ skillName: label });
-    }
-
-    this.skillname = label; // auto-select label
-  }
-}
 // @Input() enrollmentList: any[] = [];
 // @Input() submittedFeedbackIds: string[] = [];
 
@@ -410,7 +365,7 @@ lastName: string = '';
 //    }
 //  }
 async ngOnInit() {
-
+this.GetEnrolledSessionsSkillsData();
   try {
     // console.log("Initializing MSAL...");
 
@@ -766,6 +721,7 @@ convertToDDMMYYYY(dateStr: string): string {
 // }
 
 onVenueChange(venue: string) {
+  debugger;
   // this.showDateTimeDropdowns = venue === 'Teams';
   this.showDateTimeDropdowns = ['Teams', 'Offline'].includes(venue);
 
@@ -2129,6 +2085,26 @@ onSelect2Change() {
   }
 
 }
+// Mode of training popup changes
+
+  selectedValue: string = '';
+  showPopup: boolean = false;
+  Enrolledskill: { skillName: string }[] = [];
+  onModeOfTrainingChange(event: any) {
+  const value = event.target.value;
+
+  if (value === 'option1') {
+    this.showPopup = true;
+  } else {
+    this.showPopup = false;
+  }
+}
+  closePopup() {
+    this.showPopup = false;
+      this.selectedValue = '';
+  }
+
+
 pdfUrl: string | null = null;
 openDocument(fileName: string) {
   this.ielc.getWordAsPdf(fileName).subscribe(blob => {

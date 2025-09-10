@@ -348,65 +348,42 @@
             <h2 class="skill_label" *ngIf="topSkillName"> {{ topSkillName }}</h2>
           </div>
           <div class="div">
-            <!-- <div class="mb-3">
-              <label class="lblmode">Mode of Training<span style="color: red;">*</span></label>
-              <select name="selectedVenue" class="form-controlone" required [(ngModel)]="selectedVenue"
-                (change)="onVenueChange(selectedVenue)">
-                <option value="" disabled>- select -</option>
-                <option *ngFor="let venue of venueList" [value]="venue"> {{ venue }} </option>
-              </select>
-            </div> -->
-
             <div class="mb-3" style="position: relative;">
               <label class="lblmode">
                 Mode of Training<span style="color: red;">*</span>
               </label>
-
+              <!-- Popup -->
               <select name="selectedValue" class="form-controlone" required [(ngModel)]="selectedValue"
-                (change)="onVenueChange1($event)">
+                (change)="onModeOfTrainingChange($event)">
                 <option value="" disabled>- select -</option>
                 <option value="option1">Self-Learning</option>
-                <!-- <option *ngFor="let venue of venueList1" [value]="venue"> {{ venue }} </option> -->
               </select>
             </div>
-            <!-- Popup Modal -->
             <div *ngIf="showPopup" class="popup-overlay">
               <div class="popup-box">
                 <div class="popup-header">
                   <span>Select Skill Name</span>
-                  <button class="close-btn" (click)="closePopup()">✖</button>
+                  <!-- <button class="close-btn" (click)="closePopup()">✖</button> -->
                 </div>
 
                 <div class="popup-body">
-                  <label class="option-card" *ngFor="let option of modeOptions">
-                    <input type="radio" name="modeOption" [value]="option" [(ngModel)]="selectedOption">
-                    <span>{{ option.label }}</span>
+                  <label class="option-card" *ngFor="let row of Enrolledskills">
+                    <input type="radio" name="modeOption" [value]="row.skillName" [(ngModel)]="skillname"
+                      (change)="onSkillChange(skillname); onBatchInputChange(); closePopup()">
+                    <span>{{ row.skillName }}</span>
                   </label>
                 </div>
               </div>
             </div>
-
-            <!-- <div class="mb-3 formdiv">
-              <label class="lblskill">Skill Name<span style="color: red;">*</span></label>
-              <select name="skillname" class="form-controlone" required [(ngModel)]="skillname"
-                (change)="onSkillChange(skillname); onBatchInputChange()">
-                <option value="" disabled>- select -</option>
-                <option *ngFor="let row of Enrolledskills" [value]="row.skillName">{{ row.skillName }}</option>
-              </select>
-            </div> -->
-
-            <!-- Skill Name Dropdown -->
             <div class="mb-3 formdiv">
               <label class="lblskill">Skill Name<span style="color: red;">*</span></label>
               <select name="skillname" class="form-controlone" required [(ngModel)]="skillname"
                 (change)="onSkillChange(skillname); onBatchInputChange()">
                 <option value="" disabled>- select -</option>
-                <option *ngFor="let row of Enrolledskill" [value]="row.skillName">
-                  {{ row.skillName }}
-                </option>
+                <!-- ✅ Only show the selected skill from popup -->
+                <option *ngIf="skillname" [value]="skillname">{{ skillname }}</option>
               </select>
             </div>
-
 
 
 
