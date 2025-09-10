@@ -49,7 +49,6 @@ import { AuthGuard } from './auth.guard';
 import { AuthcallbackComponent } from './IELC/authcallback/authcallback.component';
 import { EventschedulerComponent } from './IELC/eventscheduler/eventscheduler.component';
 
-
 const routes: Routes = [
   {path:'adminuser',component:AdminuserComponent,canActivate: [MsalGuard]},
   {path:'pmadminuser',component:PmadminuserComponent,canActivate: [MsalGuard]},

@@ -6,17 +6,43 @@
       background: #f4f6f9;
     }
 
-    /* Sidebar */
-    .sidebar {
-      width: 220px;
-      background: linear-gradient(180deg, #1e3c72, #2a5298);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      padding-top: 20px;
-      transition: width 0.3s ease;
-      overflow: clip;
-    }
+        /* Sidebar */
+        .sidebar {
+          width: 240px;
+          background: linear-gradient(180deg, #1e3c72, #2a5298);
+          color: white;
+          display: flex;
+          flex-direction: column;
+          padding-top: 20px;
+          transition: width 0.3s ease;
+          overflow: clip;
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: 1000;
+        }
+
+        .main {
+  margin-left: 240px;  /* Push content after sidebar */
+  padding: 20px;
+  transition: margin-left 0.3s;
+}
+
+.sidebar.collapsed ~ .main {
+  margin-left: 60px;
+}
+
+.table-container {
+  overflow-x: auto;      /* Enable horizontal scroll */
+  overflow-y: hidden;    /* Avoid vertical double scroll */
+  white-space: nowrap;   /* Prevent column wrapping */
+}
+
+/* Make table behave nicely inside slider */
+.table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
     .sidebar.collapsed {
       width: 70px;
     }
@@ -568,3 +594,5 @@
 .sidebar.collapsed .dropdown-toggle .arrow {
   margin-left: 0;
 }
+
+
