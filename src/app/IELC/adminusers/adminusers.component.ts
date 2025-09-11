@@ -365,7 +365,7 @@ eventschuser: eventscuserinfo = {
  eventalertslist: any[]=[];
  event: any | null = null;
  fileError: string = "";
-
+ prjtIsmsGeneraldatainfo: any[]= [];
   
   constructor(private ielc:IelcapiService) {
 
@@ -451,7 +451,6 @@ eventschuser: eventscuserinfo = {
     this.GetEventSchedulerUser();
     this.GetLatestEvent();
     this.GetEventSchedulerTimeslots();
-    
   }
 //--------------------------------------------------------------------------------EventSchedulerTime
 GetEventSchedulerTimeslots() {
@@ -6074,13 +6073,6 @@ getDownloadLink(alertAttachment: string): string {
     ? alertAttachment  // Base64 data
     : `https://ielc-coreapi.azurewebsites.net/EventAlerts/${alertAttachment}`; // File URL
 }
-prjtIsmsGeneraldatainfo = [
-  { displayName: "Annexure Y - Agile Life cycle", fileName: "Restricted - Annexure Y - Agile Life cycle (Ver 1.0).docx" },
-  { displayName: "Annexure-Z - Agile Checklist", fileName: "Restricted - Annexure-Z--Agile Checklist (Ver 1.0).docx" },
-  { displayName: "Clear Desk and Clear Screen Policy", fileName: "Restricted - Clear Desk and Clear Screen Policy (Ver 1.0).docx" },
-  { displayName: "Inteq Secured Software Development Procedure", fileName: "Restricted - Inteq Secured Software Development Procedure PP023 (Ver 1.0).docx" },
-  { displayName: "Tele Working Guidelines", fileName: "Restricted - Tele Working Guidelines (Ver 1.0).docx" }
-];
 
 pdfUrl: string | null = null;
 openDocument(fileName: string) {

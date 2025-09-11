@@ -21,7 +21,6 @@ interface docs{
 })
 export class PrjsprtComponent {
 email='incidents@inteqsolutions.com'
-
 isLoading = true;
 prjtsprtlist: any[] = []; 
 prjtsprtdata:prjtsprtinfo={
@@ -142,12 +141,4 @@ openDocument(fileName: string) {
 closePdf() {
   this.pdfUrl = null;
 }
-prjtIsmsGeneraldatainfo = [
-  { displayName: "Annexure Y - Agile Life cycle", fileName: "Restricted - Annexure Y - Agile Life cycle (Ver 1.0).docx" },
-  { displayName: "Annexure-Z - Agile Checklist", fileName: "Restricted - Annexure-Z--Agile Checklist (Ver 1.0).docx" },
-  { displayName: "Clear Desk and Clear Screen Policy", fileName: "Restricted - Clear Desk and Clear Screen Policy (Ver 1.0).docx" },
-  { displayName: "Inteq Secured Software Development Procedure", fileName: "Restricted - Inteq Secured Software Development Procedure PP023 (Ver 1.0).docx" },
-  { displayName: "Tele Working Guidelines", fileName: "Restricted - Tele Working Guidelines (Ver 1.0).docx" }
-];
-
 }
