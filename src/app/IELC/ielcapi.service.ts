@@ -217,6 +217,13 @@ export class IelcapiService {
       headers: this.getHeaders()
     });
   }
+private baseUrl = 'https://localhost:7154/EnrollmentSessions';
+getSkillsByVenue(venue: string): Observable<string[]> {
+  debugger;
+  return this.http.get<string[]>(`${this.baseUrl}/SkillNamesByVenue/${venue}`, {
+    headers: this.getHeaders()   // ✅ add this
+  });
+}
 
   EnrolledskillDataUrl = 'https://ielcapistage.azurewebsites.net/EnrollmentSkillData';
   GetEnrolledSkills(): Observable<any> {

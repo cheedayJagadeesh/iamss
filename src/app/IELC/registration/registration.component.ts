@@ -721,7 +721,6 @@ convertToDDMMYYYY(dateStr: string): string {
 // }
 
 onVenueChange(venue: string) {
-  debugger;
   // this.showDateTimeDropdowns = venue === 'Teams';
   this.showDateTimeDropdowns = ['Teams', 'Offline'].includes(venue);
 
@@ -2087,23 +2086,50 @@ onSelect2Change() {
 }
 // Mode of training popup changes
 
+
+  skillname1: string = '';
+
+
   selectedValue: string = '';
   showPopup: boolean = false;
   Enrolledskill: { skillName: string }[] = [];
   onModeOfTrainingChange(event: any) {
-  const value = event.target.value;
-
-  if (value === 'option1') {
-    this.showPopup = true;
-  } else {
-    this.showPopup = false;
+    const venue = event.target.nextSibling.textContent.trim(); // "Offline" or "Teams"
+    this.ielc.getSkillsByVenue(venue).subscribe({
+      next: (res) => {
+        this.Enrolledskills = res.map(skill => ({ skillName: skill }));
+        this.showPopup = true;
+      },
+      error: (err) => {
+        console.error('Error fetching skills', err);
+      }
+    });
   }
-}
   closePopup() {
     this.showPopup = false;
-      this.selectedValue = '';
   }
+  isDropdownDisabled(): boolean {
+  return this.selectedValue === 'Self-Learning' || !(this.selectedValue === 'Teams' || this.selectedValue === 'Offline');
+}
+onSkillSelected(skill: string) {
+  this.skillname = skill;          // set selected skill
+  this.closePopup();               // close popup if needed
+  this.onBatchInputChange();       // your existing logic
 
+  if (this.selectedValue === 'Teams' || this.selectedValue === 'Offline') {
+    this.ielc.GetEnrolledSessionsbydate(this.skillname, this.selectedValue).subscribe({
+      next: (res: string[]) => {
+        this.availableDates = res;  // bind API response directly to dropdown
+      },
+      error: (err) => {
+        console.error('Error fetching dates:', err);
+        this.availableDates = [];
+      }
+    });
+  } else {
+    this.availableDates = [];
+  }
+}
 
 pdfUrl: string | null = null;
 openDocument(fileName: string) {
