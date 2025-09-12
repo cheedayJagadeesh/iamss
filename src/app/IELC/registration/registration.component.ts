@@ -2085,16 +2085,22 @@ onSelect2Change() {
 
 }
 // Mode of training popup changes
-
-
   skillname1: string = '';
-
-
   selectedValue: string = '';
   showPopup: boolean = false;
   Enrolledskill: { skillName: string }[] = [];
+  availableTime: string[] = [];
+
   onModeOfTrainingChange(event: any) {
     const venue = event.target.nextSibling.textContent.trim(); // "Offline" or "Teams"
+  if (venue === 'Self-Learning') {
+    this.date = '';
+    this.time = '';
+    this.availableDates = [];
+    this.availableTimes = [];
+    this.showPopup = false; // no popup for self-learning
+    return;
+  }
     this.ielc.getSkillsByVenue(venue).subscribe({
       next: (res) => {
         this.Enrolledskills = res.map(skill => ({ skillName: skill }));
@@ -2129,6 +2135,23 @@ onSkillSelected(skill: string) {
   } else {
     this.availableDates = [];
   }
+}
+onDateChanged() {
+  if (!this.skillname || !this.date) {
+    this.availableTime = [];
+    return;
+  }
+
+  this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, this.date)
+    .subscribe({
+      next: (res) => {
+        this.availableTime = res;  
+      },
+      error: (err) => {
+        console.error("Error fetching times:", err);
+        this.availableTime = [];
+      }
+    });
 }
 
 pdfUrl: string | null = null;

@@ -412,7 +412,7 @@
               <div class="col-sm-6 mb-3">
                 <label class="lbldate">Date<span style="color: red;">*</span></label>
                 <select name="date" class="form-controldate" required [(ngModel)]="date"
-                  [disabled]="isDropdownDisabled()" (change)="onBatchInputChange();">
+                  [disabled]="isDropdownDisabled()" (change)="onBatchInputChange(); onDateChange()">
                   <option value="" disabled>- select -</option>
                   <option *ngFor="let d of availableDates" [value]="d">{{ d }}</option>
                 </select>
