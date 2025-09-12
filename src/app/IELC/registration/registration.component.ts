@@ -365,8 +365,12 @@ lastName: string = '';
 //    }
 //  }
 async ngOnInit() {
-this.GetEnrolledSessionsSkillsData();
-  try {
+  this.skillname = '';
+  this.date = '';
+  this.time = '';
+  this.availableDates = [];
+  this.availableTimes = [];
+    try {
     // console.log("Initializing MSAL...");
 
     // Ensure MSAL is properly initialized before proceeding
@@ -2118,24 +2122,28 @@ onSelect2Change() {
   return this.selectedValue === 'Self-Learning' || !(this.selectedValue === 'Teams' || this.selectedValue === 'Offline');
 }
 onSkillSelected(skill: string) {
-  this.skillname = skill;          // set selected skill
-  this.closePopup();               // close popup if needed
-  this.onBatchInputChange();       // your existing logic
+  this.skillname = skill;          
+  this.closePopup();               
+  this.onBatchInputChange();       
+
+  this.availableDates = [];   // clear old dates
+  this.availableTimes = [];   // clear old times
+  this.date = '';
+  this.time = '';
 
   if (this.selectedValue === 'Teams' || this.selectedValue === 'Offline') {
     this.ielc.GetEnrolledSessionsbydate(this.skillname, this.selectedValue).subscribe({
       next: (res: string[]) => {
-        this.availableDates = res;  // bind API response directly to dropdown
+        this.availableDates = res || [];
       },
       error: (err) => {
         console.error('Error fetching dates:', err);
         this.availableDates = [];
       }
     });
-  } else {
-    this.availableDates = [];
   }
 }
+
 onDateChanged() {
   if (!this.skillname || !this.date) {
     this.availableTime = [];
