@@ -343,11 +343,11 @@ GetExamInfos(): Observable<any> {
 //     return this.http.get(url, { headers: this.getHeaders(), responseType: 'text' });
 // }
 GetEnrolledSessionsbydate(skill: string, venue: string): Observable<any> {
-    const url = `https://ielcapistage.azurewebsites.net/EnrollmentSessions/Dates/search/${(skill)}/${(venue)}`;
+    const url = `http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentSessions/Dates/search/${(skill)}/${(venue)}`;
     return this.http.get<any>(url, { headers: this.getHeaders() });
   }
 getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): Observable<any> {
-    const url = `https://ielcapistage.azurewebsites.net/EnrollmentSessions/Times/search/${skillName}/${dateRange}`;
+    const url = `http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentSessions/Times/search/${skillName}/${dateRange}`;
     return this.http.get<any>(url, { headers: this.getHeaders() });
   }
     
