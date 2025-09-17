@@ -5,7 +5,7 @@ export const environment = {
     //  redirectUri: "https://inteqemployeelearingcenter.azurewebsites.net/authcallback",
     // postLogoutRedirectUri: "https://inteqemployeelearingcenter.azurewebsites.net/#/login"
 
-    redirectUri: "https://ielc-test.azurewebsites.net//authcallback",
-    postLogoutRedirectUri: "https://ielc-test.azurewebsites.net//#/login"
+    redirectUri: "https://ielc-test.azurewebsites.net/authcallback",
+    postLogoutRedirectUri: "https://ielc-test.azurewebsites.net/#/login"
   };
   
