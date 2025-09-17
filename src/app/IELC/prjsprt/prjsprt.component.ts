@@ -21,7 +21,6 @@ interface docs{
 })
 export class PrjsprtComponent {
 email='incidents@inteqsolutions.com'
-
 isLoading = true;
 prjtsprtlist: any[] = []; 
 prjtsprtdata:prjtsprtinfo={
@@ -132,5 +131,15 @@ GetPrjtQMSFormatlist(){
    this.isLoading = false;
  });
 }
-
+pdfUrl: string | null = null;
+openDocument(fileName: string) {
+  // debugger;
+  this.ielc.getWordAsPdf(fileName).subscribe(blob => {
+    const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+    this.pdfUrl = URL.createObjectURL(pdfBlob);
+  });
+}
+closePdf() {
+  this.pdfUrl = null;
+}
 }

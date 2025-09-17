@@ -13,7 +13,7 @@
         <span class="dot"></span>
     </div>
     <div class="tablebottom">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="projectinfo" >
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="projectinfo">
             <thead class="table-primary">
                 <tr>
                     <th scope="col">Function/Operations/Projects</th>
@@ -23,7 +23,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let row of prjtsprtlist" >
+                <tr *ngFor="let row of prjtsprtlist">
                     <td>{{row.functions}}</td>
                     <td>{{row.name}}</td>
                     <td>{{row.mobile}}</td>
@@ -31,10 +31,10 @@
                 </tr>
             </tbody>
         </table>
-    </div> 
+    </div>
     <div class="divtext">
         <h3 class="h3">Contact Email ID:<a style="color: red;">Security Incidents Reporting Email Id:</a></h3>
-        <a  class="btn btnlnk btn-link" href="mailto:incidents@inteqsolutions.com">{{email}}</a>
+        <a class="btn btnlnk btn-link" href="mailto:incidents@inteqsolutions.com">{{email}}</a>
     </div>
     <h4 class="h4">ISMS for Projects</h4>
     <div class="tablebottom1">
@@ -47,14 +47,26 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of prjtIsmsGeneraldata">
-                    <td >{{item.documentName}}</td>
+                    <td>{{ item.documentName }}</td>
                     <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
+                        <a href="javascript:void(0)" (click)="openDocument(item.url)">Click Here</a>
+                    </td>
                 </tr>
+                <!-- <tr *ngFor="let item of prjtIsmsGeneraldatainfo">
+                    <td>{{ item.displayName }}</td>
+                    <td>
+                        <a href="javascript:void(0)" (click)="openDocument(item.fileName)">
+                            Click Here
+                        </a>
+                    </td>
+                </tr> -->
+ 
+                <!-- PDF Popup Component -->
+                <app-document-viewer [pdfUrl]="pdfUrl" (closePopup)="closePdf()">
+                </app-document-viewer>
             </tbody>
         </table>
-    </div> 
+    </div>
     <div class="tablebottom1">
         <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms2">
             <thead class="table-primary">
@@ -65,12 +77,13 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of prjtIsmsGuidelinesdata">
-                    <td >{{item.documentName}}</td>
+                    <td>{{item.documentName}}</td>
                     <td>
                         <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
                     </td>
                 </tr>
             </tbody>
+ 
         </table>
     </div>
     <div class="tablebottom1">
@@ -83,10 +96,10 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of prjtIsmsPolicydata">
-                    <td >{{item.documentName}}</td>
+                    <td>{{item.documentName}}</td>
                     <td>
                         <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -101,10 +114,10 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of prjtIsmsProceduredata">
-                    <td >{{item.documentName}}</td>
+                    <td>{{item.documentName}}</td>
                     <td>
                         <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -119,10 +132,10 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of prjtIsmsFormatdata">
-                    <td >{{item.documentName}}</td>
+                    <td>{{item.documentName}}</td>
                     <td>
                         <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -138,14 +151,14 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of prjtqmsGeneraldata">
-                    <td >{{item.documentName}}</td>
+                    <td>{{item.documentName}}</td>
                     <td>
                         <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
+                    </td>
                 </tr>
             </tbody>
         </table>
-    </div> 
+    </div>
     <div class="tablebottom1">
         <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjqms2">
             <thead class="table-primary">
@@ -156,10 +169,10 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of prjtqmsGuidelinesdata">
-                    <td >{{item.documentName}}</td>
+                    <td>{{item.documentName}}</td>
                     <td>
                         <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -174,10 +187,10 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of prjtqmsPolicydata">
-                    <td >{{item.documentName}}</td>
+                    <td>{{item.documentName}}</td>
                     <td>
                         <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -192,10 +205,10 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of prjtqmsProceduredata">
-                    <td >{{item.documentName}}</td>
+                    <td>{{item.documentName}}</td>
                     <td>
                         <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -210,10 +223,10 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of prjtqmsFormatdata">
-                    <td >{{item.documentName}}</td>
+                    <td>{{item.documentName}}</td>
                     <td>
                         <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
+                    </td>
                 </tr>
             </tbody>
         </table>

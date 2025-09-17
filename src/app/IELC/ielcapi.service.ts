@@ -27,44 +27,44 @@ export class IelcapiService {
     });
   }
     //---------------------------------------------------------------------------------------- Registeredusers
-    apiUrl='https://ielcapitest.azurewebsites.net/EnrollmentData';
+    apiUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentData';
     GetUsers(): Observable<UsersInfo[]> {
       return this.http.get<UsersInfo[]>(this.apiUrl, {
         headers: this.getHeaders()
       });
     }
 
-    apiskill='https://ielcapitest.azurewebsites.net/EnrollmentData/skillname'
+    apiskill='http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentData/skillname'
     GetUsersBySkill(skillName: string): Observable<any> {
       return this.http.get<any>(`${this.apiskill}/${skillName}`, {
         headers: this.getHeaders()
       });
     }
-    apistatus='https://ielcapitest.azurewebsites.net/EnrollmentData/Status'
+    apistatus='http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentData/Status'
     GetUsersByStatus(data: string): Observable<any> {
       return this.http.get<any>(`${this.apistatus}/${data}`, {
         headers: this.getHeaders()
       });
     }
-    apimail='https://ielcapitest.azurewebsites.net/EnrollmentData/Mail'
+    apimail='http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentData/Mail'
     GetUsersByEmail(data: string): Observable<any> {
       return this.http.get<any>(`${this.apimail}/${data}`, {
         headers: this.getHeaders()
       });
     }
 
-    apivenue="https://ielcapitest.azurewebsites.net/EnrollmentData/Venue"
+    apivenue="http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentData/Venue"
     GetUsersByVenue(Venue: string): Observable<any> {
       return this.http.get<any>(`${this.apivenue}/${Venue}`, {
         headers: this.getHeaders()
       });
     }
 
-    apidate="https://ielcapitest.azurewebsites.net/EnrollmentData/StartDate"
+    apidate="http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentData/StartDate"
     GetUsersByDate(date: string): Observable<any> {
       // Convert input date to DD-MM-YYYY format
       const formattedDate = this.convertDateFormat(date);
-      const url = `https://ielcapitest.azurewebsites.net/EnrollmentData/StartDate/${formattedDate}`;
+      const url = `http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentData/StartDate/${formattedDate}`;
     
       return this.http.get(url, { headers: this.getHeaders() }).pipe(
         map((response: any) => {
@@ -108,7 +108,7 @@ export class IelcapiService {
     GetUsersBytoDate(date: string): Observable<any> {
       // Convert input date to DD-MM-YYYY format
       const formattedDate = this.convertDateFormat(date);
-      const url = `https://ielcapitest.azurewebsites.net/EnrollmentData/EndDate/${formattedDate}`;
+      const url = `http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentData/EndDate/${formattedDate}`;
     
       return this.http.get(url, { headers: this.getHeaders() }).pipe(
         map((response: any) => {
@@ -133,14 +133,14 @@ export class IelcapiService {
       );
     }
 
-    apiTime="https://ielcapitest.azurewebsites.net/EnrollmentData/Time"
+    apiTime="http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentData/Time"
     GetUsersByTime(Time: string): Observable<any> {
       return this.http.get<any>(`${this.apiTime}/${Time}`, {
         headers: this.getHeaders()
       });
     }  
 
-    apiID='https://ielcapitest.azurewebsites.net/EnrollmentData'
+    apiID='http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentData'
     DeleteDataById(id: number): Observable<void> {
       return this.http.delete<void>(`${this.apiID}/${id}`, {
         headers: this.getHeaders()
@@ -152,7 +152,7 @@ export class IelcapiService {
       return this.http.get<any>(url, { headers: this.getHeaders() });
     }
 
-    url = 'https://ielcapitest.azurewebsites.net/EnrollmentData';
+    url = 'http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentData';
     enrollUser(enrollmentData: any): Observable<any> {
       const headers = this.getHeaders();
       headers.append('Content-Type', 'application/json');
@@ -164,22 +164,29 @@ export class IelcapiService {
       return this.http.post<any>(this.url, enrollmentData, { headers: this.getHeaders() });
     }
 
-    checkurl='https://ielcapitest.azurewebsites.net/EnrollmentData/check'
+    checkurl='http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentData/check'
     checkIfAlreadyEnrolled(skillName: string, date: string, time: string, mail: string) {
       const params = {skillName,date,time,mail};
       return this.http.get<boolean>(this.checkurl, { params , headers: this.getHeaders() });
     }
 
-    checkvenueurl='https://ielcapitest.azurewebsites.net/EnrollmentData/checkself'
+    checkvenueurl='http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentData/checkself'
     checkVenueEnrollment(skillName: string, venue: string, mail: string) {
     const params = {skillName,venue,mail}
       return this.http.get<boolean>(this.checkvenueurl, { params , headers: this.getHeaders() });
     }
 
+    private baseUrl = 'http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentSessions';
+getSkillsByVenue(venue: string): Observable<string[]> {
+  //debugger;
+  return this.http.get<string[]>(`${this.baseUrl}/SkillNamesByVenue/${venue}`, {
+    headers: this.getHeaders()   // ✅ add this
+  });
+}
 
     //---------------------------------------------------------------------------------------Add New Skills
 
-    EnrolledskillsUrl='https://ielcapitest.azurewebsites.net/EnrollmentSessions';
+    EnrolledskillsUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentSessions';
     GetSkillSessions(): Observable<any> {
       return this.http.get<any>(this.EnrolledskillsUrl, { headers: this.getHeaders() });
     } 
@@ -228,9 +235,6 @@ GetExamInfos(): Observable<any> {
 }
 
 
-//https://ielcapitest.azurewebsites.net/EnrollmentSessions/skillNameexamdetails?skillName=azure
-//https://localhost:7154/EnrollmentSessions/sessionid/56
-
     GetSkillSessionById(id: string): Observable<any> {
       return this.http.get<any>(`${this.EnrolledskillsUrl}/${id}`, {
         headers: this.getHeaders()
@@ -256,7 +260,7 @@ GetExamInfos(): Observable<any> {
       });
     }
 
-    EnrolledskillDataUrl='https://ielcapitest.azurewebsites.net/EnrollmentSkillData';
+    EnrolledskillDataUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentSkillData';
     GetEnrolledSkills(): Observable<any> {
       return this.http.get<any>(this.EnrolledskillDataUrl, { headers: this.getHeaders() });
     }
@@ -268,7 +272,7 @@ GetExamInfos(): Observable<any> {
       });
     }
 
-    skillquestionsurl='https://ielcapitest.azurewebsites.net/IELCQA/create'
+    skillquestionsurl='http://ielcapitest.centralus.cloudapp.azure.com:8080/IELCQA/create'
     PostEnrolledSkillQuestions(skillData: any): Observable<any> {
       // const headers = { 'Content-Type': 'application/json' };
       return this.http.post<any>(this.skillquestionsurl, skillData, {
@@ -286,65 +290,71 @@ GetExamInfos(): Observable<any> {
       return this.http.delete(`${this.EnrolledskillDataUrl}/${skillName}`, { headers,observe: 'response' });
     }
     
-    AadUsersUrl='https://ielcapitest.azurewebsites.net/AADUsersData'
+    AadUsersUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/AADUsersData'
     GetAadUserslist(): Observable<any> {
       return this.http.get<any>(this.AadUsersUrl, { headers: this.getHeaders() });
     }
 
-    AadUGroupUrl='https://ielcapitest.azurewebsites.net/AADGroupMails'
+    AadUGroupUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/AADGroupMails'
     GetAadUserGroupslist(): Observable<any> {
       return this.http.get<any>(this.AadUGroupUrl, { headers: this.getHeaders() });
     }
  
     getUsersOfGroup(groupName: string): Observable<any> {
-      const url = `https://ielcapitest.azurewebsites.net/AADGroupMails/group-users/${encodeURIComponent(groupName)}`;
+      const url = `http://ielcapitest.centralus.cloudapp.azure.com:8080/AADGroupMails/group-users/${encodeURIComponent(groupName)}`;
       return this.http.get(url, { headers: this.getHeaders() });
     }
 
-    Enrolledsessionsurl='https://ielcapitest.azurewebsites.net/EnrollmentSessions/skills/latest'
+    Enrolledsessionsurl='http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentSessions/skills/latest'
     GetEnrolledSessions(): Observable<any> {
         return this.http.get<any>(this.Enrolledsessionsurl, { headers: this.getHeaders() });
     }
 
-    venuebyskill='https://ielcapitest.azurewebsites.net/EnrollmentSessions/venues/search/skillName'
+    venuebyskill='http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentSessions/venues/search/skillName'
     GetEnrolledSessionsbyvenue(skillName: string): Observable<any> {
       return this.http.get<any>(`${this.venuebyskill}?skillName=${skillName}`, { headers: this.getHeaders() });
     }
 
-    datebyskill='https://ielcapitest.azurewebsites.net/EnrollmentSessions/Dates/search'
+    datebyskill='http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentSessions/Dates/search'
     // GetEnrolledSessionsbydate(skillName: string): Observable<any> {
     //   return this.http.get<any>(`${this.datebyskill}/${skillName}`);
     // }
-    GetEnrolledSessionsbydate(skill: string, venue: string): Observable<any> {
-      const url = `https://ielcapitest.azurewebsites.net/EnrollmentSessions/Dates/search/${skill}/${venue}`;
-      return this.http.get<any>(url, { headers: this.getHeaders() });
-    }
-//https://ielcapitest.azurewebsites.net/EnrollmentSessions/Dates/search/azure/teams
+    // GetEnrolledSessionsbydate(skill: string, venue: string): Observable<any> {
+    //   const url = `http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentSessions/Dates/search/${skill}/${venue}`;
+    //   return this.http.get<any>(url, { headers: this.getHeaders() });
+    // }
+//http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentSessions/Dates/search/azure/teams
 
-    timebyskill='https://ielcapitest.azurewebsites.net/EnrollmentSessions/Times/search'
+    timebyskill='http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentSessions/Times/search'
     GetEnrolledSessionsbytime(skillName: string): Observable<any> {
       return this.http.get<any>(`${this.timebyskill}/${skillName}`, { headers: this.getHeaders() });
     }
 
     // getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): Observable<any> {
-    //   const url = `https://ielcapitest.azurewebsites.net/EnrollmentSessions/Times/search/${skillName}/${dateRange}`;
+    //   const url = `http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentSessions/Times/search/${skillName}/${dateRange}`;
     //   return this.http.get<any>(url, { headers: this.getHeaders() });
     // }
 
-getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): Observable<string> {
-    const encodedSkill = encodeURIComponent(skillName.trim());
-    const encodedDateRange = encodeURIComponent(dateRange.trim());
+// getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): Observable<string> {
+//     const encodedSkill = encodeURIComponent(skillName.trim());
+//     const encodedDateRange = encodeURIComponent(dateRange.trim());
 
-    const url = `https://ielcapitest.azurewebsites.net/EnrollmentSessions/Times/search/${encodedSkill}/${encodedDateRange}`;
-    return this.http.get(url, { headers: this.getHeaders(), responseType: 'text' });
-}
-
-
+//     const url = `http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentSessions/Times/search/${encodedSkill}/${encodedDateRange}`;
+//     return this.http.get(url, { headers: this.getHeaders(), responseType: 'text' });
+// }
+GetEnrolledSessionsbydate(skill: string, venue: string): Observable<any> {
+    const url = `https://ielcapistage.azurewebsites.net/EnrollmentSessions/Dates/search/${(skill)}/${(venue)}`;
+    return this.http.get<any>(url, { headers: this.getHeaders() });
+  }
+getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): Observable<any> {
+    const url = `https://ielcapistage.azurewebsites.net/EnrollmentSessions/Times/search/${skillName}/${dateRange}`;
+    return this.http.get<any>(url, { headers: this.getHeaders() });
+  }
     
 
    //---------------------------------------------------------------------------------------Inteq IT Support
 
-    itsprtUrl='https://ielcapitest.azurewebsites.net/INTEQITSupport';
+    itsprtUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/INTEQITSupport';
     GetItSprt(): Observable<any> {
       return this.http.get<any>(this.itsprtUrl, { headers: this.getHeaders() });
     }
@@ -367,7 +377,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.itsprtUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itismsgeneralUrl='https://ielcapitest.azurewebsites.net/ITSupport';
+    itismsgeneralUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ITSupport';
     Getitismsgeneral(): Observable<any> {
       return this.http.get<any>(this.itismsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -389,7 +399,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.itismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itismsguidelineUrl='https://ielcapitest.azurewebsites.net/ITSupportGuidelinessISMS';
+    itismsguidelineUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ITSupportGuidelinessISMS';
     Getitismsguidelines(): Observable<any> {
       return this.http.get<any>(this.itismsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -411,7 +421,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.itismsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itismspolicyUrl='https://ielcapitest.azurewebsites.net/ITSupportPolicyISMS';
+    itismspolicyUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ITSupportPolicyISMS';
     Getitismspolicy(): Observable<any> {
       return this.http.get<any>(this.itismspolicyUrl, { headers: this.getHeaders() });
     }
@@ -433,7 +443,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.itismspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itismsprocedureUrl='https://ielcapitest.azurewebsites.net/ITSupportProcedureISMS';
+    itismsprocedureUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ITSupportProcedureISMS';
     Getitismsprocedure(): Observable<any> {
       return this.http.get<any>(this.itismsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -455,7 +465,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.itismsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itismsformatUrl='https://ielcapitest.azurewebsites.net/ITSupportFormatsISMS';
+    itismsformatUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ITSupportFormatsISMS';
     Getitismsformat(): Observable<any> {
       return this.http.get<any>(this.itismsformatUrl, { headers: this.getHeaders() });
     }
@@ -477,7 +487,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.itismsformatUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itqmsgeneralUrl='https://ielcapitest.azurewebsites.net/ITSupportGeneralQMS';
+    itqmsgeneralUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ITSupportGeneralQMS';
     Getitqmsgeneral(): Observable<any> {
       return this.http.get<any>(this.itqmsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -499,7 +509,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.itqmsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itqmsguidelineUrl='https://ielcapitest.azurewebsites.net/ITSupportGuidelinessQMS';
+    itqmsguidelineUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ITSupportGuidelinessQMS';
     Getitqmsguidelines(): Observable<any> {
       return this.http.get<any>(this.itqmsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -522,7 +532,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.itqmsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itqmspolicyUrl='https://ielcapitest.azurewebsites.net/ITSupportPolicyQMS';
+    itqmspolicyUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ITSupportPolicyQMS';
     Getitqmspolicy(): Observable<any> {
       return this.http.get<any>(this.itqmspolicyUrl, { headers: this.getHeaders() });
     }
@@ -544,7 +554,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.itqmspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itqmsprocedureUrl='https://ielcapitest.azurewebsites.net/ITSupportProcedureQMS';
+    itqmsprocedureUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ITSupportProcedureQMS';
     Getitqmsprocedure(): Observable<any> {
       return this.http.get<any>(this.itqmsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -568,7 +578,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
     }
 
 
-    itqmsformatUrl='https://ielcapitest.azurewebsites.net/ITSupportFormatsQMS';
+    itqmsformatUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ITSupportFormatsQMS';
     Getitqmsformat(): Observable<any> {
       return this.http.get<any>(this.itqmsformatUrl, { headers: this.getHeaders() });
     }
@@ -593,7 +603,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
 
      //---------------------------------------------------------------------------------------Inteq Admin/OS Support
 
-     ossprtUrl='https://ielcapitest.azurewebsites.net/AdminHelpDesk';
+     ossprtUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/AdminHelpDesk';
      GetosSprt(): Observable<any> {
        return this.http.get<any>(this.ossprtUrl, { headers: this.getHeaders() });
      }
@@ -616,7 +626,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.ossprtUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osismsgeneralUrl='https://ielcapitest.azurewebsites.net/OperationsSupport';
+    osismsgeneralUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/OperationsSupport';
     Getosismsgeneral(): Observable<any> {
       return this.http.get<any>(this.osismsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -638,7 +648,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.osismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osismsguidelineUrl='https://ielcapitest.azurewebsites.net/OperationsSupportGuidelinessISMS';
+    osismsguidelineUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/OperationsSupportGuidelinessISMS';
     Getosismsguidelines(): Observable<any> {
       return this.http.get<any>(this.osismsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -660,7 +670,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.osismsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osismspolicyUrl='https://ielcapitest.azurewebsites.net/OperationsSupportPolicyISMS';
+    osismspolicyUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/OperationsSupportPolicyISMS';
     Getosismspolicy(): Observable<any> {
       return this.http.get<any>(this.osismspolicyUrl, { headers: this.getHeaders() });
     }
@@ -682,7 +692,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.osismspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osismsprocedureUrl='https://ielcapitest.azurewebsites.net/OperationsSupportProcedureISMS';
+    osismsprocedureUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/OperationsSupportProcedureISMS';
     Getosismsprocedure(): Observable<any> {
       return this.http.get<any>(this.osismsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -704,7 +714,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.osismsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osismsformatUrl='https://ielcapitest.azurewebsites.net/OperationsSupportFormatsISMS';
+    osismsformatUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/OperationsSupportFormatsISMS';
     Getosismsformat(): Observable<any> {
       return this.http.get<any>(this.osismsformatUrl, { headers: this.getHeaders() });
     }
@@ -726,7 +736,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.osismsformatUrl}/${id}`, { headers: this.getHeaders() });
     }
     
-    osqmsgeneralUrl='https://ielcapitest.azurewebsites.net/OperationsSupportGeneralQMS';
+    osqmsgeneralUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/OperationsSupportGeneralQMS';
     Getosqmsgeneral(): Observable<any> {
       return this.http.get<any>(this.osqmsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -749,7 +759,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.osqmsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osqmsguidelineUrl='https://ielcapitest.azurewebsites.net/OperationsSupportGuidelinessQMS';
+    osqmsguidelineUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/OperationsSupportGuidelinessQMS';
     Getosqmsguidelines(): Observable<any> {
       return this.http.get<any>(this.osqmsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -773,7 +783,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
     }
 
 
-    osqmspolicyUrl='https://ielcapitest.azurewebsites.net/OperationsSupportPolicyQMS';
+    osqmspolicyUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/OperationsSupportPolicyQMS';
     Getosqmspolicy(): Observable<any> {
       return this.http.get<any>(this.osqmspolicyUrl, { headers: this.getHeaders() });
     }
@@ -796,7 +806,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.osqmspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osqmsprocedureUrl='https://ielcapitest.azurewebsites.net/OperationsSupportProcedureQMS';
+    osqmsprocedureUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/OperationsSupportProcedureQMS';
     Getosqmsprocedure(): Observable<any> {
       return this.http.get<any>(this.osqmsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -819,7 +829,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.osqmsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osqmsformatUrl='https://ielcapitest.azurewebsites.net/OperationsSupportFormatsQMS';
+    osqmsformatUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/OperationsSupportFormatsQMS';
     Getosqmsformat(): Observable<any> {
       return this.http.get<any>(this.osqmsformatUrl, { headers: this.getHeaders() });
     }
@@ -843,7 +853,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
     }
      //---------------------------------------------------------------------------------------Inteq HR Support
 
-     hrsprtUrl='https://ielcapitest.azurewebsites.net/HRHelpDesk';
+     hrsprtUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/HRHelpDesk';
      GetHrSprt(): Observable<any> {
        return this.http.get<any>(this.hrsprtUrl, { headers: this.getHeaders() });
      }
@@ -866,7 +876,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.hrsprtUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrismsgeneralUrl='https://ielcapitest.azurewebsites.net/HRSupport';
+    hrismsgeneralUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/HRSupport';
     Gethrismsgeneral(): Observable<any> {
       return this.http.get<any>(this.hrismsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -889,7 +899,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.hrismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrismsguidelineUrl='https://ielcapitest.azurewebsites.net/HRSupportGuidelinessISMS';
+    hrismsguidelineUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/HRSupportGuidelinessISMS';
     Gethrismsguidelines(): Observable<any> {
       return this.http.get<any>(this.hrismsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -911,7 +921,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.hrismsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrismspolicyUrl='https://ielcapitest.azurewebsites.net/HRSupportPolicyISMS';
+    hrismspolicyUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/HRSupportPolicyISMS';
     Gethrismspolicy(): Observable<any> {
       return this.http.get<any>(this.hrismspolicyUrl, { headers: this.getHeaders() });
     }
@@ -933,7 +943,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.hrismspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrismsprocedureUrl='https://ielcapitest.azurewebsites.net/HRSupportProcedureISMS';
+    hrismsprocedureUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/HRSupportProcedureISMS';
     Gethrismsprocedure(): Observable<any> {
       return this.http.get<any>(this.hrismsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -955,7 +965,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.hrismsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrismsformatUrl='https://ielcapitest.azurewebsites.net/HRSupportFormatsISMS';
+    hrismsformatUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/HRSupportFormatsISMS';
     Gethrismsformat(): Observable<any> {
       return this.http.get<any>(this.hrismsformatUrl, { headers: this.getHeaders() });
     }
@@ -977,7 +987,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.hrismsformatUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrqmsgeneralUrl='https://ielcapitest.azurewebsites.net/HRSupportGeneralQMS';
+    hrqmsgeneralUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/HRSupportGeneralQMS';
     Gethrqmsgeneral(): Observable<any> {
       return this.http.get<any>(this.hrqmsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -1000,7 +1010,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.hrqmsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrqmsguidelineUrl='https://ielcapitest.azurewebsites.net/HRSupportGuidelinessQMS';
+    hrqmsguidelineUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/HRSupportGuidelinessQMS';
     Gethrqmsguidelines(): Observable<any> {
       return this.http.get<any>(this.hrqmsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -1024,7 +1034,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
     }
 
 
-    hrqmspolicyUrl='https://ielcapitest.azurewebsites.net/HRSupportPolicyQMS';
+    hrqmspolicyUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/HRSupportPolicyQMS';
     Gethrqmspolicy(): Observable<any> {
       return this.http.get<any>(this.hrqmspolicyUrl, { headers: this.getHeaders() });
     }
@@ -1047,7 +1057,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.hrqmspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrqmsprocedureUrl='https://ielcapitest.azurewebsites.net/HRSupportProcedureQMS';
+    hrqmsprocedureUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/HRSupportProcedureQMS';
     Gethrqmsprocedure(): Observable<any> {
       return this.http.get<any>(this.hrqmsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -1070,7 +1080,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.hrqmsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrqmsformatUrl='https://ielcapitest.azurewebsites.net/HRSupportFormatsQMS';
+    hrqmsformatUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/HRSupportFormatsQMS';
     Gethrqmsformat(): Observable<any> {
       return this.http.get<any>(this.hrqmsformatUrl, { headers: this.getHeaders() });
     }
@@ -1095,12 +1105,12 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
 
   //---------------------------------------------------------------------------------------Inteq Project Support
 
-    prjtsprtUrl='https://ielcapitest.azurewebsites.net/ProjectsList';
+    prjtsprtUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ProjectsList';
     GetprjtSprt(): Observable<any> {
      return this.http.get<any>(this.prjtsprtUrl, { headers: this.getHeaders() });
     }
 
-    prjtismsgeneralUrl='https://ielcapitest.azurewebsites.net/ProjectsSupport';
+    prjtismsgeneralUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ProjectsSupport';
     Getprjtismsgeneral(): Observable<any> {
       return this.http.get<any>(this.prjtismsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -1122,7 +1132,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.prjtismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtismsguidelineUrl='https://ielcapitest.azurewebsites.net/ProjectsSupportGuidelinessISMS';
+    prjtismsguidelineUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ProjectsSupportGuidelinessISMS';
     Getprjtismsguidelines(): Observable<any> {
       return this.http.get<any>(this.prjtismsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -1145,7 +1155,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.prjtismsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtismspolicyUrl='https://ielcapitest.azurewebsites.net/ProjectsSupportPolicyISMS';
+    prjtismspolicyUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ProjectsSupportPolicyISMS';
     Getprjtismspolicy(): Observable<any> {
       return this.http.get<any>(this.prjtismspolicyUrl, { headers: this.getHeaders() });
     }
@@ -1168,7 +1178,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.prjtismspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtismsprocedureUrl='https://ielcapitest.azurewebsites.net/ProjectsSupportProcedureISMS';
+    prjtismsprocedureUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ProjectsSupportProcedureISMS';
     Getprjtismsprocedure(): Observable<any> {
       return this.http.get<any>(this.prjtismsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -1191,7 +1201,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.prjtismsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtismsformatUrl='https://ielcapitest.azurewebsites.net/ProjectsSupportFormatsISMS';
+    prjtismsformatUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ProjectsSupportFormatsISMS';
     Getprjtismsformat(): Observable<any> {
       return this.http.get<any>(this.prjtismsformatUrl, { headers: this.getHeaders() });
     }
@@ -1214,7 +1224,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.prjtismsformatUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtqmsgeneralUrl='https://ielcapitest.azurewebsites.net/ProjectsSupportGeneralQMS';
+    prjtqmsgeneralUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ProjectsSupportGeneralQMS';
     Getprjtqmsgeneral(): Observable<any> {
       return this.http.get<any>(this.prjtqmsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -1237,7 +1247,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.prjtqmsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtqmsguidelineUrl='https://ielcapitest.azurewebsites.net/ProjectsSupportGuidelinessQMS';
+    prjtqmsguidelineUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ProjectsSupportGuidelinessQMS';
     Getprjtqmsguidelines(): Observable<any> {
       return this.http.get<any>(this.prjtqmsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -1261,7 +1271,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
     }
 
 
-    prjtqmspolicyUrl='https://ielcapitest.azurewebsites.net/ProjectsSupportPolicyQMS';
+    prjtqmspolicyUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ProjectsSupportPolicyQMS';
     Getprjtqmspolicy(): Observable<any> {
       return this.http.get<any>(this.prjtqmspolicyUrl, { headers: this.getHeaders() });
     }
@@ -1284,7 +1294,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.prjtqmspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtqmsprocedureUrl='https://ielcapitest.azurewebsites.net/ProjectsSupportProcedureQMS';
+    prjtqmsprocedureUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ProjectsSupportProcedureQMS';
     Getprjtqmsprocedure(): Observable<any> {
       return this.http.get<any>(this.prjtqmsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -1306,7 +1316,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.prjtqmsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtqmsformatUrl='https://ielcapitest.azurewebsites.net/ProjectsSupportFormatsQMS';
+    prjtqmsformatUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ProjectsSupportFormatsQMS';
     Getprjtqmsformat(): Observable<any> {
       return this.http.get<any>(this.prjtqmsformatUrl, { headers: this.getHeaders() });
     }
@@ -1331,7 +1341,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
 
 //---------------------------------------------------------------------------------------Inteq Emergency Support
   
-    emersprtUrl='https://ielcapitest.azurewebsites.net/EmergencyContactList';
+    emersprtUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/EmergencyContactList';
     GetemerSprt(): Observable<any> {
      return this.http.get<any>(this.emersprtUrl, { headers: this.getHeaders() });
     }
@@ -1354,7 +1364,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.emersprtUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    emergeneralUrl='https://ielcapitest.azurewebsites.net/Emergency';
+    emergeneralUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/Emergency';
     Getemergeneral(): Observable<any> {
       return this.http.get<any>(this.emergeneralUrl, { headers: this.getHeaders() });
     }
@@ -1378,7 +1388,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
    
 //---------------------------------------------------------------------------------------Inteq Various committees Support  
      
-    varcmtsUrl='https://ielcapitest.azurewebsites.net/VariousCommittees';
+    varcmtsUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/VariousCommittees';
     Getvarcmt(): Observable<any> {
      return this.http.get<any>(this.varcmtsUrl, { headers: this.getHeaders() });
     }
@@ -1400,9 +1410,27 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
     DeletevarcmtById(id: number): Observable<void> {
       return this.http.delete<void>(`${this.varcmtsUrl}/${id}`, { headers: this.getHeaders() });
     }
+
+  //   getWordAsPdf(fileName: string): Observable<Blob> {
+  //     // debugger;
+  //   const url = `http://ielcapitest.centralus.cloudapp.azure.com:8080/VariousCommittees/GetWordAsPdf?fileName=${encodeURIComponent(fileName)}`;
+  //   return this.http.get(url, {
+  //     headers: this.getHeaders(),
+  //     responseType: 'blob'
+  //   });
+  // }
+
+      getWordAsPdf(fileName: string): Observable<Blob> {
+      // debugger;
+    const url = `http://ielcapitest.centralus.cloudapp.azure.com:8080/VariousCommittees/GetWordAsPdf?fileName=${encodeURIComponent(fileName)}`;
+    return this.http.get(url, {
+      headers: this.getHeaders(),
+      responseType: 'blob'
+    });
+  }
 //---------------------------------------------------------------------------------------Inteq ISO 27001
 
-    iso27001Url='https://ielcapitest.azurewebsites.net/ISO27001';
+    iso27001Url='http://ielcapitest.centralus.cloudapp.azure.com:8080/ISO27001';
     Getiso27001(): Observable<any> {
      return this.http.get<any>(this.iso27001Url, { headers: this.getHeaders() });
     }
@@ -1425,7 +1453,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.iso27001Url}/${id}`, { headers: this.getHeaders() });
     }
 
-    ismsinfoUrl='https://ielcapitest.azurewebsites.net/ISMSSupport';
+    ismsinfoUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ISMSSupport';
     Getismsinfo(): Observable<any> {
      return this.http.get<any>(this.ismsinfoUrl, { headers: this.getHeaders() });
     }
@@ -1448,7 +1476,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.ismsinfoUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    isosprtUrl='https://ielcapitest.azurewebsites.net/ISOSupport';
+    isosprtUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ISOSupport';
     Getisosprt(): Observable<any> {
      return this.http.get<any>(this.isosprtUrl, { headers: this.getHeaders() });
     }
@@ -1471,7 +1499,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.isosprtUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    ispolicyUrl='https://ielcapitest.azurewebsites.net/ISPolicy';
+    ispolicyUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ISPolicy';
     Getispolicy(): Observable<any> {
      return this.http.get<any>(this.ispolicyUrl, { headers: this.getHeaders() });
     }
@@ -1496,7 +1524,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
 
 //---------------------------------------------------------------------------------------Inteq ISO 9001
     
-    iso9001Url='https://ielcapitest.azurewebsites.net/ISO9001';
+    iso9001Url='http://ielcapitest.centralus.cloudapp.azure.com:8080/ISO9001';
     Getiso9001(): Observable<any> {
      return this.http.get<any>(this.iso9001Url, { headers: this.getHeaders() });
     }
@@ -1519,14 +1547,14 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.iso9001Url}/${id}`, { headers: this.getHeaders() });
     }
 
-    isoinfoUrl='https://ielcapitest.azurewebsites.net/ISOSupport';
+    isoinfoUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ISOSupport';
     Getisoinfo(): Observable<any> {
      return this.http.get<any>(this.isoinfoUrl, { headers: this.getHeaders() });
     }
 
 //---------------------------------------------------------------------------------------CISO Support
 
-    cisoismsgeneralUrl='https://ielcapitest.azurewebsites.net/CISO_MR_Support';
+    cisoismsgeneralUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/CISO_MR_Support';
     Getcisoismsgeneral(): Observable<any> {
       return this.http.get<any>(this.cisoismsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -1548,7 +1576,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.cisoismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoismsguidelineUrl='https://ielcapitest.azurewebsites.net/CISO_MR_SupportGuidelinessISMS';
+    cisoismsguidelineUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/CISO_MR_SupportGuidelinessISMS';
     Getcisoismsguidelines(): Observable<any> {
       return this.http.get<any>(this.cisoismsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -1570,7 +1598,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.cisoismsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoismspolicyUrl='https://ielcapitest.azurewebsites.net/CISO_MR_SupportPolicyISMS';
+    cisoismspolicyUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/CISO_MR_SupportPolicyISMS';
     Getcisoismspolicy(): Observable<any> {
       return this.http.get<any>(this.cisoismspolicyUrl, { headers: this.getHeaders() });
     }
@@ -1592,7 +1620,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.cisoismspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoismsprocedureUrl='https://ielcapitest.azurewebsites.net/CISO_MR_SupportProcedureISMS';
+    cisoismsprocedureUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/CISO_MR_SupportProcedureISMS';
     Getcisoismsprocedure(): Observable<any> {
       return this.http.get<any>(this.cisoismsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -1614,7 +1642,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.cisoismsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoismsformatUrl='https://ielcapitest.azurewebsites.net/CISO_MR_SupportFormatsISMS';
+    cisoismsformatUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/CISO_MR_SupportFormatsISMS';
     Getcisoismsformat(): Observable<any> {
       return this.http.get<any>(this.cisoismsformatUrl, { headers: this.getHeaders() });
     }
@@ -1636,7 +1664,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.cisoismsformatUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoqmsgeneralUrl='https://ielcapitest.azurewebsites.net/CISO_MR_SupportGeneralQMS';
+    cisoqmsgeneralUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/CISO_MR_SupportGeneralQMS';
     Getcisoqmsgeneral(): Observable<any> {
       return this.http.get<any>(this.cisoqmsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -1660,7 +1688,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
     }
 
 
-    cisoqmsguidelineUrl='https://ielcapitest.azurewebsites.net/CISO_MR_SupportGuidelinessQMS';
+    cisoqmsguidelineUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/CISO_MR_SupportGuidelinessQMS';
     Getcisoqmsguidelines(): Observable<any> {
       return this.http.get<any>(this.cisoqmsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -1683,7 +1711,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.cisoqmsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoqmspolicyUrl='https://ielcapitest.azurewebsites.net/CISO_MR_SupportPolicyQMS';
+    cisoqmspolicyUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/CISO_MR_SupportPolicyQMS';
     Getcisoqmspolicy(): Observable<any> {
       return this.http.get<any>(this.cisoqmspolicyUrl, { headers: this.getHeaders() });
     }
@@ -1706,7 +1734,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.cisoqmspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoqmsprocedureUrl='https://ielcapitest.azurewebsites.net/CISO_MR_SupportProcedureQMS';
+    cisoqmsprocedureUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/CISO_MR_SupportProcedureQMS';
     Getcisoqmsprocedure(): Observable<any> {
       return this.http.get<any>(this.cisoqmsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -1730,7 +1758,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
     }
 
 
-    cisoqmsformatUrl='https://ielcapitest.azurewebsites.net/CISO_MR_SupportFormatsQMS';
+    cisoqmsformatUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/CISO_MR_SupportFormatsQMS';
     Getcisoqmsformat(): Observable<any> {
       return this.http.get<any>(this.cisoqmsformatUrl, { headers: this.getHeaders() });
     }
@@ -1755,7 +1783,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
     
 //---------------------------------------------------------------------------------------Hippa
 
-    hippaUrl='https://ielcapitest.azurewebsites.net/HIPAA';
+    hippaUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/HIPAA';
     Gethippa(): Observable<any> {
      return this.http.get<any>(this.hippaUrl, { headers: this.getHeaders() });
     }
@@ -1780,7 +1808,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
     
 //---------------------------------------------------------------------------------------GDPR
 
-    gdprUrl='https://ielcapitest.azurewebsites.net/GDPR';
+    gdprUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/GDPR';
     Getgdpr(): Observable<any> {
      return this.http.get<any>(this.gdprUrl, { headers: this.getHeaders() });
     }
@@ -1804,7 +1832,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
 
 //---------------------------------------------------------------------------------------SOC
 
-    socUrl='https://ielcapitest.azurewebsites.net/SOC';
+    socUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/SOC';
     Getsoc(): Observable<any> {
      return this.http.get<any>(this.socUrl, { headers: this.getHeaders() });
     }
@@ -1828,7 +1856,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
 
 //---------------------------------------------------------------------------------------DPDP
 
-    dpdpUrl='https://ielcapitest.azurewebsites.net/DPDP';
+    dpdpUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/DPDP';
     Getdpdp(): Observable<any> {
      return this.http.get<any>(this.dpdpUrl, { headers: this.getHeaders() });
     }
@@ -1850,7 +1878,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.delete<void>(`${this.dpdpUrl}/${id}`, { headers: this.getHeaders() });
     }
 //---------------------------------------------------------------------------------------feedback
-    feedbackUrl='https://ielcapitest.azurewebsites.net/EnrollmentData'
+    feedbackUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/EnrollmentData'
     Updatefeedback(id: number, updatedData: any): Observable<any> {
       const headers = this.getHeaders();
       return this.http.put<any>(`${this.feedbackUrl}/${id}`, updatedData,{headers, observe: 'response' });
@@ -1861,7 +1889,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
     }
 //---------------------------------------------------------------------------------------Inteq Holidays
 
-    holidaysUrl='https://ielcapitest.azurewebsites.net/HolidayList';
+    holidaysUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/HolidayList';
     Getholidays(): Observable<any> {
      return this.http.get<any>(this.holidaysUrl, { headers: this.getHeaders() });
     } 
@@ -1875,7 +1903,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
     }
     
 //---------------------------------------------------------------------------------------ISMS calendar
-    ismscalenarUrl='https://ielcapitest.azurewebsites.net/ISMSInteqSoftware_Calendar';
+    ismscalenarUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ISMSInteqSoftware_Calendar';
     Getismscalendar(): Observable<any> {
      return this.http.get<any>(this.ismscalenarUrl, { headers: this.getHeaders() });
     } 
@@ -1904,12 +1932,12 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
     
 
 //---------------------------------------------------------------------------------------ISMS history
-    ismshistoryUrl='https://ielcapitest.azurewebsites.net/ISMSInteqSoftware_Calendar/GetHistoryCalendar';
+    ismshistoryUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ISMSInteqSoftware_Calendar/GetHistoryCalendar';
     Getismshistory(year: number): Observable<any> {
       return this.http.get<any>(`${this.ismshistoryUrl}?year=${year}`, { headers: this.getHeaders() });
     }
 //---------------------------------------------------------------------------------------QMS calendar
-qmscalenarUrl='https://ielcapitest.azurewebsites.net/QMSInteqSoftware_Calendar';
+qmscalenarUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/QMSInteqSoftware_Calendar';
 Getqmscalendar(): Observable<any> {
  return this.http.get<any>(this.qmscalenarUrl, { headers: this.getHeaders() });
 } 
@@ -1932,13 +1960,13 @@ Updateqmscalendar(id: number, updatedData: any): Observable<any> {
 }
 
 //---------------------------------------------------------------------------------------QMS history
-qmshistoryUrl='https://ielcapitest.azurewebsites.net/QMSInteqSoftware_Calendar/GetHistoryCalendar';
+qmshistoryUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/QMSInteqSoftware_Calendar/GetHistoryCalendar';
 Getqmshistory(year: number): Observable<any> {
   return this.http.get<any>(`${this.qmshistoryUrl}?year=${year}`, { headers: this.getHeaders() });
 }
 //---------------------------------------------------------------------------------------ISMS mails
 
-    ismsmailsUrl='https://ielcapitest.azurewebsites.net/ISMSEmails';
+    ismsmailsUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ISMSEmails';
     Getismsmails(): Observable<any> {
      return this.http.get<any>(this.ismsmailsUrl, { headers: this.getHeaders() });
     } 
@@ -1971,7 +1999,7 @@ Getqmshistory(year: number): Observable<any> {
  
 //---------------------------------------------------------------------------------------QMS mails
 
-    qmsmailsUrl='https://ielcapitest.azurewebsites.net/QMSEmails';
+    qmsmailsUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/QMSEmails';
     Getqmsmails(): Observable<any> {
      return this.http.get<any>(this.qmsmailsUrl, { headers: this.getHeaders() });
     } 
@@ -2001,7 +2029,7 @@ Getqmshistory(year: number): Observable<any> {
 
 //---------------------------------------------------------------------------------------SMTP Admin
 
-    smtpUrl='https://ielcapitest.azurewebsites.net/SMPTAdmin';
+    smtpUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/SMPTAdmin';
     Getsmtp(): Observable<any> {
      return this.http.get<any>(this.smtpUrl, { headers: this.getHeaders() });
     } 
@@ -2016,7 +2044,7 @@ Getqmshistory(year: number): Observable<any> {
     }
  //---------------------------------------------------------------------------------------ADmin users
  
- adminusersUrl='https://ielcapitest.azurewebsites.net/AdminUsersRoles';
+ adminusersUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/AdminUsersRoles';
    Getadminusers(): Observable<any> {
      return this.http.get<any>(this.adminusersUrl, { headers: this.getHeaders() });
     } 
@@ -2030,7 +2058,7 @@ Getqmshistory(year: number): Observable<any> {
     }  
  //---------------------------------------------------------------------------------------Events
  
- eventsUrl='https://ielcapitest.azurewebsites.net/Events';
+ eventsUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/Events';
    Getevents(): Observable<any> {
      return this.http.get<any>(this.eventsUrl, { headers: this.getHeaders() });
     } 
@@ -2059,7 +2087,7 @@ Getqmshistory(year: number): Observable<any> {
     
 //---------------------------------------------------------------------------------------Courses Restriction
  
- courseUrl='https://ielcapitest.azurewebsites.net/CoursesRestriction';
+ courseUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/CoursesRestriction';
    Getcourse(): Observable<any> {
      return this.http.get<any>(this.courseUrl, { headers: this.getHeaders() });
     } 
@@ -2081,7 +2109,7 @@ Getqmshistory(year: number): Observable<any> {
 
 //---------------------------------------------------------------------------------------Events Alerts
  
- eventalertsUrl='https://ielcapitest.azurewebsites.net/EventAlerts';
+ eventalertsUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/EventAlerts';
    Geteventalerts(): Observable<any> {
      return this.http.get<any>(this.eventalertsUrl, { headers: this.getHeaders() });
     } 
@@ -2107,7 +2135,7 @@ UpdateEventAlertStatus(data: any): Observable<any> {
 }
 //================================================================================Exam info
 
-examinfoUrl='https://ielcapitest.azurewebsites.net/ExamInfo';
+examinfoUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ExamInfo';
 Getexaminfo(): Observable<any> {
      return this.http.get<any>(this.examinfoUrl, { headers: this.getHeaders() });
 }    
@@ -2125,7 +2153,7 @@ Updateexaminfo(id: number, updatedData: any): Observable<any> {
   return this.http.put<any>(`${this.examinfoUrl}/${id}`, updatedData, { headers: this.getHeaders() });
 } 
 //=================================================================================skillQA
-skillqaurl='https://ielcapitest.azurewebsites.net/IELCQA';
+skillqaurl='http://ielcapitest.centralus.cloudapp.azure.com:8080/IELCQA';
 Getskillqa(): Observable<any> {
   return this.http.get<any>(this.skillqaurl, { headers: this.getHeaders() });
 }   
@@ -2156,15 +2184,15 @@ Updateskillqa(id: number, updatedData: any): Observable<any> {
   const headers = this.getHeaders();
   return this.http.put<any>(`${this.skillqaurl}/${id}`, updatedData, {headers, observe: 'response' });
 } 
-skillnameurl='https://ielcapitest.azurewebsites.net/IELCQA/skillname'
+skillnameurl='http://ielcapitest.centralus.cloudapp.azure.com:8080/IELCQA/skillname'
     GetskillqaBySkill(skillName: string): Observable<any> {
       return this.http.get<any>(`${this.skillnameurl}/${skillName}`, { headers: this.getHeaders() });
     }
 
 
 //===============================================================================================Compliance Isms
-complianceismsUrl='https://ielcapitest.azurewebsites.net/ISMSInteqSoftware_Calendar';
-complianceqmsUrl='https://ielcapitest.azurewebsites.net/QMSInteqSoftware_Calendar';
+complianceismsUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/ISMSInteqSoftware_Calendar';
+complianceqmsUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/QMSInteqSoftware_Calendar';
 
 Getcomplianceismsdata(): Observable<any> {
      return this.http.get<any>(this.complianceismsUrl, { headers: this.getHeaders() });
@@ -2265,14 +2293,14 @@ sendEmailFromBackend(payload: {
   subject: string;
   body: string;
 }) {
-  const apiUrl = 'https://ielcapitest.azurewebsites.net/SendEmail/api/sendemail'; // 🔁 Replace with your actual backend API URL
+  const apiUrl = 'http://ielcapitest.centralus.cloudapp.azure.com:8080/SendEmail/api/sendemail'; // 🔁 Replace with your actual backend API URL
   const headers = new HttpHeaders({ 'Content-Type': 'application/json',
     'Authorization': this.apiKey
    });
   return this.http.post(apiUrl, payload, {headers, responseType: 'text' });
 }
 //---------------------------------------------------------------------------------------Events Alerts
-eventschedulerAdminUrl='https://ielcapitest.azurewebsites.net/EventSchedulerAdmin/';
+eventschedulerAdminUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/EventSchedulerAdmin/';
 
 
 GetEventSchedulerAdmin(): Observable<string[]> {
@@ -2298,7 +2326,7 @@ GetEventSchedulerAdmin(): Observable<string[]> {
   return this.http.put(`${this.eventschedulerAdminUrl}/${id}`, JSON.stringify(updatedData), { headers });
 }
 //---------------------------------------------------------------------------------------------------------EventSchedulerAdmin
-eventschedulerUserUrl='https://ielcapitest.azurewebsites.net/EventSchedulerUser';
+eventschedulerUserUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/EventSchedulerUser';
 
 GetEventSchedulerUser(year: string, month: string): Observable<any[]> {
   return this.http.get<any[]>(`${this.eventschedulerUserUrl}/${year}/${month}`, {
@@ -2401,7 +2429,7 @@ GetBookedTimes(date: string): Observable<string[]> {
 //     return this.http.get<any[]>(`${this.eventschedulerUrl}/latest`, { headers: this.getHeaders() });
 
 //   }
-  //https://ielcapitest.azurewebsites.net/EventSchedulerUser/latest
+  //http://ielcapitest.centralus.cloudapp.azure.com:8080/EventSchedulerUser/latest
 
 // GetEventsscfilterprojects(displayname: string): Observable<any> {
 //   return this.http.get<any>(`${this.EventSchedulerUser}EventSchedulerUser/userprojectsbydisplayname/${displayname}`, { headers: this.getHeaders() });
@@ -2411,7 +2439,7 @@ GetBookedTimes(date: string): Observable<string[]> {
 //   return this.http.get<any[]>(`${this.EventSchedulerUser}EventSchedulerUser/auditees`, { headers: this.getHeaders() })
 // }
 //-------------------------------------------------------------------------------------------------------EventSchedules
-eventscheduleUrls='https://ielcapitest.azurewebsites.net/EventSchedules';
+eventscheduleUrls='http://ielcapitest.centralus.cloudapp.azure.com:8080/EventSchedules';
 GetEventSchedules(year: string, month: string): Observable<any[]> {
   return this.http.get<any[]>(`${this.eventscheduleUrls}/${year}/${month}`, {
     headers: this.getHeaders()
@@ -2454,7 +2482,7 @@ UpdateEventScheduleslatest(id: number, updateData: any): Observable<void> {
   }
 //-------------------------------------------------------------------------------------------------------EventSchedules
 //rough
-eventscheduleUrl='https://ielcapitest.azurewebsites.net/';
+eventscheduleUrl='http://ielcapitest.centralus.cloudapp.azure.com:8080/';
 
 
   UpdateEventScheduleadmin(id: number, updatedData: any): Observable<any> {
@@ -2462,8 +2490,8 @@ eventscheduleUrl='https://ielcapitest.azurewebsites.net/';
       return this.http.put<any>(`${this.eventscheduleUrl}/EventSchedulerUser/schedule/${id}`, updatedData,{headers, observe: 'response' });
 }
 //-------------------------------------------------------------------------------------------------------EventSchedulerUser
-eventschedulertime = 'https://ielcapitest.azurewebsites.net';
-eventschedulertimes = 'https://ielcapitest.azurewebsites.net/times';
+eventschedulertime = 'http://ielcapitest.centralus.cloudapp.azure.com:8080';
+eventschedulertimes = 'http://ielcapitest.centralus.cloudapp.azure.com:8080/times';
 
 GetEventSchedulerTime(year: string, month: string): Observable<any[]> {
   return this.http.get<any[]>(`${this.eventschedulertime}/EventSchedulerTime/Get/${year}/${month}`, {
@@ -2523,9 +2551,9 @@ DeleteEventSchedulerTime(year: string, month: string, id: number): Observable<vo
 //     }
 //   );
 // }
-//https://ielcapitest.azurewebsites.net/EventSchedulerTime/times/exclude/latest?selectedTime=06%3A30%20PM%20%E2%80%93%2008%3A00%20PM
+//http://ielcapitest.centralus.cloudapp.azure.com:8080/EventSchedulerTime/times/exclude/latest?selectedTime=06%3A30%20PM%20%E2%80%93%2008%3A00%20PM
 //---------------------------------------------------------------------------------------EventSchedulerTime
-coownersurl = 'https://ielcapitest.azurewebsites.net/CoOwners';
+coownersurl = 'http://ielcapitest.centralus.cloudapp.azure.com:8080/CoOwners';
 
 GetCoOwners(): Observable<string[]> {
   return this.http.get<any[]>(`${this.coownersurl}`, { headers: this.getHeaders() })
@@ -2580,7 +2608,7 @@ PostCoOwners(data: any): Observable<any> {
       return this.http.put<any>(`${this.coownersurl}/${id}`, updatedData,{headers, observe: 'response' });
     }
 //---------------------------------------------------------------------------------------CoOwners 
-createeventtablesurl = 'https://ielcapitest.azurewebsites.net/AddNewTables/createeventtables';
+createeventtablesurl = 'http://ielcapitest.centralus.cloudapp.azure.com:8080/AddNewTables/createeventtables';
 
 createEventTables(): Observable<any> {
   return this.http.post(this.createeventtablesurl, {}, {

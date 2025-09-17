@@ -119,7 +119,83 @@
                                             aria-label="Close" (click)="resetSkillSession(); GetAllSkillSessions()" ></button>
                                     </div>
                                     <div class="modal-body">
-                                       <div class="divmodal">
+                                         <div class="divmodal">
+                                            <label>Venue<span style="color: red;">*</span></label>
+                                            <select id="select1" class="form-control"
+                                                [(ngModel)]="skillSessionData.venue"  (change)="onVenueChange($event)" name="venue" required>
+                                                <option value="">- Select Mode -</option>
+                                                <option>Offline</option>
+                                                <option>Self-Learning</option>
+                                                <option>Teams</option>
+                                            </select>
+                                        </div>
+                                          <div class="divmodal">
+                                            <label>Start Date<span style="color: red;">*</span></label>
+                                            <input type="date" class="form-control"
+                                                [(ngModel)]="skillSessionData.fromDate" name="fromDate" [min]="today"
+                                                 required>
+                                        </div>
+
+                                        <div class="divmodal">
+                                            <label>End Date<span style="color: red;">*</span></label>
+                                            <input type="date" class="form-control"
+                                                [(ngModel)]="skillSessionData.toDate" name="toDate"
+                                                [min]="skillSessionData.fromDate || today"
+                                                [disabled]="skillSessionData.venue === 'Self-Learning'" required>
+                                        </div>
+                                         <div class="divmodal">
+                                            <label>Start Time<span style="color: red;">*</span></label>
+                                            <input type="time" class="form-control"
+                                                [(ngModel)]="skillSessionData.skillStartTime" name="skillStartTime"
+                                                [disabled]="skillSessionData.venue === 'Self-Learning'" required>
+                                        </div>
+
+                                        <div class="divmodal">
+                                            <label>End Time<span style="color: red;">*</span></label>
+                                            <input type="time" class="form-control"
+                                                [(ngModel)]="skillSessionData.skillEndTime" name="skillEndTime"
+                                                [disabled]="skillSessionData.venue === 'Self-Learning'" required>
+                                        </div>
+                                        <div class="divmodal">
+                                            <label>Description<span style="color: red;">*</span></label>
+                                            <textarea class="form-control"
+                                                [(ngModel)]="skillSessionData.skillDescription" name="skillDescription"
+                                                required #skillNameRef="ngModel"></textarea>
+                                        </div>
+                                        <div class="divmodal">
+                                            <label>Skill Name<span style="color: red;">*</span></label>
+                                            <select id="select2" class="form-control" name="skillname"
+                                                [(ngModel)]="skillSessionData.skillName" name="skillName" required
+                                                #skillNameRef="ngModel">
+                                                <option value="">- select skill -</option>
+                                                <option *ngFor="let item of Enrolledskills" [value]="item.skillName">{{
+                                                    item.skillName }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="divmodal">
+                                            <label>Conducted By</label>
+                                            <input type="text" class="form-control"
+                                                [(ngModel)]="skillSessionData.conductedBy" name="conductedBy">
+                                        </div>
+                                        <div class="divmodal">
+                                            <label>Users</label>
+                                            <select id="select3" class="form-control" name="users" name="mail" multiple
+                                                size="10" (change)="updateSelectedUsers($event)">
+                                                <option value="">- select user -</option>
+                                                <option *ngFor="let row of aadUsersData">{{ row.mail }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="divmodal">
+                                            <label>Groups</label>
+                                            <select id="select4" name="groups" class="form-control" name="groups"
+                                                name="groupName" multiple size="10"
+                                                (change)="updateSelectedGroups($event)">
+                                                <option value="">- select group -</option>
+                                                <option *ngFor="let item of aadGroupsData">{{ item.groupName }}</option>
+                                            </select>
+                                        </div>
+
+                                       <!-- <div class="divmodal">
                                         <label>Start Date<span style="color: red;">*</span></label>
                                         <input type="date" class="form-control" [(ngModel)]="skillSessionData.fromDate" name="fromDate"  [min]="today" required #skillNameRef="ngModel"  >
                                        </div>
@@ -134,8 +210,8 @@
                                        <div class="divmodal">
                                         <label>End Time<span style="color: red;">*</span></label>
                                         <input type="time" class="form-control" [(ngModel)]="skillSessionData.skillEndTime" name="skillEndTime" required #skillNameRef="ngModel"  >
-                                       </div>
-                                       <div class="divmodal">
+                                       </div> -->
+                                       <!-- <div class="divmodal">
                                         <label>Venue<span style="color: red;">*</span></label>
                                         <select id="select1"   class="form-control" name="modetype" [(ngModel)]="skillSessionData.venue" name="venue" required #skillNameRef="ngModel" >
                                             <option value=""  >- Select Mode -</option>
@@ -143,8 +219,8 @@
                                             <option >Self-Learning</option>
                                             <option >Teams</option>
                                        </select>
-                                       </div>
-                                       <div class="divmodal">
+                                       </div> -->
+                                       <!-- <div class="divmodal">
                                         <label>Description<span style="color: red;">*</span></label>
                                         <textarea  class="form-control" [(ngModel)]="skillSessionData.skillDescription" name="skillDescription" required #skillNameRef="ngModel" ></textarea>
                                        </div>
@@ -158,8 +234,8 @@
                                        <div class="divmodal">
                                         <label>Conducted By</label>
                                         <input type="text" class="form-control" [(ngModel)]="skillSessionData.conductedBy" name="conductedBy" >
-                                       </div>
-                                       <div class="divmodal">
+                                       </div> -->
+                                       <!-- <div class="divmodal">
                                         <label>Users</label>
                                         <select id="select3" class="form-control" name="users"  name="mail" multiple size="10" (change)="updateSelectedUsers($event)" >
                                                 <option value="">- select user -</option>
@@ -172,7 +248,7 @@
                                             <option value="">- select group -</option>
                                             <option *ngFor="let item of aadGroupsData" >{{ item.groupName }}</option>
                                         </select>
-                                       </div>
+                                       </div> -->
 
                                         <div class="divmodal">
                                     <label>Exam Time<span style="color: red;">*</span></label>
