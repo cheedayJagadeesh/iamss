@@ -1,8 +1,13 @@
-export const environment = {
-    production: true,
-    // redirectUri: "https://sampleielc.azurewebsites.net/authcallback",
-    // postLogoutRedirectUri: "https://sampleielc.azurewebsites.net/#/login"
-     redirectUri: "https://ielc.inteqportal.com/authcallback",
-    postLogoutRedirectUri: "https://ielc.inteqportal.com/#/login"
-  };
-  
+  export const environment = {
+  production: true,
+  urls: {
+    test: {
+      redirectUri: "https://ielc.inteqportal.com/authcallback",
+      postLogoutRedirectUri: "https://ielc.inteqportal.com/#/login"
+    },
+    prod: {
+      redirectUri: "https://inteqemployeelearingcenter.azurewebsites.net/authcallback",
+      postLogoutRedirectUri: "https://inteqemployeelearingcenter.azurewebsites.net/#/login"
+    }
+  }
+};
