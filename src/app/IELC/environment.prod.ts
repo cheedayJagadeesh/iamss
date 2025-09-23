@@ -1,4 +1,6 @@
-  export const environment = {
+const isTest = window?.location?.hostname.includes("ielc.inteqportal.com");
+
+export const environment = {
   production: true,
   urls: {
     test: {
@@ -9,5 +11,12 @@
       redirectUri: "https://inteqemployeelearingcenter.azurewebsites.net/authcallback",
       postLogoutRedirectUri: "https://inteqemployeelearingcenter.azurewebsites.net/#/login"
     }
-  }
+  },
+  redirectUri: isTest
+    ? "https://ielc.inteqportal.com/authcallback"
+    : "https://inteqemployeelearingcenter.azurewebsites.net/authcallback",
+
+  postLogoutRedirectUri: isTest
+    ? "https://ielc.inteqportal.com/#/login"
+    : "https://inteqemployeelearingcenter.azurewebsites.net/#/login"
 };
