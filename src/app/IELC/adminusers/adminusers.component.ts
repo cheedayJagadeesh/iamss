@@ -413,6 +413,7 @@ eventschuser: eventscuserinfo = {
  availableMonths: string[] = [];
  selectedMonth: string = '';
   items: any[] = [];
+  prjtIsmsGeneraldatainfo: any[]= [];
 
  updatedFields: any;
   
@@ -3956,12 +3957,30 @@ UpdateItQMSFormat() {
 }
 //=======================================================================================Project Support ISMS
 
-GetPrjtISMSGenerallist(){
+// GetPrjtISMSGenerallist(){
+//   this.ielc.Getprjtismsgeneral().subscribe((data) => {
+//     this.prjtIsmsGeneraldata=data;
+//     this.isLoading = false;
+//   });
+//  }
+
+ GetPrjtISMSGenerallist() {
   this.ielc.Getprjtismsgeneral().subscribe((data) => {
-    this.prjtIsmsGeneraldata=data;
+    this.prjtIsmsGeneraldata = data.map((item: any) => {
+      // find matching file info by comparing names
+      const match = this.prjtIsmsGeneraldatainfo.find(
+        info => info.displayName === item.documentName
+      );
+
+      return {
+        ...item,                           // keep all API data
+        fileName: match ? match.fileName : null // add fileName if found
+      };
+    });
+
     this.isLoading = false;
   });
- }
+}
  
  AddPrjtISMSGeneral(): void {
   this.ielc.Postprjtismsgeneral(this.docsdata).subscribe(
@@ -6457,6 +6476,16 @@ getDownloadLink(alertAttachment: string): string {
     : `https://ielc-coreapi.azurewebsites.net/EventAlerts/${alertAttachment}`; // File URL
 }
 
+pdfUrl: string | null = null;
+openDocument(fileName: string) {
+  this.ielc.getWordAsPdf(fileName).subscribe(blob => {
+    const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+    this.pdfUrl = URL.createObjectURL(pdfBlob);
+  });
+}
+closePdf() {
+  this.pdfUrl = null;
+}
 
 }
 
