@@ -108,7 +108,7 @@
         <table *ngIf="!isLoading" class="table table-striped table-bordered" name="smptadmin">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">ID</th>
+                    <!-- <th scope="col">ID</th> -->
                     <th scope="col">Username</th>
                     <th scope="col">Password</th>
                     <th scope="col">Action</th>
@@ -116,7 +116,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let row of smtplist">
-                    <td>{{row.id}}</td>
+                    <!-- <td>{{row.id}}</td> -->
                     <td>{{row.userName}}</td>
                     <td>{{row.password}}</td>
                     <td>
@@ -154,7 +154,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetsmtp(); GetSmtplist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddSmtp()">Add</button>
+                                                [disabled]="!smtpdata.userName || !smtpdata.password" (click)="AddSmtp()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -177,7 +177,7 @@
         <table *ngIf="!isLoading" class="table table-striped table-bordered" name="inteqitsuprt">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">ID</th>
+                    <!-- <th scope="col">ID</th> -->
                     <th scope="col">Contact Priority</th>
                     <th scope="col">Name</th>
                     <th scope="col">Mobile</th>
@@ -187,7 +187,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let row of itsprtlist">
-                    <td>{{row.id}}</td>
+                    <!-- <td>{{row.id}}</td> -->
                     <td>{{row.contactPriority}}</td>
                     <td>{{row.name}}</td>
                     <td>{{row.mobile}}</td>
@@ -237,7 +237,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItSprt(); GetItSprtlist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddItSprt()">Add</button>
+                                                [disabled]="!itsprtdata.contactPriority || !itsprtdata.name || !itsprtdata.mobile || !itsprtdata.email" (click)="AddItSprt()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -287,7 +287,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItSprt()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateItSprt()">Update</button>
+                                                [disabled]="!itsprtdata.contactPriority || !itsprtdata.name || !itsprtdata.mobile || !itsprtdata.email" (click)="UpdateItSprt()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -310,7 +310,7 @@
         <table *ngIf="!isLoading" class="table table-striped table-bordered" name="adminhd">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">ID</th>
+                    <!-- <th scope="col">ID</th> -->
                     <th scope="col">Contact Priority</th>
                     <th scope="col">Name</th>
                     <th scope="col">Mobile</th>
@@ -320,7 +320,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let row of ossprtlist">
-                    <td>{{row.id}}</td>
+                    <!-- <td>{{row.id}}</td> -->
                     <td>{{row.contactPriority}}</td>
                     <td>{{row.name}}</td>
                     <td>{{row.mobile}}</td>
@@ -370,7 +370,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsSprt(); GetOsSprtlist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddOsSprt()">Add</button>
+                                                [disabled]="!ossprtdata.contactPriority || !ossprtdata.name || !ossprtdata.mobile || !ossprtdata.email" (click)="AddOsSprt()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -420,7 +420,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsSprt()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateOsSprt()">Update</button>
+                                                [disabled]="!ossprtdata.contactPriority || !ossprtdata.name || !ossprtdata.mobile || !ossprtdata.email" (click)="UpdateOsSprt()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -442,7 +442,7 @@
         <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrhd">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">ID</th>
+                    <!-- <th scope="col">ID</th> -->
                     <th scope="col">Contact Priority</th>
                     <th scope="col">Name</th>
                     <th scope="col">Mobile</th>
@@ -452,7 +452,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let row of hrsprtlist">
-                    <td>{{row.id}}</td>
+                    <!-- <td>{{row.id}}</td> -->
                     <td>{{row.contactPriority}}</td>
                     <td>{{row.name}}</td>
                     <td>{{row.mobile}}</td>
@@ -502,7 +502,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrSprt(); GetHrSprtlist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddHrSprt()">Add</button>
+                                                [disabled]="!hrsprtdata.contactPriority || !hrsprtdata.name || !hrsprtdata.mobile || !hrsprtdata.email" (click)="AddHrSprt()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -552,7 +552,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrSprt()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateHrSprt()">Update</button>
+                                                [disabled]="!hrsprtdata.contactPriority || !hrsprtdata.name || !hrsprtdata.mobile || !hrsprtdata.email" (click)="UpdateHrSprt()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -574,7 +574,7 @@
         <table *ngIf="!isLoading" class="table table-striped table-bordered" name="emergencycnctlist">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">ID</th>
+                    <!-- <th scope="col">ID</th> -->
                     <th scope="col">Functions</th>
                     <th scope="col">Name</th>
                     <th scope="col">Mobile</th>
@@ -584,7 +584,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let row of emersprtlist">
-                    <td>{{row.id}}</td>
+                    <!-- <td>{{row.id}}</td> -->
                     <td>{{row.functions}}</td>
                     <td>{{row.name}}</td>
                     <td>{{row.mobile}}</td>
@@ -634,7 +634,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetEmerSprt(); GetEmerSprtlist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddEmerSprt()">Add</button>
+                                                [disabled]="!emersprtdata.functions || !emersprtdata.name || !emersprtdata.mobile || !emersprtdata.email" (click)="AddEmerSprt()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -684,7 +684,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetEmerSprt()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateEmerSprt()">Update</button>
+                                                [disabled]="!emersprtdata.functions || !emersprtdata.name || !emersprtdata.mobile || !emersprtdata.email" (click)="UpdateEmerSprt()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -706,7 +706,7 @@
         <table *ngIf="!isLoading" class="table table-striped table-bordered" name="iso27001">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">ID</th>
+                    <!-- <th scope="col">ID</th> -->
                     <th scope="col">Contact Priority</th>
                     <th scope="col">Name</th>
                     <th scope="col">Mobile</th>
@@ -716,7 +716,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let row of isosprtlist27001">
-                    <td>{{row.id}}</td>
+                    <!-- <td>{{row.id}}</td> -->
                     <td>{{row.contactPriority}}</td>
                     <td>{{row.name}}</td>
                     <td>{{row.mobile}}</td>
@@ -767,7 +767,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetISO27001Sprt(); GetIsoSprtlist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddISO27001Sprt()">Add</button>
+                                                [disabled]="!isosprtdata.contactPriority || !isosprtdata.name || !isosprtdata.mobile || !isosprtdata.email" (click)="AddISO27001Sprt()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -818,7 +818,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetISO27001Sprt()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!isosprtdata.contactPriority || !isosprtdata.name || !isosprtdata.mobile || !isosprtdata.email"
                                                 (click)="UpdateISO27001Sprt();resetISO27001Sprt()">Update</button>
                                         </div>
                                     </div>
@@ -841,7 +841,7 @@
         <table *ngIf="!isLoading" class="table table-striped table-bordered" name="iso9001">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">ID</th>
+                    <!-- <th scope="col">ID</th> -->
                     <th scope="col">Contact Priority</th>
                     <th scope="col">Name</th>
                     <th scope="col">Mobile</th>
@@ -851,7 +851,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let row of isosprtlist9001">
-                    <td>{{row.id}}</td>
+                    <!-- <td>{{row.id}}</td> -->
                     <td>{{row.contactPriority}}</td>
                     <td>{{row.name}}</td>
                     <td>{{row.mobile}}</td>
@@ -902,7 +902,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetISO9001Sprt(); GetIso9001Sprtlist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddISO9001Sprt()">Add</button>
+                                                [disabled]="!isosprtdata.contactPriority || !isosprtdata.name || !isosprtdata.mobile || !isosprtdata.email" (click)="AddISO9001Sprt()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -953,7 +953,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetISO9001Sprt()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateISO9001Sprt()">Update</button>
+                                                [disabled]="!isosprtdata.contactPriority || !isosprtdata.name || !isosprtdata.mobile || !isosprtdata.email" (click)="UpdateISO9001Sprt()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1026,7 +1026,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrISMS(); GetHrISMSGenerallist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddHrISMSGeneral()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddHrISMSGeneral()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1067,7 +1067,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateHrISMSGeneral()">Update</button>
                                         </div>
                                     </div>
@@ -1142,7 +1142,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrISMS(); GetHrISMSGuidelineslist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddHrISMSGuidelines()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddHrISMSGuidelines()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1183,7 +1183,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateHrISMSGuidelines()">Update</button>
                                         </div>
                                     </div>
@@ -1257,7 +1257,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrISMS(); GetHrISMSPolicylist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddHrISMSPolicy()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddHrISMSPolicy()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1298,7 +1298,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateHrISMSPolicy()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateHrISMSPolicy()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1372,7 +1372,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrISMS(); GetHrISMSProcedurelist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddHrISMSProcedure()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddHrISMSProcedure()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1413,7 +1413,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateHrISMSProcedure()">Update</button>
                                         </div>
                                     </div>
@@ -1487,7 +1487,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrISMS(); GetHrISMSFormatlist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddHrISMSFormat()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddHrISMSFormat()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1528,7 +1528,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateHrISMSFormat()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateHrISMSFormat()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1601,7 +1601,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrQMS(); GetHrQMSGenerallist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddHrQMSGeneral()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddHrQMSGeneral()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1642,7 +1642,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateHrQMSGeneral()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateHrQMSGeneral()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1716,7 +1716,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrQMS(); GetHrQMSGuidelineslist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddHrQMSGuidelines()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddHrQMSGuidelines()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1757,7 +1757,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateHrQMSGuidelines()">Update</button>
                                         </div>
                                     </div>
@@ -1831,7 +1831,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrQMS(); GetHrQMSPolicylist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddHrQMSPolicy()">Add</button>
+                                               [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddHrQMSPolicy()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1872,7 +1872,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateHrQMSPolicy()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateHrQMSPolicy()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1945,7 +1945,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrQMS(); GetHrQMSProcedurelist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddHrQMSProcedure()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddHrQMSProcedure()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1986,7 +1986,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateHrQMSProcedure()">Update</button>
                                         </div>
                                     </div>
@@ -2060,7 +2060,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrQMS(); GetHrQMSFormatlist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddHrQMSFormat()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddHrQMSFormat()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -2101,7 +2101,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHrQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateHrQMSFormat()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateHrQMSFormat()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -2539,7 +2539,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsISMS(); GetOsISMSGenerallist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddOsISMSGeneral()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddOsISMSGeneral()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -2580,7 +2580,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateOsISMSGeneral()">Update</button>
                                         </div>
                                     </div>
@@ -2655,7 +2655,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsISMS(); GetOsISMSGuidelineslist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddOsISMSGuidelines()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddOsISMSGuidelines()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -2696,7 +2696,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateOsISMSGuidelines()">Update</button>
                                         </div>
                                     </div>
@@ -2770,7 +2770,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsISMS(); GetOsISMSPolicylist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddOsISMSPolicy()">Add</button>
+                                               [disabled]="!docsdata.documentName || !docsdata.url"  (click)="AddOsISMSPolicy()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -2811,7 +2811,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateOsISMSPolicy()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateOsISMSPolicy()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -2885,7 +2885,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsISMS(); GetOsISMSProcedurelist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddOsISMSProcedure()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddOsISMSProcedure()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -2926,7 +2926,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateOsISMSProcedure()">Update</button>
                                         </div>
                                     </div>
@@ -3000,7 +3000,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsISMS(); GetOsISMSFormatlist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddOsISMSFormat()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddOsISMSFormat()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -3041,7 +3041,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateOsISMSFormat()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateOsISMSFormat()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -3114,7 +3114,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsQMS(); GetOsQMSGenerallist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddOsQMSGeneral()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddOsQMSGeneral()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -3155,7 +3155,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateOsQMSGeneral()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateOsQMSGeneral()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -3229,7 +3229,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsQMS(); GetOsQMSGuidelineslist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddOsQMSGuidelines()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddOsQMSGuidelines()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -3270,7 +3270,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateOsQMSGuidelines()">Update</button>
                                         </div>
                                     </div>
@@ -3344,7 +3344,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsQMS(); GetOsQMSPolicylist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddOsQMSPolicy()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddOsQMSPolicy()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -3385,7 +3385,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateOsQMSPolicy()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateOsQMSPolicy()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -3458,7 +3458,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsQMS(); GetOsQMSProcedurelist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddOsQMSProcedure()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddOsQMSProcedure()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -3499,7 +3499,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateOsQMSProcedure()">Update</button>
                                         </div>
                                     </div>
@@ -3573,7 +3573,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsQMS(); GetOsQMSFormatlist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddOsQMSFormat()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddOsQMSFormat()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -3614,7 +3614,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetOsQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateOsQMSFormat()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateOsQMSFormat()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -4417,7 +4417,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetIsmsSprt(); GetIsmsSprt()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddIsmsSprt()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddIsmsSprt()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -4457,7 +4457,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetIsmsSprt()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateIsmsSprt()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateIsmsSprt()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -4529,7 +4529,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetIsoSprt(); GetIsoSprt()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddIsoSprt()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddIsoSprt()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -4569,7 +4569,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetIsoSprt()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateIsoSprt()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateIsoSprt()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -4715,7 +4715,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItISMS(); GetItISMSGenerallist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddItISMSGeneral()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddItISMSGeneral()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -4756,7 +4756,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateItISMSGeneral()">Update</button>
                                         </div>
                                     </div>
@@ -4831,7 +4831,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItISMS(); GetItISMSGuidelineslist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddItISMSGuidelines()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddItISMSGuidelines()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -4872,7 +4872,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateItISMSGuidelines()">Update</button>
                                         </div>
                                     </div>
@@ -4946,7 +4946,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItISMS(); GetItISMSPolicylist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddItISMSPolicy()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddItISMSPolicy()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -4987,7 +4987,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateItISMSPolicy()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateItISMSPolicy()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -5061,7 +5061,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItISMS(); GetItISMSProcedurelist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddItISMSProcedure()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddItISMSProcedure()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -5102,7 +5102,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateItISMSProcedure()">Update</button>
                                         </div>
                                     </div>
@@ -5176,7 +5176,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItISMS(); GetItISMSFormatlist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddItISMSFormat()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddItISMSFormat()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -5217,7 +5217,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateItISMSFormat()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateItISMSFormat()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -5290,7 +5290,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItQMS(); GetItQMSGenerallist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddItQMSGeneral()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddItQMSGeneral()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -5331,7 +5331,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateItQMSGeneral()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateItQMSGeneral()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -5405,7 +5405,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItQMS(); GetItQMSGuidelineslist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddItQMSGuidelines()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddItQMSGuidelines()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -5446,7 +5446,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateItQMSGuidelines()">Update</button>
                                         </div>
                                     </div>
@@ -5520,7 +5520,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItQMS(); GetItQMSPolicylist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddItQMSPolicy()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddItQMSPolicy()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -5561,7 +5561,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateItQMSPolicy()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateItQMSPolicy()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -5634,7 +5634,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItQMS(); GetItQMSProcedurelist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddItQMSProcedure()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddItQMSProcedure()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -5675,7 +5675,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateItQMSProcedure()">Update</button>
                                         </div>
                                     </div>
@@ -5749,7 +5749,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItQMS(); GetItQMSFormatlist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddItQMSFormat()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddItQMSFormat()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -5790,7 +5790,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetItQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateItQMSFormat()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateItQMSFormat()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -6592,7 +6592,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetIsoPolicy(); GetIsoPolicy()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddIsoPolicy()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddIsoPolicy()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -6632,7 +6632,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetIsoPolicy()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateIsoPolicy()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateIsoPolicy()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -6739,8 +6739,10 @@
                         <span>{{ item.url }}</span>
                     </td>
                     <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click
-                            Here</a>
+                        <!-- <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>-->
+                         <a href="javascript:void(0)" (click)="openDocument(item.url)" style="margin-left: 10px;">Click Here</a>
+                                             <app-document-viewer [pdfUrl]="pdfUrl" (closePopup)="closePdf()">
+                </app-document-viewer>
                     </td>
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
@@ -6779,7 +6781,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtISMS(); GetPrjtISMSGenerallist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddPrjtISMSGeneral()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddPrjtISMSGeneral()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -6820,7 +6822,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdatePrjtISMSGeneral()">Update</button>
                                         </div>
                                     </div>
@@ -6895,7 +6897,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtISMS(); GetPrjtISMSGuidelineslist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddPrjtISMSGuidelines()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddPrjtISMSGuidelines()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -6936,7 +6938,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdatePrjtISMSGuidelines()">Update</button>
                                         </div>
                                     </div>
@@ -7011,7 +7013,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtISMS(); GetPrjtISMSPolicylist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddPrjtISMSPolicy()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddPrjtISMSPolicy()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -7052,7 +7054,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdatePrjtISMSPolicy()">Update</button>
                                         </div>
                                     </div>
@@ -7127,7 +7129,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtISMS(); GetPrjtISMSProcedurelist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddPrjtISMSProcedure()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddPrjtISMSProcedure()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -7168,7 +7170,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdatePrjtISMSProcedure()">Update</button>
                                         </div>
                                     </div>
@@ -7243,7 +7245,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtISMS(); GetPrjtISMSFormatlist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddPrjtISMSFormat()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddPrjtISMSFormat()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -7284,7 +7286,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdatePrjtISMSFormat()">Update</button>
                                         </div>
                                     </div>
@@ -7359,7 +7361,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtQMS(); GetPrjtQMSGenerallist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddPrjtQMSGeneral()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddPrjtQMSGeneral()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -7400,7 +7402,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdatePrjtQMSGeneral()">Update</button>
                                         </div>
                                     </div>
@@ -7475,7 +7477,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtQMS(); GetPrjtQMSGuidelineslist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddPrjtQMSGuidelines()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddPrjtQMSGuidelines()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -7516,7 +7518,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdatePrjtQMSGuidelines()">Update</button>
                                         </div>
                                     </div>
@@ -7591,7 +7593,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtQMS(); GetPrjtQMSPolicylist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddPrjtQMSPolicy()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddPrjtQMSPolicy()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -7632,7 +7634,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdatePrjtQMSPolicy()">Update</button>
                                         </div>
                                     </div>
@@ -7707,7 +7709,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtQMS(); GetPrjtQMSProcedurelist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddPrjtQMSProcedure()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddPrjtQMSProcedure()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -7748,7 +7750,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdatePrjtQMSProcedure()">Update</button>
                                         </div>
                                     </div>
@@ -7823,7 +7825,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtQMS(); GetPrjtQMSFormatlist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddPrjtQMSFormat()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddPrjtQMSFormat()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -7864,7 +7866,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetPrjtQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdatePrjtQMSFormat()">Update</button>
                                         </div>
                                     </div>
@@ -8669,7 +8671,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoISMS(); GetCisoISMSGenerallist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddCisoISMSGeneral()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddCisoISMSGeneral()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -8710,7 +8712,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateCisoISMSGeneral()">Update</button>
                                         </div>
                                     </div>
@@ -8787,7 +8789,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoISMS(); GetCisoISMSGuidelineslist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddCisoISMSGuidelines()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddCisoISMSGuidelines()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -8828,7 +8830,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateCisoISMSGuidelines()">Update</button>
                                         </div>
                                     </div>
@@ -8903,7 +8905,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoISMS(); GetCisoISMSPolicylist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddCisoISMSPolicy()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddCisoISMSPolicy()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -8944,7 +8946,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateCisoISMSPolicy()">Update</button>
                                         </div>
                                     </div>
@@ -9019,7 +9021,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoISMS(); GetCisoISMSProcedurelist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddCisoISMSProcedure()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddCisoISMSProcedure()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -9060,7 +9062,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateCisoISMSProcedure()">Update</button>
                                         </div>
                                     </div>
@@ -9135,7 +9137,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoISMS(); GetCisoISMSFormatlist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddCisoISMSFormat()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddCisoISMSFormat()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -9176,7 +9178,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoISMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateCisoISMSFormat()">Update</button>
                                         </div>
                                     </div>
@@ -9251,7 +9253,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoQMS(); GetCisoQMSGenerallist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddCisoQMSGeneral()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddCisoQMSGeneral()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -9292,7 +9294,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateCisoQMSGeneral()">Update</button>
                                         </div>
                                     </div>
@@ -9367,7 +9369,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoQMS(); GetCisoQMSGuidelineslist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddCisoQMSGuidelines()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddCisoQMSGuidelines()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -9408,7 +9410,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateCisoQMSGuidelines()">Update</button>
                                         </div>
                                     </div>
@@ -9483,7 +9485,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoQMS(); GetCisoQMSPolicylist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddCisoQMSPolicy()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddCisoQMSPolicy()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -9524,7 +9526,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateCisoQMSPolicy()">Update</button>
                                         </div>
                                     </div>
@@ -9599,7 +9601,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoQMS(); GetCisoQMSProcedurelist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddCisoQMSProcedure()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddCisoQMSProcedure()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -9640,7 +9642,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateCisoQMSProcedure()">Update</button>
                                         </div>
                                     </div>
@@ -9715,7 +9717,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoQMS(); GetCisoQMSFormatlist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddCisoQMSFormat()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddCisoQMSFormat()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -9756,7 +9758,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetCisoQMS()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateCisoQMSFormat()">Update</button>
                                         </div>
                                     </div>
@@ -10559,7 +10561,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetEmer(); GetEmerGenerallist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddEmerGeneral()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddEmerGeneral()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -10599,7 +10601,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetEmer()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateEmerGeneral()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateEmerGeneral()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -10744,7 +10746,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetVarCmt(); GetVarCmtGenerallist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddVarCmtGeneral()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddVarCmtGeneral()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -10784,7 +10786,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetVarCmt()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid"
+                                                [disabled]="!docsdata.documentName || !docsdata.url"
                                                 (click)="UpdateVarCmtGeneral()">Update</button>
                                         </div>
                                     </div>
@@ -10930,7 +10932,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetSoc(); GetSocGenerallist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddSocGeneral()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddSocGeneral()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -10970,7 +10972,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetSoc()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateSocGeneral()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateSocGeneral()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -11115,7 +11117,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHipaa(); GetHipaaGenerallist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddHipaaGeneral()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddHipaaGeneral()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -11155,7 +11157,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHipaa()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateHipaaGeneral()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateHipaaGeneral()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -11300,7 +11302,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetGdpr(); GetGdprGenerallist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddGdprGeneral()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddGdprGeneral()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -11340,7 +11342,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetGdpr()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateGdprGeneral()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateGdprGeneral()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -11485,7 +11487,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetDpdp(); GetDpdpGenerallist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddDpdpGeneral()">Add</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="AddDpdpGeneral()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -11525,7 +11527,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetDpdp()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="UpdateDpdpGeneral()">Update</button>
+                                                [disabled]="!docsdata.documentName || !docsdata.url" (click)="UpdateDpdpGeneral()">Update</button>
                                         </div>
                                     </div>
                                 </div>
@@ -11677,7 +11679,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetAdminusers(); GetAdminuserslist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddAdminusers()">Add</button>
+                                                [disabled]="!adminusersdata.pageName || !adminusersdata.email" (click)="AddAdminusers()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -11743,7 +11745,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetHolidays(); GetHolidaysist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="form.invalid" (click)="AddHolidays()">Add</button>
+                                                [disabled]="!holidaysdata.date || !holidaysdata.content" (click)="AddHolidays()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -11765,7 +11767,7 @@
         <table *ngIf="!isLoading" class="table table-striped table-bordered" name="events">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">ID</th>
+                    <!-- <th scope="col">ID</th> -->
                     <th scope="col">Events</th>
                     <th scope="col">Event Name</th>
                     <th scope="col">Action</th>
@@ -11773,11 +11775,11 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of eventslist">
-                    <td>{{item.id}}</td>
+                    <!-- <td>{{item.id}}</td>
                     <td>
                         <img [src]="'data:image/jpeg;base64,' + item.eventData" alt="Event Image" width="100"
                             height="50">
-                    </td>
+                    </td> -->
                     <td>{{item.eventName}}</td>
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
@@ -11894,14 +11896,14 @@
         <table *ngIf="!isLoading" class="table table-striped table-bordered" name="courserestriction">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">ID</th>
+                    <!-- <th scope="col">ID</th> -->
                     <th scope="col">Courses List</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let item of crserestlist">
-                    <td>{{item.id}}</td>
+                    <!-- <td>{{item.id}}</td> -->
                     <td>{{item.coursesList}}</td>
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
@@ -11999,14 +12001,14 @@
             <table *ngIf="selectedYear && selectedMonth && eventschedulertime.length > 0" class="table table-striped table-bordered">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">ID</th>
+                    <!-- <th scope="col">ID</th> -->
                     <th scope="col">TIME</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let eventsctime of eventschedulertime">
-                   <td>{{ eventsctime.id }}</td>
+                   <!-- <td>{{ eventsctime.id }}</td> -->
                    <td>{{ eventsctime.time }}</td>
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
@@ -12550,7 +12552,7 @@
         <table class="table table-striped table-bordered" name="Eventalerts">
             <thead class="table-primary">
                 <tr>
-                    <th scope="col">ID</th>
+                    <!-- <th scope="col">ID</th> -->
                     <th scope="col">Alert Name</th>
                     <th scope="col">Alert Date</th>
                     <th scope="col">To Mails</th>
@@ -12564,7 +12566,7 @@
             </thead>
             <tbody *ngIf="!isLoading">
                 <tr *ngFor="let item of eventalertslist">
-                    <td>{{item.alertID}}</td>
+                    <!-- <td>{{item.alertID}}</td> -->
                     <td>{{item.alertName}}</td>
                     <td>{{item.alertDate}}</td>
                     <td>{{item.toMails}}</td>
