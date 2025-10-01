@@ -1416,24 +1416,6 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
     DeletevarcmtById(id: number): Observable<void> {
       return this.http.delete<void>(`${this.varcmtsUrl}/${id}`, { headers: this.getHeaders() });
     }
-
-  //   getWordAsPdf(fileName: string): Observable<Blob> {
-  //     // debugger;
-  //   const url = `https://ielcapitest.azurewebsites.net/VariousCommittees/GetWordAsPdf?fileName=${encodeURIComponent(fileName)}`;
-  //   return this.http.get(url, {
-  //     headers: this.getHeaders(),
-  //     responseType: 'blob'
-  //   });
-  // }
-
-      getWordAsPdf(fileName: string): Observable<Blob> {
-      // debugger;
-    const url = `https://ielcapitest.azurewebsites.net/VariousCommittees/GetWordAsPdf?fileName=${encodeURIComponent(fileName)}`;
-    return this.http.get(url, {
-      headers: this.getHeaders(),
-      responseType: 'blob'
-    });
-  }
 //---------------------------------------------------------------------------------------Inteq ISO 27001
 
     iso27001Url='https://ielcapitest.azurewebsites.net/ISO27001';

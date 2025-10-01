@@ -6470,22 +6470,6 @@ getFileIcon(alertAttachment: string): string {
   }
 }
 
-// getDownloadLink(alertAttachment: string): string {
-//   return alertAttachment.startsWith('data:') 
-//     ? alertAttachment  // Base64 data
-//     : `https://ielc-coreapi.azurewebsites.net/EventAlerts/${alertAttachment}`; // File URL
-// }
-
-// pdfUrl: string | null = null;
-// openDocument(fileName: string) {
-//   this.ielc.getWordAsPdf(fileName).subscribe(blob => {
-//     const pdfBlob = new Blob([blob], { type: 'application/pdf' });
-//     this.pdfUrl = URL.createObjectURL(pdfBlob);
-//   });
-// }
-// closePdf() {
-//   this.pdfUrl = null;
-// }
 
 }
 
