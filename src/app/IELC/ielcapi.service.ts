@@ -1555,9 +1555,9 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.get<any>(`${this.cisoismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    Updatecisoismsgeneral(id: number, updatedData: any): Observable<any> {
+      Updatecisoismsgeneral(id: number, updatedData: any): Observable<any> {
       const headers = this.getHeaders();
-      return this.http.put<any>(`${this.cisoismsgeneralUrl}/${id}`, updatedData,{ observe: 'response' });
+      return this.http.put<any>(`${this.cisoismsgeneralUrl}/${id}`, updatedData,{headers, observe: 'response' });
     }
 
     DeletecisoismsgeneralById(id: number): Observable<void> {
