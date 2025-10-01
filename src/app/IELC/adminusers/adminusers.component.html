@@ -6738,7 +6738,12 @@
                     <td>
                         <span>{{ item.url }}</span>
                     </td>
-                   
+                    <td>
+                        <a [href]="item.url" target="_blank" rel="noopener noreferrer" style="margin-left: 10px;">Click Here</a>
+                         <!-- <a href="javascript:void(0)" (click)="openDocument(item.url)" style="margin-left: 10px;">Click Here</a>
+                                             <app-document-viewer [pdfUrl]="pdfUrl" (closePopup)="closePdf()">
+                </app-document-viewer> -->
+                    </td>
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
                             data-bs-target="#exampleModal41">
