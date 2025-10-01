@@ -3957,30 +3957,30 @@ UpdateItQMSFormat() {
 }
 //=======================================================================================Project Support ISMS
 
-// GetPrjtISMSGenerallist(){
-//   this.ielc.Getprjtismsgeneral().subscribe((data) => {
-//     this.prjtIsmsGeneraldata=data;
-//     this.isLoading = false;
-//   });
-//  }
-
- GetPrjtISMSGenerallist() {
+GetPrjtISMSGenerallist(){
   this.ielc.Getprjtismsgeneral().subscribe((data) => {
-    this.prjtIsmsGeneraldata = data.map((item: any) => {
-      // find matching file info by comparing names
-      const match = this.prjtIsmsGeneraldatainfo.find(
-        info => info.displayName === item.documentName
-      );
-
-      return {
-        ...item,                           // keep all API data
-        fileName: match ? match.fileName : null // add fileName if found
-      };
-    });
-
+    this.prjtIsmsGeneraldata=data;
     this.isLoading = false;
   });
-}
+ }
+
+//  GetPrjtISMSGenerallist() {
+//   this.ielc.Getprjtismsgeneral().subscribe((data) => {
+//     this.prjtIsmsGeneraldata = data.map((item: any) => {
+//       // find matching file info by comparing names
+//       const match = this.prjtIsmsGeneraldatainfo.find(
+//         info => info.displayName === item.documentName
+//       );
+
+//       return {
+//         ...item,                           // keep all API data
+//         fileName: match ? match.fileName : null // add fileName if found
+//       };
+//     });
+
+//     this.isLoading = false;
+//   });
+// }
  
  AddPrjtISMSGeneral(): void {
   this.ielc.Postprjtismsgeneral(this.docsdata).subscribe(
