@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter } from '@angular/core';
+import { Component,OnInit,ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { __values } from 'tslib';
@@ -13,16 +13,19 @@ import { forkJoin, Observable } from 'rxjs';
 import { EmailService } from 'src/app/email.service';
 declare var Email: any;
 
-interface holidaysinfo {
+
+
+
+interface holidaysinfo{
   date: string;
   content: string;
 }
-interface eventsinfo {
+interface eventsinfo{
   id: number;
   eventData: string;
   eventName: string;
 }
-interface exam {
+interface exam{
   id: number;
   examTime: number;
   batchLimitMembers: number;
@@ -30,10 +33,10 @@ interface exam {
   standardExamQuestions: number;
   examPercentage: number;
 }
-interface examlisinfot {
+interface examlisinfot{
   testTakenDate: string | null;
 }
-interface feedback {
+interface feedback{
   subjectMatterKnowledge: string;
   presentation: string;
   communication: string;
@@ -42,7 +45,7 @@ interface feedback {
   comments: string;
 }
 
-interface Result {
+interface Result{
   result: string;
   percentage: string;
   testTakenDate: string;
@@ -54,10 +57,11 @@ interface crserest {
 interface SkillSession {
   sessionID: number;
   skillName: string;
-  aadUsersData?: string;
+  aadUsersData?: string; 
   groups?: string;
-
+ 
 }
+
 interface EnrollmentData {
   enrollmentID: number;
   name: string;
@@ -93,6 +97,8 @@ interface EmailPayload {
   body: string;
 }
 
+
+
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
@@ -101,56 +107,60 @@ interface EmailPayload {
 export class RegistrationComponent implements OnInit {
 
 
-enrollmentList: any[] = [];
-submittedFeedbackIds: any[] = [];
-submittedResultIds: any[] = [];
-loadingExamResults = true;
-@ViewChild('registration') registration!: NgForm;
-ID: number = 0;
+  // @Input() enrollmentList: any[] = [];
+  // @Input() submittedFeedbackIds: string[] = [];
+  
+  // hasSubmittedFeedback(id: string): boolean {
+  //   return this.submittedFeedbackIds.includes(id);
+  // }
 
-selectedDate: string = ''
-examlist: any[] = [];
-Registeredusers: any[] = [];
-isLoading = true;
-feedbackLoaded = false;
-skillname = '';
-mode = '';
-date: string = '';
-time: string = '';
-mobile = '';
-examdata: exam = {
+  enrollmentList: any[] = [];
+  submittedFeedbackIds: any[] = [];
+  submittedResultIds: any[] = [];
+  loadingExamResults = true;
+  @ViewChild('registration') registration!: NgForm;
+ // currentDate:Date=new Date()
+
+ selectedDate:string=''
+ examlist: any[] = []; 
+ Registeredusers: any[] = []; 
+ isLoading = true;
+ feedbackLoaded = false;
+ skillname='';
+ mode='';
+ date:string = '';
+ time:string = '';
+ mobile='';
+ examdata:exam={
   id: 0,
   examTime: 0,
   batchLimitMembers: 0,
   displayExamQuestions: 0,
   standardExamQuestions: 0,
   examPercentage: 0
-}
-leave = '';
-// month=''
-// year=''
-work = '';
-taskslist = ''
-email = 'incidents@inteqsolutions.com'
-holidayslist: any[] = [];
-holidaysdata: holidaysinfo = {
+ }
+ leave='';
+ // month=''
+ // year=''
+ work='';
+ taskslist=''
+ email='incidents@inteqsolutions.com'
+ holidayslist: any[] = []; 
+ holidaysdata:holidaysinfo={
   date: '',
   content: ''
-}
-eventslist: any[] = [];
-eventsdata: eventsinfo = {
+ }
+ eventslist: any[]=[];
+ eventsdata:eventsinfo={
   id: 0,
   eventData: '',
   eventName: ''
-}
-latestEvent: any = null;
-page: number = 1;
-itemsPerPage: number = 5;
-Enrolledskills: any[] = [];
-EnrolledskillsLearning: any[] = [];
-EnrolledskillsTeams: any[] = [];
-EnrolledskillsOffline: any[] = [];
-venueList: any[] = [];
+ }
+latestEvent: any= null; 
+page: number = 1;  
+itemsPerPage: number = 5; 
+Enrolledskills: any[] = []; 
+venueList: any[]=[];   
 selectedVenue: string = '';
 selectDate: string = '';
 selectedTime: string = '';
@@ -158,37 +168,43 @@ availableDates: string[] = [];
 availableTimes: string[] = [];
 visibleSessionIds: SkillSession[] = [];
 showDateTimeDropdowns: boolean = false;
+// submittedFeedbackIds: number[] = [];
 batchMemberCount: number = 0;
+sessionID: number = 0;
+ID: number = 0;
 currentUser: any = {};
 allSkillSessions: any[] = [];
-
-constructor(private ielc: IelcapiService, private msalService: MsalService, private authService: AuthService, private router: Router, private route: ActivatedRoute, private emailService: EmailService){
-  this.selectedDate = new Date().toISOString().split('T')[0]
-  this.isTimeInputDisabled = true;
-  this.GetHolidayslist();
-  this.GetEventsList();
-  this.GetExamlist();
+constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute,private emailService: EmailService){
+   this.selectedDate= new Date().toISOString().split('T')[0]
+   this.isTimeInputDisabled=true;
+   this.GetHolidayslist();
+   this.GetEventsList();
+   this.GetExamlist();
   this.GetCourseist();
-
-  if (this.eventslist && this.eventslist.length > 0) {
+   if (this.eventslist && this.eventslist.length > 0) {
     this.eventslist = this.eventslist.sort((a, b) => Number(b.id) - Number(a.id));
   }
-
+  
   this.Registeredusers.forEach((item) => {
     if (item.testTakenDate) {
+      // Convert the string to a valid Date object
       item.testTakenDate = this.formatCustomDate(item.testTakenDate);
     }
   });
-}
+ }
 
-convertToISODate(dateStr: string): string {
+convertToISODate(dateStr: string): string | null {
+  // console.log('🔍 Converting date:', dateStr);
+
   if (!dateStr || typeof dateStr !== 'string') {
-    return '';
+    // console.warn('⚠️ Invalid date input:', dateStr);
+    return null;
   }
 
   const isoDate = new Date(dateStr);
   if (!isNaN(isoDate.getTime())) {
     const result = isoDate.toISOString().split('T')[0];
+    // console.log('✅ Parsed ISO Date:', result);
     return result;
   }
 
@@ -197,46 +213,50 @@ convertToISODate(dateStr: string): string {
     const [day, month, year] = parts;
     if (day.length <= 2 && month.length <= 2 && year.length === 4) {
       const result = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+      // console.log('✅ Reconstructed Date:', result);
       return result;
     }
   }
-  return '';
+  return null;
 }
 
-formatCustomDate(dateStr: string | null): string {
+ formatCustomDate(dateStr: string | null): string {
   if (!dateStr) return 'Invalid Date';
+
+  // Normalize spaces
   const normalizedDateStr = dateStr.replace(/\s+/g, ' ');
+
+  // Parse using Moment.js (matching your API's format)
   const parsedDate = moment(normalizedDateStr, 'MMM D YYYY h:mmA');
+
+  // Check if the parsing was successful
   if (!parsedDate.isValid()) {
     return 'Invalid Date';
   }
-  return parsedDate.format('MMM D, YYYY');
+
+  // Format the date as required
+  return parsedDate.format('MMM D, YYYY'); // Example: "Oct 3, 2024"
 }
 
-
-userName: string | null = null;
-userEmail: string | null = null;
-firstName: string = '';
-middleName: string = '';
-lastName: string = '';
+ userName: string | null = null;
+ userEmail: string | null = null;
+ firstName: string = '';
+ middleName: string = '';
+ lastName: string = '';
 async ngOnInit() {
-  this.skillname = '';
-  this.date = '';
-  this.time = '';
-  this.availableDates = [];
-  this.availableTimes = [];
-    try {
-    await this.msalService.instance.initialize();
+  
+  try {
+    await this.msalService.instance.initialize();  
     await this.msalService.instance.handleRedirectPromise();
     const activeAccount = this.msalService.instance.getActiveAccount();
     if (!activeAccount) {
       this.router.navigate(['/login']);
       return;
-    }
+    } 
     this.authService.setActiveAccount();
     this.authService.userDetails$.subscribe(userDetails => {
-      this.currentUser = userDetails;
-      this.userName = userDetails?.displayName;
+      this.currentUser = userDetails;  
+      this.userName = userDetails?.displayName ;
       this.userEmail = userDetails?.email;
 
       if (userDetails?.displayName) {
@@ -245,21 +265,25 @@ async ngOnInit() {
         this.lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
         this.middleName = nameParts.length > 2 ? nameParts.slice(1, -1).join(' ') : '';
       }
+      
+    
     });
     this.authService.userDetails$.subscribe(userDetails => {
       if (userDetails) {
-        this.userEmail = userDetails.email;
-        this.GetAllUsers();
-        this.GetAllSkillSessions();
+        this.userEmail = userDetails.email; // Ensure the email is correctly assigned
+        this.GetAllUsers(); // Call this AFTER we get the email
+        this.GetAllSkillSessions(); 
         this.checkUserExists();
         this.checkCoOwnerUserExists();
       }
-    });
+    });   
   }
-  catch (error) {
+   catch (error) {
+    // console.error("MSAL initialization error in HeaderComponent:", error);
   }
+  
 }
-logout(): void {
+ logout(): void {
   this.authService.logout();
 }
 sortRegisteredUsers(data: any[]): any[] {
@@ -275,10 +299,10 @@ GetAllUsers() {
         data.filter(user => user.mail === aadEmail)
       ).map(user => {
         const hasFeedback = user.subjectMatterKnowledge &&
-          user.presentation &&
-          user.communication &&
-          user.handlingDoubts &&
-          user.applicationtowork;
+                            user.presentation &&
+                            user.communication &&
+                            user.handlingDoubts &&
+                            user.applicationtowork;
 
         return {
           ...user,
@@ -286,6 +310,8 @@ GetAllUsers() {
           hasFeedback: hasFeedback
         };
       });
+
+      // Also store enrollment IDs for any other logic
       this.submittedFeedbackIds = this.Registeredusers
         .filter(user => user.hasFeedback)
         .map(user => user.enrollmentID);
@@ -293,6 +319,7 @@ GetAllUsers() {
     } else {
       this.Registeredusers = [];
     }
+    // console.log("✅ Final Registered Users:", this.Registeredusers);
     this.feedbackLoaded = true;
   });
 }
@@ -300,38 +327,62 @@ GetAllUsers() {
 hasSubmittedFeedback(enrollmentID: string): boolean {
   return this.submittedFeedbackIds.includes(enrollmentID);
 }
+
 onSkillChange(skill: string) {
   if (skill) {
     this.ielc.GetEnrolledSessions().subscribe((data: any[]) => {
       const today = new Date();
+      // console.log('🎯 Raw session data:', data);
+      // console.log('🧩 Visible session IDs:', this.visibleSessionIds);
+
+      // Group sessions by skill name
       const skillSessionMap = new Map<string, any[]>();
+
+      // Group the sessions based on skill name and filter by active sessions
       this.visibleSessionIds.forEach((session: any) => {
+        // console.log('🧩 Session being processed:', session); // Log session structure
+        
         const skillName = (session.skillName ?? '').trim();
         const skillKey = skillName.toLowerCase();
         const sessionEndDate = new Date(session.toDate);
         const isActive = sessionEndDate >= today;
-        if (skill.trim().toLowerCase() === skillKey && isActive) {
 
+
+        // if (skill.toLowerCase() === skillKey && isActive) {
+          if (skill.trim().toLowerCase() === skillKey && isActive) {
+
+          // Add active sessions to the map for this skill
           if (!skillSessionMap.has(skillKey)) {
             skillSessionMap.set(skillKey, []);
           }
           skillSessionMap.get(skillKey)!.push(session);
         }
       });
+
+      // Now filter out the sessions based on the selected skill and only active ones
       const activeSkillSessions = skillSessionMap.get(skill.trim().toLowerCase()) || [];
+      
+      // Only active venues for this skill will be considered
       if (activeSkillSessions.length > 0) {
+        // Extract venue names directly from the `venue` property
         const venues = activeSkillSessions.map(session => session.venue).filter((value, index, self) => self.indexOf(value) === index);
+
+        // console.log('✅ Filtered venue list for active sessions:', venues);
+
+        // Update venue list based on filtered venues
         this.venueList = venues;
-        this.selectedVenue = '';
+        this.selectedVenue = ''; // Reset selected venue
         this.showDateTimeDropdowns = false;
         this.availableDates = [];
         this.availableTimes = [];
       } else {
+        // No active sessions for the selected skill
         this.venueList = [];
       }
     });
   }
 }
+
 convertToDDMMYYYY(dateStr: string): string {
   const [mm, dd, yyyy] = dateStr.split('-');
   return `${dd}-${mm}-${yyyy}`;
@@ -339,29 +390,47 @@ convertToDDMMYYYY(dateStr: string): string {
 
 onVenueChange(venue: string) {
   this.showDateTimeDropdowns = ['Teams', 'Offline'].includes(venue);
+//debugger;
   if (this.showDateTimeDropdowns && this.skillname) {
     const trimmedSkillname = this.skillname.trim();
-    this.ielc.GetEnrolledSessionsbydate(trimmedSkillname, venue).subscribe({
+    this.ielc.GetEnrolledSessionsbydate(trimmedSkillname,venue).subscribe({
       next: (res) => {
         const now = new Date();
         const activeRanges = new Set<string>();
+
+        // this.visibleSessionIds.forEach((session: any) => {
+        //   const skillName = (session.skillName ?? '').trim().toLowerCase();
+        //   if (skillName !== trimmedSkillname.toLowerCase()) return;
+
         this.visibleSessionIds.forEach((session: any) => {
-          const skillName = (session.skillName ?? '').trim().toLowerCase();
-          if (skillName !== trimmedSkillname.toLowerCase()) return;
+    const skillName = (session.skillName ?? '').trim().toLowerCase();
+    const venueName = (session.venue ?? '').trim().toLowerCase(); // get venue
+
+    // Check both skillName and venue
+    if (skillName !== trimmedSkillname.toLowerCase() || venueName !== venue.toLowerCase()) return;
+
+
           const [hour, minute, second] = (session.skillStartTime ?? '00:00:00').split(':').map(Number);
           const sessionEndDateTime = new Date(session.toDate);
           sessionEndDateTime.setHours(hour || 0, minute || 0, second || 0, 0);
+
           const isActive = sessionEndDateTime >= now;
+          // console.log(`📅🕒 Comparing session end datetime with now: ${sessionEndDateTime.toLocaleString()} >= ${now.toLocaleString()} -> ${isActive}`);
+
           if (isActive) {
             const formattedFrom = this.formatDate(session.fromDate);
             const formattedTo = this.formatDate(session.toDate);
-            const range = `${formattedFrom} - ${formattedTo}`;
+            const range = `${formattedFrom} to ${formattedTo}`;
             activeRanges.add(range);
           }
         });
-        this.availableDates = res.filter((range: string) => activeRanges.has(range));
+        //this.availableDates = res.filter((range: string) => activeRanges.has(range));
+        this.availableDates = Array.from(activeRanges);
+        console.log(this.availableDates);
+        console.log(activeRanges);
       },
       error: (err) => {
+        // console.error('Error fetching dates:', err);
         this.availableDates = [];
       }
     });
@@ -379,8 +448,10 @@ formatDate(dateStr: string): string {
   const day = String(d.getDate()).padStart(2, '0');
   const month = String(d.getMonth() + 1).padStart(2, '0');
   const year = d.getFullYear();
-  return `${day}-${month}-${year}`;
+  //return `${day}-${month}-${year}`;
+  return `${year}-${month}-${day}`;
 }
+
 
 onDateChange() {
   if (!this.date) return;
@@ -388,6 +459,7 @@ onDateChange() {
   this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, this.date)
     .subscribe(
       (res: string) => {
+        // If the backend returns a comma-separated string, split it into an array
         this.availableTimes = res ? res.split(',').map(time => time.trim()) : [];
         console.log('Available times:', this.availableTimes);
       },
@@ -397,6 +469,35 @@ onDateChange() {
       }
     );
 }
+
+
+
+// onDateChange() {
+//   if (!this.date) return;
+// debugger;
+//   this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, this.date).subscribe({
+//     next: (res) => {
+//       if (Array.isArray(res)) {
+//         // Backend returned array of time slots
+//         this.availableTimes = res;
+//       } else if (typeof res === 'string') {
+//         // Backend returned "No time ranges found..."
+//         this.availableTimes = [];
+//         console.warn(res);
+//       } else {
+//         // Unexpected format
+//         this.availableTimes = [];
+//       }
+//     },
+//     error: (err) => {
+//       console.error('❌ Error fetching time slots:', err);
+//       this.availableTimes = [];
+//     }
+//   });
+// }
+
+
+
 batchMembersCount: number = 0;
 onBatchInputChange() {
   if (this.skillname && this.date && this.time) {
@@ -415,18 +516,21 @@ checkBatchAvailability() {
   this.ielc.GetBatchMembers(this.skillname, this.date, this.time).subscribe({
     next: (count: number) => {
       if (typeof count === 'number') {
-        this.batchMembersCount = count + 1;
+        this.batchMembersCount = count+1;
         if (this.batchMembersCount >= 150) {
           alert('Batch is full. Please choose another Date/Time slot.');
         }
       } else {
+        // console.warn('⚠️ Invalid count from API:', count);
         this.batchMembersCount = 0;
       }
     },
     error: (err) => {
       if (err.status === 404) {
+        // No batch yet, set count to 0
         this.batchMembersCount = 0;
       } else {
+        // console.error('❌ Error fetching batch count:', err);
         this.batchMembersCount = 0;
         alert('Error checking batch availability.');
       }
@@ -434,15 +538,27 @@ checkBatchAvailability() {
   });
 }
 
+// GetSessionID() {
+//   this.ielc.GetSkillnameVenueDateTimeDetails(
+//     this.selectedSkill,
+//     this.selectedVenue,
+//     this.selectedDate,
+//     this.selectedTime
+//   ).subscribe((data) => {
+//     this.sessionID = data;
+//     console.log("SessionID:", this.sessionID);
+//   });
+// }
+
 GetSessionIDAllDetails(callback: (id: number) => void) {
-  if (!this.skillname || !this.selectedValue || !this.date || !this.time) {
+  if (!this.skillname || !this.selectedVenue || !this.date || !this.time) {
     console.warn('Missing required parameters for getting session ID');
     callback(0);
     return;
   }
   this.ielc.GetSkillnameVenueDateTimeDetails(
     this.skillname,
-    this.selectedValue,
+    this.selectedVenue,
     this.date,
     this.time
   ).subscribe({
@@ -464,14 +580,41 @@ GetSessionIDAllDetails(callback: (id: number) => void) {
     }
   });
 }
+
+// GetSessionIDSkillVenueDetails() {
+//   debugger;
+//   if (!this.skillname || !this.selectedVenue) {
+//     console.warn('Missing required parameters for getting session ID');
+//     return;
+//   }
+//   this.ielc.GetSkillnameVenueDetails(
+//     this.skillname,
+//     this.selectedVenue,
+//   ).subscribe({
+//     next: (data) => {
+//       // If data is an array, extract the first element and convert to number
+//       if (Array.isArray(data) && data.length > 0) {
+//         this.ID = Number(data[0]);
+//       } else {
+//         this.ID = Number(data);
+//       }
+//       console.log("SessionID:", this.ID);
+//     },
+//     error: (err) => {
+//       console.error('Error getting session ID:', err);
+//       this.ID = 0;
+//     }
+//   });
+// }
+
 GetSessionIDSkillVenueDetails(callback: (id: number) => void) {
-  if (!this.skillname || !this.selectedValue) {
+  if (!this.skillname || !this.selectedVenue) {
     console.warn('Missing required parameters for getting session ID');
     callback(0);
     return;
   }
 
-  this.ielc.GetSkillnameVenueDetails(this.skillname, this.selectedValue).subscribe({
+  this.ielc.GetSkillnameVenueDetails(this.skillname, this.selectedVenue).subscribe({
     next: (data) => {
       let id = 0;
       if (Array.isArray(data) && data.length > 0) {
@@ -488,17 +631,10 @@ GetSessionIDSkillVenueDetails(callback: (id: number) => void) {
   });
 }
 
-private splitDateRange(dateRange: string | null): { start: string | null, end: string | null } {
-  if (!dateRange) return { start: null, end: null };
 
-  const parts = dateRange.split("to").map(x => x.trim());
 
-  return {
-    start: parts[0] || null,
-    end: parts[1] || parts[0] || null
-  };
-}
 allowEnrollment() {
+  //debugger;
   const now = new Date();
   const fullName = `${this.firstName} ${this.lastName}`;
   let startDate = '';
@@ -511,6 +647,7 @@ allowEnrollment() {
     endDate = this.date || '';
   }
   const formattedNow = now.toISOString().split('T')[0]; 
+  // If startDate or endDate empty, assign current date
   if (!startDate) startDate = formattedNow;
   if (!endDate) endDate = formattedNow;
 
@@ -518,28 +655,28 @@ allowEnrollment() {
   const date = this.date;
   const time = this.time;
   const mail = this.userEmail ?? '';
-
   
 
-  if (this.selectedValue === 'Teams' || this.selectedValue === 'Offline') {
+  if (this.selectedVenue === 'Teams' || this.selectedVenue === 'Offline') {
     this.ielc.checkIfAlreadyEnrolled(skill, date, time, mail).subscribe({
       next: (alreadyEnrolled: boolean) => {
         if (alreadyEnrolled) {
           alert('You are already enrolled for this batch!');
           return;
         }
-        const batchCountToInsert = this.selectedValue === 'Teams' ? this.batchMembersCount : 0;
+        const batchCountToInsert = this.selectedVenue === 'Teams' ? this.batchMembersCount : 0;
         this.GetSessionIDAllDetails((id: number) => {
           this.ID = id;
-          this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedValue, batchCountToInsert, startDate, endDate, now);
+          this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
         });
       },
       error: (err) => {
+        // console.error('❌ Error checking enrollment status:', err);
         alert('Failed to verify enrollment status. Please try again.');
       }
     });
-  } else if (this.selectedValue === 'Self-Learning') {
-    this.ielc.checkVenueEnrollment(skill, this.selectedValue, mail).subscribe({
+  } else if (this.selectedVenue === 'Self-Learning') {
+    this.ielc.checkVenueEnrollment(skill, this.selectedVenue, mail).subscribe({
       next: (alreadyEnrolled: boolean) => {
         if (alreadyEnrolled) {
           alert('You are already enrolled for this skill!');
@@ -548,12 +685,14 @@ allowEnrollment() {
         const batchCountToInsert = 0;
         this.GetSessionIDSkillVenueDetails((id: number) => {
           this.ID = id;
-          this.proceedToEnroll(fullName, mail, skill, date, time, this.venue, batchCountToInsert, startDate, endDate, now);
+          this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
         });
+        // window.location.reload();
       },
       error: (err) => {
         console.error('❌ Error checking  enrollment:', err);
         if (err.error?.errors) {
+          // Log detailed field-level validation issues
           for (const field in err.error.errors) {
             if (err.error.errors.hasOwnProperty(field)) {
               console.error(`❌ Validation failed: ${field} -> ${err.error.errors[field]}`);
@@ -565,6 +704,7 @@ allowEnrollment() {
     });
 
   } else {
+    // For other venues, skip duplicate check for now
     const batchCountToInsert = 0;
     this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
   }
@@ -577,7 +717,7 @@ proceedToEnroll(
 {
   const convertedStart = this.convertToISODate(startDate?.trim()) || null;
   const convertedEnd = this.convertToISODate(endDate?.trim()) || null;
-  const { start, end } = this.splitDateRange(date?.trim() || null);
+
   const enrollmentData: EnrollmentData = {
     enrollmentID: 0,
     name: fullName,
@@ -591,20 +731,21 @@ proceedToEnroll(
     venue: venue || '',
     batchmembers: batchCount,
     enrollmentDate: now.toISOString(),
-    startDate: start,
-    endDate: end,
-    result: 'null',
-    percentage: 'null',
-    testTakenDate: 'null',
-    subjectMatterKnowledge: 'null',
-    presentation: 'null',
-    communication: 'null',
-    handlingDoubts: 'null',
-    applicationtowork: 'null',
-    comments: 'null',
-    //sessionID: 105,
+    startDate: convertedStart,
+    endDate: convertedEnd,
+    result: '',
+    percentage: '',
+    testTakenDate: '',
+    subjectMatterKnowledge: '',
+    presentation: '',
+    communication: '',
+    handlingDoubts: '',
+    applicationtowork: '',
+    comments: '',
+    //sessionID: 0,
     sessionID: this.ID,
   };
+  // Log the full payload for debugging
   console.log("Enrollment payload:", JSON.stringify(enrollmentData, null, 2));
   this.ielc.enrollUser(enrollmentData).subscribe({
     next: () => {
@@ -679,17 +820,16 @@ getSessionDescription(skill: string, venue: string, date: string, time: string):
     const sessionTime = `${this.convertTo12HourFormat(session.skillStartTime)} - ${this.convertTo12HourFormat(session.skillEndTime)}`;
     if (venue === 'Teams') {
       return session.skillName?.trim().toLowerCase() === skill.trim().toLowerCase() &&
-        session.venue?.trim().toLowerCase() === venue.trim().toLowerCase() &&
-        (selectedStartDate >= sessionStartDate && selectedEndDate <= sessionEndDate) &&
-        time === sessionTime;
+             session.venue?.trim().toLowerCase() === venue.trim().toLowerCase() &&
+             (selectedStartDate >= sessionStartDate && selectedEndDate <= sessionEndDate) &&
+             time === sessionTime;
     } else {
       return session.skillName?.trim().toLowerCase() === skill.trim().toLowerCase() &&
-        session.venue?.trim().toLowerCase() === venue.trim().toLowerCase();
+             session.venue?.trim().toLowerCase() === venue.trim().toLowerCase();
     }
   });
   return matchedSession?.skillDescription ?? 'No description available';
 }
-
 convertTo12HourFormat(time: string): string {
   const [hour, minute] = time.split(':');
   const period = +hour >= 12 ? 'PM' : 'AM';
@@ -724,17 +864,19 @@ validatePastedMobile(event: ClipboardEvent) {
     event.preventDefault();
   }
 }
+
+
 handleFeedbackClick(item: any): void {
-  if(item.result === 'Completed') {
-  this.router.navigate(['/feedback'], {
-    queryParams: {
-      skill: item.skillName,
-      enrollment: item.enrollmentID
-    }
-  });
-} else {
-  alert('You must complete the test before giving feedback.');
-}
+  if (item.result === 'Completed') {
+    this.router.navigate(['/feedback'], {
+      queryParams: {
+        skill: item.skillName,
+        enrollment: item.enrollmentID
+      }
+    });
+  } else {
+    alert('You must complete the test before giving feedback.');
+  }
 }
 
 getExamPercentage(): number {
@@ -750,45 +892,47 @@ isTestPassed(item: any): boolean {
 
 
 selectedSkill: string = '';
-setSelectedSkill(skillName: string, enrollmentID: number) {
-  this.router.navigate(['/exampage'], { queryParams: { skill: skillName, enrollment: enrollmentID } });
+setSelectedSkill(skillName: string, enrollmentID: number, sessionID: number) {
+  this.router.navigate(['/exampage'], { queryParams: { skill: skillName, enrollment: enrollmentID, session: sessionID } });
 }
 
 setSelectedSkillandId(skillName: string, enrollmentID: number) {
   this.router.navigate(['/feedback'], { queryParams: { skill: skillName, enrollment: enrollmentID } });
 }
 
+
 sortRegisteredUsersbysession(data: any[]): any[] {
   return data.sort((a, b) => (a.sessionID > b.sessionID ? -1 : a.sessionID < b.sessionID ? 1 : 0));
 }
 
-Enrolledusers: any[] = [];
+Enrolledusers: any[] = []; 
 topSkillName: string = '';
 GetAllSkillSessions() {
   const loggedInEmail = (this.userEmail ?? '').toLowerCase();
 
   forkJoin({
     sessions: this.ielc.GetSkillSessions(),
-
+    
     aadUsers: this.ielc.GetAadUserslist(),
     aadGroups: this.ielc.GetAadUserGroupslist()
   }).subscribe(({ sessions, aadUsers, aadGroups }) => {
     const validGroups = aadGroups.map((g: any) => g.displayName?.trim()).filter(Boolean);
     const visibleSessions: any[] = [];
     this.allSkillSessions = sessions;
+    // console.log('🗃️ All sessions:', this.allSkillSessions);
 
     const processSessions = async () => {
       for (const session of sessions) {
         const skill = session.skillName;
         const sessionUsers: string[] = (session.aadUsersData || '')
           .split(',').map((u: string) => u.trim().toLowerCase()).filter(Boolean);
-
+  
         const sessionGroups: string[] = (session.groups || '')
           .split(',').map((g: string) => g.trim()).filter(Boolean);
-
+  
         let isUserAssigned = sessionUsers.includes(this.userEmail?.toLowerCase() ?? '');
         let isGroupAssigned = false;
-
+  
         for (const group of sessionGroups) {
           if (group && validGroups.includes(group)) {
             try {
@@ -799,87 +943,116 @@ GetAllSkillSessions() {
                 break;
               }
             } catch (err) {
+              // console.error(`❌ Failed to fetch members of group "${group}"`, err);
             }
           }
         }
-
+  
         const isSessionPublic = sessionUsers.length === 0 && sessionGroups.length === 0;
         const hasAccess = isUserAssigned || isGroupAssigned || isSessionPublic;
-
+  
         if (hasAccess) {
           visibleSessions.push(session);
         }
       }
+  
       this.visibleSessionIds = visibleSessions;
+      // console.log('✅ Final visible session IDs with skills:', visibleSessions);
+  
       this.Enrolledusers = this.sortRegisteredUsersbysession(visibleSessions);
+  
       if (!this.topSkillReady) {
-        this.GetEnrolledSessionsSkillsData();
+        this.GetEnrolledSessionsSkillsData();  // <-- now safe to call after filtering
       }
     };
-    processSessions();
+  
+    processSessions();  // trigger async function
   });
-
 }
+
 topSkillReady = false;
+
 GetEnrolledSessionsSkillsData() {
   const loggedInEmail = (this.userEmail ?? '').toLowerCase();
 
   this.ielc.GetEnrolledSessions().subscribe((data) => {
+    // console.log('📦 Enrolled session data:', data);
+    // console.log('🧩 Visible session IDs:', this.visibleSessionIds);
+
     if (this.visibleSessionIds && this.visibleSessionIds.length > 0) {
       const enrolledSkillNames = data.map((name: string) => name.trim().toLowerCase());
       const today = new Date();
       const now = new Date();
       const currentTime = now.toTimeString().split(' ')[0];
-      const currentDateOnly = new Date(now.setHours(0, 0, 0, 0));
+   
+      // Normalize current date to midnight (00:00:00)
+    const currentDateOnly = new Date(now.setHours(0, 0, 0, 0));  
+
+    
+      // Group sessions by skill name
       const skillSessionMap = new Map<string, any[]>();
 
       this.visibleSessionIds.forEach((session: any) => {
         const skillName = (session.skillName ?? '').trim();
         const skillKey = skillName.toLowerCase();
-        const [hour, minute, second] = (session.skillStartTime ?? '00:00:00').split(':').map(Number);
-        const sessionEndDateTime = new Date(session.toDate);
-        sessionEndDateTime.setHours(hour || 0, minute || 0, second || 0, 0);
-        const now = new Date();
-        const isActive = sessionEndDateTime >= now;
-        if (!enrolledSkillNames.includes(skillKey)) return;
+  const [hour, minute, second] = (session.skillStartTime ?? '00:00:00').split(':').map(Number);
+  const sessionEndDateTime = new Date(session.toDate);
+  sessionEndDateTime.setHours(hour || 0, minute || 0, second || 0, 0);
+
+  const now = new Date();
+
+  const isActive = sessionEndDateTime >= now;
+
+  // console.log(`📅🕒 Comparing session end datetime with now: ${sessionEndDateTime.toLocaleString()} >= ${now.toLocaleString()} -> ${isActive}`);
+
+
+        if (!enrolledSkillNames.includes(skillKey)) return; // Not an enrolled skill
 
         if (!skillSessionMap.has(skillKey)) {
           skillSessionMap.set(skillKey, []);
         }
 
         if (isActive) {
-          skillSessionMap.get(skillKey)!.push(session);
+          skillSessionMap.get(skillKey)!.push(session); // Add only active sessions
         }
       });
 
-this.Enrolledskills = Array.from(skillSessionMap.entries())
-        .filter(([_, sessions]) => sessions.length > 0)
+      // Final enrolled skills with at least one active session
+      this.Enrolledskills = Array.from(skillSessionMap.entries())
+        .filter(([_, sessions]) => sessions.length > 0) // Ensure at least one valid session
         .map(([skillKey, sessions]) => ({
           skillName: sessions[0].skillName,
-          venue: sessions[0].venue,
-          sessions: sessions
+          sessions: sessions // only non-expired sessions
         }));
 
-      if (this.Enrolledskills.length > 0) {
-        this.topSkillName = `${this.Enrolledskills[0].skillName} (${this.Enrolledskills[0].venue})`;
+      const enrolledNames = this.Enrolledskills.map((s: any) => s.skillName);
+      // console.log('🎯 Enrolled skills visible to user (unique, with active sessions):', enrolledNames);
+
+      if (enrolledNames.length > 0) {
+        this.topSkillName = enrolledNames[0];
       }
     } else {
+      // console.warn('⚠️ No visible sessions stored from GetAllSkillSessions yet.');
       this.Enrolledskills = [];
     }
   });
 }
 
-crserestlist: any[] = [];
-courseSkillNames: string[] = [];
-GetCourseist() {
+ crserestlist: any[]=[];
+ courseSkillNames: string[] = [];
+ GetCourseist() {
   this.ielc.Getcourse().subscribe((data: crserest[]) => {
     this.crserestlist = data;
+
+    // Extract and normalize all skill names from all course entries
     this.courseSkillNames = data
-      .map((item) => item.coursesList)
-      .filter(Boolean)
+      .map((item) => item.coursesList)       // get each coursesList string
+      .filter(Boolean)                       // filter out any null/undefined/empty
       .flatMap((list) =>
         list.split(',').map((skill) => skill.trim().toLowerCase())
       );
+
+    // console.log('Filtered course skill names:', this.courseSkillNames);
   });
 }
 
@@ -887,18 +1060,20 @@ isSkillRestricted(skillName: string): boolean {
   return this.courseSkillNames.includes(skillName.trim().toLowerCase());
 }
 
-GetHolidayslist(){
+ GetHolidayslist(){
   this.ielc.Getholidays().subscribe((data) => {
-    this.holidayslist = data;
+    this.holidayslist=data;
   });
-}
-sortlist(data: any[]): any[] {
+ }
+ sortlist(data: any[]): any[] {
   return data.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
 }
 
 GetEventsList() {
   this.ielc.Getevents().subscribe((data) => {
     this.eventslist = data;
+
+    // Sort by ID in descending order & get the first event
     this.latestEvent = this.eventslist.sort((a, b) => b.id - a.id)[0];
   });
 }
@@ -909,310 +1084,147 @@ GetExamlist() {
     if (data) {
       this.examlist = data.map((item: any) => ({
         ...item,
-        skillName: item.skillName ?? '',
+        skillName: item.skillName ?? '',  
         examPercentage: Number(item.examPercentage),
         testTakenDate: item.testTakenDate
           ? moment(item.testTakenDate, 'MMM D YYYY hh:mmA').toDate()  // Convert to Date
           : null,
       }));
+      // console.log("ex",data);
+      // console.log("exam",this.examlist);
     }
     this.isLoading = false;
   });
-
+  
 }
 
 checkUserExists() {
   this.GetAllUniqueNames().subscribe((usernames: string[]) => {
     this.showButton = !!(this.userName && usernames.includes(this.userName));
     if (this.showButton) {
-      console.log('Your username exists in the list.');
+      //console.log('Your username exists in the list.');
     } else {
-      console.log('Your username is NOT in the list.');
+      //console.log('Your username is NOT in the list.');
     }
   });
 }
-
+ 
 checkCoOwnerUserExists() {
   this.GetCOwnersAllUniqueNames().subscribe((usernames: string[]) => {
     this.coownersshowButton = !!(this.userName && usernames.includes(this.userName));
     if (this.coownersshowButton) {
-      console.log('Your username exists in the list.');
+      //console.log(this.coownersshowButton);
+      //console.log('Your username exists in the list.');
     } else {
-      console.log('Your username is NOT in the list.');
+      //console.log('Your username is NOT in the list.');
     }
   });
 }
-
-GetAllUniqueNames(): Observable < string[] > {
+ 
+GetAllUniqueNames(): Observable<string[]> {
   return this.ielc.GetUniqueName();
 }
 
-GetCOwnersAllUniqueNames(): Observable < string[] > {
+GetCOwnersAllUniqueNames(): Observable<string[]> {
   return this.ielc.GetCoOwnersUniqueName();
 }
-
+ 
 showButton: boolean = false;
 coownersshowButton: boolean = false;
-showData(registration: any)
+ 
+
+showData(registration:any)
 {
 }
 save()
 {
   alert('🚧 Feature under development. Implementation is currently in progress.');
-
 }
 
 modaldatasave(){
+//  console.log(this.attendanceform.value);
+//  this.attendanceform.resetForm();
 }
 
-isTimeInputDisabled: boolean = true
-time1 = ''
-firsttimeentered: Date | null=null
-
+// ngOnInit(): void {
+//   this.checkiftimepassed()
+// }
+isTimeInputDisabled:boolean=true
+time1=''
+firsttimeentered:Date |null=null
+ 
 onFirsttimechange()
 {
-  this.isTimeInputDisabled = !!this.time1
-  //  this.calculatetime()
+  this.isTimeInputDisabled=!!this.time1
+ //  this.calculatetime()
   this.isTimeInputDisabled = false;
 }
 
-calendarOptions: CalendarOptions = {
-  initialView: 'dayGridMonth',
-  plugins: [dayGridPlugin]
-};
+  calendarOptions: CalendarOptions = {
+   initialView: 'dayGridMonth',
+   plugins: [dayGridPlugin]
+ };
 
-time2: string = ''
-showEaxtraHoursLabel: boolean = false
-checktime(){
-  if (this.time2 === "23:59") {
-    this.showEaxtraHoursLabel = true;
-  } else {
-    this.showEaxtraHoursLabel = false;
-  }
-}
+ time2:string=''
+ showEaxtraHoursLabel:boolean=false
+ checktime(){
+   if(this.time2==="23:59"){
+     this.showEaxtraHoursLabel=true;
+    //  console.log(this.time2)
+   }else{
+     this.showEaxtraHoursLabel=false;
+   }
+ }
 
-leavetype = [
-  {
-    name: 'Full Day'
-  },
-  {
-    name: 'Half Day'
-  },
-  {
-    name: 'OH(Optional Holiday)'
-  }
-]
+ leavetype=[
+   {
+     name: 'Full Day'
+   },
+   {
+     name: 'Half Day'
+   },
+   {
+     name: 'OH(Optional Holiday)'
+   }
+ ]
 
 
-worktype = [
-  {
-    name: 'WFO(Work From Office)'
-  },
-  {
-    name: 'WFH(Work From Home)'
-  },
-  {
-    name: 'WFH/WFO'
-  },
-  {
-    name: 'WFC(Work From Client)'
-  }
+worktype=[
+ {
+   name: 'WFO(Work From Office)'
+ },
+ {
+   name: 'WFH(Work From Home)'
+ },
+ {
+   name: 'WFH/WFO'
+ },
+ {
+   name: 'WFC(Work From Client)'
+ }
 ]
 
 isSecondSelectDisabled: boolean = false;
 isfirstSelectDisabled: boolean = false;
 
 
-onSelect1Change() {
-  this.isSecondSelectDisabled = !!this.leave
-  if (this.leave === 'Half Day') {
-    this.isSecondSelectDisabled = false
-    this.isTimeInputDisabled = false
-  }
-}
-onSelect2Change() {
-  this.isfirstSelectDisabled = !!this.work;
-  if (this.work) {
-    this.isTimeInputDisabled = false
-  }
-
-}
-
-  skillname1: string = '';
-  selectedValue: string = '';
-  showPopup: boolean = false;
-  Enrolledskill: { skillName: string }[] = [];
-  availableTime: string[] = [];
-  disableDate: boolean = false;
-  disableTime: boolean = false;
-  isSelfLearning = false;
-  venue: string = '';
-
-  
-onModeOfTrainingChange(event: any) {
-    //debugger;
-  //const venue = event.target.nextSibling.textContent.trim();
-  const venue = (event.target as HTMLInputElement).value;
-  this.selectedValue = venue;
-  if (venue === 'Self-Learning') {
-    this.date = '';
-    this.time = '';
-    this.availableDates = [];
-    this.availableTimes = [];
-        this.EnrolledskillsOffline = [];
-    this.EnrolledskillsTeams = [];
-    this.EnrolledskillsLearning = [];
-    this.ielc.GetSkillsByVenue('Self-Learning').subscribe({
-      next: (res) => {
-        this.EnrolledskillsLearning = res.map(skill => ({ skillName: skill }));
-        this.skillname = '';
-        this.showPopup = true;
-        this.disableDate = true;
-        this.disableTime = true;
-      },
-      error: (err) => {
-        if (err.status === 404) {
-              this.EnrolledskillsOffline = [];
-    this.EnrolledskillsTeams = [];
-    this.EnrolledskillsLearning = [];
-          this.skillname = '';
-        } else {
-          console.error('Error fetching skills for Self-Learning', err);
-        }
-        this.showPopup = true;
-        this.disableDate = true;
-        this.disableTime = true;
-      }
-    });
-  } 
-  else if (venue === 'Teams') {
-        this.EnrolledskillsOffline = [];
-    this.EnrolledskillsTeams = [];
-    this.EnrolledskillsLearning = [];
-    //this.isLoading = true;
-    this.ielc.GetSkillsByVenue('Teams').subscribe({
-      next: (res) => {
-        this.EnrolledskillsTeams = res.map(skill => ({ skillName: skill }));
-        //this.isLoading = false;
-        this.skillname = '';
-        this.availableDates = [];
-        this.availableTimes = [];
-        this.showPopup = false;
-        this.disableDate = true;
-        this.disableTime = true;
-      },
-      error: (err) => {
-        if (err.status === 404) {
-              this.EnrolledskillsOffline = [];
-    this.EnrolledskillsTeams = [];
-    this.EnrolledskillsLearning = [];
-          this.skillname = '';
-        } else {
-          console.error('Error fetching skills for Teams', err);
-        }
-        this.showPopup = false;
-        this.disableDate = true;
-        this.disableTime = true;
-      }
-    });
-  } 
-  else if (venue === 'Offline') {
-    this.EnrolledskillsOffline = [];
-    this.EnrolledskillsTeams = [];
-    this.EnrolledskillsLearning = [];
-    this.ielc.GetSkillsByVenue('Offline').subscribe({
-      next: (res) => {
-        this.EnrolledskillsOffline = res.map(skill => ({ skillName: skill }));
-        this.skillname = ''; 
-        this.availableDates = [];
-        this.availableTimes = [];
-        this.date = '';
-        this.time = '';
-        this.showPopup = false;
-        this.disableDate = true;
-        this.disableTime = true;
-      },
-      error: (err) => {
-        if (err.status === 404) {
-              this.EnrolledskillsOffline = [];
-    this.EnrolledskillsTeams = [];
-    this.EnrolledskillsLearning = [];
-          this.skillname = '';
-        } else {
-          console.error('Error fetching skills for Offline', err);
-        }
-        this.showPopup = false;
-        this.date = '';
-        this.time = '';
-        this.disableDate = true;
-        this.disableTime = true;
-      }
-    });
-  }
-}
-
-onSkillSelected(skill: string) {
-  if (!skill) return;
-  this.skillname = skill;          
-  this.closePopup();               
-  this.onBatchInputChange();       
-
-  this.availableDates = [];
-  this.availableTimes = [];
-  this.date = '';
-  this.time = '';
-  this.disableDate= true;
-
-  if (this.selectedValue === 'Teams' || this.selectedValue === 'Offline') {
-    this.ielc.GetEnrolledSessionsbydate(this.skillname, this.selectedValue).subscribe({
-      next: (res: string[]) => {
-        this.availableDates = res || [];
-        this.disableDate = false;
-      },
-      error: (err) => {
-        console.error('Error fetching dates:', err);
-        this.availableDates = [];
-      }
-    });
-  }
-}
-closePopup() {
-  this.showPopup = false;
-}
-
-
-onDateChanged() {
-  if (!this.skillname || !this.date) {
-    this.availableTime = [];
-    return;
-    this.disableTime = false;
-  }
-this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, this.date)
-  .subscribe(
-    (res: string) => {
-      this.availableTimes = res
-        ? res.split(',').map(time => time.trim())
-        : [];
-      console.log('Available times:', this.availableTimes);
-      this.disableTime = false;
-    },
-    (err) => {
-      console.error('❌ Error fetching time slots:', err);
-      this.availableTimes = [];
-    }
-  );
-}
-// pdfUrl: string | null = null;
-// openDocument(fileName: string) {
-//   this.ielc.getWordAsPdf(fileName).subscribe(blob => {
-//     const pdfBlob = new Blob([blob], { type: 'application/pdf' });
-//     this.pdfUrl = URL.createObjectURL(pdfBlob);
-//   });
-// }
-// closePdf() {
-//   this.pdfUrl = null;
-// }
-}
+ onSelect1Change() {
+    this.isSecondSelectDisabled = !!this.leave
+   if(this.leave==='Half Day')
+     {
+      this.isSecondSelectDisabled=false
+     this.isTimeInputDisabled=false
+   } 
+ }
+ onSelect2Change() {
+   this.isfirstSelectDisabled = !!this.work;
+   if(this.work)
+   {
+     this.isTimeInputDisabled=false
+   }
+   
+ }
 
 
  
+}
