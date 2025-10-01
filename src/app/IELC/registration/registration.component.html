@@ -30,7 +30,7 @@
   <div class="row">
 
 
-    <div class="col-sm-4 div-left-align left_container">
+    <div class="col-sm-4 div-left-align">
       <div class="container my-4">
         <div class="card shadow">
           <div class="card-body">
@@ -170,9 +170,8 @@
 
         <!-- Office Address -->
         <div class="mb-4 p-3 border rounded bg-light">
-          <strong>Registered Office and Delivery Centre:</strong>
-<p>
-   <!-- <address> -->
+          <h5><strong>Registered Office and Delivery Centre:</strong></h5>
+          <address>
             1st Floor, Sapthagiri Towers,<br>
             1-10-75/1/1-6, Begumpet, Hyderabad-500016,<br>
             Telangana, India<br>
@@ -181,8 +180,7 @@
             <a class="btn btn-link" href="https://www.inteqsolutions.com" target="_blank" rel="noopener noreferrer">
               www.inteqsolutions.com
             </a>
-          <!-- </address> -->
-</p>
+          </address>
         </div>
       </div>
     </div>
@@ -190,7 +188,7 @@
     <div class="col-sm-8">
       <div class="row">
         <div class="col-sm-7">
-       <div class="container-main">
+          <div class="container-main">
             <h3 class="main">{{selectedDate | date:'longDate'}}</h3>
             <div class="row mb-3 align-items-end  leave_Container">
               <!-- Leave Dropdown -->
@@ -268,7 +266,6 @@
               <button class="button" (click)="save()">Save</button>
             </div>
           </div>
-          
           <div class="tablebottom">
             <table class="table  table-striped table-bordered tabletop">
               <thead class="table-primary">
@@ -288,7 +285,7 @@
                       <ng-container
                         *ngIf="!item.result || item.percentage === null || !item.testTakenDate; else showResult">
                         <a routerLink="/exampage" class="btn btn-link"
-                          (click)="setSelectedSkill(item.skillName, item.enrollmentID, item.sessionID)">
+                          (click)="setSelectedSkill(item.skillName, item.enrollmentID)">
                           StartTest
                         </a>
                       </ng-container>
@@ -302,7 +299,7 @@
                       <ng-template #pendingTest>
                         <span>Pending - </span>
                         <a routerLink="/exampage" class="btn btn-link"
-                          (click)="setSelectedSkill(item.skillName, item.enrollmentID, item.sessionID)">
+                          (click)="setSelectedSkill(item.skillName, item.enrollmentID)">
                           StartTest
                         </a>
                       </ng-template>
@@ -352,39 +349,96 @@
           </div>
           <div class="div">
             <div class="mb-3 formdiv">
+              <div class="mb-3">
+                <label class="lblmode">
+                  Mode of Training<span style="color: red;">*</span>
+                </label>
+                <br><br>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="modeSelfLearning" name="modeOfTraining"
+                    value="Self-Learning" [(ngModel)]="selectedValue" (change)="onModeOfTrainingChange($event)"
+                    required />
+                  <label class="form-check-label" for="modeSelfLearning">Self-Learning</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="modeOffline" name="modeOfTraining" value="Offline"
+                    [(ngModel)]="selectedValue" (change)="onModeOfTrainingChange($event)" required />
+                  <label class="form-check-label" for="modeOffline">Offline</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="modeTeams" name="modeOfTraining" value="Teams"
+                    [(ngModel)]="selectedValue" (change)="onModeOfTrainingChange($event)" required />
+                  <label class="form-check-label" for="modeTeams">Teams</label>
+                </div>
+              </div>
+            </div>
+            
+            <div *ngIf="showPopup" class="popup-overlay">
+              <div class="popup-box">
+                <div class="popup-header">
+                  <span>Select Skill Name</span>
+                  <button class="close-btn" (click)="closePopup()">✖</button>
+                </div>
+
+                <div class="popup-body">
+                  <label class="option-card" *ngFor="let row of Enrolledskills">
+                    <input type="radio" name="modeOption" [value]="row.skillName" [(ngModel)]="skillname"
+                      (change)="closePopup(); onSkillSelected(row.skillName)">
+                    <span>{{ row.skillName }}</span>
+                  </label>
+                </div>
+
+                <!-- <div class="popup-body">
+  <ng-container *ngIf="Enrolledskills.length; else noSkills">
+    <label class="option-card" *ngFor="let row of Enrolledskills">
+      <input type="radio" name="modeOption" [value]="row.skillName"
+             [(ngModel)]="skillname"
+             (change)="onSkillChange(skillname); onBatchInputChange(); closePopup(); onSkillSelected(row.skillName)">
+      <span>{{ row.skillName }}</span>
+    </label>
+  </ng-container>
+  <ng-template #noSkills>
+    <p style="color: gray;">No skills available</p>
+  </ng-template>
+</div> -->
+
+              </div>
+            </div>
+            <div class="mb-3 formdiv">
               <label class="lblskill">Skill Name<span style="color: red;">*</span></label>
               <select name="skillname" class="form-controlone" required [(ngModel)]="skillname"
-                (change)="onSkillChange(skillname); onBatchInputChange()">
+                (change)="onSkillSelected(skillname); onBatchInputChange()">
                 <option value="" disabled>- select -</option>
-                <option *ngFor="let row of Enrolledskills" [value]="row.skillName">{{ row.skillName }}</option>
+                <!-- <option *ngIf="skillname" [value]="skillname">{{ skillname }}</option> -->
+                  <option *ngFor="let row of Enrolledskills" [value]="row.skillName">{{ row.skillName }}</option>
               </select>
             </div>
-            <div class="mb-3">
-              <label class="lblmode">Mode of Training<span style="color: red;">*</span></label>
-              <select name="selectedVenue" class="form-controlone" required [(ngModel)]="selectedVenue"
-                (change)="onVenueChange(selectedVenue)">
-                <option value="" disabled>- select -</option>
-                <option *ngFor="let venue of venueList" [value]="venue"> {{ venue }} </option>
-              </select>
-            </div>
+
+
+
             <div class="row">
               <div class="col-sm-6 mb-3">
                 <label class="lbldate">Date<span style="color: red;">*</span></label>
                 <select name="date" class="form-controldate" required [(ngModel)]="date"
-                  [disabled]="!['Teams', 'Offline'].includes(selectedVenue)"
-                  (change)="onBatchInputChange(); onDateChange()">
+                  [disabled]="disableDate"
+                  (change)="onBatchInputChange(); onDateChanged()">
                   <option value="" disabled>- select -</option>
                   <option *ngFor="let d of availableDates" [value]="d">{{ d }}</option>
                 </select>
               </div>
+
               <div class="col-sm-6 mb-3">
                 <label class="lbltime">Time<span style="color: red;">*</span></label>
-                <select name="time" class="form-controltime" required [(ngModel)]="time" [disabled]="!date"
+                <select name="time" class="form-controltime" required [(ngModel)]="time"
+                  [disabled]="disableTime"
                   (change)="onBatchInputChange()">
                   <option value="" disabled>- select -</option>
                   <option *ngFor="let t of availableTimes" [value]="t">{{ t }}</option>
                 </select>
               </div>
+
+
               <div class="col-sm-6 mb-3">
                 <label class="lblfname">First Name<span style="color: red;">*</span></label>
                 <input type="text" class="form-controlfname" name="firstName" [(ngModel)]="firstName" readonly required>
@@ -421,7 +475,7 @@
           </div>
         </div>
       </div>
-      <div>
+      <div class="bottomtable">
         <label class="lblevents blink">Latest Events:</label>
         <button *ngIf="coownersshowButton" type="button" class="btn btn-link btnlink1 textmode"
           routerLink="/eventscheduler">
