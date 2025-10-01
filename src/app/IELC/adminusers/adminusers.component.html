@@ -11767,7 +11767,7 @@
         <table *ngIf="!isLoading" class="table table-striped table-bordered" name="events">
             <thead class="table-primary">
                 <tr>
-                    <!-- <th scope="col">ID</th> -->
+                    <th scope="col">ID</th>
                     <th scope="col">Events</th>
                     <th scope="col">Event Name</th>
                     <th scope="col">Action</th>
@@ -11775,11 +11775,11 @@
             </thead>
             <tbody>
                 <tr *ngFor="let item of eventslist">
-                    <!-- <td>{{item.id}}</td>
+                    <td>{{item.id}}</td>
                     <td>
                         <img [src]="'data:image/jpeg;base64,' + item.eventData" alt="Event Image" width="100"
                             height="50">
-                    </td> -->
+                    </td>
                     <td>{{item.eventName}}</td>
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
