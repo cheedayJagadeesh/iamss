@@ -131,15 +131,15 @@ GetPrjtQMSFormatlist(){
    this.isLoading = false;
  });
 }
-pdfUrl: string | null = null;
-openDocument(fileName: string) {
-  // debugger;
-  this.ielc.getWordAsPdf(fileName).subscribe(blob => {
-    const pdfBlob = new Blob([blob], { type: 'application/pdf' });
-    this.pdfUrl = URL.createObjectURL(pdfBlob);
-  });
-}
-closePdf() {
-  this.pdfUrl = null;
-}
+// pdfUrl: string | null = null;
+// openDocument(fileName: string) {
+//   // debugger;
+//   this.ielc.getWordAsPdf(fileName).subscribe(blob => {
+//     const pdfBlob = new Blob([blob], { type: 'application/pdf' });
+//     this.pdfUrl = URL.createObjectURL(pdfBlob);
+//   });
+// }
+// closePdf() {
+//   this.pdfUrl = null;
+// }
 }

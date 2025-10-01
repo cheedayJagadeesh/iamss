@@ -362,24 +362,18 @@
                 </div>
                 <div class="form-check">
                   <input class="form-check-input" type="radio" id="modeOffline" name="modeOfTraining" value="Offline"
-                    [(ngModel)]="selectedValue" (change)="onModeOfTrainingChange($event);onVenueChange(selectedValue)" required />
+                    [(ngModel)]="selectedValue" (change)="onModeOfTrainingChange($event)" required />
                   <label class="form-check-label" for="modeOffline">Offline</label>
                 </div>
 
                 <div class="form-check">
                   <input class="form-check-input" type="radio" id="modeTeams" name="modeOfTraining" value="Teams"
-                    [(ngModel)]="selectedValue" (change)="onModeOfTrainingChange($event);onVenueChange(selectedValue)" required />
+                    [(ngModel)]="selectedValue" (change)="onModeOfTrainingChange($event)" required />
                   <label class="form-check-label" for="modeTeams">Teams</label>
                 </div>
               </div>
-
-              <!-- Popup -->
-              <!-- <select name="selectedValue" class="form-controlone" required [(ngModel)]="selectedValue"
-                (change)="onModeOfTrainingChange($event)">
-                <option value="" disabled>- select -</option>
-                <option value="option1">Self-Learning</option>
-              </select> -->
             </div>
+            
             <div *ngIf="showPopup" class="popup-overlay">
               <div class="popup-box">
                 <div class="popup-header">
@@ -390,19 +384,34 @@
                 <div class="popup-body">
                   <label class="option-card" *ngFor="let row of Enrolledskills">
                     <input type="radio" name="modeOption" [value]="row.skillName" [(ngModel)]="skillname"
-                      (change)="onSkillChange(skillname); onBatchInputChange(); closePopup(); onSkillSelected(row.skillName)">
+                      (change)="closePopup(); onSkillSelected(row.skillName)">
                     <span>{{ row.skillName }}</span>
                   </label>
                 </div>
+
+                <!-- <div class="popup-body">
+  <ng-container *ngIf="Enrolledskills.length; else noSkills">
+    <label class="option-card" *ngFor="let row of Enrolledskills">
+      <input type="radio" name="modeOption" [value]="row.skillName"
+             [(ngModel)]="skillname"
+             (change)="onSkillChange(skillname); onBatchInputChange(); closePopup(); onSkillSelected(row.skillName)">
+      <span>{{ row.skillName }}</span>
+    </label>
+  </ng-container>
+  <ng-template #noSkills>
+    <p style="color: gray;">No skills available</p>
+  </ng-template>
+</div> -->
+
               </div>
             </div>
             <div class="mb-3 formdiv">
               <label class="lblskill">Skill Name<span style="color: red;">*</span></label>
               <select name="skillname" class="form-controlone" required [(ngModel)]="skillname"
-                (change)="onSkillChange(skillname); onBatchInputChange()">
+                (change)="onSkillSelected(skillname); onBatchInputChange()">
                 <option value="" disabled>- select -</option>
-                <!-- ✅ Only show the selected skill from popup -->
-                <option *ngIf="skillname" [value]="skillname">{{ skillname }}</option>
+                <!-- <option *ngIf="skillname" [value]="skillname">{{ skillname }}</option> -->
+                  <option *ngFor="let row of Enrolledskills" [value]="row.skillName">{{ row.skillName }}</option>
               </select>
             </div>
 
@@ -412,7 +421,8 @@
               <div class="col-sm-6 mb-3">
                 <label class="lbldate">Date<span style="color: red;">*</span></label>
                 <select name="date" class="form-controldate" required [(ngModel)]="date"
-                  [disabled]="isDropdownDisabled()" (change)="onBatchInputChange(); onDateChange()">
+                  [disabled]="disableDate"
+                  (change)="onBatchInputChange(); onDateChanged()">
                   <option value="" disabled>- select -</option>
                   <option *ngFor="let d of availableDates" [value]="d">{{ d }}</option>
                 </select>
@@ -421,11 +431,14 @@
               <div class="col-sm-6 mb-3">
                 <label class="lbltime">Time<span style="color: red;">*</span></label>
                 <select name="time" class="form-controltime" required [(ngModel)]="time"
-                  [disabled]="isDropdownDisabled()" (change)="onBatchInputChange()">
+                  [disabled]="disableTime"
+                  (change)="onBatchInputChange()">
                   <option value="" disabled>- select -</option>
                   <option *ngFor="let t of availableTimes" [value]="t">{{ t }}</option>
                 </select>
               </div>
+
+
               <div class="col-sm-6 mb-3">
                 <label class="lblfname">First Name<span style="color: red;">*</span></label>
                 <input type="text" class="form-controlfname" name="firstName" [(ngModel)]="firstName" readonly required>
@@ -449,11 +462,11 @@
                 <label class="lblbatch">Batch Members - <a *ngIf="selectedVenue === 'Teams'">{{ batchMembersCount
                     }}</a></label>
               </div>
-              <div>
+              <!-- <div>
                 <label class="lblbatchpopup" *ngFor="let item of examlist">(Each Skill have only
                   {{item.batchLimitMembers}}
                   Members...)</label>
-              </div>
+              </div> -->
               <div class="mb-3 ">
                 <button type="button" class="btn buttonsub btn-success" (click)="allowEnrollment()"
                   [disabled]="!registration.valid">Submit</button>
