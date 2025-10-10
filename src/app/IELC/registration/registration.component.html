@@ -390,31 +390,32 @@
                 </div>
 
                 <!-- <div class="popup-body">
-  <ng-container *ngIf="Enrolledskills.length; else noSkills">
-    <label class="option-card" *ngFor="let row of Enrolledskills">
-      <input type="radio" name="modeOption" [value]="row.skillName"
-             [(ngModel)]="skillname"
-             (change)="onSkillChange(skillname); onBatchInputChange(); closePopup(); onSkillSelected(row.skillName)">
-      <span>{{ row.skillName }}</span>
-    </label>
-  </ng-container>
-  <ng-template #noSkills>
-    <p style="color: gray;">No skills available</p>
-  </ng-template>
-</div> -->
+                  <ng-container *ngIf="Enrolledskills.length; else noSkills">
+                    <label class="option-card" *ngFor="let row of Enrolledskills">
+                      <input type="radio" name="modeOption" [value]="row.skillName"
+                             [(ngModel)]="skillname"
+                             (change)="onSkillChange(skillname); onBatchInputChange(); closePopup(); onSkillSelected(row.skillName)">
+                      <span>{{ row.skillName }}</span>
+                    </label>
+                  </ng-container>
+                  <ng-template #noSkills>
+                    <p style="color: gray;">No skills available</p>
+                  </ng-template>
+                </div> -->
 
               </div>
             </div>
+
+            
             <div class="mb-3 formdiv">
               <label class="lblskill">Skill Name<span style="color: red;">*</span></label>
               <select name="skillname" class="form-controlone" required [(ngModel)]="skillname"
                 (change)="onSkillSelected(skillname); onBatchInputChange()">
+                <option *ngIf="isLoadingSkills" disabled>Loading skills...</option>
                 <option value="" disabled>- select -</option>
-                <!-- <option *ngIf="skillname" [value]="skillname">{{ skillname }}</option> -->
-                  <option *ngFor="let row of Enrolledskills" [value]="row.skillName">{{ row.skillName }}</option>
+                <option *ngFor="let row of Enrolledskills" [value]="row.skillName">{{ row.skillName }}</option>
               </select>
             </div>
-
 
 
             <div class="row">
@@ -458,10 +459,13 @@
                   maxlength="10" minlength="10" (keypress)="allowOnlyDigits($event)"
                   (paste)="validatePastedMobile($event)">
               </div>
-              <div class="mb-3 ">
-                <label class="lblbatch">Batch Members - <a *ngIf="selectedVenue === 'Teams'">{{ batchMembersCount
-                    }}</a></label>
-              </div>
+              <label class="lblbatch">
+                Batch Members - <a>{{ batchMembersCount }}</a>
+              </label>
+
+              <!-- <div class="mb-3 ">
+                <label class="lblbatch">Batch Members - <a *ngIf="venue === 'Teams'">{{ batchMembersCount}}</a></label>
+              </div> -->
               <!-- <div>
                 <label class="lblbatchpopup" *ngFor="let item of examlist">(Each Skill have only
                   {{item.batchLimitMembers}}

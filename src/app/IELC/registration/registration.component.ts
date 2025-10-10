@@ -399,6 +399,7 @@ onDateChange() {
 }
 batchMembersCount: number = 0;
 onBatchInputChange() {
+  debugger;
   if (this.skillname && this.date && this.time) {
     this.checkBatchAvailability();
   } else {
@@ -416,6 +417,7 @@ checkBatchAvailability() {
     next: (count: number) => {
       if (typeof count === 'number') {
         this.batchMembersCount = count + 1;
+            console.log('Batch members count:', this.batchMembersCount)
         if (this.batchMembersCount >= 150) {
           alert('Batch is full. Please choose another Date/Time slot.');
         }
@@ -1048,108 +1050,175 @@ onSelect2Change() {
   isSelfLearning = false;
   venue: string = '';
 
-  
-onModeOfTrainingChange(event: any) {
-    //debugger;
-  //const venue = event.target.nextSibling.textContent.trim();
+  isLoadingSkills = false;
+
+// onModeOfTrainingChange(event: any) {
+//   const venue = (event.target as HTMLInputElement).value;
+//   this.isLoadingSkills = true;
+//   // ... your same logic ...
+
+//   this.ielc.GetSkillsByVenue(venue).subscribe({
+//     next: (res) => {
+//       const skills = res.map((skill: any) => ({ skillName: skill }));
+//       this.Enrolledskills = skills;
+//       this.skillname = '';
+//       this.isLoadingSkills = false;
+//     },
+//     error: () => {
+//       this.Enrolledskills = [];
+//       this.skillname = '';
+//       this.isLoadingSkills = false;
+//     }
+//   });
+// }
+
+  onModeOfTrainingChange(event: any) {
+  //debugger;
   const venue = (event.target as HTMLInputElement).value;
   this.selectedValue = venue;
-  if (venue === 'Self-Learning') {
-    this.date = '';
-    this.time = '';
-    this.availableDates = [];
-    this.availableTimes = [];
-        this.EnrolledskillsOffline = [];
-    this.EnrolledskillsTeams = [];
-    this.EnrolledskillsLearning = [];
-    this.ielc.GetSkillsByVenue('Self-Learning').subscribe({
-      next: (res) => {
-        this.EnrolledskillsLearning = res.map(skill => ({ skillName: skill }));
-        this.skillname = '';
-        this.showPopup = true;
-        this.disableDate = true;
-        this.disableTime = true;
-      },
-      error: (err) => {
-        if (err.status === 404) {
-              this.EnrolledskillsOffline = [];
-    this.EnrolledskillsTeams = [];
-    this.EnrolledskillsLearning = [];
-          this.skillname = '';
-        } else {
-          console.error('Error fetching skills for Self-Learning', err);
-        }
-        this.showPopup = true;
-        this.disableDate = true;
-        this.disableTime = true;
-      }
-    });
-  } 
-  else if (venue === 'Teams') {
-        this.EnrolledskillsOffline = [];
-    this.EnrolledskillsTeams = [];
-    this.EnrolledskillsLearning = [];
-    //this.isLoading = true;
-    this.ielc.GetSkillsByVenue('Teams').subscribe({
-      next: (res) => {
-        this.EnrolledskillsTeams = res.map(skill => ({ skillName: skill }));
-        //this.isLoading = false;
-        this.skillname = '';
-        this.availableDates = [];
-        this.availableTimes = [];
-        this.showPopup = false;
-        this.disableDate = true;
-        this.disableTime = true;
-      },
-      error: (err) => {
-        if (err.status === 404) {
-              this.EnrolledskillsOffline = [];
-    this.EnrolledskillsTeams = [];
-    this.EnrolledskillsLearning = [];
-          this.skillname = '';
-        } else {
-          console.error('Error fetching skills for Teams', err);
-        }
-        this.showPopup = false;
-        this.disableDate = true;
-        this.disableTime = true;
-      }
-    });
-  } 
-  else if (venue === 'Offline') {
-    this.EnrolledskillsOffline = [];
-    this.EnrolledskillsTeams = [];
-    this.EnrolledskillsLearning = [];
-    this.ielc.GetSkillsByVenue('Offline').subscribe({
-      next: (res) => {
-        this.EnrolledskillsOffline = res.map(skill => ({ skillName: skill }));
-        this.skillname = ''; 
-        this.availableDates = [];
-        this.availableTimes = [];
-        this.date = '';
-        this.time = '';
-        this.showPopup = false;
-        this.disableDate = true;
-        this.disableTime = true;
-      },
-      error: (err) => {
-        if (err.status === 404) {
-              this.EnrolledskillsOffline = [];
-    this.EnrolledskillsTeams = [];
-    this.EnrolledskillsLearning = [];
-          this.skillname = '';
-        } else {
-          console.error('Error fetching skills for Offline', err);
-        }
-        this.showPopup = false;
-        this.date = '';
-        this.time = '';
-        this.disableDate = true;
-        this.disableTime = true;
-      }
-    });
-  }
+  this.isLoadingSkills = true;
+  // Clear all skill arrays
+  this.Enrolledskills = [];
+  this.EnrolledskillsOffline = [];
+  this.EnrolledskillsTeams = [];
+  this.EnrolledskillsLearning = [];
+
+  this.date = '';
+  this.time = '';
+  this.availableDates = [];
+  this.availableTimes = [];
+
+  // Common UI flags
+  this.showPopup = venue === 'Self-Learning';
+  this.disableDate = true;
+  this.disableTime = true;
+
+  // Fetch skills based on venue
+  this.ielc.GetSkillsByVenue(venue).subscribe({
+    next: (res) => {
+      const skills = res.map((skill: any) => ({ skillName: skill }));
+
+      if (venue === 'Self-Learning') this.EnrolledskillsLearning = skills;
+      else if (venue === 'Teams') this.EnrolledskillsTeams = skills;
+      else if (venue === 'Offline') this.EnrolledskillsOffline = skills;
+
+      // ✅ Bind active list to dropdown
+      this.Enrolledskills = skills;
+
+      this.skillname = '';
+      this.isLoadingSkills = false;
+    },
+    error: (err) => {
+      console.error(`Error fetching skills for ${venue}`, err);
+      this.Enrolledskills = [];
+      this.skillname = '';
+      this.isLoadingSkills = false;
+    }
+  });
 }
+
+  
+// onModeOfTrainingChange(event: any) {
+//   debugger;
+//   //const venue = event.target.nextSibling.textContent.trim();
+//   const venue = (event.target as HTMLInputElement).value;
+//   this.selectedValue = venue;
+//   if (venue === 'Self-Learning') {
+//     this.date = '';
+//     this.time = '';
+//     this.availableDates = [];
+//     this.availableTimes = [];
+//     this.EnrolledskillsOffline = [];
+//     this.EnrolledskillsTeams = [];
+//     this.EnrolledskillsLearning = [];
+//     this.ielc.GetSkillsByVenue('Self-Learning').subscribe({
+//       next: (res) => {
+//         this.EnrolledskillsLearning = res.map(skill => ({ skillName: skill }));
+//         this.skillname = '';
+//         this.showPopup = true;
+//         this.disableDate = true;
+//         this.disableTime = true;
+//       },
+//       error: (err) => {
+//       if (err.status === 404) {
+//       this.EnrolledskillsOffline = [];
+//       this.EnrolledskillsTeams = [];
+//       this.EnrolledskillsLearning = [];
+//       this.skillname = '';
+//       } else {
+//           console.error('Error fetching skills for Self-Learning', err);
+//         }
+//         this.showPopup = true;
+//         this.disableDate = true;
+//         this.disableTime = true;
+//       }
+//     });
+//   } 
+//   else if (venue === 'Teams') {
+//     this.EnrolledskillsOffline = [];
+//     this.EnrolledskillsTeams = [];
+//     this.EnrolledskillsLearning = [];
+//     //this.isLoading = true;
+//     this.ielc.GetSkillsByVenue('Teams').subscribe({
+//       next: (res) => {
+//         this.EnrolledskillsTeams = res.map(skill => ({ skillName: skill }));
+//         //this.isLoading = false;
+//         this.skillname = '';
+//         this.availableDates = [];
+//         this.availableTimes = [];
+//         this.showPopup = false;
+//         this.disableDate = true;
+//         this.disableTime = true;
+//       },
+//       error: (err) => {
+//         if (err.status === 404) {
+//         this.EnrolledskillsOffline = [];
+//         this.EnrolledskillsTeams = [];
+//         this.EnrolledskillsLearning = [];
+//         this.skillname = '';
+//         } else {
+//           console.error('Error fetching skills for Teams', err);
+//         }
+//         this.showPopup = false;
+//         this.disableDate = true;
+//         this.disableTime = true;
+//       }
+//     });
+//   } 
+//   else if (venue === 'Offline') {
+//     this.EnrolledskillsOffline = [];
+//     this.EnrolledskillsTeams = [];
+//     this.EnrolledskillsLearning = [];
+//     this.ielc.GetSkillsByVenue('Offline').subscribe({
+//       next: (res) => {
+//         this.EnrolledskillsOffline = res.map(skill => ({ skillName: skill }));
+//         this.skillname = ''; 
+//         this.availableDates = [];
+//         this.availableTimes = [];
+//         this.date = '';
+//         this.time = '';
+//         this.showPopup = false;
+//         this.disableDate = true;
+//         this.disableTime = true;
+//       },
+//       error: (err) => {
+//         if (err.status === 404) {
+//         this.EnrolledskillsOffline = [];
+//         this.EnrolledskillsTeams = [];
+//         this.EnrolledskillsLearning = [];
+//         this.skillname = '';
+//         } else {
+//           console.error('Error fetching skills for Offline', err);
+//         }
+//         this.showPopup = false;
+//         this.date = '';
+//         this.time = '';
+//         this.disableDate = true;
+//         this.disableTime = true;
+//       }
+//     });
+//   }
+// }
 
 onSkillSelected(skill: string) {
   if (!skill) return;
