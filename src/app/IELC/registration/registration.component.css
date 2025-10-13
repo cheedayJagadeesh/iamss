@@ -764,3 +764,13 @@ h2 {
   display: inline-block;
   margin-right: 15px;
 }
+.form-controlone:disabled {
+  background-color: #f2f2f2;
+  color: #999;
+  cursor: not-allowed;
+}
+
+.my-4 {
+    margin-top: 0.5rem !important;
+    margin-bottom: 1.5rem !important;
+}

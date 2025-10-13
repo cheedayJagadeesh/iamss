@@ -1555,10 +1555,11 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
       return this.http.get<any>(`${this.cisoismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-      Updatecisoismsgeneral(id: number, updatedData: any): Observable<any> {
+    Updatecisoismsgeneral(id: number, updatedData: any): Observable<any> {
       const headers = this.getHeaders();
       return this.http.put<any>(`${this.cisoismsgeneralUrl}/${id}`, updatedData,{headers, observe: 'response' });
     }
+
 
     DeletecisoismsgeneralById(id: number): Observable<void> {
       return this.http.delete<void>(`${this.cisoismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
@@ -1579,7 +1580,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
 
     Updatecisoismsguideline(id: number, updatedData: any): Observable<any> {
       const headers = this.getHeaders();
-      return this.http.put<any>(`${this.cisoismsguidelineUrl}/${id}`, updatedData,{headers, observe: 'response' });
+      return this.http.put<any>(`${this.cisoismsguidelineUrl}/${id}`, updatedData,{ headers, observe: 'response' });
     }
 
     DeletecisoismsguidelineById(id: number): Observable<void> {
@@ -1601,7 +1602,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
 
     Updatecisoismspolicy(id: number, updatedData: any): Observable<any> {
       const headers = this.getHeaders();
-      return this.http.put<any>(`${this.cisoismspolicyUrl}/${id}`, updatedData,{headers, observe: 'response' });
+      return this.http.put<any>(`${this.cisoismspolicyUrl}/${id}`, updatedData,{ headers, observe: 'response' });
     }
 
     DeletecisoismspolicyById(id: number): Observable<void> {
@@ -1623,7 +1624,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
 
     Updatecisoismsprocedure(id: number, updatedData: any): Observable<any> {
       const headers = this.getHeaders();
-      return this.http.put<any>(`${this.cisoismsprocedureUrl}/${id}`, updatedData,{headers, observe: 'response' });
+      return this.http.put<any>(`${this.cisoismsprocedureUrl}/${id}`, updatedData,{ headers, observe: 'response' });
     }
 
     DeletecisoismsprocedureById(id: number): Observable<void> {
@@ -1645,7 +1646,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): 
 
     Updatecisoismsformat(id: number, updatedData: any): Observable<any> {
       const headers = this.getHeaders();
-      return this.http.put<any>(`${this.cisoismsformatUrl}/${id}`, updatedData,{headers, observe: 'response' });
+      return this.http.put<any>(`${this.cisoismsformatUrl}/${id}`, updatedData,{ headers, observe: 'response' });
     }
 
     DeletecisoismsformatById(id: number): Observable<void> {
