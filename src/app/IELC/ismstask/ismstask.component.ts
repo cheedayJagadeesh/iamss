@@ -63,7 +63,7 @@ export class IsmstaskComponent implements OnInit  {
     this.ielc.Getismscalendar().subscribe((data) => {
       this.ismscalendarlist = data;
       this.ismscalendarlist = this.sortlist(data)
-      console.log(this.ismscalendarlist);
+      //console.log(this.ismscalendarlist);
       this.isLoading = false;
     });
    }

@@ -725,10 +725,10 @@ GetUserByProjectsListQMS(){
     // console.log("🔍 Selected Project:", this.selectedProject);
   
     if (this.selectedCompliance === 'ISMS') {
-      console.log("📋 Current ISMS Status List:", this.filterprojectisms);
+      //console.log("📋 Current ISMS Status List:", this.filterprojectisms);
   
       this.ielc.GetCurrentMonth(this.selectedProject).subscribe((currentStatuses: string[]) => {
-         console.log("📥 Fetched ISMS status list:", currentStatuses);
+         //console.log("📥 Fetched ISMS status list:", currentStatuses);
 
         const selectedStatusNormalized = this.selectedStatus.trim().toLowerCase();
         const hasComplete = currentStatuses.some(

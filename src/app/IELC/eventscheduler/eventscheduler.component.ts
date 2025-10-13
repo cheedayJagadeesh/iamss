@@ -321,8 +321,8 @@ isSubmitDisabled(): boolean {
 onDateChange() {
   if (this.selectedDate) {
     this.ielc.GetBookedTimes(this.selectedDate).subscribe((bookedtimes: string[]) => {
-      console.log("All Times:", this.Time);
-      console.log("Booked Times from API:", bookedtimes);
+      //console.log("All Times:", this.Time);
+      //console.log("Booked Times from API:", bookedtimes);
 
       if (bookedtimes.length === 0) {
         alert('⚠️ No available times found for the selected date.');
@@ -413,13 +413,13 @@ onSubmit(): void {
     alert('Please complete all fields.');
     return;
   }
-  console.log(this.selectedAuditee)
+  //console.log(this.selectedAuditee)
   if (this.lastAllowedDate) {
     const today = new Date();
     const cutoff = new Date(this.lastAllowedDate);
     today.setHours(0, 0, 0, 0);
     cutoff.setHours(0, 0, 0, 0);
-    console.log("Today:", today, "Last allowed date:", cutoff);
+    //console.log("Today:", today, "Last allowed date:", cutoff);
     if (today > cutoff) {
       alert("Schedule update time is over. You cannot submit after " + this.lastAllowedDate + ".");
       return;
@@ -451,7 +451,7 @@ onSubmit(): void {
             AUDITEES: latestData.auditees,
             AUDITORS: latestData.auditors
           };
-          console.log(updateData)
+          //console.log(updateData)
           this.ielc.UpdateEventScheduleByDepartment(updateData).subscribe({
             next: () => {
               alert('✅ Schedule updated successfully.');

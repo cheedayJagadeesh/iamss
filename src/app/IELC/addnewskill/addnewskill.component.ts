@@ -174,7 +174,7 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
     GetAllSkillvenue(){
     this.ielc.GetSkillnameVenue(this.skillSessionData.skillName, this.skillSessionData.venue).subscribe((data) => {
       this.Enrolledskillvenue=data;
-      console.log("testes",this.Enrolledskillvenue);
+      //console.log("testes",this.Enrolledskillvenue);
     });
    }
 
@@ -191,7 +191,7 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
     this.ielc.GetSkillnameVenue(this.skillSessionData.skillName, this.skillSessionData.venue)
       .subscribe((data) => {
         this.Enrolledskillvenue = data;
-        console.log("testes", this.Enrolledskillvenue);
+        //console.log("testes", this.Enrolledskillvenue);
         if (this.Enrolledskillvenue || this.Enrolledskillvenue > 0) {
           alert('❌ A record with the same SkillName and Venue is already available. Kindly update it with the latest details.');
         }

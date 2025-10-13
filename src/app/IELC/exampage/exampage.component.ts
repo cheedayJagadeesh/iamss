@@ -193,7 +193,7 @@ fakePercent = 0;
         this.examdataList = data;
         this.examdata = data[0];  
         this.timeLeft = this.examdata.examTime * 60; 
-        console.log("Exam list", data);
+        //console.log("Exam list", data);
         console.log("time left", this.timeLeft);
       }
     },

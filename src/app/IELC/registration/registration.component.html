@@ -409,12 +409,28 @@
             
             <div class="mb-3 formdiv">
               <label class="lblskill">Skill Name<span style="color: red;">*</span></label>
-              <select name="skillname" class="form-controlone" required [(ngModel)]="skillname"
+              <!-- <select name="skillname" class="form-controlone" required [(ngModel)]="skillname"
                 (change)="onSkillSelected(skillname); onBatchInputChange()">
                 <option *ngIf="isLoadingSkills" disabled>Loading skills...</option>
                 <option value="" disabled>- select -</option>
                 <option *ngFor="let row of Enrolledskills" [value]="row.skillName">{{ row.skillName }}</option>
+              </select> -->
+              <select name="skillname" class="form-controlone" required [(ngModel)]="skillname"
+                (change)="onSkillSelected(skillname); onBatchInputChange()">
+              
+                <!-- Loading state -->
+                <option *ngIf="isLoadingSkills" disabled>Loading skills...</option>
+              
+                <!-- Default option -->
+                <option value="" disabled selected>- select -</option>
+              
+                <!-- No skills available -->
+                <option *ngIf="!isLoadingSkills && Enrolledskills.length === 0" disabled>No skills available</option>
+              
+                <!-- Skills list -->
+                <option *ngFor="let row of Enrolledskills" [value]="row.skillName">{{ row.skillName }}</option>
               </select>
+
             </div>
 
 
@@ -460,8 +476,8 @@
                   (paste)="validatePastedMobile($event)">
               </div>
               <label class="lblbatch">
-                Batch Members - <a>{{ batchMembersCount }}</a>
-              </label>
+  Batch Members - <a>{{ batchMembersCount }}</a>
+</label>
 
               <!-- <div class="mb-3 ">
                 <label class="lblbatch">Batch Members - <a *ngIf="venue === 'Teams'">{{ batchMembersCount}}</a></label>

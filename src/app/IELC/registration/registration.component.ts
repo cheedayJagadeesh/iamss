@@ -389,7 +389,7 @@ onDateChange() {
     .subscribe(
       (res: string) => {
         this.availableTimes = res ? res.split(',').map(time => time.trim()) : [];
-        console.log('Available times:', this.availableTimes);
+        //console.log('Available times:', this.availableTimes);
       },
       (err) => {
         console.error('❌ Error fetching time slots:', err);
@@ -417,7 +417,7 @@ checkBatchAvailability() {
     next: (count: number) => {
       if (typeof count === 'number') {
         this.batchMembersCount = count + 1;
-            console.log('Batch members count:', this.batchMembersCount)
+            //console.log('Batch members count:', this.batchMembersCount)
         if (this.batchMembersCount >= 150) {
           alert('Batch is full. Please choose another Date/Time slot.');
         }
@@ -456,7 +456,7 @@ GetSessionIDAllDetails(callback: (id: number) => void) {
         sessionId = Number(data);
       }
       this.ID = sessionId;
-      console.log("SessionID:", sessionId);
+      //console.log("SessionID:", sessionId);
       callback(sessionId);
     },
     error: (err) => {
@@ -607,7 +607,7 @@ proceedToEnroll(
     //sessionID: 105,
     sessionID: this.ID,
   };
-  console.log("Enrollment payload:", JSON.stringify(enrollmentData, null, 2));
+  //console.log("Enrollment payload:", JSON.stringify(enrollmentData, null, 2));
   this.ielc.enrollUser(enrollmentData).subscribe({
     next: () => {
       alert('Enrollment successful! A confirmation email will be sent shortly.');
@@ -927,9 +927,9 @@ checkUserExists() {
   this.GetAllUniqueNames().subscribe((usernames: string[]) => {
     this.showButton = !!(this.userName && usernames.includes(this.userName));
     if (this.showButton) {
-      console.log('Your username exists in the list.');
+     // console.log('Your username exists in the list.');
     } else {
-      console.log('Your username is NOT in the list.');
+     // console.log('Your username is NOT in the list.');
     }
   });
 }
@@ -938,9 +938,9 @@ checkCoOwnerUserExists() {
   this.GetCOwnersAllUniqueNames().subscribe((usernames: string[]) => {
     this.coownersshowButton = !!(this.userName && usernames.includes(this.userName));
     if (this.coownersshowButton) {
-      console.log('Your username exists in the list.');
+      //console.log('Your username exists in the list.');
     } else {
-      console.log('Your username is NOT in the list.');
+      //console.log('Your username is NOT in the list.');
     }
   });
 }
@@ -1262,7 +1262,7 @@ this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, this.date)
       this.availableTimes = res
         ? res.split(',').map(time => time.trim())
         : [];
-      console.log('Available times:', this.availableTimes);
+      //console.log('Available times:', this.availableTimes);
       this.disableTime = false;
     },
     (err) => {

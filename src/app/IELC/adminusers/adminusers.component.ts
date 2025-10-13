@@ -617,7 +617,7 @@ onYearChange(): void {
 GetCoOnwers() {
   this.ielc.GetCoOwners().subscribe((data) => {
     this.coownerss = this.sortlist(data);
-    console.log(this.coownerss); // Should show IDs
+    //console.log(this.coownerss); // Should show IDs
     this.isLoading = false;
   });
 }
@@ -675,7 +675,7 @@ EditCoOwners(id: number) {
         auditees: data.auditees || '',
        superOwners:data.superOwners || ''
       };
-      console.log("API Response:", data);
+      //console.log("API Response:", data);
     } else {
        console.warn("No data received for the given ID.");
     }
@@ -6195,14 +6195,14 @@ resetCourse(){
 GetEventAlertsist() {
   this.isLoading = true;
   this.ielc.Geteventalerts().subscribe((data) => {
-    console.log("Raw API data:", data); // 👈 Check here
+    //console.log("Raw API data:", data); // 👈 Check here
 
     this.eventalertslist = data.map((item: any) => ({
       ...item,
       isPaused: item.status?.trim().toLowerCase() === 'inactive'
     }));
 
-    console.log("Processed items:", this.eventalertslist);
+    //console.log("Processed items:", this.eventalertslist);
 
     this.isLoading = false; // 👈 set false only after mapping is done
   },
@@ -6268,7 +6268,7 @@ togglePlayPause(item: any): void {
   item.isPaused = !item.isPaused;
   item.status = item.isPaused ? 'InActive' : 'Active'; // Match DB casing
 
-  console.log('Toggling status to:', item.status);
+  //console.log('Toggling status to:', item.status);
 
   const payload = {
     AlertID: item.alertID,
@@ -6277,7 +6277,7 @@ togglePlayPause(item: any): void {
 
   this.ielc.UpdateEventAlertStatus(payload).subscribe({
     next: () => {
-      console.log('✅ Status updated in DB');
+      //console.log('✅ Status updated in DB');
     },
     error: (err) => {
       console.error('❌ API failed:', err);

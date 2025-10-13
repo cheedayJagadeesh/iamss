@@ -770,3 +770,7 @@ h2 {
   cursor: not-allowed;
 }
 
+.my-4 {
+    margin-top: 0.5rem !important;
+    margin-bottom: 1.5rem !important;
+}
