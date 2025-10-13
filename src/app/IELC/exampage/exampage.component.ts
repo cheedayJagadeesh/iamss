@@ -124,7 +124,6 @@ export class ExampageComponent implements OnInit, OnDestroy  {
    enrollmentID: number | null = null;
    sessionID: number | null = null;
    examdataList: exam[] = [];
-   //sessionID!: number;
 
 
 loadingProgress: number = 0;
@@ -187,6 +186,7 @@ fakePercent = 0;
   }
 
   GetExamlist() {
+    debugger;
   this.ielc.GetSessionById(this.sessionID).subscribe(
     (data: exam[]) => {
       if (data && data.length > 0) {
@@ -194,7 +194,7 @@ fakePercent = 0;
         this.examdata = data[0];  
         this.timeLeft = this.examdata.examTime * 60; 
         //console.log("Exam list", data);
-        console.log("time left", this.timeLeft);
+        //console.log("time left", this.timeLeft);
       }
     },
     (error) => {

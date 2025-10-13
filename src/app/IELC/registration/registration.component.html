@@ -285,7 +285,7 @@
                       <ng-container
                         *ngIf="!item.result || item.percentage === null || !item.testTakenDate; else showResult">
                         <a routerLink="/exampage" class="btn btn-link"
-                          (click)="setSelectedSkill(item.skillName, item.enrollmentID)">
+                          (click)="setSelectedSkill(item.skillName, item.enrollmentID, item.sessionID)">
                           StartTest
                         </a>
                       </ng-container>
@@ -299,7 +299,7 @@
                       <ng-template #pendingTest>
                         <span>Pending - </span>
                         <a routerLink="/exampage" class="btn btn-link"
-                          (click)="setSelectedSkill(item.skillName, item.enrollmentID)">
+                          (click)="setSelectedSkill(item.skillName, item.enrollmentID, item.sessionID)">
                           StartTest
                         </a>
                       </ng-template>

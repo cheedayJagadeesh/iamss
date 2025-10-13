@@ -752,8 +752,8 @@ isTestPassed(item: any): boolean {
 
 
 selectedSkill: string = '';
-setSelectedSkill(skillName: string, enrollmentID: number) {
-  this.router.navigate(['/exampage'], { queryParams: { skill: skillName, enrollment: enrollmentID } });
+setSelectedSkill(skillName: string, enrollmentID: number, sessionID: number) {
+  this.router.navigate(['/exampage'], { queryParams: { skill: skillName, enrollment: enrollmentID, session: sessionID } });
 }
 
 setSelectedSkillandId(skillName: string, enrollmentID: number) {
