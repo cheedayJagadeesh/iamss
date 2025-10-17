@@ -89,6 +89,7 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AuthcallbackComponent } from './IELC/authcallback/authcallback.component';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { EventschedulerComponent } from './IELC/eventscheduler/eventscheduler.component';
+import { LeftmenuComponent } from './leftmenu/leftmenu.component';
 
 
 
@@ -265,6 +266,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     SprtheaderComponent,
     AuthcallbackComponent,
     EventschedulerComponent,
+    LeftmenuComponent,
   ],
   imports: [
     BrowserModule,

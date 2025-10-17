@@ -1,4 +1,6 @@
-<app-header></app-header>
+ <app-leftmenu (sidebarToggled)="onSidebarToggled($event)"></app-leftmenu>
+ <div class="content-wrapper" [class.sidebar-collapsed]="isSidebarClosed">
+  <div class="main-container">
   <form class="row g-3">
     <!-- <div>
         <label class="lbllogin">Login as <strong>{{ userName }}</strong> </label>
@@ -134,3 +136,5 @@ Please feel free to correspond to us through the following contact information:
     Telefax: 91-40-27765332<br />
     Website:  <a type="button" class="btn btn-link" href="https://www.inteqsolutions.com" target="_blank" rel="noopener noreferrer">www.inteqsolutions.com</a>
   </form>
+  </div>
+  </div>
