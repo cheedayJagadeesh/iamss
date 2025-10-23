@@ -762,7 +762,7 @@ h2 {
 }
 .form-check {
   display: inline-block;
-  margin-right: 15px;
+  margin-right: 50px;
 }
 .form-controlone:disabled {
   background-color: #f2f2f2;
