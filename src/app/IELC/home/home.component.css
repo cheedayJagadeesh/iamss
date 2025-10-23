@@ -234,6 +234,7 @@
       visibility: hidden;
     }
   }
+  /* LeftMenuBar adjustment */
 .content-wrapper {
   margin-left: 100px;
   transition: margin-left 0.3s ease;

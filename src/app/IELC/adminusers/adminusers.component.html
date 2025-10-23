@@ -1,4 +1,6 @@
-<app-header></app-header>
+<app-leftmenu (sidebarToggled)="onSidebarToggled($event)"></app-leftmenu>
+ <div class="content-wrapper" [class.sidebar-collapsed]="isSidebarClosed">
+  <div class="main-container">
 <form class="row g-3" #form="ngForm">
     <div class="mt-5">
         <div class="d-flex justify-content-center">

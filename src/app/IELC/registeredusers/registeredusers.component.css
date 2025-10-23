@@ -19,6 +19,8 @@ padding-left: 49px;
  } 
  .tablebottom {
     margin-top: 1%;
+   width: 88%;
+    margin-left: 11%;
 }
 .pagination {
     margin-left: 72%;
@@ -52,3 +54,26 @@ th {
   
   .dot:nth-child(2) { animation-delay: 0.2s; }
   .dot:nth-child(3) { animation-delay: 0.4s; }
+.container{
+  max-width: 1000px;
+  margin-top: 3%;
+  margin-left: 19%;
+}
+.content-wrapper {
+  margin-left: 100px;
+  transition: margin-left 0.3s ease;
+  padding: 20px;
+}
+
+.content-wrapper.sidebar-collapsed {
+  margin-left: -60px;
+}
+
+.sidebar {
+  width: 250px;
+  transition: width 0.3s ease;
+}
+
+.sidebar.collapsed {
+  width: 60px;
+}

@@ -140,6 +140,14 @@ interface eventalertsinfo{
   styleUrls: ['./adminusers.component.css']
 })
 export class AdminusersComponent {
+ // Track sidebar state
+  isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
+
 isLoading=true;
   encodePassword (password: string): string {
     return btoa(password);

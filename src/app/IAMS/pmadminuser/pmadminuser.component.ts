@@ -7,6 +7,14 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./pmadminuser.component.css']
 })
 export class PmadminuserComponent {
+
+  // Track sidebar state
+  isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
     selectedDate:string=''
     searchname=''
     searchid=''

@@ -1,13 +1,14 @@
 <form class="row g-3" #form="ngForm">
-  <app-header></app-header>
+<app-leftmenu (sidebarToggled)="onSidebarToggled($event)"></app-leftmenu>
    <!-- <img class="img" src="/assets/images/Inteq logo.png"> -->
     <!-- <div>
         <button class="btn btn-dark btnback" routerLink="/skillqa">Back</button>
     </div> -->
+    <div class="content-wrapper" [class.sidebar-collapsed]="isSidebarClosed">
     <div *ngIf="isLoading" class="loading-container">
         <span class="dot"></span>
     </div>
-  <div class="container mt-2">
+  <div class="container mt-4">
     <div class="d-flex justify-content-center">
       <div class="col-md-8 col-lg-6">
         <div class="p-3 border rounded bg-light shadow-sm">
@@ -95,5 +96,6 @@
     <div class="pagination">
       <pagination-controls (pageChange)="page = $event"></pagination-controls>
     </div>
+  </div>
   </div>
 </form>

@@ -24,6 +24,13 @@ interface calendar {
   styleUrls: ['./qmstask.component.css']
 })
 export class QmstaskComponent implements OnInit {
+   // Track sidebar state
+  isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
   isLoading = true;
   qmscalendarlist: any[] = []; 
   page: number = 1;  

@@ -16,7 +16,13 @@ import { start } from '@popperjs/core';
 
 
 export class AttendanceComponent  {
+// Track sidebar state
+  isSidebarClosed = false;
 
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
   @ViewChild('attendanceform') attendanceform!: NgForm;
   // currentDate:Date=new Date()
   selectedDate:string=''

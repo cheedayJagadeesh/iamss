@@ -23,7 +23,13 @@ interface qmsmailsinfo{
   styleUrls: ['./soc2mails.component.css']
 })
 export class Soc2mailsComponent {
+// Track sidebar state
+  isSidebarClosed = false;
 
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
   qmsmailsdata:qmsmailsinfo={
     id: 0,
     department: '',

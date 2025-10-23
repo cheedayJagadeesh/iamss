@@ -1,13 +1,14 @@
-<app-header></app-header>
+<app-leftmenu (sidebarToggled)="onSidebarToggled($event)"></app-leftmenu>
 <!-- <div>
   <label class="lbllogin"></label>
 </div> -->
+<div class="content-wrapper" [class.sidebar-collapsed]="isSidebarClosed">
  <div *ngIf="isLoading" class="loading-container">
         <span class="dot"></span>
     </div>
 <form class="row" #searchform="ngForm" (ngSubmit)="searchSkills()">
   <div class="d-flex justify-content-center bg-light pt-5">
-    <div class="container p-4 rounded shadow-sm bg-light border border-secondary mb-4" style="max-width: 1000px;">
+    <div class="container p-2 rounded shadow-sm bg-light border border-secondary mb-4">
       <div class="row g-3">
         <!-- Skill Name -->
         <div class="col-md-4 col-sm-6">
@@ -110,3 +111,4 @@
     </div>
   </div>
 </form>
+</div>

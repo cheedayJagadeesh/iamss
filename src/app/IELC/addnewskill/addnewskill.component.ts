@@ -41,6 +41,13 @@ interface addskill {
 })
 
 export class AddnewskillComponent implements OnInit,AfterViewInit {
+   // Track sidebar state
+  isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
   isLoading=true;
   Enrolledusers: any[] = []; 
   Enrolledskills: any[]=[];

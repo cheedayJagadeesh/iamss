@@ -1,9 +1,10 @@
-<app-header></app-header>
+<app-leftmenu (sidebarToggled)="onSidebarToggled($event)"></app-leftmenu>
+ <div class="content-wrapper" [class.sidebar-collapsed]="isSidebarClosed">
 <form class="row g-3" #addskillsform="ngForm" novalidate >
  
  <!-- Wrapper to center horizontally and keep content at the top -->
 <div class="d-flex justify-content-center bg-light pt-5">
-  <div class="container" style="max-width: 600px;">
+  <div class="container">
     <div  class="container p-4 rounded shadow-sm bg-light border border-secondary">
     <!-- Form Row -->
       <div class="row justify-content-center align-items-center gx-2 gy-2 mb-3">
@@ -277,3 +278,7 @@
         </div>
     </div>
 </form>
+</div>
+
+  
+

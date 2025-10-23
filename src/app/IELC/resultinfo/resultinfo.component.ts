@@ -39,6 +39,13 @@ interface Enrollment {
   styleUrls: ['./resultinfo.component.css']
 })
 export class ResultinfoComponent implements OnInit  {
+   // Track sidebar state
+  isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
   Enrollmentlist: any[] = []; 
   Enrolledskills: any[] = []; 
   skillname='';
