@@ -219,12 +219,24 @@ userEmail: string | null = null;
 firstName: string = '';
 middleName: string = '';
 lastName: string = '';
+//selectedValue: string = 'Offline';
 async ngOnInit() {
   this.skillname = '';
   this.date = '';
   this.time = '';
   this.availableDates = [];
   this.availableTimes = [];
+  // const savedMode = localStorage.getItem('selectedMode');
+  // this.selectedValue = savedMode ? savedMode : 'Offline';
+  // debugger;
+  //   if (!this.venue) {
+  //   this.venue = 'Offline';
+  //   // this.ielc.GetSkillsByVenue(this.selectedValue).subscribe((data: any[]) => {
+  //   //   this.venueList = data;
+  //   // });
+  //   this.onModeOfTrainingChange({ target: { value: this.venue } } as any);
+  //   }
+
     try {
     await this.msalService.instance.initialize();
     await this.msalService.instance.handleRedirectPromise();
@@ -399,7 +411,7 @@ onDateChange() {
 }
 batchMembersCount: number = 0;
 onBatchInputChange() {
-  debugger;
+  //debugger;
   if (this.skillname && this.date && this.time) {
     this.checkBatchAvailability();
   } else {
@@ -1088,6 +1100,9 @@ onSelect2Change() {
   this.availableDates = [];
   this.availableTimes = [];
 
+  // this.selectedValue = event.target.value;
+  // localStorage.setItem('selectedMode', this.selectedValue);
+
   // Common UI flags
   this.showPopup = venue === 'Self-Learning';
   this.disableDate = true;
@@ -1097,16 +1112,17 @@ onSelect2Change() {
   this.ielc.GetSkillsByVenue(venue).subscribe({
     next: (res) => {
       const skills = res.map((skill: any) => ({ skillName: skill }));
-
-      if (venue === 'Self-Learning') this.EnrolledskillsLearning = skills;
+      //debugger;
+      if (venue === 'Offline') this.EnrolledskillsOffline = skills;
       else if (venue === 'Teams') this.EnrolledskillsTeams = skills;
-      else if (venue === 'Offline') this.EnrolledskillsOffline = skills;
+      else if (venue === 'Self-Learning') this.EnrolledskillsLearning = skills;
 
       // ✅ Bind active list to dropdown
       this.Enrolledskills = skills;
 
       this.skillname = '';
       this.isLoadingSkills = false;
+      //console.log(`Skills for ${venue}:`, skills);
     },
     error: (err) => {
       console.error(`Error fetching skills for ${venue}`, err);
