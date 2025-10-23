@@ -2143,12 +2143,32 @@ Updateexaminfo(id: number, updatedData: any): Observable<any> {
 } 
 //=================================================================================skillQA
 skillqaurl='https://ielc-coreapi.azurewebsites.net/IELCQA';
-Getskillqa(): Observable<any> {
+//skillqaurl='http://localhost:5024/IELCQA';
+
+Getskillqa(skillName: string): Observable<any> {
+  return this.http.get<any>(
+    `${this.skillqaurl}/questions?skillName=${encodeURIComponent(skillName)}`,
+    { headers: this.getHeaders() }
+  );
+}
+Getskillqas(): Observable<any> {
   return this.http.get<any>(this.skillqaurl, { headers: this.getHeaders() });
 }   
-// Postskillqa(data: any): Observable<any> {
-//   return this.http.post<any>(this.skillqaurl, data);
+
+// GetskillqaAnswer(id: number, answer : string): Observable<any> {
+//   return this.http.get<any>(
+//     `${this.skillqaurl}/SubmitAnswer/${id}/${answer}`,
+//     { headers: this.getHeaders() }
+//   );
 // }
+
+GetskillqaAnswer(questionId: number, answer: string): Observable<any> {
+  return this.http.get<any>(
+    `${this.skillqaurl}/SubmitAnswer?questionId=${questionId}&answer=${encodeURIComponent(answer)}`,
+    { headers: this.getHeaders() }
+  );
+}
+
 Postskillqa(data: any): Observable<any> {
   const headers = new HttpHeaders({ 'Content-Type': 'application/json',
     'Authorization': this.apiKey

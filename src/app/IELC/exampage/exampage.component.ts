@@ -186,7 +186,7 @@ fakePercent = 0;
   }
 
   GetExamlist() {
-    debugger;
+    //debugger;
   this.ielc.GetSessionById(this.sessionID).subscribe(
     (data: exam[]) => {
       if (data && data.length > 0) {
@@ -233,9 +233,9 @@ fakePercent = 0;
     this.isLoading = true;
     this.progressValue = 0;
     this.simulateLoading(); 
-
-    this.ielc.Getskillqa().subscribe((data: Question[]) => {
-  
+    //debugger;
+    this.ielc.Getskillqa(this.selectedSkill).subscribe((data: Question[]) => {
+    //console.log("all ques", data);
       this.examlist = data;
    
       const standardSkillKey = this.selectedSkill + '_StQuestions';
@@ -261,7 +261,7 @@ fakePercent = 0;
 
       const combined = [...standardQuestions, ...shuffledSkillQuestions];
       this.questions = this.shuffleArray(combined); 
-
+      //console.log("all ques", this.questions);
      
       // Final setup
       this.currentQuestionIndex = 0;
@@ -506,32 +506,62 @@ get availableOptions(): string[] {
     return `${minutes} Minute${minutes !== 1 ? 's' : ''} ${seconds} Second${seconds !== 1 ? 's' : ''}`;
   }
 
-  get currentQuestion() {
+  // get currentQuestion() {
+  //   return this.questions[this.currentQuestionIndex];
+  // }
+
+  // nextQuestion() {
+  //   debugger;
+  //   if (this.selectedAnswer) {
+  //     const correctAnswer = this.currentQuestion.questionAnswer;
+  
+  //     // ✅ Track correct answers
+  //     if (this.selectedAnswer.toUpperCase() === correctAnswer.toUpperCase()) {
+  //       this.correctAnswersCount++;
+  //     }
+  
+  //     this.selectedAnswer = null; // Reset for next question
+  
+  //     if (this.currentQuestionIndex < this.questions.length - 1) {
+  //       this.currentQuestionIndex++;
+  //     }
+  //     else {
+  //       // Last question, submit the exam
+  //       this.submitExam();
+  //     }
+  //   } else {
+  //     alert("⚠️ Please select an answer before proceeding.");
+  //   }
+  // }
+
+    get currentQuestion() {
     return this.questions[this.currentQuestionIndex];
   }
 
-  nextQuestion() {
-    if (this.selectedAnswer) {
-      const correctAnswer = this.currentQuestion.questionAnswer;
-  
-      // ✅ Track correct answers
-      if (this.selectedAnswer.toUpperCase() === correctAnswer.toUpperCase()) {
+nextQuestion() {
+  debugger;
+  if (this.selectedAnswer) {
+    const questionid = this.currentQuestion.questionId;
+
+    // ✅ Check answer from backend
+    this.ielc.GetskillqaAnswer(questionid, this.selectedAnswer).subscribe((data: any) => {
+      if (data === 1) {  // backend returns 1 if correct
         this.correctAnswersCount++;
       }
-  
+
       this.selectedAnswer = null; // Reset for next question
-  
+
       if (this.currentQuestionIndex < this.questions.length - 1) {
         this.currentQuestionIndex++;
-      }
-      else {
+      } else {
         // Last question, submit the exam
         this.submitExam();
       }
-    } else {
-      alert("⚠️ Please select an answer before proceeding.");
-    }
+    });
+  } else {
+    alert("⚠️ Please select an answer before proceeding.");
   }
+}
   
   goBack() {
     if (confirm("Are you sure you want to exit the exam? Your progress will not be saved.")) {

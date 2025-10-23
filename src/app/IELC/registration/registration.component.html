@@ -354,22 +354,24 @@
                   Mode of Training<span style="color: red;">*</span>
                 </label>
                 <br><br>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" id="modeSelfLearning" name="modeOfTraining"
-                    value="Self-Learning" [(ngModel)]="selectedValue" (change)="onModeOfTrainingChange($event)"
-                    required />
-                  <label class="form-check-label" for="modeSelfLearning">Self-Learning</label>
-                </div>
+
                 <div class="form-check">
                   <input class="form-check-input" type="radio" id="modeOffline" name="modeOfTraining" value="Offline"
-                    [(ngModel)]="selectedValue" (change)="onModeOfTrainingChange($event)" required />
-                  <label class="form-check-label" for="modeOffline">Offline</label>
+                  [(ngModel)]="selectedValue" (change)="onModeOfTrainingChange($event)" required />
+                 <label class="form-check-label" for="modeOffline">Offline</label>
                 </div>
 
                 <div class="form-check">
                   <input class="form-check-input" type="radio" id="modeTeams" name="modeOfTraining" value="Teams"
                     [(ngModel)]="selectedValue" (change)="onModeOfTrainingChange($event)" required />
                   <label class="form-check-label" for="modeTeams">Teams</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="modeSelfLearning" name="modeOfTraining"
+                    value="Self-Learning" [(ngModel)]="selectedValue" (change)="onModeOfTrainingChange($event)"
+                    required />
+                  <label class="form-check-label" for="modeSelfLearning">Self-Learning</label>
                 </div>
               </div>
             </div>
