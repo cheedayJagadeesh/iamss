@@ -211,16 +211,41 @@
   justify-content: center;
   padding: 10px 0;
 }
-.sidebar.collapsed i {
+/* .sidebar.collapsed i {
   margin: 0 auto;   /* center icons horizontally */
-  display: block;
-}
+  /* display: block;
+} */ 
 .sidebar.collapsed a span,
 .sidebar.collapsed .dropdown-toggle span,
 .sidebar.collapsed .arrow {
   display: none;  /* already there, just make sure */
 }
 
+/* Collapsed sidebar: align icons vertically & horizontally */
+.sidebar.collapsed a,
+.sidebar.collapsed .dropdown-toggle {
+  justify-content: center;   /* center icons horizontally */
+  align-items: center;       /* center icons vertically */
+  padding: 0;                /* remove leftover padding */
+  height: 50px;              /* uniform height for all items */
+  text-align: center;
+  gap: 0;                    /* remove spacing between icon & text */
+}
+
+/* Icons inside collapsed sidebar */
+.sidebar.collapsed i {
+  display: block;
+  margin: 0 auto;            /* center horizontally */
+  font-size: 20px;           /* optional: adjust icon size */
+  width: auto;               /* remove fixed width to prevent misalignment */
+}
+
+/* Hide text & arrows in collapsed state */
+.sidebar.collapsed a span,
+.sidebar.collapsed .dropdown-toggle span,
+.sidebar.collapsed .arrow {
+  display: none;
+}
 
 
 
@@ -279,4 +304,33 @@
   z-index: 1002;
   transform: translateY(-50%);
   transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.submenu a,
+.dropdown-content a {
+  display: block;
+  padding: 8px 20px;
+  color: white;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.submenu a:hover,
+.dropdown-content a:hover {
+  background: #2a4b68;
+}
+
+.dropdown-content a.active-submenu {
+  background: #2a4b68;
+  font-weight: bold;
+  border-left: -4px solid #fff;
+}
+.dropdown-content a.active-submenu,
+.floating-dropdown a.active-submenu {
+ background: #2a4b68;
+  font-weight: bold;
+  border-left: -4px solid #fff;
+}
+.floating-dropdown,
+.floating-label {
+  left: 51px; 
 }
