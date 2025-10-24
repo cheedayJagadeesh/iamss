@@ -269,14 +269,14 @@ label {
     position: absolute;
 }
 .container-info {
-    border-style: solid;
+   border-style: solid;
     border-color: inherit;
     border-width: 1px;
-    margin-top: 1%;
-    width: 592px;
+    margin-top: -25%;
+    width: 574px;
     border-radius: 5px;
     height: 335px;
-    margin-left: 0.5%;
+    margin-left: 64.5%;
 }
 .drpmnth {
     position: relative;

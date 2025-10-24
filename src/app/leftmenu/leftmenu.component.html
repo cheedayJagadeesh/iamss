@@ -1,13 +1,11 @@
 <!-- Sidebar -->
 <div class="sidebar" [class.collapsed]="isSidebarClosed">
   <img src="\assets\images\inteqlogos.png" alt="logo" />
-
   <!-- Home -->
   <a *ngIf="canAccess('home')" routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
-    title="Home">
+    (mouseenter)="showFloatingLabel($event, 'Home')" (mouseleave)="hideFloatingLabel()">
     <i>🏠</i><span>Home</span>
   </a>
-
   <!-- Registered User -->
   <div class="dropdown" *ngIf="canAccess('registered')" [class.open]="activeDropdown === 'registered'" #dropdownToggle
     (mouseenter)="onMouseEnter('registered', $event)" (mouseleave)="onMouseLeave()">
@@ -27,87 +25,61 @@
       <a routerLink="/registered" routerLinkActive="active">Registered User</a>
       <a routerLink="/resultinfo" routerLinkActive="active">Result Info</a>
     </div>
+  </div>
+  <!-- Add New Skill -->
+  <a *ngIf="canAccess('addskill')" routerLink="/addskill" routerLinkActive="active"
+    (mouseenter)="showFloatingLabel($event, 'Add New Skill')" (mouseleave)="hideFloatingLabel()">
+    <i>➕</i><span>Add New Skill</span>
+  </a>
 
+  <!-- Skill QA -->
+  <a *ngIf="canAccess('skillqa')" routerLink="/skillqa" routerLinkActive="active"
+    (mouseenter)="showFloatingLabel($event, 'Skill QA')" (mouseleave)="hideFloatingLabel()">
+    <i>❓</i><span>Skill QA</span>
+  </a>
 
-    <!-- Add New Skill -->
-    <a *ngIf="canAccess('addskill')" routerLink="/addskill" routerLinkActive="active" title="Add New Skill">
-      <i>➕</i><span>Add New Skill</span>
-    </a>
+  <!-- Compliance -->
+  <div class="dropdown" *ngIf="canAccess('ismstask') || canAccess('qmstask') || canAccess('soc2task')"
+    [class.open]="activeDropdown === 'compliance'" (mouseenter)="showFloatingDropdown($event, 'compliance')"
+    (mouseleave)="hideFloatingDropdown()">
 
-    <!-- Skill QA -->
-    <a *ngIf="canAccess('skillqa')" routerLink="/skillqa" routerLinkActive="active" title="Skill QA">
-      <i>❓</i><span>Skill QA</span>
-    </a>
+    <div class="dropdown-toggle" (click)="toggleDropdown('compliance')">
+      <i>📋</i><span>Compliance</span>
+      <span class="arrow">{{ activeDropdown === 'compliance' ? '▲' : '▼' }}</span>
+    </div>
 
-    <!-- Compliance -->
-    <div class="dropdown" *ngIf="canAccess('ismstask') || canAccess('qmstask') || canAccess('soc2task')"
-      [class.open]="activeDropdown === 'compliance'" (mouseenter)="showFloatingDropdown($event, 'compliance')"
-      (mouseleave)="hideFloatingDropdown()">
-
-      <div class="dropdown-toggle" (click)="toggleDropdown('compliance')">
-        <i>📋</i><span>Compliance</span>
-        <span class="arrow">{{ activeDropdown === 'compliance' ? '▲' : '▼' }}</span>
-      </div>
-
-      <!-- Expanded view (when sidebar is open) -->
-      <div class="dropdown-content" *ngIf="activeDropdown === 'compliance' && !isSidebarClosed">
-        <!-- ISMS -->
-        <div class="dropdown" [class.open]="isOpen['isms']">
-          <div class="dropdown-toggle" (click)="toggleSubDropdown('isms')">
-            ISMS Task <span class="arrow">{{ isOpen['isms'] ? '▲' : '▼' }}</span>
-          </div>
-          <div class="dropdown-content" *ngIf="isOpen['isms']">
-            <a routerLink="/ismstask">ISMS Calendar</a>
-            <a routerLink="/ismshistory">ISMS History</a>
-            <a routerLink="/ismsmails">ISMS Mails</a>
-          </div>
+    <!-- Expanded view (when sidebar is open) -->
+    <div class="dropdown-content" *ngIf="activeDropdown === 'compliance' && !isSidebarClosed">
+      <!-- ISMS -->
+      <div class="dropdown" [class.open]="isOpen['isms']">
+        <div class="dropdown-toggle" (click)="toggleSubDropdown('isms')">
+          ISMS Task <span class="arrow">{{ isOpen['isms'] ? '▲' : '▼' }}</span>
         </div>
-
-        <!-- QMS -->
-        <div class="dropdown" [class.open]="isOpen['qms']">
-          <div class="dropdown-toggle" (click)="toggleSubDropdown('qms')">
-            QMS Task <span class="arrow">{{ isOpen['qms'] ? '▲' : '▼' }}</span>
-          </div>
-          <div class="dropdown-content" *ngIf="isOpen['qms']">
-            <a routerLink="/qmstask">QMS Calendar</a>
-            <a routerLink="/qmshistory">QMS History</a>
-            <a routerLink="/qmsmails">QMS Mails</a>
-          </div>
-        </div>
-
-        <!-- SOC2 -->
-        <div class="dropdown" [class.open]="isOpen['soc2']">
-          <div class="dropdown-toggle" (click)="toggleSubDropdown('soc2')">
-            SOC2 Task <span class="arrow">{{ isOpen['soc2'] ? '▲' : '▼' }}</span>
-          </div>
-          <div class="dropdown-content" *ngIf="isOpen['soc2']">
-            <a routerLink="/soc2task">SOC2 Calendar</a>
-            <a routerLink="/soc2history">SOC2 History</a>
-            <a routerLink="/soc2mails">SOC2 Mails</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Floating submenu for collapsed sidebar -->
-      <div class="floating-dropdown" *ngIf="hoveredDropdown === 'compliance' && isSidebarClosed"
-        [style.top.px]="floatingTop">
-
-        <div class="dropdown-group">
-          <strong>ISMS Task</strong>
+        <div class="dropdown-content" *ngIf="isOpen['isms']">
           <a routerLink="/ismstask">ISMS Calendar</a>
           <a routerLink="/ismshistory">ISMS History</a>
           <a routerLink="/ismsmails">ISMS Mails</a>
         </div>
+      </div>
 
-        <div class="dropdown-group">
-          <strong>QMS Task</strong>
+      <!-- QMS -->
+      <div class="dropdown" [class.open]="isOpen['qms']">
+        <div class="dropdown-toggle" (click)="toggleSubDropdown('qms')">
+          QMS Task <span class="arrow">{{ isOpen['qms'] ? '▲' : '▼' }}</span>
+        </div>
+        <div class="dropdown-content" *ngIf="isOpen['qms']">
           <a routerLink="/qmstask">QMS Calendar</a>
           <a routerLink="/qmshistory">QMS History</a>
           <a routerLink="/qmsmails">QMS Mails</a>
         </div>
+      </div>
 
-        <div class="dropdown-group">
-          <strong>SOC2 Task</strong>
+      <!-- SOC2 -->
+      <div class="dropdown" [class.open]="isOpen['soc2']">
+        <div class="dropdown-toggle" (click)="toggleSubDropdown('soc2')">
+          SOC2 Task <span class="arrow">{{ isOpen['soc2'] ? '▲' : '▼' }}</span>
+        </div>
+        <div class="dropdown-content" *ngIf="isOpen['soc2']">
           <a routerLink="/soc2task">SOC2 Calendar</a>
           <a routerLink="/soc2history">SOC2 History</a>
           <a routerLink="/soc2mails">SOC2 Mails</a>
@@ -115,50 +87,118 @@
       </div>
     </div>
 
+    <!-- Floating submenu for collapsed sidebar -->
+    <div class="floating-dropdown" *ngIf="hoveredDropdown === 'compliance' && isSidebarClosed"
+      [style.top.px]="floatingTop">
 
-    <!-- Departments -->
-    <div class="dropdown" *ngIf="canAccess('admindept') || canAccess('hrdept') || canAccess('itdept')"
-      (mouseenter)="showFloatingDropdown($event, 'departments')" (mouseleave)="hideFloatingDropdown()">
-
-      <div class="dropdown-toggle" (click)="toggleDropdown('departments')">
-        <i>🏢</i><span>All Depts</span>
-        <span class="arrow">{{ activeDropdown === 'departments' ? '▲' : '▼' }}</span>
+      <div class="dropdown-group">
+        <strong>ISMS Task</strong>
+        <a routerLink="/ismstask">ISMS Calendar</a>
+        <a routerLink="/ismshistory">ISMS History</a>
+        <a routerLink="/ismsmails">ISMS Mails</a>
       </div>
 
-      <!-- Normal dropdown when sidebar is expanded -->
-      <div class="dropdown-content" *ngIf="activeDropdown === 'departments' && !isSidebarClosed">
-        <a *ngIf="canAccess('admindept')" routerLink="/admindept">Admin Dept</a>
-        <a *ngIf="canAccess('hrdept')" routerLink="/hrdept">HR Dept</a>
-        <a *ngIf="canAccess('itdept')" routerLink="/itdept">IT Dept</a>
+      <div class="dropdown-group">
+        <strong>QMS Task</strong>
+        <a routerLink="/qmstask">QMS Calendar</a>
+        <a routerLink="/qmshistory">QMS History</a>
+        <a routerLink="/qmsmails">QMS Mails</a>
       </div>
 
-      <!-- Floating dropdown when sidebar is collapsed -->
-      <div class="floating-dropdown" *ngIf="hoveredDropdown === 'departments' && isSidebarClosed"
-        [style.top.px]="floatingTop">
-        <a *ngIf="canAccess('admindept')" routerLink="/admindept">Admin Dept</a>
-        <a *ngIf="canAccess('hrdept')" routerLink="/hrdept">HR Dept</a>
-        <a *ngIf="canAccess('itdept')" routerLink="/itdept">IT Dept</a>
+      <div class="dropdown-group">
+        <strong>SOC2 Task</strong>
+        <a routerLink="/soc2task">SOC2 Calendar</a>
+        <a routerLink="/soc2history">SOC2 History</a>
+        <a routerLink="/soc2mails">SOC2 Mails</a>
       </div>
     </div>
-
-
-    <!-- Others -->
-    <a *ngIf="canAccess('adminusers')" routerLink="/adminusers" routerLinkActive="active"><i>👤</i><span>Admin
-        Users</span></a>
-    <a *ngIf="canAccess('attendance')" routerLink="/attendance"
-      routerLinkActive="active"><i>🕒</i><span>Attendance</span></a>
-    <a *ngIf="canAccess('registration')" routerLink="/registration"
-      routerLinkActive="active"><i>📝</i><span>Registration</span></a>
-    <a (click)="logout()" title="Logout"><i>🚪</i><span>Logout</span></a>
   </div>
-  <!-- Header -->
-  <div class="header" [class.collapsed]="isSidebarClosed">
-    <h1>
-      <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
-      Welcome to Inteq Admin Dashboard
-    </h1>
-    <app-sprtheader></app-sprtheader>
-    <div class="profile">
-      <img src="\assets\images\userlogo.png" alt="User" />
+
+
+  <!-- Departments -->
+  <div class="dropdown" *ngIf="canAccess('admindept') || canAccess('hrdept') || canAccess('itdept')"
+    (mouseenter)="showFloatingDropdown($event, 'departments')" (mouseleave)="hideFloatingDropdown()">
+
+    <div class="dropdown-toggle" (click)="toggleDropdown('departments')">
+      <i>🏢</i><span>All Depts</span>
+      <span class="arrow">{{ activeDropdown === 'departments' ? '▲' : '▼' }}</span>
+    </div>
+
+    <!-- Normal dropdown when sidebar is expanded -->
+    <div class="dropdown-content" *ngIf="activeDropdown === 'departments' && !isSidebarClosed">
+      <a *ngIf="canAccess('admindept')" routerLink="/admindept">Admin Dept</a>
+      <a *ngIf="canAccess('hrdept')" routerLink="/hrdept">HR Dept</a>
+      <a *ngIf="canAccess('itdept')" routerLink="/itdept">IT Dept</a>
+    </div>
+
+    <!-- Floating dropdown when sidebar is collapsed -->
+    <div class="floating-dropdown" *ngIf="hoveredDropdown === 'departments' && isSidebarClosed"
+      [style.top.px]="floatingTop">
+      <a *ngIf="canAccess('admindept')" routerLink="/admindept">Admin Dept</a>
+      <a *ngIf="canAccess('hrdept')" routerLink="/hrdept">HR Dept</a>
+      <a *ngIf="canAccess('itdept')" routerLink="/itdept">IT Dept</a>
     </div>
   </div>
+  <!-- Admin Users -->
+  <a *ngIf="canAccess('adminusers')" routerLink="/adminusers" routerLinkActive="active"
+    (mouseenter)="showFloatingLabel($event, 'Admin Users')" (mouseleave)="hideFloatingLabel()">
+    <i>👤</i><span>Admin Users</span>
+  </a>
+  <!-- Attendance -->
+  <div class="dropdown"
+    *ngIf="canAccess('attendance') || canAccess('adminuser') || canAccess('pmadminuser') || canAccess('adminreports') || canAccess('projectreports') || canAccess('monthlyempreport') || canAccess('configurations')"
+    (mouseenter)="showFloatingDropdown($event, 'attendance')" (mouseleave)="hideFloatingDropdown()">
+
+    <div class="dropdown-toggle" (click)="toggleDropdown('attendance')">
+      <i>🕒</i><span>Attendance</span>
+      <span class="arrow">{{ activeDropdown === 'attendance' ? '▲' : '▼' }}</span>
+    </div>
+
+    <!-- Normal dropdown when sidebar is expanded -->
+    <div class="dropdown-content" *ngIf="activeDropdown === 'attendance' && !isSidebarClosed">
+      <a *ngIf="canAccess('attendance')" routerLink="/attendance">Attendance</a>
+      <a *ngIf="canAccess('adminuser')" routerLink="/adminuser">Admin User</a>
+      <a *ngIf="canAccess('pmadminuser')" routerLink="/pmadminuser">PM Admin User</a>
+      <a *ngIf="canAccess('adminreports')" routerLink="/adminreports">Admin Reports</a>
+      <a *ngIf="canAccess('projectreports')" routerLink="/projectreports">Project Reports</a>
+      <a *ngIf="canAccess('monthlyempreport')" routerLink="/monthlyempreport">Monthly Emp Report</a>
+      <a *ngIf="canAccess('configurations')" routerLink="/configuration">Configurations</a>
+    </div>
+
+    <!-- Floating dropdown when sidebar is collapsed -->
+    <div class="floating-dropdown" *ngIf="hoveredDropdown === 'attendance' && isSidebarClosed"
+      [style.top.px]="floatingTop">
+      <a *ngIf="canAccess('attendance')" routerLink="/attendance">Attendance</a>
+      <a *ngIf="canAccess('adminuser')" routerLink="/adminuser">Admin User</a>
+      <a *ngIf="canAccess('pmadminuser')" routerLink="/pmadminuser">PM Admin User</a>
+      <a *ngIf="canAccess('adminreports')" routerLink="/adminreports">Admin Reports</a>
+      <a *ngIf="canAccess('projectreports')" routerLink="/projectreports">Project Reports</a>
+      <a *ngIf="canAccess('monthlyempreport')" routerLink="/monthlyempreport">Monthly Emp Report</a>
+      <a *ngIf="canAccess('configurations')" routerLink="/configuration">Configurations</a>
+    </div>
+  </div>
+  <a *ngIf="canAccess('registration')" routerLink="/registration"
+    (mouseenter)="showFloatingLabel($event, 'Registration')" (mouseleave)="hideFloatingLabel()">
+    <i>📝</i><span>Registration</span>
+  </a>
+  <!-- Logout -->
+  <a (click)="logout()" title="Logout" (mouseenter)="showFloatingLabel($event, 'Logout')"
+    (mouseleave)="hideFloatingLabel()">
+    <i>🚪</i><span>Logout</span>
+  </a>
+</div>
+<!-- Header -->
+<div class="header" [class.collapsed]="isSidebarClosed">
+  <h1>
+    <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+    Welcome to Inteq Admin Dashboard
+  </h1>
+  <app-sprtheader></app-sprtheader>
+  <div class="profile">
+    <img src="\assets\images\userlogo.png" alt="User" />
+  </div>
+  <!-- Floating label for simple menus (appears only when sidebar is collapsed) -->
+  <div class="floating-label" *ngIf="hoveredMenuLabel && isSidebarClosed" [style.top.px]="floatingTop">
+    {{ hoveredMenuLabel }}
+  </div>
+</div>

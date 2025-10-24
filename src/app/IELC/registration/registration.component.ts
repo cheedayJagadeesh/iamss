@@ -104,14 +104,6 @@ interface EmailPayload {
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-// Track sidebar state
-  isSidebarClosed = false;
-
-  // Event handler for sidebar toggle event
-   onSidebarToggled(state: boolean) {
-    this.isSidebarClosed = state;
-  }
-
   // @Input() enrollmentList: any[] = [];
   // @Input() submittedFeedbackIds: string[] = [];
   

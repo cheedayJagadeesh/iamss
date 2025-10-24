@@ -1,7 +1,6 @@
 <app-leftmenu (sidebarToggled)="onSidebarToggled($event)"></app-leftmenu>
  <div class="content-wrapper" [class.sidebar-collapsed]="isSidebarClosed">
   <div class="main-container">
-<app-attendanceheader></app-attendanceheader>
 <form class="row g-3" #attendanceform="ngForm" (ngSubmit)="showData(attendanceform.value)">
   <div class="mt-4">
     <div class="row justify-content-center">

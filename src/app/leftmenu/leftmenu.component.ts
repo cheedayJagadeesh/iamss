@@ -81,4 +81,17 @@ export class LeftmenuComponent {
   hideFloatingDropdown() {
     this.hoveredDropdown = null;
   }
+  hoveredMenuLabel: string | null = null; // add this new property at top with others
+
+showFloatingLabel(event: MouseEvent, label: string) {
+  if (this.isSidebarClosed) {
+    const target = event.currentTarget as HTMLElement;
+    const rect = target.getBoundingClientRect();
+    this.floatingTop = rect.top + window.scrollY;
+    this.hoveredMenuLabel = label;
+  }
+}
+hideFloatingLabel() {
+  this.hoveredMenuLabel = null;
+}
 }
