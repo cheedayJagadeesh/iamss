@@ -38,9 +38,8 @@
     /* position: absolute; */
 }
 .tablebottom {
-    margin-top: 4%;
-    position: absolute;
-    width: 100%;
+    margin-top: 6%;
+    margin-left: -3%;
 }
 table {
     width: 100% !important; /* Ensures the table does not exceed 100% */

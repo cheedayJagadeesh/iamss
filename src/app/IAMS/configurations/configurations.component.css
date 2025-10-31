@@ -9,11 +9,10 @@
 } 
 .lbl1{
     display: inline-block;
-    margin-left: 8%;
+    margin-left: 5%;
     font-weight: bold;
     color: black;
     margin-top: 1.4%;
-    position: absolute;
     font-size: x-large;
 }
 .lbl2{
@@ -22,7 +21,6 @@
     font-weight: bold;
     color: black;
     margin-top: 5.4%;
-    position: absolute;
     font-size: x-large;
 }
 .lbl3{
@@ -31,7 +29,6 @@
     font-weight: bold;
     color: black;
     margin-top: 9.4%;
-    position: absolute;
     font-size: x-large;
 }
 .main-container{
