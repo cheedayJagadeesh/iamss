@@ -1,4 +1,10 @@
 export interface UsersInfo {
+maintainedBy: any;
+documentNo: any;
+currentVersion: any;
+documentName: any;
+docType: any;
+department: any;
     enrollmentID: number;
     name: string;
     mail: string;

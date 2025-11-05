@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IelcapiService } from '../ielcapi.service';
 import { forkJoin } from 'rxjs';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
 
 interface smtpinfo {
   id: number;
@@ -35,6 +38,17 @@ export interface EventScheduleDetails {
   auditeeDepartment?: string;
   auditees?: string;
   superOwners?: string;
+}
+
+  interface ISMSMasterData {
+  documentID: number;
+  ismsDept?: string;
+  ismsDocType?: string;
+  ismsDocumentName?: string;
+  url?: string;
+  ismsDocumentNo?: string;
+  ismsCurrentVersion?: number;
+  documentMaintainedBy?: string;
 }
 
 interface eventsscuserdt {
@@ -222,9 +236,22 @@ coownersdept: CoOwners = {
   superOwners: '',
 };
 
+ismsdatalist: any[] = []; 
+ismsalldata: ISMSMasterData = {
+  documentID: 0,
+  ismsDept: '',
+  ismsDocType: '',
+  ismsDocumentName: '',
+  url: '',
+  ismsDocumentNo: '',
+  ismsCurrentVersion: 0,
+  documentMaintainedBy: '',
+};
+
+
 
   eventschadtlist: any[] = []; 
-eventschadmindets: eventsscuserdt = {
+ eventschadmindets: eventsscuserdt = {
    id: 0,
   auditeedepartment: '',
   auditees: '',
@@ -403,9 +430,11 @@ eventschuser: eventscuserinfo = {
  eventschedules: any[]=[];
  crserestlist: any[]=[];
  eventalertslist: any[]=[];
+ ismsdetails: any[] = [];
  event: any | null = null;
  fileError: string = "";
  coownerss: any[]=[];
+ ismsdata: any[]=[];
  years: number[] = [];
 //selectedYear: string = new Date().getFullYear().toString();
  selectedYear: string = '';
@@ -414,6 +443,7 @@ eventschuser: eventscuserinfo = {
  selectedMonth: string = '';
   items: any[] = [];
   prjtIsmsGeneraldatainfo: any[]= [];
+filteredISMSDocs: any[] = [];
 
  updatedFields: any;
   
@@ -505,7 +535,7 @@ eventschuser: eventscuserinfo = {
     this.populateYears();
     this.selectedYear = '';
     // this.fetchData(this.selectedYear);
-    
+    this.GetISMSDetails();
   }
 
   //--------------------------------------------------------------------------------Years
@@ -598,6 +628,301 @@ onYearChange(): void {
   //     }
   //   );
   // }
+
+  //-------------------------------------------------------------------------------EventSchedulerAdmin
+// GetISMSDetails(){
+//   this.ielc.GetISMSMasterTable().subscribe((data) => {
+//     this.ismsdetails=data;
+//     this.isLoading = false;
+//   console.log(this.ismsdetails);
+//   });
+//  }
+
+GetISMSDetails() {
+  this.isLoading = true;
+  this.ielc.GetISMSMasterTable().subscribe({
+    next: (data) => {
+      this.ismsdetails = data;
+      this.filteredISMSDocs = data;
+      this.updateCounts();
+      this.isLoading = false;
+    },
+    error: (err) => {
+      console.error('Error fetching ISMS Master Table:', err);
+      this.isLoading = false;
+    }
+  });
+}
+
+GetISMSDetailsDocumentName() {
+  this.isLoading = true;
+  const ismsDocumentName = this.ismsalldata.ismsDocumentName;
+  if (ismsDocumentName) { // Check if ismsDocumentName is not undefined
+    this.ielc.GetISMSMasterTableDocName(ismsDocumentName)
+      .subscribe({
+        next: (data) => {
+          this.ismsdetails = data;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Error fetching ISMS Master Table:', err);
+          this.isLoading = false;
+        }
+      });
+  } else {
+    console.error('ismsDocumentName is undefined');
+    this.isLoading = false;
+  }
+}
+totalISMSDocs: number = 0;
+totalPolicies: number = 0;
+totalProcedures: number = 0;
+totalGuidelines: number = 0;
+totalFormats: number = 0;
+totalISPolicies: number = 0;
+
+//overallcounts
+// updateCounts() {
+//   this.totalISMSDocs = this.ismsdetails?.length || 0;
+
+//   this.totalPolicies = this.ismsdetails.filter(
+//     (x: any) => x.ismsDocType?.toLowerCase() === 'policy'
+//   ).length;
+
+//   this.totalProcedures = this.ismsdetails.filter(
+//     (x: any) => x.ismsDocType?.toLowerCase() === 'procedures'
+//   ).length;
+
+//   this.totalGuidelines = this.ismsdetails.filter(
+//     (x: any) => x.ismsDocType?.toLowerCase() === 'guidelines'
+//   ).length;
+
+//   this.totalFormats = this.ismsdetails.filter(
+//     (x: any) => x.ismsDocType?.toLowerCase() === 'formats'
+//   ).length;
+
+//   this.totalISPolicies = this.ismsdetails.filter(
+//     (x: any) => x.ismsDocType?.toLowerCase() === 'is policy'
+//   ).length;
+// }
+
+//filtercounts
+updateCounts() {
+  const docs = this.filteredISMSDocs || [];
+  this.totalISMSDocs = docs.length;
+  this.totalPolicies = docs.filter(x => x.ismsDocType?.toLowerCase() === 'policy').length;
+  this.totalProcedures = docs.filter(x => x.ismsDocType?.toLowerCase() === 'procedures').length;
+  this.totalGuidelines = docs.filter(x => x.ismsDocType?.toLowerCase() === 'guidelines').length;
+  this.totalFormats = docs.filter(x => x.ismsDocType?.toLowerCase() === 'formats').length;
+  this.totalISPolicies = docs.filter(x => x.ismsDocType?.toLowerCase() === 'is policy').length;
+}
+
+
+docname: string = '';
+
+  clear(){
+    this.docname = '';
+   this.GetISMSDetails()
+ } 
+noResultsFound: boolean = false;
+ onTextChange() {
+  if (!this.docname.trim()) {
+    this.noResultsFound = false;
+    this.filteredISMSDocs = this.ismsdetails;
+    this.updateCounts();
+  }
+}
+
+searchSkills() {
+  const search = this.docname?.trim().toLowerCase();
+  
+  if (!search) {
+    // 🔄 If search box is empty, show all docs again
+    this.noResultsFound = false;
+    this.filteredISMSDocs = this.ismsdetails;
+    this.updateCounts(); // optional: recalc totals
+    return;
+  }
+
+  // 🔍 Filter locally
+  this.filteredISMSDocs = this.ismsdetails.filter((doc: any) =>
+    doc.ismsDocumentName?.toLowerCase().includes(search)
+  );
+
+  // 🚫 Show "no results" if nothing matches
+  if (this.filteredISMSDocs.length === 0) {
+    this.noResultsFound = true;
+  } else {
+    this.noResultsFound = false;
+  }
+
+  // optional: update counts based on filtered data
+  this.updateCounts();
+}
+
+
+
+//  onTextChange() {
+//   if (!this.docname.trim()) {
+//     this.noResultsFound = false;
+//     this.GetISMSDetails(); // reload all when textbox becomes empty
+//   }
+// }
+//    noResultsFound: boolean = false;
+
+// searchSkills() {
+//   const search = this.docname?.trim();
+//   if (!search) {
+//     this.noResultsFound = false;
+//     this.GetISMSDetails(); // reload all
+//     return;
+//   }
+
+//   this.isLoading = true;
+//   this.noResultsFound = false;
+
+//   this.ielc.GetISMSMasterTableDocName(search).subscribe({
+//     next: (data) => {
+//       if (!data || (Array.isArray(data) && data.length === 0)) {
+//         this.filteredISMSDocs = [];
+//         this.noResultsFound = true;
+//       } else {
+//         this.filteredISMSDocs = Array.isArray(data) ? data : [data];
+//       }
+//       this.isLoading = false;
+//     },
+//     error: (err) => {
+//       console.error('Error fetching ISMS Master Table:', err);
+//       this.filteredISMSDocs = [];
+//       this.noResultsFound = true;
+//       this.isLoading = false;
+//     }
+//   });
+// }
+
+
+
+AddISMSDetails(): void {
+  const ismsdata = {
+    ismsDept: this.ismsalldata.ismsDept,
+    ismsDocType: this.ismsalldata.ismsDocType,
+    ismsDocumentName: this.ismsalldata.ismsDocumentName,
+    url: this.ismsalldata.url,
+    ismsDocumentNo: this.ismsalldata.ismsDocumentNo,
+    ismsCurrentVersion: this.ismsalldata.ismsCurrentVersion,
+    documentMaintainedBy: this.ismsalldata.documentMaintainedBy
+  };
+
+  this.ielc.PostISMSMasterTable(ismsdata).subscribe({
+    next: (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetISMSDetails();
+      this.resetISMSDetails();
+    },
+    error: (error) => {
+      console.error('Error adding record:', error);
+      alert('❌ Error adding Record. Please try again.');
+    }
+  });
+}
+
+
+    deleteISMSDetails(id: number) {
+    if (confirm('Are you sure you want to delete this record?')) {
+      this.ielc.DeleteISMSMasterTable(id).subscribe({
+        next: () => {
+          alert(`Record with ID ${id} deleted successfully!`);
+          this.GetISMSDetails();
+        },
+         error: (err) =>  console.error('Error deleting item:', err)
+      });
+    }
+  }
+  EditISMSDetails(id: number) {
+    //debugger;
+  this.ielc.GetISMSMasterTableId(id).subscribe(data => {
+    if (data) {
+      this.ismsalldata = { 
+        documentID: data.documentID || 0,
+        ismsDept: data.ismsDept || '',
+        ismsDocType: data.ismsDocType || '',
+       ismsDocumentName:data.ismsDocumentName || '',
+       url:data.url || '',
+       ismsDocumentNo:data.ismsDocumentNo || '',
+       ismsCurrentVersion:data.ismsCurrentVersion || '',
+       documentMaintainedBy:data.documentMaintainedBy || ''
+      };
+      //console.log("API Response:", data);
+    } else {
+       console.warn("No data received for the given ID.");
+    }
+  }, error => {
+     console.error("Error fetching record:", error);
+  });
+}
+
+UpdateISMSDetails() {
+  debugger;
+  this.ielc.UpdateISMSMasterTable(this.ismsalldata.documentID, this.ismsalldata).subscribe(
+    (response) => {
+      alert(" ✅ Record updated successfully!");
+      this.GetISMSDetails();
+      this.resetISMSDetails();
+      console.log("Updated Successfully:", response);
+    },
+    (error) => {
+       console.error("Error updating Record:", error);
+    }
+  );
+}
+  //searchText: string = '';
+
+//   onSearchClick() {
+//     debugger;
+//   const search = this.searchText?.trim();
+//   if (!search) {
+//     this.GetISMSDetails(); // reload all
+//     return;
+//   }
+
+//   this.isLoading = true;
+//   this.ielc.GetISMSMasterTableDocName(search).subscribe({
+//     next: (data) => {
+//       this.filteredISMSDocs = Array.isArray(data) ? data : [data];
+//       this.isLoading = false;
+//     },
+//     error: (err) => {
+//       console.error('Error fetching ISMS Master Table:', err);
+//       this.isLoading = false;
+//     }
+//   });
+// }
+
+// getFilteredISMSDocs(): any[] {
+//   if (!this.searchText) {
+//     return this.ismsdetails;
+//   }
+//   const search = this.searchText.toLowerCase();
+//   return this.ismsdetails.filter(item =>
+//     item.ismsDocumentName?.toLowerCase().includes(search) ||
+//     item.ismsDocumentNo?.toLowerCase().includes(search)
+//   );
+// }
+
+
+resetISMSDetails() {
+  this.ismsalldata = {
+    documentID: 0,
+    ismsDept: '',
+    ismsDocType: '',
+    ismsDocumentName: '',
+    url: '',
+    ismsDocumentNo: '',
+    ismsCurrentVersion: 0,
+    documentMaintainedBy: ''
+  };
+}
+
   //--------------------------------------------------------------------------------CreateTables
 
   createEventTables(): void {
@@ -6239,30 +6564,6 @@ GetEventAlertsist() {
   }
 }
 
-// togglePlayPause(item: any): void {
-//   item.isPaused = !item.isPaused;
-//   item.status = item.isPaused ? 'InActive' : 'Active';
-//   console.log('Toggling status to:', item.status);
-
-//   const payload = {
-//     alertID: item.alertID,
-//     status: item.status
-//   };
-
-//   this.ielc.UpdateEventAlertStatus(payload).subscribe({
-//     next: () => {
-//       console.log('✅ Status updated in DB');
-//     },
-//     error: (err) => {
-//       console.error('❌ API failed:', err);
-//       alert('Failed to update status.');
-
-//       // Revert UI
-//       item.isPaused = !item.isPaused;
-//       item.status = item.isPaused ? 'InActive' : 'Active';
-//     }
-//   });
-// }
 
 togglePlayPause(item: any): void {
   item.isPaused = !item.isPaused;
