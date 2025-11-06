@@ -46,3 +46,30 @@
 .text-muted.small {
   font-size: 0.9rem;
 }
+.filter-icon {
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.filter-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 100;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 4px;
+  width: 200px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.filter-options {
+  max-height: 120px;
+  overflow-y: auto;
+  padding: 4px 0;
+}
+
+.filter-actions button {
+  font-size: 0.8rem;
+}

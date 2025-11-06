@@ -454,8 +454,12 @@ filteredISMSDocs: any[] = [];
   sortlist(data: any[]): any[] {
     return data.sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
   }
-  
+  showDeptFilter = false;
+  selectedDepts: string[] = [];
+  uniqueDepts: string[] = [];
+  isAllDeptsSelected: boolean = true;
   ngOnInit(): void {
+    // ...existing code...
     this.GetSmtplist();
     this.GetItSprtlist();
     this.GetOsSprtlist();
@@ -537,6 +541,51 @@ filteredISMSDocs: any[] = [];
     // this.fetchData(this.selectedYear);
     this.GetISMSDetails();
   }
+
+  updateUniqueDepts(): void {
+    // Extract unique departments from ISMSMasterTable (ismsdetails)
+    const allDepts = (this.ismsdetails || []).map((item: any) => item.ismsDept).filter(Boolean);
+    this.uniqueDepts = Array.from(new Set(allDepts));
+  }
+
+
+  toggleAllDepts(): void {
+    if (this.isAllDeptsSelected) {
+      // Deselect all
+      this.selectedDepts = [];
+      this.isAllDeptsSelected = false;
+    } else {
+      // Select all
+      this.selectedDepts = [...this.uniqueDepts];
+      this.isAllDeptsSelected = true;
+    }
+    this.filterISMSDocs();
+  }
+
+  onDeptCheckboxChange(event: any, dept: string): void {
+    if (event.target.checked) {
+      if (!this.selectedDepts.includes(dept)) {
+        this.selectedDepts.push(dept);
+      }
+    } else {
+      this.selectedDepts = this.selectedDepts.filter(d => d !== dept);
+    }
+    this.isAllDeptsSelected = this.selectedDepts.length === this.uniqueDepts.length;
+    this.filterISMSDocs();
+  }
+
+  filterISMSDocs(): void {
+    // Filter ISMSMasterTable (ismsdetails) by selectedDepts
+    if (this.selectedDepts.length === 0) {
+      this.filteredISMSDocs = [];
+    } else {
+      this.filteredISMSDocs = (this.ismsdetails || []).filter((item: any) => this.selectedDepts.includes(item.ismsDept));
+    }
+    this.updateCounts();
+  }
+
+
+
 
   //--------------------------------------------------------------------------------Years
 GetMonthsByYear(year: string): void {
@@ -643,8 +692,10 @@ GetISMSDetails() {
   this.ielc.GetISMSMasterTable().subscribe({
     next: (data) => {
       this.ismsdetails = data;
-      this.filteredISMSDocs = data;
-      this.updateCounts();
+      this.updateUniqueDepts();
+      this.selectedDepts = [...this.uniqueDepts];
+      this.isAllDeptsSelected = true;
+      this.filterISMSDocs();
       this.isLoading = false;
     },
     error: (err) => {
