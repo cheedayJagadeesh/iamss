@@ -12837,35 +12837,105 @@
 
         <table class="table table-striped table-bordered eventscadmin" name="ismsmastertable"  >
             <thead class="table-primary">
-               <tr>
-                    <th scope="col">
-                        ISMSDept
-                        <div style="display: inline-block; position: relative;">
-                            <button class="btn btn-light btn-sm dropdown-toggle" type="button" (click)="showDeptFilter = !showDeptFilter">
-                                Filter
-                            </button>
-                            <div class="dropdown-menu p-2" [ngClass]="{'show': showDeptFilter}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="selectAllDepts" [checked]="isAllDeptsSelected" (change)="toggleAllDepts()">
-                                    <label class="form-check-label" for="selectAllDepts">(Select All)</label>
-                                </div>
-                                <div *ngFor="let dept of uniqueDepts">
-                                    <input class="form-check-input" type="checkbox" [id]="'dept_' + dept" [checked]="selectedDepts.includes(dept)" (change)="onDeptCheckboxChange($event, dept)">
-                                    <label class="form-check-label" [for]="'dept_' + dept">{{ dept }}</label>
-                                </div>
-                                <div class="mt-2 text-end">
-                                    <button class="btn btn-primary btn-sm" type="button" (click)="showDeptFilter = false">OK</button>
-                                </div>
+            <tr>
+                <th scope="col">
+                    ISMSDept
+                    <div style="display: inline-block; position: relative;">
+                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" (click)="showDeptFilter = !showDeptFilter">Filter</button>
+                        <div class="dropdown-menu p-2" [ngClass]="{'show': showDeptFilter}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="selectAllDepts" [checked]="isAllDeptsSelected" (change)="toggleAllDepts()">
+                                <label class="form-check-label" for="selectAllDepts">(Select All)</label>
+                            </div>
+                            <div *ngFor="let dept of uniqueDepts">
+                                <input class="form-check-input" type="checkbox" [id]="'dept_' + dept" [checked]="selectedDepts.includes(dept)" (change)="onDeptCheckboxChange($event, dept)">
+                                <label class="form-check-label" [for]="'dept_' + dept">{{ dept }}</label>
+                            </div>
+                            <div class="mt-2 text-end">
+                                <button class="btn btn-primary btn-sm" type="button" (click)="showDeptFilter = false">OK</button>
                             </div>
                         </div>
-                    </th>
-   	            <th scope="col">ISMSDocType</th>
-                    <th scope="col">ISMSDocumentName</th>
-                    <th scope="col">ISMSDocumentNo</th>
-                    <th scope="col">ISMSCurrentVersion</th>
-                    <th scope="col">DocumentMaintainedBy</th>
-                    <th scope="col">Action</th>
-                </tr>
+                    </div>
+                </th>
+                <th scope="col">
+                    ISMSDocType
+                    <div style="display: inline-block; position: relative;">
+                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" (click)="showDocTypeFilter = !showDocTypeFilter">Filter</button>
+                        <div class="dropdown-menu p-2" [ngClass]="{'show': showDocTypeFilter}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="selectAllDocTypes" [checked]="isAllDocTypesSelected" (change)="toggleAllDocTypes()">
+                                <label class="form-check-label" for="selectAllDocTypes">(Select All)</label>
+                            </div>
+                            <div *ngFor="let val of uniqueDocTypes">
+                                <input class="form-check-input" type="checkbox" [id]="'doctype_' + val" [checked]="selectedDocTypes.includes(val)" (change)="onDocTypeCheckboxChange($event, val)">
+                                <label class="form-check-label" [for]="'doctype_' + val">{{ val }}</label>
+                            </div>
+                            <div class="mt-2 text-end">
+                                <button class="btn btn-primary btn-sm" type="button" (click)="showDocTypeFilter = false">OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col">ISMSDocumentName</th>
+                <th scope="col">
+                    ISMSDocumentNo
+                    <div style="display: inline-block; position: relative;">
+                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" (click)="showDocNoFilter = !showDocNoFilter">Filter</button>
+                        <div class="dropdown-menu p-2" [ngClass]="{'show': showDocNoFilter}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="selectAllDocNos" [checked]="isAllDocNosSelected" (change)="toggleAllDocNos()">
+                                <label class="form-check-label" for="selectAllDocNos">(Select All)</label>
+                            </div>
+                            <div *ngFor="let val of uniqueDocNos">
+                                <input class="form-check-input" type="checkbox" [id]="'docno_' + val" [checked]="selectedDocNos.includes(val)" (change)="onDocNoCheckboxChange($event, val)">
+                                <label class="form-check-label" [for]="'docno_' + val">{{ val }}</label>
+                            </div>
+                            <div class="mt-2 text-end">
+                                <button class="btn btn-primary btn-sm" type="button" (click)="showDocNoFilter = false">OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col">
+                    ISMSCurrentVersion
+                    <div style="display: inline-block; position: relative;">
+                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" (click)="showVersionFilter = !showVersionFilter">Filter</button>
+                        <div class="dropdown-menu p-2" [ngClass]="{'show': showVersionFilter}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="selectAllVersions" [checked]="isAllVersionsSelected" (change)="toggleAllVersions()">
+                                <label class="form-check-label" for="selectAllVersions">(Select All)</label>
+                            </div>
+                            <div *ngFor="let val of uniqueVersions">
+                                <input class="form-check-input" type="checkbox" [id]="'version_' + val" [checked]="selectedVersions.includes(val)" (change)="onVersionCheckboxChange($event, val)">
+                                <label class="form-check-label" [for]="'version_' + val">{{ val }}</label>
+                            </div>
+                            <div class="mt-2 text-end">
+                                <button class="btn btn-primary btn-sm" type="button" (click)="showVersionFilter = false">OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col">
+                    DocumentMaintainedBy
+                    <div style="display: inline-block; position: relative;">
+                        <button class="btn btn-light btn-sm dropdown-toggle" type="button" (click)="showMaintainedByFilter = !showMaintainedByFilter">Filter</button>
+                        <div class="dropdown-menu p-2" [ngClass]="{'show': showMaintainedByFilter}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="selectAllMaintainedBy" [checked]="isAllMaintainedBySelected" (change)="toggleAllMaintainedBy()">
+                                <label class="form-check-label" for="selectAllMaintainedBy">(Select All)</label>
+                            </div>
+                            <div *ngFor="let val of uniqueMaintainedBy">
+                                <input class="form-check-input" type="checkbox" [id]="'maintainedby_' + val" [checked]="selectedMaintainedBy.includes(val)" (change)="onMaintainedByCheckboxChange($event, val)">
+                                <label class="form-check-label" [for]="'maintainedby_' + val">{{ val }}</label>
+                            </div>
+                            <div class="mt-2 text-end">
+                                <button class="btn btn-primary btn-sm" type="button" (click)="showMaintainedByFilter = false">OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col">Action</th>
+            </tr>
             </thead>
             <tbody *ngIf="!isLoading">
                 <tr *ngFor="let ismsde of  filteredISMSDocs" >

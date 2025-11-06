@@ -155,6 +155,10 @@ interface eventalertsinfo{
 })
 export class AdminusersComponent {
 isLoading=true;
+
+
+
+
   encodePassword (password: string): string {
     return btoa(password);
   }
@@ -458,6 +462,125 @@ filteredISMSDocs: any[] = [];
   selectedDepts: string[] = [];
   uniqueDepts: string[] = [];
   isAllDeptsSelected: boolean = true;
+
+  // Filter UI state and values for ISMSDocType, ISMSDocumentNo, ISMSCurrentVersion, DocumentMaintainedBy
+  showDocTypeFilter = false;
+  showDocNoFilter = false;
+  showVersionFilter = false;
+  showMaintainedByFilter = false;
+
+  uniqueDocTypes: string[] = [];
+  selectedDocTypes: string[] = [];
+  isAllDocTypesSelected: boolean = true;
+
+  uniqueDocNos: string[] = [];
+  selectedDocNos: string[] = [];
+  isAllDocNosSelected: boolean = true;
+
+  uniqueVersions: string[] = [];
+  selectedVersions: string[] = [];
+  isAllVersionsSelected: boolean = true;
+
+  uniqueMaintainedBy: string[] = [];
+  selectedMaintainedBy: string[] = [];
+  isAllMaintainedBySelected: boolean = true;
+
+  updateUniqueDocTypes(): void {
+    const all = (this.ismsdetails || []).map((item: any) => item.ismsDocType).filter(Boolean);
+    this.uniqueDocTypes = Array.from(new Set(all));
+  }
+  updateUniqueDocNos(): void {
+    const all = (this.ismsdetails || []).map((item: any) => item.ismsDocumentNo).filter(Boolean);
+    this.uniqueDocNos = Array.from(new Set(all));
+  }
+  updateUniqueVersions(): void {
+    const all = (this.ismsdetails || []).map((item: any) => item.ismsCurrentVersion).filter(Boolean);
+    this.uniqueVersions = Array.from(new Set(all));
+  }
+  updateUniqueMaintainedBy(): void {
+    const all = (this.ismsdetails || []).map((item: any) => item.documentMaintainedBy).filter(Boolean);
+    this.uniqueMaintainedBy = Array.from(new Set(all));
+  }
+
+  toggleAllDocTypes(): void {
+    if (this.isAllDocTypesSelected) {
+      this.selectedDocTypes = [];
+      this.isAllDocTypesSelected = false;
+    } else {
+      this.selectedDocTypes = [...this.uniqueDocTypes];
+      this.isAllDocTypesSelected = true;
+    }
+    this.filterISMSDocs();
+  }
+  onDocTypeCheckboxChange(event: any, val: string): void {
+    if (event.target.checked) {
+      if (!this.selectedDocTypes.includes(val)) this.selectedDocTypes.push(val);
+    } else {
+      this.selectedDocTypes = this.selectedDocTypes.filter(d => d !== val);
+    }
+    this.isAllDocTypesSelected = this.selectedDocTypes.length === this.uniqueDocTypes.length;
+    this.filterISMSDocs();
+  }
+
+  toggleAllDocNos(): void {
+    if (this.isAllDocNosSelected) {
+      this.selectedDocNos = [];
+      this.isAllDocNosSelected = false;
+    } else {
+      this.selectedDocNos = [...this.uniqueDocNos];
+      this.isAllDocNosSelected = true;
+    }
+    this.filterISMSDocs();
+  }
+  onDocNoCheckboxChange(event: any, val: string): void {
+    if (event.target.checked) {
+      if (!this.selectedDocNos.includes(val)) this.selectedDocNos.push(val);
+    } else {
+      this.selectedDocNos = this.selectedDocNos.filter(d => d !== val);
+    }
+    this.isAllDocNosSelected = this.selectedDocNos.length === this.uniqueDocNos.length;
+    this.filterISMSDocs();
+  }
+
+  toggleAllVersions(): void {
+    if (this.isAllVersionsSelected) {
+      this.selectedVersions = [];
+      this.isAllVersionsSelected = false;
+    } else {
+      this.selectedVersions = [...this.uniqueVersions];
+      this.isAllVersionsSelected = true;
+    }
+    this.filterISMSDocs();
+  }
+  onVersionCheckboxChange(event: any, val: string): void {
+    if (event.target.checked) {
+      if (!this.selectedVersions.includes(val)) this.selectedVersions.push(val);
+    } else {
+      this.selectedVersions = this.selectedVersions.filter(d => d !== val);
+    }
+    this.isAllVersionsSelected = this.selectedVersions.length === this.uniqueVersions.length;
+    this.filterISMSDocs();
+  }
+
+  toggleAllMaintainedBy(): void {
+    if (this.isAllMaintainedBySelected) {
+      this.selectedMaintainedBy = [];
+      this.isAllMaintainedBySelected = false;
+    } else {
+      this.selectedMaintainedBy = [...this.uniqueMaintainedBy];
+      this.isAllMaintainedBySelected = true;
+    }
+    this.filterISMSDocs();
+  }
+  onMaintainedByCheckboxChange(event: any, val: string): void {
+    if (event.target.checked) {
+      if (!this.selectedMaintainedBy.includes(val)) this.selectedMaintainedBy.push(val);
+    } else {
+      this.selectedMaintainedBy = this.selectedMaintainedBy.filter(d => d !== val);
+    }
+    this.isAllMaintainedBySelected = this.selectedMaintainedBy.length === this.uniqueMaintainedBy.length;
+    this.filterISMSDocs();
+  }
   ngOnInit(): void {
     // ...existing code...
     this.GetSmtplist();
@@ -575,12 +698,15 @@ filteredISMSDocs: any[] = [];
   }
 
   filterISMSDocs(): void {
-    // Filter ISMSMasterTable (ismsdetails) by selectedDepts
-    if (this.selectedDepts.length === 0) {
-      this.filteredISMSDocs = [];
-    } else {
-      this.filteredISMSDocs = (this.ismsdetails || []).filter((item: any) => this.selectedDepts.includes(item.ismsDept));
-    }
+    // Combined filter for all columns
+    this.filteredISMSDocs = (this.ismsdetails || []).filter((item: any) => {
+      const deptMatch = this.selectedDepts.length === 0 || this.selectedDepts.includes(item.ismsDept);
+      const docTypeMatch = this.selectedDocTypes.length === 0 || this.selectedDocTypes.includes(item.ismsDocType);
+      const docNoMatch = this.selectedDocNos.length === 0 || this.selectedDocNos.includes(item.ismsDocumentNo);
+      const versionMatch = this.selectedVersions.length === 0 || this.selectedVersions.includes(item.ismsCurrentVersion);
+      const maintainedByMatch = this.selectedMaintainedBy.length === 0 || this.selectedMaintainedBy.includes(item.documentMaintainedBy);
+      return deptMatch && docTypeMatch && docNoMatch && versionMatch && maintainedByMatch;
+    });
     this.updateCounts();
   }
 
@@ -692,9 +818,23 @@ GetISMSDetails() {
   this.ielc.GetISMSMasterTable().subscribe({
     next: (data) => {
       this.ismsdetails = data;
+      // Update unique values for all filters
       this.updateUniqueDepts();
+      this.updateUniqueDocTypes();
+      this.updateUniqueDocNos();
+      this.updateUniqueVersions();
+      this.updateUniqueMaintainedBy();
+      // Select all by default
       this.selectedDepts = [...this.uniqueDepts];
       this.isAllDeptsSelected = true;
+      this.selectedDocTypes = [...this.uniqueDocTypes];
+      this.isAllDocTypesSelected = true;
+      this.selectedDocNos = [...this.uniqueDocNos];
+      this.isAllDocNosSelected = true;
+      this.selectedVersions = [...this.uniqueVersions];
+      this.isAllVersionsSelected = true;
+      this.selectedMaintainedBy = [...this.uniqueMaintainedBy];
+      this.isAllMaintainedBySelected = true;
       this.filterISMSDocs();
       this.isLoading = false;
     },
