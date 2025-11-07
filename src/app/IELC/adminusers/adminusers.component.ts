@@ -51,6 +51,17 @@ export interface EventScheduleDetails {
   documentMaintainedBy?: string;
 }
 
+  interface QMSMasterData {
+  documentID: number;
+  qmsDept?: string;
+  qmsDocType?: string;
+  qmsDocumentName?: string;
+  url?: string;
+  qmsDocumentNo?: string;
+  qmsCurrentVersion?: number;
+  documentMaintainedBy?: string;
+}
+
 interface eventsscuserdt {
     id: number;
   auditeedepartment?: string;
@@ -252,6 +263,17 @@ ismsalldata: ISMSMasterData = {
   documentMaintainedBy: '',
 };
 
+qmsdatalist: any[] = []; 
+qmsalldata: QMSMasterData = {
+  documentID: 0,
+  qmsDept: '',
+  qmsDocType: '',
+  qmsDocumentName: '',
+  url: '',
+  qmsDocumentNo: '',
+  qmsCurrentVersion: 0,
+  documentMaintainedBy: '',
+};
 
 
   eventschadtlist: any[] = []; 
@@ -435,6 +457,7 @@ eventschuser: eventscuserinfo = {
  crserestlist: any[]=[];
  eventalertslist: any[]=[];
  ismsdetails: any[] = [];
+ qmsdetails: any[] = [];
  event: any | null = null;
  fileError: string = "";
  coownerss: any[]=[];
@@ -447,7 +470,8 @@ eventschuser: eventscuserinfo = {
  selectedMonth: string = '';
   items: any[] = [];
   prjtIsmsGeneraldatainfo: any[]= [];
-filteredISMSDocs: any[] = [];
+  filteredISMSDocs: any[] = [];
+  filteredQMSDocs: any[] = [];
 
  updatedFields: any;
   
@@ -581,6 +605,169 @@ filteredISMSDocs: any[] = [];
     this.isAllMaintainedBySelected = this.selectedMaintainedBy.length === this.uniqueMaintainedBy.length;
     this.filterISMSDocs();
   }
+      clearAllFilters(): void {
+      // Reset all filter selections to select all
+      this.selectedDepts = [...this.uniqueDepts];
+      this.isAllDeptsSelected = true;
+      this.selectedDocTypes = [...this.uniqueDocTypes];
+      this.isAllDocTypesSelected = true;
+      this.selectedDocNos = [...this.uniqueDocNos];
+      this.isAllDocNosSelected = true;
+      this.selectedVersions = [...this.uniqueVersions];
+      this.isAllVersionsSelected = true;
+      this.selectedMaintainedBy = [...this.uniqueMaintainedBy];
+      this.isAllMaintainedBySelected = true;
+      this.filterISMSDocs();
+    }
+
+    //QMS
+    showDeptFilterQMS = false;
+  selectedDeptsQMS: string[] = [];
+  uniqueDeptsQMS: string[] = [];
+  isAllDeptsSelectedQMS: boolean = true;
+
+  // Filter UI state and values for ISMSDocType, ISMSDocumentNo, ISMSCurrentVersion, DocumentMaintainedBy
+  showDocTypeFilterQMS = false;
+  showDocNoFilterQMS = false;
+  showVersionFilterQMS = false;
+  showMaintainedByFilterQMS = false;
+
+  uniqueDocTypesQMS: string[] = [];
+  selectedDocTypesQMS: string[] = [];
+  isAllDocTypesSelectedQMS: boolean = true;
+
+  uniqueDocNosQMS: string[] = [];
+  selectedDocNosQMS: string[] = [];
+  isAllDocNosSelectedQMS: boolean = true;
+
+  uniqueVersionsQMS: string[] = [];
+  selectedVersionsQMS: string[] = [];
+  isAllVersionsSelectedQMS: boolean = true;
+
+  uniqueMaintainedByQMS: string[] = [];
+  selectedMaintainedByQMS: string[] = [];
+  isAllMaintainedBySelectedQMS: boolean = true;
+
+  updateUniqueDocTypesQMS(): void {
+    const all = (this.qmsdetails || []).map((item: any) => item.qmsDocType).filter(Boolean);
+    this.uniqueDocTypesQMS = Array.from(new Set(all));
+  }
+  updateUniqueDocNosQMS(): void {
+  const all = (this.qmsdetails || []).map((item: any) => item.qmsDocumentNo);
+  // Remove only undefined/null, keep empty string
+  this.uniqueDocNosQMS = Array.from(new Set(all.filter(v => v !== undefined && v !== null)));
+  }
+  updateUniqueVersionsQMS(): void {
+    const all = (this.qmsdetails || []).map((item: any) => {
+      if (item.qmsCurrentVersion === null || item.qmsCurrentVersion === undefined || item.qmsCurrentVersion === '') {
+        return '';
+      }
+      return item.qmsCurrentVersion;
+    });
+    this.uniqueVersionsQMS = Array.from(new Set(all));
+  }
+  updateUniqueMaintainedByQMS(): void {
+    const all = (this.qmsdetails || []).map((item: any) => item.documentMaintainedByQMS).filter(Boolean);
+    this.uniqueMaintainedByQMS = Array.from(new Set(all));
+  }
+
+  toggleAllDocTypesQMS(): void {
+    if (this.isAllDocTypesSelectedQMS) {
+      this.selectedDocTypesQMS = [];
+      this.isAllDocTypesSelectedQMS = false;
+    } else {
+      this.selectedDocTypesQMS = [...this.uniqueDocTypesQMS];
+      this.isAllDocTypesSelectedQMS = true;
+    }
+    this.filterQMSDocs();
+  }
+  onDocTypeCheckboxChangeQMS(event: any, val: string): void {
+    if (event.target.checked) {
+      if (!this.selectedDocTypesQMS.includes(val)) this.selectedDocTypesQMS.push(val);
+    } else {
+      this.selectedDocTypesQMS = this.selectedDocTypesQMS.filter(d => d !== val);
+    }
+    this.isAllDocTypesSelectedQMS = this.selectedDocTypesQMS.length === this.uniqueDocTypesQMS.length;
+    this.filterQMSDocs();
+  }
+
+  toggleAllDocNosQMS(): void {
+    if (this.isAllDocNosSelectedQMS) {
+      this.selectedDocNosQMS = [];
+      this.isAllDocNosSelectedQMS = false;
+    } else {
+      this.selectedDocNosQMS = [...this.uniqueDocNosQMS];
+      this.isAllDocNosSelectedQMS = true;
+    }
+    this.filterQMSDocs();
+  }
+  onDocNoCheckboxChangeQMS(event: any, val: string): void {
+    if (event.target.checked) {
+      if (!this.selectedDocNosQMS.includes(val)) this.selectedDocNosQMS.push(val);
+    } else {
+      this.selectedDocNosQMS = this.selectedDocNosQMS.filter(d => d !== val);
+    }
+    this.isAllDocNosSelectedQMS = this.selectedDocNosQMS.length === this.uniqueDocNosQMS.length;
+    this.filterQMSDocs();
+  }
+
+  toggleAllVersionsQMS(): void {
+    if (this.isAllVersionsSelectedQMS) {
+      this.selectedVersionsQMS = [];
+      this.isAllVersionsSelectedQMS = false;
+    } else {
+      this.selectedVersionsQMS = [...this.uniqueVersionsQMS];
+      this.isAllVersionsSelectedQMS = true;
+    }
+    this.filterQMSDocs();
+  }
+  onVersionCheckboxChangeQMS(event: any, val: string): void {
+    if (event.target.checked) {
+      if (!this.selectedVersionsQMS.includes(val)) this.selectedVersionsQMS.push(val);
+    } else {
+      this.selectedVersionsQMS = this.selectedVersionsQMS.filter(d => d !== val);
+    }
+    this.isAllVersionsSelectedQMS = this.selectedVersionsQMS.length === this.uniqueVersionsQMS.length;
+    this.filterQMSDocs();
+  }
+
+  toggleAllMaintainedByQMS(): void {
+    if (this.isAllMaintainedBySelectedQMS) {
+      this.selectedMaintainedByQMS = [];
+      this.isAllMaintainedBySelectedQMS = false;
+    } else {
+      this.selectedMaintainedByQMS = [...this.uniqueMaintainedByQMS];
+      this.isAllMaintainedBySelectedQMS = true;
+    }
+    this.filterQMSDocs();
+  }
+  onMaintainedByCheckboxChangeQMS(event: any, val: string): void {
+    if (event.target.checked) {
+      if (!this.selectedMaintainedByQMS.includes(val)) this.selectedMaintainedByQMS.push(val);
+    } else {
+      this.selectedMaintainedByQMS = this.selectedMaintainedByQMS.filter(d => d !== val);
+    }
+    this.isAllMaintainedBySelectedQMS = this.selectedMaintainedByQMS.length === this.uniqueMaintainedByQMS.length;
+    this.filterQMSDocs();
+  }
+      clearAllFiltersQMS(): void {
+      // Reset all filter selections to select all
+      this.selectedDeptsQMS = [...this.uniqueDeptsQMS];
+      this.isAllDeptsSelectedQMS = true;
+      this.selectedDocTypesQMS = [...this.uniqueDocTypesQMS];
+      this.isAllDocTypesSelectedQMS = true;
+      this.selectedDocNosQMS = [...this.uniqueDocNosQMS];
+      this.isAllDocNosSelectedQMS = true;
+      this.selectedVersionsQMS = [...this.uniqueVersionsQMS];
+      this.isAllVersionsSelectedQMS = true;
+      this.selectedMaintainedByQMS = [...this.uniqueMaintainedByQMS];
+      this.isAllMaintainedBySelectedQMS = true;
+      this.filterQMSDocs();
+    }
+
+
+
+
   ngOnInit(): void {
     // ...existing code...
     this.GetSmtplist();
@@ -663,6 +850,7 @@ filteredISMSDocs: any[] = [];
     this.selectedYear = '';
     // this.fetchData(this.selectedYear);
     this.GetISMSDetails();
+    this.GetQMSDetails();
   }
 
   updateUniqueDepts(): void {
@@ -670,7 +858,6 @@ filteredISMSDocs: any[] = [];
     const allDepts = (this.ismsdetails || []).map((item: any) => item.ismsDept).filter(Boolean);
     this.uniqueDepts = Array.from(new Set(allDepts));
   }
-
 
   toggleAllDepts(): void {
     if (this.isAllDeptsSelected) {
@@ -710,6 +897,56 @@ filteredISMSDocs: any[] = [];
     this.updateCounts();
   }
 
+  //QMS
+  updateUniqueDeptsQMS(): void {
+    // Extract unique departments from ISMSMasterTable (ismsdetails)
+    const allDeptsQMS = (this.qmsdetails || []).map((item: any) => item.qmsDept).filter(Boolean);
+    this.uniqueDeptsQMS = Array.from(new Set(allDeptsQMS));
+  }
+
+  toggleAllDeptsQMS(): void {
+    if (this.isAllDeptsSelectedQMS) {
+      // Deselect all
+      this.selectedDeptsQMS = [];
+      this.isAllDeptsSelectedQMS = false;
+    } else {
+      // Select all
+      this.selectedDeptsQMS = [...this.uniqueDeptsQMS];
+      this.isAllDeptsSelectedQMS = true;
+    }
+    this.filterQMSDocs();
+  }
+
+  onDeptCheckboxChangeQMS(event: any, dept: string): void {
+    if (event.target.checked) {
+      if (!this.selectedDeptsQMS.includes(dept)) {
+        this.selectedDeptsQMS.push(dept);
+      }
+    } else {
+      this.selectedDeptsQMS = this.selectedDeptsQMS.filter(d => d !== dept);
+    }
+    this.isAllDeptsSelectedQMS = this.selectedDeptsQMS.length === this.uniqueDeptsQMS.length;
+    this.filterQMSDocs();
+  }
+
+  filterQMSDocs(): void {
+    // Combined filter for all columns
+    this.filteredQMSDocs = (this.qmsdetails || []).filter((item: any) => {
+        const deptMatchQMS = this.selectedDeptsQMS.length === 0 || this.selectedDeptsQMS.includes(item.qmsDept);
+        const docTypeMatchQMS = this.selectedDocTypesQMS.length === 0 || this.selectedDocTypesQMS.includes(item.qmsDocType);
+        const docNoMatchQMS = this.selectedDocNosQMS.length === 0 ||
+          (item.qmsDocumentNo === '' && this.selectedDocNosQMS.includes('')) ||
+          this.selectedDocNosQMS.includes(item.qmsDocumentNo);
+        const versionMatchQMS = this.selectedVersionsQMS.length === 0 ||
+          (item.qmsCurrentVersion === null && this.selectedVersionsQMS.includes('')) ||
+          (item.qmsCurrentVersion === undefined && this.selectedVersionsQMS.includes('')) ||
+          (item.qmsCurrentVersion === '' && this.selectedVersionsQMS.includes('')) ||
+          this.selectedVersionsQMS.includes(item.qmsCurrentVersion);
+        const maintainedByMatchQMS = this.selectedMaintainedByQMS.length === 0 || this.selectedMaintainedByQMS.includes(item.documentMaintainedByQMS);
+        return deptMatchQMS && docTypeMatchQMS && docNoMatchQMS && versionMatchQMS && maintainedByMatchQMS;
+    });
+    this.updateQMSCounts();
+  }
 
 
 
@@ -805,6 +1042,9 @@ onYearChange(): void {
   // }
 
   //-------------------------------------------------------------------------------EventSchedulerAdmin
+
+
+//-------------------------------------------------------------------------------ISMSMasterTable
 // GetISMSDetails(){
 //   this.ielc.GetISMSMasterTable().subscribe((data) => {
 //     this.ismsdetails=data;
@@ -1113,6 +1353,207 @@ resetISMSDetails() {
     documentMaintainedBy: ''
   };
 }
+
+//-------------------------------------------------------------------------------QMSMasterTable
+
+GetQMSDetails() {
+  this.isLoading = true;
+  this.ielc.GetQMSMasterTable().subscribe({
+    next: (data) => {
+      this.qmsdetails = data;
+      this.updateUniqueDeptsQMS();
+      this.updateUniqueDocTypesQMS();
+      this.updateUniqueDocNosQMS();
+      this.updateUniqueVersionsQMS();
+      this.updateUniqueMaintainedByQMS();
+      this.selectedDeptsQMS = [...this.uniqueDeptsQMS];
+      this.isAllDeptsSelectedQMS = true;
+      this.selectedDocTypesQMS = [...this.uniqueDocTypesQMS];
+      this.isAllDocTypesSelectedQMS = true;
+      this.selectedDocNosQMS = [...this.uniqueDocNosQMS];
+      this.isAllDocNosSelectedQMS = true;
+      this.selectedVersionsQMS = [...this.uniqueVersionsQMS];
+      this.isAllVersionsSelectedQMS = true;
+      this.selectedMaintainedByQMS = [...this.uniqueMaintainedByQMS];
+      this.isAllMaintainedBySelectedQMS = true;
+      this.filterQMSDocs();
+      this.isLoading = false;
+      console.log("QMS",this.qmsdetails);
+    },
+    error: (err) => {
+      console.error('Error fetching QMS Master Table:', err);
+      this.isLoading = false;
+    }
+  });
+}
+
+GetQMSDetailsDocumentName() {
+  this.isLoading = true;
+  const qmsDocumentName = this.qmsalldata.qmsDocumentName;
+  if (qmsDocumentName) { // Check if ismsDocumentName is not undefined
+    this.ielc.GetQMSMasterTableDocName(qmsDocumentName)
+      .subscribe({
+        next: (data) => {
+          this.qmsdetails = data;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Error fetching ISMS Master Table:', err);
+          this.isLoading = false;
+        }
+      });
+  } else {
+    console.error('ismsDocumentName is undefined');
+    this.isLoading = false;
+  }
+}
+totalQMSDocs: number = 0;
+totalQMSPolicies: number = 0;
+totalQMSProcedures: number = 0;
+totalQMSGuidelines: number = 0;
+totalQMSFormats: number = 0;
+totalQMS: number = 0;
+
+//filtercounts
+updateQMSCounts() {
+  const docs = this.filteredQMSDocs || [];
+  this.totalQMSDocs = docs.length;
+  this.totalQMSPolicies = docs.filter(x => x.qmsDocType?.toLowerCase() === 'policy').length;
+  this.totalQMSProcedures = docs.filter(x => x.qmsDocType?.toLowerCase() === 'procedures').length;
+  this.totalQMSGuidelines = docs.filter(x => x.qmsDocType?.toLowerCase() === 'guidelines').length;
+  this.totalQMSFormats = docs.filter(x => x.qmsDocType?.toLowerCase() === 'formats').length;
+  this.totalQMS = docs.filter(x => x.qmsDocType?.toLowerCase() === 'qms').length;
+}
+
+
+docnameqms: string = '';
+
+  clearQMS(){
+    this.docnameqms = '';
+   this.GetQMSDetails()
+ } 
+noResultsFoundqms: boolean = false;
+ onTextChangeQMS() {
+  if (!this.docnameqms.trim()) {
+    this.noResultsFoundqms = false;
+    this.filteredQMSDocs = this.qmsdetails;
+    this.updateQMSCounts();
+  }
+}
+
+searchSkillsQMS() {
+  const search = this.docnameqms?.trim().toLowerCase();
+  
+  if (!search) {
+    this.noResultsFoundqms = false;
+    this.filteredQMSDocs = this.qmsdetails;
+    this.updateQMSCounts();
+    return;
+  }
+
+  // 🔍 Filter locally
+  this.filteredQMSDocs = this.qmsdetails.filter((doc: any) =>
+    doc.qmsDocumentName?.toLowerCase().includes(search)
+  );
+
+  // 🚫 Show "no results" if nothing matches
+  if (this.filteredQMSDocs.length === 0) {
+    this.noResultsFoundqms = true;
+  } else {
+    this.noResultsFoundqms = false;
+  }
+
+  // optional: update counts based on filtered data
+  this.updateQMSCounts();
+}
+
+AddQMSDetails(): void {
+  const qmsdata = {
+    qmsDept: this.qmsalldata.qmsDept,
+    qmsDocType: this.qmsalldata.qmsDocType,
+    qmsDocumentName: this.qmsalldata.qmsDocumentName,
+    url: this.qmsalldata.url,
+    qmsDocumentNo: this.qmsalldata.qmsDocumentNo,
+    qmsCurrentVersion: this.qmsalldata.qmsCurrentVersion,
+    documentMaintainedBy: this.qmsalldata.documentMaintainedBy
+  };
+
+  this.ielc.PostQMSMasterTable(qmsdata).subscribe({
+    next: (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetQMSDetails();
+      this.resetQMSDetails();
+    },
+    error: (error) => {
+      console.error('Error adding record:', error);
+      alert('❌ Error adding Record. Please try again.');
+    }
+  });
+}
+
+
+    deleteQMSDetails(id: number) {
+    if (confirm('Are you sure you want to delete this record?')) {
+      this.ielc.DeleteQMSMasterTable(id).subscribe({
+        next: () => {
+          alert(`Record with ID ${id} deleted successfully!`);
+          this.GetQMSDetails();
+        },
+         error: (err) =>  console.error('Error deleting item:', err)
+      });
+    }
+  }
+  EditQMSDetails(id: number) {
+    //debugger;
+  this.ielc.GetQMSMasterTableId(id).subscribe(data => {
+    if (data) {
+      this.qmsalldata = { 
+        documentID: data.documentID || 0,
+        qmsDept: data.qmsDept || '',
+        qmsDocType: data.qmsDocType || '',
+        qmsDocumentName:data.qmsDocumentName || '',
+       url:data.url || '',
+       qmsDocumentNo:data.qmsDocumentNo || '',
+       qmsCurrentVersion:data.qmsCurrentVersion || '',
+       documentMaintainedBy:data.documentMaintainedBy || ''
+      };
+      //console.log("API Response:", data);
+    } else {
+       console.warn("No data received for the given ID.");
+    }
+  }, error => {
+     console.error("Error fetching record:", error);
+  });
+}
+
+UpdateQMSDetails() {
+  debugger;
+  this.ielc.UpdateQMSMasterTable(this.qmsalldata.documentID, this.qmsalldata).subscribe(
+    (response) => {
+      alert(" ✅ Record updated successfully!");
+      this.GetQMSDetails();
+      this.resetQMSDetails();
+      console.log("Updated Successfully:", response);
+    },
+    (error) => {
+       console.error("Error updating Record:", error);
+    }
+  );
+}
+
+resetQMSDetails() {
+  this.qmsalldata = {
+    documentID: 0,
+    qmsDept: '',
+    qmsDocType: '',
+    qmsDocumentName: '',
+    url: '',
+    qmsDocumentNo: '',
+    qmsCurrentVersion: 0,
+    documentMaintainedBy: ''
+  };
+}
+
 
   //--------------------------------------------------------------------------------CreateTables
 

@@ -2658,10 +2658,6 @@ createEventTables(): Observable<any> {
   return this.http.put<any>(`${this.ISMSMasterTableUrl}/${id}`, updatedData, { headers });
 }
 
-// GetISMSMasterTableDocName(documentName: string): Observable<any> {
-//   return this.http.get<any>(`${this.ISMSMasterTableUrl}/search/${documentName}`, { headers: this.getHeaders() });
-// }
-
 GetISMSMasterTableDocName(documentName: string): Observable<any> {
   return this.http.get<any>(
     `${this.ISMSMasterTableUrl}/search/${encodeURIComponent(documentName)}`,
@@ -2669,6 +2665,42 @@ GetISMSMasterTableDocName(documentName: string): Observable<any> {
   );
 }
 
+//---------------------------------------------------------------------------------------QMSMasterTable
 
+    QMSMasterTableUrl='https://ielcapitest.azurewebsites.net/QMSMasterTable';
+    GetQMSMasterTable(): Observable<UsersInfo[]> {
+      return this.http.get<UsersInfo[]>(this.QMSMasterTableUrl, {
+        headers: this.getHeaders()
+      });
+    }
+
+    GetQMSMasterTableId(id: number): Observable<any> {
+  return this.http.get<any>(
+    `${this.QMSMasterTableUrl}/${id}`,
+    { headers: this.getHeaders() }
+  );
+}
+
+    PostQMSMasterTable(ismsdata: any): Observable<any> {
+      return this.http.post<any>(this.QMSMasterTableUrl, ismsdata, { headers: this.getHeaders() });
+    }
+
+    DeleteQMSMasterTable(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.QMSMasterTableUrl}/${id}`, {
+        headers: this.getHeaders()
+      });
+    }
+
+    UpdateQMSMasterTable(id: number, updatedData: any): Observable<any> {
+  const headers = this.getHeaders();
+  return this.http.put<any>(`${this.QMSMasterTableUrl}/${id}`, updatedData, { headers });
+}
+
+GetQMSMasterTableDocName(documentName: string): Observable<any> {
+  return this.http.get<any>(
+    `${this.QMSMasterTableUrl}/search/${encodeURIComponent(documentName)}`,
+    { headers: this.getHeaders() }
+  );
+}
 
 }
