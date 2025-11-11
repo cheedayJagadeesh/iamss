@@ -517,10 +517,22 @@ eventschuser: eventscuserinfo = {
     const all = (this.ismsdetails || []).map((item: any) => item.ismsDocumentNo).filter(Boolean);
     this.uniqueDocNos = Array.from(new Set(all));
   }
-  updateUniqueVersions(): void {
-    const all = (this.ismsdetails || []).map((item: any) => item.ismsCurrentVersion).filter(Boolean);
+  // updateUniqueVersions(): void {
+  //   const all = (this.ismsdetails || []).map((item: any) => item.ismsCurrentVersion).filter(Boolean);
+  //   this.uniqueVersions = Array.from(new Set(all));
+  // }
+
+    updateUniqueVersions(): void {
+    const all = (this.ismsdetails || []).map((item: any) => {
+      if (item.ismsCurrentVersion === null || item.ismsCurrentVersion === undefined || item.ismsCurrentVersion === '') {
+        return '';
+      }
+      return item.ismsCurrentVersion;
+    });
     this.uniqueVersions = Array.from(new Set(all));
   }
+
+
   updateUniqueMaintainedBy(): void {
     const all = (this.ismsdetails || []).map((item: any) => item.documentMaintainedBy).filter(Boolean);
     this.uniqueMaintainedBy = Array.from(new Set(all));
@@ -890,7 +902,13 @@ eventschuser: eventscuserinfo = {
       const deptMatch = this.selectedDepts.length === 0 || this.selectedDepts.includes(item.ismsDept);
       const docTypeMatch = this.selectedDocTypes.length === 0 || this.selectedDocTypes.includes(item.ismsDocType);
       const docNoMatch = this.selectedDocNos.length === 0 || this.selectedDocNos.includes(item.ismsDocumentNo);
-      const versionMatch = this.selectedVersions.length === 0 || this.selectedVersions.includes(item.ismsCurrentVersion);
+      //const versionMatch = this.selectedVersions.length === 0 || this.selectedVersions.includes(item.ismsCurrentVersion);
+        const versionMatch = this.selectedVersions.length === 0 ||
+          (item.ismsCurrentVersion === null && this.selectedVersions.includes('')) ||
+          (item.ismsCurrentVersion === undefined && this.selectedVersions.includes('')) ||
+          (item.ismsCurrentVersion === '' && this.selectedVersions.includes('')) ||
+          this.selectedVersions.includes(item.ismsCurrentVersion);
+  
       const maintainedByMatch = this.selectedMaintainedBy.length === 0 || this.selectedMaintainedBy.includes(item.documentMaintainedBy);
       return deptMatch && docTypeMatch && docNoMatch && versionMatch && maintainedByMatch;
     });

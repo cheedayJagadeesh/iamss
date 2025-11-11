@@ -12955,7 +12955,7 @@
                         <span *ngIf="!ismsde.url">{{ ismsde.ismsDocumentName }}</span>
                     </td>
                     <td>{{ismsde.ismsDocumentNo}}</td>
-                    <td>{{ismsde.ismsCurrentVersion}}</td>
+                    <td>{{ismsde.ismsCurrentVersion == null || ismsde.ismsCurrentVersion === '' ? '-' : ismsde.ismsCurrentVersion}}</td>
                     <td>{{ismsde.documentMaintainedBy}}</td>
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
@@ -13113,7 +13113,6 @@
         </table>
     </div> 
 
-    #--
 
     <div *ngIf="isLoading" class="loading-container">
         <span class="dot"></span>
