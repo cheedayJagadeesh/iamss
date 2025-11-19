@@ -88,6 +88,7 @@
     font-weight: 700;
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
     margin-left: 265px;
+    
 }
 .header-logo-fit {
     /* Ensures the logo doesn't exceed the height of the header bar. 
@@ -96,11 +97,15 @@
     /* Optional: Sets a maximum width to prevent distortion if the header is very wide */
     max-width: 150px; 
     /* Ensures the image scales down correctly without being cut off */
-    width: auto; 
+    width: 100%; 
     height: auto;
 }
 
 /* You may need this if your header bar has a fixed height */
 .header-left {
     height: 60px; /* Example height of the header bar */
+}
+.header-center {
+    width: 118%;
+    margin-left: -10%;
 }

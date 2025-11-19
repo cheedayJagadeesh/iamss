@@ -1,53 +1,70 @@
-<form class="row g-3">
-    <!-- <div>
-        <label class="lbllogin">Login as </label>
-    </div> -->
-    <app-sprtheader></app-sprtheader>
-    <img class="img" src="/assets/images/Inteq logo.png">
-    <div>
-        <button class="btn btn-dark btnback" routerLink="/registration">Back</button>
-    </div>
-    <h1 class="h1">Welcome to INTEQ Emergency Contact List</h1>
+<form class="container py-4">
+
+    <!-- Header -->
+    <app-userheader pageTitle="Welcome to INTEQ Emergency Contact List"></app-userheader>
+
+    <!-- Loader -->
     <div *ngIf="isLoading" class="loading-container">
         <span class="dot"></span>
     </div>
-    <div class="tablebottom">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="emergencycnctlist" >
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col">Functions/Operations/Projects</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Mobile</th>
-                    <th scope="col">Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let row of emersprtlist" >
-                    <td>{{row.functions}}</td>
-                    <td>{{row.name}}</td>
-                    <td>{{row.mobile}}</td>
-                    <td>{{row.email}}</td>   
-                </tr>
-            </tbody>
-        </table>
-    </div> 
-    <h4 class="h4">Emergency Reference Docs</h4>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="emergency">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of EmerGeneraldata" >
-                    <td>{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
-                </tr>
-            </tbody>
-        </table>
+
+    <!-- Emergency Contact List -->
+    <div class="card shadow-sm my-4 fade-in">
+        <div class="card-header bg-danger text-white fw-bold">
+            Emergency Contact Details
+        </div>
+
+        <div class="card-body p-0">
+            <table *ngIf="!isLoading" class="table table-hover table-striped mb-0">
+                <thead class="table-light sticky-top">
+                    <tr>
+                        <th>Functions / Operations / Projects</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of emersprtlist">
+                        <td>{{row.functions}}</td>
+                        <td>{{row.name}}</td>
+                        <td>{{row.mobile}}</td>
+                        <td>{{row.email}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+
+    <!-- Emergency Reference Docs Section Title -->
+    <h3 class="fw-bold text-center text-primary mt-5 fade-in delay-1">
+        Emergency Reference Documents
+    </h3>
+
+    <!-- Emergency Documents -->
+    <div class="card shadow-sm my-4 fade-in delay-2">
+        <div class="card-header bg-info text-white fw-bold">
+            Reference Documents
+        </div>
+
+        <div class="card-body p-0">
+            <table *ngIf="!isLoading" class="table table-hover mb-0">
+                <thead class="table-light sticky-top">
+                    <tr>
+                        <th style="width:70%">Document Name</th>
+                        <th style="width:30%">Share Path</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of EmerGeneraldata">
+                        <td>{{item.documentName}}</td>
+                        <td>
+                            <a [href]="item.url" target="_blank">Click Here</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </form>

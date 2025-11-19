@@ -47,7 +47,7 @@
     margin-left: 40%;
     width: 10%;
 } */
-.container {
+.container1 {
     max-width: 600px; /* Adjust width */
     background: #f8f9fa; /* Light background */
     padding: 20px;
@@ -119,9 +119,9 @@ select:disabled {
 
   .buttonlogout{
     margin-left: 93%;
-    margin-top: -4%;
+    margin-top: 8%;
     position: absolute;
-    width: 5%;
+    width: 7%;
 }
 
 .loading-container {
@@ -155,3 +155,115 @@ select:disabled {
     0%, 100% { transform: scale(1); opacity: 0.5; }
     50% { transform: scale(1.5); opacity: 1; }
   }
+  
+  /* Cards */
+.card {
+    border-radius: 12px;
+}
+
+.card-header {
+    font-size: 1.15rem;
+}
+
+/* Sticky table header */
+.sticky-header th {
+    position: sticky;
+    top: 0;
+    background: #e8f1ff !important;
+    z-index: 5;
+}
+
+/* Fade-in effects */
+.fade-in {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn .7s ease-out forwards;
+}
+
+.delay-1 { animation-delay: .25s; }
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Smooth dropdown UI */
+.form-select {
+    padding: 10px;
+    border-radius: 8px;
+}
+
+/* Submit button styling */
+.btn-info {
+    background: #0dcaf0;
+    border: none;
+}
+.head{
+    margin-left: 8%;
+    width: 86%;
+}
+
+/* Fade-in animation */
+.fade-in { opacity: 0; animation: fadeIn 0.8s ease-out forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: translateY(0);} }
+
+/* Card Hover */
+.card-animate { transition: 0.3s ease; border-radius: 14px; }
+.card-animate:hover { transform: translateY(-6px); box-shadow: 0 8px 25px rgba(0,0,0,0.25); }
+
+/* Gradient Header */
+.gradient-header {
+    background: steelblue;
+    padding: 10px 15px;
+    color: #fff;
+    border-radius: 8px;
+    font-weight: 600;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+}
+
+/* Stylish dropdown */
+.stylish-select {
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+.stylish-select:hover, .stylish-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 8px rgba(13,110,253,0.3);
+}
+
+/* Logout button */
+.logout-btn {
+    border-radius: 40px;
+    padding: 8px 25px;
+    font-size: 1rem;
+    transition: 0.3s;
+    margin-left: 100%;
+    margin-top: 2%;
+}
+.logout-btn:hover {
+    transform: scale(1.05);
+}
+
+/* Table Row Hover */
+table.table tbody tr {
+    transition: 0.25s ease;
+}
+table.table tbody tr:hover {
+    background-color: #e9f4ff;
+    transform: scale(1.01);
+}
+
+/* Animated rows */
+.table-row { animation: fadeIn 0.8s ease-out forwards; }
+
+/* Fancy Table */
+.stylish-table {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+}
