@@ -1,113 +1,322 @@
-.img{
-    height: 100px;
-    width: 200px;
-}
-.btnback{
-    margin-left: 92%;
-    margin-top: -7%;
-}
-.lbllogin{
-    margin-top: 1.5%;
-    margin-left: 75%;
-    position: absolute;
-}
-h1 {
-    /* font-family: Times New Roman; */
-    display: block;
-    font-size: 2em;
-    font-weight: bold;
-    unicode-bidi: isolate;
-    text-align: center;
-    color: rgb(0, 3, 12);
-    margin-top: -3%;
-}
-.h2 {
-    /* font-family: Times New Roman; */
-    display: block;
-    font-size: 1.3em;
-    font-weight: bold;
-    unicode-bidi: isolate;
-    text-align: left;
-    color: rgb(0, 3, 12);
-    margin-left: 25%;
-    width: 30%;
-}
-.h3{
-    margin-top: 0%;
-    margin-right: 14%;
-}
-.btnlnk{
-    margin-top: -5.8%;
-    margin-left: 10%;
-}
-.tablebottom {
-    margin-top: 0%;
-    border-collapse: collapse;
-    width: 50%;
-    margin-left: 25%;
-    
-}
-.tablebottom1 {
-    margin-top: 0%;
-    border-collapse: collapse;
-    width: 40%;
-    margin-left: 30%;
-    
-}
-.pagination {
-    margin-left: 72%;
-}
-.divmodal{
-    margin-top: 1%;
-    font-size: 15px;
-}
-.headermodal{
-    font-size: 15px;
-    font-weight: bold;
-}
-.divtext{
-   text-align: center;
-}
-.h4{
-        /* font-family: Times New Roman; */
-        display: block;
-        font-size: 1.3em;
-        font-weight: bold;
-        unicode-bidi: isolate;
-        text-align: center;
-        color: rgb(0, 3, 12);
+/* =====================================
+   PREMIUM LIGHT THEME (PASTEL VERSION)
+   ===================================== */
+:root {
+  --primary: #5C80BC;        /* pastel steel blue */
+  --primary-alt: #4A6FA5;    /* darker pastel blue */
+  --accent: #A2D6F9;         /* sky blue */
+  --accent-light: #CDEFFF;   /* very soft blue */
 
+  --success: #87CBB9;        /* mint green */
+
+  --bg: #F7F9FC;             /* ultra light clean bg */
+  --panel: #FFFFFF;
+  --border: #DCE7F5;
+
+  --text-dark: #2B3A55;
+  --text-muted: #6C7486;
+
+  --hover-row: #F0F6FF;
+  --hover-button: #E3EDF9;
+}
+.text{
+      font-size: large;
+      text-align: left;
+      margin-top: 54px;
+}
+.table-title {
+  font-size: 1.1rem;
+  color: #1e3a8a;
+  letter-spacing: 0.3px;
 }
 
+/* Page background */
+body, form.container-fluid {
+  background: var(--bg) !important;
+}
 
-.loading-container {
-    position: fixed; /* Ensures it stays in place */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Centers it exactly */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.8); /* Optional: adds a light overlay */
-    z-index: 9999; /* Ensures it's above other elements */
+/* Logo */
+.brand-logo {
+  height: 80px;
+  max-width: 200px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.12));
+  animation: fadeIn 1s ease;
+}
+
+/* =======================
+   CARD DESIGN
+   ======================= */
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0;
+  transition: 0.30s ease-in-out;
+  animation: slideUp 0.6s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.09);
+}
+
+/* Card Header */
+.card-header {
+  background: linear-gradient(90deg, var(--primary) 0%, var(--primary-alt) 100%) !important;
+  color: #fff !important;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  border-radius: 16px 16px 0 0;
+}
+
+/* SUCCESS HEADER (Mint) */
+.card-header.bg-success {
+  background: linear-gradient(90deg, var(--success), #68b49f) !important;
+}
+
+/* =======================
+   TABLES
+   ======================= */
+.table {
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--panel);
+}
+
+.table thead th {
+  background: #E9F1FB;
+  color: var(--text-dark);
+  font-weight: 600;
+  border-bottom: 2px solid var(--border);
+  letter-spacing: 0.3px;
+}
+
+.table td, .table th {
+  padding: 12px;
+  vertical-align: middle;
+  color: var(--text-dark);
+}
+
+/* Hover effect */
+.table tbody tr:hover {
+  background: var(--hover-row) !important;
+  transition: background 0.25s;
+}
+
+/* =======================
+   SEARCH + INPUTS
+   ======================= */
+input.form-control {
+  border: 1px solid var(--border);
+  background: #FAFCFF;
+  border-radius: 6px;
+  transition: 0.2s ease;
+}
+
+input.form-control:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 4px rgba(92,128,188,0.35);
+}
+
+/* =======================
+   BUTTONS
+   ======================= */
+.btn-primary {
+  background: linear-gradient(90deg, var(--primary), var(--primary-alt)) !important;
+  border: none !important;
+  color: blue !important;
+  transition: 0.3s;
+}
+
+
+.btn-primary:hover {
+  background: linear-gradient(90deg, var(--primary-alt), var(--primary)) !important;
+}
+
+.btn-info {
+  background: var(--accent) !important;
+  color: var(--text-dark) !important;
+  border: none;
+}
+
+.btn-info:hover {
+  background: var(--accent-light) !important;
+}
+
+.btn-outline-secondary {
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--hover-button);
+}
+
+/* =======================
+   DROPDOWN FILTERS
+   ======================= */
+.dropdown-toggle {
+  background: #F1F6FF;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  color: var(--text-dark);
+  transition: 0.2s;
+}
+
+.dropdown-toggle:hover {
+  background: var(--accent-light);
+  color: #1c2e52;
+}
+
+.dropdown-menu {
+  background: beige;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+  padding: 10px;
+  animation: fadeIn 0.2s ease;
+}
+
+/* =======================
+   LINKS
+   ======================= */
+a {
+  color: blue;
+  transition: 0.2s ease;
+}
+
+a:hover {
+  color: blue;
+  text-decoration: underline;
+}
+
+/* =======================
+   LOADING ANIMATION
+   ======================= */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255,255,255,0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+}
+
+/* =======================
+   ANIMATIONS
+   ======================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =======================
+   RESPONSIVE
+   ======================= */
+@media (max-width: 768px) {
+  .table th, .table td {
+    font-size: 0.82rem;
   }
-  
-  .dot {
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    background-color: #3498db;
-    border-radius: 50%;
-    animation: pulse 1.5s infinite;
-    margin: 0 5px;
+  input.form-control {
+    width: 100% !important;
   }
-  
-  .dot:nth-child(2) { animation-delay: 0.2s; }
-  .dot:nth-child(3) { animation-delay: 0.4s; }
-  
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); opacity: 0.5; }
-    50% { transform: scale(1.5); opacity: 1; }
-  }
+}
+/* Fade-in animation with slight slide */
+.fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+  opacity: 0;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animation delay utilities */
+.delay-1 {
+  animation-delay: 0.2s;
+}
+.delay-2 {
+  animation-delay: 0.4s;
+}
+
+/* Card hover zoom + neon glow */
+.card-animate {
+  transition: all 0.3s ease;
+  border-radius: 15px;
+  backdrop-filter: blur(6px);
+}
+.card-animate:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 132, 255, 0.3);
+  border: 1px solid rgba(0, 132, 255, 0.7);
+}
+
+/* Gradient headers */
+.gradient-header {
+  background: linear-gradient(135deg, #0d6efd, #49b5ff);
+  color: white !important;
+  padding: 12px 18px;
+  font-weight: 600;
+  border-radius: 10px;
+  letter-spacing: 0.3px;
+  box-shadow: 0 3px 10px rgba(13, 110, 253, 0.35);
+}
+
+/* Glass effect card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 15px;
+}
+
+/* Table row slide-in animation */
+.table-row {
+  animation: slideIn 0.5s ease-out forwards;
+  opacity: 0;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+/* Gradient red highlight text */
+.gradient-text {
+  background: linear-gradient(90deg, #ff3b3b, #ff7b7b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Email button-style link */
+.email-link {
+  font-size: 1.3rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #0d6efd;
+  transition: all 0.3s ease;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(13, 110, 253, 0.1);
+}
+
+.email-link:hover {
+  background: rgba(13, 110, 253, 0.2);
+  text-decoration: underline;
+  transform: translateY(-2px);
+}
+
+/* Fade-in animation reused */
+.fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+  opacity: 0;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

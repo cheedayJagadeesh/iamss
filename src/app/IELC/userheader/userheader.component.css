@@ -1,0 +1,106 @@
+/* ====================================
+   GRADIENT STICKY HEADER
+   ==================================== */
+.gradient-header {
+  background: linear-gradient(90deg, #4A6FA5 0%, #6EA7C3 100%);
+  color: #ffffff;
+}
+
+/* Make header sticky */
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 2000;
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+}
+
+/* Shadow appears when page scrolls */
+.sticky-header.scrolled {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.22);
+}
+
+/* LOGO */
+.header-logo {
+  height: 55px;
+  width: auto;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.22));
+}
+
+/* CENTER TITLE */
+.page-heading {
+  margin: 0;
+  font-size: 1.45rem;
+  color: #ffffff;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+}
+
+/* RIGHT SECTION */
+.header-right {
+  gap: 12px;
+}
+.user-text {
+  font-size: 0.95rem;
+  color: #eef6ff;
+}
+
+.btn-outline-light {
+  border-radius: 6px;
+  padding: 5px 14px;
+  color: #ffffff;
+  border-color: #ffffff !important;
+  transition: 0.25s;
+}
+
+.btn-outline-light:hover {
+  background-color: rgba(255,255,255,0.2);
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .sticky-header {
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem !important;
+  }
+  
+  .header-right {
+    margin-top: 10px;
+  }
+
+  .page-heading {
+    font-size: 1.2rem;
+  }
+
+  .header-logo {
+    height: 45px;
+  }
+}
+.label1 {
+    display: inline-block;
+    color: white;
+    font-weight: bold;
+}
+.head{
+    margin: 0;
+    font-size: 1.45rem;
+    color: #ffffff;
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    margin-left: 265px;
+}
+.header-logo-fit {
+    /* Ensures the logo doesn't exceed the height of the header bar. 
+       Adjust 100% or 40px/50px as needed based on your header's height. */
+    max-height: 100%; 
+    /* Optional: Sets a maximum width to prevent distortion if the header is very wide */
+    max-width: 150px; 
+    /* Ensures the image scales down correctly without being cut off */
+    width: auto; 
+    height: auto;
+}
+
+/* You may need this if your header bar has a fixed height */
+.header-left {
+    height: 60px; /* Example height of the header bar */
+}

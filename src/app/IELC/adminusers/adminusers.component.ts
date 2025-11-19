@@ -517,11 +517,6 @@ eventschuser: eventscuserinfo = {
     const all = (this.ismsdetails || []).map((item: any) => item.ismsDocumentNo).filter(Boolean);
     this.uniqueDocNos = Array.from(new Set(all));
   }
-  // updateUniqueVersions(): void {
-  //   const all = (this.ismsdetails || []).map((item: any) => item.ismsCurrentVersion).filter(Boolean);
-  //   this.uniqueVersions = Array.from(new Set(all));
-  // }
-
     updateUniqueVersions(): void {
     const all = (this.ismsdetails || []).map((item: any) => {
       if (item.ismsCurrentVersion === null || item.ismsCurrentVersion === undefined || item.ismsCurrentVersion === '') {
