@@ -1,16 +1,20 @@
-<app-header></app-header>
-<!-- <div>
-  <label class="lbllogin"></label>
-</div> -->
- <div *ngIf="isLoading" class="loading-container">
-        <span class="dot"></span>
-    </div>
-<form class="row" #searchform="ngForm" (ngSubmit)="searchSkills()">
-  <div class="d-flex justify-content-center bg-light pt-5">
-    <div class="container p-4 rounded shadow-sm bg-light border border-secondary mb-4" style="max-width: 1000px;">
+<app-leftmenu (sidebarToggled)="onSidebarToggled($event)"></app-leftmenu>
+
+<div class="content-wrapper" [class.sidebar-collapsed]="isSidebarClosed">
+  
+  <!-- Loading Animation -->
+  <div *ngIf="isLoading" class="loading-container">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  </div>
+
+  <form class="row" #searchform="ngForm" (ngSubmit)="searchSkills()">
+    <div class="container shadow-sm">
+
+      <h5 class="text-center mb-4 fw-bold text-primary">Search Enrolled Users</h5>
+
       <div class="row g-3">
         <!-- Skill Name -->
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-4">
           <label for="skillname" class="form-label">Skill Name</label>
           <select id="select2" class="form-select form-select-sm" name="skillname" [(ngModel)]="skillname">
             <option value="">- Select Skill -</option>
@@ -19,14 +23,13 @@
         </div>
 
         <!-- Email -->
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-4">
           <label for="time" class="form-label">Email</label>
           <input type="text" class="form-control form-control-sm" id="time" name="mail" [(ngModel)]="mail">
         </div>
 
-        <!-- Mode of Training + Buttons in one row -->
-        <div class="col-md-4 col-sm-12 d-flex align-items-end">
-          <!-- Mode of Training dropdown -->
+        <!-- Mode of Training + Buttons -->
+        <div class="col-md-4 d-flex align-items-end">
           <div class="me-2 flex-grow-1">
             <label for="modetype" class="form-label">Mode of Training</label>
             <select id="select1" name="modetype" class="form-select form-select-sm" [(ngModel)]="modetype">
@@ -36,7 +39,7 @@
               <option>Teams</option>
             </select>
           </div>
-          <!-- Buttons beside dropdown -->
+
           <div class="d-flex align-items-end">
             <button class="btn btnsearch me-1" type="submit">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
@@ -56,57 +59,63 @@
           </div>
         </div>
       </div>
+
       <!-- Date Range -->
       <div class="row mt-4">
-        <div class="col-sm-4">
-          <label for="fromDate" class="form-label">Choose Date Range From</label>
+        <div class="col-sm-6">
+          <label for="fromDate" class="form-label">From Date</label>
           <input type="date" class="form-control form-control-sm" name="fromdate" [(ngModel)]="fromDate">
         </div>
-        <div class="col-sm-4">
-          <label for="toDate" class="form-label">Choose Date Range To</label>
+        <div class="col-sm-6">
+          <label for="toDate" class="form-label">To Date</label>
           <input type="date" class="form-control form-control-sm" name="todate" [(ngModel)]="toDate">
         </div>
       </div>
-
     </div>
-  </div>
 
-  <div *ngIf="isLoading" class="loading-container">
-    <span class="dot"></span>
-  </div>
-  <div class="tablebottom">
-    <table class="table table-striped table-bordered">
-      <thead class="table-primary">
-        <tr>
-          <th scope="col">Enrollment Id</th>
-          <th scope="col">Name</th>
-          <th scope="col">Email</th>
-          <th scope="col">Mobile</th>
-          <th scope="col">Skill Name</th>
-          <th scope="col">Date</th>
-          <th scope="col">Time</th>
-          <th scope="col">Skill Type</th>
-          <th scope="col">Batch Members</th>
-          <th scope="col">Registered Date</th>
-        </tr>
-      </thead>
-      <tbody *ngIf="!isLoading">
-        <tr *ngFor="let row of Registeredusers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
-          <td>{{row.enrollmentID}}</td>
-          <td>{{row.name}}</td>
-          <td>{{row.mail}}</td>
-          <td>{{row.mobile}}</td>
-          <td>{{row.skillName}}</td>
-          <td>{{row.date}}</td>
-          <td>{{row.time}}</td>
-          <td>{{row.venue}}</td>
-          <td>{{row.batchmembers}}</td>
-          <td>{{row.enrollmentDate}}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="pagination">
-      <pagination-controls (pageChange)="page = $event"></pagination-controls>
+    <!-- Table Section -->
+    <div class="tablebottom mt-4">
+      <table class="table table-striped table-bordered align-middle">
+        <thead>
+          <tr>
+            <th>Enrollment Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Skill Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Skill Type</th>
+            <th>Batch Members</th>
+            <th>Registered Date</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="!isLoading && Registeredusers.length > 0; else noData">
+          <tr *ngFor="let row of Registeredusers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+            <td>{{ row.enrollmentID }}</td>
+            <td>{{ row.name }}</td>
+            <td>{{ row.mail }}</td>
+            <td>{{ row.mobile }}</td>
+            <td>{{ row.skillName }}</td>
+            <td>{{ row.date }}</td>
+            <td>{{ row.time }}</td>
+            <td>{{ row.venue }}</td>
+            <td>{{ row.batchmembers }}</td>
+            <td>{{ row.enrollmentDate }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Empty State -->
+      <ng-template #noData>
+        <tr><td colspan="10" class="text-center text-muted py-3">No records found.</td></tr>
+      </ng-template>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <pagination-controls (pageChange)="page = $event"></pagination-controls>
+      </div>
     </div>
-  </div>
-</form>
+
+  </form>
+</div>

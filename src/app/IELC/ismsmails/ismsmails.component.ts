@@ -25,6 +25,13 @@ interface ismsmailsinfo{
   styleUrls: ['./ismsmails.component.css']
 })
 export class IsmsmailsComponent implements OnInit {
+    // Track sidebar state
+  isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
   ismsmailsdata:ismsmailsinfo={
     id: 0,
     department: '',

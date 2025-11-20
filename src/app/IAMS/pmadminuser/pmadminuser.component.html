@@ -1,4 +1,6 @@
-<app-attendanceheader></app-attendanceheader>
+<app-leftmenu (sidebarToggled)="onSidebarToggled($event)"></app-leftmenu>
+ <div class="content-wrapper" [class.sidebar-collapsed]="isSidebarClosed">
+  <div class="main-container">
 <div>
   <label class="lbllogin"></label>
 </div>

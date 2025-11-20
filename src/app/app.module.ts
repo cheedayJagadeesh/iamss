@@ -92,7 +92,7 @@ import { EventschedulerComponent } from './IELC/eventscheduler/eventscheduler.co
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
 import { DocumentViewerComponent } from './IAMS/document-viewer/document-viewer.component';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { LeftmenuComponent } from './IELC/leftmenu/leftmenu.component';
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
@@ -271,7 +271,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     SprtheaderComponent,
     AuthcallbackComponent,
     EventschedulerComponent,
-    DocumentViewerComponent
+    DocumentViewerComponent,
+    LeftmenuComponent
   ],
   imports: [
     BrowserModule,
@@ -281,7 +282,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     NgbDatepickerModule,FormsModule,MatDatepickerModule,MatNativeDateModule,MatCardModule,FullCalendarModule,MatInputModule,
     MatFormFieldModule,MatButtonModule,MatIconModule,HttpClientModule,NgxPaginationModule,LazyLoadImageModule,
          MatDialogModule,
-    MatRadioModule,PdfViewerModule
+    MatRadioModule
   ],
   providers: [IelcapiService,HttpClient,AuthService,MsalModule,MsalGuard,MsalService,DatePipe,ExcelExportService,MsalBroadcastService, 
     {

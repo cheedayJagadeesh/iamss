@@ -100,7 +100,6 @@ interface EmailPayload {
 })
 export class RegistrationComponent implements OnInit {
 
-
 enrollmentList: any[] = [];
 submittedFeedbackIds: any[] = [];
 submittedResultIds: any[] = [];

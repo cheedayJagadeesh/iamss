@@ -1,136 +1,116 @@
-<app-header></app-header>
-  <form class="row g-3">
-    <!-- <div>
-        <label class="lbllogin">Login as <strong>{{ userName }}</strong> </label>
-    </div> -->
-    <h1 class="h1">Welcome to our website</h1>
-    <br>
-    <p class="p1">
-            Inteq is an ISO 9001:2015 certified company with CMMI initiative. Established in 1994, 
-            Inteq has a track record of providing software development and quality assurance services. 
-            We have built intellectual property and competence in emerging technologies and various domain areas. 
-            Our solutions include a line of outsourced product development and offshore software development services for small, 
-            medium corporations and emerging technology businesses.
-    </p>  
-    <h3 class="h3 blink">Our Customers:</h3>
-    <br>
-            <p class="p2">
-                    At Inteq, we are committed to delivering the best solution to each client 
-                    and believe in developing long-term partnerships. Our customers value 
-                    Inteq because of our expertise in technology and multiple domains, 
-                    coupled with a range of flexible engagement models for them to choose 
-                    from depending on the nature, suitability, budget and priority of the assignment.
-            </p>
-            <br>
-        <div class="images">
-            <p>
-                <img  src="/assets/images/citra.png">
-            </p>
-            <p>
-                <img  src="/assets/images/edlogia.jpg">
-            </p>
-            <p>
-                <img  src="/assets/images/globalexcel.png">
-            </p>
-            <p>
-                <img  src="/assets/images/atlas.png">
-            </p>
-            <p>
-                <img src="/assets/images/NNA.jpg">
-            </p>
-            <p>
-                <img  src="/assets/images/golf.jpg">
-            </p>
-            <p>
-                <img  src="/assets/images/redwood.png">
-            </p>
-            <p>
-                <img  src="/assets/images/tam.png">
-            </p>
-            <p>
-                <img  src="/assets/images/cgi.jpg">
-            </p>
-            <p>
-                <img  src="/assets/images/sage.png">
-            </p>
-            <p>
-                <img  src="/assets/images/inetwork.png">
-            </p>
-        </div>
-            <h4 class="h4 blink">Our Services:</h4>
-            <br>
-            <div class="services">
-                <p >Application Development</p>
-                <p >Application Migration</p>
-                <p >Application Maintenance</p>
-                <p >Software Validation</p>
-                <p >Oracle Application</p>
-                <p >Microsoft Dynamics</p>
-                <p >---GP</p>
-                <p >---CRM</p>
-                 <p >---Axapta</p>
-                 <p >---Navision</p>
-                 <p >Data Warehouse</p>
-                 <p >EI & EDI Services</p>
-                 <p >Consulting Services</p>
-                 <p >Healthcare BPO</p>
-            </div>
-            <h5 class="h5">Technology Partners:</h5>
-            <br>
-                 <p class="tp">
-                             Our technology partners including software vendors with whom we work to enhance our application and make our solutions
-                             more competitive and feature rich.
-                 </p>
-                 <div class="bottomimages" >
-                 <p>
-                    <img  src="/assets/images/logo_mcsp.gif">
-                </p>
-                <p>
-                    <img  src="/assets/images/p_logo5.jpg">
-                </p>
-                 </div>
-                <h6 class="h6">Why Inteq:</h6>
-                <p class="p3">
-                    At Inteq we believe in the principle-'Innovation through people'. 
-                    The core strength of Inteq is to provide high quality, cost effective information technology solutions.
-                    </p>
-            <div class="inteq">
-            <p >✓ We deploy Efficient and Accelerated Software Implementation Methodologies.</p>
-            <p >✓ We are an ISO 9001 company and exercise strong Quality Control.</p>
-            <p >✓ We have a Tradition of innovation - 'innovation through people'.</p>
-            <p >✓ Continuous effort to hone remote development methodology in order to sustain the offshore development model.</p>
-            <p >✓ We have state-of-the-art development facility.</p>
-            <p >✓ We have entire bandwidth of technology solutions.</p>
-            <p >✓ Domain expertise spanning various industry verticals.</p>
-        </div>
-        <h3 class="h7">Vision & Mission:</h3>
-        <br>
-        <h4 class="vision">Vision:</h4>
- <p class="visionm">
-"To be the recognized leader in providing reliable business solutions world-wide through computing and creative excellence"
-</p>
-<br>
-     <h4 class="mission">Mission:</h4>
-<p class="missionm">
-"Enable our clients to be competitive through deployment of efficient solutions and delivery of value added services , driven by 'Innovation Through People' "
-    </p>
+<app-leftmenu (sidebarToggled)="onSidebarToggled($event)"></app-leftmenu>
 
-     <h3 class="contact">Contact Us:</h3>
-        <br>
-<h4 class="registered">Registered Office and Delivery Centre:</h4>
-<p class="dc">We pride ourselves in providing you the best of our services. 
-    Your comments and suggestions are important to us as we continue to improve our services.We pride ourselves in providing you the best of our services.
-    </p>
-<br>
-<p class="info">
-Please feel free to correspond to us through the following contact information:
-     </p>
-<br>
-<p class="address">
-    1st Floor,<br />
-    Sapthagiri Towers,1-10-75/1/1-6, <br />
-    Begumpet, Hyderabad-500016, <br />
-    Telangana, India.<br />
-    Telefax: 91-40-27765332<br />
-    Website:  <a type="button" class="btn btn-link" href="https://www.inteqsolutions.com" target="_blank" rel="noopener noreferrer">www.inteqsolutions.com</a>
-  </form>
+<div class="content-wrapper" [class.sidebar-collapsed]="isSidebarClosed">
+  <div class="main-container">
+
+    <section class="hero-section">
+      <h1>Welcome to Our Website</h1>
+      <p>
+        Inteq is an ISO 9001:2015 certified company with CMMI initiative. Established in 1994, 
+        Inteq has a track record of providing software development and quality assurance services. 
+        We have built intellectual property and competence in emerging technologies and various domain areas. 
+        Our solutions include a line of outsourced product development and offshore software development services 
+        for small, medium corporations, and emerging technology businesses.
+      </p>
+    </section>
+
+    <section class="customers-section">
+      <h2 class="blink">Our Customers</h2>
+      <p>
+        At Inteq, we are committed to delivering the best solution to each client 
+        and believe in developing long-term partnerships. Our customers value 
+        Inteq because of our expertise in technology and multiple domains,
+        coupled with a range of flexible engagement models to suit their needs.
+      </p>
+
+      <div class="image-grid">
+        <img src="/assets/images/citra.png" alt="Citra" />
+        <img src="/assets/images/edlogia.jpg" alt="Edlogia" />
+        <img src="/assets/images/globalexcel.png" alt="Global Excel" />
+        <img src="/assets/images/atlas.png" alt="Atlas" />
+        <img src="/assets/images/NNA.jpg" alt="NNA" />
+        <img src="/assets/images/golf.jpg" alt="Golf" />
+        <img src="/assets/images/redwood.png" alt="Redwood" />
+        <img src="/assets/images/tam.png" alt="TAM" />
+        <img src="/assets/images/cgi.jpg" alt="CGI" />
+        <img src="/assets/images/sage.png" alt="Sage" />
+        <img src="/assets/images/inetwork.png" alt="Inetwork" />
+      </div>
+    </section>
+
+    <section class="services-section">
+      <h2 class="blink">Our Services</h2>
+      <ul>
+        <li>Application Development</li>
+        <li>Application Migration</li>
+        <li>Application Maintenance</li>
+        <li>Software Validation</li>
+        <li>Oracle Application</li>
+        <li>Microsoft Dynamics (GP, CRM, Axapta, Navision)</li>
+        <li>Data Warehouse</li>
+        <li>EI & EDI Services</li>
+        <li>Consulting Services</li>
+        <li>Healthcare BPO</li>
+      </ul>
+    </section>
+
+    <section class="partners-section">
+      <h2>Technology Partners</h2>
+      <p>
+        Our technology partners include software vendors with whom we work to enhance our applications and 
+        make our solutions more competitive and feature-rich.
+      </p>
+      <div class="image-grid small">
+        <img src="/assets/images/logo_mcsp.gif" alt="Microsoft Partner" />
+        <img src="/assets/images/p_logo5.jpg" alt="Partner Logo" />
+      </div>
+    </section>
+
+    <section class="why-section">
+      <h2>Why Inteq</h2>
+      <p>
+        At Inteq we believe in the principle — “Innovation through people”. 
+        The core strength of Inteq is to provide high quality, cost-effective information technology solutions.
+      </p>
+      <ul>
+        <li>Efficient and accelerated software implementation methodologies.</li>
+        <li>ISO 9001 certified with strong quality control.</li>
+        <li>Tradition of innovation - "Innovation through people".</li>
+        <li>Continuous refinement of remote development methodologies.</li>
+        <li>State-of-the-art development facility.</li>
+        <li>Comprehensive technology bandwidth and domain expertise.</li>
+      </ul>
+    </section>
+
+    <section class="vision-section">
+      <h2>Vision & Mission</h2>
+      <h3>Vision</h3>
+      <p>
+        “To be the recognized leader in providing reliable business solutions worldwide through computing and creative excellence.”
+      </p>
+      <h3>Mission</h3>
+      <p>
+        “Enable our clients to be competitive through deployment of efficient solutions and delivery of value-added services, driven by ‘Innovation Through People’.”
+      </p>
+    </section>
+
+    <section class="contact-section">
+      <h2>Contact Us</h2>
+      <h3>Registered Office and Delivery Centre</h3>
+      <p>
+        We pride ourselves in providing you the best of our services. Your comments and suggestions help us improve continuously.
+      </p>
+      <p>
+        Please feel free to correspond with us through the following contact information:
+      </p>
+      <address>
+        1st Floor, Sapthagiri Towers, 1-10-75/1/1-6, <br />
+        Begumpet, Hyderabad-500016, Telangana, India. <br />
+        Telefax: 91-40-27765332 <br />
+        Website: 
+        <a href="https://www.inteqsolutions.com" target="_blank">www.inteqsolutions.com</a>
+      </address>
+    </section>
+
+  </div>
+</div>

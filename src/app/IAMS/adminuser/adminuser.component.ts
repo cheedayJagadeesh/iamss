@@ -17,6 +17,14 @@ import { FormControl, FormGroup, NgForm } from '@angular/forms';
   styleUrls: ['./adminuser.component.css']
 })
 export class AdminuserComponent {
+// Track sidebar state
+  isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
+
   selectedDate:string=''
 //  selectedDate= new Date().toISOString().split('T')[0]
   searchname=''

@@ -1,4 +1,6 @@
-<app-qmsheader></app-qmsheader>
+ <app-leftmenu (sidebarToggled)="onSidebarToggled($event)"></app-leftmenu>
+ <div class="content-wrapper" [class.sidebar-collapsed]="isSidebarClosed">
+  <div class="main-container">
 <form>
     <div *ngIf="isLoading" class="loading-container">
         <span class="dot"></span>

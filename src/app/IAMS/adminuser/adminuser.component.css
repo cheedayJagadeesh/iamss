@@ -26,6 +26,10 @@ h1 {
     height: 250px;
     margin-left: 8%;
 }
+.main-container{
+    margin-top: 4%;
+    margin-left: 8%;
+}
 .h3 {
     /* font-family: Times New Roman; */
     display: block;
@@ -265,14 +269,14 @@ label {
     position: absolute;
 }
 .container-info {
-    border-style: solid;
+   border-style: solid;
     border-color: inherit;
     border-width: 1px;
-    margin-top: 1%;
-    width: 592px;
+    margin-top: -25%;
+    width: 574px;
     border-radius: 5px;
     height: 335px;
-    margin-left: 0.5%;
+    margin-left: 64.5%;
 }
 .drpmnth {
     position: relative;
@@ -512,4 +516,23 @@ label {
 .btnback{
     margin-top: -5%;
     margin-left: 95%;
+}
+/* LeftMenuBar adjustment */
+.content-wrapper {
+  margin-left: 100px;
+  transition: margin-left 0.3s ease;
+  padding: 20px;
+}
+
+.content-wrapper.sidebar-collapsed {
+  margin-left: -60px;
+}
+
+.sidebar {
+  width: 250px;
+  transition: width 0.3s ease;
+}
+
+.sidebar.collapsed {
+  width: 60px;
 }

@@ -78,6 +78,12 @@ export class SkillqaComponent implements OnInit {
     questionAnswer: ''
     
   }
+    isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
 
   constructor(private ielc:IelcapiService) {}
 

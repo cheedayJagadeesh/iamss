@@ -49,6 +49,13 @@ export class ResultinfoComponent implements OnInit  {
   itemsPerPage: number = 10; 
   displayedColumns = [];
   exportAllRecords = false;
+
+    isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
  
   // constructor(private ielc:IelcapiService) {}
 

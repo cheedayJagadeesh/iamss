@@ -7,6 +7,14 @@ import { IelcapiService } from '../ielcapi.service';
   styleUrls: ['./ismshistory.component.css']
 })
 export class IsmshistoryComponent implements OnInit {
+  
+  // Track sidebar state
+  isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
   isLoading = true;
   ismshistorylist: any[] = []; 
   years: number[] = [];

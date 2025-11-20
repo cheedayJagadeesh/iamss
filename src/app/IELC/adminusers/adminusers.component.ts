@@ -140,6 +140,14 @@ interface eventalertsinfo{
   styleUrls: ['./adminusers.component.css']
 })
 export class AdminusersComponent {
+
+      isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
+  
 isLoading=true;
   encodePassword (password: string): string {
     return btoa(password);
@@ -160,6 +168,8 @@ isLoading=true;
   isEventSchedulerSelected: boolean = false;
   isEventYearSelected: boolean = false;
   isEventMonthSelected: boolean = false;
+
+
 
 onSelection1Change() {
   this.isContactSelected = this.selectedOption1 === 'Contact';

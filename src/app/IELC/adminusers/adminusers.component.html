@@ -1,4 +1,6 @@
-<app-header></app-header>
+<app-leftmenu (sidebarToggled)="onSidebarToggled($event)"></app-leftmenu>
+ <div class="content-wrapper" [class.sidebar-collapsed]="isSidebarClosed">
+  <div class="main-container">
 <form class="row g-3" #form="ngForm">
     <div class="mt-5">
         <div class="d-flex justify-content-center">
@@ -11679,7 +11681,7 @@
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetAdminusers(); GetAdminuserslist()">Close</button>
                                             <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                                                [disabled]="!adminusersdata.pageName || !adminusersdata.email" (click)="AddAdminusers()">Add</button>
+                                                [disabled]="!adminusersdata.roleName || !adminusersdata.email" (click)="AddAdminusers()">Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -12798,3 +12800,5 @@
         </table>
     </div>
 </form>
+</div>
+</div>

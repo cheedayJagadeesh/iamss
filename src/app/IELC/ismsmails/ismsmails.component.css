@@ -116,4 +116,26 @@ th:nth-child(15), td:nth-child(15) { width: 70px; }
     0%, 100% { transform: scale(1); opacity: 0.5; }
     50% { transform: scale(1.5); opacity: 1; }
   }
-  
+  .main-container{
+    margin-top: 4%;
+    margin-left: 12%;
+}
+ /* LeftMenuBar adjustment */
+.content-wrapper {
+  margin-left: 100px;
+  transition: margin-left 0.3s ease;
+  padding: 20px;
+}
+
+.content-wrapper.sidebar-collapsed {
+  margin-left: -60px;
+}
+
+.sidebar {
+  width: 250px;
+  transition: width 0.3s ease;
+}
+
+.sidebar.collapsed {
+  width: 60px;
+}

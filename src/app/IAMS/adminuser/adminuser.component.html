@@ -1,8 +1,10 @@
+<app-leftmenu (sidebarToggled)="onSidebarToggled($event)"></app-leftmenu>
+ <div class="content-wrapper" [class.sidebar-collapsed]="isSidebarClosed">
+  <div class="main-container">
 <!-- <div class="p-3 mb-2 bg-light">
     <h1 class="h1" >INTEQ ATTENDANCE MANAGEMENT SYSTEM</h1>
 </div> -->
 <!-- <app-header></app-header> -->
- <app-attendanceheader></app-attendanceheader>
 <!-- <div class="p-3 mb-2">
     <h2 class="h2" >Admin User</h2>
 </div> -->
