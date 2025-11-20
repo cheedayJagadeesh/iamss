@@ -167,6 +167,73 @@ fakePercent = 0;
   }
   }
 
+
+userAnswers: { questionIndex: number; selected: string | null }[] = [];
+showConfirmSubmit = false;
+
+get answeredCount(): number {
+  return this.userAnswers.filter(a => !!a.selected).length;
+}
+
+// ✅ Progress percentage for progress bar
+get answeredProgress(): number {
+  const total = this.examdata?.displayExamQuestions || this.questions.length || 0;
+  if (!total) { return 0; }
+  return (this.answeredCount / total) * 100;
+}
+
+// Called when user selects an option
+onOptionSelect(option: string) {
+  const selectedCode = option.toUpperCase();
+  this.selectedAnswer = selectedCode;
+
+  const existing = this.userAnswers.find(a => a.questionIndex === this.currentQuestionIndex);
+  if (existing) {
+    existing.selected = selectedCode;
+  } else {
+    this.userAnswers.push({
+      questionIndex: this.currentQuestionIndex,
+      selected: selectedCode
+    });
+  }
+}
+
+// Optional: when you change question, restore previous answer
+loadSelectedAnswerForCurrentQuestion() {
+  const existing = this.userAnswers.find(a => a.questionIndex === this.currentQuestionIndex);
+  this.selectedAnswer = existing?.selected || '';
+}
+
+// NEXT question (example – merge with your existing code)
+nextQuestion() {
+  if (!this.selectedAnswer) { return; }
+
+  if (this.currentQuestionIndex < this.questions.length - 1) {
+    this.currentQuestionIndex++;
+    this.loadSelectedAnswerForCurrentQuestion();
+  }
+}
+
+// OPEN confirm submit dialog instead of direct submit
+openConfirmSubmit() {
+  if (!this.selectedAnswer) { return; }
+
+  // ensure current answer is stored
+  const code = this.selectedAnswer.toLowerCase();
+  this.onOptionSelect(code);
+
+  this.showConfirmSubmit = true;
+}
+
+cancelSubmit() {
+  this.showConfirmSubmit = false;
+}
+
+confirmSubmit() {
+  this.showConfirmSubmit = false;
+  this.submitExam(); // your existing submit logic
+}
+
   sortRegisteredUsers(data: any[]): any[] {
     return data.sort((a, b) => (a.enrollmentID > b.enrollmentID ? -1 : a.enrollmentID < b.enrollmentID ? 1 : 0));
   }
@@ -538,8 +605,7 @@ get availableOptions(): string[] {
     return this.questions[this.currentQuestionIndex];
   }
 
-nextQuestion() {
-  debugger;
+nextQuestion1() {
   if (this.selectedAnswer) {
     const questionid = this.currentQuestion.questionId;
 
