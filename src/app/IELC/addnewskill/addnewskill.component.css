@@ -26,3 +26,15 @@
     width: 84%;
     margin-left: 10%;
 }
+.buttonprnt {
+    cursor: pointer;
+    border-color: black;
+    color: black;
+    background-color: rgb(159, 196, 238);
+    width: 121px;
+    border-radius: 5px;
+    height: 35px;
+}
+.buttonsInsert{
+  margin-left:10%;
+}

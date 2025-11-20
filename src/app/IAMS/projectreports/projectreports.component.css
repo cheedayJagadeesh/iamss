@@ -50,3 +50,7 @@
 .sidebar.collapsed {
   width: 60px;
 }
+.text-truncate {
+  max-width: 100%;
+  display: block;
+}

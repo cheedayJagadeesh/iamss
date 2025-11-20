@@ -20,11 +20,14 @@
         </div>
 
         <!-- Buttons -->
-        <div class="col-auto">
-          <button type="button" class="btn btn-info me-2"
+        <div class="col-auto buttonsInsert">
+            <br>
+          <!-- <button type="button" class="btn btn-info me-2"
                   [disabled]="!skillNameRef.valid" (click)="AddSkill()">Insert</button>
           <button type="button" class="btn btn-danger"
-                  [disabled]="!skillNameRef.valid" (click)="DeleteSkill()">Delete</button>
+                  [disabled]="!skillNameRef.valid" (click)="DeleteSkill()">Delete</button> -->
+                   <button type="button" class="buttonprnt"  [disabled]="!skillNameRef.valid" (click)="AddSkill()">Insert</button>&nbsp;
+                   <button type="button" class="buttonprnt" [disabled]="!skillNameRef.valid" (click)="DeleteSkill()">Delete</button> 
         </div>
       </div>
 
