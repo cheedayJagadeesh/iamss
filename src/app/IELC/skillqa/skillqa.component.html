@@ -18,7 +18,7 @@
                             <!-- Dropdown -->
                             <div class="col-sm-8">
                                 <select name="skill" class="form-control" required [(ngModel)]="selectedSkill"
-                                    (change)="filterQuestions()">
+                                   (change)="onSkillChange()">
                                     <option value="" selected>- select skill -</option>
                                     <option *ngFor="let row of Enrolledskills" [value]="row.skillName">
                                         {{ row.skillName }}

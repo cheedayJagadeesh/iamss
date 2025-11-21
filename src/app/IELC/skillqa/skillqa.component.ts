@@ -67,7 +67,7 @@ export class SkillqaComponent implements OnInit {
   selectedSkill: string = ""; 
   allQuestions: Question[] = []; 
   filteredQuestions: Question[] = [];
-  isLoading = true;
+  isLoading = false;
   page: number = 1;  
   itemsPerPage: number = 10; 
   submitted = false;
@@ -92,25 +92,36 @@ export class SkillqaComponent implements OnInit {
 
   ngOnInit() {
     this.GetAllSkillsData();
-    this.GetAllSkillsQa();
+    // this.GetAllSkillsQa();
    }
   GetAllSkillsData(){
     this.ielc.GetEnrolledSkills().subscribe((data) => {
       this.Enrolledskills=data;
     });
    }
-   GetAllSkillsQa(){
-    this.isLoading = true;
-    this.ielc.Getskillqa().subscribe((data) => {
-      this.Enrolledskillqa=data;
+  GetAllSkillsQa() {
+  this.isLoading = true;
+
+  this.ielc.Getskillqa().subscribe({
+    next: (data) => {
+      this.Enrolledskillqa = data;
+
+      // Filter only questions matching skill
+      this.filteredQuestions = this.Enrolledskillqa.filter(
+        q => q.skillName === this.selectedSkill
+      );
+
       this.isLoading = false;
-      this.filteredQuestions = [...this.Enrolledskillqa];
-    });
-   }
+    },
+    error: () => {
+      this.isLoading = false;
+    }
+  });
+}
+
    sortRegisteredUsers(data: any[]): any[] {
     return data.sort((a, b) => (a.questionId > b.questionId ? -1 : a.questionId < b.questionId ? 1 : 0));
   }
-
   filterQuestions() {
     this.page = 1; // ✅ Reset to first page when filtering
     this.filteredQuestions = this.selectedSkill 
@@ -129,6 +140,13 @@ export class SkillqaComponent implements OnInit {
   //     }
   //   );
   // }
+onSkillChange() {
+  if (this.selectedSkill) {
+    this.GetAllSkillsQa(); // load QA only after selecting skill
+  } else {
+    this.filteredQuestions = [];
+  }
+}
 
   AddSkillsQa() {
     const requestData = {

@@ -75,7 +75,7 @@
     max-width: 900px; /* optional, to center or limit width */
     margin-top: 19%;
     margin-left: 8%;
-    position: absolute;
+    /* position: absolute; */
   }
   
   .images img {
