@@ -37,7 +37,7 @@
 
       <!-- 🔹 TOP BAR: BACK + TIMER -->
       <div class="exam-topbar d-flex justify-content-between align-items-center mb-3">
-        <button class="btn btn-outline-light btn-sm back-btn" routerLink="/registration" (click)="goBack()">
+        <button class="btn btn-outline-light btn-sm back-btn" (click)="goBack()">
           ← Back
         </button>
 
@@ -177,6 +177,40 @@
             <strong>{{ examPassed ? '🎉 Wohoo!' : '🙁 Oh no!' }}</strong>
           </h5>
         </div>
+ <!-- PASS EFFECTS -->
+<div *ngIf="examPassed">
+  
+  <!-- 🎆 Fireworks -->
+  <div class="fireworks">
+    <div class="explosion"></div>
+    <div class="explosion"></div>
+    <div class="explosion"></div>
+  </div>
+
+  <!-- 🎈 Balloons -->
+  <div class="balloon-wrapper">
+    <div class="balloon" *ngFor="let b of [].constructor(8); let i = index" 
+         [ngStyle]="{ '--i': i }"></div>
+  </div>
+
+</div>
+
+<!-- FAIL EFFECTS -->
+<!-- <div *ngIf="!examPassed">
+
+  <div class="storm">
+    <div class="lightning"></div>
+    <div class="lightning"></div>
+  </div>
+
+  <div class="rain-wrapper">
+    <div class="raindrop" *ngFor="let r of [].constructor(70); let i = index"
+         [ngStyle]="{ '--i': i }">😢</div>
+  </div>
+
+</div> -->
+
+
         <div class="modal-body">
           <p>
             <strong>

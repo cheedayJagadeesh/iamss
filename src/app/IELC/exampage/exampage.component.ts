@@ -72,6 +72,7 @@ interface Enrollment {
   styleUrls: ['./exampage.component.css']
 })
 export class ExampageComponent implements OnInit, OnDestroy  {
+
  
   questions: Question[] = [];
   resultdata: Enrollment = {
@@ -137,102 +138,77 @@ fakePercent = 0;
     });
   }
   
-   async ngOnInit(){
-    this.GetExamlist();
-    this.GetAllSkillsQa();
+  //  async ngOnInit(){
+  //   this.GetExamlist();
+  //   this.GetAllSkillsQa();
    
+  // try {
+  //   await this.msalService.instance.initialize();  
+  //   await this.msalService.instance.handleRedirectPromise();
+  //   const activeAccount = this.msalService.instance.getActiveAccount();
+  //   if (!activeAccount) {
+  //      console.warn("No active account found. Redirecting to login...");
+  //     this.router.navigate(['/login']);
+  //     return;
+  //   }
+
+  //   this.authService.setActiveAccount();
+
+  //   this.authService.userDetails$.subscribe(userDetails => {
+  //     this.userName = userDetails?.displayName ;
+  //     this.userEmail = userDetails?.email;
+  //     if (userDetails) {
+  //       this.userEmail = userDetails.email;
+  //       this.GetAllUsers();
+  //     }
+  //   }); 
+  // }
+  //  catch (error) {
+  //   // console.error("MSAL initialization error in HeaderComponent:", error);
+  // }
+  // }
+
+  async ngOnInit() {
+  // 1) Load exam meta first (time, number of questions, etc.)
+  this.ielc.GetSessionById(this.sessionID).subscribe(
+    (data: exam[]) => {
+      if (data && data.length > 0) {
+        this.examdataList = data;
+        this.examdata = data[0];
+        this.timeLeft = this.examdata.examTime * 60;
+
+        // ✅ NOW load questions using correct displayExamQuestions
+        this.GetAllSkillsQa();
+      }
+    },
+    error => {
+      console.error('Error fetching exam data', error);
+    }
+  );
+
+  // 2) Your existing MSAL / user loading logic stays as-is
   try {
-    await this.msalService.instance.initialize();  
+    await this.msalService.instance.initialize();
     await this.msalService.instance.handleRedirectPromise();
     const activeAccount = this.msalService.instance.getActiveAccount();
     if (!activeAccount) {
-       console.warn("No active account found. Redirecting to login...");
       this.router.navigate(['/login']);
       return;
     }
 
     this.authService.setActiveAccount();
-
     this.authService.userDetails$.subscribe(userDetails => {
-      this.userName = userDetails?.displayName ;
+      this.userName  = userDetails?.displayName;
       this.userEmail = userDetails?.email;
       if (userDetails) {
-        this.userEmail = userDetails.email;
         this.GetAllUsers();
       }
-    }); 
-  }
-   catch (error) {
-    // console.error("MSAL initialization error in HeaderComponent:", error);
-  }
-  }
-
-
-userAnswers: { questionIndex: number; selected: string | null }[] = [];
-showConfirmSubmit = false;
-
-get answeredCount(): number {
-  return this.userAnswers.filter(a => !!a.selected).length;
-}
-
-// ✅ Progress percentage for progress bar
-get answeredProgress(): number {
-  const total = this.examdata?.displayExamQuestions || this.questions.length || 0;
-  if (!total) { return 0; }
-  return (this.answeredCount / total) * 100;
-}
-
-// Called when user selects an option
-onOptionSelect(option: string) {
-  const selectedCode = option.toUpperCase();
-  this.selectedAnswer = selectedCode;
-
-  const existing = this.userAnswers.find(a => a.questionIndex === this.currentQuestionIndex);
-  if (existing) {
-    existing.selected = selectedCode;
-  } else {
-    this.userAnswers.push({
-      questionIndex: this.currentQuestionIndex,
-      selected: selectedCode
     });
+  } catch (error) {
+    // handle msal error if needed
   }
 }
 
-// Optional: when you change question, restore previous answer
-loadSelectedAnswerForCurrentQuestion() {
-  const existing = this.userAnswers.find(a => a.questionIndex === this.currentQuestionIndex);
-  this.selectedAnswer = existing?.selected || '';
-}
-
-// NEXT question (example – merge with your existing code)
-nextQuestion() {
-  if (!this.selectedAnswer) { return; }
-
-  if (this.currentQuestionIndex < this.questions.length - 1) {
-    this.currentQuestionIndex++;
-    this.loadSelectedAnswerForCurrentQuestion();
-  }
-}
-
-// OPEN confirm submit dialog instead of direct submit
-openConfirmSubmit() {
-  if (!this.selectedAnswer) { return; }
-
-  // ensure current answer is stored
-  const code = this.selectedAnswer.toLowerCase();
-  this.onOptionSelect(code);
-
-  this.showConfirmSubmit = true;
-}
-
-cancelSubmit() {
-  this.showConfirmSubmit = false;
-}
-
-confirmSubmit() {
-  this.showConfirmSubmit = false;
-  this.submitExam(); // your existing submit logic
-}
 
   sortRegisteredUsers(data: any[]): any[] {
     return data.sort((a, b) => (a.enrollmentID > b.enrollmentID ? -1 : a.enrollmentID < b.enrollmentID ? 1 : 0));
@@ -409,7 +385,7 @@ UpdateResult() {
     
     const attemptedQuestions = this.questions.filter(q => q['userAnswer']?.toString().trim() !== '').length;
     // console.log('✏️ Attempted Questions:', attemptedQuestions);
-  this.correctAnswersCount++;
+  //this.correctAnswersCount++;
   // console.log('📝 Matched Answers:', matchedAnswers);
 
     // console.log('✅ Correct Answers:', this.correctAnswersCount);
@@ -547,6 +523,8 @@ get availableOptions(): string[] {
     // Submit result to backend
     this.UpdateResult(); // This handles the alert + navigation
   }
+
+
   
   ngOnDestroy(): void {
     clearInterval(this.timer); 
@@ -605,7 +583,7 @@ get availableOptions(): string[] {
     return this.questions[this.currentQuestionIndex];
   }
 
-nextQuestion1() {
+nextQuestion() {
   if (this.selectedAnswer) {
     const questionid = this.currentQuestion.questionId;
 
@@ -622,19 +600,82 @@ nextQuestion1() {
       } else {
         // Last question, submit the exam
         this.submitExam();
+        this.loadSelectedAnswerForCurrentQuestion();
       }
     });
   } else {
     alert("⚠️ Please select an answer before proceeding.");
   }
 }
-  
-  goBack() {
-    if (confirm("Are you sure you want to exit the exam? Your progress will not be saved.")) {
-    if (this.currentQuestionIndex > 0) {
-      this.currentQuestionIndex--;
-      this.selectedAnswer = null;
-    }
+
+goBack() {
+    const userChoice = confirm(
+    "⚠️ Going back may affect your exam flow.\n\nAre you sure you want to go to the previous question?"
+  );
+
+  if (!userChoice) {
+    // ❌ User clicked CANCEL → Stay on page
+    return;
   }
- }
+
+  // ✅ User clicked OK → Navigate to registration
+  this.router.navigate(['/registration']);
+}
+
+
+
+
+showConfirmSubmit = false;
+userAnswers: { questionIndex: number; selected: string | null }[] = [];
+cancelSubmit() {
+  this.showConfirmSubmit = false;
+}
+
+confirmSubmit() {
+  this.showConfirmSubmit = false;
+  this.submitExam(); // your existing submit logic
+}
+get answeredCount(): number {
+  return this.userAnswers.filter(a => !!a.selected).length;
+}
+
+// ✅ Progress percentage for progress bar
+get answeredProgress(): number {
+  const total = this.examdata?.displayExamQuestions || this.questions.length || 0;
+  if (!total) { return 0; }
+  return (this.answeredCount / total) * 100;
+}
+// Called when user selects an option
+onOptionSelect(option: string) {
+  const selectedCode = option.toUpperCase();
+  this.selectedAnswer = selectedCode;
+
+  const existing = this.userAnswers.find(a => a.questionIndex === this.currentQuestionIndex);
+  if (existing) {
+    existing.selected = selectedCode;
+  } else {
+    this.userAnswers.push({
+      questionIndex: this.currentQuestionIndex,
+      selected: selectedCode
+    });
+  }
+}
+// Optional: when you change question, restore previous answer
+loadSelectedAnswerForCurrentQuestion() {
+  const existing = this.userAnswers.find(a => a.questionIndex === this.currentQuestionIndex);
+  this.selectedAnswer = existing?.selected || '';
+}
+// OPEN confirm submit dialog instead of direct submit
+openConfirmSubmit() {
+  if (!this.selectedAnswer) { return; }
+
+  // ensure current answer is stored
+  const code = this.selectedAnswer.toLowerCase();
+  this.onOptionSelect(code);
+
+  this.showConfirmSubmit = true;
+}
+
+
+
 }

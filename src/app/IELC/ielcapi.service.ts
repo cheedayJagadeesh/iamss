@@ -2145,6 +2145,13 @@ Updateexaminfo(id: number, updatedData: any): Observable<any> {
 skillqaurl='https://ielcapitest.azurewebsites.net/IELCQA';
 //skillqaurl='http://localhost:5024/IELCQA';
 
+GetskillAllQues(): Observable<any> {
+  return this.http.get<any>(`${this.skillqaurl}/allrecords`, {
+    headers: this.getHeaders()
+  });
+}
+  
+
 Getskillqa(skillName: string): Observable<any> {
   return this.http.get<any>(
     `${this.skillqaurl}/questions?skillName=${encodeURIComponent(skillName)}`,
