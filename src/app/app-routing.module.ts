@@ -48,6 +48,7 @@ import { ItdeptComponent } from './IELC/itdept/itdept.component';
 import { AuthGuard } from './auth.guard';
 import { AuthcallbackComponent } from './IELC/authcallback/authcallback.component';
 import { EventschedulerComponent } from './IELC/eventscheduler/eventscheduler.component';
+import { ISMSMasterComponent } from './ISMS/ismsmaster/ismsmaster.component';
 
 
 const routes: Routes = [
@@ -57,7 +58,8 @@ const routes: Routes = [
   {path:'monthlyempreport',component:MonthlyempreportComponent,canActivate: [MsalGuard]},
   {path:'projectreports',component:ProjectreportsComponent,canActivate: [MsalGuard]},
   {path:'configuration',component:ConfigurationsComponent,canActivate: [MsalGuard]},
-  {path:'attendance',component:AttendanceComponent,canActivate: [MsalGuard]},
+  // {path:'attendance',component:AttendanceComponent,canActivate: [MsalGuard]},
+  {path:'attendance',component:ISMSMasterComponent,canActivate: [MsalGuard]},
   {path:'registered',component:RegisteredusersComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['registered'], roles: ['Admin', 'SuperAdmin'] }},
   // {path:'home',component:HomeComponent,canActivate:[MsalGuard]},
   // {path:'',redirectTo:'login', pathMatch:'full'},

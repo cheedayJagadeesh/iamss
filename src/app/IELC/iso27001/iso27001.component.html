@@ -1,442 +1,290 @@
-<form class="row g-3">
-    <!-- <div>
-        <label class="lbllogin">Login as </label>
-    </div> -->
-    <app-sprtheader></app-sprtheader>
-    <img class="img" src="/assets/images/Inteq logo.png">
-    <div>
-        <button class="btn btn-dark btnback" routerLink="/registration">Back</button>
-    </div>
-    <h1 class="h1">Welcome to INTEQ ISO 27001</h1>
-    <h2 class="h2">CISO\HCO: C V Prasad</h2>
-    <div *ngIf="isLoading" class="loading-container">
-        <span class="dot"></span>
-    </div>
-    <div class="tablebottom">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="iso27001">
+<form class="container py-4">
+
+  <!-- Header -->
+  <app-userheader pageTitle="Welcome to INTEQ ISO 27001"></app-userheader>
+
+
+  <!-- Loader -->
+  <div *ngIf="isLoading" class="loading-container">
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+
+
+  <!-- CONTENT GRID -->
+<div class="container my-4">
+
+  <div *ngIf="!isLoading" class="row g-4">
+
+    <!-- LEFT CARD -->
+    <div class="col-lg-6 fade-in delay-1">
+      <div class="p-3 glass-card shadow-sm card-animate">
+
+        <div class="gradient-header mb-3">
+          CISO / HCO: <span class="fw-bold">C V Prasad</span>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover align-middle">
             <thead class="table-primary">
-                <tr>
-                    <th scope="col">Contact Priority</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Mobile</th>
-                    <th scope="col">Email</th>
-                </tr>
+              <tr>
+                <th>Priority</th>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Email</th>
+              </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let row of isosprtlist" >
-                    <td>{{row.contactPriority}}</td>
-                    <td>{{row.name}}</td>
-                    <td>{{row.mobile}}</td>
-                    <td>{{row.email}}</td>  
-                </tr>
+              <tr class="table-row" *ngFor="let row of isosprtlist">
+                <td>{{ row.contactPriority }}</td>
+                <td>{{ row.name }}</td>
+                <td>{{ row.mobile }}</td>
+                <td>{{ row.email }}</td>
+              </tr>
             </tbody>
-        </table>
-    </div> 
-    <div class="divtext">
-        <h3 class="h3">Contact Email ID:<a style="color: red;">Security Incidents Reporting Email Id:</a></h3>
-        <a  class="btn btnlnk btn-link" href="mailto:incidents@inteqsolutions.com">{{email}}</a>
+          </table>
+        </div>
+
+      </div>
     </div>
-    <h4 class="h4">ISMS Info</h4>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="ismssprt">
+
+    <!-- RIGHT CARD -->
+    <div class="col-lg-6 fade-in delay-2">
+      <div class="p-3 glass-card shadow-sm card-animate">
+
+        <div class="gradient-header mb-3">
+          ISMS Documents
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover align-middle">
             <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
+              <tr>
+                <th>Document Name</th>
+                <th>Share Path Links</th>
+              </tr>
             </thead>
             <tbody>
-                <tr  *ngFor="let item of isoinfolist">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
-                </tr>
+              <tr class="table-row" *ngFor="let item of isoinfolist">
+                <td>{{ item.documentName }}</td>
+                <td>
+                  <a [href]="item.url" target="_blank"
+                     class="fw-semibold text-decoration-none text-primary">
+                    Click Here
+                  </a>
+                </td>
+              </tr>
             </tbody>
-        </table>
+          </table>
+        </div>
+
+      </div>
     </div>
-    <h4 class="h4">IS Policy</h4>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="ispolicy">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr  *ngFor="let item of isopolicylist">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td> 
-                </tr>
-            </tbody>
-        </table>
+
+  </div>
+
+</div>
+
+
+
+
+    <!-- Contact Email -->
+    <div class="card shadow-sm mb-5 fade-in delay-1">
+        <div class="card-body text-center">
+            <h4 class="fw-bold text-secondary">
+                Contact Email ID:
+                <span class="text-danger">Security Incidents Reporting Email ID</span>
+            </h4>
+
+            <a href="mailto:incidents@inteqsolutions.com"
+               class="btn btn-outline-danger fw-semibold mt-2">
+                {{email}}
+            </a>
+        </div>
     </div>
-    <h4 class="h4">Projects</h4>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms2">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Guidelines Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr  *ngFor="let item of prjtIsmsGuidelinesdata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+
+
+  <!-- ISMS MASTER TABLE -->
+  <div class="card mt-4 shadow-sm border-0 panel-card">
+    <div class="card-header panel-header">
+      ISMS Master Table
     </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms3">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Policy Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr  *ngFor="let item of prjtIsmsPolicydata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
-                </tr>
-            </tbody>
-        </table>
+
+    <div class="card-body">
+
+      <!-- Top bar -->
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+
+        <!-- Counts -->
+        <div class="text-muted small">
+          <span class="fw-bold">Total ISMS Docs: {{ totalISMSDocs }}</span> |
+          <span>Total Policy: {{ totalPolicies }}</span> |
+          <span>Total Procedures: {{ totalProcedures }}</span> |
+          <span>Total Guidelines: {{ totalGuidelines }}</span> |
+          <span>Total Formats: {{ totalFormats }}</span> |
+          <span>Total IS Policy: {{ totalISPolicies }}</span>
+        </div>
+
+        <!-- Search -->
+       <div class="d-flex align-items-center gap-2">
+          <input type="text" class="form-control me-2 Search" placeholder="Enter document name..." style="width: 250px;"
+         id="docname" name="docname" [(ngModel)]="docname" (keyup.enter)="searchSkills()" (input)="onTextChange()">
+
+        <button class="btn btn-success" (click)="searchSkills()">Search</button>
+        <button class="btn btn-dark" (click)="clear()">Clear</button>
+        </div>
+
+      </div>
+
+
+      <!-- ISMS TABLE -->
+      <table class="table table-striped table-bordered">
+        <thead class="table-primary">
+          <tr>
+            <th>
+              ISMSDept
+              <div class="filter-box">
+                <button class="btn btn-sm dropdown-toggle"
+                        [ngClass]="{'btn-primary': !isAllDeptsSelected, 'btn-light': isAllDeptsSelected}"
+                        (click)="showDeptFilter = !showDeptFilter">
+                  Filter
+                </button>
+
+                <div class="dropdown-menu p-2" [ngClass]="{'show':showDeptFilter}">
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input"
+                           id="selectAllDepts"
+                           [checked]="isAllDeptsSelected"
+                           (change)="toggleAllDepts()">
+                    <label class="form-check-label" for="selectAllDepts">(Select All)</label>
+                  </div>
+
+                  <div *ngFor="let dept of uniqueDepts">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           [id]="'dept_' + dept"
+                           [checked]="selectedDepts.includes(dept)"
+                           (change)="onDeptCheckboxChange($event, dept)">
+                    <label class="form-check-label" [for]="'dept_' + dept">{{ dept }}</label>
+                  </div>
+
+                  <div class="mt-2 text-end">
+                    <button class="btn btn-primary btn-sm" type="button"
+                            (click)="showDeptFilter=false">
+                      OK
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </th>
+
+            <th scope="col">
+                    ISMSDocType
+                    <div style="display: inline-block; position: relative;">
+                        <button class="btn btn-sm dropdown-toggle" type="button" [ngClass]="{'btn-primary': !isAllDocTypesSelected, 'btn-light': isAllDocTypesSelected}" (click)="showDocTypeFilter = !showDocTypeFilter">Filter</button>
+                        <div class="dropdown-menu p-2" [ngClass]="{'show': showDocTypeFilter}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="selectAllDocTypes" [checked]="isAllDocTypesSelected" (change)="toggleAllDocTypes()">
+                                <label class="form-check-label" for="selectAllDocTypes">(Select All)</label>
+                            </div>
+                            <div *ngFor="let val of uniqueDocTypes">
+                                <input class="form-check-input" type="checkbox" [id]="'doctype_' + val" [checked]="selectedDocTypes.includes(val)" (change)="onDocTypeCheckboxChange($event, val)">
+                                <label class="form-check-label" [for]="'doctype_' + val">{{ val }}</label>
+                            </div>
+                            <div class="mt-2 text-end">
+                                <button class="btn btn-primary btn-sm" type="button" (click)="showDocTypeFilter = false">OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col">ISMSDocumentName</th>
+                <th scope="col">
+                    ISMSDocumentNo
+                    <div style="display: inline-block; position: relative;">
+                        <button class="btn btn-sm dropdown-toggle" type="button" [ngClass]="{'btn-primary': !isAllDocNosSelected, 'btn-light': isAllDocNosSelected}" (click)="showDocNoFilter = !showDocNoFilter">Filter</button>
+                        <div class="dropdown-menu p-2" [ngClass]="{'show': showDocNoFilter}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="selectAllDocNos" [checked]="isAllDocNosSelected" (change)="toggleAllDocNos()">
+                                <label class="form-check-label" for="selectAllDocNos">(Select All)</label>
+                            </div>
+                            <div *ngFor="let val of uniqueDocNos">
+                                <input class="form-check-input" type="checkbox" [id]="'docno_' + val" [checked]="selectedDocNos.includes(val)" (change)="onDocNoCheckboxChange($event, val)">
+                                <label class="form-check-label" [for]="'docno_' + val">{{ val }}</label>
+                            </div>
+                            <div class="mt-2 text-end">
+                                <button class="btn btn-primary btn-sm" type="button" (click)="showDocNoFilter = false">OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col">
+                    ISMSCurrentVersion
+                    <div style="display: inline-block; position: relative;">
+                        <button class="btn btn-sm dropdown-toggle" type="button" [ngClass]="{'btn-primary': !isAllVersionsSelected, 'btn-light': isAllVersionsSelected}" (click)="showVersionFilter = !showVersionFilter">Filter</button>
+                        <div class="dropdown-menu p-2" [ngClass]="{'show': showVersionFilter}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="selectAllVersions" [checked]="isAllVersionsSelected" (change)="toggleAllVersions()">
+                                <label class="form-check-label" for="selectAllVersions">(Select All)</label>
+                            </div>
+                            <div *ngFor="let val of uniqueVersions">
+                                <input class="form-check-input" type="checkbox" [id]="'version_' + val" [checked]="selectedVersions.includes(val)" (change)="onVersionCheckboxChange($event, val)">
+                                <label class="form-check-label" [for]="'version_' + val">{{ val }}</label>
+                            </div>
+                            <div class="mt-2 text-end">
+                                <button class="btn btn-primary btn-sm" type="button" (click)="showVersionFilter = false">OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+                <th scope="col">
+                    DocumentMaintainedBy
+                    <div style="display: inline-block; position: relative;">
+                        <button class="btn btn-sm dropdown-toggle" type="button" [ngClass]="{'btn-primary': !isAllMaintainedBySelected, 'btn-light': isAllMaintainedBySelected}" (click)="showMaintainedByFilter = !showMaintainedByFilter">Filter</button>
+                        <div class="dropdown-menu p-2" [ngClass]="{'show': showMaintainedByFilter}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="selectAllMaintainedBy" [checked]="isAllMaintainedBySelected" (change)="toggleAllMaintainedBy()">
+                                <label class="form-check-label" for="selectAllMaintainedBy">(Select All)</label>
+                            </div>
+                            <div *ngFor="let val of uniqueMaintainedBy">
+                                <input class="form-check-input" type="checkbox" [id]="'maintainedby_' + val" [checked]="selectedMaintainedBy.includes(val)" (change)="onMaintainedByCheckboxChange($event, val)">
+                                <label class="form-check-label" [for]="'maintainedby_' + val">{{ val }}</label>
+                            </div>
+                            <div class="mt-2 text-end">
+                                <button class="btn btn-primary btn-sm" type="button" (click)="showMaintainedByFilter = false">OK</button>
+                            </div>
+                        </div>
+                    </div>
+                </th>
+
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let ismsde of filteredISMSDocs">
+            <td>{{ ismsde.ismsDept }}</td>
+            <td>{{ ismsde.ismsDocType }}</td>
+            <td>
+              <a *ngIf="ismsde.url" [href]="ismsde.url" target="_blank">
+                {{ ismsde.ismsDocumentName }}
+              </a>
+              <span *ngIf="!ismsde.url">{{ ismsde.ismsDocumentName }}</span>
+            </td>
+            <td>{{ ismsde.ismsDocumentNo }}</td>
+            <td>{{ ismsde.ismsCurrentVersion || '-' }}</td>
+            <td>{{ ismsde.documentMaintainedBy }}</td>
+          </tr>
+
+          <tr *ngIf="filteredISMSDocs.length === 0">
+            <td colspan="7" class="text-center text-muted py-3">
+              No documents found
+            </td>
+          </tr>
+        </tbody>
+
+      </table>
+
     </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms4">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Procedure Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr  *ngFor="let item of prjtIsmsProceduredata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms5">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Formats Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr  *ngFor="let item of prjtIsmsFormatdata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <h4 class="h4">CISO</h4>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoisms2">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Guidelines Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr  *ngFor="let item of cisoIsmsGuidelinesdata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoisms3">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Policy Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr  *ngFor="let item of cisoIsmsPolicydata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td> 
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoisms4">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Procedure Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr  *ngFor="let item of cisoIsmsProceduredata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="cisoisms5">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Formats Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr  *ngFor="let item of cisoIsmsFormatdata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <h4 class="h4">IT</h4>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itisms2">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Guidelines Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of IsmsGuidelinesdata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td> 
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itisms3">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Policy Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of IsmsPolicydata">
-                    <td>{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itisms4">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Procedure Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of IsmsProceduredata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="itisms5">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Formats Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of IsmsFormatdata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <h4 class="h4">Admin</h4>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osisms2">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Guidelines Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of OsIsmsGuidelinesdata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>    
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osisms3">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Policy Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of OsIsmsPolicydata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osisms4">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Procedure Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of OsIsmsProceduredata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="osisms5">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Formats Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of OsIsmsFormatdata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <h4 class="h4">HR</h4>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrisms2">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Guidelines Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of HrIsmsGuidelinesdata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrisms3">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Policy Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of HrIsmsPolicydata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrisms4">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Procedure Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of HrIsmsProceduredata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrisms5">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Formats Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of HrIsmsFormatdata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
-                </tr>
-            </tbody>
-        </table>
-    </div>
+  </div>
+
 </form>

@@ -1,221 +1,139 @@
-<form class="row g-3">
-    <!-- <div>
-        <label class="lbllogin">Login as </label>
-    </div> -->
-    <app-sprtheader></app-sprtheader>
-    <img class="img" src="/assets/images/Inteq logo.png">
-    <div>
-        <button class="btn btn-dark btnback" routerLink="/registration">Back</button>
+<form class="container py-4">
+
+    <!-- Header -->
+    <app-userheader pageTitle="Welcome to INTEQ ISO 27001:2013"></app-userheader>
+
+    <!-- Section Title -->
+    <div class="text-center mt-4">
+        <h2 class="fw-bold text-primary">CISO / HCO / MR : C V Prasad</h2>
     </div>
-    <h1 class="h1">Welcome to INTEQ ISO 27001:2013</h1>
-    <h2 class="h2">CISO\HCO\MR : C V Prasad</h2>
+
+    <!-- Loader -->
     <div *ngIf="isLoading" class="loading-container">
         <span class="dot"></span>
     </div>
-    <div class="tablebottom">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="projectinfo" >
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col">Function/Operations/Projects</th>
-                    <th scope="col">Name/Project Coordinators</th>
-                    <th scope="col">Mobile</th>
-                    <th scope="col">Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let row of prjtsprtlist" >
-                    <td>{{row.functions}}</td>
-                    <td>{{row.name}}</td>
-                    <td>{{row.mobile}}</td>
-                    <td>{{row.email}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div> 
-    <div class="divtext">
-        <h3 class="h3">Contact Email ID:<a style="color: red;">Security Incidents Reporting Email Id:</a></h3>
-        <a  class="btn btnlnk btn-link" href="mailto:incidents@inteqsolutions.com">{{email}}</a>
+
+    <!-- Project Information Table -->
+    <div class="card shadow-sm my-4 fade-in">
+        <div class="card-header bg-primary text-white fw-bold">
+            Project – Function / Operations / Coordinators
+        </div>
+
+        <div class="card-body p-0">
+            <table *ngIf="!isLoading" class="table table-hover table-striped mb-0">
+                <thead class="table-light sticky-top">
+                    <tr>
+                        <th>Function / Operations / Projects</th>
+                        <th>Name / Project Coordinators</th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of prjtsprtlist">
+                        <td>{{row.functions}}</td>
+                        <td>{{row.name}}</td>
+                        <td>{{row.mobile}}</td>
+                        <td>{{row.email}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <h4 class="h4">ISMS for Projects</h4>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms1">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">General Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of prjtIsmsGeneraldata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
-                </tr>
-            </tbody>
-        </table>
-    </div> 
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms2">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Guidelines Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of prjtIsmsGuidelinesdata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+
+    <!-- Contact Email -->
+    <div class="card shadow-sm mb-5 fade-in delay-1">
+        <div class="card-body text-center">
+            <h4 class="fw-bold text-secondary">
+                Contact Email ID:
+                <span class="text-danger">Security Incidents Reporting Email ID</span>
+            </h4>
+
+            <a href="mailto:incidents@inteqsolutions.com"
+               class="btn btn-outline-danger fw-semibold mt-2">
+                {{email}}
+            </a>
+        </div>
     </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms3">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Policy Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of prjtIsmsPolicydata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
-                </tr>
-            </tbody>
-        </table>
+
+    <!-- ISMS Section -->
+    <h3 class="fw-bold text-center text-primary mt-5 fade-in delay-2">
+        ISMS for Projects
+    </h3>
+
+    <!-- ISMS Document Groups -->
+    <div class="fade-in delay-3"
+         *ngFor="let group of [
+                { title: 'General Documents', data: prjtIsmsGeneraldata },
+                { title: 'Guidelines Documents', data: prjtIsmsGuidelinesdata },
+                { title: 'Policy Documents', data: prjtIsmsPolicydata },
+                { title: 'Procedure Documents', data: prjtIsmsProceduredata },
+                { title: 'Formats Documents', data: prjtIsmsFormatdata }
+            ]">
+
+        <div class="card shadow-sm my-4">
+            <div class="card-header bg-info text-white fw-bold">
+                {{ group.title }}
+            </div>
+
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light sticky-top">
+                        <tr>
+                            <th style="width:70%">Document Name</th>
+                            <th style="width:30%">Share Path Link</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of group.data">
+                            <td>{{ item.documentName }}</td>
+                            <td><a [href]="item.url" target="_blank">Click Here</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms4">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Procedure Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of prjtIsmsProceduredata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
-                </tr>
-            </tbody>
-        </table>
+
+    <!-- QMS Section -->
+    <h3 class="fw-bold text-center text-primary mt-5 fade-in delay-4">
+        QMS for Projects
+    </h3>
+
+    <!-- QMS Document Groups -->
+    <div class="fade-in delay-5"
+         *ngFor="let group of [
+                { title: 'General Documents', data: prjtqmsGeneraldata },
+                { title: 'Guidelines Documents', data: prjtqmsGuidelinesdata },
+                { title: 'Policy Documents', data: prjtqmsPolicydata },
+                { title: 'Procedure Documents', data: prjtqmsProceduredata },
+                { title: 'Formats Documents', data: prjtqmsFormatdata }
+            ]">
+
+        <div class="card shadow-sm my-4">
+            <div class="card-header bg-warning text-dark fw-bold">
+                {{ group.title }}
+            </div>
+
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light sticky-top">
+                        <tr>
+                            <th style="width:70%">Document Name</th>
+                            <th style="width:30%">Share Path Link</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of group.data">
+                            <td>{{ item.documentName }}</td>
+                            <td><a [href]="item.url" target="_blank">Click Here</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjisms5">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Formats Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of prjtIsmsFormatdata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <h4 class="h4">QMS for Projects</h4>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjqms1">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">General Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of prjtqmsGeneraldata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
-                </tr>
-            </tbody>
-        </table>
-    </div> 
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjqms2">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Guidelines Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of prjtqmsGuidelinesdata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjqms3">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Policy Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of prjtqmsPolicydata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjqms4">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Procedure Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of prjtqmsProceduredata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="prjqms5">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Formats Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of prjtqmsFormatdata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
-                </tr>
-            </tbody>
-        </table>
-    </div>
+
 </form>

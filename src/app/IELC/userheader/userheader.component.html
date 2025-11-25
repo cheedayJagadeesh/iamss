@@ -1,0 +1,25 @@
+<header class="page-header sticky-header gradient-header d-flex align-items-center justify-content-between px-4 py-3 header-center">
+
+  <!-- Left: Logo -->
+<div class="header-left d-flex align-items-center">
+    <img src="/assets/images/inteqlogos.png" class="header-logo-fit" alt="inteQ Logo">
+</div>
+
+  <!-- Center: Title -->
+  <div class="header-title text-center">
+    <h2 class="head">{{pageTitle}}</h2>
+  </div>
+
+  <!-- Right: User + Back Button -->
+  <div class="header-right d-flex align-items-center">
+    <span class="user-text">
+      <label class="label1">Login as <strong>{{ userName }}</strong></label>
+    </span>
+
+ <button class="btn btn-secondary" routerLink="/registration">
+      Back
+    </button>
+
+  </div>
+
+</header>

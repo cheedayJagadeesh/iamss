@@ -1,225 +1,228 @@
-<form class="row g-3">
-    <app-sprtheader></app-sprtheader>
-<div class="exam-container">
-    <!-- <div *ngIf="isLoading" class="loading-container">
-        <span class="dot"></span>
-    </div> -->
-    <div *ngIf="isLoading" class="loading-container">
+<form class="row g-0 justify-content-center">
+  <app-sprtheader></app-sprtheader>
+
+  <div class="exam-wrapper">
+
+    <!-- LOADING OVERLAY -->
+    <div *ngIf="isLoading" class="exam-loading-overlay">
       <div class="loader-content">
-        <span class="dot"></span>
-        <div class="percentage">{{ progressValue }}%</div>
+        <div class="spinner-circle"></div>
+        <div class="percentage mt-3">{{ progressValue }}%</div>
+        <div class="loader-text">Loading your exam…</div>
       </div>
     </div>
-    
-    <!-- <div>
-        <label class="lbllogin">Login as </label>
-    </div> -->
-    
-    <!-- <a (click)="goBack()" class="back-link">Back</a> -->
-     <div>
-    <button class="btn btn-dark btnback" routerLink="/registration" (click)="goBack()">Back</button>
-    </div>
-    <div class="exam-header">
-      <!-- <h2>Your Test: <strong>Cloud Computing</strong></h2> -->
-      <!-- <h2 *ngFor="let item of Registeredusers">Your Test: <strong>{{item.skillName}}</strong></h2> -->
-      <h2 *ngIf="selectedSkill">Your Test: <strong>{{ selectedSkill }}</strong></h2>
-      <p>
-        <span style="font-size: 18px; margin-right: 5px;">⏰</span>
-        Time Left:  <strong>{{ formattedTime }}</strong>
-      </p>
-    </div>
-<!--   
-    <div *ngIf="currentQuestion">
-      <h3>{{ currentQuestionIndex + 1 }}. {{ currentQuestion.question }}</h3>
-      
-      <div class="options">
-        <label class="options-label" *ngFor="let option of currentQuestion.options">
-          <input 
-            class="options-input"
-            type="radio" 
-            name="answer" 
-            [value]="option" 
-            [(ngModel)]="selectedAnswer">
-          {{ option }}
-        </label>
+
+    <!-- MAIN EXAM CARD -->
+    <div class="exam-card shadow-lg">
+
+      <!-- 🔹 PROGRESS BAR + ANSWERED STATUS -->
+      <div class="exam-progress-bar mb-3">
+        <div class="d-flex justify-content-between align-items-center mb-1 small text-muted">
+          <span>Progress</span>
+          <span>{{ answeredCount }} answered / {{ examdata.displayExamQuestions }}</span>
+        </div>
+        <div class="progress">
+          <div
+            class="progress-bar"
+            role="progressbar"
+            [style.width.%]="answeredProgress"
+            [attr.aria-valuenow]="answeredProgress"
+            aria-valuemin="0"
+            aria-valuemax="100"
+          >
+            {{ answeredProgress | number:'1.0-0' }}%
+          </div>
+        </div>
       </div>
-    </div>
-  
-    <button (click)="nextQuestion()" [disabled]="!selectedAnswer" class="next-button">Next</button> -->
 
+      <!-- 🔹 TOP BAR: BACK + TIMER -->
+      <div class="exam-topbar d-flex justify-content-between align-items-center mb-3">
+        <button class="btn btn-outline-light btn-sm back-btn" (click)="goBack()">
+          ← Back
+        </button>
 
-    <!-- <p *ngIf="examdata.displayExamQuestions > 0">Question {{ currentQuestionIndex + 1 }} of {{ examdata.displayExamQuestions }}</p> -->
+        <div class="exam-timer-pill">
+          <span class="me-1">⏰</span>
+          <span>Time Left:</span>
+          <strong class="ms-1">{{ formattedTime }}</strong>
+        </div>
+      </div>
 
-<!-- 
-<div *ngIf="examdata.displayExamQuestions > 0">
- 
-<h3>
-    {{ currentQuestionIndex + 1 }}.
-    <span *ngIf="questions[currentQuestionIndex]?.question">
-      {{ questions[currentQuestionIndex].question }}
-    </span>
-  </h3>
-  
- 
-  <img 
-    *ngIf="questions[currentQuestionIndex]?.questionImage" 
-    [src]="questions[currentQuestionIndex].questionImage" 
-    alt="Question Image" 
-    class="question-image"
-  />
-  
-  
+      <!-- 🔹 EXAM HEADER -->
+      <div class="exam-header text-center mb-4">
+        <h2 class="exam-title mb-1" *ngIf="selectedSkill">
+          Your Test: <strong>{{ selectedSkill }}</strong>
+        </h2>
+        <p class="exam-subtitle mb-0">
+          Question {{ currentQuestionIndex + 1 }} of {{ examdata.displayExamQuestions }}
+        </p>
+      </div>
 
-  
-  <div class="options">
-    <label class="options-label" *ngFor="let option of questions[currentQuestionIndex]?.options">
-      <input  class="options-input" type="radio" name="answer" [value]="option.text" [(ngModel)]="selectedAnswer" />
+      <!-- 🔹 QUESTION + OPTIONS -->
+      <div *ngIf="questions.length > 0" class="question-section">
 
-   
-      <span *ngIf="option.text">{{ option.text }}</span>
+        <!-- Question Text -->
+        <h3 class="question-text mb-3">
+          <strong>{{ currentQuestion.question }}</strong>
+        </h3>
 
-      
-      <img *ngIf="option.image" [src]="option.image" alt="Option Image" class="option-image" />
-    </label>
-  </div>
-</div> -->
-<!-- 
-<div *ngIf="questions.length > 0" >
-    <div  class="question-section">
-      <h3> <strong>{{ currentQuestion.question }}</strong></h3>
-  
-    
-      <img *ngIf="currentQuestion.iQuestion" [src]="'data:image/jpeg;base64,' + currentQuestion.iQuestion" alt="Question Image" width="400" />
-  
- 
-      <ul class="options-list">
-        <li *ngFor="let option of ['a', 'b', 'c', 'd']">
-          <label class="options-label" >
-            <input
-            class="options-input"
-              type="radio"
-              name="answer"
-              [value]="currentQuestion[option]"
-               [(ngModel)]="selectedAnswer"
-            />
-            <span *ngIf="!currentQuestion['i' + option]">
+        <!-- Question Image -->
+        <div class="text-center mb-4" *ngIf="currentQuestion.iQuestion">
+          <img
+            [src]="'data:image/jpeg;base64,' + currentQuestion.iQuestion"
+            alt="Question Image"
+            class="question-image img-fluid"
+          />
+        </div>
+
+        <!-- Options -->
+        <ul class="options-grid list-unstyled">
+          <li *ngFor="let option of availableOptions" class="mb-2">
+            <label
+              class="option-card"
+              [class.selected]="selectedAnswer === option.toUpperCase()"
+            >
+              <input
+                class="options-input"
+                type="radio"
+                name="answer"
+                [value]="option.toUpperCase()"
+                [(ngModel)]="selectedAnswer"
+                (change)="onOptionSelect(option)"
+              />
+
+              <!-- Text option -->
+              <span *ngIf="!currentQuestion['i' + option]" class="option-text">
                 {{ currentQuestion[option] }}
               </span>
-  
-            <img
-            *ngIf="currentQuestion['i' + option]"
-            [src]="'data:image/jpeg;base64,' + currentQuestion['i' + option]"
-            alt="Option Image"
-            width="300"
-            height="180"
-            />
-          </label>
-        </li>
-      </ul>
-    </div>
-  
-    
- 
-</div> -->
-<div *ngIf="questions.length > 0">
-    <div class="question-section">
-      <h3 style="font-size: 18px;"><strong>{{ currentQuestion.question }}</strong></h3>
-  
-      <!-- Question Image -->
-      
-      <img *ngIf="currentQuestion.iQuestion" 
-           [src]="'data:image/jpeg;base64,' + currentQuestion.iQuestion" 
-           alt="Question Image" 
-           width="400"
-           height="300" />
-      
-  
 
-      <!-- Options -->
-      <ul class="options-list">
-        <!-- <li *ngFor="let option of ['a', 'b', 'c', 'd']"> -->
-          <li *ngFor="let option of availableOptions">
-          <label class="options-label">
-            <input
-              class="options-input"
-              type="radio"
-              name="answer"
-              [value]="option.toUpperCase()"
-              [(ngModel)]="selectedAnswer"
-            />
-  
-           
-            <!-- Display text if no image -->
-            <span *ngIf="!currentQuestion['i' + option]">
-              {{ currentQuestion[option] }}
-            </span>
-  
-            <!-- Display image if available -->
-            <img *ngIf="currentQuestion['i' + option]"
+              <!-- Image option -->
+              <img
+                *ngIf="currentQuestion['i' + option]"
                 [src]="'data:image/jpeg;base64,' + currentQuestion['i' + option]"
-                 alt="Option Image"
-                 width="200"
-                 height="100" 
-                  />
-           
-          </label>
-        </li>
-      </ul>
+                alt="Option Image"
+                class="option-image img-fluid"
+              />
+            </label>
+          </li>
+        </ul>
+
+      </div>
+
+      <!-- 🔹 BOTTOM ACTIONS -->
+      <div class="exam-actions d-flex justify-content-between align-items-center mt-4">
+        <div class="question-progress">
+          Question <strong>{{ currentQuestionIndex + 1 }}</strong> /
+          <strong>{{ examdata.displayExamQuestions }}</strong>
+        </div>
+
+        <div>
+          <!-- Next button -->
+          <button
+            *ngIf="currentQuestionIndex < questions.length - 1"
+            (click)="nextQuestion()"
+            [disabled]="!selectedAnswer"
+            class="btn next-button"
+          >
+            Next →
+          </button>
+
+          <!-- Submit button opens confirm dialog -->
+          <button
+            *ngIf="currentQuestionIndex === questions.length - 1"
+            (click)="openConfirmSubmit()"
+            [disabled]="!selectedAnswer"
+            class="btn next-button"
+          >
+            Submit ✅
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
-  
 
-
-<!-- Loading or no questions -->
-<!-- <div *ngIf="questions.length === 0" >
-  <p >Loading questions</p>
-</div> -->
-
-<!-- Navigation Buttons -->
-<!-- <button (click)="goBack()">Back</button>
-<button (click)="nextQuestion()">Next</button> -->
-<!-- <button (click)="nextQuestion()" [disabled]="!selectedAnswer" class="next-button">Next</button> -->
-<!-- <button (click)="nextQuestion()" [disabled]="!selectedAnswer" class="next-button">{{ currentQuestionIndex === questions.length - 1 ? 'Submit' : 'Next' }}</button> -->
-<!-- Show "Next" button until the last question -->
-<button 
-  *ngIf="currentQuestionIndex < questions.length - 1"
-  (click)="nextQuestion()" 
-  [disabled]="!selectedAnswer" 
-  class="next-button">
-  Next
-</button>
-
-<!-- Show "Submit" button only on the last question -->
-<button 
-  *ngIf="currentQuestionIndex === questions.length - 1"
-  (click)="submitExam()" 
-  [disabled]="!selectedAnswer" 
-  class="next-button">
-  Submit
-</button>
-  
-    <p>Question {{ currentQuestionIndex + 1 }} of {{ examdata.displayExamQuestions }}</p>
+  <!-- 🔹 CUSTOM CONFIRM SUBMIT MODAL (ANGULAR-ONLY) -->
+  <div class="confirm-backdrop" *ngIf="showConfirmSubmit">
+    <div class="confirm-modal">
+      <h5 class="mb-2">Submit Exam?</h5>
+      <p class="small text-muted mb-4">
+        You have answered {{ answeredCount }} out of {{ examdata.displayExamQuestions }} questions.
+        You won't be able to change your answers after submitting.
+      </p>
+      <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="cancelSubmit()">
+          Review Again
+        </button>
+        <button type="button" class="btn btn-primary btn-sm" (click)="confirmSubmit()">
+          Yes, Submit
+        </button>
+      </div>
+    </div>
   </div>
 
-
-  <!-- Add this to your component HTML -->
-<div class="modal fade" id="resultModal" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel" aria-hidden="true">
+  <!-- 🔹 RESULT MODAL (your existing one, just styled) -->
+  <div
+    class="modal fade"
+    id="resultModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="resultModalLabel"
+    aria-hidden="true"
+  >
     <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content text-center">
-        <div class="modal-header">
-          <h5 class="modal-title" id="resultModalLabel"><strong>{{ examPassed ? '🎉 Wohoo!' : '🙁 Oh no!' }}</strong></h5>
+      <div class="modal-content text-center result-modal-card">
+        <div class="modal-header border-0 justify-content-center">
+          <h5 class="modal-title" id="resultModalLabel">
+            <strong>{{ examPassed ? '🎉 Wohoo!' : '🙁 Oh no!' }}</strong>
+          </h5>
         </div>
+ <!-- PASS EFFECTS -->
+<div *ngIf="examPassed">
+  
+  <!-- 🎆 Fireworks -->
+  <div class="fireworks">
+    <div class="explosion"></div>
+    <div class="explosion"></div>
+    <div class="explosion"></div>
+  </div>
+
+  <!-- 🎈 Balloons -->
+  <div class="balloon-wrapper">
+    <div class="balloon" *ngFor="let b of [].constructor(8); let i = index" 
+         [ngStyle]="{ '--i': i }"></div>
+  </div>
+
+</div>
+
+<!-- FAIL EFFECTS -->
+<!-- <div *ngIf="!examPassed">
+
+  <div class="storm">
+    <div class="lightning"></div>
+    <div class="lightning"></div>
+  </div>
+
+  <div class="rain-wrapper">
+    <div class="raindrop" *ngFor="let r of [].constructor(70); let i = index"
+         [ngStyle]="{ '--i': i }">😢</div>
+  </div>
+
+</div> -->
+
+
         <div class="modal-body">
-          <p><strong>{{ examPassed ? 'Congratulations! You passed the exam!' : 'Better luck next time!' }}</strong></p>
-          <!-- <p>Your Score: {{ correctAnswersCount }}/{{ examdata.displayExamQuestions }}</p> -->
+          <p>
+            <strong>
+              {{ examPassed ? 'Congratulations! You passed the exam!' : 'Better luck next time!' }}
+            </strong>
+          </p>
           <p><strong>Percentage: {{ percentage }}%</strong></p>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer border-0 justify-content-center">
           <button type="button" class="btn btn-primary" (click)="closeModal()">Close</button>
         </div>
       </div>
     </div>
   </div>
-  
-  </form>
-  
+</form>

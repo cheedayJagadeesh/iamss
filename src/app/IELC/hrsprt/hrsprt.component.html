@@ -1,221 +1,132 @@
-<form class="row g-3">
-    <!-- <div>
-        <label class="lbllogin">Login as </label>
-    </div> -->
-    <app-sprtheader></app-sprtheader>
-    <img class="img" src="/assets/images/Inteq logo.png">
-    <div>
-        <button class="btn btn-dark btnback" routerLink="/registration">Back</button>
+<form class="container py-4">
+
+    <!-- Top Header -->
+    <app-userheader pageTitle="Welcome to INTEQ Human Resource Support"></app-userheader>
+
+    <!-- HR Head -->
+    <div class="text-center mt-4">
+        <h2 class="fw-bold text-primary">HR Incharge: Venkatesh Boga</h2>
     </div>
-    <h1 class="h1">Welcome to INTEQ Human Resource Support</h1>
-    <h2 class="h2">HR Incharge: Venkatesh Boga</h2>
+
+    <!-- Loading -->
     <div *ngIf="isLoading" class="loading-container">
         <span class="dot"></span>
     </div>
-    <div class="tablebottom">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrhd">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col">Contact Priority</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Mobile</th>
-                    <th scope="col">Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let row of hrsprtlist" >
-                    <td>{{row.contactPriority}}</td>
-                    <td>{{row.name}}</td>
-                    <td>{{row.mobile}}</td>
-                    <td>{{row.email}}</td> 
-                </tr>
-            </tbody>
-        </table>
-    </div> 
-    <div class="divtext">
-        <h3 class="h3">Contact Email ID:</h3>
-        <a  class="btn btnlnk btn-link" href="mailto:venkatesh.b@inteqsolutions.com">{{email}}</a>
+
+    <!-- HR Contact Table -->
+    <div class="card shadow-sm my-4 fade-in">
+        <div class="card-header bg-primary text-white fw-bold">
+            HR Contact Details
+        </div>
+        <div class="card-body p-0">
+            <table *ngIf="!isLoading" class="table table-hover table-striped mb-0">
+                <thead class="table-light sticky-top">
+                    <tr>
+                        <th>Contact Priority</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of hrsprtlist">
+                        <td>{{row.contactPriority}}</td>
+                        <td>{{row.name}}</td>
+                        <td>{{row.mobile}}</td>
+                        <td>{{row.email}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <h4 class="h4">ISMS for HR</h4>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrisms1">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">General Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of HrIsmsGeneraldata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
-                </tr>
-            </tbody>
-        </table>
-    </div> 
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrisms2">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Guidelines Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of HrIsmsGuidelinesdata" >
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+
+    <!-- Email Card -->
+    <div class="card shadow-sm mb-5 fade-in delay-1">
+        <div class="card-body text-center">
+            <h4 class="fw-bold text-secondary">Contact Email ID</h4>
+            <a href="mailto:venkatesh.b@inteqsolutions.com"
+               class="btn btn-outline-primary fw-semibold mt-2">
+                {{ email }}
+            </a>
+        </div>
     </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrisms3">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Policy Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of HrIsmsPolicydata" >
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
-                </tr>
-            </tbody>
-        </table>
+
+    <!-- ISMS Section -->
+    <h3 class="fw-bold text-center text-primary mt-4 fade-in delay-2">ISMS for HR</h3>
+
+    <div class="fade-in delay-3"
+         *ngFor="let group of [
+                { title: 'General Documents', data: HrIsmsGeneraldata },
+                { title: 'Guidelines Documents', data: HrIsmsGuidelinesdata },
+                { title: 'Policy Documents', data: HrIsmsPolicydata },
+                { title: 'Procedure Documents', data: HrIsmsProceduredata },
+                { title: 'Formats Documents', data: HrIsmsFormatdata }
+             ]">
+
+        <div class="card shadow-sm my-4">
+            <div class="card-header bg-info text-white fw-bold">
+                {{ group.title }}
+            </div>
+
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light sticky-top">
+                        <tr>
+                            <th style="width:70%">Document Name</th>
+                            <th style="width:30%">Share Path</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of group.data">
+                            <td>{{item.documentName}}</td>
+                            <td>
+                                <a [href]="item.url" target="_blank">Click Here</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrisms4">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Procedure Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of HrIsmsProceduredata" >
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
-                </tr>
-            </tbody>
-        </table>
+
+
+    <!-- QMS Section -->
+    <h3 class="fw-bold text-center text-primary mt-5 fade-in delay-4">QMS for HR</h3>
+
+    <div class="fade-in delay-5"
+         *ngFor="let group of [
+                { title: 'General Documents', data: HrqmsGeneraldata },
+                { title: 'Guidelines Documents', data: HrqmsGuidelinesdata },
+                { title: 'Policy Documents', data: HrqmsPolicydata },
+                { title: 'Procedure Documents', data: HrqmsProceduredata },
+                { title: 'Formats Documents', data: HrqmsFormatdata }
+             ]">
+
+        <div class="card shadow-sm my-4">
+            <div class="card-header bg-warning text-dark fw-bold">
+                {{ group.title }}
+            </div>
+
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light sticky-top">
+                        <tr>
+                            <th style="width:70%">Document Name</th>
+                            <th style="width:30%">Share Path</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of group.data">
+                            <td>{{item.documentName}}</td>
+                            <td>
+                                <a [href]="item.url" target="_blank">Click Here</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrisms5">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Formats Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of HrIsmsFormatdata" >
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <h4 class="h4">QMS for HR</h4>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrqms1">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">General Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of HrqmsGeneraldata" >
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
-                </tr>
-            </tbody>
-        </table>
-    </div> 
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrqms2">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Guidelines Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of HrqmsGuidelinesdata" >
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td> 
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrqms3">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Policy Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of HrqmsPolicydata" >
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrqms4">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Procedure Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of HrqmsProceduredata" >
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="hrqms5">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Formats Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of HrqmsFormatdata" >
-                    <td >{{item.documentName}}</td>
-                    <td>
-                           <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>   
-                </tr>
-            </tbody>
-        </table>
-    </div>
+
 </form>

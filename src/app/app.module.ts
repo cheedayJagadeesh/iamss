@@ -93,6 +93,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio';
 import { DocumentViewerComponent } from './IAMS/document-viewer/document-viewer.component';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { ISMSMasterComponent } from './ISMS/ismsmaster/ismsmaster.component';
+import { UserheaderComponent } from './IELC/userheader/userheader.component';
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
@@ -271,7 +273,9 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     SprtheaderComponent,
     AuthcallbackComponent,
     EventschedulerComponent,
-    DocumentViewerComponent
+    DocumentViewerComponent,
+    ISMSMasterComponent,
+    UserheaderComponent
   ],
   imports: [
     BrowserModule,

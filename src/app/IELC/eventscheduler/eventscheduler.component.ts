@@ -97,6 +97,7 @@ eventslist: any[] = [];
   TIME: '',
   AUDITORS: '',
 };
+form: any;
 
 
  constructor(private ielc:IelcapiService, private authService: AuthService, private cdr: ChangeDetectorRef) {

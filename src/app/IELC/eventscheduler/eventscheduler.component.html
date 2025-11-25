@@ -1,149 +1,181 @@
-<div *ngIf="hasPermission; else noAccess">
-  <app-sprtheader></app-sprtheader>
-      <img class="img" src="/assets/images/Inteq logo.png">
-    <div>
-        <button class="btn btn-dark btnback" routerLink="/registration">Back</button>
-        <button type="button" class="btn buttonlogout btn-danger" (click)="logout()">Logout</button>
-    </div>
-  <form class="event-schedule-container"  #form="ngForm">
+<form class="container py-4 fade-in" #form="ngForm">
 
-    <h1 class="h1">EVENT SCHEDULE PLANNER</h1>
-    <div class="info-table">
-    <div class="row">
-      <div class="cell header">PROJECT/EVENT</div>
-      <div class="cell value">{{event.projectInternalAudit}}</div>
-      <div class="cell value">{{ event?.projectQMS}}</div>
-      <div class="cell value">{{ event?.projectISMS }}</div>
-      <div class="cell value height">{{ event?.notes }}</div>
+  <!-- Permission Check -->
+  <div *ngIf="hasPermission; else noAccess">
+      <app-userheader pageTitle="EVENT SCHEDULE PLANNER"></app-userheader>
+    <!-- Header Row -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <button class="btn btn-danger logout-btn" (click)="logout()">Logout</button>
     </div>
-    <div class="row">
-      <div class="cell header">ORGANIZER</div>
-      <div class="cell value">{{ event?.organizerCompany}}</div>
-      <div class="cell value">{{ event?.organizerSchedule }}</div>
-      <div class="cell value">{{event?.organizerDateRange}}</div>
-      <!-- <div class="cell value"></div> -->
-    </div>
-  </div>
 
-    <div class="schedule-form">
-      <div class="form-header">
-        <div class="focus-title">FOCUS AREA / AUDITEE DEPARTMENT</div>
-        <div class="form-label">DATE</div>
-        <div class="form-label">TIME</div>
+    <!-- Event Information Card -->
+    <div class="card glass-card p-4 shadow fade-in my-4">
+
+      <h5 class="gradient-header mb-3">Event Overview</h5>
+
+      <div class="info-grid">
+
+        <div class="info-box">
+          <label>Project Internal Audit</label>
+          <span>{{ event?.projectInternalAudit }}</span>
+        </div>
+
+        <div class="info-box">
+          <label>QMS Project</label>
+          <span>{{ event?.projectQMS }}</span>
+        </div>
+
+        <div class="info-box">
+          <label>ISMS Project</label>
+          <span>{{ event?.projectISMS }}</span>
+        </div>
+
+        <div class="info-box height-lg">
+          <label>Notes</label>
+          <span>{{ event?.notes }}</span>
+        </div>
+
       </div>
 
-      <div class="form-row">
-        <select
-          class="input-select1"
-          name="department"
-          required
-          [(ngModel)]="selectedDept"
-          (change)="onDepartmentChange()"
-        >
-          <option value="" disabled>- AUDITEE DEPARTMENT -</option>
-          <option *ngFor="let dept of projectlist" [value]="dept">{{ dept }}</option>
-        </select>
+      <!-- Organizer -->
+      <h5 class="gradient-header mt-4 mb-3">Organizer Details</h5>
 
-        <!-- <input
-          type="date"
-          class="input-date"
-          name="selectedDate"
-          required
-          [(ngModel)]="selectedDate"
-          (change)="onDateChange()"
-        /> -->
+      <div class="info-grid">
+        <div class="info-box">
+          <label>Company</label>
+          <span>{{ event?.organizerCompany }}</span>
+        </div>
 
-<!-- <input
-  type="date"
-  class="input-date"
-  name="selectedDate"
-  required
-  [(ngModel)]="selectedDate"
-  [attr.min]="minDate"
-  [attr.max]="maxDate"
-  (change)="onDateChange()"
-/> -->
+        <div class="info-box">
+          <label>Schedule</label>
+          <span>{{ event?.organizerSchedule }}</span>
+        </div>
 
-<input type="date" class="input-date" name="selectedDate" [(ngModel)]="selectedDate" [min]="minDate" [max]="maxDate" class="form-control" (change)="onDateChange()" />
-
-
-<select
-  class="input-select"
-  name="Time"
-  required
-  [(ngModel)]="selectedTime"
->
-  <option value="" disabled>- Select TIME -</option>
-  <option *ngFor="let time of bookedtimes" [value]="time">{{ time }}</option>
-</select>
+        <div class="info-box">
+          <label>Date Range</label>
+          <span>{{ event?.organizerDateRange }}</span>
+        </div>
       </div>
+    </div>
 
-      <!-- <div class="submit-row">
-        <button type="submit" class="submit-btn" [disabled]="form.invalid">SUBMIT</button>
+    <!-- Scheduler Card -->
+    <div class="card glass-card shadow p-4 fade-in">
+
+      <h5 class="gradient-header mb-4">Schedule An Event</h5>
+
+      <div class="row g-4">
+
+        <!-- Department -->
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Auditee Department</label>
+          <select class="form-select stylish-input"
+                  name="department"
+                  required
+                  [(ngModel)]="selectedDept"
+                  (change)="onDepartmentChange()">
+            <option value="" disabled>- Select Department -</option>
+            <option *ngFor="let dept of projectlist" [value]="dept">{{ dept }}</option>
+          </select>
+        </div>
+
+        <!-- Date -->
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Date</label>
+          <input type="date"
+                 class="form-control stylish-input"
+                 name="selectedDate"
+                 [(ngModel)]="selectedDate"
+                 [min]="minDate"
+                 [max]="maxDate"
+                 (change)="onDateChange()"
+                 required />
+        </div>
+
+        <!-- Time -->
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Time</label>
+          <select class="form-select stylish-input"
+                  name="Time"
+                  required
+                  [(ngModel)]="selectedTime">
+            <option value="" disabled>- Select Time -</option>
+            <option *ngFor="let time of bookedtimes" [value]="time">{{ time }}</option>
+          </select>
+        </div>
+
+        <!-- Last Date -->
+        <div class="col-12 mt-3">
+          <strong class="me-2 text-danger">Note:</strong>
+          <strong>{{ event?.organizerLastDate }}</strong>
+        </div>
+
+        <div class="col-12 text-center mt-3">
+          <button type="submit"
+                  class="btn btn-primary submit-btn px-5 py-2"
+                  [disabled]="form.invalid"
+                  (click)="onSubmit()">
+            SUBMIT
+          </button>
+        </div>
+
       </div>
-    </div> -->
+    </div>
 
-<div class="submit-row">
-  <strong class="last-date-text1">Note:</strong><strong class="last-date-text">{{ event?.organizerLastDate }}</strong>
-  <!-- <button
-    type="submit"
-    class="submit-btn"
-    [disabled]="form.invalid || isSubmitDisabled">
-    SUBMIT
-  </button> -->
-  <button
-  type="submit"
-  class="submit-btn"
-  [disabled]="form.invalid"
-  (click)="onSubmit()"
->
-  SUBMIT
-</button>
+    <!-- Selected Auditee Info -->
+    <div *ngIf="selectedAuditee" class="mt-4 fade-in">
+      <div class="card p-4 shadow glass-card">
+        <h5 class="gradient-header mb-3">Selected Auditee Details</h5>
 
-</div>
-</div>
+        <table class="table table-striped table-hover stylish-table">
+          <thead class="table-primary sticky-top">
+            <tr>
+              <th>Department</th>
+              <th>Auditees</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Auditors</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{ selectedAuditee?.auditeedepartment }}</td>
+              <td>{{ selectedAuditee?.auditees }}</td>
+              <td>{{ selectedAuditee?.starting }}</td>
+              <td>{{ selectedAuditee?.time }}</td>
+              <td>{{ selectedAuditee?.auditors }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-    <!-- Display selected department info -->
-    <div *ngIf="selectedAuditee" class="auditee-table-wrapper">
-      <table class="selected-auditee-table">
-        <thead>
+    <!-- Event Admin Table -->
+    <div class="card p-4 shadow glass-card mt-4 fade-in">
+      <h5 class="gradient-header mb-3">Procedure Details</h5>
+
+      <table class="table table-bordered table-striped stylish-table">
+        <thead class="table-primary sticky-top">
           <tr>
-            <th>DEPARTMENT</th>
-            <th>AUDITEES</th>
-            <th>DATE</th>
-            <th>TIME</th>
-            <th>AUDITORS</th>
+            <th>AUDITEE DEPARTMENT</th>
+            <th>PROCEDURE</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>{{ selectedAuditee?.auditeedepartment }}</td>
-            <td>{{ selectedAuditee?.auditees }}</td>
-            <td>{{ selectedAuditee?.starting }}</td>
-            <td>{{ selectedAuditee?.time }}</td>
-            <td>{{ selectedAuditee?.auditors }}</td>
+          <tr *ngFor="let eventscadmin of eventscheduleradmin">
+            <td>{{ eventscadmin.auditeedepartment }}</td>
+            <td>{{ eventscadmin.procedures }}</td>
           </tr>
         </tbody>
       </table>
     </div>
 
-    <table class="table table-striped table-bordered layout" name="eventschdule">
-      <thead class="table-primary eventscadmin">
-        <tr>
-          <th class="eventscad" scope="col">AUDITEE DEPARTMENT</th>
-          <th scope="col" class="eventscadmincol">PROCEDURE</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let eventscadmin of eventscheduleradmin">
-          <td>{{ eventscadmin.auditeedepartment }}</td>
-          <td>{{ eventscadmin.procedures }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </form>
-</div>
+  </div>
 
-<ng-template #noAccess>
-  <p>You do not have permission to access this page.</p>
-</ng-template>
+  <!-- No Access -->
+  <ng-template #noAccess>
+    <p class="alert alert-warning text-center mt-5 fade-in">
+      You do not have permission to access this page.
+    </p>
+  </ng-template>
+
+</form>

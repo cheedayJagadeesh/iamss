@@ -1,58 +1,86 @@
-<form class="row g-3">
-    <!-- <div>
-        <label class="lbllogin">Login as </label>
-    </div> -->
-    <app-sprtheader></app-sprtheader>
-    <img class="img" src="/assets/images/Inteq logo.png">
-    <div>
-        <button class="btn btn-dark btnback" routerLink="/registration">Back</button>
+<form class="container py-4">
+
+    <!-- GDPR Header -->
+    <app-userheader pageTitle="Welcome to GDPR"></app-userheader>
+
+    <!-- CISO -->
+    <div class="text-center mt-4">
+        <h2 class="fw-bold text-primary">CISO: C V Prasad</h2>
     </div>
-    <h1 class="h1">Welcome to GDPR</h1>
-    <h2 class="h2">CISO: C V Prasad</h2>
+
+    <!-- Loading Spinner -->
     <div *ngIf="isLoading" class="loading-container">
         <span class="dot"></span>
     </div>
-    <div class="tablebottom">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="iso27001">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col">Contact Priority</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Mobile</th>
-                    <th scope="col">Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let row of isosprtlist">
-                    <td>{{row.contactPriority}}</td>
-                    <td>{{row.name}}</td>
-                    <td>{{row.mobile}}</td>
-                    <td>{{row.email}}</td>   
-                </tr>
-            </tbody>
-        </table>
-    </div> 
-    <div class="divtext">
-        <h3 class="h3">Contact Email ID:</h3>
-        <a  class="btn btnlnk btn-link" href="mailto:cvprasad@inteqsolutions.com">{{email}}</a>
+
+    <!-- GDPR Contact List -->
+    <div class="card shadow-sm my-4 fade-in">
+        <div class="card-header bg-primary text-white fw-bold">
+            GDPR – Contact Details
+        </div>
+
+        <div class="card-body p-0">
+            <table *ngIf="!isLoading" class="table table-hover table-striped mb-0">
+                <thead class="table-light sticky-top">
+                    <tr>
+                        <th>Contact Priority</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of isosprtlist">
+                        <td>{{ row.contactPriority }}</td>
+                        <td>{{ row.name }}</td>
+                        <td>{{ row.mobile }}</td>
+                        <td>{{ row.email }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-    <h4 class="h4">GDPR Knowledgebase for ISO</h4>
-    <div class="tablebottom1">
-        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="gdpr">
-            <thead class="table-primary">
-                <tr>
-                    <th scope="col" style="width:70%">Document Name</th>
-                    <th scope="col" style="width:30%">Share Path Links</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of gdprdata">
-                    <td >{{item.documentName}}</td>
-                    <td>
-                        <a [href]="item.url" target="_blank" rel="noopener noreferrer">Click Here</a>
-                    </td>  
-                </tr>
-            </tbody>
-        </table>
+
+    <!-- Contact Email -->
+    <div class="card shadow-sm mb-4 fade-in delay-1">
+        <div class="card-body text-center">
+            <h4 class="fw-bold text-secondary">Contact Email ID</h4>
+            <a href="mailto:cvprasad@inteqsolutions.com"
+               class="btn btn-outline-primary fw-semibold mt-2">
+               {{ email }}
+            </a>
+        </div>
     </div>
+
+    <!-- GDPR Docs Title -->
+    <h3 class="fw-bold text-center text-primary mt-5 fade-in delay-2">
+        GDPR Knowledgebase for ISO Team
+    </h3>
+
+    <!-- GDPR Documents -->
+    <div class="card shadow-sm my-4 fade-in delay-3">
+        <div class="card-header bg-info text-white fw-bold">
+            GDPR – Reference Documents
+        </div>
+
+        <div class="card-body p-0">
+            <table *ngIf="!isLoading" class="table table-hover mb-0">
+                <thead class="table-light sticky-top">
+                    <tr>
+                        <th style="width:70%">Document Name</th>
+                        <th style="width:30%">Share Path</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of gdprdata">
+                        <td>{{ item.documentName }}</td>
+                        <td>
+                            <a [href]="item.url" target="_blank">Click Here</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </form>

@@ -1,0 +1,17 @@
+.container {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.table th, .table td {
+  white-space: nowrap;
+  text-align: center;
+}
+
+input.form-control {
+  border-radius: 10px;
+  padding: 5px 10px;
+}
+
+.table {
+  font-size: 14px;
+}

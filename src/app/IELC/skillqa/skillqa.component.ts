@@ -92,7 +92,7 @@ export class SkillqaComponent implements OnInit {
    }
    GetAllSkillsQa(){
     this.isLoading = true;
-    this.ielc.Getskillqas().subscribe((data) => {
+    this.ielc.GetskillAllQues().subscribe((data) => {
       this.Enrolledskillqa=data;
       this.isLoading = false;
       this.filteredQuestions = [...this.Enrolledskillqa];

@@ -1,0 +1,47 @@
+<app-header></app-header>
+<!-- <div>
+  <label class="lbllogin"></label>
+</div> -->
+ <div  class="loading-container">
+        <span class="dot"></span>
+    </div>
+<form class="row" #searchform="ngForm">
+
+  <div class="loading-container">
+    <span class="dot"></span>
+  </div>
+  <div class="tablebottom">
+    <table class="table table-striped table-bordered">
+      <thead class="table-primary">
+        <tr>
+          <th scope="col">documenid</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Mobile</th>
+          <th scope="col">Skill Name</th>
+          <th scope="col">Date</th>
+          <th scope="col">Time</th>
+          <th scope="col">Skill Type</th>
+          <th scope="col">Batch Members</th>
+          <th scope="col">Registered Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of ismsdetails">
+          <td>{{row.enrollmentID}}</td>
+          <td>{{row.name}}</td>
+          <td>{{row.mail}}</td>
+          <td>{{row.mobile}}</td>
+          <td>{{row.skillName}}</td>
+          <td>{{row.date}}</td>
+          <td>{{row.time}}</td>
+          <td>{{row.venue}}</td>
+          <td>{{row.batchmembers}}</td>
+          <td>{{row.enrollmentDate}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="pagination">
+    </div>
+  </div>
+</form>
