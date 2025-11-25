@@ -351,19 +351,20 @@ h1 {
 .sidebar.collapsed {
   width: 60px;
 }
-.header {
+/* .header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 70px;              /* adjust to your actual header height */
-  background: #1c3144;       /* or whatever color you use */
-  color: white;
+  /* background: #1c3144;       /* or whatever color you use */
+  /* color: white;
   z-index: 1050 !important;
   display: flex;
   align-items: center;
   padding: 0 20px;
-}
+  z-index: 999;
+} */
 /* Force content to stay below header */
 .content-wrapper {
   margin-top: 70px !important; /* height of header */
@@ -373,4 +374,20 @@ h1 {
 .content-wrapper.sidebar-collapsed {
   margin-left: -60px;
 }
-
+.calendar-wrapper {
+  height: 350px; /* adjust as needed */
+  overflow: hidden; /* prevents overlapping */
+}
+:host ::ng-deep .header {
+   position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;              /* adjust to your actual header height */
+  background: #1c3144;       /* or whatever color you use */
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 999;
+}
