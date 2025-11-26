@@ -50,13 +50,13 @@
 }
  /* LeftMenuBar adjustment */
 .content-wrapper {
-  margin-left: 100px;
+  margin-left: 20px;
   transition: margin-left 0.3s ease;
   padding: 20px;
 }
 
 .content-wrapper.sidebar-collapsed {
-  margin-left: -60px;
+  margin-left: -141px;
 }
 
 .sidebar {
