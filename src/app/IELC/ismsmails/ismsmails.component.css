@@ -38,9 +38,8 @@
     /* position: absolute; */
 }
 .tablebottom {
-    margin-top: 4%;
-    position: absolute;
-    width: 100%;
+    margin-top: 6%;
+    margin-left: -3%;
 }
 table {
     width: 100% !important; /* Ensures the table does not exceed 100% */
@@ -122,13 +121,13 @@ th:nth-child(15), td:nth-child(15) { width: 70px; }
 }
  /* LeftMenuBar adjustment */
 .content-wrapper {
-  margin-left: 100px;
+  margin-left: 63px;
   transition: margin-left 0.3s ease;
   padding: 20px;
 }
 
 .content-wrapper.sidebar-collapsed {
-  margin-left: -60px;
+  margin-left: -99px;
 }
 
 .sidebar {

@@ -4,7 +4,7 @@
  
  <!-- Wrapper to center horizontally and keep content at the top -->
 <div class="d-flex justify-content-center bg-light pt-5">
-    <div class="container">
+  <div class="container">
     <div  class="container p-4 rounded shadow-sm bg-light border border-secondary">
     <!-- Form Row -->
       <div class="row justify-content-center align-items-center gx-2 gy-2 mb-3">
@@ -20,11 +20,14 @@
         </div>
 
         <!-- Buttons -->
-        <div class="col-auto">
-          <button type="button" class="btn btn-info me-2"
+        <div class="col-auto buttonsInsert">
+            <br>
+          <!-- <button type="button" class="btn btn-info me-2"
                   [disabled]="!skillNameRef.valid" (click)="AddSkill()">Insert</button>
           <button type="button" class="btn btn-danger"
-                  [disabled]="!skillNameRef.valid" (click)="DeleteSkill()">Delete</button>
+                  [disabled]="!skillNameRef.valid" (click)="DeleteSkill()">Delete</button> -->
+                   <button type="button" class="buttonprnt"  [disabled]="!skillNameRef.valid" (click)="AddSkill()">Insert</button>&nbsp;
+                   <button type="button" class="buttonprnt" [disabled]="!skillNameRef.valid" (click)="DeleteSkill()">Delete</button> 
         </div>
       </div>
 
@@ -51,7 +54,7 @@
         <table  class="table table-striped table-bordered">
             <thead class="table-primary">
                 <tr>
-                    <!-- <th scope="col">ID</th> -->
+                    <th scope="col">ID</th>
                     <th scope="col">Start Date</th>
                     <th scope="col">End Date</th>
                     <th scope="col">Start Time</th>
@@ -62,22 +65,17 @@
                     <th scope="col">Conducted By</th>
                     <th scope="col">Users </th>
                     <th scope="col">Groups </th>
-                    <th scope="col">ExamTime</th>
-                    <th scope="col">BatchMembers</th>
-                    <th scope="col">DisplayQuestions</th>
-                    <th scope="col">StandardQuestions </th>
-                    <th scope="col">Percentage </th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody *ngIf="!isLoading" >
                 <tr *ngFor="let row of Enrolledusers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
-                     <!-- <td>{{row.sessionID}}</td> -->
-                     <td>{{ row.fromDate | date:'dd-MM-yyyy' }}</td>
-                     <td>{{ row.toDate   | date:'dd-MM-yyyy' }}</td>
-                     <td>{{ row.skillStartTime}}</td>
-                     <td>{{ row.skillEndTime}}</td>
-                     <td>{{row.venue}}</td>
+                     <td>{{row.sessionID}}</td>
+                    <td>{{row.fromDate}}</td>
+                    <td>{{row.toDate}}</td>
+                    <td>{{row.skillStartTime}}</td>
+                    <td>{{row.skillEndTime}}</td>
+                    <td>{{row.venue}}</td>
                     <td style="max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                         {{ row.skillDescription }}
                     </td>
@@ -93,11 +91,6 @@
                     <td style="max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
                         {{row.aadGroupsData}}
                     </td>
-                    <td>{{row.examTime}}</td>
-                    <td>{{row.batchLimitMembers}}</td>
-                    <td>{{row.displayExamQuestions}}</td>
-                    <td>{{row.standardExamQuestions}}</td>
-                    <td>{{row.examPercentage}}</td>
                     <td>
                         <button type="button" class="btn btn-info me-1" style="margin: 2px" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">
@@ -120,89 +113,13 @@
                                             aria-label="Close" (click)="resetSkillSession(); GetAllSkillSessions()" ></button>
                                     </div>
                                     <div class="modal-body">
-                                         <div class="divmodal">
-                                            <label>Venue<span style="color: red;">*</span></label>
-                                            <select id="select1" class="form-control"
-                                                [(ngModel)]="skillSessionData.venue"  (change)="onVenueChange($event)" name="venue" required>
-                                                <option value="">- Select Mode -</option>
-                                                <option>Offline</option>
-                                                <option>Self-Learning</option>
-                                                <option>Teams</option>
-                                            </select>
-                                        </div>
-                                          <div class="divmodal">
-                                            <label>Start Date<span style="color: red;">*</span></label>
-                                            <input type="date" class="form-control"
-                                                [(ngModel)]="skillSessionData.fromDate" name="fromDate" [min]="today"
-                                                 required>
-                                        </div>
-
-                                        <div class="divmodal">
-                                            <label>End Date<span style="color: red;">*</span></label>
-                                            <input type="date" class="form-control"
-                                                [(ngModel)]="skillSessionData.toDate" name="toDate"
-                                                [min]="skillSessionData.fromDate || today"
-                                                [disabled]="skillSessionData.venue === 'Self-Learning'" required>
-                                        </div>
-                                         <div class="divmodal">
-                                            <label>Start Time<span style="color: red;">*</span></label>
-                                            <input type="time" class="form-control"
-                                                [(ngModel)]="skillSessionData.skillStartTime" name="skillStartTime"
-                                                [disabled]="skillSessionData.venue === 'Self-Learning'" required>
-                                        </div>
-
-                                        <div class="divmodal">
-                                            <label>End Time<span style="color: red;">*</span></label>
-                                            <input type="time" class="form-control"
-                                                [(ngModel)]="skillSessionData.skillEndTime" name="skillEndTime"
-                                                [disabled]="skillSessionData.venue === 'Self-Learning'" required>
-                                        </div>
-                                        <div class="divmodal">
-                                            <label>Description<span style="color: red;">*</span></label>
-                                            <textarea class="form-control"
-                                                [(ngModel)]="skillSessionData.skillDescription" name="skillDescription"
-                                                required #skillNameRef="ngModel"></textarea>
-                                        </div>
-                                        <div class="divmodal">
-                                            <label>Skill Name<span style="color: red;">*</span></label>
-                                            <select id="select2" class="form-control" name="skillname"
-                                                [(ngModel)]="skillSessionData.skillName" name="skillName" required
-                                                #skillNameRef="ngModel">
-                                                <option value="">- select skill -</option>
-                                                <option *ngFor="let item of Enrolledskills" [value]="item.skillName">{{
-                                                    item.skillName }}</option>
-                                            </select>
-                                        </div>
-                                        <div class="divmodal">
-                                            <label>Conducted By</label>
-                                            <input type="text" class="form-control"
-                                                [(ngModel)]="skillSessionData.conductedBy" name="conductedBy">
-                                        </div>
-                                        <div class="divmodal">
-                                            <label>Users</label>
-                                            <select id="select3" class="form-control" name="users" name="mail" multiple
-                                                size="10" (change)="updateSelectedUsers($event)">
-                                                <option value="">- select user -</option>
-                                                <option *ngFor="let row of aadUsersData">{{ row.mail }}</option>
-                                            </select>
-                                        </div>
-                                        <div class="divmodal">
-                                            <label>Groups</label>
-                                            <select id="select4" name="groups" class="form-control" name="groups"
-                                                name="groupName" multiple size="10"
-                                                (change)="updateSelectedGroups($event)">
-                                                <option value="">- select group -</option>
-                                                <option *ngFor="let item of aadGroupsData">{{ item.groupName }}</option>
-                                            </select>
-                                        </div>
-
-                                       <!-- <div class="divmodal">
+                                       <div class="divmodal">
                                         <label>Start Date<span style="color: red;">*</span></label>
                                         <input type="date" class="form-control" [(ngModel)]="skillSessionData.fromDate" name="fromDate"  [min]="today" required #skillNameRef="ngModel"  >
                                        </div>
                                        <div class="divmodal">
                                         <label>End Date<span style="color: red;">*</span></label>
-                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.toDate" name="toDate" [min]="skillSessionData.fromDate || today" required #skillNameRef="ngModel"  >
+                                        <input type="date" class="form-control" [(ngModel)]="skillSessionData.toDate" name="toDate"    [min]="skillSessionData.fromDate || today" required #skillNameRef="ngModel"  >
                                        </div>
                                        <div class="divmodal">
                                         <label>Start Time<span style="color: red;">*</span></label>
@@ -211,8 +128,8 @@
                                        <div class="divmodal">
                                         <label>End Time<span style="color: red;">*</span></label>
                                         <input type="time" class="form-control" [(ngModel)]="skillSessionData.skillEndTime" name="skillEndTime" required #skillNameRef="ngModel"  >
-                                       </div> -->
-                                       <!-- <div class="divmodal">
+                                       </div>
+                                       <div class="divmodal">
                                         <label>Venue<span style="color: red;">*</span></label>
                                         <select id="select1"   class="form-control" name="modetype" [(ngModel)]="skillSessionData.venue" name="venue" required #skillNameRef="ngModel" >
                                             <option value=""  >- Select Mode -</option>
@@ -220,8 +137,8 @@
                                             <option >Self-Learning</option>
                                             <option >Teams</option>
                                        </select>
-                                       </div> -->
-                                       <!-- <div class="divmodal">
+                                       </div>
+                                       <div class="divmodal">
                                         <label>Description<span style="color: red;">*</span></label>
                                         <textarea  class="form-control" [(ngModel)]="skillSessionData.skillDescription" name="skillDescription" required #skillNameRef="ngModel" ></textarea>
                                        </div>
@@ -235,8 +152,8 @@
                                        <div class="divmodal">
                                         <label>Conducted By</label>
                                         <input type="text" class="form-control" [(ngModel)]="skillSessionData.conductedBy" name="conductedBy" >
-                                       </div> -->
-                                       <!-- <div class="divmodal">
+                                       </div>
+                                       <div class="divmodal">
                                         <label>Users</label>
                                         <select id="select3" class="form-control" name="users"  name="mail" multiple size="10" (change)="updateSelectedUsers($event)" >
                                                 <option value="">- select user -</option>
@@ -249,35 +166,14 @@
                                             <option value="">- select group -</option>
                                             <option *ngFor="let item of aadGroupsData" >{{ item.groupName }}</option>
                                         </select>
-                                       </div> -->
-
-                                        <div class="divmodal">
-                                    <label>Exam Time<span style="color: red;">*</span></label>
-                                    <input type="number" class="form-control" name="examtime" [(ngModel)]="skillSessionData.examTime" required #skillNameRef="ngModel" >
-                                   </div>
-                                   <div class="divmodal">
-                                    <label>BatchLimit Members<span style="color: red;">*</span></label>
-                                    <input type="number" class="form-control" name="batchlimit" [(ngModel)]="skillSessionData.batchLimitMembers" required #skillNameRef="ngModel" >
-                                   </div>
-                                   <div class="divmodal">
-                                    <label>Display Exam Questions<span style="color: red;">*</span></label>
-                                    <input type="number" class="form-control" name="displayqstns" [(ngModel)]="skillSessionData.displayExamQuestions" required #skillNameRef="ngModel" >
-                                   </div>
-                                   <div class="divmodal">
-                                    <label>Standard Exam Questions<span style="color: red;">*</span></label>
-                                    <input type="number" class="form-control" name="standardqstns" [(ngModel)]="skillSessionData.standardExamQuestions" required #skillNameRef="ngModel" >
-                                   </div>
-                                   <div class="divmodal">
-                                    <label>Exam Percentage<span style="color: red;">*</span></label>
-                                    <input type="number" class="form-control" name="examperc" [(ngModel)]="skillSessionData.examPercentage" required #skillNameRef="ngModel" >
-                                   </div>
+                                       </div>
 
                                     </div>
                                     
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-bs-dismiss="modal" (click)="resetSkillSession(); GetAllSkillSessions()" >Close</button>
-                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="Postthevalues()" [disabled]="addskillsform.invalid" >Add</button>
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="AddSkillsession()" [disabled]="addskillsform.invalid" >Add</button>
                                     </div>
                                 </div>
                             </div>
@@ -358,27 +254,6 @@
                                         </select>
                                        </div>
 
-                                          <div class="divmodal">
-                                    <label>Exam Time<span style="color: red;">*</span></label>
-                                    <input type="number" class="form-control" name="examtime" [(ngModel)]="skillSessionData.examTime" required #skillNameRef="ngModel" >
-                                   </div>
-                                   <div class="divmodal">
-                                    <label>BatchLimit Members<span style="color: red;">*</span></label>
-                                    <input type="number" class="form-control" name="batchlimit" [(ngModel)]="skillSessionData.batchLimitMembers" required #skillNameRef="ngModel" >
-                                   </div>
-                                   <div class="divmodal">
-                                    <label>Display Exam Questions<span style="color: red;">*</span></label>
-                                    <input type="number" class="form-control" name="displayqstns" [(ngModel)]="skillSessionData.displayExamQuestions" required #skillNameRef="ngModel" >
-                                   </div>
-                                   <div class="divmodal">
-                                    <label>Standard Exam Questions<span style="color: red;">*</span></label>
-                                    <input type="number" class="form-control" name="standardqstns" [(ngModel)]="skillSessionData.standardExamQuestions" required #skillNameRef="ngModel" >
-                                   </div>
-                                   <div class="divmodal">
-                                    <label>Exam Percentage<span style="color: red;">*</span></label>
-                                    <input type="number" class="form-control" name="examperc" [(ngModel)]="skillSessionData.examPercentage" required #skillNameRef="ngModel" >
-                                   </div>
-
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -407,3 +282,6 @@
     </div>
 </form>
 </div>
+
+  
+

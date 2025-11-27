@@ -5,13 +5,13 @@
 }
  /* LeftMenuBar adjustment */
 .content-wrapper {
-  margin-left: 100px;
+  margin-left: 60px;
   transition: margin-left 0.3s ease;
   padding: 20px;
 }
 
 .content-wrapper.sidebar-collapsed {
-  margin-left: -60px;
+  margin-left: -108px;
 }
 
 .sidebar {
@@ -23,6 +23,18 @@
   width: 60px;
 }
 .tablebottom{
-    width: 84%;
+    width: 90%;
     margin-left: 10%;
+}
+.buttonprnt {
+    cursor: pointer;
+    border-color: black;
+    color: black;
+    background-color: rgb(159, 196, 238);
+    width: 121px;
+    border-radius: 5px;
+    height: 35px;
+}
+.buttonsInsert{
+  margin-left:10%;
 }

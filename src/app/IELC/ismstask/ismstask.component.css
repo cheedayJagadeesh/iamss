@@ -37,10 +37,7 @@
     /* position: absolute; */
 }
 .tablebottom {
-    margin: 4% -61px 0;
-    margin-top: 4%;
-    position: absolute;
-    width: 83%;
+    margin-top: 6%;
 }
 .pagination {
     margin-left: 72%;
@@ -90,13 +87,13 @@
 }
  /* LeftMenuBar adjustment */
 .content-wrapper {
-  margin-left: 100px;
+  margin-left: 50px;
   transition: margin-left 0.3s ease;
   padding: 20px;
 }
 
 .content-wrapper.sidebar-collapsed {
-  margin-left: -60px;
+  margin-left: -151px;
 }
 
 .sidebar {

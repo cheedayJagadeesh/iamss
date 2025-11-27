@@ -1,6 +1,5 @@
 .tablebottom {
-    margin-top: 4%;
-    position: absolute;
+    margin-top: 11%;
     width: 100%;
 }
 table {
@@ -52,13 +51,13 @@ th:nth-child(15), td:nth-child(15) { width: 70px; }
 }
  /* LeftMenuBar adjustment */
 .content-wrapper {
-  margin-left: 100px;
+  margin-left: 23px;
   transition: margin-left 0.3s ease;
   padding: 20px;
 }
 
 .content-wrapper.sidebar-collapsed {
-  margin-left: -60px;
+  margin-left: -147px;
 }
 
 .sidebar {
