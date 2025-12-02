@@ -70,6 +70,7 @@ interface EnrollmentData {
   time: string;
   venue: string;
   batchmembers: number;
+  skillDescription: string;
   enrollmentDate: string;
   startDate: string | null;
   endDate: string | null;
@@ -532,6 +533,7 @@ allowEnrollment() {
   const date = this.date;
   const time = this.time;
   const mail = this.userEmail ?? '';
+  const skilldescription = this.getSessionDescription(skill, this.selectedValue, date, time);
 
   
 
@@ -545,7 +547,7 @@ allowEnrollment() {
         const batchCountToInsert = this.selectedValue === 'Teams' ? this.batchMembersCount : 0;
         this.GetSessionIDAllDetails((id: number) => {
           this.ID = id;
-          this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedValue, batchCountToInsert, startDate, endDate, now);
+          this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedValue, batchCountToInsert, skilldescription, startDate, endDate, now);
         });
       },
       error: (err) => {
@@ -562,7 +564,7 @@ allowEnrollment() {
         const batchCountToInsert = 0;
         this.GetSessionIDSkillVenueDetails((id: number) => {
           this.ID = id;
-          this.proceedToEnroll(fullName, mail, skill, date, time, this.venue, batchCountToInsert, startDate, endDate, now);
+          this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedValue, batchCountToInsert, skilldescription, startDate, endDate, now);
         });
       },
       error: (err) => {
@@ -580,13 +582,13 @@ allowEnrollment() {
 
   } else {
     const batchCountToInsert = 0;
-    this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedVenue, batchCountToInsert, startDate, endDate, now);
+    this.proceedToEnroll(fullName, mail, skill, date, time, this.selectedValue, batchCountToInsert, skilldescription, startDate, endDate, now);
   }
 }
 
 proceedToEnroll(
   fullName: string, mail: string, skill: string, date: string, time: string,
-  venue: string, batchCount: number, startDate: string, endDate: string, now: Date
+  venue: string, batchCount: number, skillDescription: string, startDate: string, endDate: string, now: Date
 )
 {
   const convertedStart = this.convertToISODate(startDate?.trim()) || null;
@@ -602,8 +604,9 @@ proceedToEnroll(
     skillName: skill || '',
     date: date || '',
     time: time || '',
-    venue: venue || '',
+    venue: this.selectedValue,
     batchmembers: batchCount,
+    skillDescription: skillDescription,
     enrollmentDate: now.toISOString(),
     startDate: start,
     endDate: end,
@@ -619,21 +622,22 @@ proceedToEnroll(
     //sessionID: 105,
     sessionID: this.ID,
   };
-  //console.log("Enrollment payload:", JSON.stringify(enrollmentData, null, 2));
+  console.log("Enrollment payload:", JSON.stringify(enrollmentData, null, 2));
   this.ielc.enrollUser(enrollmentData).subscribe({
     next: () => {
       alert('Enrollment successful! A confirmation email will be sent shortly.');
-      this.resetForm();
       this.GetAllUsers();
       const sessionDescription = this.getSessionDescription(skill, venue, date, time);
+
       const subject = 'Session Invitation Link';
       const body = `
         <p>Thanks for the Registration!</p>
         <p>Attend the meeting SkillName\\ Self-Learning\\ Recorded using below link:</p>
         <p>
-        <a href="${sessionDescription}" target="_blank" style="color: #007bff; text-decoration: underline;">
-          Click here to access the session
-        </a>
+        <a href="${sessionDescription ?? '#'}" target="_blank">
+  Click here to access the meeting
+</a>
+
         </p>
         <br>
         <table style="border: 1px solid #ddd; border-collapse: collapse; width: 100%;">
@@ -674,6 +678,7 @@ proceedToEnroll(
       alert('Enrollment failed. Please try again.');
     }
   });
+        this.resetForm();
 }
 
 resetForm(): void {
