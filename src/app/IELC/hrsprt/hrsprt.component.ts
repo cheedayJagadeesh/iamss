@@ -21,7 +21,7 @@ interface docs{
   styleUrls: ['./hrsprt.component.css']
 })
 export class HrsprtComponent implements OnInit {
-email='venkatesh.b@inteqsolutions.com'
+email='shilpa.chilumula@inteqsolutions.com'
 isLoading = true;
  hrsprtlist: any[] = []; 
  hrsprtdata:hrsprtinfo={
