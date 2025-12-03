@@ -13,7 +13,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './IAMS/login/login.component';
-import { AttendanceComponent } from './IAMS/attendance/attendance.component';
+import { EmpattendanceComponent } from './IAMS/empattendance/empattendance.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule,ReactiveFormsModule,FormGroup,FormControl } from '@angular/forms';
@@ -45,7 +45,7 @@ import { Soc2headerComponent } from './IELC/soc2header/soc2header.component';
 import { Soc2taskComponent } from './IELC/soc2task/soc2task.component';
 import { Soc2historyComponent } from './IELC/soc2history/soc2history.component';
 import { Soc2mailsComponent } from './IELC/soc2mails/soc2mails.component';
-import { AttendanceheaderComponent } from './IELC/attendanceheader/attendanceheader.component';
+
 import { ComplianceformComponent } from './IELC/complianceform/complianceform.component';
 import { AdminusersComponent } from './IELC/adminusers/adminusers.component';
 import { IthelpsprtComponent } from './IELC/ithelpsprt/ithelpsprt.component';
@@ -95,6 +95,10 @@ import { DocumentViewerComponent } from './IAMS/document-viewer/document-viewer.
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ISMSMasterComponent } from './ISMS/ismsmaster/ismsmaster.component';
 import { UserheaderComponent } from './IELC/userheader/userheader.component';
+import { LeftmenuComponent } from './IELC/leftmenu/leftmenu.component';
+
+
+
 
 const isIE = window.navigator.userAgent.indexOf('MSIE ') > -1 || window.navigator.userAgent.indexOf('Trident/') > -1;
 
@@ -222,7 +226,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
   declarations: [
     AppComponent,
     LoginComponent,
-    AttendanceComponent,
+    EmpattendanceComponent,
     AdminuserComponent,
     PmadminuserComponent,
     AdminreportsComponent,
@@ -250,7 +254,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     Soc2taskComponent,
     Soc2historyComponent,
     Soc2mailsComponent,
-    AttendanceheaderComponent,
+    EmpattendanceComponent,
     ComplianceformComponent,
     AdminusersComponent,
     IthelpsprtComponent,
@@ -275,7 +279,9 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     EventschedulerComponent,
     DocumentViewerComponent,
     ISMSMasterComponent,
-    UserheaderComponent
+    UserheaderComponent,
+    LeftmenuComponent,
+    EmpattendanceComponent
   ],
   imports: [
     BrowserModule,

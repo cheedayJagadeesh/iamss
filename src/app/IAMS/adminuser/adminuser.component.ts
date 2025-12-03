@@ -17,6 +17,18 @@ import { FormControl, FormGroup, NgForm } from '@angular/forms';
   styleUrls: ['./adminuser.component.css']
 })
 export class AdminuserComponent {
+    holidayList: any[] = [];
+  holidayToDelete: any = null;
+
+
+// Track sidebar state
+  isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
+
   selectedDate:string=''
 //  selectedDate= new Date().toISOString().split('T')[0]
   searchname=''
@@ -106,6 +118,22 @@ export class AdminuserComponent {
   {
     // console.log(this.adminform.value);
     this.adminform.resetForm();
+  }
+  // hold selected row for delete
+
+// when user clicks trash button
+  setDeleteHoliday(item: any) {
+    this.holidayToDelete = item;
+  }
+
+  deleteHoliday() {
+    const index = this.holidayList.indexOf(this.holidayToDelete);
+
+    if (index > -1) {
+      this.holidayList.splice(index, 1);
+    }
+
+    this.holidayToDelete = null;
   }
   isSecondSelectDisabled: boolean = false;
   isTimeInputDisabled: boolean = true;

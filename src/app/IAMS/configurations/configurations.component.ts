@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./configurations.component.css']
 })
 export class ConfigurationsComponent {
+// Track sidebar state
+  isSidebarClosed = false;
 
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
 }

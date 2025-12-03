@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { EmpattendanceComponent } from 'src/app/IAMS/empattendance/empattendance.component';
 
+import { EmpattendanceComponent } from './empattendance.component';
 
 describe('EmpattendanceComponent', () => {
   let component: EmpattendanceComponent;

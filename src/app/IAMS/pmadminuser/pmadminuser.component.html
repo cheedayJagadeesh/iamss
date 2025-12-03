@@ -1,168 +1,173 @@
-<app-attendanceheader></app-attendanceheader>
-<div>
-  <label class="lbllogin"></label>
-</div>
-<form class="row g-3" #pmadminform="ngForm" (ngSubmit)="submitdata(pmadminform.value)">
-  <div class="container border p-4 rounded bg-light w-75 mx-auto">
-    <h3 class="text-danger fw-bold mb-4">Modify User Leaves, Login and Logout</h3>
+<app-leftmenu (sidebarToggled)="onSidebarToggled($event)"></app-leftmenu>
+<div class="content-wrapper" [class.sidebar-collapsed]="isSidebarClosed">
+  <div class="main-container">
+    <!-- <div>
+      <label class="lbllogin"></label>
+    </div> -->
+    <form class="row g-3" #pmadminform="ngForm" (ngSubmit)="submitdata(pmadminform.value)">
+      <div class="container border p-4 rounded bg-light w-75 mx-auto">
+        <h3 class="text-danger fw-bold mb-4">Modify User Leaves, Login and Logout</h3>
 
-    <div class="row mb-3 align-items-end">
-      <div class="col-md-4">
-        <label for="selectedDate" class="form-label">Choose Date</label>
-        <input class="form-control" type="date" id="selectedDate" [(ngModel)]="selectedDate">
-      </div>
+        <div class="row mb-3 align-items-end">
+          <div class="col-md-4">
+            <label for="selectedDate" class="form-label">Choose Date</label>
+            <input class="form-control" type="date" id="selectedDate" [(ngModel)]="selectedDate">
+          </div>
 
-      <div class="col-md-4">
-        <label for="Empname" class="form-label">Emp. Name</label>
-        <input type="text" class="form-control" id="Empname" placeholder="Enter Employee Name" [(ngModel)]="searchname">
-      </div>
+          <div class="col-md-4">
+            <label for="Empname" class="form-label">Emp. Name</label>
+            <input type="text" class="form-control" id="Empname" placeholder="Enter Employee Name"
+              [(ngModel)]="searchname">
+          </div>
 
-      <div class="col-md-4">
-        <label for="Empid" class="form-label">Emp. ID</label>
-        <div class="input-group">
-          <input type="text" class="form-control" id="Empid" placeholder="Enter Employee ID" [(ngModel)]="searchid">
-          <button class="btn btn-primary" type="button">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
-              viewBox="0 0 16 16">
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 
-         3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 
-         6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-            </svg>
-          </button>
+          <div class="col-md-4">
+            <label for="Empid" class="form-label">Emp. ID</label>
+            <div class="search-wrapper">
+              <input type="text" class="search-input" id="Empid" placeholder="Enter Employee ID" [(ngModel)]="searchid">
+
+              <button class="search-btn" type="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" stroke="white"
+                  stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8"></circle>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+              </button>
+
+            </div>
+
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label for="select1" class="form-label">Leave</label>
+            <select id="select1" class="form-select" [(ngModel)]="leave" (change)="onSelect1Change()">
+              <option value="" disabled selected>- select leave type -</option>
+              <option value="Full Day">Full Day</option>
+              <option value="Half Day">Half Day</option>
+              <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
+            </select>
+          </div>
+
+          <div class="col-md-4">
+            <label for="time1" class="form-label">Login Time</label>
+            <input type="time" class="form-control" id="time1" [(ngModel)]="time1" [disabled]="isSecondSelectDisabled">
+          </div>
+
+          <div class="col-md-4">
+            <label for="time2" class="form-label">Logout Time</label>
+            <input type="time" class="form-control" id="time2" [(ngModel)]="time2" [disabled]="isSecondSelectDisabled">
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center gap-3">
+          <button class="btn btn-success" type="button">Save</button>
+          <button class="btn btn-secondary" type="button" (click)="clearData()">Clear</button>
         </div>
       </div>
-    </div>
+      <div class="container my-4 border rounded p-3 justify-content-center bg-light">
+        <div class="row align-items-center mb-3">
+          <div class="col-md-4">
+            <label for="totalWorkingDays" class="form-label fw-bold">Total Working Days</label>
+            <input id="totalWorkingDays" class="form-control" type="text">
+          </div>
+          <div class="col-md-4 text-center">
+            <h1 class="text-success fw-bold mt-4">Employee Attendance Details</h1>
+          </div>
+          <div class="col-md-4">
+            <label for="totalLeaveCount" class="fw-bold">Total Leave Count</label>
+            <input id="totalLeaveCount" class="form-control" type="text">
+          </div>
+        </div>
 
-    <div class="row mb-3">
-      <div class="col-md-4">
-        <label for="select1" class="form-label">Leave</label>
-        <select id="select1" class="form-select" [(ngModel)]="leave" (change)="onSelect1Change()">
-          <option value="" disabled selected>- select leave type -</option>
-          <option value="Full Day">Full Day</option>
-          <option value="Half Day">Half Day</option>
-          <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
-        </select>
-      </div>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead class="table-primary text-center">
+              <tr>
+                <th>Emp.ID</th>
+                <th>Emp.Name</th>
+                <th>Project Name</th>
+                <th>Date</th>
+                <th>Login</th>
+                <th>Logout</th>
+                <th>Extra Hours</th>
+                <th>Total Working Hours</th>
+                <th>Leaves</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-      <div class="col-md-4">
-        <label for="time1" class="form-label">Login Time</label>
-        <input type="time" class="form-control" id="time1" [(ngModel)]="time1" [disabled]="isSecondSelectDisabled">
+        <!-- Pagination -->
+        <div class="row mt-4">
+          <div class="col">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
       </div>
-
-      <div class="col-md-4">
-        <label for="time2" class="form-label">Logout Time</label>
-        <input type="time" class="form-control" id="time2" [(ngModel)]="time2" [disabled]="isSecondSelectDisabled">
-      </div>
-    </div>
-
-    <div class="d-flex justify-content-center gap-3">
-      <button class="btn btn-success" type="button">Save</button>
-      <button class="btn btn-secondary" type="button" (click)="clearData()">Clear</button>
-    </div>
-  </div>
-  <div class="container my-4 border rounded p-3 justify-content-center bg-light">
-    <div class="row align-items-center mb-3">
-      <div class="col-md-4">
-        <label for="totalWorkingDays" class="form-label fw-bold">Total Working Days</label>
-        <input id="totalWorkingDays" class="form-control" type="text">
-      </div>
-      <div class="col-md-4 text-center">
-        <h1 class="text-success fw-bold mt-4">Employee Attendance Details</h1>
-      </div>
-      <div class="col-md-4">
-        <label for="totalLeaveCount" class="fw-bold">Total Leave Count</label>
-        <input id="totalLeaveCount" class="form-control" type="text">
-      </div>
-    </div>
-
-    <div class="table-responsive">
-      <table class="table table-bordered">
-        <thead class="table-primary text-center">
-          <tr>
-            <th>Emp.ID</th>
-            <th>Emp.Name</th>
-            <th>Project Name</th>
-            <th>Date</th>
-            <th>Login</th>
-            <th>Logout</th>
-            <th>Extra Hours</th>
-            <th>Total Working Hours</th>
-            <th>Leaves</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Pagination -->
-    <div class="row mt-4">
-      <div class="col">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-center">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-  </div>
-</form>
+    </form>

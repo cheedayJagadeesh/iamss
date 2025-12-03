@@ -1,4 +1,6 @@
-<app-header></app-header>
+<app-leftmenu (sidebarToggled)="onSidebarToggled($event)"></app-leftmenu>
+ <div class="content-wrapper" [class.sidebar-collapsed]="isSidebarClosed">
+  <div class="main-container">
 <form class="row g-3" #form="ngForm">
     <div class="mt-5">
         <div class="d-flex justify-content-center">
@@ -36,7 +38,7 @@
                                 <option value="GDPR">GDPR</option>
                                 <option value="DPDP">DPDP</option>
                                 <option value="AdminUsers">AdminUsers</option>
-                                <option value="News">News</option>
+                                <option value="HolidaysList">HolidaysList</option>
                                 <option value="Events">Events</option>
                                 <option value="CoursesRestriction">CoursesRestriction</option>
                                 <option value="EventAlerts">EventAlerts</option>
@@ -11699,7 +11701,7 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom" *ngIf="selectedOption1 === 'News'">
+    <div class="tablebottom" *ngIf="selectedOption1 === 'HolidaysList'">
         <table *ngIf="!isLoading" class="table table-striped table-bordered" name="news">
             <thead class="table-primary">
                 <tr>

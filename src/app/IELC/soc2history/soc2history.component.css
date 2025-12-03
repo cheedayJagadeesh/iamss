@@ -4,3 +4,26 @@
 .pagination {
     margin-left: 72%;
 }
+  .main-container{
+    margin-top: 4%;
+    margin-left: 12%;
+}
+ /* LeftMenuBar adjustment */
+.content-wrapper {
+  margin-left: 21px;
+  transition: margin-left 0.3s ease;
+  padding: 20px;
+}
+
+.content-wrapper.sidebar-collapsed {
+  margin-left: -141px;
+}
+
+.sidebar {
+  width: 250px;
+  transition: width 0.3s ease;
+}
+
+.sidebar.collapsed {
+  width: 60px;
+}

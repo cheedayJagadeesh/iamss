@@ -15,6 +15,15 @@ import { ChangeDetectorRef } from '@angular/core';
  
 })
 export class RegisteredusersComponent implements OnInit {
+
+  // Track sidebar state
+  isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
+
  selectedDate:string=''
  formatdate:string=''
  skillname:string=''

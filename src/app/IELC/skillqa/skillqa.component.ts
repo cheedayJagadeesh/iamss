@@ -52,6 +52,15 @@ interface Question {
   styleUrls: ['./skillqa.component.css']
 })
 export class SkillqaComponent implements OnInit {
+
+    // Track sidebar state
+  isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
+  
   Enrolledskills: any[] = []; 
   Enrolledskillqa: any[] = []; 
   skillname='';

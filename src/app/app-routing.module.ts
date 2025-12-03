@@ -9,7 +9,7 @@ import { ProjectreportsComponent } from './IAMS/projectreports/projectreports.co
 import { ConfigurationsComponent } from './IAMS/configurations/configurations.component';
 import { RegisteredusersComponent } from './IELC/registeredusers/registeredusers.component';
 import { HomeComponent } from './IELC/home/home.component';
-import { AttendanceComponent } from './IAMS/attendance/attendance.component';
+import { EmpattendanceComponent } from './IAMS/empattendance/empattendance.component';
 import { RegistrationComponent } from './IELC/registration/registration.component';
 import { AddnewskillComponent } from './IELC/addnewskill/addnewskill.component';
 import { SkillqaComponent } from './IELC/skillqa/skillqa.component';
@@ -51,6 +51,7 @@ import { EventschedulerComponent } from './IELC/eventscheduler/eventscheduler.co
 import { ISMSMasterComponent } from './ISMS/ismsmaster/ismsmaster.component';
 
 
+
 const routes: Routes = [
   {path:'adminuser',component:AdminuserComponent,canActivate: [MsalGuard]},
   {path:'pmadminuser',component:PmadminuserComponent,canActivate: [MsalGuard]},
@@ -59,7 +60,7 @@ const routes: Routes = [
   {path:'projectreports',component:ProjectreportsComponent,canActivate: [MsalGuard]},
   {path:'configuration',component:ConfigurationsComponent,canActivate: [MsalGuard]},
   // {path:'attendance',component:AttendanceComponent,canActivate: [MsalGuard]},
-  {path:'attendance',component:ISMSMasterComponent,canActivate: [MsalGuard]},
+  {path:'empattendance',component:EmpattendanceComponent,canActivate: [MsalGuard]},
   {path:'registered',component:RegisteredusersComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['registered'], roles: ['Admin', 'SuperAdmin'] }},
   // {path:'home',component:HomeComponent,canActivate:[MsalGuard]},
   // {path:'',redirectTo:'login', pathMatch:'full'},

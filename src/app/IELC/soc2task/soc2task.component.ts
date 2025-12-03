@@ -24,6 +24,15 @@ interface calendar {
   styleUrls: ['./soc2task.component.css']
 })
 export class Soc2taskComponent implements OnInit {
+
+    // Track sidebar state
+  isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
+
   isLoading = true;
   qmscalendarlist: any[] = []; 
   page: number = 1;  

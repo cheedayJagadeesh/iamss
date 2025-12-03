@@ -10,6 +10,12 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent  {
 
- 
+   // Track sidebar state
+  isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
  
 }

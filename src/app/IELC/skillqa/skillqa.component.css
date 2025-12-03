@@ -1,9 +1,13 @@
- 
+ .container{
+margin-top:2%;
+ }
  .tablebottom {
     margin-top: 2%;
+    width: 90%;
+    margin-left: 10%;
 }
 .pagination {
-    margin-left: 72%;
+    margin-left: 66%;
 }
 
 th {
@@ -49,4 +53,23 @@ th {
     transform: scale(1);
     opacity: 1;
   }
+}
+ /* LeftMenuBar adjustment */
+.content-wrapper {
+  margin-left: 78px;
+  transition: margin-left 0.3s ease;
+  padding: 20px;
+}
+
+.content-wrapper.sidebar-collapsed {
+  margin-left: -102px;
+}
+
+.sidebar {
+  width: 250px;
+  transition: width 0.3s ease;
+}
+
+.sidebar.collapsed {
+  width: 60px;
 }

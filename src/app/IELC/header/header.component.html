@@ -1,94 +1,120 @@
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #fff;"  >
-    <img class="img" src="/assets/images/Inteq logo.png">
-    <div *ngIf="isLoading" class="loading-container">
-      <span class="dot"></span>
+Sidebar
+<div class="sidebar" [class.collapsed]="isSidebarClosed">
+  <img src="\assets\images\inteqlogos.png" alt="logo">
+
+  <!-- Direct Links -->
+  <a *ngIf="canAccess('home')" routerLink="/home" routerLinkActive="active"
+     [routerLinkActiveOptions]="{ exact: true }" title="Home">
+     <i>🏠</i><span>Home</span>
+  </a>
+
+  <!-- Registered User Dropdown -->
+  <div class="dropdown" *ngIf="canAccess('registered')"
+       [class.open]="activeDropdown === 'registered'"
+       (mouseenter)="setActiveDropdown('registered')"
+       (mouseleave)="setActiveDropdown(null)">
+    <a class="dropdown-toggle">
+      <i>👥</i><span>Registered User</span>
+      <span class="arrow">{{ activeDropdown === 'registered' ? '▼' : '▶' }}</span>
+    </a>
+    <div class="dropdown-content" *ngIf="activeDropdown === 'registered'">
+      <a routerLink="/registered" routerLinkActive="active" title="Registered User">Registered User</a>
+      <a routerLink="/resultinfo" routerLinkActive="active" title="Result Info">Result Info</a>
+    </div>
   </div>
-    <div class="container-fluid" >
-      <div class="collapse navbar-collapse" id="navbarNavDropdown" *ngIf="!isLoading">
-        <ul class="nav nav-pills nav-list">
-        <li class="nav-item" *ngIf="canAccess('home')">
-            <a class="nav-link" routerLink="/home"  routerLinkActive="active-tab" 
-            [routerLinkActiveOptions]="{ exact: true }">Home</a>
-        </li>
-          <li class="nav-item" *ngIf="canAccess('registered')">
-            <a class="nav-link "  routerLink="/registered"  routerLinkActive="active-tab" 
-            [routerLinkActiveOptions]="{ exact: true }" >RegisteredUser</a>
-          </li>
-          <li class="nav-item" *ngIf="canAccess('addskill')">
-            <a class="nav-link " routerLink="/addskill"  routerLinkActive="active-tab" 
-            [routerLinkActiveOptions]="{ exact: true }" >AddNewSkill</a>
-          </li>
-          <li class="nav-item" *ngIf="canAccess('skillqa')">
-            <a class="nav-link " routerLink="/skillqa"  routerLinkActive="active-tab" 
-            [routerLinkActiveOptions]="{ exact: true }">SkillQA</a>
-          </li>
-          <li class="nav-item dropdown" *ngIf="canAccess('ismstask') || canAccess('qmstask') || canAccess('soc2task')" >
-            <a class="nav-link  dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Compliance
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li *ngIf="canAccess('ismstask')"><a class="dropdown-item" routerLink="/ismstask"  routerLinkActive="active-tab" 
-                [routerLinkActiveOptions]="{ exact: true }">ISMS Task</a></li>
-              <li *ngIf="canAccess('qmstask')"><a class="dropdown-item" routerLink="/qmstask"  routerLinkActive="active-tab" 
-                [routerLinkActiveOptions]="{ exact: true }">QMS Task</a></li>
-              <li *ngIf="canAccess('soc2task')"><a class="dropdown-item" routerLink="/soc2task"  routerLinkActive="active-tab" 
-                [routerLinkActiveOptions]="{ exact: true }">SOC2 Task</a></li>
-            </ul>
-          </li>
-          <li class="nav-item dropdown" *ngIf="canAccess('admindept') || canAccess('hrdept') || canAccess('itdept')">
-            <a class="nav-link  dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              AllDepts
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li *ngIf="canAccess('admindept')"><a class="dropdown-item" routerLink="/admindept"  routerLinkActive="active-tab" 
-                [routerLinkActiveOptions]="{ exact: true }">Admin Dept</a></li>
-              <li *ngIf="canAccess('hrdept')"><a class="dropdown-item" routerLink="/hrdept"  routerLinkActive="active-tab" 
-                [routerLinkActiveOptions]="{ exact: true }">HR Dept</a></li>
-              <li *ngIf="canAccess('itdept')"><a class="dropdown-item" routerLink="/itdept"  routerLinkActive="active-tab" 
-                [routerLinkActiveOptions]="{ exact: true }">IT Dept</a></li>
-            </ul>
-          </li>
-          <li class="nav-item" *ngIf="canAccess('adminusers')">
-            <a class="nav-link " routerLink="/adminusers"  routerLinkActive="active-tab" 
-            [routerLinkActiveOptions]="{ exact: true }">AdminUsers</a>
-          </li>
-          <li class="nav-item" *ngIf="canAccess('attendance')">
-            <a class="nav-link " routerLink="/attendance"  routerLinkActive="active-tab" 
-            [routerLinkActiveOptions]="{ exact: true }">Attendance</a>
-          </li>
-          <!-- <li class="nav-item dropdown">
-            <a class="nav-link  dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Attendance
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <li><a class="dropdown-item" routerLink="/attendance" routerLinkActive="active-tab" 
-                [routerLinkActiveOptions]="{ exact: true }">Attendance</a></li>
-              <li><a class="dropdown-item" routerLink="/adminuser" routerLinkActive="active-tab" 
-                [routerLinkActiveOptions]="{ exact: true }">Admin User</a></li>
-              <li><a class="dropdown-item" routerLink="/pmadminuser" routerLinkActive="active-tab" 
-                [routerLinkActiveOptions]="{ exact: true }">PM Admin User</a></li>
-              <li><a class="dropdown-item" routerLink="/adminreports" routerLinkActive="active-tab" 
-                [routerLinkActiveOptions]="{ exact: true }">Admin Reports</a></li>
-              <li><a class="dropdown-item" routerLink="/projectreports" routerLinkActive="active-tab" 
-                [routerLinkActiveOptions]="{ exact: true }">project Reports</a></li>
-              <li><a class="dropdown-item" routerLink="/monthlyempreport" routerLinkActive="active-tab" 
-                [routerLinkActiveOptions]="{ exact: true }">Monthly Emp Report</a></li>
-              <li><a class="dropdown-item" routerLink="/configuration" routerLinkActive="active-tab" 
-                [routerLinkActiveOptions]="{ exact: true }">Configurations</a></li>
-            </ul>
-          </li> -->
-          <li class="nav-item" *ngIf="canAccess('registration')">
-            <a class="nav-link " routerLink="/registration" routerLinkActive="active-tab" 
-            [routerLinkActiveOptions]="{ exact: true }">RegistrationPage</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " (click)="logout()" style="cursor: pointer;">Logout</a>
-          </li>
-        </ul>
+
+  <a *ngIf="canAccess('addskill')" routerLink="/addskill" routerLinkActive="active"
+     [routerLinkActiveOptions]="{ exact: true }" title="Add New Skill">
+     <i>➕</i><span>AddNewSkill</span>
+  </a>
+
+  <a *ngIf="canAccess('skillqa')" routerLink="/skillqa" routerLinkActive="active"
+     [routerLinkActiveOptions]="{ exact: true }" title="Skill QA">
+     <i>❓</i><span>SkillQA</span>
+  </a>
+
+<!-- fourthmodel -->
+
+  <div class="dropdown" *ngIf="canAccess('ismstask') || canAccess('qmstask') || canAccess('soc2task')"
+       [class.open]="activeDropdown === 'compliance'"
+       (mouseenter)="setActiveDropdown('compliance')"
+       (mouseleave)="setActiveDropdown(null)">
+    <a class="dropdown-toggle">
+      <i>📋</i><span>Compliance</span>
+      <span class="arrow">{{ activeDropdown === 'compliance' ? '▼' : '▶' }}</span>
+    </a>
+
+    <div class="dropdown-content" *ngIf="activeDropdown === 'compliance'">
+    <!-- ISMS -->
+    <div class="dropdown" [class.open]="isOpen['isms']">
+      <div class="dropdown-toggle" (click)="toggleDropdown('isms')">
+        ISMS Task <span class="arrow">{{ isOpen['isms'] ? '▼' : '▶' }}</span>
+      </div>
+      <div class="dropdown-content" *ngIf="isOpen['isms']">
+        <a routerLink="/ismstask" routerLinkActive="active">ISMS Calendar</a>
+        <a routerLink="/ismshistory" routerLinkActive="active">ISMS History</a>
+        <a routerLink="/ismsmails" routerLinkActive="active">ISMS Mails</a>
       </div>
     </div>
-  </nav>
-  <div>
-    <!-- <label class="lbllogin">Login as <strong>{{ userName }}</strong> </label> -->
-    <app-sprtheader></app-sprtheader>
+    <!-- QMS -->
+    <div class="dropdown" [class.open]="isOpen['qms']">
+      <div class="dropdown-toggle" (click)="toggleDropdown('qms')">
+        QMS Task <span class="arrow">{{ isOpen['qms'] ? '▼' : '▶' }}</span>
+      </div>
+      <div class="dropdown-content" *ngIf="isOpen['qms']">
+        <a routerLink="/qmstask" routerLinkActive="active">QMS Calendar</a>
+        <a routerLink="/qmshistory" routerLinkActive="active">QMS History</a>
+        <a routerLink="/qmsmails" routerLinkActive="active">QMS Mails</a>
+      </div>
+    </div>
+    <!-- SOC2 -->
+    <div class="dropdown" [class.open]="isOpen['soc2']">
+      <div class="dropdown-toggle" (click)="toggleDropdown('soc2')">
+        SOC2 Task <span class="arrow">{{ isOpen['soc2'] ? '▼' : '▶' }}</span>
+      </div>
+      <div class="dropdown-content" *ngIf="isOpen['soc2']">
+        <a routerLink="/soc2task" routerLinkActive="active">SOC2 Calendar</a>
+        <a routerLink="/soc2history" routerLinkActive="active">SOC2 History</a>
+        <a routerLink="/soc2mails" routerLinkActive="active">SOC2 Mails</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <!-- Departments Dropdown -->
+  <div class="dropdown" *ngIf="canAccess('admindept') || canAccess('hrdept') || canAccess('itdept')"
+       [class.open]="activeDropdown === 'departments'"
+       (mouseenter)="setActiveDropdown('departments')"
+       (mouseleave)="setActiveDropdown(null)">
+    <a class="dropdown-toggle">
+      <i>🏢</i><span>AllDepts</span>
+      <span class="arrow">{{ activeDropdown === 'departments' ? '▼' : '▶' }}</span>
+    </a>
+    <div class="dropdown-content" *ngIf="activeDropdown === 'departments'">
+      <a *ngIf="canAccess('admindept')" routerLink="/admindept">Admin Dept</a>
+      <a *ngIf="canAccess('hrdept')" routerLink="/hrdept">HR Dept</a>
+      <a *ngIf="canAccess('itdept')" routerLink="/itdept">IT Dept</a>
+    </div>
+  </div>
+
+  <!-- Other Links -->
+  <a *ngIf="canAccess('adminusers')" routerLink="/adminusers" routerLinkActive="active" title="Admin Users"><i>👤</i><span>AdminUsers</span></a>
+  <a *ngIf="canAccess('empattendance')" routerLink="/empattendance" routerLinkActive="active" title="Attendance"><i>🕒</i><span>Attendance</span></a>
+  <a *ngIf="canAccess('registration')" routerLink="/registration" routerLinkActive="active" title="Registration"><i>📝</i><span>RegistrationPage</span></a>
+  <a (click)="logout()" title="Logout"><i>🚪</i><span>Logout</span></a>
+</div>
+
+<!-- Header --> 
+ <div class="header" [class.collapsed]="isSidebarClosed"> 
+  <h1> 
+    <button class="toggle-btn" (click)="toggleSidebar()">☰</button> Welcome to Inteq Admin Dashboard </h1> 
+  <app-sprtheader></app-sprtheader> 
+  <div class="profile"> <img src="\assets\images\userlogo.png" alt="User"> 
+  </div> 
+</div>
+
+<!-- Content --> 
+ <div class="content" [class.collapsed]="isSidebarClosed"> 
+  <router-outlet></router-outlet> 
 </div>

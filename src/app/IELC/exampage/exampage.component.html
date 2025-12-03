@@ -1,8 +1,7 @@
 <form class="row g-0 justify-content-center">
-  <app-sprtheader></app-sprtheader>
 
   <div class="exam-wrapper">
-
+  <app-sprtheader class="lbllogin"></app-sprtheader>
     <!-- LOADING OVERLAY -->
     <div *ngIf="isLoading" class="exam-loading-overlay">
       <div class="loader-content">
@@ -154,12 +153,23 @@
         <button type="button" class="btn btn-outline-secondary btn-sm" (click)="cancelSubmit()">
           Review Again
         </button>
+
         <button type="button" class="btn btn-primary btn-sm" (click)="confirmSubmit()">
           Yes, Submit
         </button>
       </div>
     </div>
   </div>
+
+<!-- Message shown while reviewing -->
+<div *ngIf="showCorrectPopup" class="modal-overlay">
+  <div class="modal-popup">
+    <p>You answered <strong>{{ correctAnswersCount }}</strong> questions correctly.</p>
+    <button class="btn btn-primary btn-sm" (click)="closeCorrectPopup()">OK</button>
+  </div>
+</div>
+
+
 
   <!-- 🔹 RESULT MODAL (your existing one, just styled) -->
   <div

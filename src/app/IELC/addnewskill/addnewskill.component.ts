@@ -57,6 +57,13 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
     skillID: '',
     skillName: ''
   };
+
+      isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
   
    skillname:string=''
    includeStQuestions:boolean=false;
@@ -124,6 +131,7 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
       this.Enrolledusers=data;
       this.Enrolledusers = this.sortRegisteredUsers(data);
       this.isLoading=false;
+      console.log("Skill Sessions Data:", this.Enrolledusers);
     });
    }
 

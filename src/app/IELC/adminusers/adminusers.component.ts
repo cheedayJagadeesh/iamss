@@ -168,6 +168,12 @@ export class AdminusersComponent {
 isLoading=true;
 
 
+      isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
 
 
   encodePassword (password: string): string {

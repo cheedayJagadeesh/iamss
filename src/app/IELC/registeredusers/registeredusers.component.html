@@ -1,13 +1,17 @@
-<app-header></app-header>
-<!-- <div>
-  <label class="lbllogin"></label>
-</div> -->
- <div *ngIf="isLoading" class="loading-container">
-        <span class="dot"></span>
-    </div>
-<form class="row" #searchform="ngForm" (ngSubmit)="searchSkills()">
-  <div class="d-flex justify-content-center bg-light pt-5">
-    <div class="container p-4 rounded shadow-sm bg-light border border-secondary mb-4" style="max-width: 1000px;">
+<app-leftmenu (sidebarToggled)="onSidebarToggled($event)"></app-leftmenu>
+
+<div class="content-wrapper" [class.sidebar-collapsed]="isSidebarClosed">
+  
+  <!-- Loading Animation -->
+  <div *ngIf="isLoading" class="loading-container">
+    <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+  </div>
+
+  <form class="row" #searchform="ngForm" (ngSubmit)="searchSkills()">
+    <div class="container shadow-sm">
+
+      <h5 class="text-center mb-4 fw-bold text-primary">Search Enrolled Users</h5>
+
       <div class="row g-3">
         <!-- Skill Name -->
         <div class="col-md-4 col-sm-6">
@@ -58,18 +62,18 @@
       </div>
       <!-- Date Range -->
       <div class="row mt-4">
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <label for="fromDate" class="form-label">Choose Date Range From</label>
           <input type="date" class="form-control form-control-sm" name="fromdate" [(ngModel)]="fromDate">
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
           <label for="toDate" class="form-label">Choose Date Range To</label>
           <input type="date" class="form-control form-control-sm" name="todate" [(ngModel)]="toDate">
         </div>
       </div>
 
     </div>
-  </div>
+  
 
   <div *ngIf="isLoading" class="loading-container">
     <span class="dot"></span>

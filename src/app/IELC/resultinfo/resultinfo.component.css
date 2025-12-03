@@ -1,9 +1,14 @@
 
 .tablebottom {
     margin-top: 3%;
+    width: 50%;
+    margin-left: 8%;
 }
-.pagination {
-    margin-left: 72%;
+.pagination1 {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  margin-left: 63%;
 }
 
 th {
@@ -45,3 +50,21 @@ th {
   
   .dot:nth-child(2) { animation-delay: 0.2s; }
   .dot:nth-child(3) { animation-delay: 0.4s; }
+.content-wrapper {
+  margin-left: 100px;
+  transition: margin-left 0.3s ease;
+  padding: 20px;
+}
+
+.content-wrapper.sidebar-collapsed {
+  margin-left: -60px;
+}
+
+.sidebar {
+  width: 250px;
+  transition: width 0.3s ease;
+}
+
+.sidebar.collapsed {
+  width: 60px;
+}

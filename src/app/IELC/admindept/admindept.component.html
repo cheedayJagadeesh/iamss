@@ -1,5 +1,8 @@
-<p>admindept works!</p>
-<app-sprtheader></app-sprtheader>
-<div>
-    <button class="btn btn-dark btnback" routerLink="/home">Back</button>
-</div>
+
+ <app-leftmenu (sidebarToggled)="onSidebarToggled($event)"></app-leftmenu>
+ <div class="content-wrapper" [class.sidebar-collapsed]="isSidebarClosed">
+  <div class="main-container">
+    <p>admindept works!</p>
+    </div>
+    </div>
+

@@ -7,6 +7,16 @@ import { IelcapiService } from '../ielcapi.service';
   styleUrls: ['./qmshistory.component.css']
 })
 export class QmshistoryComponent  {
+
+
+      // Track sidebar state
+  isSidebarClosed = false;
+
+  // Event handler for sidebar toggle event
+   onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
+
   isLoading = true;
   years: number[] = [];
   selectedYear: number = new Date().getFullYear();

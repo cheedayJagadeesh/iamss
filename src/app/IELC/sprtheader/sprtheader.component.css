@@ -1,10 +1,21 @@
-.lbllogin{
+.lbllogin {
     /* margin-top: 1.5%;
-    margin-left: 75%;
-    position: absolute; */
-    margin-top: 1.5%;
-    margin-left: 75%;
-    position: absolute;
+    margin-left: 65%;
     font-size: 16px;
-    position: absolute;
+    display: inline-block;
+    white-space: nowrap;
+      margin-top: -1.5%; */
+    /* margin-left: 46%; */
+    
+       font-size: 16px;
+    display: inline-block;
+    white-space: nowrap;
+    text-align: center;
+    width: auto;
+    margin: 0 auto;
+    margin-top: -20px;
+    margin-left: 46%;
+}
+.lbllogin span {
+    display: inline;
 }

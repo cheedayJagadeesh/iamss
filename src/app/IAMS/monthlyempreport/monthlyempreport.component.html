@@ -1,5 +1,6 @@
-
-<app-attendanceheader></app-attendanceheader>
+<app-leftmenu (sidebarToggled)="onSidebarToggled($event)"></app-leftmenu>
+ <div class="content-wrapper" [class.sidebar-collapsed]="isSidebarClosed">
+  <div class="main-container">
 <form class="row g-3">
   <div class="mt-4 border p-4 rounded shadow-sm bg-light border-secondary">
   <div class="row g-3 align-items-end">

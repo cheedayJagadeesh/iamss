@@ -627,9 +627,24 @@ goBack() {
 
 showConfirmSubmit = false;
 userAnswers: { questionIndex: number; selected: string | null }[] = [];
+// cancelSubmit() {
+//   this.correctAnswersCount
+//   this.showConfirmSubmit = false;
+// }
+
+showCorrectPopup: boolean = false;
+
 cancelSubmit() {
-  this.showConfirmSubmit = false;
+  this.calculateCorrectAnswers();
+  this.showConfirmSubmit = false; // close main submit popup
+  this.showCorrectPopup = true;   // show result popup
 }
+
+closeCorrectPopup() {
+  this.showCorrectPopup = false;
+}
+
+
 
 confirmSubmit() {
   this.showConfirmSubmit = false;
@@ -676,6 +691,15 @@ openConfirmSubmit() {
   this.showConfirmSubmit = true;
 }
 
+correctAnswersCounts: number = 0;
+showReviewMessage: boolean = false;
+
+
+calculateCorrectAnswers() {
+  this.correctAnswersCounts = this.questions.filter((q: any) =>
+    q.selectedAnswer === q.correctAnswer
+  ).length;
+}
 
 
 }
