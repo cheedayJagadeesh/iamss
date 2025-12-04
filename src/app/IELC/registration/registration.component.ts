@@ -628,7 +628,7 @@ proceedToEnroll(
       alert('Enrollment successful! A confirmation email will be sent shortly.');
       this.GetAllUsers();
       const sessionDescription = this.getSessionDescription(skill, venue, date, time);
-
+debugger;
       const subject = 'Session Invitation Link';
       const body = `
         <p>Thanks for the Registration!</p>
