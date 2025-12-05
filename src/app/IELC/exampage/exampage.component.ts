@@ -476,7 +476,7 @@ UpdateResult() {
                 <tr>
                     <td style="border: 1px solid #ddd; padding: 8px;">${this.selectedSkill}</td>
                     <td style="border: 1px solid #ddd; padding: 8px;">${this.percentage.toFixed(0)}%</td>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Pending</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Failed</td>
                 </tr>
               </tbody>
             </table>
