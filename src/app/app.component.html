@@ -1,10 +1,17 @@
- <!-- <router-outlet></router-outlet> -->
-  <!-- <app-login></app-login> -->
-<!-- <app-hrsprt></app-hrsprt> -->
+<div *ngIf="isLoading && currentRoute !== '/login'" class="loading-container">
+    <span class="dot"></span>
+</div>
 
-    <div *ngIf="isLoading && currentRoute !== '/login'" class="loading-container">
-        <span class="dot"></span>
-    </div>
-  
-  <router-outlet *ngIf="!isLoading || currentRoute === '/login'"></router-outlet>
+<ng-container *ngIf="!isLoading || currentRoute === '/login'">
+  <!-- Left menu is rendered once at the app root so it persists across route changes -->
+  <app-leftmenu
+    (sidebarToggled)="onSidebarToggled($event)"
+    *ngIf="currentRoute !== '/login'">
+  </app-leftmenu>
+
+  <!-- Main content area. Adjust CSS to make room for the left menu as needed -->
+  <main class="main-content" [class.sidebar-collapsed]="isSidebarClosed">
+    <router-outlet></router-outlet>
+  </main>
+</ng-container>
   

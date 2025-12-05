@@ -47,6 +47,13 @@ export class AppComponent implements OnInit {
   // }
   isLoading: boolean = true;
   currentRoute: string = '';
+  // track left-menu collapsed state
+  isSidebarClosed: boolean = false;
+
+  // handler for leftmenu toggle events
+  onSidebarToggled(state: boolean) {
+    this.isSidebarClosed = state;
+  }
   // async ngOnInit() {
     
   //   try {
