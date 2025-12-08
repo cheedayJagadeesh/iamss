@@ -17,33 +17,10 @@
 
   <!-- Result INFO -->
     <a *ngIf="canAccess('resultinfo')" routerLink="/resultinfo" routerLinkActive="active" [class.active]="activeRoute === '/resultinfo'"
-    [routerLinkActiveOptions]="{ exact: true }" (mouseenter)="showFloatingLabel($event, 'Result Info')"
+    [routerLinkActiveOptions]="{ exact: true }" (mouseenter)="showFloatingLabel($event, 'Results')"
     (mouseleave)="hideFloatingLabel()">
-    <i>📈</i><span>Result Info</span>
+    <i>📈</i><span>Results</span>
   </a>
-
-
-  <!-- Registered User -->
-  <!-- <div class="dropdown" *ngIf="canAccess('registered')" [class.open]="activeDropdown === 'registered'" #dropdownToggle
-    (mouseenter)="onMouseEnter('registered', $event)" (mouseleave)="onMouseLeave()">
-    <div class="dropdown-toggle" (click)="toggleDropdown('registered')">
-      <i>👥</i><span>Enrolled Users</span>
-      <span class="arrow">{{ activeDropdown === 'registered' ? '▲' : '▼' }}</span>
-    </div> -->
-    <!-- Normal expanded content -->
-    <!-- <div class="dropdown-content" *ngIf="activeDropdown === 'registered' && !isSidebarClosed">
-      <a routerLink="/registered" [ngClass]="{ 'active-submenu': isSubMenuActive('/registered') }">Registered User</a>
-      <a routerLink="/resultinfo" [ngClass]="{ 'active-submenu': isSubMenuActive('/resultinfo') }">Result Info</a>
-    </div> -->
-
-    <!-- Floating submenu when collapsed -->
-    <!-- <div class="floating-dropdown" *ngIf="hoveredDropdown === 'registered' && isSidebarClosed"
-      [style.top.px]="floatingTop">
-      <a routerLink="/registered">Registered User</a>
-      <a routerLink="/resultinfo">Result Info</a>
-    </div>
-  </div> -->
-
 
   <!-- Add New Skill -->
   <a *ngIf="canAccess('addskill')" routerLink="/addskill" routerLinkActive="active"
@@ -53,14 +30,12 @@
   </a>
 
 
-
   <!-- Skill QA -->
   <a *ngIf="canAccess('skillqa')" routerLink="/skillqa" routerLinkActive="active"
-    [class.active]="activeRoute === '/skillqa'" (mouseenter)="showFloatingLabel($event, 'Skill QA')"
+    [class.active]="activeRoute === '/skillqa'" (mouseenter)="showFloatingLabel($event, 'Skill Question Bank')"
     (mouseleave)="hideFloatingLabel()">
-    <i>❓</i><span>Skill QA</span>
+    <i>❓</i><span>Skill Questions</span>
   </a>
-
 
 
   <!-- Compliance -->
@@ -144,14 +119,12 @@
   </div>
 
 
-
-
   <!-- Departments -->
   <div class="dropdown" *ngIf="canAccess('admindept') || canAccess('hrdept') || canAccess('itdept')"
     (mouseenter)="showFloatingDropdown($event, 'departments')" (mouseleave)="hideFloatingDropdown()">
 
     <div class="dropdown-toggle" (click)="toggleDropdown('departments')">
-      <i>🏢</i><span>All Depts</span>
+      <i>🏢</i><span>Departments</span>
       <span class="arrow">{{ activeDropdown === 'departments' ? '▲' : '▼' }}</span>
     </div>
 
@@ -173,10 +146,10 @@
 
 
   <!-- Admin Users -->
-  <a *ngIf="canAccess('adminusers')" routerLink="/adminusers" routerLinkActive="active"
-    [class.active]="activeRoute === '/adminusers'" (mouseenter)="showFloatingLabel($event, 'Admin Users')"
-    (mouseleave)="hideFloatingLabel()">
-    <i>👤</i><span>Admin Users</span>
+  <a *ngIf="canAccess('adminusers')" routerLink="/user-groups" routerLinkActive="active"
+    [class.active]="activeRoute === '/user-groups'" (mouseenter)="showFloatingLabel($event, 'User Groups')"
+    (mouseleave)="hideFloatingLabel()" [routerLinkActiveOptions]="{ exact: true }">
+    <i>👤</i><span>User Groups</span>
   </a>
 
 
@@ -190,7 +163,7 @@
     <!-- Normal expanded content -->
     <div class="dropdown-content" *ngIf="activeDropdown === 'iams' && !isSidebarClosed">
       <a routerLink="/empattendance" [ngClass]="{ 'active-submenu': isSubMenuActive('/empattendance') }">Attendance</a>
-      <a routerLink="/adminuser" [ngClass]="{ 'active-submenu': isSubMenuActive('/adminuser') }">Admin User</a>
+      <a routerLink="/adminuser" [ngClass]="{ 'active-submenu': isSubMenuActive('/iams/adminuser')  }" >Admin User</a>
       <a routerLink="/pmadminuser" [ngClass]="{ 'active-submenu': isSubMenuActive('/pmadminuser') }">PM Admin User</a>
       <a routerLink="/adminreports" [ngClass]="{ 'active-submenu': isSubMenuActive('/adminreports') }">Admin Reports</a>
       <a routerLink="/projectreports" [ngClass]="{ 'active-submenu': isSubMenuActive('/projectreports') }">Project Reports</a>
@@ -219,7 +192,7 @@
 
   <a *ngIf="canAccess('registration')" routerLink="/registration" [class.active]="activeRoute === '/registration'"
     (mouseenter)="showFloatingLabel($event, 'Registration')" (mouseleave)="hideFloatingLabel()">
-    <i>📝</i><span>Registration</span>
+    <i>📝</i><span>User Registration</span>
   </a>
 
 

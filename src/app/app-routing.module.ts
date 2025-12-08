@@ -25,7 +25,7 @@ import { Soc2taskComponent } from './IELC/soc2task/soc2task.component';
 import { Soc2historyComponent } from './IELC/soc2history/soc2history.component';
 import { Soc2mailsComponent } from './IELC/soc2mails/soc2mails.component';
 import { ComplianceformComponent } from './IELC/complianceform/complianceform.component';
-import { AdminusersComponent } from './IELC/adminusers/adminusers.component';
+import { UserGroupsComponent } from './IELC/user-groups/user-groups.component';
 import { IthelpsprtComponent } from './IELC/ithelpsprt/ithelpsprt.component';
 import { AdminsprtComponent } from './IELC/adminsprt/adminsprt.component';
 import { HrsprtComponent } from './IELC/hrsprt/hrsprt.component';
@@ -88,8 +88,8 @@ const routes: Routes = [
   {path:'soc2history',component:Soc2historyComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['soc2history'], roles: ['Admin', 'SuperAdmin']}},
   {path:'soc2mails',component:Soc2mailsComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['soc2mails'], roles: ['Admin', 'SuperAdmin']}},
   {path:'complianceform',component:ComplianceformComponent,canActivate: [MsalGuard],data: { pageNames: ['complianceform'], roles: ['Admin', 'SuperAdmin']}},
-  {path:'adminusers',component:AdminusersComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['adminusers'], roles: ['Admin', 'SuperAdmin']}},
-  {path:'eventscheduler',component:EventschedulerComponent,canActivate: [MsalGuard],data: { pageNames: ['adminusers'], roles: ['Admin', 'SuperAdmin']}},
+  {path:'user-groups',component:UserGroupsComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['user-groups'], roles: ['Admin', 'SuperAdmin']}},
+  {path:'eventscheduler',component:EventschedulerComponent,canActivate: [MsalGuard],data: { pageNames: ['eventscheduler'], roles: ['Admin', 'SuperAdmin']}},
   {path:'ithelpsprt',component:IthelpsprtComponent,canActivate: [MsalGuard]},
   {path:'adminsprt',component:AdminsprtComponent,canActivate: [MsalGuard]},
   {path:'hrsprt',component:HrsprtComponent,canActivate: [MsalGuard]},

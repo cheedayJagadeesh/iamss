@@ -99,7 +99,7 @@ Sidebar
   </div>
 
   <!-- Other Links -->
-  <a *ngIf="canAccess('adminusers')" routerLink="/adminusers" routerLinkActive="active" title="Admin Users"><i>👤</i><span>AdminUsers</span></a>
+  <a *ngIf="canAccess('adminusers')" routerLink="/user-groups" routerLinkActive="active" title="User Groups"><i>👤</i><span>User Groups</span></a>
   <a *ngIf="canAccess('empattendance')" routerLink="/empattendance" routerLinkActive="active" title="Attendance"><i>🕒</i><span>Attendance</span></a>
   <a *ngIf="canAccess('registration')" routerLink="/registration" routerLinkActive="active" title="Registration"><i>📝</i><span>RegistrationPage</span></a>
   <a (click)="logout()" title="Logout"><i>🚪</i><span>Logout</span></a>

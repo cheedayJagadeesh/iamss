@@ -1,17 +1,22 @@
 /* Center main content within dashboard */
 .content-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding-top: 60px;
-  background-color: #f8fafc;
-  min-height: calc(100vh - 60px);
+  margin-left: 60px;
   transition: margin-left 0.3s ease;
-  margin-left: 100px; /* adjust for sidebar width */
+  padding: 20px;
 }
 
 .content-wrapper.sidebar-collapsed {
-  margin-left: 60px;
+  margin-left: -108px
+}
+
+
+.sidebar {
+  width: 250px;
+  transition: width 0.3s ease;
+}
+
+.sidebar.collapsed {
+  width: 60px;
 }
 
 /* Card container for search filters */
@@ -41,17 +46,17 @@
     font-family: Roboto, sans-serif;
     letter-spacing: .0178571429em;
 }
+
  .main_container{
 padding-left: 49px;
  } 
-/* Table section centered */
-.tablebottom {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
+
+.tablebottom{
+    width: 90%;
+    margin-left: 10%;
 }
 
-/* Pagination alignment */
+
 .pagination {
   display: flex;
   justify-content: center;
@@ -114,12 +119,3 @@ th {
   }
 }
 
-
-.sidebar {
-  width: 250px;
-  transition: width 0.3s ease;
-}
-
-.sidebar.collapsed {
-  width: 60px;
-}

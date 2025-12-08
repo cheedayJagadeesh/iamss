@@ -1,5 +1,5 @@
 <p>hrdept works!</p>
- <!-- left menu moved to root AppComponent -->
+ <app-leftmenu (sidebarToggled)="onSidebarToggled($event)"></app-leftmenu>
  <div class="content-wrapper" [class.sidebar-collapsed]="isSidebarClosed">
   <div class="main-container">
     </div>

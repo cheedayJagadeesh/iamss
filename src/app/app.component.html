@@ -1,4 +1,4 @@
-<div *ngIf="isLoading && currentRoute !== '/login'" class="loading-container">
+<!-- <div *ngIf="isLoading && currentRoute !== '/login'" class="loading-container">
     <span class="dot"></span>
 </div>
 
@@ -13,4 +13,10 @@
     <router-outlet></router-outlet>
   </main>
 </ng-container>
+   -->
+
+    <div *ngIf="isLoading && currentRoute !== '/login'" class="loading-container">
+        <span class="dot"></span>
+    </div>
   
+  <router-outlet *ngIf="!isLoading || currentRoute === '/login'"></router-outlet>

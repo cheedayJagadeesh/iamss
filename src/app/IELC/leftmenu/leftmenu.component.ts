@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, Output, QueryList, Renderer2, View
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
 
+
 @Component({
   selector: 'app-leftmenu',
   templateUrl: './leftmenu.component.html',

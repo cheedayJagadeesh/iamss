@@ -47,7 +47,7 @@ import { Soc2historyComponent } from './IELC/soc2history/soc2history.component';
 import { Soc2mailsComponent } from './IELC/soc2mails/soc2mails.component';
 
 import { ComplianceformComponent } from './IELC/complianceform/complianceform.component';
-import { AdminusersComponent } from './IELC/adminusers/adminusers.component';
+import { UserGroupsComponent } from './IELC/user-groups/user-groups.component';
 import { IthelpsprtComponent } from './IELC/ithelpsprt/ithelpsprt.component';
 import { AdminsprtComponent } from './IELC/adminsprt/adminsprt.component';
 import { HrsprtComponent } from './IELC/hrsprt/hrsprt.component';
@@ -96,6 +96,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ISMSMasterComponent } from './ISMS/ismsmaster/ismsmaster.component';
 import { UserheaderComponent } from './IELC/userheader/userheader.component';
 import { LeftmenuComponent } from './IELC/leftmenu/leftmenu.component';
+
 
 
 
@@ -255,8 +256,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     Soc2historyComponent,
     Soc2mailsComponent,
     EmpattendanceComponent,
-    ComplianceformComponent,
-    AdminusersComponent,
+  ComplianceformComponent,
+  UserGroupsComponent,
     IthelpsprtComponent,
     AdminsprtComponent,
     HrsprtComponent,
@@ -291,7 +292,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     NgbDatepickerModule,FormsModule,MatDatepickerModule,MatNativeDateModule,MatCardModule,FullCalendarModule,MatInputModule,
     MatFormFieldModule,MatButtonModule,MatIconModule,HttpClientModule,NgxPaginationModule,LazyLoadImageModule,
          MatDialogModule,
-    MatRadioModule,PdfViewerModule
+    MatRadioModule,PdfViewerModule, RouterModule
   ],
   providers: [IelcapiService,HttpClient,AuthService,MsalModule,MsalGuard,MsalService,DatePipe,ExcelExportService,MsalBroadcastService, 
     {

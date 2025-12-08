@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IelcapiService } from '../ielcapi.service';
 import { forkJoin } from 'rxjs';
 import { FormsModule } from '@angular/forms';
@@ -159,13 +159,14 @@ interface eventalertsinfo{
   fileName?: string; 
    status:string;
 }
+
 @Component({
-  selector: 'app-adminusers',
-  templateUrl: './adminusers.component.html',
-  styleUrls: ['./adminusers.component.css']
+  selector: 'app-user-groups',
+  templateUrl: './user-groups.component.html',
+  styleUrls: ['./user-groups.component.css']
 })
-export class AdminusersComponent {
-isLoading=true;
+export class UserGroupsComponent implements OnInit {
+  isLoading=true;
 
 
       isSidebarClosed = false;
@@ -7424,5 +7425,6 @@ getFileIcon(alertAttachment: string): string {
 
 
 }
+
 
 
