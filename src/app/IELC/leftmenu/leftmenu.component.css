@@ -358,3 +358,6 @@
 .floating-dropdown::-webkit-scrollbar-track {
   background: transparent;
 }
+.hidden-sidebar {
+  display: none !important;
+}

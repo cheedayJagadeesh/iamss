@@ -5,17 +5,8 @@ import { AuthService } from 'src/app/authservice.service';
 import { MsalService } from '@azure/msal-angular';
 import { ActivatedRoute } from '@angular/router';
 
-// interface Feedback {
-//   enrollmentID: number;
-//   subjectMatterKnowledge: string;
-//   presentation: string;
-//   communication: string;
-//   handlingDoubts: string;
-//   applicationToWork: string;
-//   comments: string;
-// }
-
 interface Enrollment {
+  [key: string]: any; // allow dynamic access from template (feedbackdata[item.model])
   enrollmentID: number;
   name: string;
   mail: string;
@@ -75,32 +66,6 @@ export class FeedbackComponent {
     });
   }
 
-  // UpdateFeedback() {
-  //   if (this.enrollmentID) {
-
-      
-      
-  //     // console.log('Before submitting:', {
-  //     //   result: this.feedbackdata.result,
-  //     //   percentage: this.feedbackdata.percentage,
-  //     //   testTakenDate: this.feedbackdata.testTakenDate
-  //     // });
-  //     this.ielc.Updatefeedback(this.enrollmentID, this.feedbackdata).subscribe(
-  //       (response) => {
-  //         console.log('Updated Successfully:', response);
-  //         alert('✅ Thank you for submitting the feedback!');
-  
-  //         // Navigate back to the table with submittedID
-  //         this.router.navigate(['/registration']);
-  //         // this.router.navigate(['/registration'], { queryParams: { submittedID: this.enrollmentID } });
-  //       },
-  //       (error) => {
-  //         console.error('Error updating Record:', error);
-  //       }
-  //     );
-  //   }
-  // }
-
   UpdateFeedback() {
     if (this.enrollmentID !== null) {
       const id = this.enrollmentID;
@@ -139,34 +104,6 @@ export class FeedbackComponent {
   }
   
   
-  
-
-  
-  // UpdateFeedback() {
-  //   if (this.enrollmentID) {
-  //     // Add the optional feedback-related fields the backend expects
-  //     const feedbackWithExtras = {
-  //       ...this.feedbackdata,
-  //       result: this.feedbackdata.result || '',
-  //       percentage: this.feedbackdata.percentage || '',
-  //       testTakenDate: this.feedbackdata.testTakenDate || ''
-  //     };
-  
-  //     this.ielc.Updatefeedback(this.enrollmentID, feedbackWithExtras).subscribe(
-  //       (response) => {
-  //         console.log('Updated Successfully:', response);
-  //         alert('✅ Thank you for submitting the feedback!');
-  //         this.router.navigate(['/registration']);
-  //       },
-  //       (error) => {
-  //         console.error('Error updating Record:', error);
-  //       }
-  //     );
-  //   }
-  // }
-  
-  
-  
   resetlist(){
     this.feedbackdata={
       enrollmentID: 0,
@@ -191,4 +128,7 @@ export class FeedbackComponent {
       comments: '',
     }
   }
+
+
+  
 }

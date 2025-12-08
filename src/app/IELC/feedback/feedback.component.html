@@ -1,141 +1,53 @@
-<form class="row g-3" #form="ngForm">
-<!-- <div>
-    <label class="lbllogin">Login as </label>
-</div> -->
-<app-sprtheader></app-sprtheader>
-<img class="img" src="/assets/images/Inteq logo.png">
-<div>
-    <button class="btn btn-dark btnback" routerLink="/registration">Back</button>
-</div>
-<h1 class="h1">Assessment Feedback Details</h1>
-<div>
-    <label class="lblskill" *ngIf="selectedSkill">SkillName: <strong>{{ selectedSkill }}</strong></label>
-    <!-- <h2 *ngIf="selectedSkill">Your Test: <strong>{{ selectedSkill }}</strong></h2> -->
-    <!-- <label class="lblskill" >skillName: </label> -->
-    <label class="lblid" *ngIf="enrollmentID">ID: <strong>{{ enrollmentID }}</strong></label>
-</div>
-<div class="radio-container">
-<div class="radio-group">
-    <label class="radio-label">Subject Matter Knowledge:</label>
+<form class="container py-4 fade-in" #form="ngForm">
+    <app-userheader pageTitle="Assessment Feedback Details"></app-userheader>
 
-    <label class="radio-option">
-        <input type="radio" name="subjectMatterKnowledge" [(ngModel)]="feedbackdata.subjectMatterKnowledge" required  #subjectMatterKnowledgeRef="ngModel" value="Excellent"> Excellent
-    </label>
+    <div class="feedback-header text-center mb-3">
+        <p *ngIf="selectedSkill" class="info-text">
+            Skill: <strong>{{ selectedSkill }}</strong>
+            ID: <strong>{{ enrollmentID }}</strong>
+        </p>
+        <!-- <p *ngIf="enrollmentID" class="info-text">
+            ID: <strong>{{ enrollmentID }}</strong>
+        </p> -->
+    </div>
 
-    <label class="radio-option">
-        <input type="radio" name="subjectMatterKnowledge" [(ngModel)]="feedbackdata.subjectMatterKnowledge" required  #subjectMatterKnowledgeRef="ngModel" value="Very Good"> Very Good
-    </label>
+    <div class="card shadow-lg feedback-card p-4">
+        <div class="form-group mb-3" *ngFor="let item of [
+              {label:'Subject Matter Knowledge', model:'subjectMatterKnowledge'},
+              {label:'Presentation', model:'presentation'},
+              {label:'Communication', model:'communication'},
+              {label:'Handling Doubts', model:'handlingDoubts'},
+              {label:'Application to Work', model:'applicationtowork'}
+            ]">
 
-    <label class="radio-option">
-        <input type="radio" name="subjectMatterKnowledge" [(ngModel)]="feedbackdata.subjectMatterKnowledge" required  #subjectMatterKnowledgeRef="ngModel" value="Good"> Good
-    </label>
+            <label class="form-label fw-semibold">{{ item.label }}:</label>
 
-    <label class="radio-option">
-        <input type="radio" name="subjectMatterKnowledge" [(ngModel)]="feedbackdata.subjectMatterKnowledge" required  #subjectMatterKnowledgeRef="ngModel" value="Fair"> Fair
-    </label>
+            <div class="d-flex flex-wrap gap-3">
+                <label class="radio-pill" *ngFor="let rate of ['Excellent','Very Good','Good','Fair','Poor']">
+                    <input type="radio" [name]="item.model"
+                           [(ngModel)]="feedbackdata[item.model]"
+                           required
+                           [value]="rate">
+                    {{ rate }}
+                </label>
+            </div>
+        </div>
 
-    <label class="radio-option">
-        <input type="radio" name="subjectMatterKnowledge" [(ngModel)]="feedbackdata.subjectMatterKnowledge" required  #subjectMatterKnowledgeRef="ngModel" value="Poor"> Poor
-    </label>
-</div>
-<div class="radio-groupnxt">
-    <label class="radio-label">Presentation:</label>
+        <div class="form-group mt-4">
+            <label class="form-label fw-semibold">Comments:</label>
+            <textarea name="comments"
+                      class="form-control"
+                      placeholder="Tell us about your experience..."
+                      [(ngModel)]="feedbackdata.comments"
+                      required></textarea>
+        </div>
 
-    <label class="radio-option">
-        <input type="radio" name="presentation" [(ngModel)]="feedbackdata.presentation" required  #presentationRef="ngModel"  value="Excellent"> Excellent
-    </label>
-
-    <label class="radio-option">
-        <input type="radio" name="presentation" [(ngModel)]="feedbackdata.presentation"  required  #presentationRef="ngModel"   value="Very Good"> Very Good
-    </label>
-
-    <label class="radio-option">
-        <input type="radio" name="presentation" [(ngModel)]="feedbackdata.presentation"  required  #presentationRef="ngModel"   value="Good"> Good
-    </label>
-
-    <label class="radio-option">
-        <input type="radio" name="presentation" [(ngModel)]="feedbackdata.presentation"  required  #presentationRef="ngModel"   value="Fair"> Fair
-    </label>
-
-    <label class="radio-option">
-        <input type="radio" name="presentation" [(ngModel)]="feedbackdata.presentation"  required  #presentationRef="ngModel"  value="Poor"> Poor
-    </label>
-</div>
-<div class="radio-groupnxt">
-    <label class="radio-label">Communication:</label>
-
-    <label class="radio-option">
-        <input type="radio" name="communication" [(ngModel)]="feedbackdata.communication"  required  #communicationRef="ngModel"  value="Excellent"> Excellent
-    </label>
-
-    <label class="radio-option">
-        <input type="radio" name="communication" [(ngModel)]="feedbackdata.communication" required  #communicationRef="ngModel" value="Very Good"> Very Good
-    </label>
-
-    <label class="radio-option">
-        <input type="radio" name="communication" [(ngModel)]="feedbackdata.communication" required  #communicationRef="ngModel" value="Good"> Good
-    </label>
-
-    <label class="radio-option">
-        <input type="radio" name="communication" [(ngModel)]="feedbackdata.communication" required  #communicationRef="ngModel" value="Fair"> Fair
-    </label>
-
-    <label class="radio-option">
-        <input type="radio" name="communication" [(ngModel)]="feedbackdata.communication" required  #communicationRef="ngModel" value="Poor"> Poor
-    </label>
-</div>
-<div class="radio-groupnxt">
-    <label class="radio-label">Handling Doubts:</label>
-
-    <label class="radio-option">
-        <input type="radio" name="handlingDoubts" [(ngModel)]="feedbackdata.handlingDoubts" required  #handlingDoubtsRef="ngModel" value="Excellent"> Excellent
-    </label>
-
-    <label class="radio-option">
-        <input type="radio" name="handlingDoubts" [(ngModel)]="feedbackdata.handlingDoubts" required  #handlingDoubtsRef="ngModel"  value="Very Good"> Very Good
-    </label>
-
-    <label class="radio-option">
-        <input type="radio" name="handlingDoubts" [(ngModel)]="feedbackdata.handlingDoubts" required  #handlingDoubtsRef="ngModel"  value="Good"> Good
-    </label>
-
-    <label class="radio-option">
-        <input type="radio" name="handlingDoubts" [(ngModel)]="feedbackdata.handlingDoubts" required  #handlingDoubtsRef="ngModel"  value="Fair"> Fair
-    </label>
-
-    <label class="radio-option">
-        <input type="radio" name="handlingDoubts" [(ngModel)]="feedbackdata.handlingDoubts" required  #handlingDoubtsRef="ngModel"  value="Poor"> Poor
-    </label>
-</div>
-<div class="radio-groupnxt">
-    <label class="radio-label">Application to work:</label>
-
-    <label class="radio-option">
-        <input type="radio" name="applicationtowork" [(ngModel)]="feedbackdata.applicationtowork" required  #applicationtoworkRef="ngModel"  value="Excellent"> Excellent
-    </label>
-
-    <label class="radio-option">
-        <input type="radio" name="applicationtowork" [(ngModel)]="feedbackdata.applicationtowork" required  #applicationtoworkRef="ngModel" value="Very Good"> Very Good
-    </label>
-
-    <label class="radio-option">
-        <input type="radio" name="applicationtowork" [(ngModel)]="feedbackdata.applicationtowork" required  #applicationtoworkRef="ngModel" value="Good"> Good
-    </label>
-
-    <label class="radio-option">
-        <input type="radio" name="applicationtowork" [(ngModel)]="feedbackdata.applicationtowork" required  #applicationtoworkRef="ngModel" value="Fair"> Fair
-    </label>
-
-    <label class="radio-option">
-        <input type="radio" name="applicationtowork" [(ngModel)]="feedbackdata.applicationtowork" required  #applicationtoworkRef="ngModel" value="Poor"> Poor
-    </label>
-</div>
-</div>
-<div>
-    <textarea class="txtarea" name="comments" placeholder="Leave a comment here" required  #commentsRef="ngModel" [(ngModel)]="feedbackdata.comments" ></textarea>
-</div>
-<div>
-    <button class="btn btn-info btnsrch"  (click)="UpdateFeedback()"  [disabled]="form.invalid" >Submit</button>
-</div>
+        <div class="text-center mt-4">
+            <button class="btn btn-primary btn-lg px-4"
+                    (click)="UpdateFeedback()"
+                    [disabled]="form.invalid">
+                Submit Feedback
+            </button>
+        </div>
+    </div>
 </form>
-

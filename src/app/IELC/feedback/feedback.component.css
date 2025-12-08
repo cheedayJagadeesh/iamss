@@ -33,46 +33,6 @@ h1 {
     position: absolute;
     font-size: 15px;
 }
-/* .radio-group {
-    display: inline-flex;
-    gap: 15px; 
-    margin-top: 4%;
-    margin-left: 30%;
-    font-size: 15px;
-  }
-  
-  .radio-label {
-    display: flex;
-    align-items: center;
-    gap: 5px; 
-  } */
-  /* .radio-group {
-    display: flex;
-    align-items: center;
-    gap: 22px; 
-    margin-top: 4%;
-    margin-left: 30%;
-    font-size: 15px;
-    width: 50%;
-  }
-  .radio-groupnxt {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 2%;
-    margin-left: 30%;
-    font-size: 15px;
-    width: 50%;
-  }
-  .radio-option {
-    display: flex;
-    align-items: center;
-    gap: 5px; 
-  }
-  
-  .radio-option input {
-    margin: 0;
-  } */
   .radio-container {
     display: flex;
     flex-direction: column;
@@ -130,4 +90,74 @@ h1 {
     margin-left: 48%;
     width: 100px;
 }
-  
+  .card {
+  border-radius: 12px;
+}
+
+.form-check-input {
+  transform: scale(1.1);
+}
+
+badge {
+  font-size: 1rem;
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.feedback-card {
+    max-width: 700px;
+    margin: auto;
+    border-radius: 14px;
+    background: #ffffff;
+    border: none;
+}
+
+.info-text {
+    font-size: 16px;
+    color: #333;
+    margin-top: 4%;
+}
+
+.radio-pill {
+    background: #f1f4ff;
+    border-radius: 25px;
+    padding: 6px 14px;
+    cursor: pointer;
+    border: 1px solid #d2d6f2;
+    transition: 0.2s;
+    font-size: 14px;
+}
+
+.radio-pill:hover {
+    background: #dbe3ff;
+}
+
+.radio-pill input {
+    margin-right: 4px;
+}
+
+textarea.form-control {
+    height: 100px;
+    border-radius: 8px !important;
+    font-size: 14px;
+}
+
+.btn-primary {
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.fade-in {
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}

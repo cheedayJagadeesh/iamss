@@ -3,13 +3,12 @@
 </div>
 
 <ng-container *ngIf="!isLoading || currentRoute === '/login'">
-  <!-- Left menu is rendered once at the app root so it persists across route changes -->
-  <app-leftmenu
-    (sidebarToggled)="onSidebarToggled($event)"
-    *ngIf="currentRoute !== '/login'">
-  </app-leftmenu>
 
-  <!-- Main content area. Adjust CSS to make room for the left menu as needed -->
+<app-leftmenu
+  (sidebarToggled)="onSidebarToggled($event)"
+  [ngClass]="{ 'hidden-sidebar': shouldHideSidebar }">
+</app-leftmenu>
+
   <main class="main-content" [class.sidebar-collapsed]="isSidebarClosed">
     <router-outlet></router-outlet>
   </main>

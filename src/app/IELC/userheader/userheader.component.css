@@ -109,3 +109,10 @@
     width: 118%;
     margin-left: -10%;
 }
+.header-left img {
+  height: 45px;     /* Controlled size */
+  width: auto;      /* Keep natural aspect ratio */
+  object-fit: contain;
+  margin-right: 10px;
+  filter: none;     /* Remove sticker effect shadow */
+}

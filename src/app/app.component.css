@@ -29,3 +29,7 @@
     0%, 100% { transform: scale(1); opacity: 0.5; }
     50% { transform: scale(1.5); opacity: 1; }
   }
+  .hidden-sidebar {
+  display: none !important;
+}
+
