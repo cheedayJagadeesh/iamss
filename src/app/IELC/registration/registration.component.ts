@@ -1088,8 +1088,10 @@ onSelect2Change() {
 //   });
 // }
 
+isModeSelected: boolean = false;
   onModeOfTrainingChange(event: any) {
   //debugger;
+  this.isModeSelected = true;
   const venue = (event.target as HTMLInputElement).value;
   this.selectedValue = venue;
   this.isLoadingSkills = true;
@@ -1291,6 +1293,9 @@ this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, this.date)
     }
   );
 }
+
+
+
 // pdfUrl: string | null = null;
 // openDocument(fileName: string) {
 //   this.ielc.getWordAsPdf(fileName).subscribe(blob => {

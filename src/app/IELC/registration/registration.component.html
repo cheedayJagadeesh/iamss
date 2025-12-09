@@ -418,7 +418,7 @@
                 <option *ngFor="let row of Enrolledskills" [value]="row.skillName">{{ row.skillName }}</option>
               </select> -->
               <select name="skillname" class="form-controlone" required [(ngModel)]="skillname"
-                (change)="onSkillSelected(skillname); onBatchInputChange()">
+                (change)="onSkillSelected(skillname); onBatchInputChange()" [disabled]="!isModeSelected">
               
                 <!-- Loading state -->
                 <option *ngIf="isLoadingSkills" disabled>Loading skills...</option>

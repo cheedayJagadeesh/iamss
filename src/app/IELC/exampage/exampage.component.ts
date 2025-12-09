@@ -422,6 +422,7 @@ UpdateResult() {
               <thead>
                <tr style="background-color: #f2f2f2;">
                 <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">SkillName</th>
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Registration Date</th>
                 <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Percentage</th>
                 <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Status</th>
                 </tr>
@@ -429,13 +430,14 @@ UpdateResult() {
               <tbody>
                 <tr>
                  <td style="border: 1px solid #ddd; padding: 8px;">${this.selectedSkill}</td>
+                 <td style="border: 1px solid #ddd; padding: 8px;">${this.resultdata.enrollmentDate}</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">${this.percentage.toFixed(0)}%</td>
                 <td style="border: 1px solid #ddd; padding: 8px;">Completed</td>
                 </tr>
               </tbody>
             </table>
             <br>
-            <div style="border: 4px solid #0d6efd; padding: 30px; font-family: Arial, sans-serif; max-width: 600px; margin: auto; background-color: #fff;">
+            <div style="border: 4px solid #0d6efd; padding: 30px; font-family: Arial, sans-serif; max-width: 400px; margin: auto; background-color: #fff;">
               <div style="text-align: center;">
                 <h2 style="color: #0d6efd; margin: 0; font-size: 35px">INTEQ SOFTWARE LLP</h2>
                 <h5 style="color: #999; margin-top: 5px;margin-left:40%">Innovation through people</h5>
@@ -468,6 +470,7 @@ UpdateResult() {
               <thead>
                   <tr style="background-color: #f2f2f2;">
                   <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">SkillName</th>
+                  <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Registration Date</th>
                   <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Percentage</th>
                   <th style="border: 1px solid #ddd; padding: 8px; text-align: left;">Status</th>
                 </tr>
@@ -475,6 +478,7 @@ UpdateResult() {
               <tbody>
                 <tr>
                     <td style="border: 1px solid #ddd; padding: 8px;">${this.selectedSkill}</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;">${this.resultdata.enrollmentDate}</td>
                     <td style="border: 1px solid #ddd; padding: 8px;">${this.percentage.toFixed(0)}%</td>
                     <td style="border: 1px solid #ddd; padding: 8px;">Failed</td>
                 </tr>

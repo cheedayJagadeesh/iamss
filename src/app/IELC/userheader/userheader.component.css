@@ -6,7 +6,6 @@
   color: #ffffff;
 }
 
-/* Make header sticky */
 .sticky-header {
   position: sticky;
   top: 0;
@@ -14,19 +13,26 @@
   transition: box-shadow 0.3s ease, background 0.3s ease;
 }
 
-/* Shadow appears when page scrolls */
 .sticky-header.scrolled {
   box-shadow: 0 4px 12px rgba(0,0,0,0.22);
 }
 
-/* LOGO */
-.header-logo {
-  height: 55px;
-  width: auto;
-  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.22));
+.header-left {
+  height: 65px; /* same as header */
+  display: flex;
+  align-items: center;
 }
 
-/* CENTER TITLE */
+.header-logo-fit {
+  height: 100%;      /* fit full header height */
+  width: auto;       /* keep aspect ratio */
+  object-fit: contain;
+  filter: none;      /* remove sticker-like shadow */
+  padding: 0 10px;   /* some spacing from edges */
+}
+
+
+
 .page-heading {
   margin: 0;
   font-size: 1.45rem;
@@ -35,7 +41,6 @@
   text-shadow: 0 1px 2px rgba(0,0,0,0.25);
 }
 
-/* RIGHT SECTION */
 .header-right {
   gap: 12px;
 }
@@ -91,28 +96,23 @@
     
 }
 .header-logo-fit {
-    /* Ensures the logo doesn't exceed the height of the header bar. 
-       Adjust 100% or 40px/50px as needed based on your header's height. */
     max-height: 100%; 
-    /* Optional: Sets a maximum width to prevent distortion if the header is very wide */
     max-width: 150px; 
-    /* Ensures the image scales down correctly without being cut off */
     width: 100%; 
     height: auto;
 }
 
-/* You may need this if your header bar has a fixed height */
 .header-left {
-    height: 60px; /* Example height of the header bar */
+    height: 60px;
 }
 .header-center {
     width: 118%;
     margin-left: -10%;
 }
 .header-left img {
-  height: 45px;     /* Controlled size */
-  width: auto;      /* Keep natural aspect ratio */
+  height: 45px;    
+  width: auto;      
   object-fit: contain;
   margin-right: 10px;
-  filter: none;     /* Remove sticker effect shadow */
+  filter: none;     
 }
