@@ -437,7 +437,7 @@ UpdateResult() {
               </tbody>
             </table>
             <br>
-            <div style="border: 4px solid #0d6efd; padding: 30px; font-family: Arial, sans-serif; max-width: 400px; margin: auto; background-color: #fff;">
+            <div style="border: 4px solid #0d6efd; padding: 30px; font-family: Arial, sans-serif; max-width: 600px; margin: auto; background-color: #fff;">
               <div style="text-align: center;">
                 <h2 style="color: #0d6efd; margin: 0; font-size: 35px">INTEQ SOFTWARE LLP</h2>
                 <h5 style="color: #999; margin-top: 5px;margin-left:40%">Innovation through people</h5>
@@ -450,7 +450,7 @@ UpdateResult() {
              <div style="display: flex; margin-top: 20px; ">
               <img src="https://th.bing.com/th/id/OLC.rH1hOQll17Ivig480x360?&rs=1&pid=ImgDetMain" alt="Italian Trulli" style="margin-left: 0%;" width="150" height="100" style="margin-right: 20px;" />
               <p style="font-size: 18px; color: #666; margin: 30;margin-left: 30%;">
-                C V Prasad <br> CISO, Program Manager
+                C V Prasad <br> CISO / MR / Program Manager
               </p>
             </div>
             </div>
