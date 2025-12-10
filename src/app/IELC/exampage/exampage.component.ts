@@ -450,7 +450,7 @@ UpdateResult() {
              <div style="display: flex; margin-top: 20px; ">
               <img src="https://th.bing.com/th/id/OLC.rH1hOQll17Ivig480x360?&rs=1&pid=ImgDetMain" alt="Italian Trulli" style="margin-left: 0%;" width="150" height="100" style="margin-right: 20px;" />
               <p style="font-size: 18px; color: #666; margin: 30;margin-left: 30%;">
-                C V Prasad <br> CISO, Program Manager
+                C V Prasad <br> CISO / MR / Program Manager
               </p>
             </div>
             </div>
