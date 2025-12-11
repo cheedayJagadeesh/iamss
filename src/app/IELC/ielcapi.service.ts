@@ -2305,7 +2305,7 @@ sendEmailFromBackend(payload: {
   smtpUserName: string;
   smtpPassword: string;
   to: string;
-  cc: string;
+  bcc: string;
   subject: string;
   body: string;
 }) {
