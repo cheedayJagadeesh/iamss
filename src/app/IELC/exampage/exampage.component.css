@@ -1037,3 +1037,6 @@
   from { transform: translateY(120vh); }
   to { transform: translateY(-120vh); }
 }
+.left{
+  margin-left: 64%;
+}
