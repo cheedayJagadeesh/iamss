@@ -614,7 +614,7 @@ nextQuestion() {
 
 goBack() {
     const userChoice = confirm(
-    "⚠️ Going back may affect your exam flow.\n\nAre you sure you want to go to the previous question?"
+    "⚠️ Going back may affect your exam flow.\n\nAre you sure you want to return to the Home page?"
   );
 
   if (!userChoice) {
