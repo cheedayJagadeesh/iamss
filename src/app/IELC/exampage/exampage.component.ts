@@ -126,6 +126,12 @@ export class ExampageComponent implements OnInit, OnDestroy  {
    sessionID: number | null = null;
    examdataList: exam[] = [];
 
+   // ✅ Throttle for tab switch detection
+   lastTabSwitchTime: number = 0;
+   tabSwitchThrottleMs: number = 2000; // 2 second cooldown
+   lastScreenshotAlertTime: number = 0;
+   screenshotThrottleMs: number = 1000; // 1 second cooldown
+   isAlertShowing: boolean = false; // Prevent multiple alerts
 
 loadingProgress: number = 0;
 fakePercent = 0;
@@ -169,45 +175,224 @@ fakePercent = 0;
   // }
 
   async ngOnInit() {
-  // 1) Load exam meta first (time, number of questions, etc.)
-  this.ielc.GetSessionById(this.sessionID).subscribe(
-    (data: exam[]) => {
-      if (data && data.length > 0) {
-        this.examdataList = data;
-        this.examdata = data[0];
-        this.timeLeft = this.examdata.examTime * 60;
+    // Prevent all right-click and context menus
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('copy', e => e.preventDefault());
+    document.addEventListener('cut', e => e.preventDefault());
+    document.addEventListener('paste', e => e.preventDefault());
 
-        // ✅ NOW load questions using correct displayExamQuestions
-        this.GetAllSkillsQa();
-      }
-    },
-    error => {
-      console.error('Error fetching exam data', error);
-    }
-  );
-
-  // 2) Your existing MSAL / user loading logic stays as-is
-  try {
-    await this.msalService.instance.initialize();
-    await this.msalService.instance.handleRedirectPromise();
-    const activeAccount = this.msalService.instance.getActiveAccount();
-    if (!activeAccount) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
-    this.authService.setActiveAccount();
-    this.authService.userDetails$.subscribe(userDetails => {
-      this.userName  = userDetails?.displayName;
-      this.userEmail = userDetails?.email;
-      if (userDetails) {
-        this.GetAllUsers();
+    // ✅ Tab switching detection with throttle - Single Alert Only
+    window.addEventListener('blur', () => {
+      const now = Date.now();
+      
+      // Only trigger if enough time has passed AND no alert is currently showing
+      if (now - this.lastTabSwitchTime > this.tabSwitchThrottleMs && !this.isAlertShowing) {
+        this.tabSwitchCount++;
+        this.lastTabSwitchTime = now;
+        this.isAlertShowing = true; // Prevent multiple alerts
+        
+        console.warn(`⚠️ Tab switch detected (${this.tabSwitchCount})`);
+        
+        // Show alert only once
+        alert('⚠️ Tab switching detected! Alert sent to Administrator!');
+        
+        // Reset flag after user clicks OK (alert is dismissed)
+        this.isAlertShowing = false;
       }
     });
-  } catch (error) {
-    // handle msal error if needed
+
+    // ✅ AGGRESSIVE keyboard prevention for screenshots and dev tools
+    document.addEventListener('keydown', (e: any) => {
+      // Block PrintScreen
+      if (e.key === 'PrintScreen' || e.code === 'PrintScreen') {
+        e.preventDefault();
+        e.stopPropagation();
+        this.showToastNotification('⚠️ Screenshots blocked');
+        return;
+      }
+
+      // Block Ctrl+PrintScreen
+      if (e.ctrlKey && (e.key === 'PrintScreen' || e.code === 'PrintScreen')) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.showToastNotification('⚠️ Screenshots blocked');
+        return;
+      }
+
+      // Block Alt+PrintScreen
+      if (e.altKey && (e.key === 'PrintScreen' || e.code === 'PrintScreen')) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.showToastNotification('⚠️ Screenshots blocked');
+        return;
+      }
+
+      // Block Shift+PrintScreen
+      if (e.shiftKey && (e.key === 'PrintScreen' || e.code === 'PrintScreen')) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.showToastNotification('⚠️ Screenshots blocked');
+        return;
+      }
+
+      // Block Windows Key + Shift + S (Snipping Tool) - MOST IMPORTANT
+      if (e.metaKey && e.shiftKey && e.key === 's') {
+        e.preventDefault();
+        e.stopPropagation();
+        this.showToastNotification('⚠️ Snipping tool blocked');
+        return;
+      }
+
+      // Block Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+P, Ctrl+S
+      if (e.ctrlKey && ['c', 'v', 'x', 'p', 's'].includes(e.key.toLowerCase())) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+
+      // Block F12 (Developer Tools)
+      if (e.key === 'F12' || e.code === 'F12') {
+        e.preventDefault();
+        e.stopPropagation();
+        this.showToastNotification('⚠️ Dev tools blocked');
+        return;
+      }
+
+      // Block Ctrl+Shift+I (Inspector)
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'i') {
+        e.preventDefault();
+        e.stopPropagation();
+        this.showToastNotification('⚠️ Dev tools blocked');
+        return;
+      }
+
+      // Block Ctrl+Shift+J (Console)
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'j') {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+
+      // Block Ctrl+Shift+C (Element Inspector)
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'c') {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+
+      // Block Ctrl+Shift+K (Console)
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+    }, true); // Use capture phase to intercept early
+
+    // ✅ Block keyup for PrintScreen
+    document.addEventListener('keyup', (e: any) => {
+      if (e.key === 'PrintScreen' || e.code === 'PrintScreen') {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+    }, true);
+
+    // ✅ Monitor clipboard for screenshot content
+    document.addEventListener('paste', (e) => {
+      e.preventDefault();
+    });
+
+    document.addEventListener('copy', (e) => {
+      e.preventDefault();
+    });
+
+    // ✅ Blur page when tab is hidden
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        document.body.style.filter = 'blur(10px)';
+        this.tabSwitchCount++;
+      } else {
+        document.body.style.filter = 'none';
+      }
+    });
+
+    // ✅ Disable right-click entirely
+    document.addEventListener('mousedown', (e: any) => {
+      if (e.button === 2) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+    }, true);
+
+    // ✅ Block drag and drop
+    document.addEventListener('dragstart', (e) => {
+      e.preventDefault();
+      return false;
+    });
+
+    document.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      return false;
+    });
+
+    document.addEventListener('drop', (e) => {
+      e.preventDefault();
+      return false;
+    });
+
+    // ✅ Prevent user select
+    document.body.style.userSelect = 'none';
+    document.body.style.webkitUserSelect = 'none';
+    (document.body as any).style.msUserSelect = 'none';
+    (document.body as any).style.mozUserSelect = 'none';
+
+    // ✅ Monitor for screen capture API attempts
+    if ((navigator as any).mediaDevices && (navigator as any).mediaDevices.getDisplayMedia) {
+      const originalGetDisplayMedia = (navigator as any).mediaDevices.getDisplayMedia;
+      (navigator as any).mediaDevices.getDisplayMedia = function () {
+        console.warn('Screen capture attempt blocked');
+        return Promise.reject(new Error('Screen capture is disabled'));
+      };
+    }
+
+    // 1) Load exam meta first
+    this.ielc.GetSessionById(this.sessionID).subscribe(
+      (data: exam[]) => {
+        if (data && data.length > 0) {
+          this.examdataList = data;
+          this.examdata = data[0];
+          this.timeLeft = this.examdata.examTime * 60;
+          this.GetAllSkillsQa();
+        }
+      },
+      error => {
+        console.error('Error fetching exam data', error);
+      }
+    );
+
+    // 2) Load user data
+    try {
+      await this.msalService.instance.initialize();
+      await this.msalService.instance.handleRedirectPromise();
+      const activeAccount = this.msalService.instance.getActiveAccount();
+      if (!activeAccount) {
+        this.router.navigate(['/login']);
+        return;
+      }
+
+      this.authService.setActiveAccount();
+      this.authService.userDetails$.subscribe(userDetails => {
+        this.userName = userDetails?.displayName;
+        this.userEmail = userDetails?.email;
+        if (userDetails) {
+          this.GetAllUsers();
+        }
+      });
+    } catch (error) {
+      // handle msal error if needed
+    }
   }
-}
 
 
   sortRegisteredUsers(data: any[]): any[] {
@@ -614,7 +799,7 @@ nextQuestion() {
 
 goBack() {
     const userChoice = confirm(
-    "⚠️ Going back may affect your exam flow.\n\nAre you sure you want to go to the previous question?"
+    "⚠️ Going back may affect your exam flow.\n\nAre you sure you want to return to the Home page?"
   );
 
   if (!userChoice) {
@@ -697,7 +882,7 @@ openConfirmSubmit() {
 
 correctAnswersCounts: number = 0;
 showReviewMessage: boolean = false;
-
+tabSwitchCount: number = 0;
 
 calculateCorrectAnswers() {
   this.correctAnswersCounts = this.questions.filter((q: any) =>
@@ -705,5 +890,29 @@ calculateCorrectAnswers() {
   ).length;
 }
 
+// ✅ Toast notification (non-blocking, auto-dismiss)
+showToastNotification(message: string, duration: number = 2000) {
+  const toast = document.createElement('div');
+  toast.textContent = message;
+  
+  toast.style.position = 'fixed';
+  toast.style.top = '20px';
+  toast.style.right = '20px';
+  toast.style.backgroundColor = '#ff6b6b';
+  toast.style.color = 'white';
+  toast.style.padding = '12px 20px';
+  toast.style.borderRadius = '4px';
+  toast.style.zIndex = '99999';
+  toast.style.fontSize = '14px';
+  toast.style.fontWeight = 'bold';
+  toast.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+  
+  document.body.appendChild(toast);
 
+  setTimeout(() => {
+    if (document.body.contains(toast)) {
+      document.body.removeChild(toast);
+    }
+  }, duration);
+}
 }

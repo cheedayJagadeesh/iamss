@@ -96,6 +96,8 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ISMSMasterComponent } from './ISMS/ismsmaster/ismsmaster.component';
 import { UserheaderComponent } from './IELC/userheader/userheader.component';
 import { LeftmenuComponent } from './IELC/leftmenu/leftmenu.component';
+import { AdminComponent } from './admin/admin.component';
+import { IsmsqmssupportComponent } from './ismsqmssupport/ismsqmssupport.component';
 
 
 
@@ -282,7 +284,9 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     ISMSMasterComponent,
     UserheaderComponent,
     LeftmenuComponent,
-    EmpattendanceComponent
+    EmpattendanceComponent,
+    AdminComponent,
+    IsmsqmssupportComponent
   ],
   imports: [
     BrowserModule,

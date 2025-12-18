@@ -33,7 +33,7 @@ export class EmailService {
   }
 
   // Send the email, but only if the SMTP settings are loaded
-  async sendEmail(to: string, cc: string, subject: string, body: string): Promise<void> {
+  async sendEmail(to: string, bcc: string, subject: string, body: string): Promise<void> {
     if (this.isLoading) {
       // console.log("🔄 Waiting for SMTP settings to load...");
       return; // If SMTP settings are still loading, don't proceed
@@ -45,9 +45,9 @@ export class EmailService {
     const EmailPayload = {
       smtpUserName: smtp.userName,
       smtpPassword: decryptedPassword,
-      to,
-       cc: 'jagadeesh.c@inteqsolutions.com',
-      //cc: 'ramprasadh@inteqsolutions.com',
+      to, 
+      bcc: 'Akhilpasha.m@inteqsolutions.com',
+      //bcc: 'ramprasadh@inteqsolutions.com',
       subject,
       body
     };

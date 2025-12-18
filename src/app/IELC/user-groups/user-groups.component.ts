@@ -123,6 +123,12 @@ interface isosprtinfo{
   mobile: number;
   email: string;
 }
+interface ismsqmssprtinfo{
+  id: number;
+  contactPriority: string;
+  name: string;
+  mobile: number;
+  email: string;}
 interface docs{
   documentID: number;
   documentName: string;
@@ -158,6 +164,17 @@ interface eventalertsinfo{
   alertAttachment?: string;
   fileName?: string; 
    status:string;
+}
+
+interface auditevents{
+  Id: number,
+  auditeeDepartment: string;
+  auditees: string;
+  StartingDate: string;
+  StartTime: string;
+  EndTime: string;
+  auditors: string;
+  location: string;
 }
 
 @Component({
@@ -205,6 +222,11 @@ onSelection1Change() {
   this.isPRJTSelected = this.selectedOption1 === 'ProjectsSupport';
   this.isCISOSelected = this.selectedOption1 === 'CISO_MR_Support';
   this.isEventSchedulerSelected = this.selectedOption1 === 'EventScheduler';
+
+  // Load AuditEvents data when AuditEvents is selected
+  // if (this.selectedOption1 === 'AuditEvents') {
+  //   this.GetAuditSchedule();
+  // }
 
   if (this.selectedOption1 !== 'Contact') {
     this.showContactTable = false;
@@ -349,8 +371,16 @@ eventschuser: eventscuserinfo = {
   email: '',
   }
   isosprtlist27001: any[] = []; 
-  isosprtlist9001: any[] = []; 
+  isosprtlist9001: any[] = [];
+  ismsqmssupport: any[] = []; 
   isosprtdata:isosprtinfo={
+    id: 0,
+    contactPriority: '',
+    name: '',
+    mobile: 0,
+    email: '',
+ }
+   ismsqmssprtdata:ismsqmssprtinfo={
     id: 0,
     contactPriority: '',
     name: '',
@@ -393,6 +423,18 @@ eventschuser: eventscuserinfo = {
   fileName: '',
   status:'',
  }
+
+ auditeventsdata:auditevents={
+  Id: 0,
+  auditeeDepartment: '',
+  auditees: '',
+  StartingDate: '',
+  StartTime: '',
+  EndTime: '',
+  auditors: '',
+  location: '',
+ }
+today:string=''
  HrIsmsGeneraldata: any[] = []; 
  HrIsmsGuidelinesdata: any[] = []; 
  HrIsmsPolicydata: any[] = []; 
@@ -462,6 +504,7 @@ eventschuser: eventscuserinfo = {
  eventschedulertime: any[]=[];
  eventschedules: any[]=[];
  crserestlist: any[]=[];
+ auditschedulelist: any[]=[];
  eventalertslist: any[]=[];
  ismsdetails: any[] = [];
  qmsdetails: any[] = [];
@@ -791,6 +834,7 @@ eventschuser: eventscuserinfo = {
     this.GetEmerSprtlist();
     this.GetIsoSprtlist();
     this.GetIso9001Sprtlist();
+    this.GetIsmsqmsSprtlist();
     this.GetHrISMSGenerallist();
     this.GetHrISMSGuidelineslist();
     this.GetHrISMSPolicylist();
@@ -860,11 +904,14 @@ eventschuser: eventscuserinfo = {
     //this.GetEventSchedules();
     this.GetEventSchedulerTimeslots();
     this.GetCoOnwers();
+    this.GetAuditSchedule();
     this.populateYears();
     this.selectedYear = '';
     // this.fetchData(this.selectedYear);
     this.GetISMSDetails();
     this.GetQMSDetails();
+    const currentDate = new Date();
+    this.today = currentDate.toISOString().split('T')[0];
   }
 
   updateUniqueDepts(): void {
@@ -2639,6 +2686,85 @@ UpdateISO9001Sprt() {
 }
 resetISO9001Sprt(){
   this.isosprtdata={
+    id: 0,
+    contactPriority: '',
+    name: '',
+    mobile: 0,
+    email: '',
+  }
+}
+
+//-------------------------------------------------------------------------------INTEQ ISO27001
+
+GetIsmsqmsSprtlist(){
+  this.ielc.Getismsqms().subscribe((data) => {
+    this.ismsqmssupport=data;
+    this.ismsqmssupport = this.sortlist(data)
+    this.isLoading = false;
+  });
+ }
+
+ 
+ AddIsmsqmsSprt(): void {
+  this.ielc.PostismsqmsSprt(this.ismsqmssprtdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetIsmsqmsSprtlist();
+      this.resetIsmsqmsSprt();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteIsmsqmssprt(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteismsqmsSprtById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetIsmsqmsSprtlist();
+      },
+     // error: (err) =>  console.error('Error deleting item:', err)
+    });
+  }
+}
+
+EditIsmsqmsSprt(id: number) {
+  // ////console.log("Edit button clicked, fetching ID:", id); 
+  this.ielc.GetismsqmsSprtById(id).subscribe(data => {
+    if (data) {
+      // Assign data only if it's valid
+      this.ismsqmssprtdata = { 
+        id: data.id || 0,
+        contactPriority: data.contactPriority || '',
+        name:  data.name || '',
+        mobile:  data.mobile || 0,
+        email:  data.email || '',
+      };
+    } else {
+      // console.warn("No data received for the given ID.");
+    }
+  }, error => {
+    // console.error("Error fetching record:", error);
+  });
+}
+
+
+UpdateIsmsqmsSprt() {
+  this.ielc.UpdateismsqmsSprt(this.ismsqmssprtdata.id, this.ismsqmssprtdata).subscribe(
+    (response) => {
+      console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetIsmsqmsSprtlist();
+      this.resetIsmsqmsSprt();
+    },
+    (error) => {
+      // console.error("Error updating Record:", error);
+    }
+  );
+}
+resetIsmsqmsSprt(){
+  this.ismsqmssprtdata={
     id: 0,
     contactPriority: '',
     name: '',
@@ -7156,6 +7282,205 @@ resetCourse(){
     coursesList: ''
   }
 }
+
+//=====================================================================================Audit Schedule
+// GetAuditSchedule(){
+//   this.ielc.GetAuditSchedule().subscribe((data) => {
+//     this.auditschedulelist=data;
+//     this.isLoading = false;
+//   });
+//  }
+
+ 
+GetAuditSchedule(){
+  this.ielc.GetAuditSchedule().subscribe((data) => {
+    this.auditschedulelist=data;
+    console.log("Audit Schedule Data:", data);
+    this.isLoading = false;
+  });
+ }
+
+//   AddAuditSchedule(): void {
+//   this.ielc.PostAuditSchedule(this.auditeventsdata).subscribe(
+//     (response) => {
+//       alert('✅ Record Added Successfully!');
+//       this.GetAuditSchedule();
+//       this.resetAuditSchedule();
+//     },
+//     (error) => {
+//       alert('❌ Error adding Record. Please try again.');
+//     }
+//   );
+// }
+
+AddAuditSchedule(): void {
+
+  // Convert time to 12-hour format
+  this.auditeventsdata.StartTime =
+    this.convertTo12Hour(this.auditeventsdata.StartTime);
+
+  this.auditeventsdata.EndTime =
+    this.convertTo12Hour(this.auditeventsdata.EndTime);
+
+  // Combine if needed
+  // this.auditeventsdata.Time =
+  //   `${this.auditeventsdata.StartTime} - ${this.auditeventsdata.EndTime}`;
+
+  this.ielc.PostAuditSchedule(this.auditeventsdata).subscribe(
+    () => {
+      alert('✅ Record Added Successfully!');
+      this.GetAuditSchedule();
+      this.resetAuditSchedule();
+    },
+    () => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+
+convertTo12Hour(time: string): string {
+  if (!time) return '';
+
+  const [hourStr, minute] = time.split(':');
+  let hour = Number(hourStr);
+  const ampm = hour >= 12 ? 'PM' : 'AM';
+
+  hour = hour % 12;
+  hour = hour ? hour : 12; // 0 → 12
+
+  return `${hour.toString().padStart(2, '0')}:${minute} ${ampm}`;
+}
+
+ 
+deleteAuditSchedule(id: number) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteAuditScheduleById(id).subscribe({
+      next: () => {
+        alert(`Record with ID ${id} deleted successfully!`);
+        this.GetAuditSchedule();
+      },
+      // error: (err) =>  console.error('Error deleting item:', err)
+    });
+  }
+}
+
+// EditAuditSchedule(id: number) {
+//   this.ielc.GetAuditScheduleId(id).subscribe(data => {
+//     if (data) {
+//       // Assign data only if it's valid
+//       this.auditeventsdata = { 
+//         Id: data.id || 0,
+//         auditeeDepartment: data.auditeeDepartment || '',
+//         auditees: data.auditees || '',
+//         StartingDate: data.StartingDate || '',
+//         StartTime: data.StartTime || '',
+//         EndTime: data.EndTime || '',
+//         auditors: data.auditors || '',
+//         location: data.location || ''
+//       };
+//     } else {
+//       // console.warn("No data received for the given ID.");
+//     }
+//   }, error => {
+//     // console.error("Error fetching record:", error);
+//   });
+// }
+
+EditAuditSchedule(id: number) {
+  const record = (this.auditschedulelist || []).find((x: any) => x.id === id);
+  if (!record) return;
+
+  // Map API response to interface (handles different property casing)
+  const startingDate = record.StartingDate || record.startingDate || record.startingdate || '';
+  const startTime = record.StartTime || record.startTime || record.timeslot || '';
+  const endTime = record.EndTime || record.endTime || '';
+  
+  this.auditeventsdata = {
+    Id: record.Id || record.id || 0,
+    auditeeDepartment: record.auditeeDepartment || record.auditeedepartment || '',
+    auditees: record.auditees || '',
+    StartingDate: startingDate,
+    StartTime: startTime,
+    EndTime: endTime,
+    auditors: record.auditors || '',
+    location: record.location || record.Location || ''
+  };
+
+  // ✅ FIX DATE (yyyy-MM-dd format for HTML date input) - Avoid timezone issues
+  if (this.auditeventsdata.StartingDate) {
+    // Extract date part directly without timezone conversion
+    if (this.auditeventsdata.StartingDate.includes('T')) {
+      // If format is "2025-12-31T00:00:00", extract just the date part
+      this.auditeventsdata.StartingDate = this.auditeventsdata.StartingDate.split('T')[0];
+    } else if (this.auditeventsdata.StartingDate.includes('-')) {
+      // Already in yyyy-MM-dd format, keep as is
+      this.auditeventsdata.StartingDate = this.auditeventsdata.StartingDate.substring(0, 10);
+    }
+  }
+
+  // ✅ FIX TIME (convert 12h → 24h if needed)
+  if (this.auditeventsdata.StartTime && (this.auditeventsdata.StartTime.includes('AM') || this.auditeventsdata.StartTime.includes('PM'))) {
+    this.auditeventsdata.StartTime = this.convertTo24Hour(this.auditeventsdata.StartTime);
+  }
+
+  if (this.auditeventsdata.EndTime && (this.auditeventsdata.EndTime.includes('AM') || this.auditeventsdata.EndTime.includes('PM'))) {
+    this.auditeventsdata.EndTime = this.convertTo24Hour(this.auditeventsdata.EndTime);
+  }
+}
+convertTo24Hour(time: string): string {
+  if (!time) return '';
+
+  // Example: "05:43 PM"
+  const [t, modifier] = time.split(' ');
+  let [hours, minutes] = t.split(':');
+
+  let h = parseInt(hours, 10);
+
+  if (modifier === 'PM' && h < 12) h += 12;
+  if (modifier === 'AM' && h === 12) h = 0;
+
+  return `${h.toString().padStart(2, '0')}:${minutes}`;
+}
+
+
+
+UpdateAuditSchedule() {
+  // Convert times from 24-hour to 12-hour format (HH:MM PM format)
+  const dataToSend = { ...this.auditeventsdata };
+  
+  if (dataToSend.StartTime) {
+    dataToSend.StartTime = this.convertTo12Hour(dataToSend.StartTime);
+  }
+  
+  if (dataToSend.EndTime) {
+    dataToSend.EndTime = this.convertTo12Hour(dataToSend.EndTime);
+  }
+  
+  this.ielc.UpdateAuditSchedule(dataToSend.Id, dataToSend).subscribe(
+    (response) => {
+      // ////console.log("Updated Successfully:", response);
+      alert(" ✅ Record updated successfully!");
+      this.GetAuditSchedule();
+      this.resetAuditSchedule();
+    },
+    (error) => {
+      // console.error("Error updating Record:", error);
+    }
+  );
+}
+resetAuditSchedule(){
+  this.auditeventsdata={
+  Id: 0,
+  auditeeDepartment: '',
+  auditees: '',
+  StartingDate: '',
+  StartTime: '',
+  EndTime: '',
+  auditors: '',
+  location: ''
+  }
+}
+
 
 //=====================================================================================Event Alerts
 // GetEventAlertsist(){

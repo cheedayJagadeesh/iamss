@@ -1,0 +1,14 @@
+<div class="alert alert-success text-center p-2 mt-3">
+  🟢 Active Users Online: <strong>{{ activeUsersService.activeCount }}</strong>
+</div>
+
+<div class="card p-3 mt-3 shadow-sm">
+  <h5 class="fw-bold mb-2">Users Currently Accessing the Site:</h5>
+
+  <ul class="list-group">
+    <li *ngFor="let user of activeUsersService.activeUsers"
+        class="list-group-item">
+      👤 {{ user }}
+    </li>
+  </ul>
+</div>

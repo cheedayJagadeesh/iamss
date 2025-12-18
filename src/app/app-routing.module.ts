@@ -1,3 +1,4 @@
+import { IsmsqmssupportComponent } from './ismsqmssupport/ismsqmssupport.component';
 import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminuserComponent } from './IAMS/adminuser/adminuser.component';
@@ -49,6 +50,7 @@ import { AuthGuard } from './auth.guard';
 import { AuthcallbackComponent } from './IELC/authcallback/authcallback.component';
 import { EventschedulerComponent } from './IELC/eventscheduler/eventscheduler.component';
 import { ISMSMasterComponent } from './ISMS/ismsmaster/ismsmaster.component';
+import { AdminComponent } from './admin/admin.component';
 
 
 
@@ -90,9 +92,12 @@ const routes: Routes = [
   {path:'complianceform',component:ComplianceformComponent,canActivate: [MsalGuard],data: { pageNames: ['complianceform'], roles: ['Admin', 'SuperAdmin']}},
   {path:'user-groups',component:UserGroupsComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['user-groups'], roles: ['Admin', 'SuperAdmin']}},
   {path:'eventscheduler',component:EventschedulerComponent,canActivate: [MsalGuard],data: { pageNames: ['eventscheduler'], roles: ['Admin', 'SuperAdmin']}},
+    {path:'admin',component:AdminComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['admin'], roles: ['Admin', 'SuperAdmin']}},
+
   {path:'ithelpsprt',component:IthelpsprtComponent,canActivate: [MsalGuard]},
   {path:'adminsprt',component:AdminsprtComponent,canActivate: [MsalGuard]},
   {path:'hrsprt',component:HrsprtComponent,canActivate: [MsalGuard]},
+  {path:'ismsqmssupport',component:IsmsqmssupportComponent,canActivate: [MsalGuard]},
   {path:'emercntctlst',component:EmercntctlstComponent,canActivate: [MsalGuard]},
   {path:'varcmts',component:VarcmtsComponent,canActivate: [MsalGuard]},
   {path:'prjsprt',component:PrjsprtComponent,canActivate: [MsalGuard]},

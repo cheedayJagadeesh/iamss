@@ -1,3 +1,5 @@
+import { ActiveUsersService } from './IELC/active-users.service';
+import { IelcapiService } from 'src/app/IELC/ielcapi.service';
 import { Component, OnInit } from '@angular/core';
 import { MsalService } from '@azure/msal-angular';
 import { AuthService } from './authservice.service';
@@ -13,7 +15,7 @@ import { AuthenticationResult, InteractionRequiredAuthError  } from '@azure/msal
 export class AppComponent implements OnInit {
 
   title = 'IAMS';
-  constructor(private msalService: MsalService,private authService: AuthService, private router: Router) {}
+  constructor(private msalService: MsalService,private authService: AuthService, private router: Router, private activeUsersService: ActiveUsersService) {}
 
   isLoading: boolean = true;
   currentRoute: string = '';
@@ -26,6 +28,10 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
+
+    const userName = localStorage.getItem("email") || "Guest";
+  this.activeUsersService.startConnection(userName);
+
     this.isLoading = true;
       //  this.authService.startInactivityTimer();
     this.router.events.subscribe(() => {

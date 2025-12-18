@@ -21,6 +21,13 @@
     width: 62%;
     margin-left: 20%;
 }
+
+.tablebottomAudit {
+    margin-top: 1%;
+    border-collapse: collapse;
+    width: 91%;
+    margin-left: 8%;
+}
 .pagination {
     margin-left: 72%;
 }

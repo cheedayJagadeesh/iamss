@@ -17,6 +17,15 @@ interface holidaysinfo {
   date: string;
   content: string;
 }
+interface auditevents{
+  Id: number,
+  auditeedepartment: string;
+  auditees: string;
+  startingdate: string;
+  timeslot: string;
+  auditors: string;
+  location: string;
+}
 interface eventsinfo {
   id: number;
   eventData: string;
@@ -144,6 +153,17 @@ eventsdata: eventsinfo = {
   eventData: '',
   eventName: ''
 }
+
+ auditeventsdata:auditevents={
+  Id: 0,
+  auditeedepartment: '',
+  auditees: '',
+  startingdate: '',
+  timeslot: '',
+  auditors: '',
+  location: '',
+ }
+
 latestEvent: any = null;
 page: number = 1;
 itemsPerPage: number = 5;
@@ -266,6 +286,7 @@ async ngOnInit() {
         this.GetAllSkillSessions();
         this.checkUserExists();
         this.checkCoOwnerUserExists();
+        this.GetAuditSchedule();
       }
     });
   }
@@ -398,7 +419,7 @@ formatDate(dateStr: string): string {
 onDateChange() {
   if (!this.date) return;
 
-  this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, this.date)
+  this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, this.date, this.selectedValue)
     .subscribe(
       (res: string) => {
         this.availableTimes = res ? res.split(',').map(time => time.trim()) : [];
@@ -1273,12 +1294,12 @@ closePopup() {
 
 
 onDateChanged() {
-  if (!this.skillname || !this.date) {
+  if (!this.skillname || !this.date || !this.selectedValue) {
     this.availableTime = [];
     return;
     this.disableTime = false;
   }
-this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, this.date)
+this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, this.date, this.selectedValue)
   .subscribe(
     (res: string) => {
       this.availableTimes = res
@@ -1293,7 +1314,13 @@ this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, this.date)
     }
   );
 }
-
+ auditschedulelist: any[]=[];
+GetAuditSchedule(){
+  this.ielc.GetAuditSchedule().subscribe((data) => {
+    this.auditschedulelist=data;
+    this.isLoading = false;
+  });
+ }
 
 
 // pdfUrl: string | null = null;

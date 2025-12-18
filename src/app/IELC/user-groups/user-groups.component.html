@@ -39,7 +39,8 @@
                                 <option value="DPDP">DPDP</option>
                                 <option value="AdminUsers">AdminUsers</option>
                                 <option value="HolidaysList">HolidaysList</option>
-                                <option value="Events">Events</option>
+                                <!-- <option value="Events">Events</option> -->
+                                 <option value="AuditEvents">AuditEvents</option>
                                 <option value="CoursesRestriction">CoursesRestriction</option>
                                 <option value="EventAlerts">EventAlerts</option>
                                 <option value="EventScheduler">EventScheduler</option>
@@ -62,6 +63,7 @@
                                 <option value="EmergencyContactList">EmergencyContactList</option>
                                 <option value="ISO27001">ISO27001</option>
                                 <option value="ISO9001">ISO9001</option>
+                                <option value="ISMSQMSSupport">ISMSQMSSupport</option>
                             </select>
                         </div>
                     </div>
@@ -11767,7 +11769,8 @@
             </tbody>
         </table>
     </div>
-    <div class="tablebottom" *ngIf="selectedOption1 === 'Events'">
+
+    <!-- <div class="tablebottom" *ngIf="selectedOption1 === 'Events'">
         <table *ngIf="!isLoading" class="table table-striped table-bordered" name="events">
             <thead class="table-primary">
                 <tr>
@@ -11806,10 +11809,7 @@
                                             aria-label="Close" (click)="resetEvents(); GetEventsist()"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <!-- <div class="divmodal">
-                                    <label>Events</label>
-                                    <input class="form-control" type="file" id="formFile" name="event" [(ngModel)]="eventsdata.eventData">
-                                   </div> -->
+                                       
                                         <div class="divmodal">
                                             <label>Events</label>
                                             <input class="form-control" type="file" id="formFile" accept="image/*"
@@ -11895,7 +11895,168 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </div> -->
+
+
+    <div class="tablebottomAudit"  *ngIf="selectedOption1 === 'AuditEvents'">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="events">
+            <thead class="table-primary">
+               <tr>
+                    <th scope="col">AUDITEE DEPARTMENT</th>
+  		            <th scope="col">AUDITEES</th>
+                    <th scope="col">STARTING</th>
+  		            <th scope="col">TIME</th>
+                    <th scope="col">AUDITORS</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let auditevents of auditschedulelist" >
+                    <td>{{auditevents.auditeeDepartment}}</td>
+                    <td>{{auditevents.auditees}}</td>
+                     <td>{{auditevents.startingDate}}</td>
+                     <td>{{auditevents.time}}</td>
+                     <td>{{auditevents.auditors}}</td>
+                     <td>{{auditevents.location}}</td>
+                    <td>
+                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal70">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal70" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close" (click)="resetAuditSchedule(); GetAuditSchedule()"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                   <div class="divmodal">
+                                     <label>AuditeeDepartment</label>
+                                    <input type="text" class="form-control" name="auditeedeptudser" [(ngModel)]="auditeventsdata.auditeeDepartment">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>Auditees</label>
+                                    <input type="text" class="form-control" name="auditedes" [(ngModel)]="auditeventsdata.auditees">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>Date</label>
+                                    <!-- <input type="text" class="form-control" name="stardting" [(ngModel)]="auditevents.startingdate"> -->
+                                     <input type="date" class="form-control" [(ngModel)]="auditeventsdata.StartingDate" name="stardting" [min]="today">
+                                   </div>
+
+                                   <div class="divmodal">
+                                    <label>StartTime</label>
+                                    <input type="time" class="form-control" name="timde" [(ngModel)]="auditeventsdata.StartTime">
+                                   </div>
+
+                                     <div class="divmodal">
+                                    <label>EndTime</label>
+                                    <input type="time" class="form-control" name="timdef" [(ngModel)]="auditeventsdata.EndTime">
+                                   </div>
+                                   
+                                   <div class="divmodal">
+                                    <label>Auditors</label>
+                                    <input type="text" class="form-control" name="auditdors"  [(ngModel)]="auditeventsdata.auditors">
+                                   </div>
+                                    <div class="divmodal">
+                                    <label>Location</label>
+                                    <input type="text" class="form-control" name="loc"  [(ngModel)]="auditeventsdata.location">
+                                   </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                                (click)="resetAuditSchedule(); GetAuditSchedule()">Close</button>
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                                [disabled]="!auditeventsdata.auditeeDepartment || !auditeventsdata.auditees || !auditeventsdata.StartingDate || !auditeventsdata.StartTime || !auditeventsdata.EndTime || !auditeventsdata.auditors || !auditeventsdata.location"  
+                                                (click)="AddAuditSchedule()">Add</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit70user" (click)="EditAuditSchedule(auditevents.id)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit70user" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close" (click)="resetAuditSchedule()"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="divmodal">
+                                     <label>AuditeeDepartment</label>
+                                    <input type="text" class="form-control" name="auditeedeptuseredfit" [(ngModel)]="auditeventsdata.auditeeDepartment">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>Auditees</label>
+                                    <input type="text" class="form-control" name="auditeesedfit" [(ngModel)]="auditeventsdata.auditees">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>Date</label>
+                                    <input type="date" class="form-control" name="startingefdit" [(ngModel)]="auditeventsdata.StartingDate" [min]="today">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>StartTime</label>
+                                    <input type="time" class="form-control" name="timeedfit"  [(ngModel)]="auditeventsdata.StartTime">
+                                   </div>
+                                   <div class="divmodal">
+                                   <label>EndTime</label>
+                                    <input type="time" class="form-control" name="timeefdfit"  [(ngModel)]="auditeventsdata.EndTime">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>Auditors</label>
+                                    <input type="text" class="form-control" name="auditorsefdit"  [(ngModel)]="auditeventsdata.auditors">
+                                   </div>
+                                   <div class="divmodal">
+                                    <label>Location</label>
+                                    <input type="text" class="form-control" name="locsedit"  [(ngModel)]="auditeventsdata.location">
+                                   </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal" (click)="resetAuditSchedule()">Close</button>
+                                        <button type="button" class="btn btn-primary" [disabled]="!auditeventsdata.auditeeDepartment || !auditeventsdata.auditees || !auditeventsdata.StartingDate || !auditeventsdata.StartTime || !auditeventsdata.EndTime || !auditeventsdata.auditors || !auditeventsdata.location" data-bs-dismiss="modal" (click)="UpdateAuditSchedule()">Update</button>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                                            
+                        <button class="btn btn-info me-1" (click)="deleteAuditSchedule(auditevents.id)" >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>    
+                </tr>
+               
+            </tbody>
+        </table>
+    </div> 
+
+   
+
     <div class="tablebottom" *ngIf="selectedOption1 === 'CoursesRestriction'">
         <table *ngIf="!isLoading" class="table table-striped table-bordered" name="courserestriction">
             <thead class="table-primary">
@@ -13420,6 +13581,142 @@
         </table>
     </div> 
 
+
+    <div class="tablebottom" *ngIf="selectedOption2 === 'ISMSQMSSupport' && selectedOption1 === 'Contact'">
+        <table *ngIf="!isLoading" class="table table-striped table-bordered" name="ismsqmssupport">
+            <thead class="table-primary">
+                <tr>
+                    <!-- <th scope="col">ID</th> -->
+                    <th scope="col">Contact Priority</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Mobile</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let row of ismsqmssupport">
+                    <!-- <td>{{row.id}}</td> -->
+                    <td>{{row.contactPriority}}</td>
+                    <td>{{row.name}}</td>
+                    <td>{{row.mobile}}</td>
+                    <td>{{row.email}}</td>
+                    <td>
+                        <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal6">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-plus-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                <path
+                                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModal6" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title headermodal" id="exampleModalLabel">Add Record</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close" (click)="resetIsmsqmsSprt(); GetIsmsqmsSprtlist()"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="divmodal">
+                                            <label>Contact Priority</label>
+                                            <input type="text" class="form-control" required
+                                                #contactpriorityRef="ngModel" name="contactpriority"
+                                                [(ngModel)]="ismsqmssprtdata.contactPriority">
+                                        </div>
+                                        <div class="divmodal">
+                                            <label>Name</label>
+                                            <input type="text" class="form-control" required #nameRef="ngModel"
+                                                name="name" [(ngModel)]="ismsqmssprtdata.name">
+                                        </div>
+                                        <div class="divmodal">
+                                            <label>Mobile</label>
+                                            <input type="text" class="form-control" name="mobile"
+                                                [(ngModel)]="ismsqmssprtdata.mobile">
+                                        </div>
+                                        <div class="divmodal">
+                                            <label>Email</label>
+                                            <input type="text" class="form-control" required #EmailRef="ngModel"
+                                                name="email" [(ngModel)]="ismsqmssprtdata.email">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                                (click)="resetIsmsqmsSprt(); GetIsmsqmsSprtlist()">Close</button>
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                                [disabled]="!ismsqmssprtdata.contactPriority || !ismsqmssprtdata.name || !ismsqmssprtdata.mobile || !ismsqmssprtdata.email" (click)="AddIsmsqmsSprt()">Add</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-info me-1" data-bs-toggle="modal" data-bs-target="#exampleModaledit6"
+                            (click)="EditIsmsqmsSprt(row.id)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                <path fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                            </svg>
+                        </button>
+                        <div class="modal fade" id="exampleModaledit6" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title headermodal" id="exampleModalLabel">Edit Record</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close" (click)="resetIsmsqmsSprt()"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="divmodal">
+                                            <label>Contact Priority</label>
+                                            <input type="text" class="form-control" required
+                                                #contactpriorityRef="ngModel" name="contactpriority"
+                                                [(ngModel)]="ismsqmssprtdata.contactPriority">
+                                        </div>
+                                        <div class="divmodal">
+                                            <label>Name</label>
+                                            <input type="text" class="form-control" required #nameRef="ngModel"
+                                                name="name" [(ngModel)]="ismsqmssprtdata.name">
+                                        </div>
+                                        <div class="divmodal">
+                                            <label>Mobile</label>
+                                            <input type="text" class="form-control" name="mobile"
+                                                [(ngModel)]="ismsqmssprtdata.mobile">
+                                        </div>
+                                        <div class="divmodal">
+                                            <label>Email</label>
+                                            <input type="text" class="form-control" required #EmailRef="ngModel"
+                                                name="email" [(ngModel)]="ismsqmssprtdata.email">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                                (click)="resetIsmsqmsSprt()">Close</button>
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                                                [disabled]="!ismsqmssprtdata.contactPriority || !ismsqmssprtdata.name || !ismsqmssprtdata.mobile || !ismsqmssprtdata.email"
+                                                (click)="UpdateIsmsqmsSprt();resetIsmsqmsSprt()">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-info me-1" (click)="deleteIsmsqmssprt(row.id)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
 
 </form>

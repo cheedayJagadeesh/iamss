@@ -1077,3 +1077,11 @@
     margin-top: -9px;
     margin-left: 13%;
 }
+.left{
+  margin-left: 64%;
+}
+.exam-container {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}

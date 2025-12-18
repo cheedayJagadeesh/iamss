@@ -1,0 +1,58 @@
+<form class="container py-4">
+
+    <!-- Top Header -->
+    <app-userheader pageTitle="Welcome to ISMS QMS Support"></app-userheader>
+
+    <!-- HR Head -->
+    <div class="text-center mt-4">
+        <h2 class="fw-bold text-primary">CISO\MR\HCO : CV PRASAD</h2>
+    </div>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="loading-container">
+        <span class="dot"></span>
+    </div>
+
+    <!-- HR Contact Table -->
+    <div class="card shadow-sm my-4 fade-in">
+        <div class="card-header bg-primary text-white fw-bold">
+            HR Contact Details
+        </div>
+        <div class="card-body p-0">
+            <table *ngIf="!isLoading" class="table table-hover table-striped mb-0">
+                <thead class="table-light sticky-top">
+                    <tr>
+                        <th>Contact Priority</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let row of ismsqmssupport">
+                        <td>{{row.contactPriority}}</td>
+                        <td>{{row.name}}</td>
+                        <td>{{row.mobile}}</td>
+                        <td>{{row.email}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Contact Email -->
+    <div class="card shadow-sm mb-5 fade-in delay-1">
+        <div class="card-body text-center">
+            <h4 class="fw-bold text-secondary">
+                Contact Email ID:
+                <span class="text-danger">Security Incidents Reporting Email ID</span>
+            </h4>
+
+            <a href="mailto:incidents@inteqsolutions.com"
+               class="btn btn-outline-danger fw-semibold mt-2">
+                {{email}}
+            </a>
+        </div>
+    </div>
+    
+</form>

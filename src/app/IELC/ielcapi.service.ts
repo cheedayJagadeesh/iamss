@@ -352,8 +352,8 @@ GetEnrolledSessionsbydate(skill: string, venue: string): Observable<any> {
 //     return this.http.get<any>(url, { headers: this.getHeaders() });
 //   }
 
-getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): Observable<any> {
-    const url = `https://ielcapitest.azurewebsites.net/EnrollmentSessions/Times/search/${skillName}/${dateRange}`;
+getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, venue: string): Observable<any> {
+    const url = `https://ielcapitest.azurewebsites.net/EnrollmentSessions/Times/search/${skillName}/${dateRange}/${venue}`;
     return this.http.get<any>(url, { headers: this.getHeaders() });
   }
     
@@ -2305,7 +2305,7 @@ sendEmailFromBackend(payload: {
   smtpUserName: string;
   smtpPassword: string;
   to: string;
-  cc: string;
+  bcc: string;
   subject: string;
   body: string;
 }) {
@@ -2710,4 +2710,53 @@ GetQMSMasterTableDocName(documentName: string): Observable<any> {
   );
 }
 
-}
+//---------------------------------------------------------------------------------------Audit Schedule
+ 
+ AuditScheduleUrl='https://ielcapitest.azurewebsites.net/AuditSchedule';
+
+   GetAuditSchedule(): Observable<any> {
+     return this.http.get<any>(this.AuditScheduleUrl, { headers: this.getHeaders() });
+    } 
+    PostAuditSchedule(data: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.AuditScheduleUrl, data, { headers: this.getHeaders() });
+    }
+
+    DeleteAuditScheduleById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.AuditScheduleUrl}/${id}`, { headers: this.getHeaders() });
+    }  
+    GetAuditScheduleId(id: number): Observable<any> {
+      return this.http.get<any>(`${this.AuditScheduleUrl}/${id}`, { headers: this.getHeaders() });
+    }
+
+    UpdateAuditSchedule(id: number, updatedData: any): Observable<any> {
+      return this.http.put<any>(`${this.AuditScheduleUrl}/${id}`, updatedData, { headers: this.getHeaders() });
+    }  
+
+    //---------------------------------------------------------------------------------------Inteq ISO 27001
+
+    ismsqmsUrl='https://ielcapitest.azurewebsites.net/ISMSQMSSupport';
+    Getismsqms(): Observable<any> {
+     return this.http.get<any>(this.ismsqmsUrl, { headers: this.getHeaders() });
+    }
+
+    PostismsqmsSprt(skillSessions: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.ismsqmsUrl, skillSessions, { headers: this.getHeaders() });
+    }
+
+    GetismsqmsSprtById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.ismsqmsUrl}/${id}`, { headers: this.getHeaders() });
+    }
+
+    UpdateismsqmsSprt(id: number, updatedData: any): Observable<any> {
+      const headers = this.getHeaders();
+      return this.http.put<any>(`${this.ismsqmsUrl}/${id}`, updatedData,{headers, observe: 'response' });
+    }
+
+    DeleteismsqmsSprtById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.ismsqmsUrl}/${id}`, { headers: this.getHeaders() });
+    }
+
+
+  }

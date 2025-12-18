@@ -152,6 +152,13 @@
     <i>👤</i><span>User Groups</span>
   </a>
 
+    <!-- Admin-->
+  <a *ngIf="canAccess('admin')" routerLink="/admin" routerLinkActive="active"
+    [class.active]="activeRoute === '/admin'" (mouseenter)="showFloatingLabel($event, 'admin')"
+    (mouseleave)="hideFloatingLabel()" [routerLinkActiveOptions]="{ exact: true }">
+    <i>👤</i><span>Count</span>
+  </a>
+
 
   <!-- Attendance -->
   <div class="dropdown" *ngIf="canAccess('iams')" [class.open]="activeDropdown === 'iams'" #dropdownToggle
