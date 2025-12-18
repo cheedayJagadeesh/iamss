@@ -35,7 +35,9 @@ export class ActiveUsersService {
 
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl("https://ielcapitest.azurewebsites.net/activeUsersHub?user=" + userName, {
-        withCredentials: true
+        withCredentials: false,  // Changed from true to bypass CORS issue
+        skipNegotiation: false,
+        transport: signalR.HttpTransportType.WebSockets | signalR.HttpTransportType.LongPolling
       })
       .withAutomaticReconnect([0, 2000, 10000])
       .build();
