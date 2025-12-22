@@ -50,12 +50,12 @@ export class ActiveUsersService {
         this.isConnected = true;
         this.isConnecting = false;
         this.logConnectionAttempt('Connected', userName);
-        console.log("Connected to Active Users Hub");
+        //console.log("Connected to Active Users Hub");
       })
       .catch(err => {
         this.isConnecting = false;
         this.logConnectionAttempt('Connection Failed', userName, err.message);
-        console.log("Error connecting:", err);
+        //console.log("Error connecting:", err);
       });
 
     // Receive real-time updates
@@ -76,19 +76,19 @@ export class ActiveUsersService {
     this.hubConnection.onreconnecting((error) => {
       this.isConnected = false;
       this.logConnectionAttempt('Reconnecting', userName, error?.message);
-      console.log("Reconnecting to hub...", error);
+      //console.log("Reconnecting to hub...", error);
     });
 
     this.hubConnection.onreconnected((connectionId) => {
       this.isConnected = true;
       this.logConnectionAttempt('Reconnected', userName);
-      console.log("Reconnected to hub with connection ID:", connectionId);
+      //console.log("Reconnected to hub with connection ID:", connectionId);
     });
 
     this.hubConnection.onclose((error) => {
       this.isConnected = false;
       this.logConnectionAttempt('Connection Closed', userName, error?.message);
-      console.log("Connection closed:", error);
+      //console.log("Connection closed:", error);
     });
   }
 
@@ -154,7 +154,7 @@ export class ActiveUsersService {
       this.connectionLogs.shift();
     }
 
-    console.log('Connection Log:', log);
+    //console.log('Connection Log:', log);
   }
 
   getConnectionLogs(): any[] {

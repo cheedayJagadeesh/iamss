@@ -1445,7 +1445,7 @@ GetQMSDetails() {
       this.isAllMaintainedBySelectedQMS = true;
       this.filterQMSDocs();
       this.isLoading = false;
-      console.log("QMS",this.qmsdetails);
+      //console.log("QMS",this.qmsdetails);
     },
     error: (err) => {
       console.error('Error fetching QMS Master Table:', err);
@@ -1600,7 +1600,7 @@ UpdateQMSDetails() {
       alert(" ✅ Record updated successfully!");
       this.GetQMSDetails();
       this.resetQMSDetails();
-      console.log("Updated Successfully:", response);
+      //console.log("Updated Successfully:", response);
     },
     (error) => {
        console.error("Error updating Record:", error);
@@ -2753,7 +2753,7 @@ EditIsmsqmsSprt(id: number) {
 UpdateIsmsqmsSprt() {
   this.ielc.UpdateismsqmsSprt(this.ismsqmssprtdata.id, this.ismsqmssprtdata).subscribe(
     (response) => {
-      console.log("Updated Successfully:", response);
+      //console.log("Updated Successfully:", response);
       alert(" ✅ Record updated successfully!");
       this.GetIsmsqmsSprtlist();
       this.resetIsmsqmsSprt();
@@ -7295,7 +7295,7 @@ resetCourse(){
 GetAuditSchedule(){
   this.ielc.GetAuditSchedule().subscribe((data) => {
     this.auditschedulelist=data;
-    console.log("Audit Schedule Data:", data);
+    //console.log("Audit Schedule Data:", data);
     this.isLoading = false;
   });
  }
