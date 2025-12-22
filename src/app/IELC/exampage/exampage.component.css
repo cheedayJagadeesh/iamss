@@ -1085,3 +1085,10 @@
   -webkit-user-select: none;
   -moz-user-select: none;
 }
+.contact-info {
+  margin-top: 15px;
+  color: green;
+  font-weight: 500;
+}
+
+

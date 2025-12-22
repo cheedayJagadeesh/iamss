@@ -554,7 +554,7 @@ allowEnrollment() {
   const date = this.date;
   const time = this.time;
   const mail = this.userEmail ?? '';
-  const skilldescription = this.getSessionDescription(skill, this.selectedValue, date, time);
+  const skilldescription = this.getSessionDescription(skill, this.selectedValue, date,  time);
 
   
 
@@ -649,6 +649,25 @@ proceedToEnroll(
       alert('Enrollment successful! A confirmation email will be sent shortly.');
       this.GetAllUsers();
       const sessionDescription = this.getSessionDescription(skill, venue, date, time);
+      //debugger;
+      // Decide date & time for email
+let emailDate = date;
+let emailTime = time;
+
+if (venue === 'Self-Learning') {
+  const nowDate = new Date();
+
+  // yyyy-MM-dd (or format as you like)
+  emailDate = nowDate.toISOString().split('T')[0];
+
+  // 12-hour time with AM/PM
+  emailTime = nowDate.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: true
+  });
+}
+
       const subject = 'Session Invitation Link';
       const body = `
         <p>Thanks for the Registration!</p>
@@ -674,13 +693,17 @@ proceedToEnroll(
             <tr>
               <td style="border: 1px solid #ddd; padding: 8px;">${fullName}</td>
               <td style="border: 1px solid #ddd; padding: 8px;">${skill}</td>
-              <td style="border: 1px solid #ddd; padding: 8px;">${date}</td>
-              <td style="border: 1px solid #ddd; padding: 8px;">${time}</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">${emailDate}</td>
+              <td style="border: 1px solid #ddd; padding: 8px;">${emailTime}</td>
               <td style="border: 1px solid #ddd; padding: 8px;">${venue}</td>
             </tr>
           </tbody>
         </table>
         <br>
+          <p class="contact-info">
+  For ISMS &amp; QMS queries contact:
+  <a href="mailto:ramprasadh@inteqsolutions.com">ramprasadh@inteqsolutions.com</a>
+</p>
       `;
 
       this.emailService.sendEmail(mail, '', subject, body);
@@ -710,31 +733,104 @@ resetForm(): void {
   this.batchMembersCount = 0;
 }
 
+// getSessionDescription(skill: string, venue: string, date: string, time: string): string {
+//   debugger;
+//   const [selectedStartDate, selectedEndDate] = date.split(' - ').map(this.convertDDMMYYYYToYYYYMMDD);
+//   const matchedSession = this.allSkillSessions.find((session: any) => {
+//     const sessionStartDate = this.convertToYYYYMMDD(session.date);
+//     //const sessionEndDate = this.convertToYYYYMMDD(session.toDate);
+//     const sessionTime = `${this.convertTo12HourFormat(session.skillStartTime)} - ${this.convertTo12HourFormat(session.skillEndTime)}`;
+//     // if (venue === 'Teams') {
+//     //   return session.skillName?.trim().toLowerCase() === skill.trim().toLowerCase() &&
+//     //     session.venue?.trim().toLowerCase() === venue.trim().toLowerCase() &&
+//     //     (selectedStartDate >= sessionStartDate && selectedEndDate <= sessionEndDate) &&
+//     //     time === sessionTime;
+//     // } 
+//     if (venue === 'Teams') {
+//   const normalizedTime = time.replace(/\s+/g, '').toLowerCase();
+//   const normalizedSessionTime = sessionTime.replace(/\s+/g, '').toLowerCase();
+
+//   return (
+//     session.skillName?.trim().toLowerCase() === skill.trim().toLowerCase() &&
+//     session.venue?.trim().toLowerCase() === venue.trim().toLowerCase() &&
+//     (selectedStartDate >= sessionStartDate) &&
+//     normalizedTime === normalizedSessionTime
+//   );
+// }
+
+//     else {
+//       return session.skillName?.trim().toLowerCase() === skill.trim().toLowerCase() &&
+//         session.venue?.trim().toLowerCase() === venue.trim().toLowerCase();
+//     }
+//   });
+//   return matchedSession?.skillDescription ?? 'No description available';
+// }
+
+
 getSessionDescription(skill: string, venue: string, date: string, time: string): string {
-  const [selectedStartDate, selectedEndDate] = date.split(' - ').map(this.convertDDMMYYYYToYYYYMMDD);
+  //debugger;
+
+  // UI has only ONE date
+  // const selectedDate = this.convertDDMMYYYYToYYYYMMDD(date);
+
+  const selectedDate = date;
+
   const matchedSession = this.allSkillSessions.find((session: any) => {
-    const sessionStartDate = this.convertToYYYYMMDD(session.fromDate);
-    const sessionEndDate = this.convertToYYYYMMDD(session.toDate);
-    const sessionTime = `${this.convertTo12HourFormat(session.skillStartTime)} - ${this.convertTo12HourFormat(session.skillEndTime)}`;
+
+    //const sessionDate = this.convertToYYYYMMDD(session.date);
+
+    const sessionTime = 
+  `${this.convertTo12HourFormat(session.skillStartTime)} - ${this.convertTo12HourFormat(session.skillEndTime)}`;
+
+
+    const normalizedTime = time.replace(/\s+/g, '').toLowerCase();
+    const normalizedSessionTime = sessionTime.replace(/\s+/g, '').toLowerCase();
+
     if (venue === 'Teams') {
-      return session.skillName?.trim().toLowerCase() === skill.trim().toLowerCase() &&
+      return (
+        session.skillName?.trim().toLowerCase() === skill.trim().toLowerCase() &&
         session.venue?.trim().toLowerCase() === venue.trim().toLowerCase() &&
-        (selectedStartDate >= sessionStartDate && selectedEndDate <= sessionEndDate) &&
-        time === sessionTime;
-    } else {
-      return session.skillName?.trim().toLowerCase() === skill.trim().toLowerCase() &&
-        session.venue?.trim().toLowerCase() === venue.trim().toLowerCase();
+
+        // ✔ Only compare single date
+        //selectedDate === sessionDate &&
+
+        // ✔ Normalized time comparison
+        normalizedTime === normalizedSessionTime
+      );
     }
+
+    // Self-Learning / Offline
+    return (
+      session.skillName?.trim().toLowerCase() === skill.trim().toLowerCase() &&
+      session.venue?.trim().toLowerCase() === venue.trim().toLowerCase()
+    );
   });
+
   return matchedSession?.skillDescription ?? 'No description available';
 }
 
-convertTo12HourFormat(time: string): string {
-  const [hour, minute] = time.split(':');
-  const period = +hour >= 12 ? 'PM' : 'AM';
-  const hour12 = +hour % 12 || 12;
-  return `${hour12}:${minute} ${period}`;
+
+// convertTo12HourFormat(time: string): string {
+//   const [hour, minute] = time.split(':');
+//   const period = +hour >= 12 ? 'PM' : 'AM';
+//   const hour12 = +hour % 12 || 12;
+//   return `${hour12}:${minute} ${period}`;
+// }
+
+convertTo12HourFormat(time24: string): string {
+  if (!time24) return '';
+
+  const [hour, minute] = time24.split(':');
+  let h = parseInt(hour, 10);
+  const m = minute;
+
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12;
+  if (h === 0) h = 12; // 12 AM or 12 PM
+
+  return `${h}:${m}${ampm}`;  // ❗ no leading zero on hours
 }
+
 convertDDMMYYYYToYYYYMMDD(dateStr: string): string {
   const [dd, mm, yyyy] = dateStr.split('-');
   return `${yyyy}-${mm}-${dd}`;
@@ -1303,9 +1399,10 @@ this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, this.date, th
   .subscribe(
     (res: string) => {
       this.availableTimes = res
-        ? res.split(',').map(time => time.trim())
-        : [];
-      //console.log('Available times:', this.availableTimes);
+  ? res.split(',')
+      .map(time => this.normalizeTimeRange(time.trim()))
+  : [];
+
       this.disableTime = false;
     },
     (err) => {
@@ -1314,6 +1411,21 @@ this.ielc.getEnrollmentSessionsBySkillAndDateRange(this.skillname, this.date, th
     }
   );
 }
+
+normalizeTimeRange(range: string): string {
+  if (!range) return range;
+
+  const [start, end] = range.split(' - ');
+
+  return `${this.stripLeadingZero(start)} - ${this.stripLeadingZero(end)}`;
+}
+
+stripLeadingZero(time: string): string {
+  // Converts "01:50PM" -> "1:50PM"
+  return time.replace(/^0/, '');
+}
+
+
  auditschedulelist: any[]=[];
 GetAuditSchedule(){
   this.ielc.GetAuditSchedule().subscribe((data) => {

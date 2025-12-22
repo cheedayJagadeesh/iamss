@@ -191,7 +191,7 @@ fakePercent = 0;
         this.lastTabSwitchTime = now;
         this.isAlertShowing = true; // Prevent multiple alerts
         
-        console.warn(`⚠️ Tab switch detected (${this.tabSwitchCount})`);
+        //console.warn(`⚠️ Tab switch detected (${this.tabSwitchCount})`);
         
         // Show alert only once
         alert('⚠️ Tab switching detected! Alert sent to Administrator!');
@@ -642,6 +642,10 @@ UpdateResult() {
               <p style="color: #999; font-size: 10px; margin-top: 10px;text-align:center">INTEQ SOFTWARE LLP, 1-10-75-1 to 6, 1st Floor, Saptagiri Towers, Begumpet, HYDERABAD 500016, INDIA </p>
                   <p style="color: #999; font-size: 10px; margin-top: 10px; text-align:center">www.inteqsolutions.com</p>    
             </div>
+  <p class="contact-info">
+  For ISMS &amp; QMS queries contact:
+  <a href="mailto:ramprasadh@inteqsolutions.com">ramprasadh@inteqsolutions.com</a>
+</p>
             <br>
             <p style="margin-top: 15px; color: Green;">Thank you for your effort and dedication!</p>
               <br>
@@ -669,6 +673,13 @@ UpdateResult() {
                 </tr>
               </tbody>
             </table>
+  <p class="contact-info">
+  For ISMS &amp; QMS queries contact:
+  <a href="mailto:ramprasadh@inteqsolutions.com">ramprasadh@inteqsolutions.com</a>
+</p>
+
+
+
             <p style="margin-top: 15px; color: red;">Please prepare and re-attempt the test again.</p>
             <br>
           `;

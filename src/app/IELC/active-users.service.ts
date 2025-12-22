@@ -15,6 +15,9 @@ export interface IActiveUser {
   providedIn: 'root'
 })
 export class ActiveUsersService {
+  getAADUserName() {
+    throw new Error('Method not implemented.');
+  }
 
   private hubConnection!: signalR.HubConnection;
   private connectionLogs: any[] = [];
@@ -34,8 +37,10 @@ export class ActiveUsersService {
     this.logConnectionAttempt('Connecting', userName);
 
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl("https://ielcapitest.azurewebsites.net/activeUsersHub?user=" + userName, {
-        withCredentials: true
+      .withUrl("http://localhost:5024/activeUsersHub?user=" + userName, {
+        withCredentials: false,  // Changed from true to bypass CORS issue
+        skipNegotiation: false,
+        transport: signalR.HttpTransportType.WebSockets | signalR.HttpTransportType.LongPolling
       })
       .withAutomaticReconnect([0, 2000, 10000])
       .build();

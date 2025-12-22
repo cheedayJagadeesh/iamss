@@ -6,6 +6,7 @@ import { AuthService } from './authservice.service';
 import { Router } from '@angular/router';
 import { AuthenticationResult, InteractionRequiredAuthError  } from '@azure/msal-browser';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
