@@ -131,7 +131,7 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
       this.Enrolledusers=data;
       this.Enrolledusers = this.sortRegisteredUsers(data);
       this.isLoading=false;
-      console.log("Skill Sessions Data:", this.Enrolledusers);
+      //console.log("Skill Sessions Data:", this.Enrolledusers);
     });
    }
 

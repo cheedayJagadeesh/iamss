@@ -643,7 +643,7 @@ proceedToEnroll(
     //sessionID: 105,
     sessionID: this.ID,
   };
-  console.log("Enrollment payload:", JSON.stringify(enrollmentData, null, 2));
+  //console.log("Enrollment payload:", JSON.stringify(enrollmentData, null, 2));
   this.ielc.enrollUser(enrollmentData).subscribe({
     next: () => {
       alert('Enrollment successful! A confirmation email will be sent shortly.');
