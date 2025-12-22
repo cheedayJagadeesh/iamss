@@ -937,7 +937,7 @@ login(): void {
   this.isLoginInProgress = true;
   // this.msalService.loginPopup().subscribe({
     this.msalService.loginPopup({
-      prompt: 'login',
+      prompt: 'select_account',
       scopes: []
     }).subscribe({
     next: (response: AuthenticationResult) => {
