@@ -98,6 +98,7 @@ import { UserheaderComponent } from './IELC/userheader/userheader.component';
 import { LeftmenuComponent } from './IELC/leftmenu/leftmenu.component';
 import { AdminComponent } from './admin/admin.component';
 import { IsmsqmssupportComponent } from './ismsqmssupport/ismsqmssupport.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -286,7 +287,8 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     LeftmenuComponent,
     EmpattendanceComponent,
     AdminComponent,
-    IsmsqmssupportComponent
+    IsmsqmssupportComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

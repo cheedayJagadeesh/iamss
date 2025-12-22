@@ -204,7 +204,7 @@
 
 
   <!-- Logout -->
-  <a (click)="logout()" (mouseenter)="showFloatingLabel($event, 'Logout')" (mouseleave)="hideFloatingLabel()"
+  <a (click)="confirmLogout()" (mouseenter)="showFloatingLabel($event, 'Logout')" (mouseleave)="hideFloatingLabel()"
     [class.active]="activeRoute === '/registration'">
     <i>🚪</i><span>Logout</span>
   </a>
@@ -212,7 +212,7 @@
 
 
 <!-- Header -->
-<div class="header" [class.collapsed]="isSidebarClosed">
+<!-- <div class="header" [class.collapsed]="isSidebarClosed">
   <h1>
     <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
     Welcome to Inteq Admin Dashboard
@@ -221,8 +221,56 @@
   <div class="profile">
     <img src="\assets\images\userlogo.png" alt="User" />
   </div>
-  <!-- Floating label for simple menus (appears only when sidebar is collapsed) -->
+
   <div class="floating-label" *ngIf="hoveredMenuLabel && isSidebarClosed" [style.top.px]="floatingTop">
     {{ hoveredMenuLabel }}
   </div>
+</div> -->
+
+
+
+<!-- Header -->
+<div class="header" [class.collapsed]="isSidebarClosed">
+  <h1>
+    <button class="toggle-btn" (click)="toggleSidebar()">☰</button>
+    Welcome to Inteq Admin Dashboard
+  </h1>
+
+  <app-sprtheader></app-sprtheader>
+
+  <!-- User Dropdown -->
+<div class="user-menu" (click)="toggleUserMenu($event)">
+  <img src="assets/images/userlogo.png" alt="User" class="user-avatar" />
+  <span class="user-name">{{ userName }}</span>
+  <span class="caret">▾</span>
+
+  <!-- Dropdown -->
+  <div class="user-dropdown" *ngIf="showUserMenu">
+    <div class="dropdown-item" (click)="goToProfile($event)">
+      👤 Profile
+    </div>
+
+    <!-- <div class="dropdown-item" (click)="clearCache($event)">
+      🧹 Clear Cache
+    </div> -->
+
+    <div class="dropdown-item logout" (click)="confirmLogout()">
+      🚪 Logout
+    </div>
+  </div>
 </div>
+
+<!-- Logout Confirmation Modal -->
+<!-- <div class="modal-overlay" *ngIf="showLogoutModal">
+  <div class="modal-box">
+    <h5>Confirm Logout</h5>
+    <p>Are you sure you want to logout?</p>
+
+    <div class="modal-actions">
+      <button class="btn btn-secondary" (click)="closeLogoutModal()">Cancel</button>
+      <button class="btn btn-danger" (click)="confirmLogout()">Logout</button>
+    </div>
+  </div>
+</div> -->
+
+

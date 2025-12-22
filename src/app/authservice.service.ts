@@ -338,15 +338,32 @@ constructor(private msalService: MsalService, private router: Router, private ht
 //     }
 //   }, 1000);
 // }
+// private initializeUser() {
+//   setTimeout(() => {
+//     const accounts = this.msalService.instance.getAllAccounts();
+//     if (accounts.length > 0) {
+//       this.msalService.instance.setActiveAccount(accounts[0]); // Ensure active account is set
+//       this.fetchUserDetails();
+//     }
+//   }, 1000);
+// }
+
 private initializeUser() {
   setTimeout(() => {
     const accounts = this.msalService.instance.getAllAccounts();
+
+    // ❌ Do NOT auto-login on login page
+    if (this.router.url === '/login') {
+      return;
+    }
+
     if (accounts.length > 0) {
-      this.msalService.instance.setActiveAccount(accounts[0]); // Ensure active account is set
+      this.msalService.instance.setActiveAccount(accounts[0]);
       this.fetchUserDetails();
     }
   }, 1000);
 }
+
 
 // login(): void {
 //   this.msalService.loginPopup().subscribe({
@@ -918,7 +935,11 @@ login(): void {
     return; // Prevent multiple simultaneous login attempts
   }
   this.isLoginInProgress = true;
-  this.msalService.loginPopup().subscribe({
+  // this.msalService.loginPopup().subscribe({
+    this.msalService.loginPopup({
+      prompt: 'login',
+      scopes: []
+    }).subscribe({
     next: (response: AuthenticationResult) => {
       this.msalService.instance.setActiveAccount(response.account);
       this.fetchUserDetails(); // optional, for registration checks

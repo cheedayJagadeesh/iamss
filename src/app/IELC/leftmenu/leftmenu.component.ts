@@ -1,6 +1,8 @@
-import { Component, ElementRef, EventEmitter, Output, QueryList, Renderer2, ViewChildren } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Output, QueryList, Renderer2, ViewChildren } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
+import { environment } from '../environment.prod';
+import { MsalService } from '@azure/msal-angular';
 
 
 @Component({
@@ -17,7 +19,9 @@ export class LeftmenuComponent {
   hoveredDropdown: string | null = null;
   activeRoute: string = ''; // ✅ track active route
   hoveredMenuLabel: string | null = null;
-  constructor(private router: Router, private renderer: Renderer2) {
+  userDetailsSubject: any;
+  userInfoSubject: any;
+  constructor(private router: Router, private renderer: Renderer2, private msalService: MsalService) {
 
     
     // Detect route change
@@ -57,14 +61,14 @@ export class LeftmenuComponent {
   }
 
   // Logout function — adjust per your project’s authentication flow
-  logout() {
-    // Clear session or token
-    localStorage.clear();
-    sessionStorage.clear();
+  // logout() {
+  //   // Clear session or token
+  //   localStorage.clear();
+  //   sessionStorage.clear();
 
-    // Navigate to login page
-    this.router.navigate(['/login']);
-  }
+  //   // Navigate to login page
+  //   this.router.navigate(['/login']);
+  // }
 
   // onMouseEnter(menu: string) {
   //   if (this.isSidebarClosed) {
@@ -157,4 +161,88 @@ export class LeftmenuComponent {
   isSubMenuActive(route: string): boolean {
     return this.activeRoute === route;
   }
+
+
+
+
+showUserMenu = false;
+showLogoutModal = false;
+
+userName = localStorage.getItem('userName');
+
+toggleUserMenu(event: MouseEvent) {
+  event.stopPropagation();
+  this.showUserMenu = !this.showUserMenu;
+}
+
+goToProfile(event: MouseEvent) {
+  event.stopPropagation();
+  this.showUserMenu = false;
+  this.router.navigate(['/profile']);
+}
+
+/* ✅ Clear Cache */
+clearCache(event: MouseEvent) {
+  event.stopPropagation();
+
+  // Keep login-related data if needed
+  const userName = localStorage.getItem('userName');
+  const token = localStorage.getItem('token');
+
+  localStorage.clear();
+
+  if (userName) localStorage.setItem('userName', userName);
+  if (token) localStorage.setItem('token', token);
+
+  alert('Cache cleared successfully!');
+  this.showUserMenu = false;
+}
+
+/* ✅ Logout modal handling */
+openLogoutModal(event: MouseEvent) {
+  event.stopPropagation();
+  this.showUserMenu = false;
+  this.showLogoutModal = true;
+}
+
+closeLogoutModal() {
+  this.showLogoutModal = false;
+}
+
+confirmLogout() {
+  localStorage.clear();
+  this.showLogoutModal = false;
+  this.router.navigate(['/login']);
+}
+
+/* Close dropdown when clicking outside */
+@HostListener('document:click')
+closeDropdown() {
+  this.showUserMenu = false;
+}
+
+logout(): void {
+  // Clear app state
+  this.userDetailsSubject.next({ displayName: null, email: null });
+  this.userInfoSubject.next({
+    email: '',
+    roleName: '',
+    pageName: []
+  });
+
+  // Clear local/session storage
+  localStorage.clear();
+  sessionStorage.clear();
+
+
+// 🔥 IMPORTANT: Clear active account explicitly
+this.msalService.instance.setActiveAccount(null);
+
+// 🔥 FORCE Azure AD logout (NO popup)
+this.msalService.logoutRedirect({
+  postLogoutRedirectUri: environment.postLogoutRedirectUri
+});
+}
+
+
 }

@@ -51,6 +51,7 @@ import { AuthcallbackComponent } from './IELC/authcallback/authcallback.componen
 import { EventschedulerComponent } from './IELC/eventscheduler/eventscheduler.component';
 import { ISMSMasterComponent } from './ISMS/ismsmaster/ismsmaster.component';
 import { AdminComponent } from './admin/admin.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -92,7 +93,10 @@ const routes: Routes = [
   {path:'complianceform',component:ComplianceformComponent,canActivate: [MsalGuard],data: { pageNames: ['complianceform'], roles: ['Admin', 'SuperAdmin']}},
   {path:'user-groups',component:UserGroupsComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['user-groups'], roles: ['Admin', 'SuperAdmin']}},
   {path:'eventscheduler',component:EventschedulerComponent,canActivate: [MsalGuard],data: { pageNames: ['eventscheduler'], roles: ['Admin', 'SuperAdmin']}},
-    {path:'admin',component:AdminComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['admin'], roles: ['Admin', 'SuperAdmin']}},
+  {path:'admin',component:AdminComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['admin'], roles: ['Admin', 'SuperAdmin']}},
+  {path:'profile',component:ProfileComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['profile'], roles: ['Admin', 'SuperAdmin'] }},
+
+
 
   {path:'ithelpsprt',component:IthelpsprtComponent,canActivate: [MsalGuard]},
   {path:'adminsprt',component:AdminsprtComponent,canActivate: [MsalGuard]},
