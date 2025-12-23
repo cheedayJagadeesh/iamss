@@ -71,7 +71,7 @@ interface Enrollment {
   templateUrl: './exampage.component.html',
   styleUrls: ['./exampage.component.css']
 })
-export class ExampageComponent implements OnInit, OnDestroy  {
+export class ExampageComponent implements OnInit  {
 
  
   questions: Question[] = [];
@@ -135,6 +135,9 @@ export class ExampageComponent implements OnInit, OnDestroy  {
 
 loadingProgress: number = 0;
 fakePercent = 0;
+ showWarningBanner = false;
+warningMessage = '';
+
 
   constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute,private emailService: EmailService,private zone: NgZone) {
     this.route.queryParams.subscribe(params => {
@@ -143,6 +146,9 @@ fakePercent = 0;
       this.sessionID = params['session'] ? Number(params['session']) : null;
     });
   }
+  // ngOnDestroy(): void {
+  //   throw new Error('Method not implemented.');
+  // }
   
   //  async ngOnInit(){
   //   this.GetExamlist();
@@ -174,6 +180,7 @@ fakePercent = 0;
   // }
   // }
 
+private blurHandler!: () => void;
   async ngOnInit() {
     // Prevent all right-click and context menus
     document.addEventListener('contextmenu', e => e.preventDefault());
@@ -181,25 +188,34 @@ fakePercent = 0;
     document.addEventListener('cut', e => e.preventDefault());
     document.addEventListener('paste', e => e.preventDefault());
 
-    // ✅ Tab switching detection with throttle - Single Alert Only
-    window.addEventListener('blur', () => {
-      const now = Date.now();
-      
-      // Only trigger if enough time has passed AND no alert is currently showing
-      if (now - this.lastTabSwitchTime > this.tabSwitchThrottleMs && !this.isAlertShowing) {
-        this.tabSwitchCount++;
-        this.lastTabSwitchTime = now;
-        this.isAlertShowing = true; // Prevent multiple alerts
-        
-        //console.warn(`⚠️ Tab switch detected (${this.tabSwitchCount})`);
-        
-        // Show alert only once
-        alert('⚠️ Tab switching detected! Alert sent to Administrator!');
-        
-        // Reset flag after user clicks OK (alert is dismissed)
+
+
+  this.blurHandler = () => {
+    const now = Date.now();
+
+    if (
+      now - this.lastTabSwitchTime > this.tabSwitchThrottleMs &&
+      !this.isAlertShowing
+    ) {
+      this.tabSwitchCount++;
+      this.lastTabSwitchTime = now;
+      this.isAlertShowing = true;
+
+      // ✅ Show warning banner instead of alert
+      this.warningMessage = '⚠️ Tab switching detected! This activity is monitored. Alert sent to Administrator!';
+      this.showWarningBanner = true;
+
+      // Auto-hide banner after 5 seconds
+      setTimeout(() => {
+        this.showWarningBanner = false;
         this.isAlertShowing = false;
-      }
-    });
+      }, 5000);
+    }
+  };
+
+  window.addEventListener('blur', this.blurHandler);
+
+
 
     // ✅ AGGRESSIVE keyboard prevention for screenshots and dev tools
     document.addEventListener('keydown', (e: any) => {
@@ -726,9 +742,9 @@ get availableOptions(): string[] {
 
 
   
-  ngOnDestroy(): void {
-    clearInterval(this.timer); 
-  }
+  // ngOnDestroy(): void {
+  //   clearInterval(this.timer); 
+  // }
 
   startTimer() {
     this.timer = setInterval(() => {

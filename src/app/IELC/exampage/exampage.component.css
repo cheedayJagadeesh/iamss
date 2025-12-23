@@ -1092,3 +1092,26 @@
 }
 
 
+.warning-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #fff3cd;
+  color: #856404;
+  padding: 12px 16px;
+  text-align: center;
+  font-weight: 500;
+  border-bottom: 1px solid #ffeeba;
+  z-index: 9999;
+  animation: slideDown 0.3s ease-in-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

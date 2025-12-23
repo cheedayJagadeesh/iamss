@@ -11,6 +11,11 @@
       </div>
     </div>
 
+    <div class="warning-banner" *ngIf="showWarningBanner">
+      {{ warningMessage }}
+    </div>
+
+
     <!-- MAIN EXAM CARD -->
     <div class="exam-card shadow-lg">
 
