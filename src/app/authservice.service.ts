@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './IELC/environment';
 import { IelcapiService } from './IELC/ielcapi.service';
+import { environmentConfig } from './IELC/environment.runtime';
 
 interface User {
   roleName: string;
@@ -410,7 +411,7 @@ logout(): void {
       this.userDetailsSubject.next({ displayName: null, email: null }); // Clear user details
 
       // Manually redirect to the post-logout URL
-      window.location.href = environment.postLogoutRedirectUri;
+      window.location.href = environmentConfig.postLogoutRedirectUri;
     },
     error: (error) => {
       // console.error('Logout Error:', error);

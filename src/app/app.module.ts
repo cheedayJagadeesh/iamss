@@ -99,6 +99,7 @@ import { LeftmenuComponent } from './IELC/leftmenu/leftmenu.component';
 import { AdminComponent } from './admin/admin.component';
 import { IsmsqmssupportComponent } from './ismsqmssupport/ismsqmssupport.component';
 import { ProfileComponent } from './profile/profile.component';
+import { environmentConfig } from './IELC/environment.runtime';
 
 
 
@@ -184,8 +185,8 @@ export function MSALInstanceFactory(): IPublicClientApplication {
       authority: "https://login.microsoftonline.com/d0ae250e-943b-431f-be00-cc1a2f3f59d9",
       // redirectUri: "http://localhost:4200",
       // postLogoutRedirectUri: 'http://localhost:4200/login'
-      redirectUri: environment.redirectUri,
-      postLogoutRedirectUri: environment.postLogoutRedirectUri
+      redirectUri: environmentConfig.redirectUri,
+      postLogoutRedirectUri: environmentConfig.postLogoutRedirectUri
     },
     cache: {
       // cacheLocation: BrowserCacheLocation.SessionStorage,
