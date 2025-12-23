@@ -3,6 +3,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs';
 import { environment } from '../environment.prod';
 import { MsalService } from '@azure/msal-angular';
+import { environmentConfig } from '../environment.runtime';
 
 
 @Component({
@@ -240,9 +241,8 @@ this.msalService.instance.setActiveAccount(null);
 
 // 🔥 FORCE Azure AD logout (NO popup)
 this.msalService.logoutRedirect({
-  postLogoutRedirectUri: environment.postLogoutRedirectUri
+  postLogoutRedirectUri: environmentConfig.postLogoutRedirectUri
 });
 }
-
 
 }
