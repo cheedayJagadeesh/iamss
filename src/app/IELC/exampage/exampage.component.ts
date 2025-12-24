@@ -137,6 +137,14 @@ loadingProgress: number = 0;
 fakePercent = 0;
  showWarningBanner = false;
 warningMessage = '';
+isExamLocked = false;
+fullscreenExited = false;
+// maxFullscreenAttempts = 3;
+// remainingFullscreenAttempts = 3;
+
+// fullscreenCountdown = 10; // seconds before auto-submit
+// countdownTimer: any = null;
+
 
 
   constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute,private emailService: EmailService,private zone: NgZone) {
@@ -188,6 +196,66 @@ private blurHandler!: () => void;
     document.addEventListener('cut', e => e.preventDefault());
     document.addEventListener('paste', e => e.preventDefault());
 
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement) {
+    this.tabSwitchCount++;
+
+    this.warningMessage =
+      '⚠️ Fullscreen exited! This violation is recorded.';
+    this.showWarningBanner = true;
+
+    setTimeout(() => {
+      this.showWarningBanner = false;
+    }, 4000);
+
+    // OPTIONAL: auto-submit after 2 violations
+    // if (this.tabSwitchCount >= 2) {
+    //   this.submitExam();
+    // }
+
+    if (this.tabSwitchCount >= 3) {
+  this.submitExam();
+}
+
+  }
+});
+
+// document.addEventListener('fullscreenchange', () => {
+//   if (!document.fullscreenElement && this.isExamLocked) {
+
+//     this.fullscreenExited = true;
+//     this.remainingFullscreenAttempts--;
+
+//     // Reset countdown
+//     this.fullscreenCountdown = 10;
+
+//     // Show warning banner
+//     this.warningMessage =
+//       '⚠️ Fullscreen exited. Resume fullscreen to continue.';
+//     this.showWarningBanner = true;
+
+//     // Start countdown to auto-submit
+//     this.startFullscreenCountdown();
+
+//     // Auto-submit if attempts exhausted
+//     if (this.remainingFullscreenAttempts <= 0) {
+//       this.submitExam();
+//     }
+//   }
+// });
+
+
+document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement && this.isExamLocked) {
+      this.fullscreenExited = true;
+      //this.tabSwitchCount++;
+
+      this.warningMessage =
+        '⚠️ You exited fullscreen. Click "Resume Exam" to continue.';
+      this.showWarningBanner = true;
+    }
+  });
+
 
 
   this.blurHandler = () => {
@@ -197,7 +265,7 @@ private blurHandler!: () => void;
       now - this.lastTabSwitchTime > this.tabSwitchThrottleMs &&
       !this.isAlertShowing
     ) {
-      this.tabSwitchCount++;
+      //this.tabSwitchCount++;
       this.lastTabSwitchTime = now;
       this.isAlertShowing = true;
 
@@ -326,7 +394,7 @@ private blurHandler!: () => void;
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
         document.body.style.filter = 'blur(10px)';
-        this.tabSwitchCount++;
+        //this.tabSwitchCount++;
       } else {
         document.body.style.filter = 'none';
       }
@@ -506,6 +574,10 @@ private blurHandler!: () => void;
       const combined = [...standardQuestions, ...shuffledSkillQuestions];
       this.questions = this.shuffleArray(combined); 
       //console.log("all ques", this.questions);
+
+      this.isExamLocked = true;
+this.enterFullscreen();
+document.body.style.overflow = 'hidden';
      
       // Final setup
       this.currentQuestionIndex = 0;
@@ -738,6 +810,11 @@ get availableOptions(): string[] {
   
     // Submit result to backend
     this.UpdateResult(); // This handles the alert + navigation
+
+    //this.exitFullscreen();
+// this.isExamLocked = false;
+// document.body.style.overflow = 'auto';
+
   }
 
 
@@ -942,4 +1019,72 @@ showToastNotification(message: string, duration: number = 2000) {
     }
   }, duration);
 }
+
+enterFullscreen() {
+  const elem = document.documentElement as any;
+
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) {
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    elem.msRequestFullscreen();
+  }
+}
+exitFullscreen() {
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  }
+}
+resumeFullscreen() {
+  const elem = document.documentElement as any;
+
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) {
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    elem.msRequestFullscreen();
+  }
+
+  this.fullscreenExited = false;
+  this.showWarningBanner = false;
+}
+
+// resumeFullscreen() {
+//   const elem = document.documentElement as any;
+
+//   if (elem.requestFullscreen) {
+//     elem.requestFullscreen();
+//   } else if (elem.webkitRequestFullscreen) {
+//     elem.webkitRequestFullscreen();
+//   } else if (elem.msRequestFullscreen) {
+//     elem.msRequestFullscreen();
+//   }
+
+//   this.fullscreenExited = false;
+//   this.showWarningBanner = false;
+
+//   // Stop countdown
+//   clearInterval(this.countdownTimer);
+// }
+
+
+// startFullscreenCountdown() {
+//   clearInterval(this.countdownTimer);
+
+//   this.countdownTimer = setInterval(() => {
+//     this.fullscreenCountdown--;
+
+//     if (this.fullscreenCountdown <= 0) {
+//       clearInterval(this.countdownTimer);
+
+//       // Auto-submit if still not in fullscreen
+//       if (!document.fullscreenElement) {
+//         this.submitExam();
+//       }
+//     }
+//   }, 1000);
+// }
+
 }

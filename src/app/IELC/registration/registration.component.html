@@ -308,10 +308,14 @@
                     <ng-container *ngIf="!isSkillRestricted(item.skillName)">
                       <ng-container
                         *ngIf="!item.result || item.percentage === null || !item.testTakenDate; else showResult">
-                        <a routerLink="/exampage" class="btn btn-link"
+                        <!-- <a routerLink="/exampage" class="btn btn-link"
                           (click)="setSelectedSkill(item.skillName, item.enrollmentID, item.sessionID)">
                           StartTest
-                        </a>
+                        </a> -->
+                        <a href="javascript:void(0)" class="btn btn-link"
+   (click)="openPreExamWarning(item)">
+  StartTest
+</a>
                       </ng-container>
                     </ng-container>
 
@@ -322,10 +326,14 @@
 
                       <ng-template #pendingTest>
                         <span>Pending - </span>
-                        <a routerLink="/exampage" class="btn btn-link"
+                        <!-- <a routerLink="/exampage" class="btn btn-link"
                           (click)="setSelectedSkill(item.skillName, item.enrollmentID, item.sessionID)">
                           StartTest
-                        </a>
+                        </a> -->
+                        <a href="javascript:void(0)" class="btn btn-link"
+   (click)="openPreExamWarning(item)">
+  StartTest
+</a>
                       </ng-template>
                     </ng-template>
                   </td>
@@ -591,3 +599,36 @@
     </div>
   </div>
 </form>
+
+<!-- 🔒 PRE-EXAM WARNING MODAL -->
+<div class="preexam-backdrop" *ngIf="showPreExamWarning">
+  <div class="preexam-modal">
+
+    <h4 class="mb-3">⚠️ Important Exam Instructions</h4>
+
+    <ul class="preexam-list">
+      <li>🔴 This test is <strong>monitored and recorded</strong>.</li>
+      <li>🔒 The exam must be taken in <strong>fullscreen mode only</strong>.</li>
+      <li>🚫 Switching tabs, exiting fullscreen, copying content, or screenshots are <strong>violations</strong>.</li>
+      <li>📢 Any violation will be <strong>reported to the Administrator</strong>.</li>
+      <li>⏱ Repeated violations may result in <strong>auto submission</strong>.</li>
+    </ul>
+
+    <p class="mt-3 text-muted small">
+      By clicking <strong>“I Understand & Start Exam”</strong>, you agree to follow the exam rules.
+    </p>
+
+    <div class="d-flex justify-content-end gap-2 mt-4">
+      <button class="btn btn-outline-secondary btn-sm"
+              (click)="showPreExamWarning = false">
+        Cancel
+      </button>
+
+      <button class="btn btn-primary btn-sm"
+              (click)="confirmStartExam()">
+        I Understand & Start Exam
+      </button>
+    </div>
+
+  </div>
+</div>

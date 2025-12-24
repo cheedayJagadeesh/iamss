@@ -1,4 +1,81 @@
+<!-- 🔒 EXAM LOCK OVERLAY -->
+<div class="exam-lock-overlay" *ngIf="isExamLocked">
+
+  <div class="exam-lock-container">
+    <!-- Everything inside is your EXISTING exam -->
+
+    <!-- 🔐 Header -->
+    <div class="exam-lock-header">
+      <span>🔒 Exam in Progress</span>
+      <span>⏰ {{ formattedTime }}</span>
+      <span>Tab Switches: {{ tabSwitchCount }}</span>
+    </div>
+<!-- 🔒 FULLSCREEN EXIT BLOCK -->
+<div class="fullscreen-exit-overlay" *ngIf="fullscreenExited">
+  <div class="fullscreen-exit-card">
+
+    <h4 class="mb-2">⚠️ Fullscreen Required</h4>
+
+    <p class="mb-3">
+      This exam must be completed in <strong>fullscreen mode</strong>.
+      Please return to fullscreen to continue your test.
+    </p>
+
+    <p class="text-muted small mb-2">
+      ⏰ Time Remaining: <strong>{{ formattedTime }}</strong>
+    </p>
+
+    <p class="text-danger small mb-4">
+      ⚠️ Note: Exiting fullscreen more than <strong>3 times</strong>
+      will result in <strong>automatic submission</strong>.
+    </p>
+
+    <button class="btn btn-primary px-4" (click)="resumeFullscreen()">
+      Resume Exam
+    </button>
+
+  </div>
+</div>
+
+<!-- 🔒 FULLSCREEN EXIT BLOCK -->
+<!-- <div class="fullscreen-exit-overlay" *ngIf="fullscreenExited">
+  <div class="fullscreen-exit-card">
+
+    <h4 class="mb-2">⚠️ Fullscreen Required</h4>
+
+    <p class="mb-3">
+      This exam must be taken in <strong>fullscreen mode</strong>.
+      Please return to fullscreen to continue.
+    </p>
+
+    <p class="text-muted small mb-2">
+      ⏰ Time Remaining: <strong>{{ formattedTime }}</strong>
+    </p>
+
+    <p class="text-warning small mb-2">
+      Attempts left:
+      <strong>{{ remainingFullscreenAttempts }}</strong> /
+      {{ maxFullscreenAttempts }}
+    </p>
+
+    <p class="text-danger small mb-4">
+      Auto-submission in
+      <strong>{{ fullscreenCountdown }}</strong> seconds
+      if fullscreen is not restored.
+    </p>
+
+    <button class="btn btn-primary px-4"
+            (click)="resumeFullscreen()">
+      Resume Exam
+    </button>
+
+  </div>
+</div> -->
+
+
+
 <form class="row g-0 justify-content-center">
+
 
   <div class="exam-wrapper">
   <app-sprtheader class="lbllogin"></app-sprtheader>
@@ -241,3 +318,6 @@
     </div>
   </div>
 </form>
+    
+  </div>
+</div>

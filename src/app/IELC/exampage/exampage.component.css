@@ -1115,3 +1115,57 @@
     transform: translateY(0);
   }
 }
+
+.exam-lock-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 100000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.exam-lock-container {
+  width: 96%;
+  height: 96%;
+  background: #f9fbfd;
+  border-radius: 12px;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Sticky secure header */
+.exam-lock-header {
+  position: sticky;
+  top: 0;
+  background: #0d6efd;
+  color: #fff;
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  font-weight: 500;
+  z-index: 10;
+}
+
+/* Disable text selection */
+.exam-lock-container {
+  user-select: none;
+}
+.fullscreen-exit-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 100001;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fullscreen-exit-card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  text-align: center;
+  width: 400px;
+}
