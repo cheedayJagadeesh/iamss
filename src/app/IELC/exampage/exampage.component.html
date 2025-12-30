@@ -11,7 +11,7 @@
       <span>Tab Switches: {{ tabSwitchCount }}</span>
     </div>
 <!-- 🔒 FULLSCREEN EXIT BLOCK -->
-<div class="fullscreen-exit-overlay" *ngIf="fullscreenExited">
+<div class="fullscreen-exit-overlay" *ngIf="fullscreenExited && remainingFullscreenAttempts > 0">
   <div class="fullscreen-exit-card">
 
     <h4 class="mb-2">⚠️ Fullscreen Required</h4>
@@ -318,6 +318,31 @@
     </div>
   </div>
 </form>
+
+<!-- 🚨 VIOLATION MESSAGE BOX -->
+<div class="violation-overlay" *ngIf="showViolationModal">
+  <div class="violation-modal">
+
+    <h4 class="mb-2">🚨 Exam Violation Detected</h4>
+
+    <p class="mb-3">
+      You have exited <strong>fullscreen mode</strong>.
+      This action is not allowed during the exam.
+    </p>
+
+    <p class="text-danger mb-3">
+      ⏳ Exam will be automatically submitted in
+      <strong>{{ violationCountdown }}</strong> seconds.
+    </p>
+
+    <!-- <button class="btn btn-primary"
+            (click)="resumeFullscreen()">
+      Resume Fullscreen
+    </button> -->
+
+  </div>
+</div>
+
     
   </div>
 </div>

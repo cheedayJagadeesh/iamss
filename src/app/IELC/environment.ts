@@ -27,7 +27,11 @@ export const environment = {
       redirectUri: 'http://localhost:4200/authcallback',
       postLogoutRedirectUri: 'http://localhost:4200/#/login'
     }
-  }
+  },
+  // adminViolationEmails: [
+  //   'jagadeesh.c@inteqsolutions.com',
+  // ]
 };
+
 
 

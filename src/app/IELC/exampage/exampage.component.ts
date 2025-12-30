@@ -8,6 +8,7 @@ import { forkJoin, lastValueFrom, firstValueFrom   } from 'rxjs';
 import { EmailService } from 'src/app/email.service';
 import { NgZone } from '@angular/core';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { environment } from '../environment';
 declare var bootstrap: any;
 
 
@@ -139,6 +140,20 @@ fakePercent = 0;
 warningMessage = '';
 isExamLocked = false;
 fullscreenExited = false;
+maxFullscreenAttempts = 4;
+remainingFullscreenAttempts = 4;
+
+
+violationCountdown = 10;
+violationTimer: any = null;
+isViolationCountdownActive = false;
+resumeAllowed = true;
+showViolationModal = false;
+  //isAutoSubmitDueToViolation: any;
+
+
+
+
 // maxFullscreenAttempts = 3;
 // remainingFullscreenAttempts = 3;
 
@@ -196,29 +211,56 @@ private blurHandler!: () => void;
     document.addEventListener('cut', e => e.preventDefault());
     document.addEventListener('paste', e => e.preventDefault());
 
+// document.addEventListener('fullscreenchange', () => {
+//   if (!document.fullscreenElement) {
+//     this.tabSwitchCount++;
+
+//     this.warningMessage =
+//       '⚠️ Fullscreen exited! This violation is recorded.';
+//     this.showWarningBanner = true;
+
+//     setTimeout(() => {
+//       this.showWarningBanner = false;
+//     }, 4000);
+
+// //     if (this.tabSwitchCount >= 4) {
+// //   this.submitExam();
+// // }
+
+// if (this.tabSwitchCount >= 4 && !this.showViolationModal) {
+//   this.resumeAllowed = false;   // 🚫 disable resume
+//   this.startViolationModal();
+// }
+
+//   }
+// });
+
 document.addEventListener('fullscreenchange', () => {
-  if (!document.fullscreenElement) {
+  if (!document.fullscreenElement && this.isExamLocked) {
+
     this.tabSwitchCount++;
 
-    this.warningMessage =
-      '⚠️ Fullscreen exited! This violation is recorded.';
-    this.showWarningBanner = true;
+    // 🚫 If attempts already exhausted → do nothing here
+    if (this.remainingFullscreenAttempts <= 0) {
+      return;
+    }
 
-    setTimeout(() => {
-      this.showWarningBanner = false;
-    }, 4000);
+    this.remainingFullscreenAttempts--;
+    this.fullscreenExited = true;
 
-    // OPTIONAL: auto-submit after 2 violations
-    // if (this.tabSwitchCount >= 2) {
-    //   this.submitExam();
-    // }
+    // 🔴 If this was the LAST allowed attempt
+    if (this.remainingFullscreenAttempts === 0) {
+      // Do NOT show resume popup
+      this.fullscreenExited = false;
 
-    if (this.tabSwitchCount >= 3) {
-  this.submitExam();
-}
-
+      // Start violation countdown / auto-submit
+      this.startViolationModal();
+      return;
+    }
   }
 });
+
+
 
 // document.addEventListener('fullscreenchange', () => {
 //   if (!document.fullscreenElement && this.isExamLocked) {
@@ -250,9 +292,9 @@ document.addEventListener('fullscreenchange', () => {
       this.fullscreenExited = true;
       //this.tabSwitchCount++;
 
-      this.warningMessage =
-        '⚠️ You exited fullscreen. Click "Resume Exam" to continue.';
-      this.showWarningBanner = true;
+      // this.warningMessage =
+      //  '⚠️ You exited fullscreen. Click "Resume Exam" to continue.';
+      // this.showWarningBanner = true;
     }
   });
 
@@ -270,7 +312,7 @@ document.addEventListener('fullscreenchange', () => {
       this.isAlertShowing = true;
 
       // ✅ Show warning banner instead of alert
-      this.warningMessage = '⚠️ Tab switching detected! This activity is monitored. Alert sent to Administrator!';
+      //this.warningMessage = '⚠️ Tab switching detected! This activity is monitored. Alert sent to Administrator!';
       this.showWarningBanner = true;
 
       // Auto-hide banner after 5 seconds
@@ -799,23 +841,136 @@ closeModal() {
   this.router.navigate(['/registration']);
 }
 
+
 get availableOptions(): string[] {
   return ['a', 'b', 'c', 'd'].filter(option =>
     this.currentQuestion?.[option] || this.currentQuestion?.['i' + option]
   );
 }
 
-  submitExam() {
-    clearInterval(this.timer); // Stop timer when submitting
+//   submitExam() {
+//     clearInterval(this.timer); // Stop timer when submitting
   
-    // Submit result to backend
-    this.UpdateResult(); // This handles the alert + navigation
+//     // Submit result to backend
+//     this.UpdateResult(); // This handles the alert + navigation
 
-    //this.exitFullscreen();
-// this.isExamLocked = false;
-// document.body.style.overflow = 'auto';
+//     //this.exitFullscreen();
+// // this.isExamLocked = false;
+// // document.body.style.overflow = 'auto';
 
+//   }
+
+// submitExam() {
+//   clearInterval(this.timer);
+//   clearInterval(this.violationTimer);
+
+//   this.isViolationCountdownActive = false;
+//   this.showWarningBanner = false;
+
+//   this.UpdateResult();
+// }
+
+// submitExam() {
+//   if(!(this.tabSwitchCount >= this.maxFullscreenAttempts)) {
+//   clearInterval(this.timer);
+//   clearInterval(this.violationTimer);
+//   }
+//   //this.showViolationModal = false;
+// else {
+//   this.UpdateResult();
+// }
+// }
+
+submitExam() {
+  // Always clear timers
+  clearInterval(this.timer);
+  clearInterval(this.violationTimer);
+
+  // Hide violation UI if any
+  this.showViolationModal = false;
+  this.fullscreenExited = false;
+
+  // ❌ Auto-submit due to violation → DO NOT update result
+  if (this.isViolationCountdownActive) {
+    this.openModal();
+    // console.warn('Exam auto-submitted due to violation. Skipping UpdateResult().');
+    return;
   }
+
+  // ✅ Normal submit → update result
+  this.UpdateResult();
+}
+
+
+
+//   startViolationCountdown() {
+//   this.isViolationCountdownActive = true;
+//   this.violationCountdown = 10;
+
+//   this.warningMessage =
+//     `🚨 Multiple violations detected. Exam will be submitted in ${this.violationCountdown} seconds.`;
+//   this.showWarningBanner = true;
+
+//   this.violationTimer = setInterval(() => {
+//     this.violationCountdown--;
+
+//     this.warningMessage =
+//       `🚨 Exam will be auto-submitted in ${this.violationCountdown} seconds due to violations.`;
+
+//     if (this.violationCountdown <= 0) {
+//       clearInterval(this.violationTimer);
+//       this.showWarningBanner = false;
+//       this.submitExam();
+//     }
+//   }, 1000);
+// }
+
+// startViolationModal() {
+//   this.showViolationModal = true;
+//   this.violationCountdown = 10;
+
+//   this.violationTimer = setInterval(() => {
+//     this.violationCountdown--;
+
+//     if (this.violationCountdown <= 0) {
+//       clearInterval(this.violationTimer);
+//       this.showViolationModal = false;
+//       this.submitExam();
+//     }
+//   }, 1000);
+// }
+
+startViolationModal() {
+  this.isViolationCountdownActive = true;
+  this.showViolationModal = true;
+  this.violationCountdown = 10;
+
+  // ✅ Send violation email ONCE
+  this.sendViolationEmail('Exited fullscreen multiple times');
+
+  this.violationTimer = setInterval(() => {
+    this.violationCountdown--;
+
+    if (this.violationCountdown <= 0) {
+      clearInterval(this.violationTimer);
+      this.showViolationModal = false;
+      this.submitExam();
+    }
+  }, 1000);
+}
+
+resumeFullscreenFromViolation() {
+  if (!this.resumeAllowed) {
+    return; // 🚫 resume blocked
+  }
+
+  const elem = document.documentElement as any;
+  elem.requestFullscreen?.();
+
+  clearInterval(this.violationTimer);
+  this.showViolationModal = false;
+}
+
 
 
   
@@ -1086,5 +1241,48 @@ resumeFullscreen() {
 //     }
 //   }, 1000);
 // }
+
+
+sendViolationEmail(reason: string) {
+
+  //const admins = environment.adminViolationEmails.join(',');
+   const matchedUser = this.Registeredusers.find(user =>
+      user.skillName === this.selectedSkill &&
+      (this.enrollmentID ? user.enrollmentID === this.enrollmentID : true)
+    );
+const to = matchedUser.email || this.userEmail;
+        const bcc = '';
+
+
+
+  const subject = '🚨 Exam Violation Detected';
+
+  const body = `
+    <h3>🚨 Exam Violation Alert</h3>
+
+    <p><strong>User Name:</strong> ${this.userName}</p>
+    <p><strong>User Email:</strong> ${this.userEmail}</p>
+    <p><strong>Skill:</strong> ${this.selectedSkill}</p>
+    <p><strong>Enrollment ID:</strong> ${this.enrollmentID}</p>
+
+    <hr>
+
+    <p><strong>Violation Type:</strong> ${reason}</p>
+    <p><strong>Violation Count:</strong> ${this.tabSwitchCount}</p>
+    <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
+
+    <p style="color:red;">
+      This violation may lead to auto-submission of the exam.
+    </p>
+  `;
+  this.emailService.sendEmail(to,bcc, subject, body);
+  // this.emailService.sendEmail(
+  //   admins,        // to
+  //   '',            // bcc
+  //   subject,
+  //   body
+  // );
+}
+
 
 }

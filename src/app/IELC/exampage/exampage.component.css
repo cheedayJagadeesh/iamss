@@ -1169,3 +1169,21 @@
   text-align: center;
   width: 400px;
 }
+.violation-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 100002;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.violation-modal {
+  background: #fff;
+  width: 420px;
+  padding: 28px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
