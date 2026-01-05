@@ -16,22 +16,22 @@
       <div class="info-grid">
 
         <div class="info-box">
-          <!-- <label>Project Internal Audit</label> -->
+          <!-- <label>Project Internal Audit:</label> -->
           <span>{{ event?.projectInternalAudit }}</span>
         </div>
 
         <div class="info-box">
-          <!-- <label>QMS Project</label> -->
+          <!-- <label>QMS Project:</label> -->
           <span>{{ event?.projectQMS }}</span>
         </div>
 
         <div class="info-box">
-          <!-- <label>ISMS Project</label> -->
+          <!-- <label>ISMS Project:</label> -->
           <span>{{ event?.projectISMS }}</span>
         </div>
 
         <div class="info-box height-lg">
-          <!-- <label>Notes</label> -->
+          <!-- <label>Notes:</label> -->
           <span>{{ event?.notes }}</span>
         </div>
 
@@ -42,17 +42,17 @@
 
       <div class="info-grid">
         <div class="info-box">
-          <!-- <label>Company</label> -->
+          <!-- <label>Company:</label> -->
           <span>{{ event?.organizerCompany }}</span>
         </div>
 
         <div class="info-box">
-          <!-- <label>Schedule</label> -->
+          <!-- <label>Schedule:</label> -->
           <span>{{ event?.organizerSchedule }}</span>
         </div>
 
         <div class="info-box">
-          <!-- <label>Date Range</label> -->
+          <!-- <label>Date Range:</label> -->
           <span>{{ event?.organizerDateRange }}</span>
         </div>
       </div>
@@ -74,7 +74,7 @@
                   [(ngModel)]="selectedDept"
                   (change)="onDepartmentChange()">
             <option value="" disabled>- Select Department -</option>
-            <option *ngFor="let dept of projectlist" [value]="dept">{{ dept }}</option>
+            <option *ngFor="let dept of projectlists" [value]="dept">{{ dept }}</option>
           </select>
         </div>
 

@@ -178,7 +178,7 @@ export class IelcapiService {
 
     private baseUrl = 'https://ielc-coreapi.azurewebsites.net/EnrollmentSessions';
 
-   // private testurl = "http://localhost:5024/EnrollmentSessions";
+   // private testurl = "https://ielc-coreapi.azurewebsites.net/EnrollmentSessions";
 GetSkillsByVenue(venue: string): Observable<string[]> {
   return this.http.get<string[]>(`${this.baseUrl}/SkillNamesByVenue/${venue}`, {
     headers: this.getHeaders()
@@ -2143,7 +2143,7 @@ Updateexaminfo(id: number, updatedData: any): Observable<any> {
 } 
 //=================================================================================skillQA
 skillqaurl='https://ielc-coreapi.azurewebsites.net/IELCQA';
-//skillqaurl='http://localhost:5024/IELCQA';
+//skillqaurl='https://ielc-coreapi.azurewebsites.net/IELCQA';
 
 GetskillAllQues(): Observable<any> {
   return this.http.get<any>(`${this.skillqaurl}/allrecords`, {
@@ -2385,6 +2385,15 @@ GetEventSchedulerUserByDeptYearMonth(department: string): Observable<any[]> {
     headers: this.getHeaders()
   });
 }
+
+// GetEventSchedulerUserByDeptYearMonth(year: string, month: string, displayname: string): Observable<any[]> {
+//   return this.http.get<any[]>(`${this.eventschedulerUserUrl}/userprojectsbydisplayname`, {
+//     params: { year, month, displayname }, // add department as query param if needed
+//     headers: this.getHeaders()
+//   });
+// }
+
+//https://ielc-coreapi.azurewebsites.net/EventSchedulerUser/userprojectsbydisplayname
 
 GetEventSchedulerUserAuditeesDept(): Observable<string[]> {
   return this.http.get<string[]>(`${this.eventschedulerUserUrl}/auditees/latest`, { headers: this.getHeaders() });

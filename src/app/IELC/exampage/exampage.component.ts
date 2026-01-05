@@ -8,6 +8,7 @@ import { forkJoin, lastValueFrom, firstValueFrom   } from 'rxjs';
 import { EmailService } from 'src/app/email.service';
 import { NgZone } from '@angular/core';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { environment } from '../environment';
 declare var bootstrap: any;
 
 
@@ -137,6 +138,28 @@ loadingProgress: number = 0;
 fakePercent = 0;
  showWarningBanner = false;
 warningMessage = '';
+isExamLocked = false;
+fullscreenExited = false;
+maxFullscreenAttempts = 4;
+remainingFullscreenAttempts = 4;
+
+
+violationCountdown = 10;
+violationTimer: any = null;
+isViolationCountdownActive = false;
+resumeAllowed = true;
+showViolationModal = false;
+  //isAutoSubmitDueToViolation: any;
+
+
+
+
+// maxFullscreenAttempts = 3;
+// remainingFullscreenAttempts = 3;
+
+// fullscreenCountdown = 10; // seconds before auto-submit
+// countdownTimer: any = null;
+
 
 
   constructor(private ielc:IelcapiService,private msalService: MsalService, private authService: AuthService, private router: Router,private route: ActivatedRoute,private emailService: EmailService,private zone: NgZone) {
@@ -188,6 +211,93 @@ private blurHandler!: () => void;
     document.addEventListener('cut', e => e.preventDefault());
     document.addEventListener('paste', e => e.preventDefault());
 
+// document.addEventListener('fullscreenchange', () => {
+//   if (!document.fullscreenElement) {
+//     this.tabSwitchCount++;
+
+//     this.warningMessage =
+//       '⚠️ Fullscreen exited! This violation is recorded.';
+//     this.showWarningBanner = true;
+
+//     setTimeout(() => {
+//       this.showWarningBanner = false;
+//     }, 4000);
+
+// //     if (this.tabSwitchCount >= 4) {
+// //   this.submitExam();
+// // }
+
+// if (this.tabSwitchCount >= 4 && !this.showViolationModal) {
+//   this.resumeAllowed = false;   // 🚫 disable resume
+//   this.startViolationModal();
+// }
+
+//   }
+// });
+
+document.addEventListener('fullscreenchange', () => {
+  if (!document.fullscreenElement && this.isExamLocked) {
+
+    this.tabSwitchCount++;
+
+    // 🚫 If attempts already exhausted → do nothing here
+    if (this.remainingFullscreenAttempts <= 0) {
+      return;
+    }
+
+    this.remainingFullscreenAttempts--;
+    this.fullscreenExited = true;
+
+    // 🔴 If this was the LAST allowed attempt
+    if (this.remainingFullscreenAttempts === 0) {
+      // Do NOT show resume popup
+      this.fullscreenExited = false;
+
+      // Start violation countdown / auto-submit
+      this.startViolationModal();
+      return;
+    }
+  }
+});
+
+
+
+// document.addEventListener('fullscreenchange', () => {
+//   if (!document.fullscreenElement && this.isExamLocked) {
+
+//     this.fullscreenExited = true;
+//     this.remainingFullscreenAttempts--;
+
+//     // Reset countdown
+//     this.fullscreenCountdown = 10;
+
+//     // Show warning banner
+//     this.warningMessage =
+//       '⚠️ Fullscreen exited. Resume fullscreen to continue.';
+//     this.showWarningBanner = true;
+
+//     // Start countdown to auto-submit
+//     this.startFullscreenCountdown();
+
+//     // Auto-submit if attempts exhausted
+//     if (this.remainingFullscreenAttempts <= 0) {
+//       this.submitExam();
+//     }
+//   }
+// });
+
+
+document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement && this.isExamLocked) {
+      this.fullscreenExited = true;
+      //this.tabSwitchCount++;
+
+      // this.warningMessage =
+      //  '⚠️ You exited fullscreen. Click "Resume Exam" to continue.';
+      // this.showWarningBanner = true;
+    }
+  });
+
 
 
   this.blurHandler = () => {
@@ -197,12 +307,12 @@ private blurHandler!: () => void;
       now - this.lastTabSwitchTime > this.tabSwitchThrottleMs &&
       !this.isAlertShowing
     ) {
-      this.tabSwitchCount++;
+      //this.tabSwitchCount++;
       this.lastTabSwitchTime = now;
       this.isAlertShowing = true;
 
       // ✅ Show warning banner instead of alert
-      this.warningMessage = '⚠️ Tab switching detected! This activity is monitored. Alert sent to Administrator!';
+      //this.warningMessage = '⚠️ Tab switching detected! This activity is monitored. Alert sent to Administrator!';
       this.showWarningBanner = true;
 
       // Auto-hide banner after 5 seconds
@@ -326,7 +436,7 @@ private blurHandler!: () => void;
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
         document.body.style.filter = 'blur(10px)';
-        this.tabSwitchCount++;
+        //this.tabSwitchCount++;
       } else {
         document.body.style.filter = 'none';
       }
@@ -506,6 +616,10 @@ private blurHandler!: () => void;
       const combined = [...standardQuestions, ...shuffledSkillQuestions];
       this.questions = this.shuffleArray(combined); 
       //console.log("all ques", this.questions);
+
+      this.isExamLocked = true;
+this.enterFullscreen();
+document.body.style.overflow = 'hidden';
      
       // Final setup
       this.currentQuestionIndex = 0;
@@ -727,18 +841,136 @@ closeModal() {
   this.router.navigate(['/registration']);
 }
 
+
 get availableOptions(): string[] {
   return ['a', 'b', 'c', 'd'].filter(option =>
     this.currentQuestion?.[option] || this.currentQuestion?.['i' + option]
   );
 }
 
-  submitExam() {
-    clearInterval(this.timer); // Stop timer when submitting
+//   submitExam() {
+//     clearInterval(this.timer); // Stop timer when submitting
   
-    // Submit result to backend
-    this.UpdateResult(); // This handles the alert + navigation
+//     // Submit result to backend
+//     this.UpdateResult(); // This handles the alert + navigation
+
+//     //this.exitFullscreen();
+// // this.isExamLocked = false;
+// // document.body.style.overflow = 'auto';
+
+//   }
+
+// submitExam() {
+//   clearInterval(this.timer);
+//   clearInterval(this.violationTimer);
+
+//   this.isViolationCountdownActive = false;
+//   this.showWarningBanner = false;
+
+//   this.UpdateResult();
+// }
+
+// submitExam() {
+//   if(!(this.tabSwitchCount >= this.maxFullscreenAttempts)) {
+//   clearInterval(this.timer);
+//   clearInterval(this.violationTimer);
+//   }
+//   //this.showViolationModal = false;
+// else {
+//   this.UpdateResult();
+// }
+// }
+
+submitExam() {
+  // Always clear timers
+  clearInterval(this.timer);
+  clearInterval(this.violationTimer);
+
+  // Hide violation UI if any
+  this.showViolationModal = false;
+  this.fullscreenExited = false;
+
+  // ❌ Auto-submit due to violation → DO NOT update result
+  if (this.isViolationCountdownActive) {
+    this.openModal();
+    // console.warn('Exam auto-submitted due to violation. Skipping UpdateResult().');
+    return;
   }
+
+  // ✅ Normal submit → update result
+  this.UpdateResult();
+}
+
+
+
+//   startViolationCountdown() {
+//   this.isViolationCountdownActive = true;
+//   this.violationCountdown = 10;
+
+//   this.warningMessage =
+//     `🚨 Multiple violations detected. Exam will be submitted in ${this.violationCountdown} seconds.`;
+//   this.showWarningBanner = true;
+
+//   this.violationTimer = setInterval(() => {
+//     this.violationCountdown--;
+
+//     this.warningMessage =
+//       `🚨 Exam will be auto-submitted in ${this.violationCountdown} seconds due to violations.`;
+
+//     if (this.violationCountdown <= 0) {
+//       clearInterval(this.violationTimer);
+//       this.showWarningBanner = false;
+//       this.submitExam();
+//     }
+//   }, 1000);
+// }
+
+// startViolationModal() {
+//   this.showViolationModal = true;
+//   this.violationCountdown = 10;
+
+//   this.violationTimer = setInterval(() => {
+//     this.violationCountdown--;
+
+//     if (this.violationCountdown <= 0) {
+//       clearInterval(this.violationTimer);
+//       this.showViolationModal = false;
+//       this.submitExam();
+//     }
+//   }, 1000);
+// }
+
+startViolationModal() {
+  this.isViolationCountdownActive = true;
+  this.showViolationModal = true;
+  this.violationCountdown = 10;
+
+  // ✅ Send violation email ONCE
+  this.sendViolationEmail('Exited fullscreen multiple times');
+
+  this.violationTimer = setInterval(() => {
+    this.violationCountdown--;
+
+    if (this.violationCountdown <= 0) {
+      clearInterval(this.violationTimer);
+      this.showViolationModal = false;
+      this.submitExam();
+    }
+  }, 1000);
+}
+
+resumeFullscreenFromViolation() {
+  if (!this.resumeAllowed) {
+    return; // 🚫 resume blocked
+  }
+
+  const elem = document.documentElement as any;
+  elem.requestFullscreen?.();
+
+  clearInterval(this.violationTimer);
+  this.showViolationModal = false;
+}
+
 
 
   
@@ -942,4 +1174,115 @@ showToastNotification(message: string, duration: number = 2000) {
     }
   }, duration);
 }
+
+enterFullscreen() {
+  const elem = document.documentElement as any;
+
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) {
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    elem.msRequestFullscreen();
+  }
+}
+exitFullscreen() {
+  if (document.fullscreenElement) {
+    document.exitFullscreen();
+  }
+}
+resumeFullscreen() {
+  const elem = document.documentElement as any;
+
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) {
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) {
+    elem.msRequestFullscreen();
+  }
+
+  this.fullscreenExited = false;
+  this.showWarningBanner = false;
+}
+
+// resumeFullscreen() {
+//   const elem = document.documentElement as any;
+
+//   if (elem.requestFullscreen) {
+//     elem.requestFullscreen();
+//   } else if (elem.webkitRequestFullscreen) {
+//     elem.webkitRequestFullscreen();
+//   } else if (elem.msRequestFullscreen) {
+//     elem.msRequestFullscreen();
+//   }
+
+//   this.fullscreenExited = false;
+//   this.showWarningBanner = false;
+
+//   // Stop countdown
+//   clearInterval(this.countdownTimer);
+// }
+
+
+// startFullscreenCountdown() {
+//   clearInterval(this.countdownTimer);
+
+//   this.countdownTimer = setInterval(() => {
+//     this.fullscreenCountdown--;
+
+//     if (this.fullscreenCountdown <= 0) {
+//       clearInterval(this.countdownTimer);
+
+//       // Auto-submit if still not in fullscreen
+//       if (!document.fullscreenElement) {
+//         this.submitExam();
+//       }
+//     }
+//   }, 1000);
+// }
+
+
+sendViolationEmail(reason: string) {
+
+  //const admins = environment.adminViolationEmails.join(',');
+   const matchedUser = this.Registeredusers.find(user =>
+      user.skillName === this.selectedSkill &&
+      (this.enrollmentID ? user.enrollmentID === this.enrollmentID : true)
+    );
+const to = matchedUser.email || this.userEmail;
+        const bcc = '';
+
+
+
+  const subject = '🚨 Exam Violation Detected';
+
+  const body = `
+    <h3>🚨 Exam Violation Alert</h3>
+
+    <p><strong>User Name:</strong> ${this.userName}</p>
+    <p><strong>User Email:</strong> ${this.userEmail}</p>
+    <p><strong>Skill:</strong> ${this.selectedSkill}</p>
+    <p><strong>Enrollment ID:</strong> ${this.enrollmentID}</p>
+
+    <hr>
+
+    <p><strong>Violation Type:</strong> ${reason}</p>
+    <p><strong>Violation Count:</strong> ${this.tabSwitchCount}</p>
+    <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
+
+    <p style="color:red;">
+      This violation may lead to auto-submission of the exam.
+    </p>
+  `;
+  this.emailService.sendEmail(to,bcc, subject, body);
+  // this.emailService.sendEmail(
+  //   admins,        // to
+  //   '',            // bcc
+  //   subject,
+  //   body
+  // );
+}
+
+
 }

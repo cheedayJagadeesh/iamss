@@ -70,6 +70,10 @@ export const environment = {
       redirectUri: "#{TEST_REDIRECT_URI}#",
       postLogoutRedirectUri: "#{TEST_POST_LOGOUT_URI}#"
     },
+    "test-dns": {
+      redirectUri: "#{TEST_DNS_REDIRECT_URI}#",
+      postLogoutRedirectUri: "#{TEST_DNS_POST_LOGOUT_URI}#"
+    },
     stage: {
       redirectUri: "#{STAGE_REDIRECT_URI}#",
       postLogoutRedirectUri: "#{STAGE_POST_LOGOUT_URI}#"
@@ -77,6 +81,10 @@ export const environment = {
     prod: {
       redirectUri: "#{PROD_REDIRECT_URI}#",
       postLogoutRedirectUri: "#{PROD_POST_LOGOUT_URI}#"
+    },
+    "prod-dns": {
+      redirectUri: "#{PROD_DNS_REDIRECT_URI}#",
+      postLogoutRedirectUri: "#{PROD_DNS_POST_LOGOUT_URI}#"
     }
   }
 };

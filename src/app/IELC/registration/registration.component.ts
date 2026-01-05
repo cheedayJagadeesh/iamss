@@ -1445,6 +1445,41 @@ GetAuditSchedule(){
 // closePdf() {
 //   this.pdfUrl = null;
 // }
+
+
+showPreExamWarning = false;
+selectedExam: {
+  skillName: string;
+  enrollmentID: number;
+  sessionID: number;
+} | null = null;
+
+openPreExamWarning(item: any) {
+  this.selectedExam = {
+    skillName: item.skillName,
+    enrollmentID: item.enrollmentID,
+    sessionID: item.sessionID
+  };
+  this.showPreExamWarning = true;
+}
+confirmStartExam() {
+  if (!this.selectedExam) return;
+
+  this.showPreExamWarning = false;
+
+  this.router.navigate(['/exampage'], {
+    queryParams: {
+      skill: this.selectedExam.skillName,
+      enrollment: this.selectedExam.enrollmentID,
+      session: this.selectedExam.sessionID
+    }
+  });
+}
+
+
+
+
+
 }
 
 
