@@ -63,6 +63,7 @@ selectedAuditee: any | null = null;
   matchedSuperOwnerqms: boolean = false;
   matchedOwnerqms: boolean = false;
   projectlist: any[] = [];
+  projectlists: any[] = [];
   userProjects: string[] = [];
   superownerss: any[] = [];
   ownerss: any[] = [];
@@ -70,6 +71,7 @@ selectedAuditee: any | null = null;
   event: any = {};
   minDate!: string;
   maxDate!: string;
+  
   lastAllowedDate!: string;
   selectedYear: string = '';
   selectedMonth: string = '';
@@ -110,7 +112,7 @@ ngOnInit(): void {
   this.authService.userDetails$.subscribe(userDetails => {
     this.userName = userDetails?.displayName;
     // For testing:
-    // this.userName = "Venkat Merla";
+    //this.userName = "Venkat Merla";
     //this.userName = "Ramprasad .KP";
     // this.userName = "Nivedita Merla";
     //  this.userName = "Praveen Kumar Alapana";
@@ -122,11 +124,11 @@ ngOnInit(): void {
       this.isLoading = false;
       return;
     }
-
+    debugger;
     this.ielc.GetCoOwnersUserByProjects(this.userName).subscribe({
       next: (userbyprojectsdata) => {
         if (userbyprojectsdata && userbyprojectsdata.length > 0) {
-          this.projectlist = userbyprojectsdata;
+          this.projectlists = userbyprojectsdata;
           this.hasPermission = true;
           this.GetEventSchedulerAdmin();
           this.GetSuperOwners(this.userName);
@@ -135,6 +137,7 @@ ngOnInit(): void {
           this.GetProjectsListBasedOnUser();
           this.GetEventscheduleData();
 
+          
           if (this.event && this.event.organizerDateRange) {
             const parts = this.event.organizerDateRange.split("–");
             if (parts.length === 2) {
@@ -170,6 +173,8 @@ ngOnInit(): void {
 
               const start = parseDatePart(parts[0]);
               const end = parseDatePart(parts[1]);
+              
+              console.log("Parsed Date Range:", start, end);
 
               if (start && end) {
                 this.minDate = start;
@@ -481,8 +486,9 @@ onSubmit(): void {
 
 
 // onDepartmentChange() {
-//   if (this.selectedDept) {
-//     this.ielc.GetEventSchedulerUserByDept(this.selectedYear, this.selectedMonth, this.selectedDept).subscribe({
+//   debugger;
+//   if (this.selectedDept && this.userName) {
+//     this.ielc.GetEventSchedulerUserByDeptYearMonth(this.selectedYear, this.selectedMonth, this.userName).subscribe({
 //       next: (data) => {
 //         this.selectedAuditee = data;
 //       },

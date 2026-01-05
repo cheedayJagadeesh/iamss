@@ -90,7 +90,8 @@ export class AuthGuard implements CanActivate {
     await this.authService.ensureMsalInitialized();
   
     if (!this.authService.hasActiveAccount()) {
-      await this.authService.login();
+      //await this.authService.login();
+      this.router.navigate(['/login']);
       return false;
     }
   
