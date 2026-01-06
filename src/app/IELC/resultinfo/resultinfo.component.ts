@@ -68,7 +68,10 @@ export class ResultinfoComponent implements OnInit  {
    userName: string | null = null;
    userEmail: string | null = null;
 
-   constructor(private msalService: MsalService, private authService: AuthService, private router: Router,private ielc:IelcapiService) {}
+   constructor(private msalService: MsalService, private authService: AuthService, private router: Router,private ielc:IelcapiService) 
+   {
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+   }
   
     async ngOnInit() {
     //  try {

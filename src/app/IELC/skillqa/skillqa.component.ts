@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IelcapiService } from '../ielcapi.service';
+import { Router } from '@angular/router';
 // interface Question {
   
 //   questionId: number;
@@ -88,7 +89,10 @@ export class SkillqaComponent implements OnInit {
     
   }
 
-  constructor(private ielc:IelcapiService) {}
+  constructor(private ielc:IelcapiService, private router: Router) 
+  {
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
   ngOnInit() {
     this.GetAllSkillsData();

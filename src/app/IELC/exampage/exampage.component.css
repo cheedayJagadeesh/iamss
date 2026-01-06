@@ -1167,7 +1167,7 @@
   padding: 30px;
   border-radius: 8px;
   text-align: center;
-  width: 400px;
+  width: 850px;
 }
 .violation-overlay {
   position: fixed;
@@ -1186,4 +1186,8 @@
   border-radius: 10px;
   text-align: center;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.text{
+  font-size: 20px;
 }

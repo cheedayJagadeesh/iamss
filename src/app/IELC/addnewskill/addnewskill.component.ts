@@ -4,7 +4,7 @@ import { forkJoin, of } from 'rxjs';
 import { NgForm } from '@angular/forms';
 import { catchError } from 'rxjs/operators';
 declare var bootstrap: any; 
-
+import { Router } from '@angular/router';
 
 interface NewSkillsInfo {
   sessionID: string;
@@ -94,7 +94,10 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
   page: number = 1;  
   itemsPerPage: number = 10; 
 
-  constructor(private ielc:IelcapiService) {
+  constructor(private ielc:IelcapiService, private router: Router) {
+
+         this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+
     for (let i = 1; i <= 100; i++) {
       this.Enrolledusers.push({ id: i, name: `Item ${i}` });
     }
