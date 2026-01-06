@@ -27,44 +27,44 @@ export class IelcapiService {
     });
   }
     //---------------------------------------------------------------------------------------- Registeredusers
-    apiUrl='https://ielcapitest.azurewebsites.net/EnrollmentData';
+    apiUrl='https://ielc-coreapi.azurewebsites.net/EnrollmentData';
     GetUsers(): Observable<UsersInfo[]> {
       return this.http.get<UsersInfo[]>(this.apiUrl, {
         headers: this.getHeaders()
       });
     }
 
-    apiskill='https://ielcapitest.azurewebsites.net/EnrollmentData/skillname'
+    apiskill='https://ielc-coreapi.azurewebsites.net/EnrollmentData/skillname'
     GetUsersBySkill(skillName: string): Observable<any> {
       return this.http.get<any>(`${this.apiskill}/${skillName}`, {
         headers: this.getHeaders()
       });
     }
-    apistatus='https://ielcapitest.azurewebsites.net/EnrollmentData/Status'
+    apistatus='https://ielc-coreapi.azurewebsites.net/EnrollmentData/Status'
     GetUsersByStatus(data: string): Observable<any> {
       return this.http.get<any>(`${this.apistatus}/${data}`, {
         headers: this.getHeaders()
       });
     }
-    apimail='https://ielcapitest.azurewebsites.net/EnrollmentData/Mail'
+    apimail='https://ielc-coreapi.azurewebsites.net/EnrollmentData/Mail'
     GetUsersByEmail(data: string): Observable<any> {
       return this.http.get<any>(`${this.apimail}/${data}`, {
         headers: this.getHeaders()
       });
     }
 
-    apivenue="https://ielcapitest.azurewebsites.net/EnrollmentData/Venue"
+    apivenue="https://ielc-coreapi.azurewebsites.net/EnrollmentData/Venue"
     GetUsersByVenue(Venue: string): Observable<any> {
       return this.http.get<any>(`${this.apivenue}/${Venue}`, {
         headers: this.getHeaders()
       });
     }
 
-    apidate="https://ielcapitest.azurewebsites.net/EnrollmentData/StartDate"
+    apidate="https://ielc-coreapi.azurewebsites.net/EnrollmentData/StartDate"
     GetUsersByDate(date: string): Observable<any> {
       // Convert input date to DD-MM-YYYY format
       const formattedDate = this.convertDateFormat(date);
-      const url = `https://ielcapitest.azurewebsites.net/EnrollmentData/StartDate/${formattedDate}`;
+      const url = `https://ielc-coreapi.azurewebsites.net/EnrollmentData/StartDate/${formattedDate}`;
     
       return this.http.get(url, { headers: this.getHeaders() }).pipe(
         map((response: any) => {
@@ -108,7 +108,7 @@ export class IelcapiService {
     GetUsersBytoDate(date: string): Observable<any> {
       // Convert input date to DD-MM-YYYY format
       const formattedDate = this.convertDateFormat(date);
-      const url = `https://ielcapitest.azurewebsites.net/EnrollmentData/EndDate/${formattedDate}`;
+      const url = `https://ielc-coreapi.azurewebsites.net/EnrollmentData/EndDate/${formattedDate}`;
     
       return this.http.get(url, { headers: this.getHeaders() }).pipe(
         map((response: any) => {
@@ -133,14 +133,14 @@ export class IelcapiService {
       );
     }
 
-    apiTime="https://ielcapitest.azurewebsites.net/EnrollmentData/Time"
+    apiTime="https://ielc-coreapi.azurewebsites.net/EnrollmentData/Time"
     GetUsersByTime(Time: string): Observable<any> {
       return this.http.get<any>(`${this.apiTime}/${Time}`, {
         headers: this.getHeaders()
       });
     }  
 
-    apiID='https://ielcapitest.azurewebsites.net/EnrollmentData'
+    apiID='https://ielc-coreapi.azurewebsites.net/EnrollmentData'
     DeleteDataById(id: number): Observable<void> {
       return this.http.delete<void>(`${this.apiID}/${id}`, {
         headers: this.getHeaders()
@@ -152,7 +152,7 @@ export class IelcapiService {
       return this.http.get<any>(url, { headers: this.getHeaders() });
     }
 
-    url = 'https://ielcapitest.azurewebsites.net/EnrollmentData';
+    url = 'https://ielc-coreapi.azurewebsites.net/EnrollmentData';
     enrollUser(enrollmentData: any): Observable<any> {
       const headers = this.getHeaders();
       headers.append('Content-Type', 'application/json');
@@ -164,21 +164,21 @@ export class IelcapiService {
       return this.http.post<any>(this.url, enrollmentData, { headers: this.getHeaders() });
     }
 
-    checkurl='https://ielcapitest.azurewebsites.net/EnrollmentData/check'
+    checkurl='https://ielc-coreapi.azurewebsites.net/EnrollmentData/check'
     checkIfAlreadyEnrolled(skillName: string, date: string, time: string, mail: string) {
       const params = {skillName,date,time,mail};
       return this.http.get<boolean>(this.checkurl, { params , headers: this.getHeaders() });
     }
 
-    checkvenueurl='https://ielcapitest.azurewebsites.net/EnrollmentData/checkself'
+    checkvenueurl='https://ielc-coreapi.azurewebsites.net/EnrollmentData/checkself'
     checkVenueEnrollment(skillName: string, venue: string, mail: string) {
     const params = {skillName,venue,mail}
       return this.http.get<boolean>(this.checkvenueurl, { params , headers: this.getHeaders() });
     }
 
-    private baseUrl = 'https://ielcapitest.azurewebsites.net/EnrollmentSessions';
+    private baseUrl = 'https://ielc-coreapi.azurewebsites.net/EnrollmentSessions';
 
-   // private testurl = "https://ielcapitest.azurewebsites.net/EnrollmentSessions";
+   // private testurl = "https://ielc-coreapi.azurewebsites.net/EnrollmentSessions";
 GetSkillsByVenue(venue: string): Observable<string[]> {
   return this.http.get<string[]>(`${this.baseUrl}/SkillNamesByVenue/${venue}`, {
     headers: this.getHeaders()
@@ -187,7 +187,7 @@ GetSkillsByVenue(venue: string): Observable<string[]> {
 
     //---------------------------------------------------------------------------------------Add New Skills
 
-    EnrolledskillsUrl='https://ielcapitest.azurewebsites.net/EnrollmentSessions';
+    EnrolledskillsUrl='https://ielc-coreapi.azurewebsites.net/EnrollmentSessions';
     GetSkillSessions(): Observable<any> {
       return this.http.get<any>(this.EnrolledskillsUrl, { headers: this.getHeaders() });
     } 
@@ -261,7 +261,7 @@ GetExamInfos(): Observable<any> {
       });
     }
 
-    EnrolledskillDataUrl='https://ielcapitest.azurewebsites.net/EnrollmentSkillData';
+    EnrolledskillDataUrl='https://ielc-coreapi.azurewebsites.net/EnrollmentSkillData';
     GetEnrolledSkills(): Observable<any> {
       return this.http.get<any>(this.EnrolledskillDataUrl, { headers: this.getHeaders() });
     }
@@ -273,7 +273,7 @@ GetExamInfos(): Observable<any> {
       });
     }
 
-    skillquestionsurl='https://ielcapitest.azurewebsites.net/IELCQA/create'
+    skillquestionsurl='https://ielc-coreapi.azurewebsites.net/IELCQA/create'
     PostEnrolledSkillQuestions(skillData: any): Observable<any> {
       // const headers = { 'Content-Type': 'application/json' };
       return this.http.post<any>(this.skillquestionsurl, skillData, {
@@ -291,48 +291,48 @@ GetExamInfos(): Observable<any> {
       return this.http.delete(`${this.EnrolledskillDataUrl}/${skillName}`, { headers,observe: 'response' });
     }
     
-    AadUsersUrl='https://ielcapitest.azurewebsites.net/AADUsersData'
+    AadUsersUrl='https://ielc-coreapi.azurewebsites.net/AADUsersData'
     GetAadUserslist(): Observable<any> {
       return this.http.get<any>(this.AadUsersUrl, { headers: this.getHeaders() });
     }
 
-    AadUGroupUrl='https://ielcapitest.azurewebsites.net/AADGroupMails'
+    AadUGroupUrl='https://ielc-coreapi.azurewebsites.net/AADGroupMails'
     GetAadUserGroupslist(): Observable<any> {
       return this.http.get<any>(this.AadUGroupUrl, { headers: this.getHeaders() });
     }
  
     getUsersOfGroup(groupName: string): Observable<any> {
-      const url = `https://ielcapitest.azurewebsites.net/AADGroupMails/group-users/${encodeURIComponent(groupName)}`;
+      const url = `https://ielc-coreapi.azurewebsites.net/AADGroupMails/group-users/${encodeURIComponent(groupName)}`;
       return this.http.get(url, { headers: this.getHeaders() });
     }
 
-    Enrolledsessionsurl='https://ielcapitest.azurewebsites.net/EnrollmentSessions/skills/latest'
+    Enrolledsessionsurl='https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/skills/latest'
     GetEnrolledSessions(): Observable<any> {
         return this.http.get<any>(this.Enrolledsessionsurl, { headers: this.getHeaders() });
     }
 
-    venuebyskill='https://ielcapitest.azurewebsites.net/EnrollmentSessions/venues/search/skillName'
+    venuebyskill='https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/venues/search/skillName'
     GetEnrolledSessionsbyvenue(skillName: string): Observable<any> {
       return this.http.get<any>(`${this.venuebyskill}?skillName=${skillName}`, { headers: this.getHeaders() });
     }
 
-    datebyskill='https://ielcapitest.azurewebsites.net/EnrollmentSessions/Dates/search'
+    datebyskill='https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Dates/search'
     // GetEnrolledSessionsbydate(skillName: string): Observable<any> {
     //   return this.http.get<any>(`${this.datebyskill}/${skillName}`);
     // }
     // GetEnrolledSessionsbydate(skill: string, venue: string): Observable<any> {
-    //   const url = `https://ielcapitest.azurewebsites.net/EnrollmentSessions/Dates/search/${skill}/${venue}`;
+    //   const url = `https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Dates/search/${skill}/${venue}`;
     //   return this.http.get<any>(url, { headers: this.getHeaders() });
     // }
-//https://ielcapitest.azurewebsites.net/EnrollmentSessions/Dates/search/azure/teams
+//https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Dates/search/azure/teams
 
-    timebyskill='https://ielcapitest.azurewebsites.net/EnrollmentSessions/Times/search'
+    timebyskill='https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Times/search'
     GetEnrolledSessionsbytime(skillName: string): Observable<any> {
       return this.http.get<any>(`${this.timebyskill}/${skillName}`, { headers: this.getHeaders() });
     }
 
     // getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): Observable<any> {
-    //   const url = `https://ielcapitest.azurewebsites.net/EnrollmentSessions/Times/search/${skillName}/${dateRange}`;
+    //   const url = `https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Times/search/${skillName}/${dateRange}`;
     //   return this.http.get<any>(url, { headers: this.getHeaders() });
     // }
 
@@ -340,27 +340,27 @@ GetExamInfos(): Observable<any> {
 //     const encodedSkill = encodeURIComponent(skillName.trim());
 //     const encodedDateRange = encodeURIComponent(dateRange.trim());
 
-//     const url = `https://ielcapitest.azurewebsites.net/EnrollmentSessions/Times/search/${encodedSkill}/${encodedDateRange}`;
+//     const url = `https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Times/search/${encodedSkill}/${encodedDateRange}`;
 //     return this.http.get(url, { headers: this.getHeaders(), responseType: 'text' });
 // }
 GetEnrolledSessionsbydate(skill: string, venue: string): Observable<any> {
-    const url = `https://ielcapitest.azurewebsites.net/EnrollmentSessions/Dates/search/${(skill)}/${(venue)}`;
+    const url = `https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Dates/search/${(skill)}/${(venue)}`;
     return this.http.get<any>(url, { headers: this.getHeaders() });
   }
 // getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string): Observable<any> {
-//     const url = `https://ielcapitest.azurewebsites.net/EnrollmentSessions/Times/search/${skillName}/${dateRange}`;
+//     const url = `https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Times/search/${skillName}/${dateRange}`;
 //     return this.http.get<any>(url, { headers: this.getHeaders() });
 //   }
 
 getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, venue: string): Observable<any> {
-    const url = `https://ielcapitest.azurewebsites.net/EnrollmentSessions/Times/search/${skillName}/${dateRange}/${venue}`;
+    const url = `https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/Times/search/${skillName}/${dateRange}/${venue}`;
     return this.http.get<any>(url, { headers: this.getHeaders() });
   }
     
 
    //---------------------------------------------------------------------------------------Inteq IT Support
 
-    itsprtUrl='https://ielcapitest.azurewebsites.net/INTEQITSupport';
+    itsprtUrl='https://ielc-coreapi.azurewebsites.net/INTEQITSupport';
     GetItSprt(): Observable<any> {
       return this.http.get<any>(this.itsprtUrl, { headers: this.getHeaders() });
     }
@@ -383,7 +383,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.itsprtUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itismsgeneralUrl='https://ielcapitest.azurewebsites.net/ITSupport';
+    itismsgeneralUrl='https://ielc-coreapi.azurewebsites.net/ITSupport';
     Getitismsgeneral(): Observable<any> {
       return this.http.get<any>(this.itismsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -405,7 +405,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.itismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itismsguidelineUrl='https://ielcapitest.azurewebsites.net/ITSupportGuidelinessISMS';
+    itismsguidelineUrl='https://ielc-coreapi.azurewebsites.net/ITSupportGuidelinessISMS';
     Getitismsguidelines(): Observable<any> {
       return this.http.get<any>(this.itismsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -427,7 +427,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.itismsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itismspolicyUrl='https://ielcapitest.azurewebsites.net/ITSupportPolicyISMS';
+    itismspolicyUrl='https://ielc-coreapi.azurewebsites.net/ITSupportPolicyISMS';
     Getitismspolicy(): Observable<any> {
       return this.http.get<any>(this.itismspolicyUrl, { headers: this.getHeaders() });
     }
@@ -449,7 +449,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.itismspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itismsprocedureUrl='https://ielcapitest.azurewebsites.net/ITSupportProcedureISMS';
+    itismsprocedureUrl='https://ielc-coreapi.azurewebsites.net/ITSupportProcedureISMS';
     Getitismsprocedure(): Observable<any> {
       return this.http.get<any>(this.itismsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -471,7 +471,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.itismsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itismsformatUrl='https://ielcapitest.azurewebsites.net/ITSupportFormatsISMS';
+    itismsformatUrl='https://ielc-coreapi.azurewebsites.net/ITSupportFormatsISMS';
     Getitismsformat(): Observable<any> {
       return this.http.get<any>(this.itismsformatUrl, { headers: this.getHeaders() });
     }
@@ -493,7 +493,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.itismsformatUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itqmsgeneralUrl='https://ielcapitest.azurewebsites.net/ITSupportGeneralQMS';
+    itqmsgeneralUrl='https://ielc-coreapi.azurewebsites.net/ITSupportGeneralQMS';
     Getitqmsgeneral(): Observable<any> {
       return this.http.get<any>(this.itqmsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -515,7 +515,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.itqmsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itqmsguidelineUrl='https://ielcapitest.azurewebsites.net/ITSupportGuidelinessQMS';
+    itqmsguidelineUrl='https://ielc-coreapi.azurewebsites.net/ITSupportGuidelinessQMS';
     Getitqmsguidelines(): Observable<any> {
       return this.http.get<any>(this.itqmsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -538,7 +538,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.itqmsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itqmspolicyUrl='https://ielcapitest.azurewebsites.net/ITSupportPolicyQMS';
+    itqmspolicyUrl='https://ielc-coreapi.azurewebsites.net/ITSupportPolicyQMS';
     Getitqmspolicy(): Observable<any> {
       return this.http.get<any>(this.itqmspolicyUrl, { headers: this.getHeaders() });
     }
@@ -560,7 +560,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.itqmspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    itqmsprocedureUrl='https://ielcapitest.azurewebsites.net/ITSupportProcedureQMS';
+    itqmsprocedureUrl='https://ielc-coreapi.azurewebsites.net/ITSupportProcedureQMS';
     Getitqmsprocedure(): Observable<any> {
       return this.http.get<any>(this.itqmsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -584,7 +584,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
     }
 
 
-    itqmsformatUrl='https://ielcapitest.azurewebsites.net/ITSupportFormatsQMS';
+    itqmsformatUrl='https://ielc-coreapi.azurewebsites.net/ITSupportFormatsQMS';
     Getitqmsformat(): Observable<any> {
       return this.http.get<any>(this.itqmsformatUrl, { headers: this.getHeaders() });
     }
@@ -609,7 +609,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
 
      //---------------------------------------------------------------------------------------Inteq Admin/OS Support
 
-     ossprtUrl='https://ielcapitest.azurewebsites.net/AdminHelpDesk';
+     ossprtUrl='https://ielc-coreapi.azurewebsites.net/AdminHelpDesk';
      GetosSprt(): Observable<any> {
        return this.http.get<any>(this.ossprtUrl, { headers: this.getHeaders() });
      }
@@ -632,7 +632,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.ossprtUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osismsgeneralUrl='https://ielcapitest.azurewebsites.net/OperationsSupport';
+    osismsgeneralUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupport';
     Getosismsgeneral(): Observable<any> {
       return this.http.get<any>(this.osismsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -654,7 +654,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.osismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osismsguidelineUrl='https://ielcapitest.azurewebsites.net/OperationsSupportGuidelinessISMS';
+    osismsguidelineUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupportGuidelinessISMS';
     Getosismsguidelines(): Observable<any> {
       return this.http.get<any>(this.osismsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -676,7 +676,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.osismsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osismspolicyUrl='https://ielcapitest.azurewebsites.net/OperationsSupportPolicyISMS';
+    osismspolicyUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupportPolicyISMS';
     Getosismspolicy(): Observable<any> {
       return this.http.get<any>(this.osismspolicyUrl, { headers: this.getHeaders() });
     }
@@ -698,7 +698,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.osismspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osismsprocedureUrl='https://ielcapitest.azurewebsites.net/OperationsSupportProcedureISMS';
+    osismsprocedureUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupportProcedureISMS';
     Getosismsprocedure(): Observable<any> {
       return this.http.get<any>(this.osismsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -720,7 +720,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.osismsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osismsformatUrl='https://ielcapitest.azurewebsites.net/OperationsSupportFormatsISMS';
+    osismsformatUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupportFormatsISMS';
     Getosismsformat(): Observable<any> {
       return this.http.get<any>(this.osismsformatUrl, { headers: this.getHeaders() });
     }
@@ -742,7 +742,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.osismsformatUrl}/${id}`, { headers: this.getHeaders() });
     }
     
-    osqmsgeneralUrl='https://ielcapitest.azurewebsites.net/OperationsSupportGeneralQMS';
+    osqmsgeneralUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupportGeneralQMS';
     Getosqmsgeneral(): Observable<any> {
       return this.http.get<any>(this.osqmsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -765,7 +765,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.osqmsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osqmsguidelineUrl='https://ielcapitest.azurewebsites.net/OperationsSupportGuidelinessQMS';
+    osqmsguidelineUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupportGuidelinessQMS';
     Getosqmsguidelines(): Observable<any> {
       return this.http.get<any>(this.osqmsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -789,7 +789,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
     }
 
 
-    osqmspolicyUrl='https://ielcapitest.azurewebsites.net/OperationsSupportPolicyQMS';
+    osqmspolicyUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupportPolicyQMS';
     Getosqmspolicy(): Observable<any> {
       return this.http.get<any>(this.osqmspolicyUrl, { headers: this.getHeaders() });
     }
@@ -812,7 +812,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.osqmspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osqmsprocedureUrl='https://ielcapitest.azurewebsites.net/OperationsSupportProcedureQMS';
+    osqmsprocedureUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupportProcedureQMS';
     Getosqmsprocedure(): Observable<any> {
       return this.http.get<any>(this.osqmsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -835,7 +835,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.osqmsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    osqmsformatUrl='https://ielcapitest.azurewebsites.net/OperationsSupportFormatsQMS';
+    osqmsformatUrl='https://ielc-coreapi.azurewebsites.net/OperationsSupportFormatsQMS';
     Getosqmsformat(): Observable<any> {
       return this.http.get<any>(this.osqmsformatUrl, { headers: this.getHeaders() });
     }
@@ -859,7 +859,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
     }
      //---------------------------------------------------------------------------------------Inteq HR Support
 
-     hrsprtUrl='https://ielcapitest.azurewebsites.net/HRHelpDesk';
+     hrsprtUrl='https://ielc-coreapi.azurewebsites.net/HRHelpDesk';
      GetHrSprt(): Observable<any> {
        return this.http.get<any>(this.hrsprtUrl, { headers: this.getHeaders() });
      }
@@ -882,7 +882,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.hrsprtUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrismsgeneralUrl='https://ielcapitest.azurewebsites.net/HRSupport';
+    hrismsgeneralUrl='https://ielc-coreapi.azurewebsites.net/HRSupport';
     Gethrismsgeneral(): Observable<any> {
       return this.http.get<any>(this.hrismsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -905,7 +905,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.hrismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrismsguidelineUrl='https://ielcapitest.azurewebsites.net/HRSupportGuidelinessISMS';
+    hrismsguidelineUrl='https://ielc-coreapi.azurewebsites.net/HRSupportGuidelinessISMS';
     Gethrismsguidelines(): Observable<any> {
       return this.http.get<any>(this.hrismsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -927,7 +927,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.hrismsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrismspolicyUrl='https://ielcapitest.azurewebsites.net/HRSupportPolicyISMS';
+    hrismspolicyUrl='https://ielc-coreapi.azurewebsites.net/HRSupportPolicyISMS';
     Gethrismspolicy(): Observable<any> {
       return this.http.get<any>(this.hrismspolicyUrl, { headers: this.getHeaders() });
     }
@@ -949,7 +949,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.hrismspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrismsprocedureUrl='https://ielcapitest.azurewebsites.net/HRSupportProcedureISMS';
+    hrismsprocedureUrl='https://ielc-coreapi.azurewebsites.net/HRSupportProcedureISMS';
     Gethrismsprocedure(): Observable<any> {
       return this.http.get<any>(this.hrismsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -971,7 +971,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.hrismsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrismsformatUrl='https://ielcapitest.azurewebsites.net/HRSupportFormatsISMS';
+    hrismsformatUrl='https://ielc-coreapi.azurewebsites.net/HRSupportFormatsISMS';
     Gethrismsformat(): Observable<any> {
       return this.http.get<any>(this.hrismsformatUrl, { headers: this.getHeaders() });
     }
@@ -993,7 +993,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.hrismsformatUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrqmsgeneralUrl='https://ielcapitest.azurewebsites.net/HRSupportGeneralQMS';
+    hrqmsgeneralUrl='https://ielc-coreapi.azurewebsites.net/HRSupportGeneralQMS';
     Gethrqmsgeneral(): Observable<any> {
       return this.http.get<any>(this.hrqmsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -1016,7 +1016,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.hrqmsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrqmsguidelineUrl='https://ielcapitest.azurewebsites.net/HRSupportGuidelinessQMS';
+    hrqmsguidelineUrl='https://ielc-coreapi.azurewebsites.net/HRSupportGuidelinessQMS';
     Gethrqmsguidelines(): Observable<any> {
       return this.http.get<any>(this.hrqmsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -1040,7 +1040,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
     }
 
 
-    hrqmspolicyUrl='https://ielcapitest.azurewebsites.net/HRSupportPolicyQMS';
+    hrqmspolicyUrl='https://ielc-coreapi.azurewebsites.net/HRSupportPolicyQMS';
     Gethrqmspolicy(): Observable<any> {
       return this.http.get<any>(this.hrqmspolicyUrl, { headers: this.getHeaders() });
     }
@@ -1063,7 +1063,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.hrqmspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrqmsprocedureUrl='https://ielcapitest.azurewebsites.net/HRSupportProcedureQMS';
+    hrqmsprocedureUrl='https://ielc-coreapi.azurewebsites.net/HRSupportProcedureQMS';
     Gethrqmsprocedure(): Observable<any> {
       return this.http.get<any>(this.hrqmsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -1086,7 +1086,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.hrqmsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    hrqmsformatUrl='https://ielcapitest.azurewebsites.net/HRSupportFormatsQMS';
+    hrqmsformatUrl='https://ielc-coreapi.azurewebsites.net/HRSupportFormatsQMS';
     Gethrqmsformat(): Observable<any> {
       return this.http.get<any>(this.hrqmsformatUrl, { headers: this.getHeaders() });
     }
@@ -1111,12 +1111,12 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
 
   //---------------------------------------------------------------------------------------Inteq Project Support
 
-    prjtsprtUrl='https://ielcapitest.azurewebsites.net/ProjectsList';
+    prjtsprtUrl='https://ielc-coreapi.azurewebsites.net/ProjectsList';
     GetprjtSprt(): Observable<any> {
      return this.http.get<any>(this.prjtsprtUrl, { headers: this.getHeaders() });
     }
 
-    prjtismsgeneralUrl='https://ielcapitest.azurewebsites.net/ProjectsSupport';
+    prjtismsgeneralUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupport';
     Getprjtismsgeneral(): Observable<any> {
       return this.http.get<any>(this.prjtismsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -1138,7 +1138,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.prjtismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtismsguidelineUrl='https://ielcapitest.azurewebsites.net/ProjectsSupportGuidelinessISMS';
+    prjtismsguidelineUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportGuidelinessISMS';
     Getprjtismsguidelines(): Observable<any> {
       return this.http.get<any>(this.prjtismsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -1161,7 +1161,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.prjtismsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtismspolicyUrl='https://ielcapitest.azurewebsites.net/ProjectsSupportPolicyISMS';
+    prjtismspolicyUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportPolicyISMS';
     Getprjtismspolicy(): Observable<any> {
       return this.http.get<any>(this.prjtismspolicyUrl, { headers: this.getHeaders() });
     }
@@ -1184,7 +1184,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.prjtismspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtismsprocedureUrl='https://ielcapitest.azurewebsites.net/ProjectsSupportProcedureISMS';
+    prjtismsprocedureUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportProcedureISMS';
     Getprjtismsprocedure(): Observable<any> {
       return this.http.get<any>(this.prjtismsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -1207,7 +1207,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.prjtismsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtismsformatUrl='https://ielcapitest.azurewebsites.net/ProjectsSupportFormatsISMS';
+    prjtismsformatUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportFormatsISMS';
     Getprjtismsformat(): Observable<any> {
       return this.http.get<any>(this.prjtismsformatUrl, { headers: this.getHeaders() });
     }
@@ -1230,7 +1230,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.prjtismsformatUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtqmsgeneralUrl='https://ielcapitest.azurewebsites.net/ProjectsSupportGeneralQMS';
+    prjtqmsgeneralUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportGeneralQMS';
     Getprjtqmsgeneral(): Observable<any> {
       return this.http.get<any>(this.prjtqmsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -1253,7 +1253,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.prjtqmsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtqmsguidelineUrl='https://ielcapitest.azurewebsites.net/ProjectsSupportGuidelinessQMS';
+    prjtqmsguidelineUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportGuidelinessQMS';
     Getprjtqmsguidelines(): Observable<any> {
       return this.http.get<any>(this.prjtqmsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -1277,7 +1277,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
     }
 
 
-    prjtqmspolicyUrl='https://ielcapitest.azurewebsites.net/ProjectsSupportPolicyQMS';
+    prjtqmspolicyUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportPolicyQMS';
     Getprjtqmspolicy(): Observable<any> {
       return this.http.get<any>(this.prjtqmspolicyUrl, { headers: this.getHeaders() });
     }
@@ -1300,7 +1300,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.prjtqmspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtqmsprocedureUrl='https://ielcapitest.azurewebsites.net/ProjectsSupportProcedureQMS';
+    prjtqmsprocedureUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportProcedureQMS';
     Getprjtqmsprocedure(): Observable<any> {
       return this.http.get<any>(this.prjtqmsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -1322,7 +1322,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.prjtqmsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    prjtqmsformatUrl='https://ielcapitest.azurewebsites.net/ProjectsSupportFormatsQMS';
+    prjtqmsformatUrl='https://ielc-coreapi.azurewebsites.net/ProjectsSupportFormatsQMS';
     Getprjtqmsformat(): Observable<any> {
       return this.http.get<any>(this.prjtqmsformatUrl, { headers: this.getHeaders() });
     }
@@ -1347,7 +1347,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
 
 //---------------------------------------------------------------------------------------Inteq Emergency Support
   
-    emersprtUrl='https://ielcapitest.azurewebsites.net/EmergencyContactList';
+    emersprtUrl='https://ielc-coreapi.azurewebsites.net/EmergencyContactList';
     GetemerSprt(): Observable<any> {
      return this.http.get<any>(this.emersprtUrl, { headers: this.getHeaders() });
     }
@@ -1370,7 +1370,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.emersprtUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    emergeneralUrl='https://ielcapitest.azurewebsites.net/Emergency';
+    emergeneralUrl='https://ielc-coreapi.azurewebsites.net/Emergency';
     Getemergeneral(): Observable<any> {
       return this.http.get<any>(this.emergeneralUrl, { headers: this.getHeaders() });
     }
@@ -1394,7 +1394,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
    
 //---------------------------------------------------------------------------------------Inteq Various committees Support  
      
-    varcmtsUrl='https://ielcapitest.azurewebsites.net/VariousCommittees';
+    varcmtsUrl='https://ielc-coreapi.azurewebsites.net/VariousCommittees';
     Getvarcmt(): Observable<any> {
      return this.http.get<any>(this.varcmtsUrl, { headers: this.getHeaders() });
     }
@@ -1418,7 +1418,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
     }
 //---------------------------------------------------------------------------------------Inteq ISO 27001
 
-    iso27001Url='https://ielcapitest.azurewebsites.net/ISO27001';
+    iso27001Url='https://ielc-coreapi.azurewebsites.net/ISO27001';
     Getiso27001(): Observable<any> {
      return this.http.get<any>(this.iso27001Url, { headers: this.getHeaders() });
     }
@@ -1441,7 +1441,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.iso27001Url}/${id}`, { headers: this.getHeaders() });
     }
 
-    ismsinfoUrl='https://ielcapitest.azurewebsites.net/ISMSSupport';
+    ismsinfoUrl='https://ielc-coreapi.azurewebsites.net/ISMSSupport';
     Getismsinfo(): Observable<any> {
      return this.http.get<any>(this.ismsinfoUrl, { headers: this.getHeaders() });
     }
@@ -1464,7 +1464,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.ismsinfoUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    isosprtUrl='https://ielcapitest.azurewebsites.net/ISOSupport';
+    isosprtUrl='https://ielc-coreapi.azurewebsites.net/ISOSupport';
     Getisosprt(): Observable<any> {
      return this.http.get<any>(this.isosprtUrl, { headers: this.getHeaders() });
     }
@@ -1487,7 +1487,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.isosprtUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    ispolicyUrl='https://ielcapitest.azurewebsites.net/ISPolicy';
+    ispolicyUrl='https://ielc-coreapi.azurewebsites.net/ISPolicy';
     Getispolicy(): Observable<any> {
      return this.http.get<any>(this.ispolicyUrl, { headers: this.getHeaders() });
     }
@@ -1512,7 +1512,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
 
 //---------------------------------------------------------------------------------------Inteq ISO 9001
     
-    iso9001Url='https://ielcapitest.azurewebsites.net/ISO9001';
+    iso9001Url='https://ielc-coreapi.azurewebsites.net/ISO9001';
     Getiso9001(): Observable<any> {
      return this.http.get<any>(this.iso9001Url, { headers: this.getHeaders() });
     }
@@ -1535,14 +1535,14 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.iso9001Url}/${id}`, { headers: this.getHeaders() });
     }
 
-    isoinfoUrl='https://ielcapitest.azurewebsites.net/ISOSupport';
+    isoinfoUrl='https://ielc-coreapi.azurewebsites.net/ISOSupport';
     Getisoinfo(): Observable<any> {
      return this.http.get<any>(this.isoinfoUrl, { headers: this.getHeaders() });
     }
 
 //---------------------------------------------------------------------------------------CISO Support
 
-    cisoismsgeneralUrl='https://ielcapitest.azurewebsites.net/CISO_MR_Support';
+    cisoismsgeneralUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_Support';
     Getcisoismsgeneral(): Observable<any> {
       return this.http.get<any>(this.cisoismsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -1565,7 +1565,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.cisoismsgeneralUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoismsguidelineUrl='https://ielcapitest.azurewebsites.net/CISO_MR_SupportGuidelinessISMS';
+    cisoismsguidelineUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportGuidelinessISMS';
     Getcisoismsguidelines(): Observable<any> {
       return this.http.get<any>(this.cisoismsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -1587,7 +1587,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.cisoismsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoismspolicyUrl='https://ielcapitest.azurewebsites.net/CISO_MR_SupportPolicyISMS';
+    cisoismspolicyUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportPolicyISMS';
     Getcisoismspolicy(): Observable<any> {
       return this.http.get<any>(this.cisoismspolicyUrl, { headers: this.getHeaders() });
     }
@@ -1609,7 +1609,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.cisoismspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoismsprocedureUrl='https://ielcapitest.azurewebsites.net/CISO_MR_SupportProcedureISMS';
+    cisoismsprocedureUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportProcedureISMS';
     Getcisoismsprocedure(): Observable<any> {
       return this.http.get<any>(this.cisoismsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -1631,7 +1631,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.cisoismsprocedureUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoismsformatUrl='https://ielcapitest.azurewebsites.net/CISO_MR_SupportFormatsISMS';
+    cisoismsformatUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportFormatsISMS';
     Getcisoismsformat(): Observable<any> {
       return this.http.get<any>(this.cisoismsformatUrl, { headers: this.getHeaders() });
     }
@@ -1653,7 +1653,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.cisoismsformatUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoqmsgeneralUrl='https://ielcapitest.azurewebsites.net/CISO_MR_SupportGeneralQMS';
+    cisoqmsgeneralUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportGeneralQMS';
     Getcisoqmsgeneral(): Observable<any> {
       return this.http.get<any>(this.cisoqmsgeneralUrl, { headers: this.getHeaders() });
     }
@@ -1677,7 +1677,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
     }
 
 
-    cisoqmsguidelineUrl='https://ielcapitest.azurewebsites.net/CISO_MR_SupportGuidelinessQMS';
+    cisoqmsguidelineUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportGuidelinessQMS';
     Getcisoqmsguidelines(): Observable<any> {
       return this.http.get<any>(this.cisoqmsguidelineUrl, { headers: this.getHeaders() });
     }
@@ -1700,7 +1700,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.cisoqmsguidelineUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoqmspolicyUrl='https://ielcapitest.azurewebsites.net/CISO_MR_SupportPolicyQMS';
+    cisoqmspolicyUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportPolicyQMS';
     Getcisoqmspolicy(): Observable<any> {
       return this.http.get<any>(this.cisoqmspolicyUrl, { headers: this.getHeaders() });
     }
@@ -1723,7 +1723,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.cisoqmspolicyUrl}/${id}`, { headers: this.getHeaders() });
     }
 
-    cisoqmsprocedureUrl='https://ielcapitest.azurewebsites.net/CISO_MR_SupportProcedureQMS';
+    cisoqmsprocedureUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportProcedureQMS';
     Getcisoqmsprocedure(): Observable<any> {
       return this.http.get<any>(this.cisoqmsprocedureUrl, { headers: this.getHeaders() });
     }
@@ -1747,7 +1747,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
     }
 
 
-    cisoqmsformatUrl='https://ielcapitest.azurewebsites.net/CISO_MR_SupportFormatsQMS';
+    cisoqmsformatUrl='https://ielc-coreapi.azurewebsites.net/CISO_MR_SupportFormatsQMS';
     Getcisoqmsformat(): Observable<any> {
       return this.http.get<any>(this.cisoqmsformatUrl, { headers: this.getHeaders() });
     }
@@ -1772,7 +1772,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
     
 //---------------------------------------------------------------------------------------Hippa
 
-    hippaUrl='https://ielcapitest.azurewebsites.net/HIPAA';
+    hippaUrl='https://ielc-coreapi.azurewebsites.net/HIPAA';
     Gethippa(): Observable<any> {
      return this.http.get<any>(this.hippaUrl, { headers: this.getHeaders() });
     }
@@ -1797,7 +1797,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
     
 //---------------------------------------------------------------------------------------GDPR
 
-    gdprUrl='https://ielcapitest.azurewebsites.net/GDPR';
+    gdprUrl='https://ielc-coreapi.azurewebsites.net/GDPR';
     Getgdpr(): Observable<any> {
      return this.http.get<any>(this.gdprUrl, { headers: this.getHeaders() });
     }
@@ -1821,7 +1821,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
 
 //---------------------------------------------------------------------------------------SOC
 
-    socUrl='https://ielcapitest.azurewebsites.net/SOC';
+    socUrl='https://ielc-coreapi.azurewebsites.net/SOC';
     Getsoc(): Observable<any> {
      return this.http.get<any>(this.socUrl, { headers: this.getHeaders() });
     }
@@ -1845,7 +1845,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
 
 //---------------------------------------------------------------------------------------DPDP
 
-    dpdpUrl='https://ielcapitest.azurewebsites.net/DPDP';
+    dpdpUrl='https://ielc-coreapi.azurewebsites.net/DPDP';
     Getdpdp(): Observable<any> {
      return this.http.get<any>(this.dpdpUrl, { headers: this.getHeaders() });
     }
@@ -1867,7 +1867,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
       return this.http.delete<void>(`${this.dpdpUrl}/${id}`, { headers: this.getHeaders() });
     }
 //---------------------------------------------------------------------------------------feedback
-    feedbackUrl='https://ielcapitest.azurewebsites.net/EnrollmentData'
+    feedbackUrl='https://ielc-coreapi.azurewebsites.net/EnrollmentData'
     Updatefeedback(id: number, updatedData: any): Observable<any> {
       const headers = this.getHeaders();
       return this.http.put<any>(`${this.feedbackUrl}/${id}`, updatedData,{headers, observe: 'response' });
@@ -1878,7 +1878,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
     }
 //---------------------------------------------------------------------------------------Inteq Holidays
 
-    holidaysUrl='https://ielcapitest.azurewebsites.net/HolidayList';
+    holidaysUrl='https://ielc-coreapi.azurewebsites.net/HolidayList';
     Getholidays(): Observable<any> {
      return this.http.get<any>(this.holidaysUrl, { headers: this.getHeaders() });
     } 
@@ -1892,7 +1892,7 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
     }
     
 //---------------------------------------------------------------------------------------ISMS calendar
-    ismscalenarUrl='https://ielcapitest.azurewebsites.net/ISMSInteqSoftware_Calendar';
+    ismscalenarUrl='https://ielc-coreapi.azurewebsites.net/ISMSInteqSoftware_Calendar';
     Getismscalendar(): Observable<any> {
      return this.http.get<any>(this.ismscalenarUrl, { headers: this.getHeaders() });
     } 
@@ -1921,12 +1921,12 @@ getEnrollmentSessionsBySkillAndDateRange(skillName: string, dateRange: string, v
     
 
 //---------------------------------------------------------------------------------------ISMS history
-    ismshistoryUrl='https://ielcapitest.azurewebsites.net/ISMSInteqSoftware_Calendar/GetHistoryCalendar';
+    ismshistoryUrl='https://ielc-coreapi.azurewebsites.net/ISMSInteqSoftware_Calendar/GetHistoryCalendar';
     Getismshistory(year: number): Observable<any> {
       return this.http.get<any>(`${this.ismshistoryUrl}?year=${year}`, { headers: this.getHeaders() });
     }
 //---------------------------------------------------------------------------------------QMS calendar
-qmscalenarUrl='https://ielcapitest.azurewebsites.net/QMSInteqSoftware_Calendar';
+qmscalenarUrl='https://ielc-coreapi.azurewebsites.net/QMSInteqSoftware_Calendar';
 Getqmscalendar(): Observable<any> {
  return this.http.get<any>(this.qmscalenarUrl, { headers: this.getHeaders() });
 } 
@@ -1949,13 +1949,13 @@ Updateqmscalendar(id: number, updatedData: any): Observable<any> {
 }
 
 //---------------------------------------------------------------------------------------QMS history
-qmshistoryUrl='https://ielcapitest.azurewebsites.net/QMSInteqSoftware_Calendar/GetHistoryCalendar';
+qmshistoryUrl='https://ielc-coreapi.azurewebsites.net/QMSInteqSoftware_Calendar/GetHistoryCalendar';
 Getqmshistory(year: number): Observable<any> {
   return this.http.get<any>(`${this.qmshistoryUrl}?year=${year}`, { headers: this.getHeaders() });
 }
 //---------------------------------------------------------------------------------------ISMS mails
 
-    ismsmailsUrl='https://ielcapitest.azurewebsites.net/ISMSEmails';
+    ismsmailsUrl='https://ielc-coreapi.azurewebsites.net/ISMSEmails';
     Getismsmails(): Observable<any> {
      return this.http.get<any>(this.ismsmailsUrl, { headers: this.getHeaders() });
     } 
@@ -1988,7 +1988,7 @@ Getqmshistory(year: number): Observable<any> {
  
 //---------------------------------------------------------------------------------------QMS mails
 
-    qmsmailsUrl='https://ielcapitest.azurewebsites.net/QMSEmails';
+    qmsmailsUrl='https://ielc-coreapi.azurewebsites.net/QMSEmails';
     Getqmsmails(): Observable<any> {
      return this.http.get<any>(this.qmsmailsUrl, { headers: this.getHeaders() });
     } 
@@ -2018,7 +2018,7 @@ Getqmshistory(year: number): Observable<any> {
 
 //---------------------------------------------------------------------------------------SMTP Admin
 
-    smtpUrl='https://ielcapitest.azurewebsites.net/SMPTAdmin';
+    smtpUrl='https://ielc-coreapi.azurewebsites.net/SMPTAdmin';
     Getsmtp(): Observable<any> {
      return this.http.get<any>(this.smtpUrl, { headers: this.getHeaders() });
     } 
@@ -2033,7 +2033,7 @@ Getqmshistory(year: number): Observable<any> {
     }
  //---------------------------------------------------------------------------------------ADmin users
  
- adminusersUrl='https://ielcapitest.azurewebsites.net/AdminUsersRoles';
+ adminusersUrl='https://ielc-coreapi.azurewebsites.net/AdminUsersRoles';
    Getadminusers(): Observable<any> {
      return this.http.get<any>(this.adminusersUrl, { headers: this.getHeaders() });
     } 
@@ -2047,7 +2047,7 @@ Getqmshistory(year: number): Observable<any> {
     }  
  //---------------------------------------------------------------------------------------Events
  
- eventsUrl='https://ielcapitest.azurewebsites.net/Events';
+ eventsUrl='https://ielc-coreapi.azurewebsites.net/Events';
    Getevents(): Observable<any> {
      return this.http.get<any>(this.eventsUrl, { headers: this.getHeaders() });
     } 
@@ -2076,7 +2076,7 @@ Getqmshistory(year: number): Observable<any> {
     
 //---------------------------------------------------------------------------------------Courses Restriction
  
- courseUrl='https://ielcapitest.azurewebsites.net/CoursesRestriction';
+ courseUrl='https://ielc-coreapi.azurewebsites.net/CoursesRestriction';
    Getcourse(): Observable<any> {
      return this.http.get<any>(this.courseUrl, { headers: this.getHeaders() });
     } 
@@ -2098,7 +2098,7 @@ Getqmshistory(year: number): Observable<any> {
 
 //---------------------------------------------------------------------------------------Events Alerts
  
- eventalertsUrl='https://ielcapitest.azurewebsites.net/EventAlerts';
+ eventalertsUrl='https://ielc-coreapi.azurewebsites.net/EventAlerts';
    Geteventalerts(): Observable<any> {
      return this.http.get<any>(this.eventalertsUrl, { headers: this.getHeaders() });
     } 
@@ -2124,7 +2124,7 @@ UpdateEventAlertStatus(data: any): Observable<any> {
 }
 //================================================================================Exam info
 
-examinfoUrl='https://ielcapitest.azurewebsites.net/ExamInfo';
+examinfoUrl='https://ielc-coreapi.azurewebsites.net/ExamInfo';
 Getexaminfo(): Observable<any> {
      return this.http.get<any>(this.examinfoUrl, { headers: this.getHeaders() });
 }    
@@ -2142,8 +2142,8 @@ Updateexaminfo(id: number, updatedData: any): Observable<any> {
   return this.http.put<any>(`${this.examinfoUrl}/${id}`, updatedData, { headers: this.getHeaders() });
 } 
 //=================================================================================skillQA
-skillqaurl='https://ielcapitest.azurewebsites.net/IELCQA';
-//skillqaurl='https://ielcapitest.azurewebsites.net/IELCQA';
+skillqaurl='https://ielc-coreapi.azurewebsites.net/IELCQA';
+//skillqaurl='https://ielc-coreapi.azurewebsites.net/IELCQA';
 
 GetskillAllQues(): Observable<any> {
   return this.http.get<any>(`${this.skillqaurl}/allrecords`, {
@@ -2200,15 +2200,15 @@ Updateskillqa(id: number, updatedData: any): Observable<any> {
   const headers = this.getHeaders();
   return this.http.put<any>(`${this.skillqaurl}/${id}`, updatedData, {headers, observe: 'response' });
 } 
-skillnameurl='https://ielcapitest.azurewebsites.net/IELCQA/skillname'
+skillnameurl='https://ielc-coreapi.azurewebsites.net/IELCQA/skillname'
     GetskillqaBySkill(skillName: string): Observable<any> {
       return this.http.get<any>(`${this.skillnameurl}/${skillName}`, { headers: this.getHeaders() });
     }
 
 
 //===============================================================================================Compliance Isms
-complianceismsUrl='https://ielcapitest.azurewebsites.net/ISMSInteqSoftware_Calendar';
-complianceqmsUrl='https://ielcapitest.azurewebsites.net/QMSInteqSoftware_Calendar';
+complianceismsUrl='https://ielc-coreapi.azurewebsites.net/ISMSInteqSoftware_Calendar';
+complianceqmsUrl='https://ielc-coreapi.azurewebsites.net/QMSInteqSoftware_Calendar';
 
 Getcomplianceismsdata(): Observable<any> {
      return this.http.get<any>(this.complianceismsUrl, { headers: this.getHeaders() });
@@ -2309,14 +2309,14 @@ sendEmailFromBackend(payload: {
   subject: string;
   body: string;
 }) {
-  const apiUrl = 'https://ielcapitest.azurewebsites.net/SendEmail/api/sendemail'; // 🔁 Replace with your actual backend API URL
+  const apiUrl = 'https://ielc-coreapi.azurewebsites.net/SendEmail/api/sendemail'; // 🔁 Replace with your actual backend API URL
   const headers = new HttpHeaders({ 'Content-Type': 'application/json',
     'Authorization': this.apiKey
    });
   return this.http.post(apiUrl, payload, {headers, responseType: 'text' });
 }
 //---------------------------------------------------------------------------------------Events Alerts
-eventschedulerAdminUrl='https://ielcapitest.azurewebsites.net/EventSchedulerAdmin';
+eventschedulerAdminUrl='https://ielc-coreapi.azurewebsites.net/EventSchedulerAdmin';
 
 
 GetEventSchedulerAdmin(): Observable<string[]> {
@@ -2342,7 +2342,7 @@ GetEventSchedulerAdmin(): Observable<string[]> {
   return this.http.put(`${this.eventschedulerAdminUrl}/${id}`, JSON.stringify(updatedData), { headers });
 }
 //---------------------------------------------------------------------------------------------------------EventSchedulerAdmin
-eventschedulerUserUrl='https://ielcapitest.azurewebsites.net/EventSchedulerUser';
+eventschedulerUserUrl='https://ielc-coreapi.azurewebsites.net/EventSchedulerUser';
 
 GetEventSchedulerUser(year: string, month: string): Observable<any[]> {
   return this.http.get<any[]>(`${this.eventschedulerUserUrl}/${year}/${month}`, {
@@ -2393,7 +2393,7 @@ GetEventSchedulerUserByDeptYearMonth(department: string): Observable<any[]> {
 //   });
 // }
 
-//https://ielcapitest.azurewebsites.net/EventSchedulerUser/userprojectsbydisplayname
+//https://ielc-coreapi.azurewebsites.net/EventSchedulerUser/userprojectsbydisplayname
 
 GetEventSchedulerUserAuditeesDept(): Observable<string[]> {
   return this.http.get<string[]>(`${this.eventschedulerUserUrl}/auditees/latest`, { headers: this.getHeaders() });
@@ -2454,7 +2454,7 @@ GetBookedTimes(date: string): Observable<string[]> {
 //     return this.http.get<any[]>(`${this.eventschedulerUrl}/latest`, { headers: this.getHeaders() });
 
 //   }
-  //https://ielcapitest.azurewebsites.net/EventSchedulerUser/latest
+  //https://ielc-coreapi.azurewebsites.net/EventSchedulerUser/latest
 
 // GetEventsscfilterprojects(displayname: string): Observable<any> {
 //   return this.http.get<any>(`${this.EventSchedulerUser}EventSchedulerUser/userprojectsbydisplayname/${displayname}`, { headers: this.getHeaders() });
@@ -2464,7 +2464,7 @@ GetBookedTimes(date: string): Observable<string[]> {
 //   return this.http.get<any[]>(`${this.EventSchedulerUser}EventSchedulerUser/auditees`, { headers: this.getHeaders() })
 // }
 //-------------------------------------------------------------------------------------------------------EventSchedules
-eventscheduleUrls='https://ielcapitest.azurewebsites.net/EventSchedules';
+eventscheduleUrls='https://ielc-coreapi.azurewebsites.net/EventSchedules';
 GetEventSchedules(year: string, month: string): Observable<any[]> {
   return this.http.get<any[]>(`${this.eventscheduleUrls}/${year}/${month}`, {
     headers: this.getHeaders()
@@ -2507,7 +2507,7 @@ UpdateEventScheduleslatest(id: number, updateData: any): Observable<void> {
   }
 //-------------------------------------------------------------------------------------------------------EventSchedules
 //rough
-eventscheduleUrl='https://ielcapitest.azurewebsites.net/';
+eventscheduleUrl='https://ielc-coreapi.azurewebsites.net/';
 
 
   UpdateEventScheduleadmin(id: number, updatedData: any): Observable<any> {
@@ -2515,8 +2515,8 @@ eventscheduleUrl='https://ielcapitest.azurewebsites.net/';
       return this.http.put<any>(`${this.eventscheduleUrl}/EventSchedulerUser/schedule/${id}`, updatedData,{headers, observe: 'response' });
 }
 //-------------------------------------------------------------------------------------------------------EventSchedulerUser
-eventschedulertime = 'https://ielcapitest.azurewebsites.net';
-eventschedulertimes = 'https://ielcapitest.azurewebsites.net/times';
+eventschedulertime = 'https://ielc-coreapi.azurewebsites.net';
+eventschedulertimes = 'https://ielc-coreapi.azurewebsites.net/times';
 
 GetEventSchedulerTime(year: string, month: string): Observable<any[]> {
   return this.http.get<any[]>(`${this.eventschedulertime}/EventSchedulerTime/Get/${year}/${month}`, {
@@ -2576,9 +2576,9 @@ DeleteEventSchedulerTime(year: string, month: string, id: number): Observable<vo
 //     }
 //   );
 // }
-//https://ielcapitest.azurewebsites.net/EventSchedulerTime/times/exclude/latest?selectedTime=06%3A30%20PM%20%E2%80%93%2008%3A00%20PM
+//https://ielc-coreapi.azurewebsites.net/EventSchedulerTime/times/exclude/latest?selectedTime=06%3A30%20PM%20%E2%80%93%2008%3A00%20PM
 //---------------------------------------------------------------------------------------EventSchedulerTime
-coownersurl = 'https://ielcapitest.azurewebsites.net/CoOwners';
+coownersurl = 'https://ielc-coreapi.azurewebsites.net/CoOwners';
 
 GetCoOwners(): Observable<string[]> {
   return this.http.get<any[]>(`${this.coownersurl}`, { headers: this.getHeaders() })
@@ -2633,7 +2633,7 @@ PostCoOwners(data: any): Observable<any> {
       return this.http.put<any>(`${this.coownersurl}/${id}`, updatedData,{headers, observe: 'response' });
     }
 //---------------------------------------------------------------------------------------CoOwners 
-createeventtablesurl = 'https://ielcapitest.azurewebsites.net/AddNewTables/createeventtables';
+createeventtablesurl = 'https://ielc-coreapi.azurewebsites.net/AddNewTables/createeventtables';
 
 createEventTables(): Observable<any> {
   return this.http.post(this.createeventtablesurl, {}, {
@@ -2645,7 +2645,7 @@ createEventTables(): Observable<any> {
 
 //---------------------------------------------------------------------------------------ISMSMasterTable
 
-    ISMSMasterTableUrl='https://ielcapitest.azurewebsites.net/ISMSMasterTable';
+    ISMSMasterTableUrl='https://ielc-coreapi.azurewebsites.net/ISMSMasterTable';
     GetISMSMasterTable(): Observable<UsersInfo[]> {
       return this.http.get<UsersInfo[]>(this.ISMSMasterTableUrl, {
         headers: this.getHeaders()
@@ -2683,7 +2683,7 @@ GetISMSMasterTableDocName(documentName: string): Observable<any> {
 
 //---------------------------------------------------------------------------------------QMSMasterTable
 
-    QMSMasterTableUrl='https://ielcapitest.azurewebsites.net/QMSMasterTable';
+    QMSMasterTableUrl='https://ielc-coreapi.azurewebsites.net/QMSMasterTable';
     GetQMSMasterTable(): Observable<UsersInfo[]> {
       return this.http.get<UsersInfo[]>(this.QMSMasterTableUrl, {
         headers: this.getHeaders()
@@ -2721,7 +2721,7 @@ GetQMSMasterTableDocName(documentName: string): Observable<any> {
 
 //---------------------------------------------------------------------------------------Audit Schedule
  
- AuditScheduleUrl='https://ielcapitest.azurewebsites.net/AuditSchedule';
+ AuditScheduleUrl='https://ielc-coreapi.azurewebsites.net/AuditSchedule';
 
    GetAuditSchedule(): Observable<any> {
      return this.http.get<any>(this.AuditScheduleUrl, { headers: this.getHeaders() });
@@ -2744,7 +2744,7 @@ GetQMSMasterTableDocName(documentName: string): Observable<any> {
 
     //---------------------------------------------------------------------------------------Inteq ISO 27001
 
-    ismsqmsUrl='https://ielcapitest.azurewebsites.net/ISMSQMSSupport';
+    ismsqmsUrl='https://ielc-coreapi.azurewebsites.net/ISMSQMSSupport';
     Getismsqms(): Observable<any> {
      return this.http.get<any>(this.ismsqmsUrl, { headers: this.getHeaders() });
     }
