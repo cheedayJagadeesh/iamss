@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IelcapiService } from '../ielcapi.service';
 import { UsersInfo } from '../users-info';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { forkJoin, Observable, of  } from 'rxjs';
 import { ChangeDetectorRef } from '@angular/core';
@@ -53,7 +53,9 @@ export class RegisteredusersComponent implements OnInit {
   fromDate: string = '';
   toDate: string = '';
 
-  constructor(private ielc:IelcapiService, private datePipe: DatePipe,private cdr: ChangeDetectorRef) {
+  constructor(private ielc:IelcapiService, private datePipe: DatePipe,private cdr: ChangeDetectorRef, private router: Router) {
+
+     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     for (let i = 1; i <= 100; i++) {
       // this.Registeredusers.push({ id: i, name: `item ${i}` });
       this.Registeredusers.push({ id: i });
@@ -63,6 +65,7 @@ export class RegisteredusersComponent implements OnInit {
 
  ngOnInit() {
   this.GetAllUSers();
+  //console.log('Enrolled Users reloaded');
   this.GetAllSkillsData();
  }
 

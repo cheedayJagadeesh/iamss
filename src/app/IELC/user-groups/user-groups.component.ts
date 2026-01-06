@@ -3,7 +3,7 @@ import { IelcapiService } from '../ielcapi.service';
 import { forkJoin } from 'rxjs';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-
+import { Router } from '@angular/router';
 
 interface smtpinfo {
   id: number;
@@ -525,8 +525,8 @@ today:string=''
 
  updatedFields: any;
   
-  constructor(private ielc:IelcapiService) {
-
+  constructor(private ielc:IelcapiService, private router: Router) {
+     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   sortlist(data: any[]): any[] {
