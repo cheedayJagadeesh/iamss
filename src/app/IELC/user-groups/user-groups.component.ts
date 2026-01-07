@@ -1360,7 +1360,6 @@ AddISMSDetails(): void {
 }
 
 UpdateISMSDetails() {
-  debugger;
   this.ielc.UpdateISMSMasterTable(this.ismsalldata.documentID, this.ismsalldata).subscribe(
     (response) => {
       alert(" ✅ Record updated successfully!");
@@ -1594,7 +1593,6 @@ AddQMSDetails(): void {
 }
 
 UpdateQMSDetails() {
-  debugger;
   this.ielc.UpdateQMSMasterTable(this.qmsalldata.documentID, this.qmsalldata).subscribe(
     (response) => {
       alert(" ✅ Record updated successfully!");
@@ -7527,19 +7525,49 @@ GetEventAlertsist() {
 //   });
 // }
 
-   selectedFileBase64: string = '';
- onFileChange(event: any): void {
-  const file = event.target.files[0];
+
+selectedFileName: string = '';
+selectedFile!: File;
+
+onFileSelected(event: any) {
+  const file: File = event.target.files[0];
+
   if (file) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const base64String = (reader.result as string).split(',')[1];
-      this.eventalertsdata.alertAttachment = base64String;
-      this.eventalertsdata.fileName = file.name; // <-- Save the original filename
-    };
-    reader.readAsDataURL(file);
+    this.selectedFile = file;
+    this.selectedFileName = file.name; // ✅ ONLY filename
   }
 }
+
+   selectedFileBase64: string = '';
+//  onFileChange(event: any): void {
+//   const file = event.target.files[0];
+//   if (file) {
+//     const reader = new FileReader();
+//     reader.onload = () => {
+//       const base64String = (reader.result as string).split(',')[1];
+//       this.eventalertsdata.alertAttachment = base64String;
+//       this.eventalertsdata.fileName = file.name; // <-- Save the original filename
+//     };
+//     reader.readAsDataURL(file);
+//   }
+// }
+
+onFileChange(event: any): void {
+  const file: File = event.target.files[0];
+
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    this.eventalertsdata.alertAttachment =
+      (reader.result as string).split(',')[1]; // base64
+
+    this.eventalertsdata.fileName = file.name; // ✅ NEW filename
+  };
+
+  reader.readAsDataURL(file);
+}
+
 
 
 togglePlayPause(item: any): void {
@@ -7597,7 +7625,6 @@ AddEventAlerts(): void {
 
 getDownloadLinkFileupload(base64Data: string, fileName: string): string {
   const extension = fileName?.split('.').pop()?.toLowerCase();
-
   const mimeTypes: { [key: string]: string } = {
     pdf: 'application/pdf',
     jpg: 'image/jpeg',
@@ -7660,6 +7687,8 @@ deleteEventAlerts(id: number) {
 
 EditEventAlerts(id: number) {
   // ////console.log("Edit button clicked, fetching ID:", id); 
+
+  debugger;
   this.ielc.GeteventalertsById(id).subscribe(data => {
 
     // ////console.log("Fetched Record Session:", data); 
