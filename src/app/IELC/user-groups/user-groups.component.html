@@ -12838,7 +12838,8 @@
                                         <label>Attachment</label>
                                         <input class="form-control" type="file" (change)="onFileChange($event)" />
                                     </div>
-                                
+
+                                                                    
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                             (click)="resetEventAlerts(); GetEventAlertsist()">Close</button>
@@ -12914,12 +12915,20 @@
                                                 <option>Yearly</option>
                                             </select>
                                         </div>
-                                        <div class="divmodal">
+
+                                     <div class="divmodal">
+                                        <label>Attachment</label>
+                                        <input class="form-control" type="file" id="formFile" name="attachment" (change)="onFileChange($event)" />
+                                        <small class="text-muted">
+                                            {{ eventalertsdata.fileName }}
+                                        </small>
+                                    </div>
+                                        <!-- <div class="divmodal">
                                             <label>Attachment</label>
                                             <input class="form-control" type="file" id="formFile" name="attachment"
                                                 [(ngModel)]="eventalertsdata.fileName">
                                             <span>{{ eventalertsdata.fileName }}</span>
-                                        </div>
+                                        </div> -->
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
                                                 (click)="resetEventAlerts()">Close</button>

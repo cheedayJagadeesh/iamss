@@ -469,12 +469,7 @@
             
             <div class="mb-3 formdiv">
               <label class="lblskill">Skill Name<span style="color: red;">*</span></label>
-              <!-- <select name="skillname" class="form-controlone" required [(ngModel)]="skillname"
-                (change)="onSkillSelected(skillname); onBatchInputChange()">
-                <option *ngIf="isLoadingSkills" disabled>Loading skills...</option>
-                <option value="" disabled>- select -</option>
-                <option *ngFor="let row of Enrolledskills" [value]="row.skillName">{{ row.skillName }}</option>
-              </select> -->
+              <!-- Categorized Skills Dropdown -->
               <select name="skillname" class="form-controlone" required [(ngModel)]="skillname"
                 (change)="onSkillSelected(skillname); onBatchInputChange()" [disabled]="!isModeSelected">
               
@@ -487,8 +482,19 @@
                 <!-- No skills available -->
                 <option *ngIf="!isLoadingSkills && Enrolledskills.length === 0" disabled>No skills available</option>
               
-                <!-- Skills list -->
-                <option *ngFor="let row of Enrolledskills" [value]="row.skillName">{{ row.skillName }}</option>
+                <!-- Categorized Skills with optgroup (if categories exist) -->
+                <ng-container *ngIf="skillCategories && skillCategories.length > 0">
+                  <optgroup *ngFor="let category of skillCategories" [label]="category.category">
+                    <option *ngFor="let skill of category.skills" [value]="skill">
+                      {{ skill }}
+                    </option>
+                  </optgroup>
+                </ng-container>
+
+                <!-- Fallback: Flat skill list (if no categories) -->
+                <ng-container *ngIf="!skillCategories || skillCategories.length === 0">
+                  <option *ngFor="let row of Enrolledskills" [value]="row.skillName">{{ row.skillName }}</option>
+                </ng-container>
               </select>
 
             </div>

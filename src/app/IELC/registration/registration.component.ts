@@ -42,6 +42,11 @@ interface exam {
 interface examlisinfot {
   testTakenDate: string | null;
 }
+interface SkillCategory {
+  category: string;
+  skills: string[];
+}
+
 interface feedback {
   subjectMatterKnowledge: string;
   presentation: string;
@@ -171,6 +176,11 @@ Enrolledskills: any[] = [];
 EnrolledskillsLearning: any[] = [];
 EnrolledskillsTeams: any[] = [];
 EnrolledskillsOffline: any[] = [];
+// Skill categories
+skillCategories: SkillCategory[] = [];
+skillCategoriesLearning: SkillCategory[] = [];
+skillCategoriesTeams: SkillCategory[] = [];
+skillCategoriesOffline: SkillCategory[] = [];
 venueList: any[] = [];
 selectedVenue: string = '';
 selectDate: string = '';
@@ -1217,6 +1227,11 @@ isModeSelected: boolean = false;
   this.EnrolledskillsOffline = [];
   this.EnrolledskillsTeams = [];
   this.EnrolledskillsLearning = [];
+  // Clear category arrays
+  this.skillCategories = [];
+  this.skillCategoriesOffline = [];
+  this.skillCategoriesTeams = [];
+  this.skillCategoriesLearning = [];
 
   this.date = '';
   this.time = '';
@@ -1236,20 +1251,39 @@ isModeSelected: boolean = false;
     next: (res) => {
       const skills = res.map((skill: any) => ({ skillName: skill }));
       //debugger;
-      if (venue === 'Offline') this.EnrolledskillsOffline = skills;
-      else if (venue === 'Teams') this.EnrolledskillsTeams = skills;
-      else if (venue === 'Self-Learning') this.EnrolledskillsLearning = skills;
+      
+      // Group skills by category
+      const categorizedSkills = this.groupSkillsByCategory(res);
+      console.log('Categorized skills:', categorizedSkills);
+      
+      if (venue === 'Offline') {
+        this.EnrolledskillsOffline = skills;
+        this.skillCategoriesOffline = categorizedSkills;
+        this.skillCategories = this.skillCategoriesOffline;
+      }
+      else if (venue === 'Teams') {
+        this.EnrolledskillsTeams = skills;
+        this.skillCategoriesTeams = categorizedSkills;
+        this.skillCategories = this.skillCategoriesTeams;
+      }
+      else if (venue === 'Self-Learning') {
+        this.EnrolledskillsLearning = skills;
+        this.skillCategoriesLearning = categorizedSkills;
+        this.skillCategories = this.skillCategoriesLearning;
+      }
 
       // ✅ Bind active list to dropdown
       this.Enrolledskills = skills;
 
       this.skillname = '';
       this.isLoadingSkills = false;
-      //console.log(`Skills for ${venue}:`, skills);
+      console.log(`Skills for ${venue}:`, skills);
+      console.log(`Categories for ${venue}:`, this.skillCategories);
     },
     error: (err) => {
       console.error(`Error fetching skills for ${venue}`, err);
       this.Enrolledskills = [];
+      this.skillCategories = [];
       this.skillname = '';
       this.isLoadingSkills = false;
     }
@@ -1476,10 +1510,78 @@ confirmStartExam() {
   });
 }
 
+// Skill categorization mapping
+// Define which skills belong to which categories
+private skillCategoryMapping: { [key: string]: string } = {
+  // Azure & Cloud Computing Group
+  'Azure': 'Cloud & DevOps',
+  'DevOps': 'Cloud & DevOps',
+  'Cloud Computing': 'Cloud & DevOps',
+  'Cloud - Azure - DevOps Basics': 'Cloud & DevOps',
+  
+  // ISMS Group
+  'ISMS': 'ISMS',
+  'ISMS - Training Module I': 'ISMS',
+  
+  // AI Group
+  'AI Learning Sessions': 'AI',
+  'AI': 'AI',
+  
+  // Compliance Group
+  'HIPAA Awareness Training': 'Compliance',
+  'GDPR': 'Compliance',
+  'DPDP': 'Compliance'
+};
 
+/**
+ * Groups skills by category
+ * @param skills Array of skill names
+ * @returns Array of SkillCategory objects
+ */
+groupSkillsByCategory(skills: any[]): SkillCategory[] {
+  const categoryMap = new Map<string, Set<string>>();
 
+  // Extract skill names and group them
+  const skillNames = Array.isArray(skills) ? 
+    skills.map(s => typeof s === 'string' ? s : (s.skillName || s)) : [];
 
+  if (!skillNames || skillNames.length === 0) {
+    console.warn('No skills provided to groupSkillsByCategory');
+    return [];
+  }
 
+  skillNames.forEach(skill => {
+    if (!skill) return; // Skip empty values
+    
+    const category = this.skillCategoryMapping[skill] || 'Other';
+    
+    if (!categoryMap.has(category)) {
+      categoryMap.set(category, new Set());
+    }
+    categoryMap.get(category)!.add(skill);
+  });
+
+  // Convert to SkillCategory array, sorted alphabetically
+  const result = Array.from(categoryMap.entries())
+    .map(([category, skills]) => ({
+      category,
+      skills: Array.from(skills).sort()
+    }))
+    .sort((a, b) => a.category.localeCompare(b.category));
+
+  console.log('Result from groupSkillsByCategory:', result);
+  return result;
+}
+
+/**
+ * Flattens categories back to skills for form binding if needed
+ * @param categories Array of SkillCategory objects
+ * @returns Flattened array of skills
+ */flattenCategorizedSkills(categories: SkillCategory[]): any[] {
+  return categories.flatMap(cat => 
+    cat.skills.map(skill => ({ skillName: skill }))
+  );
+}
 }
 
 
