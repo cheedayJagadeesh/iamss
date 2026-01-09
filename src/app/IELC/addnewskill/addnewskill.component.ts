@@ -14,6 +14,7 @@ interface NewSkillsInfo {
   skillEndTime: string;
   venue: string;
   skillDescription: string;
+  skillType: string;
   skillName: string;
   aadUsersData: any;  
   aadGroupsData: any; 
@@ -78,6 +79,7 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
     venue: '',
     skillDescription: '',
     skillName: '',
+    skillType: '',
     aadUsersData: '',
     aadGroupsData: '',
     conductedBy: '',
@@ -134,7 +136,7 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
       this.Enrolledusers=data;
       this.Enrolledusers = this.sortRegisteredUsers(data);
       this.isLoading=false;
-      //console.log("Skill Sessions Data:", this.Enrolledusers);
+      console.log("Skill Sessions Data:", this.Enrolledusers);
     });
    }
 
@@ -148,6 +150,7 @@ export class AddnewskillComponent implements OnInit,AfterViewInit {
       venue: '',
       skillDescription: '',
       skillName: '',
+      skillType: '',
       aadUsersData: '',
       aadGroupsData: '',
       conductedBy: '',

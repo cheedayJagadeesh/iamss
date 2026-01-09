@@ -760,6 +760,127 @@ h2 {
 .option-card input[type="radio"] {
   transform: scale(1.2);
 }
+
+/* Skills Grid Popup Styles */
+.skills-grid-popup {
+  min-height: auto;
+  max-width: 900px;
+  width: 90%;
+}
+
+.skills-grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  padding: 15px 0;
+}
+
+.skill-category-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.category-header {
+  font-weight: bold;
+  font-size: 16px;
+  padding: 8px 10px;
+  border-bottom: 3px solid #333;
+  color: #333;
+  text-align: left;
+}
+
+.category-items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skill-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.skill-option:hover {
+  background-color: #f0f0f0;
+}
+
+.skill-option input[type="radio"] {
+  transform: scale(1);
+  cursor: pointer;
+}
+
+.skill-label {
+  font-size: 14px;
+  color: #333;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  .skills-grid-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .skills-grid-container {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
+
+/* Skill info styling for popup */
+.skill-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-grow: 1;
+}
+
+.skill-name {
+  font-weight: 600;
+  color: #333;
+  font-size: 14px;
+}
+
+.skill-type {
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+  padding: 2px 6px;
+  background: #e8f4f8;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+/* Color coding for skill types */
+.skill-info .skill-type {
+  background: #e8f4f8;
+  color: #0066cc;
+}
+
+/* Different colors for different types */
+.option-card:has(.skill-type:contains("Compliance")) .skill-type {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.option-card:has(.skill-type:contains("Technologies")) .skill-type {
+  background: #d1ecf1;
+  color: #0c5460;
+}
+
+.option-card:has(.skill-type:contains("Security")) .skill-type {
+  background: #f8d7da;
+  color: #721c24;
+}
+
 .form-check {
   display: inline-block;
   margin-right: 50px;
@@ -827,3 +948,4 @@ h2 {
   margin-bottom: 8px;
   font-size: 14px;
 }
+

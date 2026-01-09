@@ -60,6 +60,7 @@
                     <th scope="col">Venue</th>
                     <th style="width: 200px;">Description</th>
                     <th scope="col">Skill Name</th>
+                    <th scope="col">Skill Type</th>
                     <th scope="col">Conducted By</th>
                     <th scope="col">Users </th>
                     <th scope="col">Groups </th>
@@ -84,6 +85,9 @@
                     </td>
                     <td style="max-width: 200px;  text-overflow: ellipsis;">
                         {{row.skillName}}
+                    </td>
+                     <td style="max-width: 200px;  text-overflow: ellipsis;">
+                        {{row.skillType}}
                     </td>
                     <td style="max-width: 150px;  text-overflow: ellipsis;">
                         {{row.conductedBy}}
@@ -172,6 +176,17 @@
                                                 <option value="">- select skill -</option>
                                                 <option *ngFor="let item of Enrolledskills" [value]="item.skillName">{{
                                                     item.skillName }}</option>
+                                            </select>
+                                        </div>
+                                         <div class="divmodal">
+                                            <label>Skill Type<span style="color: red;">*</span></label>
+                                            <select id="select2" class="form-control" name="skillType"
+                                                [(ngModel)]="skillSessionData.skillType" name="skillType" required
+                                                #skillTypeRef="ngModel">
+                                                <option value="">- select skillType -</option>
+                                                <option>Compliance</option>
+                                                <option>Technologies</option>
+                                                <option>Security</option>
                                             </select>
                                         </div>
                                         <div class="divmodal">
@@ -340,6 +355,17 @@
                                             <option *ngFor="let item of Enrolledskills" [value]="item.skillName">{{ item.skillName }}</option>
                                         </select>
                                        </div>
+                                        <div class="divmodal">
+                                            <label>Skill Type<span style="color: red;">*</span></label>
+                                            <select id="select2" class="form-control"
+                                                [(ngModel)]="skillSessionData.skillType" name="skillType" required
+                                                #skillTypeRef="ngModel">
+                                                <option value="">- select skillType -</option>
+                                                <option>Compliance</option>
+                                                <option>Technologies</option>
+                                                <option>Security</option>
+                                            </select>
+                                        </div>
                                        <div class="divmodal">
                                         <label>Conducted By</label>
                                         <input type="text" class="form-control" [(ngModel)]="skillSessionData.conductedBy" name="conductedBy" >

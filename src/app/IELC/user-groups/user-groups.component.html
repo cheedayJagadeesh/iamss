@@ -12811,7 +12811,7 @@
                                     <div class="divmodal">
                                         <label>Mail Alert Day</label>
                                         <input type="number" class="form-control" name="mailalertday" required #mailalertdayRef="ngModel"
-                                            [(ngModel)]="eventalertsdata.mailAlertDay">
+                                           min="0" step="1" [(ngModel)]="eventalertsdata.mailAlertDay">
                                     </div>
                                 
                                     <div class="divmodal">
