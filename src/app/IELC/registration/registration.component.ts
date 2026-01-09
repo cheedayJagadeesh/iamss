@@ -52,6 +52,16 @@ interface SkillWithType {
   skillType: string;
 }
 
+/**
+ * USER-FRIENDLY SKILL ORDERING CONFIG
+ * Easily customize the order of skills in each category
+ * Skills listed here will appear at the top in the order specified
+ * Any skills not listed will appear at the bottom (sorted alphabetically)
+ */
+interface SkillOrderConfig {
+  [skillType: string]: string[]; // skillType -> array of skill names in desired order
+}
+
 interface feedback {
   subjectMatterKnowledge: string;
   presentation: string;
@@ -199,6 +209,30 @@ batchMemberCount: number = 0;
 currentUser: any = {};
 allSkillSessions: any[] = [];
 skillTypeFromAPI: { [key: string]: string } = {}; // Map of skillName -> skillType from API
+
+/**
+ * CUSTOMIZE SKILL ORDER HERE - User Friendly Configuration
+ * Add skill names in the order you want them to appear in the popup
+ * Skills listed here will appear at the top in the specified order
+ * Any skills not listed will appear at the bottom (sorted alphabetically)
+ * 
+ * Example to reorder:
+ * skillOrderConfig: SkillOrderConfig = {
+ *   'Compliance': ['ISMS Awareness Training', 'QMS Awareness Training', 'HIPAA Awareness Training'],
+ *   'Technologies': ['Azure', 'DevOps'],
+ *   'Security': ['Security Awareness - online frauds']
+ * };
+ */
+skillOrderConfig: SkillOrderConfig = {
+  'Compliance': [
+    'ISMS Awareness Training',
+    'QMS Awareness Training', 
+    'HIPAA Awareness Training',
+    'POSH Act'
+  ],
+  'Technologies': [],
+  'Security': []
+};
 
 constructor(private ielc: IelcapiService, private msalService: MsalService, private authService: AuthService, private router: Router, private route: ActivatedRoute, private emailService: EmailService){
   this.selectedDate = new Date().toISOString().split('T')[0]
@@ -1623,7 +1657,51 @@ getSkillsWithType(skills: any[]): SkillWithType[] {
  * @returns Array of SkillWithType objects matching the type
  */
 getSkillsByType(skillType: string): SkillWithType[] {
-  return this.EnrolledskillsWithType.filter(skill => skill.skillType === skillType);
+  const skillsOfType = this.EnrolledskillsWithType.filter(skill => skill.skillType === skillType);
+  
+  // Apply custom ordering from skillOrderConfig
+  return this.sortSkillsByConfig(skillsOfType, skillType);
+}
+
+/**
+ * Sorts skills based on the skillOrderConfig
+ * Skills in the config appear first in the specified order
+ * Remaining skills appear at the bottom (sorted alphabetically)
+ * 
+ * @param skills Array of SkillWithType objects to sort
+ * @param skillType The skill type category (e.g., 'Compliance', 'Technologies')
+ * @returns Sorted array of SkillWithType objects
+ */
+sortSkillsByConfig(skills: SkillWithType[], skillType: string): SkillWithType[] {
+  const configOrder = this.skillOrderConfig[skillType] || [];
+  
+  if (configOrder.length === 0) {
+    // If no specific order configured, return alphabetically sorted
+    return [...skills].sort((a, b) => a.skillName.localeCompare(b.skillName));
+  }
+
+  // Separate skills into two groups: configured and unconfigured
+  const configuredSkills: SkillWithType[] = [];
+  const unconfiguredSkills: SkillWithType[] = [];
+
+  skills.forEach(skill => {
+    if (configOrder.includes(skill.skillName)) {
+      configuredSkills.push(skill);
+    } else {
+      unconfiguredSkills.push(skill);
+    }
+  });
+
+  // Sort configured skills by the order in the config
+  configuredSkills.sort((a, b) => 
+    configOrder.indexOf(a.skillName) - configOrder.indexOf(b.skillName)
+  );
+
+  // Sort unconfigured skills alphabetically
+  unconfiguredSkills.sort((a, b) => a.skillName.localeCompare(b.skillName));
+
+  // Return configured skills first, then unconfigured skills
+  return [...configuredSkills, ...unconfiguredSkills];
 }
 }
 
