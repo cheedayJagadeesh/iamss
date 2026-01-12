@@ -8,14 +8,14 @@ h1 {
 }
 
 .btnlink {
-    margin-left: 43%;
+    margin-left: 37%;
     color: red;
     font-weight: bold;
     text-decoration: none;
 }
 
 .a {
-    margin-left: 40%;
+    margin-left: 34%;
     font-weight: bold;
     position: absolute;
     margin-top: 0.6%;
@@ -651,6 +651,11 @@ h2 {
 .textmode{
     color: green;
     font-weight: bold;
+}
+.textmode1{
+    color: green;
+    font-weight: bold;
+    margin-left: 4%;
 }
 .bottomtable{
     overflow: auto;
