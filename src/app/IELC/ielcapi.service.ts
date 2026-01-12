@@ -192,6 +192,24 @@ GetSkillsByVenue(venue: string): Observable<string[]> {
       return this.http.get<any>(this.EnrolledskillsUrl, { headers: this.getHeaders() });
     } 
 
+     private apiUrls = 'https://ielc-coreapi.azurewebsites.net/EnrollmentSessions/skills';
+  getSkills(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrls);
+  }
+     getGroupedSkills(): Observable<any> {
+    return this.getSkills().pipe(
+      map(skills =>
+        skills.reduce((acc: any, skill: any) => {
+          if (!acc[skill.skillType]) {
+            acc[skill.skillType] = [];
+          }
+          acc[skill.skillType].push(skill);
+          return acc;
+        }, {})
+      )
+    );
+  }
+
     Getallexaminfo(skillname: string): Observable<string[]> {
     return this.http.get<string[]>(`${this.EnrolledskillsUrl}/skillNameexamdetails?skillName=${skillname}`, { headers: this.getHeaders() });
   }

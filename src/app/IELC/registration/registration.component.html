@@ -27,6 +27,10 @@
   <button *ngIf="showButton" type="button" class="btn btn-link btnlink" routerLink="/complianceform">
     ISMS - QMS Monthly Task Status Update
   </button>
+          <button *ngIf="coownersshowButton" type="button" class="btn btn-link btnlink1 textmode1"
+          routerLink="/eventscheduler">
+          Event Scheduler
+        </button>
   <div class="row">
 
 
@@ -434,35 +438,51 @@
               </div>
             </div>
             
+            <!-- 📚 Self-Learning Skills Popup - Categorized Grid View -->
             <div *ngIf="showPopup" class="popup-overlay">
-              <div class="popup-box">
+              <div class="popup-box skills-grid-popup">
                 <div class="popup-header">
-                  <span>Select Skill Name</span>
+                  <span>🎓 Select Skill Name for Self-Learning</span>
                   <button class="close-btn" (click)="closePopup()">✖</button>
                 </div>
 
-                <div class="popup-body">
-                  <label class="option-card" *ngFor="let row of Enrolledskills">
-                    <input type="radio" name="modeOption" [value]="row.skillName" [(ngModel)]="skillname"
-                      (change)="closePopup(); onSkillSelected(row.skillName)">
-                    <span>{{ row.skillName }}</span>
-                  </label>
+                <div class="popup-body skills-grid-container">
+                  <!-- Security Column -->
+                  <div class="skill-category-column">
+                    <div class="category-header">Security</div>
+                    <div class="category-items">
+                      <label class="skill-option" *ngFor="let skillItem of getSkillsByType('Security')">
+                        <input type="radio" name="modeOption" [value]="skillItem.skillName" [(ngModel)]="skillname"
+                          (change)="closePopup(); onSkillSelected(skillItem.skillName)">
+                        <span class="skill-label">{{ skillItem.skillName }}</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Technologies Column -->
+                  <div class="skill-category-column">
+                    <div class="category-header">Technologies</div>
+                    <div class="category-items">
+                      <label class="skill-option" *ngFor="let skillItem of getSkillsByType('Technologies')">
+                        <input type="radio" name="modeOption" [value]="skillItem.skillName" [(ngModel)]="skillname"
+                          (change)="closePopup(); onSkillSelected(skillItem.skillName)">
+                        <span class="skill-label">{{ skillItem.skillName }}</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Compliance Column -->
+                  <div class="skill-category-column">
+                    <div class="category-header">Compliance</div>
+                    <div class="category-items">
+                      <label class="skill-option" *ngFor="let skillItem of getSkillsByType('Compliance')">
+                        <input type="radio" name="modeOption" [value]="skillItem.skillName" [(ngModel)]="skillname"
+                          (change)="closePopup(); onSkillSelected(skillItem.skillName)">
+                        <span class="skill-label">{{ skillItem.skillName }}</span>
+                      </label>
+                    </div>
+                  </div>
                 </div>
-
-                <!-- <div class="popup-body">
-                  <ng-container *ngIf="Enrolledskills.length; else noSkills">
-                    <label class="option-card" *ngFor="let row of Enrolledskills">
-                      <input type="radio" name="modeOption" [value]="row.skillName"
-                             [(ngModel)]="skillname"
-                             (change)="onSkillChange(skillname); onBatchInputChange(); closePopup(); onSkillSelected(row.skillName)">
-                      <span>{{ row.skillName }}</span>
-                    </label>
-                  </ng-container>
-                  <ng-template #noSkills>
-                    <p style="color: gray;">No skills available</p>
-                  </ng-template>
-                </div> -->
-
               </div>
             </div>
 
@@ -483,18 +503,18 @@
                 <option *ngIf="!isLoadingSkills && Enrolledskills.length === 0" disabled>No skills available</option>
               
                 <!-- Categorized Skills with optgroup (if categories exist) -->
-                <ng-container *ngIf="skillCategories && skillCategories.length > 0">
+                <!-- <ng-container *ngIf="skillCategories && skillCategories.length > 0">
                   <optgroup *ngFor="let category of skillCategories" [label]="category.category">
                     <option *ngFor="let skill of category.skills" [value]="skill">
                       {{ skill }}
                     </option>
                   </optgroup>
-                </ng-container>
+                </ng-container> -->
 
                 <!-- Fallback: Flat skill list (if no categories) -->
-                <ng-container *ngIf="!skillCategories || skillCategories.length === 0">
+                <!-- <ng-container *ngIf="!skillCategories || skillCategories.length === 0"> -->
                   <option *ngFor="let row of Enrolledskills" [value]="row.skillName">{{ row.skillName }}</option>
-                </ng-container>
+                <!-- </ng-container> -->
               </select>
 
             </div>
