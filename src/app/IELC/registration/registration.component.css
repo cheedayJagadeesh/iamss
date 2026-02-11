@@ -44,25 +44,25 @@ select:disabled {
 .tablebottom {
     width: 100%;
     overflow: auto;
-    th {
-        white-space: nowrap;
-
-    }
-
-    td {
-
-        padding: 2px;
-        text-align: left;
-        vertical-align: top;
-    }
-
-    td a {
-        text-decoration: none;
-        text-align: left;
-        margin: 0;
-        padding: 0;
-    }
 }
+
+.tablebottom th {
+    white-space: nowrap;
+}
+
+.tablebottom td {
+    padding: 2px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.tablebottom td a {
+    text-decoration: none;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+}
+
 
 .pagination {
     display: flex;
@@ -497,19 +497,20 @@ h2 {
     text-align: justify;
     border-collapse: collapse;
     border-spacing: 0;
-
-    tr {
-        height: 30px;
-        margin: 0;
-        padding: 0;
-    }
-
-    td {
-        padding: 0px 0px !important;
-        line-height: 0.2;
-        border: none;
-    }
 }
+
+.tableleft tr {
+    height: 30px;
+    margin: 0;
+    padding: 0;
+}
+
+.tableleft td {
+    padding: 0px 0px !important;
+    line-height: 0.2;
+    border: none;
+}
+
 
 .tableleft-2 {
     font-size: 16px;
