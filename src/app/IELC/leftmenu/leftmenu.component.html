@@ -8,6 +8,13 @@
     <i>🏠</i><span>Home</span>
   </a>
 
+    <!-- Add New Skill -->
+  <a *ngIf="canAccess('addskill')" routerLink="/addskill" routerLinkActive="active"
+    [class.active]="activeRoute === '/addskill'" (mouseenter)="showFloatingLabel($event, 'Add New Skill')"
+    (mouseleave)="hideFloatingLabel()">
+    <i>➕</i><span>Add New Skill</span>
+  </a>
+
   <!-- Registered User -->
    <a *ngIf="canAccess('registered')" routerLink="/registered" routerLinkActive="active" [class.active]="activeRoute === '/registered'"
     [routerLinkActiveOptions]="{ exact: true }" (mouseenter)="showFloatingLabel($event, 'Enrolled Users')"
@@ -20,13 +27,6 @@
     [routerLinkActiveOptions]="{ exact: true }" (mouseenter)="showFloatingLabel($event, 'Results')"
     (mouseleave)="hideFloatingLabel()">
     <i>📈</i><span>Results</span>
-  </a>
-
-  <!-- Add New Skill -->
-  <a *ngIf="canAccess('addskill')" routerLink="/addskill" routerLinkActive="active"
-    [class.active]="activeRoute === '/addskill'" (mouseenter)="showFloatingLabel($event, 'Add New Skill')"
-    (mouseleave)="hideFloatingLabel()">
-    <i>➕</i><span>Add New Skill</span>
   </a>
 
 
