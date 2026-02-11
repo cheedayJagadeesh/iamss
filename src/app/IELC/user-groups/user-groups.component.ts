@@ -579,7 +579,10 @@ today:string=''
 
 
   updateUniqueMaintainedBy(): void {
-    const all = (this.ismsdetails || []).map((item: any) => item.documentMaintainedBy).filter(Boolean);
+    const all = (this.ismsdetails || []).map((item: any) => {
+      const value = item.documentMaintainedBy;
+      return (value === null || value === undefined || value === '') ? 'N/A' : value;
+    });
     this.uniqueMaintainedBy = Array.from(new Set(all));
   }
 
@@ -724,7 +727,10 @@ today:string=''
     this.uniqueVersionsQMS = Array.from(new Set(all));
   }
   updateUniqueMaintainedByQMS(): void {
-    const all = (this.qmsdetails || []).map((item: any) => item.documentMaintainedByQMS).filter(Boolean);
+    const all = (this.qmsdetails || []).map((item: any) => {
+      const value = item.documentMaintainedBy;
+      return (value === null || value === undefined || value === '') ? 'N/A' : value;
+    });
     this.uniqueMaintainedByQMS = Array.from(new Set(all));
   }
 
@@ -958,7 +964,8 @@ today:string=''
           (item.ismsCurrentVersion === '' && this.selectedVersions.includes('')) ||
           this.selectedVersions.includes(item.ismsCurrentVersion);
   
-      const maintainedByMatch = this.selectedMaintainedBy.length === 0 || this.selectedMaintainedBy.includes(item.documentMaintainedBy);
+      const itemMaintainedBy = (item.documentMaintainedBy === null || item.documentMaintainedBy === undefined || item.documentMaintainedBy === '') ? 'N/A' : item.documentMaintainedBy;
+      const maintainedByMatch = this.selectedMaintainedBy.length === 0 || this.selectedMaintainedBy.includes(itemMaintainedBy);
       return deptMatch && docTypeMatch && docNoMatch && versionMatch && maintainedByMatch;
     });
     this.updateCounts();
@@ -1009,7 +1016,8 @@ today:string=''
           (item.qmsCurrentVersion === undefined && this.selectedVersionsQMS.includes('')) ||
           (item.qmsCurrentVersion === '' && this.selectedVersionsQMS.includes('')) ||
           this.selectedVersionsQMS.includes(item.qmsCurrentVersion);
-        const maintainedByMatchQMS = this.selectedMaintainedByQMS.length === 0 || this.selectedMaintainedByQMS.includes(item.documentMaintainedByQMS);
+        const itemMaintainedBy = (item.documentMaintainedBy === null || item.documentMaintainedBy === undefined || item.documentMaintainedBy === '') ? 'N/A' : item.documentMaintainedBy;
+        const maintainedByMatchQMS = this.selectedMaintainedByQMS.length === 0 || this.selectedMaintainedByQMS.includes(itemMaintainedBy);
         return deptMatchQMS && docTypeMatchQMS && docNoMatchQMS && versionMatchQMS && maintainedByMatchQMS;
     });
     this.updateQMSCounts();

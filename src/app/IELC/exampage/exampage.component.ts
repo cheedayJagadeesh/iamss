@@ -834,11 +834,62 @@ openModal() {
 }
 
 closeModal() {
-  const modalElement = document.getElementById('resultModal')!;
-  const modalInstance = bootstrap.Modal.getInstance(modalElement);
-  modalInstance?.hide();
-  alert("📩 You will receive your exam status via email shortly.");
-  this.router.navigate(['/registration']);
+  try {
+    const modalElement = document.getElementById('resultModal')!;
+    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+    
+    if (modalInstance) {
+      // Dispose the modal properly
+      modalInstance.hide();
+      // Give a brief moment for Bootstrap to start hiding
+      setTimeout(() => {
+        modalInstance.dispose();
+      }, 150);
+    }
+    
+    // Comprehensive cleanup
+    setTimeout(() => {
+      // Remove modal-open class and all related styles
+      document.body.classList.remove('modal-open');
+      document.documentElement.classList.remove('modal-open');
+      
+      // Force scroll to be enabled
+      document.body.style.overflow = 'unset';
+      document.body.style.overflowY = 'unset';
+      document.body.style.paddingRight = '';
+      document.documentElement.style.overflow = 'unset';
+      document.documentElement.style.overflowY = 'unset';
+      
+      // Remove all modal backdrops
+      document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+      
+      // Hide and clean all modals
+      document.querySelectorAll('.modal').forEach(modal => {
+        modal.classList.remove('show');
+        modal.classList.remove('fade');
+        (modal as HTMLElement).style.display = '';
+        (modal as HTMLElement).style.visibility = '';
+        modal.setAttribute('aria-hidden', 'true');
+      });
+      
+      // Allow body to be scrollable
+      document.body.style.position = '';
+      document.body.style.width = '';
+      
+      // Navigate before showing alert to prevent scroll lock from alert
+      this.router.navigate(['/registration']);
+      
+      // Show alert AFTER navigation
+      // setTimeout(() => {
+      //   //alert("📩 You will receive your exam status via email shortly.");
+      // }, 500);
+      this.exitFullscreen();
+    }, 300);
+  } catch (error) {
+    console.error('Error closing modal:', error);
+    // Force navigate even if there's an error
+    this.router.navigate(['/registration']);
+  }
 }
 
 

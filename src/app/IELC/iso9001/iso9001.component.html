@@ -174,7 +174,7 @@
 
             <th scope="col">
                     QMSDocType
-                    <div style="display: inline-block; position: relative;">
+                    <div style="display: block;">
                         <button class="btn btn-sm dropdown-toggle" type="button" [ngClass]="{'btn-primary': !isAllDocTypesSelectedQMS, 'btn-light': isAllDocTypesSelectedQMS}" (click)="showDocTypeFilterQMS = !showDocTypeFilterQMS">Filter</button>
                         <div class="dropdown-menu p-2" [ngClass]="{'show': showDocTypeFilterQMS}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
                             <div class="form-check">
@@ -194,7 +194,7 @@
                 <th scope="col">QMSDocumentName</th>
                 <th scope="col">
                     QMSDocumentNo
-                    <div style="display: inline-block; position: relative;">
+                    <div style="display: block;">
                         <button class="btn btn-sm dropdown-toggle" type="button" [ngClass]="{'btn-primary': !isAllDocNosSelectedQMS, 'btn-light': isAllDocNosSelectedQMS}" (click)="showDocNoFilterQMS = !showDocNoFilterQMS">Filter</button>
                         <div class="dropdown-menu p-2" [ngClass]="{'show': showDocNoFilterQMS}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
                             <div class="form-check">
@@ -213,7 +213,7 @@
                 </th>
                 <th scope="col">
                     QMSCurrentVersion
-                    <div style="display: inline-block; position: relative;">
+                    <div style="display: block;">
                         <button class="btn btn-sm dropdown-toggle" type="button" [ngClass]="{'btn-primary': !isAllVersionsSelectedQMS, 'btn-light': isAllVersionsSelectedQMS}" (click)="showVersionFilterQMS = !showVersionFilterQMS">Filter</button>
                         <div class="dropdown-menu p-2" [ngClass]="{'show': showVersionFilterQMS}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
                             <div class="form-check">
@@ -221,7 +221,7 @@
                                 <label class="form-check-label" for="selectAllVersionsQMS">(Select All)</label>
                             </div>
                             <div *ngFor="let valQMS of uniqueVersionsQMS">
-                                <input class="form-check-input" type="checkboxQMS" [id]="'version_' + valQMS" [checked]="selectedVersionsQMS.includes(valQMS)" (change)="onVersionCheckboxChangeQMS($event, valQMS)">
+                                <input class="form-check-input" type="checkbox" [id]="'version_' + valQMS" [checked]="selectedVersionsQMS.includes(valQMS)" (change)="onVersionCheckboxChangeQMS($event, valQMS)">
                                 <label class="form-check-label" [for]="'version_' + valQMS">{{ valQMS }}</label>
                             </div>
                             <div class="mt-2 text-end">
@@ -232,7 +232,7 @@
                 </th>
                 <th scope="col">
                     DocumentMaintainedBy
-                    <div style="display: inline-block; position: relative;">
+                    <div style="display: block;">
                         <button class="btn btn-sm dropdown-toggle" type="button" [ngClass]="{'btn-primary': !isAllMaintainedBySelectedQMS, 'btn-light': isAllMaintainedBySelectedQMS}" (click)="showMaintainedByFilterQMS = !showMaintainedByFilterQMS">Filter</button>
                         <div class="dropdown-menu p-2" [ngClass]="{'show': showMaintainedByFilterQMS}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
                             <div class="form-check">
@@ -263,9 +263,9 @@
               </a>
               <span *ngIf="!qmsde.url">{{ qmsde.qmsDocumentName }}</span>
             </td>
-            <td>{{ qmsde.qmsDocumentNo }}</td>
-            <td>{{ qmsde.qmsCurrentVersion || '-' }}</td>
-            <td>{{ qmsde.documentMaintainedBy }}</td>
+            <td>{{ qmsde.qmsDocumentNo || '-' }}</td>
+            <td>{{ qmsde.qmsCurrentVersion == null || qmsde.qmsCurrentVersion === '' ? '-' : qmsde.qmsCurrentVersion}}</td>
+            <td>{{ qmsde.documentMaintainedBy == null || qmsde.documentMaintainedBy === '' ? 'N/A' : qmsde.documentMaintainedBy}}</td>
           </tr>
 
           <tr *ngIf="filteredQMSDocs.length === 0">

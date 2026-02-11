@@ -125,7 +125,10 @@ qmsalldata: QMSMasterData = {
     this.uniqueVersionsQMS = Array.from(new Set(all));
   }
   updateUniqueMaintainedByQMS(): void {
-    const all = (this.qmsdetails || []).map((item: any) => item.documentMaintainedByQMS).filter(Boolean);
+    const all = (this.qmsdetails || []).map((item: any) => {
+      const value = item.documentMaintainedBy;
+      return (value === null || value === undefined || value === '') ? 'N/A' : value;
+    });
     this.uniqueMaintainedByQMS = Array.from(new Set(all));
   }
 
@@ -287,7 +290,8 @@ updateUniqueDeptsQMS(): void {
           (item.qmsCurrentVersion === undefined && this.selectedVersionsQMS.includes('')) ||
           (item.qmsCurrentVersion === '' && this.selectedVersionsQMS.includes('')) ||
           this.selectedVersionsQMS.includes(item.qmsCurrentVersion);
-        const maintainedByMatchQMS = this.selectedMaintainedByQMS.length === 0 || this.selectedMaintainedByQMS.includes(item.documentMaintainedByQMS);
+        const itemMaintainedBy = (item.documentMaintainedBy === null || item.documentMaintainedBy === undefined || item.documentMaintainedBy === '') ? 'N/A' : item.documentMaintainedBy;
+        const maintainedByMatchQMS = this.selectedMaintainedByQMS.length === 0 || this.selectedMaintainedByQMS.includes(itemMaintainedBy);
         return deptMatchQMS && docTypeMatchQMS && docNoMatchQMS && versionMatchQMS && maintainedByMatchQMS;
     });
     this.updateQMSCounts();

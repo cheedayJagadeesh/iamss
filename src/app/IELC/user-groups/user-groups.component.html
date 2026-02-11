@@ -13128,7 +13128,7 @@
                     </td>
                     <td>{{ismsde.ismsDocumentNo}}</td>
                     <td>{{ismsde.ismsCurrentVersion == null || ismsde.ismsCurrentVersion === '' ? '-' : ismsde.ismsCurrentVersion}}</td>
-                    <td>{{ismsde.documentMaintainedBy}}</td>
+                    <td>{{ismsde.documentMaintainedBy == null || ismsde.documentMaintainedBy === '' ? 'N/A' : ismsde.documentMaintainedBy}}</td>
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
                             data-bs-target="#exampleModal1901">
@@ -13376,7 +13376,7 @@
                 </th>
                 <th scope="col">
                     QMSCurrentVersion
-                    <div style="display: inline-block; position: relative;">
+                    <div style="display: block;">
                         <button class="btn btn-sm dropdown-toggle" type="button" [ngClass]="{'btn-primary': !isAllVersionsSelectedQMS, 'btn-light': isAllVersionsSelectedQMS}" (click)="showVersionFilterQMS = !showVersionFilterQMS">Filter</button>
                         <div class="dropdown-menu p-2" [ngClass]="{'show': showVersionFilterQMS}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
                             <div class="form-check">
@@ -13395,7 +13395,7 @@
                 </th>
                 <th scope="col">
                     DocumentMaintainedBy
-                    <div style="display: inline-block; position: relative;">
+                    <div style="display: block;">
                         <button class="btn btn-sm dropdown-toggle" type="button" [ngClass]="{'btn-primary': !isAllMaintainedBySelectedQMS, 'btn-light': isAllMaintainedBySelectedQMS}" (click)="showMaintainedByFilterQMS = !showMaintainedByFilterQMS">Filter</button>
                         <div class="dropdown-menu p-2" [ngClass]="{'show': showMaintainedByFilterQMS}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
                             <div class="form-check">
@@ -13433,7 +13433,7 @@
                     </td>
                     <td>{{QMSde.qmsDocumentNo || '-' }}</td>
                     <td>{{QMSde.qmsCurrentVersion == null || QMSde.qmsCurrentVersion === '' ? '-' : QMSde.qmsCurrentVersion}}</td>
-                    <td>{{QMSde.documentMaintainedBy}}</td>
+                    <td>{{QMSde.documentMaintainedBy == null || QMSde.documentMaintainedBy === '' ? 'N/A' : QMSde.documentMaintainedBy}}</td>
                     <td>
                         <button type="button" class="btn btn-info me-1" data-bs-toggle="modal"
                             data-bs-target="#exampleModal1901">

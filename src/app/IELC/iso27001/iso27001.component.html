@@ -181,7 +181,7 @@
 
             <th scope="col">
                     ISMSDocType
-                    <div style="display: inline-block; position: relative;">
+                    <div style="display: block;">
                         <button class="btn btn-sm dropdown-toggle" type="button" [ngClass]="{'btn-primary': !isAllDocTypesSelected, 'btn-light': isAllDocTypesSelected}" (click)="showDocTypeFilter = !showDocTypeFilter">Filter</button>
                         <div class="dropdown-menu p-2" [ngClass]="{'show': showDocTypeFilter}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
                             <div class="form-check">
@@ -201,7 +201,7 @@
                 <th scope="col">ISMSDocumentName</th>
                 <th scope="col">
                     ISMSDocumentNo
-                    <div style="display: inline-block; position: relative;">
+                    <div style="display: block;">
                         <button class="btn btn-sm dropdown-toggle" type="button" [ngClass]="{'btn-primary': !isAllDocNosSelected, 'btn-light': isAllDocNosSelected}" (click)="showDocNoFilter = !showDocNoFilter">Filter</button>
                         <div class="dropdown-menu p-2" [ngClass]="{'show': showDocNoFilter}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
                             <div class="form-check">
@@ -220,7 +220,7 @@
                 </th>
                 <th scope="col">
                     ISMSCurrentVersion
-                    <div style="display: inline-block; position: relative;">
+                    <div style="display: block;">
                         <button class="btn btn-sm dropdown-toggle" type="button" [ngClass]="{'btn-primary': !isAllVersionsSelected, 'btn-light': isAllVersionsSelected}" (click)="showVersionFilter = !showVersionFilter">Filter</button>
                         <div class="dropdown-menu p-2" [ngClass]="{'show': showVersionFilter}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
                             <div class="form-check">
@@ -239,7 +239,7 @@
                 </th>
                 <th scope="col">
                     DocumentMaintainedBy
-                    <div style="display: inline-block; position: relative;">
+                    <div style="display: block;">
                         <button class="btn btn-sm dropdown-toggle" type="button" [ngClass]="{'btn-primary': !isAllMaintainedBySelected, 'btn-light': isAllMaintainedBySelected}" (click)="showMaintainedByFilter = !showMaintainedByFilter">Filter</button>
                         <div class="dropdown-menu p-2" [ngClass]="{'show': showMaintainedByFilter}" style="min-width: 200px; max-height: 250px; overflow-y: auto; position: absolute; z-index: 1000;">
                             <div class="form-check">
@@ -270,9 +270,9 @@
               </a>
               <span *ngIf="!ismsde.url">{{ ismsde.ismsDocumentName }}</span>
             </td>
-            <td>{{ ismsde.ismsDocumentNo }}</td>
-            <td>{{ ismsde.ismsCurrentVersion || '-' }}</td>
-            <td>{{ ismsde.documentMaintainedBy }}</td>
+            <td>{{ ismsde.ismsDocumentNo || '-' }}</td>
+            <td>{{ ismsde.ismsCurrentVersion == null || ismsde.ismsCurrentVersion === '' ? '-' : ismsde.ismsCurrentVersion}}</td>
+            <td>{{ ismsde.documentMaintainedBy == null || ismsde.documentMaintainedBy === '' ? 'N/A' : ismsde.documentMaintainedBy}}</td>
           </tr>
 
           <tr *ngIf="filteredISMSDocs.length === 0">
