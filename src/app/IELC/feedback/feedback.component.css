@@ -151,6 +151,18 @@ textarea.form-control {
 .btn-primary {
     border-radius: 8px;
     font-weight: bold;
+    min-height: 45px;
+    min-width: 200px;
+    visibility: visible !important;
+    display: inline-block !important;
+    opacity: 1;
+}
+
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    visibility: visible !important;
+    display: inline-block !important;
 }
 
 .fade-in {

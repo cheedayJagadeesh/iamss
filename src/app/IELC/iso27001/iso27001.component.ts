@@ -137,7 +137,10 @@ filteredISMSDocs: any[] = [];
 
 
   updateUniqueMaintainedBy(): void {
-    const all = (this.ismsdetails || []).map((item: any) => item.documentMaintainedBy).filter(Boolean);
+    const all = (this.ismsdetails || []).map((item: any) => {
+      const value = item.documentMaintainedBy;
+      return (value === null || value === undefined || value === '') ? 'N/A' : value;
+    });
     this.uniqueMaintainedBy = Array.from(new Set(all));
   }
 
@@ -306,7 +309,8 @@ filteredISMSDocs: any[] = [];
           (item.ismsCurrentVersion === '' && this.selectedVersions.includes('')) ||
           this.selectedVersions.includes(item.ismsCurrentVersion);
   
-      const maintainedByMatch = this.selectedMaintainedBy.length === 0 || this.selectedMaintainedBy.includes(item.documentMaintainedBy);
+      const itemMaintainedBy = (item.documentMaintainedBy === null || item.documentMaintainedBy === undefined || item.documentMaintainedBy === '') ? 'N/A' : item.documentMaintainedBy;
+      const maintainedByMatch = this.selectedMaintainedBy.length === 0 || this.selectedMaintainedBy.includes(itemMaintainedBy);
       return deptMatch && docTypeMatch && docNoMatch && versionMatch && maintainedByMatch;
     });
     this.updateCounts();
@@ -548,6 +552,17 @@ GetISMSDetails() {
       this.updateUniqueDocNos();
       this.updateUniqueVersions();
       this.updateUniqueMaintainedBy();
+      // Initialize all selected filters
+      this.selectedDepts = [...this.uniqueDepts];
+      this.isAllDeptsSelected = true;
+      this.selectedDocTypes = [...this.uniqueDocTypes];
+      this.isAllDocTypesSelected = true;
+      this.selectedDocNos = [...this.uniqueDocNos];
+      this.isAllDocNosSelected = true;
+      this.selectedVersions = [...this.uniqueVersions];
+      this.isAllVersionsSelected = true;
+      this.selectedMaintainedBy = [...this.uniqueMaintainedBy];
+      this.isAllMaintainedBySelected = true;
       this.updateCounts(); 
       this.isLoading = false;
     },
