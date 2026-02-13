@@ -725,7 +725,7 @@ if (venue === 'Self-Learning') {
         <p>Attend the meeting SkillName\\ Self-Learning\\ Recorded using below link:</p>
         <p>
         <a href="${sessionDescription ?? '#'}" target="_blank">
-  Click here to access the meeting
+  Click here to access
 </a>
 
         </p>
