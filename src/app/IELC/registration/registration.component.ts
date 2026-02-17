@@ -1474,6 +1474,11 @@ closePopup() {
   this.showPopup = false;
 }
 
+HidePopup(){
+    this.showPopup = false;
+    this.selectedValue = '';
+}
+
 
 onDateChanged() {
   if (!this.skillname || !this.date || !this.selectedValue) {
