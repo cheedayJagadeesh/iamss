@@ -149,6 +149,9 @@ violationTimer: any = null;
 isViolationCountdownActive = false;
 resumeAllowed = true;
 showViolationModal = false;
+// ✅ VIOLATION EMAIL DE-DUPLICATION
+violationEmailSent = false; // Prevent multiple emails for same violation
+examSubmitted = false; // Track if exam already submitted
   //isAutoSubmitDueToViolation: any;
 
 
@@ -235,8 +238,13 @@ private blurHandler!: () => void;
 //   }
 // });
 
+// ✅ CONSOLIDATED FULLSCREEN CHANGE LISTENER (Only one!)
 document.addEventListener('fullscreenchange', () => {
   if (!document.fullscreenElement && this.isExamLocked) {
+    // 🚫 If exam already submitted, ignore this event
+    if (this.examSubmitted) {
+      return;
+    }
 
     this.tabSwitchCount++;
 
@@ -285,19 +293,6 @@ document.addEventListener('fullscreenchange', () => {
 //     }
 //   }
 // });
-
-
-document.addEventListener('fullscreenchange', () => {
-    if (!document.fullscreenElement && this.isExamLocked) {
-      this.fullscreenExited = true;
-      //this.tabSwitchCount++;
-
-      // this.warningMessage =
-      //  '⚠️ You exited fullscreen. Click "Resume Exam" to continue.';
-      // this.showWarningBanner = true;
-    }
-  });
-
 
 
   this.blurHandler = () => {
@@ -772,9 +767,19 @@ UpdateResult() {
               <p style="color: #999; font-size: 10px; margin-top: 10px;text-align:center">INTEQ SOFTWARE LLP, 1-10-75-1 to 6, 1st Floor, Saptagiri Towers, Begumpet, HYDERABAD 500016, INDIA </p>
                   <p style="color: #999; font-size: 10px; margin-top: 10px; text-align:center">www.inteqsolutions.com</p>    
             </div>
-  <p class="contact-info">
+          <p class="contact-info">
+  Report Potential Breaches Immediately:
+  <a href="mailto:incidents@inteqsolutions.com">incidents@inteqsolutions.com</a>
+</p>
+ <p class="contact-info">
   For ISMS &amp; QMS queries contact:
   <a href="mailto:ramprasadh@inteqsolutions.com">ramprasadh@inteqsolutions.com</a>
+</p>
+<p class="contact-info">
+  Employee Learning Center:
+  <a href="https://ielc.inteqportal.com/" target="_blank">
+    https://ielc.inteqportal.com/
+  </a>
 </p>
             <br>
             <p style="margin-top: 15px; color: Green;">Thank you for your effort and dedication!</p>
@@ -803,9 +808,19 @@ UpdateResult() {
                 </tr>
               </tbody>
             </table>
-  <p class="contact-info">
+          <p class="contact-info">
+  Report Potential Breaches Immediately:
+  <a href="mailto:incidents@inteqsolutions.com">incidents@inteqsolutions.com</a>
+</p>
+ <p class="contact-info">
   For ISMS &amp; QMS queries contact:
   <a href="mailto:ramprasadh@inteqsolutions.com">ramprasadh@inteqsolutions.com</a>
+</p>
+<p class="contact-info">
+  Employee Learning Center:
+  <a href="https://ielc.inteqportal.com/" target="_blank">
+    https://ielc.inteqportal.com/
+  </a>
 </p>
 
 
@@ -815,7 +830,16 @@ UpdateResult() {
           `;
         }
         this.emailService.sendEmail(to,cc, subject, body);
-        // alert("📩 You will receive your exam status via email shortly.");
+        
+        console.log('✅ Result updated and email sent. Modal should be visible now.');
+        console.log('📧 Email sent to:', to);
+        console.log('🎓 Exam Result:', this.examPassed ? 'PASSED' : 'FAILED', '(' + this.percentage.toFixed(0) + '%)');
+        
+        // ✅ AUTO-CLOSE MODAL AFTER 5 SECONDS (user sees result clearly)
+        setTimeout(() => {
+          console.log('⏱️ Auto-closing modal and redirecting to registration...');
+          this.closeModal();
+        }, 5000);
       },
       (error) => {
         // console.error('❌ Error updating Record:', error);
@@ -829,68 +853,108 @@ UpdateResult() {
 
 
 openModal() {
-  const modal = new bootstrap.Modal(document.getElementById('resultModal')!);
-  modal.show();
+  try {
+    console.log('📂 openModal() called - Opening result modal...');
+    
+    // Give DOM a moment to settle
+    setTimeout(() => {
+      const modalElement = document.getElementById('resultModal');
+      
+      if (!modalElement) {
+        console.error('❌ Result modal element not found in DOM!');
+        console.error('Looking for: #resultModal');
+        // List all modals found
+        const allModals = document.querySelectorAll('.modal');
+        console.log('📊 Modals found in DOM:', allModals.length);
+        allModals.forEach((m, i) => {
+          console.log(`  Modal ${i}:`, m.id, m.className);
+        });
+        return;
+      }
+      
+      console.log('✅ Modal element found:', modalElement.id);
+      console.log('📊 Modal visible:', modalElement.offsetParent !== null);
+      console.log('📊 Modal z-index:', window.getComputedStyle(modalElement).zIndex);
+      
+      const modal = new bootstrap.Modal(modalElement);
+      console.log('🎯 Bootstrap modal instance created');
+      modal.show();
+      console.log('✨ Modal shown to user');
+      const backdrop = document.querySelector('.modal-backdrop');
+      if (backdrop) {
+        console.log('📊 Backdrop opacity:', window.getComputedStyle(backdrop).opacity);
+      }
+    }, 100);
+  } catch (error) {
+    console.error('❌ Error in openModal():', error);
+  }
 }
+
+
 
 closeModal() {
   try {
-    const modalElement = document.getElementById('resultModal')!;
-    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+    console.log('🔄 closeModal() called - IMMEDIATELY closing and redirecting...');
     
-    if (modalInstance) {
-      // Dispose the modal properly
-      modalInstance.hide();
-      // Give a brief moment for Bootstrap to start hiding
-      setTimeout(() => {
-        modalInstance.dispose();
-      }, 150);
+    // ✅ AGGRESSIVE CLEANUP - Don't wait for modal disposal
+    
+    // Step 1: Hide modal immediately
+    const modalElement = document.getElementById('resultModal');
+    if (modalElement) {
+      const modalInstance = bootstrap.Modal.getInstance(modalElement);
+      if (modalInstance) {
+        modalInstance.hide();
+      }
+      // Force hide with CSS
+      modalElement.style.display = 'none';
+      modalElement.classList.remove('show');
     }
     
-    // Comprehensive cleanup
-    setTimeout(() => {
-      // Remove modal-open class and all related styles
-      document.body.classList.remove('modal-open');
-      document.documentElement.classList.remove('modal-open');
-      
-      // Force scroll to be enabled
-      document.body.style.overflow = 'unset';
-      document.body.style.overflowY = 'unset';
-      document.body.style.paddingRight = '';
-      document.documentElement.style.overflow = 'unset';
-      document.documentElement.style.overflowY = 'unset';
-      
-      // Remove all modal backdrops
-      document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-      
-      // Hide and clean all modals
-      document.querySelectorAll('.modal').forEach(modal => {
-        modal.classList.remove('show');
-        modal.classList.remove('fade');
-        (modal as HTMLElement).style.display = '';
-        (modal as HTMLElement).style.visibility = '';
-        modal.setAttribute('aria-hidden', 'true');
-      });
-      
-      // Allow body to be scrollable
-      document.body.style.position = '';
-      document.body.style.width = '';
-      
-      // Navigate before showing alert to prevent scroll lock from alert
-      this.router.navigate(['/registration']);
-      
-      // Show alert AFTER navigation
-      // setTimeout(() => {
-      //   //alert("📩 You will receive your exam status via email shortly.");
-      // }, 500);
-      this.exitFullscreen();
-    }, 300);
+    // Step 2: Immediate DOM cleanup (don't wait)
+    console.log('🧹 Immediate cleanup...');
+    
+    // Remove modal-open class
+    document.body.classList.remove('modal-open');
+    document.documentElement.classList.remove('modal-open');
+    
+    // Remove all backdrops immediately
+    document.querySelectorAll('.modal-backdrop').forEach(el => {
+      el.remove();
+    });
+    
+    // Reset overflow
+    document.body.style.overflow = 'auto';
+    document.body.style.overflowY = 'auto';
+    document.body.style.paddingRight = '';
+    document.documentElement.style.overflow = 'auto';
+    
+    // Reset body position
+    document.body.style.position = '';
+    document.body.style.width = '';
+    
+    console.log('✅ Cleanup complete - NOW navigating...');
+    
+    // Step 3: Immediate navigation (no delay)
+    this.router.navigate(['/registration']).then(() => {
+      console.log('✅ Navigation successful!');
+    }).catch((err) => {
+      console.error('❌ Navigation error:', err);
+    });
+    
+    // Step 4: Exit fullscreen
+    this.exitFullscreen();
+    console.log('🔚 Fullscreen exited');
+    
   } catch (error) {
-    console.error('Error closing modal:', error);
-    // Force navigate even if there's an error
+    console.error('❌ Error in closeModal:', error);
+    // Emergency fallback
     this.router.navigate(['/registration']);
+    this.exitFullscreen();
   }
 }
+
+
+
 
 
 get availableOptions(): string[] {
@@ -933,6 +997,9 @@ get availableOptions(): string[] {
 // }
 
 submitExam() {
+  // ✅ MARK EXAM AS SUBMITTED - Prevents future violation detections
+  //this.examSubmitted = true;
+  
   // Always clear timers
   clearInterval(this.timer);
   clearInterval(this.violationTimer);
@@ -940,6 +1007,9 @@ submitExam() {
   // Hide violation UI if any
   this.showViolationModal = false;
   this.fullscreenExited = false;
+  
+  // ✅ RESET EXAM LOCK - Critical to prevent false violations after exam ends
+  //this.isExamLocked = false;
 
   // ❌ Auto-submit due to violation → DO NOT update result
   if (this.isViolationCountdownActive) {
@@ -996,8 +1066,11 @@ startViolationModal() {
   this.showViolationModal = true;
   this.violationCountdown = 10;
 
-  // ✅ Send violation email ONCE
-  this.sendViolationEmail('Exited fullscreen multiple times');
+  // ✅ PREVENT DUPLICATE EMAILS - Send only once per violation
+  if (!this.violationEmailSent) {
+    this.sendViolationEmail('Exited fullscreen multiple times');
+    this.violationEmailSent = true; // Mark as sent
+  }
 
   this.violationTimer = setInterval(() => {
     this.violationCountdown--;
@@ -1147,7 +1220,7 @@ closeCorrectPopup() {
 
 confirmSubmit() {
   this.showConfirmSubmit = false;
-  this.submitExam(); // your existing submit logic
+  this.submitExam(); // ✅ Call submitExam which handles modal display and auto-close
 }
 get answeredCount(): number {
   return this.userAnswers.filter(a => !!a.selected).length;
@@ -1295,18 +1368,19 @@ resumeFullscreen() {
 
 
 sendViolationEmail(reason: string) {
+  // ✅ ADMIN EMAIL CONFIGURATION - Send violation report to admin, not user
+  //const adminEmail = 'exam-admin@inteqsolutions.com'; // Configure as needed
 
-  //const admins = environment.adminViolationEmails.join(',');
-   const matchedUser = this.Registeredusers.find(user =>
+     const matchedUser = this.Registeredusers.find(user =>
       user.skillName === this.selectedSkill &&
       (this.enrollmentID ? user.enrollmentID === this.enrollmentID : true)
     );
-const to = matchedUser.email || this.userEmail;
-        const bcc = '';
+  
+  // Fallback to userEmail if no admin configured
+  const to = matchedUser.email || this.userEmail;
+  const bcc = '';
 
-
-
-  const subject = '🚨 Exam Violation Detected';
+  const subject = '🚨 Exam Violation Detected - ' + this.selectedSkill;
 
   const body = `
     <h3>🚨 Exam Violation Alert</h3>
@@ -1319,14 +1393,21 @@ const to = matchedUser.email || this.userEmail;
     <hr>
 
     <p><strong>Violation Type:</strong> ${reason}</p>
-    <p><strong>Violation Count:</strong> ${this.tabSwitchCount}</p>
+    <p><strong>Violation Count:</strong> ${this.tabSwitchCount-1}</p>
+    <p><strong>Fullscreen Exit Attempts Remaining:</strong> ${this.remainingFullscreenAttempts} / ${this.maxFullscreenAttempts-1}</p>
     <p><strong>Time:</strong> ${new Date().toLocaleString()}</p>
 
     <p style="color:red;">
-      This violation may lead to auto-submission of the exam.
+      <strong>ACTION:</strong> This violation has triggered auto-submission of the exam.
+      The exam response will be graded as submitted due to violation.
     </p>
   `;
-  this.emailService.sendEmail(to,bcc, subject, body);
+  
+  console.warn('📧 Sending violation email to:', to);
+  console.warn('📋 Violation Reason:', reason);
+  console.warn('📋 Tab Switch Count:', this.tabSwitchCount);
+  
+  this.emailService.sendEmail(to, bcc, subject, body);
   // this.emailService.sendEmail(
   //   admins,        // to
   //   '',            // bcc
