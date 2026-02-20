@@ -722,10 +722,10 @@ if (venue === 'Self-Learning') {
       const subject = 'Session Invitation Link';
       const body = `
         <p>Thanks for the Registration!</p>
-        <p>Attend the meeting SkillName\\ Self-Learning\\ Recorded using below link:</p>
+        <p>Attend the meeting SkillName \\ Self-Learning \\ Recorded \\ learning materials using below link:</p>
         <p>
         <a href="${sessionDescription ?? '#'}" target="_blank">
-  Click here to access the meeting
+  Click here to access
 </a>
 
         </p>
@@ -752,8 +752,18 @@ if (venue === 'Self-Learning') {
         </table>
         <br>
           <p class="contact-info">
+  Report Potential Breaches Immediately:
+  <a href="mailto:incidents@inteqsolutions.com">incidents@inteqsolutions.com</a>
+</p>
+ <p class="contact-info">
   For ISMS &amp; QMS queries contact:
   <a href="mailto:ramprasadh@inteqsolutions.com">ramprasadh@inteqsolutions.com</a>
+</p>
+<p class="contact-info">
+  Employee Learning Center:
+  <a href="https://ielc.inteqportal.com/" target="_blank">
+    https://ielc.inteqportal.com/
+  </a>
 </p>
       `;
 
@@ -782,6 +792,7 @@ resetForm(): void {
   this.time = '';
   this.selectedVenue = '';
   this.batchMembersCount = 0;
+  this.selectedValue = '';
 }
 
 // getSessionDescription(skill: string, venue: string, date: string, time: string): string {
@@ -963,13 +974,15 @@ GetAllSkillSessions() {
     const visibleSessions: any[] = [];
     this.allSkillSessions = sessions;
 
-    // Build skill type mapping from API response
+    // ✅ BUILD COMPLETE SKILL TYPE MAPPING - Must happen FIRST
+    //console.log('🔨 Building skill type mapping from API...');
     sessions.forEach((session: any) => {
       if (session.skillName && session.skillType) {
         this.skillTypeFromAPI[session.skillName] = session.skillType;
       }
     });
-    console.log('Skill Type Mapping from API:', this.skillTypeFromAPI);
+    //console.log('✅ Skill Type Mapping Complete:', this.skillTypeFromAPI);
+    //console.log('📊 Total skills with types:', Object.keys(this.skillTypeFromAPI).length);
 
     const processSessions = async () => {
       for (const session of sessions) {
@@ -1291,34 +1304,44 @@ isModeSelected: boolean = false;
   this.showPopup = venue === 'Self-Learning';
   this.disableDate = true;
   this.disableTime = true;
-
+  this.isSkillDisabled = true;
   // Fetch skills based on venue
   this.ielc.GetSkillsByVenue(venue).subscribe({
     next: (res) => {
       const skills = res.map((skill: any) => ({ skillName: skill }));
-      //debugger;
       
-      // Get skills with type information
+      // ✅ GET SKILLS WITH TYPE INFORMATION
+      //console.log(`📥 Fetched ${res.length} skills for ${venue}`);
       const skillsWithType = this.getSkillsWithType(res);
+      
+      // ✅ CHECK: Do we have type information for all skills?
+      const skillsWithoutTypes = skillsWithType.filter(s => s.skillType === 'Other');
+      if (skillsWithoutTypes.length > 0) {
+        console.warn(`⚠️ ${skillsWithoutTypes.length} skills missing type info:`, 
+          skillsWithoutTypes.map(s => s.skillName));
+      }
       
       // Group skills by category
       const categorizedSkills = this.groupSkillsByCategory(res);
-      console.log('Categorized skills:', categorizedSkills);
+      //console.log('📊 Categorized skills:', categorizedSkills);
       
       if (venue === 'Offline') {
         this.EnrolledskillsOffline = skills;
         this.skillCategoriesOffline = categorizedSkills;
         this.skillCategories = this.skillCategoriesOffline;
+        this.isSkillDisabled = false;
       }
       else if (venue === 'Teams') {
         this.EnrolledskillsTeams = skills;
         this.skillCategoriesTeams = categorizedSkills;
         this.skillCategories = this.skillCategoriesTeams;
+        this.isSkillDisabled = false;
       }
       else if (venue === 'Self-Learning') {
         this.EnrolledskillsLearning = skills;
         this.skillCategoriesLearning = categorizedSkills;
         this.skillCategories = this.skillCategoriesLearning;
+        //this.isSkillDisabled = false;
       }
 
       // ✅ Bind active list to dropdown
@@ -1327,12 +1350,13 @@ isModeSelected: boolean = false;
 
       this.skillname = '';
       this.isLoadingSkills = false;
-      console.log(`Skills for ${venue}:`, skills);
-      console.log(`Skills with Type for ${venue}:`, skillsWithType);
-      console.log(`Categories for ${venue}:`, this.skillCategories);
+      
+      //console.log(`✅ Skills loaded for ${venue}:`, skills.length);
+      //console.log(`   - With types:`, skillsWithType.length);
+      //console.log(`   - Categories:`, Object.keys(categorizedSkills || {}).length);
     },
     error: (err) => {
-      console.error(`Error fetching skills for ${venue}`, err);
+      console.error(`❌ Error fetching skills for ${venue}`, err);
       this.Enrolledskills = [];
       this.EnrolledskillsWithType = [];
       this.skillCategories = [];
@@ -1446,6 +1470,7 @@ isModeSelected: boolean = false;
 // }
 
 onSkillSelected(skill: string) {
+  //debugger;
   if (!skill) return;
   this.skillname = skill;          
   this.closePopup();               
@@ -1469,11 +1494,23 @@ onSkillSelected(skill: string) {
       }
     });
   }
+      if (this.selectedValue === 'Self-Learning') {
+    this.isSkillDisabled = false;
+  }
 }
 closePopup() {
   this.showPopup = false;
 }
 
+isSkillDisabled = false;
+HidePopup(){
+    this.showPopup = false;
+    this.selectedValue = '';
+  //   if (this.selectedValue === 'Self-Learning') {
+  //   this.isSkillDisabled = false;
+  // }
+    //this.isSkillDisabled = true;
+}
 
 onDateChanged() {
   if (!this.skillname || !this.date || !this.selectedValue) {
@@ -1621,7 +1658,7 @@ groupSkillsByCategory(skills: any[]): SkillCategory[] {
     }))
     .sort((a, b) => a.category.localeCompare(b.category));
 
-  console.log('Result from groupSkillsByCategory:', result);
+  //console.log('Result from groupSkillsByCategory:', result);
   return result;
 }
 
@@ -1645,10 +1682,19 @@ getSkillsWithType(skills: any[]): SkillWithType[] {
   const skillNames = Array.isArray(skills) ? 
     skills.map(s => typeof s === 'string' ? s : (s.skillName || s)) : [];
 
-  return skillNames.map(skillName => ({
-    skillName,
-    skillType: this.skillTypeFromAPI[skillName] || 'Other'
-  }));
+  return skillNames.map(skillName => {
+    const skillType = this.skillTypeFromAPI[skillName];
+    
+    // ✅ Log missing types for debugging
+    if (!skillType) {
+      console.warn(`⚠️ Skill type missing for: "${skillName}". Available types:`, this.skillTypeFromAPI);
+    }
+    
+    return {
+      skillName,
+      skillType: skillType || 'Other'  // Fallback to 'Other' if not found
+    };
+  });
 }
 
 /**
@@ -1658,6 +1704,14 @@ getSkillsWithType(skills: any[]): SkillWithType[] {
  */
 getSkillsByType(skillType: string): SkillWithType[] {
   const skillsOfType = this.EnrolledskillsWithType.filter(skill => skill.skillType === skillType);
+  
+  // ✅ Debug logging
+  if (skillsOfType.length === 0) {
+    console.warn(`⚠️ No skills found for type: "${skillType}"`);
+    //console.log('   Available types:', 
+    //  [...new Set(this.EnrolledskillsWithType.map(s => s.skillType))]);
+    //console.log('   Total skills with types:', this.EnrolledskillsWithType.length);
+  }
   
   // Apply custom ordering from skillOrderConfig
   return this.sortSkillsByConfig(skillsOfType, skillType);

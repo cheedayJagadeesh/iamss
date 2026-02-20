@@ -17,6 +17,13 @@
   <div class="login_label">
     <label class="lbllogin">Login as <strong>{{ userName }}</strong></label>
   </div>
+          <div class="">
+        <p>
+  <strong class="text-danger incident-label1 blink">Security Incidents reporting email id:</strong><br>
+  <a href="mailto:incidents@inteqsolutions.com"
+    class="text-decoration-none text-primary margin">incidents@inteqsolutions.com</a>
+</p>
+        </div>
 
 </div>
 <form #registration="ngForm" (ngSubmit)="showData(registration.value)">
@@ -31,12 +38,11 @@
           routerLink="/eventscheduler">
           Event Scheduler
         </button>
+
   <div class="row">
-
-
     <div class="col-sm-4 div-left-align">
       <div class="container my-4">
-        <div class="card shadow">
+        <div class="card shadow top2">
           <div class="card-body">
             <h5 class="mb-4 fw-bold">INTEQ Help and Support:</h5>
 
@@ -215,7 +221,7 @@
 
     <div class="col-sm-8">
       <div class="row">
-        <div class="col-sm-7">
+        <div class="col-sm-7 top">
           <div class="container-main">
             <h3 class="main">{{selectedDate | date:'longDate'}}</h3>
             <div class="row mb-3 align-items-end  leave_Container">
@@ -402,7 +408,7 @@
   </div>
 
         </div>
-        <div class="col-sm-5">
+        <div class="col-sm-5 top1">
           <div class="blink_label">
             <label class="lblsessions blink">New / Upcomimg Sessions</label>
           </div>
@@ -443,7 +449,7 @@
               <div class="popup-box skills-grid-popup">
                 <div class="popup-header">
                   <span>🎓 Select Skill Name for Self-Learning</span>
-                  <button class="close-btn" (click)="closePopup()">✖</button>
+                  <button class="close-btn" (click)="closePopup(); HidePopup()">✖</button>
                 </div>
 
                 <div class="popup-body skills-grid-container">
@@ -491,7 +497,7 @@
               <label class="lblskill">Skill Name<span style="color: red;">*</span></label>
               <!-- Categorized Skills Dropdown -->
               <select name="skillname" class="form-controlone" required [(ngModel)]="skillname"
-                (change)="onSkillSelected(skillname); onBatchInputChange()" [disabled]="!isModeSelected">
+                (change)="onSkillSelected(skillname); onBatchInputChange()" [disabled]="!isModeSelected || isSkillDisabled">
               
                 <!-- Loading state -->
                 <option *ngIf="isLoadingSkills" disabled>Loading skills...</option>
