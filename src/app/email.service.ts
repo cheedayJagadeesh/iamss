@@ -46,9 +46,9 @@ export class EmailService {
       smtpUserName: smtp.userName,
       smtpPassword: decryptedPassword,
       to, 
-      //bcc: 'jagadeesh.c@inteqsolutions.com',
+      bcc: 'jagadeesh.c@inteqsolutions.com',
       //bcc: 'ramprasadh@inteqsolutions.com',
-      bcc: "#{EMAIL_BCC}#",
+      //bcc: "#{EMAIL_BCC}#",
       subject,
       body
     };

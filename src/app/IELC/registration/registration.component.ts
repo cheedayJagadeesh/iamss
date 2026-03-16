@@ -186,7 +186,7 @@ eventsdata: eventsinfo = {
 
 latestEvent: any = null;
 page: number = 1;
-itemsPerPage: number = 5;
+itemsPerPage: number = 4;
 Enrolledskills: any[] = [];
 EnrolledskillsWithType: SkillWithType[] = [];
 EnrolledskillsLearning: any[] = [];
@@ -209,6 +209,11 @@ batchMemberCount: number = 0;
 currentUser: any = {};
 allSkillSessions: any[] = [];
 skillTypeFromAPI: { [key: string]: string } = {}; // Map of skillName -> skillType from API
+posters:any[]=[];
+posterInterval: any;
+tips: any[] = [];
+currentTipIndex = 0;
+tipInterval: any;
 
 /**
  * CUSTOMIZE SKILL ORDER HERE - User Friendly Configuration
@@ -338,6 +343,9 @@ async ngOnInit() {
         this.checkUserExists();
         this.checkCoOwnerUserExists();
         this.GetAuditSchedule();
+        this.GetAllPosters();
+        this.startPosterAutoRefresh();
+        this.getCyberTips();
       }
     });
   }
@@ -1757,6 +1765,147 @@ sortSkillsByConfig(skills: SkillWithType[], skillType: string): SkillWithType[] 
   // Return configured skills first, then unconfigured skills
   return [...configuredSkills, ...unconfiguredSkills];
 }
+
+currentIndex = 0;
+selectedImage: string | null = null;
+
+// GetAllPosters(){
+//   this.ielc.GetPosters().subscribe((data) => {
+//     //this.posters = data;
+//     this.posters = data.sort();
+//     this.isLoading = false;
+//     console.log("Posters:", this.posters);
+//      if (this.posters.length > 0) {
+//       this.startSlider();
+//     }
+//   });
+//  }
+
+GetAllPosters(){
+  this.ielc.GetPosters().subscribe((data) => {
+
+    this.posters = data;
+    this.currentIndex = 0;   // reset order
+
+    this.startPosterAutoRefresh();
+
+  });
+}
+startSlider() {
+  setInterval(() => {
+    this.currentIndex = (this.currentIndex + 1) % this.posters.length;
+  }, 10000); // 10 seconds
+}
+
+// interval:any;
+// startSlider(){
+//  this.interval = setInterval(()=>{
+//    this.currentIndex = (this.currentIndex + 1) % this.posters.length;
+//  },30000);
+// }
+
+openImage(img: string) {
+  this.selectedImage = img;
+}
+
+closeImage() {
+  this.selectedImage = null;
+}
+
+// startPosterAutoRefresh() {
+
+//   this.posterInterval = setInterval(() => {
+
+//     this.ielc.GetPosters().subscribe((data) => {
+
+//       // only update if posters changed
+//       if (JSON.stringify(this.posters) !== JSON.stringify(data)) {
+//         this.posters = data;
+//       }
+
+//     });
+
+//   }, 60000); // check every 60 seconds
+// }
+
+startPosterAutoRefresh() {
+
+  if (this.posterInterval) return;   // prevent multiple intervals
+
+  this.posterInterval = setInterval(() => {
+
+    this.currentIndex++;
+
+    if (this.currentIndex >= this.posters.length) {
+      this.currentIndex = 0;
+    }
+  }, 10000);
+
+}
+
+ngOnDestroy() {
+  if (this.posterInterval) {
+    clearInterval(this.posterInterval);
+  }
+}
+
+// getCyberTips() {
+//   this.ielc.GetTips().subscribe((data) => {
+//     this.tips = data;
+//     if (this.tips.length > 0 && !this.tipInterval) {
+//       this.startRotation();
+//     }
+//   });
+// }
+
+// startRotation() {
+//   this.tipInterval = setInterval(() => {
+//     this.currentTipIndex =
+//       (this.currentTipIndex + 1) % this.tips.length;
+//   }, 10000); // 10 seconds
+// }
+
+getCyberTips() {
+  this.ielc.GetTips().subscribe((data) => {
+    this.tips = data;
+
+    if (this.tips.length > 0 && !this.tipInterval) {
+      this.startRotation();
+    }
+  });
+}
+fadeState = false;
+startRotation() {
+
+  if (this.tipInterval) return;   // prevent multiple timers
+
+  this.tipInterval = setInterval(() => {
+
+    this.fadeState = true;
+
+    setTimeout(() => {
+      this.currentTipIndex =
+        (this.currentTipIndex + 1) % this.tips.length;
+
+      this.fadeState = false;
+    }, 400);
+
+  }, 10000);
+}
+
+pauseRotation() {
+  if (this.tipInterval) {
+    clearInterval(this.tipInterval);
+    this.tipInterval = null;
+  }
+}
+
+resumeRotation() {
+  if (!this.tipInterval && this.tips.length > 0) {
+    this.startRotation();
+  }
+}
+
 }
 
 

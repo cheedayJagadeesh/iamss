@@ -226,31 +226,31 @@
             <h3 class="main">{{selectedDate | date:'longDate'}}</h3>
             <div class="row mb-3 align-items-end  leave_Container">
               <!-- Leave Dropdown -->
-              <div class="col-md-4">
-                <label for="select1" class="form-label">Leave</label>
-                <select id="select1" name="leavetype" class="form-select" [(ngModel)]="leave"
+              <div class="col-auto">
+                <label for="select1" class="labeltimeleave">Leave</label>
+                <select id="select1" name="leavetype" class="form-select1" [(ngModel)]="leave"
                   (change)="onSelect1Change()" [disabled]="isfirstSelectDisabled">
                   <option value="" selected>- select leave -</option>
                   <option value="Full Day">Full Day</option>
                   <option value="Half Day">Half Day</option>
                   <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
                 </select>
-              </div>
+              <!-- </div>
 
-              <!-- Work Location Dropdown -->
-              <div class="col-md-4">
-                <label for="select2" class="form-label">Work Location</label>
-                <select id="select2" name="worktype" class="form-select" [(ngModel)]="work"
+              
+              <div class="col-auto"> -->
+                <label class="labeltimework">Work Location</label>
+                <select id="select2" name="worktype" class="form-select1" [(ngModel)]="work"
                   [disabled]="isSecondSelectDisabled" (change)="onSelect2Change()">
                   <option value="">- select work -</option>
                   <option *ngFor="let work of worktype">{{ work.name }}</option>
                 </select>
-              </div>
+              <!-- </div> -->
 
               <!-- Calendar Input -->
-              <div class="col-md-2">
+              <!-- <div class="col-md-2"> -->
                 <div class="form-outline datepicker">
-                  <input class="formcontrolcalendar" type="date" name="selectedDate" [(ngModel)]="selectedDate"
+                  <input class="formcontrolcalendar lblposition" type="date" name="selectedDate" [(ngModel)]="selectedDate"
                     required>
                 </div>
               </div>
@@ -383,29 +383,25 @@
             </div>
           </div> -->
 
-          <div class="container-div">
-  <div>
-    <h2 class="notify">Inteq Holidays</h2>
+          <div class="image-modal" *ngIf="selectedImage" (click)="closeImage()">
+  <img [src]="selectedImage" class="modal-img" />
+</div>
+
+<div class="poster-card">
+  <h3 class="poster-title">Posters</h3>
+
+  <div class="poster-wrapper">
+
+    <img
+      *ngFor="let poster of posters; let i = index"
+      [src]="poster"
+      class="poster-img"
+      [class.active]="i === currentIndex"
+      (click)="openImage(poster)"
+    />
+
   </div>
-  
-  <!-- Scrollable Table -->
-  <div class="table-scroll">
-    <table class="holiday-table">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Holiday</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of holidayslist">
-          <td>{{ item.date | date:'dd-MM-yyyy' }}</td>
-          <td>{{ item.content }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  </div>
+</div>
 
         </div>
         <div class="col-sm-5 top1">
@@ -587,6 +583,50 @@
           </div>
         </div>
       </div>
+
+      <div class="cyber-tip-card"
+     (mouseenter)="pauseRotation()"
+     (mouseleave)="resumeRotation()">
+
+  <div class="tip-header">
+    Cyber Safety Tips
+  </div>
+
+  <div class="tip-body" [class.fade]="fadeState">
+
+    <b>{{ tips[currentTipIndex]?.title }}</b> :
+    {{ tips[currentTipIndex]?.description }}
+
+  </div>
+
+</div>
+
+                    <div class="container-div">
+  <div>
+    <h2 class="notify">Inteq Holidays</h2>
+  </div>
+  
+  <!-- Scrollable Table -->
+  <div class="table-scroll">
+    <table class="holiday-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Holiday</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of holidayslist">
+          <td>{{ item.date | date:'dd-MM-yyyy' }}</td>
+          <td>{{ item.content }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+
+
+
       <div class="bottomtable">
         <label class="lblevents blink">Latest Events:</label>
         <button *ngIf="coownersshowButton" type="button" class="btn btn-link btnlink1 textmode"
@@ -595,6 +635,8 @@
         </button>
         <!-- <img *ngFor="let item of eventslist | slice:0:1" class="imgevents"
           [src]="'data:image/jpeg;base64,' + item.eventData" alt="Latest Event Image"> -->
+
+
 
 
 <div class="card shadow-sm my-4 fade-in">
