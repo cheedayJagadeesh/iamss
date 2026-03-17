@@ -2786,10 +2786,9 @@ GetQMSMasterTableDocName(documentName: string): Observable<any> {
     }
 
     //---------------------------------------------------------------------------------------Posters
-//posterurl='https://ielctest.azurewebsites.net/Posters';
-posterurl = 'http://localhost:5024/Posters/posters';
-posterposturl = 'http://localhost:5024/Posters/upload';
-posterdeleteurl = 'http://localhost:5024/Posters';
+posterurl = 'https://ielctest.azurewebsites.net/Posters/posters';
+posterposturl = 'https://ielctest.azurewebsites.net/Posters/upload';
+posterdeleteurl = 'https://ielctest.azurewebsites.net/Posters';
 
     GetPosters(): Observable<any> {
       return this.http.get<any>(this.posterurl, {
@@ -2815,9 +2814,9 @@ posterdeleteurl = 'http://localhost:5024/Posters';
 
 //---------------------------------------------------------------------------------------Tips
 //tipsurl='https://ielctest.azurewebsites.net/Tips';
-tipsurl = 'http://localhost:5024/CyberSafetyTip/cyber-tips';
-tipsposturl = 'http://localhost:5024/CyberSafetyTip';
-tipsdeleteurl = 'http://localhost:5024/CyberSafetyTip';
+tipsurl = 'https://ielctest.azurewebsites.net/CyberSafetyTip/cyber-tips';
+tipsposturl = 'https://ielctest.azurewebsites.net/CyberSafetyTip';
+tipsdeleteurl = 'https://ielctest.azurewebsites.net/CyberSafetyTip';
 
     GetTips(): Observable<any> {
       return this.http.get<any>(this.tipsurl, {

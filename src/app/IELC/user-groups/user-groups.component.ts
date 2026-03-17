@@ -7944,6 +7944,11 @@ AddPosters(): void {
         //console.warn('📁 File was uploaded successfully to the server!');
         alert('✅ Poster Uploaded Successfully!');
         this.selectedFiles = null;
+        // Clear the file input element
+        const fileInput = document.getElementById('posterFileInput') as HTMLInputElement;
+        if (fileInput) {
+          fileInput.value = '';
+        }
         this.GetAllPosters();  // Reload to show new poster
         return;  // ✅ IMPORTANT: Exit early to prevent other error checks
       }
@@ -7976,12 +7981,19 @@ AddPosters(): void {
       // }
     }
   });
+      this.resetPosters();
 }
 
 GetAllPosters(){
   this.ielc.GetPosters().subscribe((data) => {
     this.posters = data;
   });
+}
+
+resetPosters()
+{
+   this.selectedFiles = null;
+   this.posters = [];
 }
 
 }
