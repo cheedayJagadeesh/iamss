@@ -631,10 +631,15 @@
       Cyber Safety Tips
     </div>
 
-    <div class="tip-body" [class.fade]="fadeState">
-      <b>{{ tips[currentTipIndex]?.title }}</b> :
-      {{ tips[currentTipIndex]?.description }}
-    </div>
+<div class="tip-body" [class.fade]="fadeState">
+  <div class="tip-title">
+    {{ tips[currentTipIndex]?.title }} :
+  </div>
+
+  <div class="tip-desc">
+    {{ tips[currentTipIndex]?.description }}
+  </div>
+</div>
   </div>
 
   <div class="container-div">
