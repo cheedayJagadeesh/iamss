@@ -310,12 +310,12 @@ h2 {
 .labeltime1 {
     display: inline-block;
     font-size: medium;
-    margin-left: -25%;
+    margin-left: -14%;
 }
 .labeltime2 {
     display: inline-block;
     font-size: medium;
-    margin-left: -26%;
+    margin-left: -11%;
 }
 .labeltimeleave {
     display: inline-block;
@@ -326,6 +326,17 @@ h2 {
     display: inline-block;
     font-size: medium;
     margin-left: 4%;
+}
+
+.container-main {
+  background: white;
+  border-radius: 8px;
+  color: black;
+}
+
+.main {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
 }
 .lblposition{
     margin-left: 87%;
@@ -371,7 +382,7 @@ h2 {
     position: initial !important;
 }
 
-.container-div {
+/* .container-div {
 border-style: solid;
     border-color: inherit;
     border-width: 1px;
@@ -380,7 +391,7 @@ border-style: solid;
     height: 244px;
     margin-left: 60%;
     width: 40%;
-}
+} */
 
 #newsTicker {
     overflow: hidden;
@@ -944,7 +955,7 @@ border-style: solid;
     margin-bottom: 1.5rem !important;
 }
 
-.table-scroll {
+/* .table-scroll {
   max-height: 206px;
   overflow-y: auto;
   border: 1px solid #ccc;
@@ -968,7 +979,7 @@ border-style: solid;
   top: 0;
   z-index: 1;
   width: 0%;
-}
+} */
 
 .preexam-backdrop {
   position: fixed;
@@ -1255,8 +1266,8 @@ border-style: solid;
   }
 }
 
-.poster-card {
-  width: 576px;
+/* .poster-card {
+  width: 526px;
   background: rgb(36, 120, 156);
   padding: 5px;
   border-radius: 0px;
@@ -1264,6 +1275,18 @@ border-style: solid;
   margin-left: 0%;
   margin-top: -1%;
   height: 55.9%;
+} */
+
+.poster-card {
+  width: 100%;              /* full width of container */
+  max-width: 526px;         /* limit for large screens */
+  background: rgb(36, 120, 156);
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 0 auto;           /* center horizontally */
+  height: auto;             /* let content decide height */
+  box-sizing: border-box;   /* prevents overflow */
 }
 
 /* .poster-wrapper{
@@ -1386,7 +1409,7 @@ border-style: solid;
     font-size: x-large;
     color: var(--mdc-filled-text-field-container-color);
 }
-.cyber-tip-card{
+/* .cyber-tip-card{
     border: 1px solid #ccc;
     background: #f5f5f5;
     width: 40%;
@@ -1394,9 +1417,10 @@ border-style: solid;
     height: 11%;
     margin-top: -52%;
     cursor: default;
-}
+} */
 
-.tip-header{
+
+/* .tip-header{
   background:white;
   color:rgb(232, 19, 19);
   font-weight:bold;
@@ -1411,7 +1435,7 @@ border-style: solid;
   font-weight:600;
     transition: opacity 0.4s ease-in-out;
   cursor: pointer;
-}
+} */
 
 .tip-body.fade{
   opacity:0;
@@ -1437,3 +1461,121 @@ border-style: solid;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
+.right-panel {
+  width: 100%;
+  max-width: 420px;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+/* Cyber tips card */
+.cyber-tip-card {
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  width: 100%;
+  min-height: 225px;
+  cursor: default;
+  box-sizing: border-box;
+  margin-top: -127%;
+}
+
+.tip-header {
+  background: white;
+  color: rgb(232, 19, 19);
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.tip-body {
+  padding: 12px;
+  color: #3b5f94;
+  font-weight: 600;
+  transition: opacity 0.4s ease-in-out;
+  cursor: pointer;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* Holiday card */
+.container-div {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.notify {
+  margin: 0;
+  padding: 10px 12px;
+  text-align: center;
+  background: #1f78a8;
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.table-scroll {
+  max-height: 244px;
+  overflow-y: auto;
+}
+
+.holiday-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.holiday-table th,
+.holiday-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  word-wrap: break-word;
+}
+
+.holiday-table th {
+  background-color: #f4f4f4;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* Tablet and mobile */
+@media (max-width: 991px) {
+  .right-panel {
+    max-width: 100%;
+    margin: 20px 0 0 0;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 576px) {
+  .tip-header {
+    font-size: 15px;
+    padding: 8px;
+  }
+
+  .tip-body {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .notify {
+    font-size: 1.4rem;
+    padding: 8px 10px;
+  }
+
+  .holiday-table th,
+  .holiday-table td {
+    padding: 8px;
+    font-size: 13px;
+  }
+}
