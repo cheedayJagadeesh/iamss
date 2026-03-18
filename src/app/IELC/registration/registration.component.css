@@ -1463,7 +1463,7 @@ border-style: solid;
 
 .right-panel {
   width: 100%;
-  max-width: 420px;
+  max-width: 381px;
   margin-left: auto;
   display: flex;
   flex-direction: column;
@@ -1479,7 +1479,7 @@ border-style: solid;
   min-height: 225px;
   cursor: default;
   box-sizing: border-box;
-  margin-top: -127%;
+  margin-top: -140%;
 }
 
 .tip-header {
@@ -1579,3 +1579,6 @@ border-style: solid;
     font-size: 13px;
   }
 }
+
+/* code */
+
