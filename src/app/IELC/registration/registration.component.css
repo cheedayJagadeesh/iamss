@@ -1615,3 +1615,8 @@ border-style: solid;
   font-weight: 600;
   color: #3b5f94;
 }
+
+.cyber-tip-card {
+  font-family: "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji", "Segoe UI", sans-serif;
+}
+

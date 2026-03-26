@@ -303,15 +303,25 @@
               <thead class="table-primary">
                 <tr>
                   <th scope="col">Skill Name</th>
+                  <th scope="col">Material</th>
                   <th scope="col">Test Result</th>
-                  <th scope="col">Percentage(%)</th>
+                  <th scope="col">%</th>
                   <th scope="col">Test Taken Date</th>
                   <th scope="col">Feedback</th>
                 </tr>
               </thead>
               <tbody *ngIf="!isLoading">
                 <tr *ngFor="let item of Registeredusers | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+
                   <td>{{ item.skillName }}</td>
+
+                                    <td>
+                                      <a *ngIf="item.skillDescription" [href]="item.skillDescription" target="_blank">
+                                        Click here
+                                      </a>
+                                      <span *ngIf="!item.skillDescription">-</span>
+                                    </td>
+
                   <td>
                     <ng-container *ngIf="!isSkillRestricted(item.skillName)">
                       <ng-container
@@ -326,6 +336,9 @@
 </a>
                       </ng-container>
                     </ng-container>
+
+
+ 
 
                     <ng-template #showResult>
                       <ng-container *ngIf="item.percentage >= getExamPercentage(); else pendingTest">
@@ -345,6 +358,8 @@
                       </ng-template>
                     </ng-template>
                   </td>
+
+
                   <td>{{ item.percentage }}</td>
                   <td>
                     <ng-container *ngIf="item.testTakenDate">
@@ -632,13 +647,22 @@
     </div>
 
 <div class="tip-body" [class.fade]="fadeState">
-  <div class="tip-title">
-    {{ tips[currentTipIndex]?.title }} :
-  </div>
+<!-- <div class="tip-title">
+  {{ tips[currentTipIndex]?.title || 'Cyber Safety Tip' }} :
+</div> -->
 
-  <div class="tip-desc">
+<div class="tip-title" *ngIf="tips[currentTipIndex]?.title">
+  {{ tips[currentTipIndex]?.title }} :
+</div>
+
+<div class="tip-title" *ngIf="!tips[currentTipIndex]?.title">
+  
+</div>
+
+  <!-- <div class="tip-desc">
     {{ tips[currentTipIndex]?.description }}
-  </div>
+  </div> -->
+   <div class="tip-desc" [innerHTML]="tips[currentTipIndex]?.description"></div>
 </div>
   </div>
 

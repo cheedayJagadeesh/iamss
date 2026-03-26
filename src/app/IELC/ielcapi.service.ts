@@ -185,6 +185,23 @@ GetSkillsByVenue(venue: string): Observable<string[]> {
   });
 }
 
+skilldescriptionurl = 'http://localhost:5024/EnrollmentData';
+
+// Getskilldescription(skillName: string, enrollid: number, sessionid: number) {
+//   const url = `${this.skilldescriptionurl}/${encodeURIComponent(skillName)}/${enrollid}/${sessionid}`;
+//   return this.http.get<string>(url, { headers: this.getHeaders() });
+// }
+
+Getskilldescription(skillName: string, enrollid: number, sessionid: number) {
+
+  const url = `${this.skilldescriptionurl}/${encodeURIComponent(skillName)}/${enrollid}/${sessionid}`;
+
+  return this.http.get(url, {
+    headers: this.getHeaders(),
+    responseType: 'text'   // ⭐ IMPORTANT
+  });
+}
+
     //---------------------------------------------------------------------------------------Add New Skills
 
     EnrolledskillsUrl='https://ielctest.azurewebsites.net/EnrollmentSessions';

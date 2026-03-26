@@ -214,6 +214,8 @@ posterInterval: any;
 tips: any[] = [];
 currentTipIndex = 0;
 tipInterval: any;
+currentIndex = 0;
+selectedImage: string | null = null;
 
 /**
  * CUSTOMIZE SKILL ORDER HERE - User Friendly Configuration
@@ -942,6 +944,9 @@ handleFeedbackClick(item: any): void {
 }
 }
 
+getSkillDescription(): string {
+  return this.examlist.length > 0 ? this.examlist[0].examDescription : '';
+}
 getExamPercentage(): number {
   return this.examlist.length > 0 ? this.examlist[0].examPercentage : 0;
 }
@@ -1766,8 +1771,8 @@ sortSkillsByConfig(skills: SkillWithType[], skillType: string): SkillWithType[] 
   return [...configuredSkills, ...unconfiguredSkills];
 }
 
-currentIndex = 0;
-selectedImage: string | null = null;
+
+
 
 // GetAllPosters(){
 //   this.ielc.GetPosters().subscribe((data) => {
@@ -1786,7 +1791,10 @@ GetAllPosters(){
 
     this.posters = data;
     this.currentIndex = 0;   // reset order
-
+ const savedIndex = localStorage.getItem('posterIndex');
+    if (savedIndex !== null) {
+      this.currentIndex = +savedIndex;
+    }
     this.startPosterAutoRefresh();
 
   });
@@ -1839,6 +1847,7 @@ startPosterAutoRefresh() {
     if (this.currentIndex >= this.posters.length) {
       this.currentIndex = 0;
     }
+    localStorage.setItem('posterIndex', this.currentIndex.toString());
   }, 10000);
 
 }
@@ -1865,15 +1874,32 @@ ngOnDestroy() {
 //   }, 10000); // 10 seconds
 // }
 
+// getCyberTips() {
+//   this.ielc.GetTips().subscribe((data) => {
+//     this.tips = data;
+
+//     if (this.tips.length > 0 && !this.tipInterval) {
+//       this.startRotation();
+//     }
+//   });
+// }
+
 getCyberTips() {
   this.ielc.GetTips().subscribe((data) => {
     this.tips = data;
+
+    // restore last index
+    const savedIndex = localStorage.getItem('cyberTipIndex');
+    if (savedIndex !== null) {
+      this.currentTipIndex = +savedIndex;
+    }
 
     if (this.tips.length > 0 && !this.tipInterval) {
       this.startRotation();
     }
   });
 }
+
 fadeState = false;
 startRotation() {
 
@@ -1886,7 +1912,7 @@ startRotation() {
     setTimeout(() => {
       this.currentTipIndex =
         (this.currentTipIndex + 1) % this.tips.length;
-
+localStorage.setItem('cyberTipIndex', this.currentTipIndex.toString());
       this.fadeState = false;
     }, 400);
 

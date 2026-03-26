@@ -208,6 +208,8 @@ examSubmitted = false; // Track if exam already submitted
 
 private blurHandler!: () => void;
   async ngOnInit() {
+
+    this.loadSkillDescription();
     // Prevent all right-click and context menus
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('copy', e => e.preventDefault());
@@ -678,6 +680,26 @@ document.body.style.overflow = 'hidden';
   examPassed: boolean = false;
 percentage: number = 0;
 
+
+skillDescription: string = '';
+
+// loadSkillDescription(selectedSkill: string, enrollmentID: number | null, p0: number) { 
+//   this.ielc.Getskilldescription( this.selectedSkill, this.enrollmentID!, this.sessionID! ).subscribe(
+//     res => { this.skillDescription = res; });
+//     console.log('Skill description loaded:', this.skillDescription);
+//    }
+
+loadSkillDescription() {
+  this.ielc
+    .Getskilldescription(this.selectedSkill, this.enrollmentID!, this.sessionID!)
+    .subscribe(res => {
+      this.skillDescription = res;
+      console.log('Skill description loaded:', this.skillDescription);
+    });
+}
+
+
+
 UpdateResult() {
   if (this.Registeredusers.length > 0) {
     const matchedUser = this.Registeredusers.find(user =>
@@ -787,8 +809,13 @@ UpdateResult() {
           `;
         } else {
           // emailSubject = "📘 Exam Status - Reattempt Required";
+
           body = `
-            <p><strong>🙁 Oh no! Better luck next time!</strong></p>
+<p>
+<strong>🙁 Oh no! Better luck next time! …………………… learning materials using link:
+<a href="${this.skillDescription ?? '#'}" target="_blank">Click here to access</a>
+</strong>
+</p>
             <p>Here is your result</p>
             <table style="border: 1px solid #ddd; border-collapse: collapse; width: 100%;">
               <thead>
@@ -828,7 +855,8 @@ UpdateResult() {
             <p style="margin-top: 15px; color: red;">Please prepare and re-attempt the test again.</p>
             <br>
           `;
-        }
+      }
+        
         this.emailService.sendEmail(to,cc, subject, body);
         
         console.log('✅ Result updated and email sent. Modal should be visible now.');
