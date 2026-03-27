@@ -5,7 +5,7 @@ type EnvKey = keyof typeof environment.urls;
 const hostname = window.location.hostname;
 
 const ENV_MAP: Record<string, EnvKey> = {
-  'ielc-test.azurewebsites.net': 'test',
+  'ielc-testapp.azurewebsites.net': 'test',
   'app-local.xyz': 'test-dns',
   'ielc-stage.inteqportal.com': 'stage',
   'inteqemployeelearingcenter.azurewebsites.net': 'prod',

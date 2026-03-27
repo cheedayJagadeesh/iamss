@@ -143,6 +143,10 @@ interface holidays{
   date: string;
   content: string;
 }
+interface tips{
+  title: string;
+  description: string;
+}
 interface eventsinfo{
   id: number;
   eventData: string;
@@ -401,6 +405,10 @@ eventschuser: eventscuserinfo = {
   date: '',
   content: ''
  }
+  tipsdata:tips={
+  title: '',
+  description: ''
+ }
  eventsdata:eventsinfo={
   id: 0,
   eventData: '',
@@ -497,6 +505,7 @@ today:string=''
  DpdpGeneraldata: any[]=[];
  adminuserslist: any[]=[];
  holidayslist: any[]=[];
+ tips: any[]=[];
  eventslist: any[]=[];
  eventscheduleradmin: any[]=[];
  eventscheduleadmin: any[]=[];
@@ -918,6 +927,8 @@ today:string=''
     this.GetQMSDetails();
     const currentDate = new Date();
     this.today = currentDate.toISOString().split('T')[0];
+    this.GetTipsList();
+    this.GetAllPosters();
   }
 
   updateUniqueDepts(): void {
@@ -7784,7 +7795,206 @@ getFileIcon(alertAttachment: string): string {
       return 'assets/icons/default-file-icon.jpg';
   }
 }
+//---------------------------------------------------------------------------------------Tips
 
+GetTipsList(){
+  this.ielc.GetTips().subscribe((data) => {
+    this.tips = data;
+    this.isLoading = false;
+    //console.log("Tips List:", data);
+  });
+}
+AddTips(): void {
+  this.ielc.PostTips(this.tipsdata).subscribe(
+    (response) => {
+      alert('✅ Record Added Successfully!');
+      this.GetTipsList();
+      this.resetTips();
+    },
+    (error) => {
+      alert('❌ Error adding Record. Please try again.');
+    }
+  );
+}
+deleteTips(content: any) {
+  if (confirm('Are you sure you want to delete this record?')) {
+    this.ielc.DeleteTipsById(content).subscribe({
+      next: () => {
+        alert(`Record with  ${content} deleted successfully!`);
+        this.GetTipsList();
+      },
+      // error: (err) =>  console.error('Error deleting item:', err)
+    });
+  }
+}
+resetTips(){
+  this.tipsdata={
+  title: '',
+  description: ''
+  }
+}
+//------------------------------------------------------------------------------Posters
+
+// selectedFiles: File | null = null;
+
+// onFilesSelected(event: any) {
+//   this.selectedFiles = event.target.files[0];
+// }
+// posters:any[]=[];
+// GetAllPosters(){
+//   this.ielc.GetPosters().subscribe((data) => {
+//     this.posters = data;
+//     this.isLoading = false;
+//     console.log("Posters:", this.posters);
+//   });
+//  }
+
+// uploadPoster() {
+//   if (!this.selectedFiles) {
+//     alert("Please select a file");
+//     return;
+//   }
+//   const formData = new FormData();
+//   formData.append("file", this.selectedFiles);
+//   this.ielc.UploadPosters(formData).subscribe({
+//     next: () => {
+//       alert("✅ Poster uploaded successfully");
+//       this.selectedFiles = null;
+//       this.GetAllPosters(); // reload posters
+//     },
+//     error: () => {
+//       alert("❌ Upload failed");
+//     }
+//   });
+// }
+
+
+selectedFiles: File | null = null;
+posters: any[] = [];
+
+onFilesSelected(event: any) {
+  this.selectedFiles = event.target.files[0];
+}
+
+// uploadPoster() {
+//   if (!this.selectedFiles) {
+//     alert("Please select a file");
+//     return;
+//   }
+//   const formData = new FormData();
+//   formData.append("file", this.selectedFiles);
+//   this.ielc.PostPosters(formData).subscribe({
+//     next: () => {
+//       alert("Poster uploaded successfully");
+//       this.selectedFiles = null;
+//       this.GetAllPosters();
+//     },
+//     error: () => {
+//       alert("Upload failed");
+//     }
+//   });
+// }
+
+// AddPosters(): void {
+//   this.ielc.PostPosters(this.tipsdata).subscribe(
+//     (response) => {
+//       alert('✅ Record Added Successfully!');
+//       //this.GetAllPosters();
+//     },
+//     (error) => {
+//       alert('❌ Error adding Record. Please try again.');
+//     }
+//   );
+// }
+
+AddPosters(): void {
+  //console.log('📂 AddPosters() called');
+  
+  if (!this.selectedFiles) {
+    console.warn('⚠️ No file selected');
+    alert('Please select a poster image');
+    return;
+  }
+
+  console.log('📄 File selected:', this.selectedFiles.name, 'Size:', this.selectedFiles.size);
+
+  const formData = new FormData();
+  formData.append('file', this.selectedFiles);
+
+  //console.log('📤 Uploading poster to:', 'http://localhost:5024/Posters/upload');
+  
+  this.ielc.PostPosters(formData).subscribe({
+    next: (response) => {
+      //console.log('✅ Upload successful!');
+      //console.log('Response:', response);
+      alert('✅ Poster Uploaded Successfully!');
+      this.selectedFiles = null;
+      this.GetAllPosters();
+    },
+    error: (error) => {
+      // console.error('❌ Upload error occurred');
+      // console.error('Error object:', error);
+      // console.error('Error status:', error.status);
+      // console.error('Error statusText:', error.statusText);
+      // console.error('Error message:', error.message);
+      
+      // ✅ FIRST CHECK: HTTP 200-299 with parsing error means upload succeeded!
+      if (error.status >= 200 && error.status < 300) {
+        //console.warn('⚠️ Status ' + error.status + ' - Upload succeeded but response parsing failed');
+        //console.warn('📁 File was uploaded successfully to the server!');
+        alert('✅ Poster Uploaded Successfully!');
+        this.selectedFiles = null;
+        // Clear the file input element
+        const fileInput = document.getElementById('posterFileInput') as HTMLInputElement;
+        if (fileInput) {
+          fileInput.value = '';
+        }
+        this.GetAllPosters();  // Reload to show new poster
+        return;  // ✅ IMPORTANT: Exit early to prevent other error checks
+      }
+      
+      // Handle other specific error types
+      // if (error.status === 0) {
+      //   console.error('🔴 Network error or CORS issue');
+      //   alert('❌ Network error: Check if backend server is running');
+      // } 
+      // else if (error.status === 401) {
+      //   alert('❌ Unauthorized: Authentication failed');
+      // } 
+      // else if (error.status === 403) {
+      //   alert('❌ Forbidden: You do not have permission');
+      // } 
+      // else if (error.status === 400) {
+      //   alert('❌ Bad Request: Invalid file format or size');
+      // } 
+      // else if (error.status === 404) {
+      //   alert('❌ Not Found: Upload endpoint not found');
+      // }
+      // else if (error.status === 500) {
+      //   alert('❌ Server Error: Backend error occurred');
+      // }
+      // else if (error.error?.message) {
+      //   alert(`❌ Error: ${error.error.message}`);
+      // } 
+      // else {
+      //   alert(`❌ Error uploading poster: ${error.statusText || error.message || 'Unknown error'}`);
+      // }
+    }
+  });
+      this.resetPosters();
+}
+
+GetAllPosters(){
+  this.ielc.GetPosters().subscribe((data) => {
+    this.posters = data;
+  });
+}
+
+resetPosters()
+{
+   this.selectedFiles = null;
+   this.posters = [];
+}
 
 }
 

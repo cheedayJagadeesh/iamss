@@ -185,6 +185,23 @@ GetSkillsByVenue(venue: string): Observable<string[]> {
   });
 }
 
+skilldescriptionurl = 'https://ielc-coreapi.azurewebsites.net/EnrollmentData';
+
+// Getskilldescription(skillName: string, enrollid: number, sessionid: number) {
+//   const url = `${this.skilldescriptionurl}/${encodeURIComponent(skillName)}/${enrollid}/${sessionid}`;
+//   return this.http.get<string>(url, { headers: this.getHeaders() });
+// }
+
+Getskilldescription(skillName: string, enrollid: number, sessionid: number) {
+
+  const url = `${this.skilldescriptionurl}/${encodeURIComponent(skillName)}/${enrollid}/${sessionid}`;
+
+  return this.http.get(url, {
+    headers: this.getHeaders(),
+    responseType: 'text'   // ⭐ IMPORTANT
+  });
+}
+
     //---------------------------------------------------------------------------------------Add New Skills
 
     EnrolledskillsUrl='https://ielc-coreapi.azurewebsites.net/EnrollmentSessions';
@@ -2785,5 +2802,56 @@ GetQMSMasterTableDocName(documentName: string): Observable<any> {
       return this.http.delete<void>(`${this.ismsqmsUrl}/${id}`, { headers: this.getHeaders() });
     }
 
+    //---------------------------------------------------------------------------------------Posters
+posterurl = 'https://ielc-coreapi.azurewebsites.net/Posters/posters';
+posterposturl = 'https://ielc-coreapi.azurewebsites.net/Posters/upload';
+posterdeleteurl = 'https://ielc-coreapi.azurewebsites.net/Posters';
+
+    GetPosters(): Observable<any> {
+      return this.http.get<any>(this.posterurl, {
+        headers: this.getHeaders()
+      });
+    }
+
+  // PostPosters(data: any): Observable<any> {
+  //   return this.http.post<any>(this.posterposturl, data, { headers: this.getHeaders() });
+  // }
+
+  PostPosters(data: FormData): Observable<any> {
+    const headers = new HttpHeaders({
+      'Authorization': this.apiKey
+    });
+    // When sending FormData, do not set 'Content-Type' (the browser will set multipart boundary)
+    // responseType: 'blob' or 'text' might be needed if backend returns non-JSON
+    return this.http.post<any>(this.posterposturl, data, { 
+      headers,
+      reportProgress: true  // Enable progress tracking
+    });
+  }
+
+//---------------------------------------------------------------------------------------Tips
+//tipsurl='https://ielc-coreapi.azurewebsites.net/Tips';
+tipsurl = 'https://ielc-coreapi.azurewebsites.net/CyberSafetyTip/cyber-tips';
+tipsposturl = 'https://ielc-coreapi.azurewebsites.net/CyberSafetyTip';
+tipsdeleteurl = 'https://ielc-coreapi.azurewebsites.net/CyberSafetyTip';
+
+    GetTips(): Observable<any> {
+      return this.http.get<any>(this.tipsurl, {
+        headers: this.getHeaders()
+      });
+    }
+
+     PostTips(tipsData: any): Observable<any> {
+      // const headers = { 'Content-Type': 'application/json' };
+      return this.http.post<any>(this.tipsposturl, tipsData, { headers: this.getHeaders() });
+    }
+
+     DeleteTipsById(id: number): Observable<void> {
+      return this.http.delete<void>(`${this.tipsdeleteurl}/${id}`, { headers: this.getHeaders() });
+    }
+
+        GetTipsById(id: number): Observable<any> {
+      return this.http.get<any>(`${this.tipsurl}/${id}`, { headers: this.getHeaders() });
+    }
 
   }

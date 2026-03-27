@@ -310,10 +310,37 @@ h2 {
 .labeltime1 {
     display: inline-block;
     font-size: medium;
+    margin-left: -14%;
 }
 .labeltime2 {
     display: inline-block;
     font-size: medium;
+    margin-left: -11%;
+}
+.labeltimeleave {
+    display: inline-block;
+    font-size: medium;
+    margin-left: -10%;
+}
+.labeltimework {
+    display: inline-block;
+    font-size: medium;
+    margin-left: 4%;
+}
+
+.container-main {
+  background: white;
+  border-radius: 8px;
+  color: black;
+}
+
+.main {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+.lblposition{
+    margin-left: 87%;
+    margin-top: -7%;
 }
 .time {
     margin: 0;
@@ -355,14 +382,16 @@ h2 {
     position: initial !important;
 }
 
-.container-div {
-    border-style: solid;
+/* .container-div {
+border-style: solid;
     border-color: inherit;
     border-width: 1px;
-    margin-top: 0%;
+    margin-top: 3%;
     border-radius: 5px;
-    height: 300px;
-}
+    height: 244px;
+    margin-left: 60%;
+    width: 40%;
+} */
 
 #newsTicker {
     overflow: hidden;
@@ -537,10 +566,10 @@ h2 {
   margin-top: -5%;
 }
 .top1{
-  margin-top: -9%;
+  margin-top: -10%;
 }
 .top2{
-  margin-top: -14%;
+  margin-top: -17%;
 }
  
 .incident-label {
@@ -664,6 +693,7 @@ h2 {
 
 .login_label {
     text-align: right;
+    margin-top: -3%;
 }
 
 .tabletop{
@@ -682,11 +712,12 @@ h2 {
 }
 .bottomtable{
     overflow: auto;
+    margin-top: 0%;
 }
  .leave_Container
  {
   padding-left: 12%;
-  padding-top: 25px;
+  padding-top: 0px;
  }
  .left_container{
     margin-top:-22px;
@@ -920,15 +951,15 @@ h2 {
 }
 
 .my-4 {
-    margin-top: 0.5rem !important;
+    margin-top: 1.5rem !important;
     margin-bottom: 1.5rem !important;
 }
 
-.table-scroll {
-  max-height: 256px;
+/* .table-scroll {
+  max-height: 206px;
   overflow-y: auto;
   border: 1px solid #ccc;
-  margin-top: -16px;
+  margin-top: -21px;
 }
 
 .holiday-table {
@@ -948,7 +979,7 @@ h2 {
   top: 0;
   z-index: 1;
   width: 0%;
-}
+} */
 
 .preexam-backdrop {
   position: fixed;
@@ -1233,5 +1264,359 @@ h2 {
   .btn-save {
     width: 100%;
   }
+}
+
+/* .poster-card {
+  width: 526px;
+  background: rgb(36, 120, 156);
+  padding: 5px;
+  border-radius: 0px;
+  text-align: center;
+  margin-left: 0%;
+  margin-top: -1%;
+  height: 55.9%;
+} */
+
+.poster-card {
+  width: 100%;              /* full width of container */
+  max-width: 526px;         /* limit for large screens */
+  background: rgb(36, 120, 156);
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 0 auto;           /* center horizontally */
+  height: auto;             /* let content decide height */
+  box-sizing: border-box;   /* prevents overflow */
+}
+
+/* .poster-wrapper{
+  background:white;
+  padding:10px;
+  border-radius:4px;
+} */
+
+/* .poster-img{
+  width:100%;
+  cursor:pointer;
+  transition: transform 0.3s;
+  flex-shrink:0;
+  object-fit:contain;
+} */
+/* .poster-img{
+  position:absolute;
+  width:100%;
+  height:95%;
+  object-fit:contain;
+  opacity:0;
+  transition: opacity 1.2s ease-in-out;
+  cursor:pointer;
+  margin-left: -52%;
+} */
+
+.poster-img{
+  position:absolute;
+  width:77%;
+  height:95%;
+  object-fit:fill;
+  opacity:0;
+  transition: opacity 1.2s ease-in-out;
+  pointer-events:none;   /* hidden images can't capture mouse */
+  margin-left:-39%;
+}
+
+.poster-img.active{
+  opacity:1;
+  cursor:pointer;        /* shows hand cursor */
+  pointer-events:auto;   /* only active image clickable */
+}
+
+.poster-img:hover{
+  transform:scale(1.05);
+}
+
+.image-modal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter: blur(8px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+}
+
+.modal-img{
+  max-width:80%;
+  max-height:80%;
+  border-radius:10px;
+  box-shadow:0px 5px 25px rgba(0,0,0,0.5);
+}
+
+.blur-background {
+  filter: blur(6px);
+  pointer-events: none;
+}
+.image-modal{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:rgba(0,0,0,0.4);
+  z-index:9999;
+}
+
+.modal-img{
+  max-width:80%;
+  max-height:80%;
+  border-radius:10px;
+  box-shadow:0 10px 40px rgba(0,0,0,0.6);
+}
+
+.slider{
+  overflow:hidden;
+  width:100%;
+}
+
+.slides{
+  display:flex;
+  transition: transform 0.8s ease-in-out;
+}
+
+.poster-wrapper{
+  position:relative;
+  width:100%;
+  height:550px;
+  overflow:hidden;
+}
+.poster-wrapper{
+  background:white;
+  padding:10px;
+  border-radius:4px;
+}
+.poster-img.active{
+  opacity:1;
+}
+.poster-title{
+    font-weight: bold;
+    text-align: center;
+    font-size: x-large;
+    color: var(--mdc-filled-text-field-container-color);
+}
+/* .cyber-tip-card{
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+    width: 40%;
+    margin-left: 60%;
+    height: 11%;
+    margin-top: -52%;
+    cursor: default;
+} */
+
+
+/* .tip-header{
+  background:white;
+  color:rgb(232, 19, 19);
+  font-weight:bold;
+  text-align:center;
+  padding:6px;
+  cursor: pointer;
+}
+
+.tip-body{
+  padding:12px;
+  color:#3b5f94;
+  font-weight:600;
+    transition: opacity 0.4s ease-in-out;
+  cursor: pointer;
+} */
+
+.tip-body.fade{
+  opacity:0;
+}
+
+
+.form-select1 {
+    display: inline-block;
+    width: 30%;
+    padding: .375rem 2.25rem .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-image: var(--bs-form-select-bg-img), var(--bs-form-select-bg-icon, none);
+    background-repeat: no-repeat;
+    background-position: right .75rem center;
+    background-size: 16px 12px;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.right-panel {
+  width: 100%;
+  max-width: 381px;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+}
+
+/* Cyber tips card */
+.cyber-tip-card {
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  width: 100%;
+  min-height: 270px;
+  cursor: default;
+  box-sizing: border-box;
+  margin-top: -152%;
+}
+
+.tip-header {
+  background: #cfe2ff;
+  color: rgb(232, 19, 19);
+  font-weight: bold;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.tip-body {
+  padding: 12px;
+  color: #3b5f94;
+  font-weight: 600;
+  transition: opacity 0.4s ease-in-out;
+  cursor: pointer;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* Holiday card */
+.container-div {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.notify {
+  margin: 0;
+  padding: 10px 12px;
+  text-align: center;
+  background: #1f78a8;
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.table-scroll {
+  max-height: 246px;
+  overflow-y: auto;
+}
+
+.holiday-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.holiday-table th,
+.holiday-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  word-wrap: break-word;
+}
+
+.holiday-table th {
+  background-color: #f4f4f4;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* Tablet and mobile */
+@media (max-width: 991px) {
+  .right-panel {
+    max-width: 100%;
+    margin: 20px 0 0 0;
+  }
+}
+
+/* Small mobile */
+@media (max-width: 576px) {
+  .tip-header {
+    font-size: 15px;
+    padding: 8px;
+  }
+
+  .tip-body {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .notify {
+    font-size: 1.4rem;
+    padding: 8px 10px;
+  }
+
+  .holiday-table th,
+  .holiday-table td {
+    padding: 8px;
+    font-size: 13px;
+  }
+}
+
+/* code */
+
+.poster-card {
+  margin-top: 20px;
+}
+
+.tablebottom {
+  max-height: 300px;
+  overflow-y: auto;
+}
+.col-sm-7 {
+  display: flex;
+  flex-direction: column;
+}
+
+.tablebottom {
+  flex: 0 0 auto;
+  min-height: 300px;
+}
+
+.poster-card {
+  flex: 0 0 auto;
+  margin-top: 20px;
+}
+
+.tip-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #3b5f94;
+}
+
+.tip-desc {
+  font-weight: 600;
+  color: #3b5f94;
+}
+
+.cyber-tip-card {
+  font-family: "Segoe UI Emoji", "Noto Color Emoji", "Apple Color Emoji", "Segoe UI", sans-serif;
 }
 
