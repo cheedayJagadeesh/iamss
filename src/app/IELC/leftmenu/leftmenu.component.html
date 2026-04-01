@@ -120,29 +120,49 @@
 
 
   <!-- Departments -->
-  <div class="dropdown" *ngIf="canAccess('admindept') || canAccess('hrdept') || canAccess('itdept')"
+  <!-- <div class="dropdown" *ngIf="canAccess('admindept') || canAccess('hrdept') || canAccess('itdept')"
     (mouseenter)="showFloatingDropdown($event, 'departments')" (mouseleave)="hideFloatingDropdown()">
 
     <div class="dropdown-toggle" (click)="toggleDropdown('departments')">
       <i>🏢</i><span>Departments</span>
       <span class="arrow">{{ activeDropdown === 'departments' ? '▲' : '▼' }}</span>
-    </div>
+    </div> -->
 
     <!-- Normal dropdown when sidebar is expanded -->
-    <div class="dropdown-content" *ngIf="activeDropdown === 'departments' && !isSidebarClosed">
+    <!-- <div class="dropdown-content" *ngIf="activeDropdown === 'departments' && !isSidebarClosed">
       <a *ngIf="canAccess('admindept')" routerLink="/admindept">Admin Dept</a>
       <a *ngIf="canAccess('hrdept')" routerLink="/hrdept">HR Dept</a>
       <a *ngIf="canAccess('itdept')" routerLink="/itdept">IT Dept</a>
-    </div>
+    </div> -->
 
     <!-- Floating dropdown when sidebar is collapsed -->
-    <div class="floating-dropdown" *ngIf="hoveredDropdown === 'departments' && isSidebarClosed"
+    <!-- <div class="floating-dropdown" *ngIf="hoveredDropdown === 'departments' && isSidebarClosed"
       [style.top.px]="floatingTop">
       <a *ngIf="canAccess('admindept')" routerLink="/admindept">Admin Dept</a>
       <a *ngIf="canAccess('hrdept')" routerLink="/hrdept">HR Dept</a>
       <a *ngIf="canAccess('itdept')" routerLink="/itdept">IT Dept</a>
     </div>
+  </div> -->
+
+  <div class="dropdown"
+     *ngIf="canAccess('departments')"
+     (mouseenter)="showFloatingDropdown($event, 'departments')"
+     (mouseleave)="hideFloatingDropdown()">
+
+  <div class="dropdown-toggle" (click)="toggleDropdown('departments')">
+    <i>🏢</i><span>Departments</span>
+    <span class="arrow">{{ activeDropdown === 'departments' ? '▲' : '▼' }}</span>
   </div>
+
+  <div class="dropdown-content"
+       *ngIf="activeDropdown === 'departments' && !isSidebarClosed">
+
+    <a *ngIf="canAccess('admindept')" routerLink="/admindept">Admin Dept</a>
+    <a *ngIf="canAccess('hrdept')" routerLink="/hrdept">HR Dept</a>
+    <a *ngIf="canAccess('itdept')" routerLink="/itdept">IT Dept</a>
+
+  </div>
+</div>
 
 
   <!-- Admin Users -->
