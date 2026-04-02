@@ -29,6 +29,7 @@ export class LeftmenuComponent implements OnDestroy {
   userInfoSubscription: any;
   userInfoInitialized = false;
 
+
   allowedPages: string[] = JSON.parse(
   localStorage.getItem('allowedPages') || '[]'
 );
@@ -151,8 +152,8 @@ forkJoin({
   role: this.ielc.GetUserRole(email as string),
   permissions: this.ielc.getUserPermissions(email as string)
 }).subscribe(({ role, permissions }) => {
-debugger;
-  this.userRole = role;
+//debugger;
+  this.userRole = (role || '').toString();
   localStorage.setItem('userRole', this.userRole);
 
   this.allowedPages = permissions
@@ -164,6 +165,8 @@ debugger;
   localStorage.setItem('allowedPages', JSON.stringify(this.allowedPages));
 
 });
+
+
 
   }
 
@@ -235,7 +238,7 @@ debugger;
 //   const normalized = module.replace(/\s+/g,'').toLowerCase();
 
 //   // SuperAdmin
-//   if (this.userRole === 'SuperAdmin') return true;
+//   if (this.userRole.toLowerCase() === 'superadmin') return true;
 
 //   // Always visible
 //   if (normalized === 'home' || normalized === 'registration') return true;
@@ -243,21 +246,38 @@ debugger;
 //   return this.allowedPages.includes(normalized);
 // }
 
-canAccess(module: string): boolean {
+// canAccess(module: string): boolean {
 
-  // SuperAdmin sees everything
-  if (this.userRole?.toLowerCase() === 'superadmin') {
-    return true;
-  }
+//   // SuperAdmin sees everything
+//   if (this.userRole?.toLowerCase() === 'superadmin') {
+//     return true;
+//   }
+
+//   const normalized = module.replace(/\s+/g,'').toLowerCase();
+
+//   if (normalized === 'home' || normalized === 'registration') {
+//     return true;
+//   }
+
+//   return this.allowedPages.includes(normalized);
+// }
+
+canAccess(module: string): boolean {
 
   const normalized = module.replace(/\s+/g,'').toLowerCase();
 
-  if (normalized === 'home' || normalized === 'registration') {
-    return true;
-  }
+  const role = (this.userRole || '').toString().toLowerCase();
+
+  // SuperAdmin
+  if (role === 'superadmin') return true;
+
+  // Always visible
+  if (normalized === 'home' || normalized === 'registration') return true;
 
   return this.allowedPages.includes(normalized);
 }
+
+
 
 
   onMouseLeave() {
