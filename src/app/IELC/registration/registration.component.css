@@ -1476,10 +1476,10 @@ border-style: solid;
   border: 1px solid #ccc;
   background: #f5f5f5;
   width: 100%;
-  min-height: 270px;
+  min-height: 290px;
   cursor: default;
   box-sizing: border-box;
-  margin-top: -152%;
+  margin-top: -161%;
 }
 
 .tip-header {
@@ -1523,7 +1523,7 @@ border-style: solid;
 }
 
 .table-scroll {
-  max-height: 246px;
+  max-height: 266px;
   overflow-y: auto;
 }
 
@@ -1602,7 +1602,7 @@ border-style: solid;
 
 .poster-card {
   flex: 0 0 auto;
-  margin-top: 20px;
+  margin-top: -31px;
 }
 
 .tip-title {

@@ -186,7 +186,7 @@ eventsdata: eventsinfo = {
 
 latestEvent: any = null;
 page: number = 1;
-itemsPerPage: number = 4;
+itemsPerPage: number = 3;
 Enrolledskills: any[] = [];
 EnrolledskillsWithType: SkillWithType[] = [];
 EnrolledskillsLearning: any[] = [];

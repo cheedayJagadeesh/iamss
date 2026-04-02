@@ -2856,14 +2856,18 @@ tipsdeleteurl = 'https://ielcapitest.azurewebsites.net/CyberSafetyTip';
 
 //---------------------------------------------------------------------------------------AdminUsersRoles
 
-   AdminUsersRolesurl = 'http://localhost:5024/AdminUsersRoles';
+   AdminUsersRolesurl = 'https://ielcapitest.azurewebsites.net/AdminUsersRoles';
 
 getUserPermissions(email: string) {
   return this.http.get<any[]>(`${this.AdminUsersRolesurl}?email=${email}`,  { headers: this.getHeaders() });
 }
 
+AdminUsersRolename = 'https://ielcapitest.azurewebsites.net/AdminUsersRoles/role';
 
-
-
+GetUserRole(email: string) {
+  return this.http.get<string>(`${this.AdminUsersRolename}/${email}`, {
+    headers: this.getHeaders()
+  });
+}
 
 }

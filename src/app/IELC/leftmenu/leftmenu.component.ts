@@ -6,7 +6,7 @@ import { MsalService } from '@azure/msal-angular';
 import { environmentConfig } from '../environment.runtime';
 import { AuthService } from 'src/app/authservice.service';
 import { IelcapiService } from '../ielcapi.service';
-
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-leftmenu',
@@ -24,10 +24,19 @@ export class LeftmenuComponent implements OnDestroy {
   hoveredMenuLabel: string | null = null;
   userDetailsSubject: any;
   userInfoSubject: any;
-  allowedPages: string[] = [];
-  userRole: string = '';
+  // allowedPages: string[] = [];
+  // userRole: string = '';
   userInfoSubscription: any;
   userInfoInitialized = false;
+
+  allowedPages: string[] = JSON.parse(
+  localStorage.getItem('allowedPages') || '[]'
+);
+
+
+userRole: string = localStorage.getItem('userRole') || 'User';
+//userRole: string = '';
+
   constructor(private router: Router, private renderer: Renderer2, private msalService: MsalService, private authService: AuthService, private ielc: IelcapiService) {
 
     this.router.events
@@ -41,11 +50,37 @@ export class LeftmenuComponent implements OnDestroy {
         this.autoOpenDropdown(this.activeRoute);
       });
 
+//       const account = this.msalService.instance.getActiveAccount();
 
-      //debugger;
+//       const email =
+//           account?.username ||
+//           account?.idTokenClaims?.preferred_username ||
+//           account?.idTokenClaims?.['email'];
 
 
-      const account = this.msalService.instance.getActiveAccount();
+//       this.ielc.getUserPermissions(email as string).subscribe((res:any[]) => {
+
+//   this.allowedPages = res
+//     .map(x => x.pageName?.toLowerCase())
+//     .filter(Boolean)
+//     .flatMap(p => p.split(','))
+//     .map(p => p.trim().replace(/\s+/g,'')); 
+
+//   localStorage.setItem('allowedPages', JSON.stringify(this.allowedPages));
+
+//   console.log('Allowed Pages:', this.allowedPages);
+// });
+//debugger;
+//this.userRole = localStorage.getItem('userRole') || 'User';
+// FIRST load from localStorage (no flicker)
+
+
+// this.allowedPages = JSON.parse(
+//   localStorage.getItem('allowedPages') || '[]'
+// );
+
+// THEN refresh from API
+const account = this.msalService.instance.getActiveAccount();
 
 const email =
   account?.username ||
@@ -56,17 +91,71 @@ const email =
 
 //   this.allowedPages = res
 //     .map(x => x.pageName?.toLowerCase())
-//     .filter(Boolean)                 // remove null/empty
-//     .flatMap(p => p.split(','))      // split comma values
+//     .filter(Boolean)
+//     .flatMap(p => p.split(','))
 //     .map(p => p.trim().replace(/\s+/g,'')); 
 
 //   localStorage.setItem('allowedPages', JSON.stringify(this.allowedPages));
+// });
 
-//   console.log('Allowed Pages:', this.allowedPages);
 
-this.ielc.getUserPermissions(email as string).subscribe((res:any[]) => {
+// this.ielc.GetUserRole(email as string).subscribe(role => {
+//   this.userRole = role;
+//   console.log('User Role:', this.userRole);
+// });
 
-  this.allowedPages = res
+
+// this.ielc.getUserPermissions(email as string).subscribe((res:any[]) => {
+
+//   this.allowedPages = res
+//     .map(x => x.pageName?.toLowerCase())
+//     .filter(Boolean)
+//     .flatMap(p => p.split(','))
+//     .map(p => p.trim().replace(/\s+/g,'')); 
+// debugger;
+//   // ✅ set role from API
+//   //this.userRole = res[0]?.roleName || 'User';
+//   //this.userRole = res[0]?.roleName || 'User';
+// this.permissionsLoaded = true;
+
+//   // ✅ store role
+//   localStorage.setItem('userRole', this.userRole);
+
+//   localStorage.setItem('allowedPages', JSON.stringify(this.allowedPages));
+
+//   console.log('Role:', this.userRole);
+// });
+
+
+// forkJoin({
+//   role: this.ielc.GetUserRole(email as string),
+//   permissions: this.ielc.getUserPermissions(email as string)
+// }).subscribe(({ role, permissions }) => {
+
+//   this.userRole = role;
+
+//   this.allowedPages = permissions
+//     .map(x => x.pageName?.toLowerCase())
+//     .filter(Boolean)
+//     .flatMap(p => p.split(','))
+//     .map(p => p.trim().replace(/\s+/g,'')); 
+
+
+
+//   localStorage.setItem('allowedPages', JSON.stringify(this.allowedPages));
+
+//   console.log('Role:', this.userRole);
+// });
+
+forkJoin({
+  role: this.ielc.GetUserRole(email as string),
+  permissions: this.ielc.getUserPermissions(email as string)
+}).subscribe(({ role, permissions }) => {
+debugger;
+  this.userRole = role;
+  localStorage.setItem('userRole', this.userRole);
+
+  this.allowedPages = permissions
     .map(x => x.pageName?.toLowerCase())
     .filter(Boolean)
     .flatMap(p => p.split(','))
@@ -74,91 +163,8 @@ this.ielc.getUserPermissions(email as string).subscribe((res:any[]) => {
 
   localStorage.setItem('allowedPages', JSON.stringify(this.allowedPages));
 
-  console.log('Allowed Pages:', this.allowedPages);
 });
 
-// const account = this.msalService.instance.getActiveAccount();
-
-// const email =
-//   account?.username ||
-//   account?.idTokenClaims?.preferred_username ||
-//   account?.idTokenClaims?.['email'];
-
-// this.ielc.getUserPermissions(email as string).subscribe((res:any[]) => {
-
-//   const allowedPages = res.map(x =>
-//     x.pageName.toLowerCase().replace(/\s+/g,'')
-//   );
-
-//   localStorage.setItem('allowedPages', JSON.stringify(allowedPages[1]));
-//     console.log('Checking access for:',  'Allowed Pages:', allowedPages);
-// });
-
-
-//   this.userInfoSubscription = this.authService.userInfo$.subscribe(userInfo => {
-//       if (!userInfo || !userInfo.email ) return;
-    
-//       this.userRole = userInfo.roleName || 'User';
-//       //this.isLoading = false;
-    
-//       // Store role for redirect tracking
-//       const lastRole = localStorage.getItem('userRole');
-//       if (lastRole !== this.userRole) {
-//         localStorage.setItem('userRole', this.userRole);
-       
-//         if (this.userRole === 'SuperAdmin' || this.userRole === 'Admin') {
-//           if (this.router.url === '/' || this.router.url === '/registration') {
-//             this.router.navigate(['/home']);
-//           }
-//         } else {
-//           if (this.router.url !== '/registration') {
-//             this.router.navigate(['/registration']);
-//           }
-//         }
-//       }
-    
-//          debugger;
-//       if (typeof userInfo.pageName === 'string') {
-//   this.allowedPages = userInfo.pageName
-//     .split(',')
-//     .map(p => p.trim().toLowerCase().replace(/\s+/g, ''));
-// }
-// else if (Array.isArray(userInfo.pageName)) {
-//   this.allowedPages = userInfo.pageName
-//     .map((p: string) => p.trim().toLowerCase().replace(/\s+/g, ''));
-// }
-// else {
-//   this.allowedPages = [];
-// }
-
-// console.log('allowedPages:', this.allowedPages);
-//       const currentPage = this.router.url.replace('/', '').toLowerCase();
-//       if (
-//         !this.canAccess(currentPage) &&
-//         this.userRole !== 'SuperAdmin' &&
-//         this.userRole !== 'Admin'
-//       ) {
-//         this.router.navigate(['/registration']);
-//       }
-//       this.userInfoInitialized = true;
-//     });
-    
-//     this.router.events.subscribe(event => {
-//       if (event instanceof NavigationEnd) {
-//          const url = event.urlAfterRedirects;
-
-//         if (url.includes('isms')) {
-//           this.isOpen['compliance'] = true;
-//           this.isOpen['isms'] = true;
-//         } else if (url.includes('qms')) {
-//           this.isOpen['compliance'] = true;
-//           this.isOpen['qms'] = true;
-//         } else if (url.includes('soc2')) {
-//           this.isOpen['compliance'] = true;
-//           this.isOpen['soc2'] = true;
-//         }
-//       }
-//     });
   }
 
 
@@ -179,43 +185,80 @@ this.ielc.getUserPermissions(email as string).subscribe((res:any[]) => {
     this.isOpen[menu] = !this.isOpen[menu];
   }
 
+// canAccess(module: string): boolean {
+//   // Always visible
+//   if (module === 'home' || module === 'registration') {
+//     return true;
+//   }
 
+//   // Admin always allowed
+//   if (this.userRole === 'SuperAdmin' || this.userRole === 'Admin') {
+//     return true;
+//   }
+//   const normalizedModule = module.replace(/\s+/g, '').toLowerCase();
+//   return this.allowedPages.includes(normalizedModule);
+// }
 
+// canAccess(module: string): boolean {
 
+//   const normalized = module.replace(/\s+/g,'').toLowerCase();
 
-  // Simulated permission check — replace with your real logic
+//   // SuperAdmin → everything
+//   if (this.userRole === 'SuperAdmin') {
+//     return true;
+//   }
+
+//   // Always visible
+//   if (normalized === 'home' || normalized === 'registration') {
+//     return true;
+//   }
+
+//   // Admin + User → only allowed pages
+//   return this.allowedPages.includes(normalized);
+// }
+
+// canAccess(module: string): boolean {
+
+//   if (!this.permissionsLoaded) return false;
+
+//   const normalized = module.replace(/\s+/g,'').toLowerCase();
+
+//   if (this.userRole === 'SuperAdmin') return true;
+
+//   if (normalized === 'home' || normalized === 'registration') return true;
+
+//   return this.allowedPages.includes(normalized);
+// }
+
+// canAccess(module: string): boolean {
+
+//   const normalized = module.replace(/\s+/g,'').toLowerCase();
+
+//   // SuperAdmin
+//   if (this.userRole === 'SuperAdmin') return true;
+
+//   // Always visible
+//   if (normalized === 'home' || normalized === 'registration') return true;
+
+//   return this.allowedPages.includes(normalized);
+// }
+
 canAccess(module: string): boolean {
 
-  // Always visible
-  if (module === 'home' || module === 'registration') {
+  // SuperAdmin sees everything
+  if (this.userRole?.toLowerCase() === 'superadmin') {
     return true;
   }
 
-  // Admin always allowed
-  if (this.userRole === 'SuperAdmin' || this.userRole === 'Admin') {
+  const normalized = module.replace(/\s+/g,'').toLowerCase();
+
+  if (normalized === 'home' || normalized === 'registration') {
     return true;
   }
 
-  const normalizedModule = module.replace(/\s+/g, '').toLowerCase();
-
-  return this.allowedPages.includes(normalizedModule);
+  return this.allowedPages.includes(normalized);
 }
 
-  // Logout function — adjust per your project’s authentication flow
-  // logout() {
-  //   // Clear session or token
-  //   localStorage.clear();
-  //   sessionStorage.clear();
-
-  //   // Navigate to login page
-  //   this.router.navigate(['/login']);
-  // }
-
-  // onMouseEnter(menu: string) {
-  //   if (this.isSidebarClosed) {
-  //     this.hoveredDropdown = menu;
-  //   }
-  // }
 
   onMouseLeave() {
     this.hoveredDropdown = null;
@@ -302,10 +345,6 @@ canAccess(module: string): boolean {
   isSubMenuActive(route: string): boolean {
     return this.activeRoute === route;
   }
-
-
-
-
 showUserMenu = false;
 showLogoutModal = false;
 

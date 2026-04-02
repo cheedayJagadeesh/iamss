@@ -576,11 +576,11 @@
                 <label class="lbllname">Last Name<span style="color: red;">*</span></label>
                 <input type="text" class="form-controllname" name="lastName" [(ngModel)]="lastName" readonly required>
               </div>
-              <div class="mb-3 ">
+              <div class="col-sm-6 mb-3">
                 <label class="lblemail">Email<span style="color: red;">*</span></label>
                 <input type="text" class="form-controlemail" name="email" [(ngModel)]="userEmail" readonly required>
               </div>
-              <div class="mb-3 ">
+              <div class="col-sm-6 mb-3">
                 <label class="lblmbl">Mobile No.</label>
                 <input type="text" class="form-controlmbl" name="mobile" [(ngModel)]="mobile" pattern="[0-9]*"
                   maxlength="10" minlength="10" (keypress)="allowOnlyDigits($event)"
