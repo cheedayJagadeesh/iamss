@@ -234,9 +234,9 @@
         <div class="col-sm-7 top">
           <div class="container-main">
             <h3 class="main">{{selectedDate | date:'longDate'}}</h3>
-            <div class="row mb-3 align-items-end  leave_Container">
+            <!-- <div class="row mb-3 align-items-end  leave_Container">
               <div class="col-auto">
-                <label for="select1" class="labeltimeleave">Leave</label>
+                <label for="select1" class="select-row">Leave</label>
                 <select id="select1" name="leavetype" class="form-select1" [(ngModel)]="leave"
                   (change)="onSelect1Change()" [disabled]="isfirstSelectDisabled">
                   <option value="" selected>- select leave -</option>
@@ -244,34 +244,71 @@
                   <option value="Half Day">Half Day</option>
                   <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
                 </select>
+             
 
-                <label class="labeltimework">Work Location</label>
+                <label class="select-row">Work Location</label>
                 <select id="select2" name="worktype" class="form-select1" [(ngModel)]="work"
                   [disabled]="isSecondSelectDisabled" (change)="onSelect2Change()">
+                  
                   <option value="">- select work -</option>
                   <option *ngFor="let work of worktype">{{ work.name }}</option>
                 </select>
+                
 
                 <div class="form-outline datepicker">
                   <input class="formcontrolcalendar lblposition" type="date" name="selectedDate" [(ngModel)]="selectedDate"
                     required>
                 </div>
               </div>
-            </div>
-            <div>
-              <div class="row mb-3 justify-content-center">
-                <div class="col-auto">
-                  <label class="labeltime1">Login Time</label>
-                  <input type="time" class="time" name="time1" [(ngModel)]="time1" [disabled]="isSecondSelectDisabled"
+            </div> -->
+
+            <div class="form-outline datepicker">
+                  <input class="formcontrolcalendar lblposition" type="date" name="selectedDate" [(ngModel)]="selectedDate"
+                    required>
+                </div>
+
+                <div class="time-row">
+                  <div class="time-group">
+                    <label>Leave</label>
+                    <select id="select1" name="leavetype" class="form-select1 time-input" [(ngModel)]="leave"
+                      (change)="onSelect1Change()" [disabled]="isfirstSelectDisabled">
+                      <option value="" selected>- select leave -</option>
+                      <option value="Full Day">Full Day</option>
+                      <option value="Half Day">Half Day</option>
+                      <option value="OH(Optional Holiday)">OH(Optional Holiday)</option>
+                    </select>
+                  </div>
+                
+                
+                  
+                    <div class="time-group">
+                      <label>Work Location</label>
+                      <select id="select2" name="worktype" class="form-select1 time-input" [(ngModel)]="work"
+                        [disabled]="isSecondSelectDisabled" (change)="onSelect2Change()">
+                
+                        <option value="">- select work -</option>
+                        <option *ngFor="let work of worktype">{{ work.name }}</option>
+                      </select>
+                    </div>
+                  
+                <!-- </div> -->
+
+            
+              <!-- <div class="time-row"> -->
+                <div class="time-group group">
+                  <label>Login Time</label>
+                  <input type="time" class="time-input width" [(ngModel)]="time1" [disabled]="isSecondSelectDisabled"
                     (change)="onFirsttimechange()">
                 </div>
-                <div class="col-auto">
-                  <label class="labeltime2">Logout Time</label>
-                  <input type="time" class="time" name="time2" [(ngModel)]="time2" (change)="checktime()"
-                    [disabled]="isSecondSelectDisabled" [disabled]="!isTimeInputDisabled">
+            
+                <div class="time-group group">
+                  <label>Logout Time</label>
+                  <input type="time" class="time-input width" [(ngModel)]="time2" (change)="checktime()"
+                    [disabled]="!isTimeInputDisabled">
                 </div>
-              </div>
 
+              </div>
+<div>
               <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
@@ -300,7 +337,7 @@
               </div>
             </div>
             <div class="div-btnSave">
-              <button class="button" (click)="save()">Save</button>
+              <button class="button ttop" (click)="save()">Save</button>
             </div>
           </div>
 
@@ -410,21 +447,7 @@
   <img [src]="selectedImage" class="modal-img" />
 </div>
 
-<div class="poster-card">
-  <h3 class="poster-title">Posters</h3>
 
-  <div class="poster-wrapper">
-
-    <img
-      *ngFor="let poster of posters; let i = index"
-      [src]="poster"
-      class="poster-img"
-      [class.active]="i === currentIndex"
-      (click)="openImage(poster)"
-    />
-
-  </div>
-</div>
 
         </div>
         <div class="col-sm-5 top1">
@@ -646,8 +669,82 @@
                       </div>
                     </div> -->
 
+<!-- <div class="container my-4">
+  <div class="right-panel">
+  <div class="cyber-tip-card"
+       (mouseenter)="pauseRotation()"
+       (mouseleave)="resumeRotation()">
+
+    <div class="tip-header">
+      Cyber Safety Tips
+    </div>
+
+<div class="tip-body" [class.fade]="fadeState"> -->
+<!-- <div class="tip-title">
+  {{ tips[currentTipIndex]?.title || 'Cyber Safety Tip' }} :
+</div> -->
+
+<!-- <div class="tip-title" *ngIf="tips[currentTipIndex]?.title">
+  {{ tips[currentTipIndex]?.title }} :
+</div> -->
+
+<!-- <div class="tip-title" *ngIf="!tips[currentTipIndex]?.title">
+  
+</div> -->
+
+  <!-- <div class="tip-desc">
+    {{ tips[currentTipIndex]?.description }}
+  </div> -->
+   <!-- <div class="tip-desc" [innerHTML]="tips[currentTipIndex]?.description"></div>
+</div>
+  </div>
+
+  <div class="container-div">
+    <div>
+      <h2 class="notify">Inteq Holidays</h2>
+    </div>
+
+    <div class="table-scroll">
+      <table class="holiday-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Holiday</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of holidayslist">
+            <td>{{ item.date | date:'dd-MM-yyyy' }}</td>
+            <td>{{ item.content }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div> -->
+
+
+<div class="main-layout">
+  <div class="left-panel">
+<div class="poster-card">
+  <h3 class="poster-title">Posters</h3>
+
+  <div class="poster-wrapper">
+
+    <img
+      *ngFor="let poster of posters; let i = index"
+      [src]="poster"
+      class="poster-img"
+      [class.active]="i === currentIndex"
+      (click)="openImage(poster)"
+    />
+    </div>
+  </div>
+</div>
 
   <div class="right-panel">
+    <div class="right-panel">
   <div class="cyber-tip-card"
        (mouseenter)="pauseRotation()"
        (mouseleave)="resumeRotation()">
@@ -699,7 +796,8 @@
     </div>
   </div>
 </div>
-
+  </div>
+</div>
 
 
       <div class="bottomtable">
