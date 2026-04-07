@@ -30,8 +30,8 @@ export class AppComponent implements OnInit {
 
   async ngOnInit() {
 
-    const userName = localStorage.getItem("email") || "Guest";
-  this.activeUsersService.startConnection(userName);
+  //   const userName = localStorage.getItem("email") || "Guest";
+  // this.activeUsersService.startConnection(userName);
 
     this.isLoading = true;
       //  this.authService.startInactivityTimer();

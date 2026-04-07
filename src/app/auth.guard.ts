@@ -84,44 +84,89 @@ export class AuthGuard implements CanActivate {
   //   }
   // }
   
-  async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
-    const allowedPageNames = route.data['pageNames'] as string[] || [];
+//   async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
+//     const allowedPageNames = route.data['pageNames'] as string[] || [];
   
-    await this.authService.ensureMsalInitialized();
+//     await this.authService.ensureMsalInitialized();
   
-    if (!this.authService.hasActiveAccount()) {
-      //await this.authService.login();
-      this.router.navigate(['/login']);
-      return false;
-    }
+//     if (!this.authService.hasActiveAccount()) {
+//       //await this.authService.login();
+//       this.router.navigate(['/login']);
+//       return false;
+//     }
   
-    const userRole = await this.authService.fetchUserDetails(); // This also populates userInfoSubject
-    const userPageNames = await this.authService.getUserPageNames();
+//     const userRole = await this.authService.fetchUserDetails(); // This also populates userInfoSubject
+//     const userPageNames = await this.authService.getUserPageNames();
   
-    // console.log('User Role:', userRole);
-    // console.log('User page names from backend:', userPageNames);
-    // console.log('Route allowed pages:', allowedPageNames);
+//     // console.log('User Role:', userRole);
+//     // console.log('User page names from backend:', userPageNames);
+//     // console.log('Route allowed pages:', allowedPageNames);
   
-    // Add default allowed pages based on role
-    let effectiveAllowedPages: string[] = [];
+//     // Add default allowed pages based on role
+//     let effectiveAllowedPages: string[] = [];
   
-    if (userRole === 'SuperAdmin') {
-      // SuperAdmin can access everything
-      return true;
-    } else if (userRole === 'Admin') {
-      effectiveAllowedPages = ['home', 'registration', ...userPageNames];
-    } else if (userRole === 'User') {
-      effectiveAllowedPages = ['registration'];
-    }
+//     if (userRole === 'SuperAdmin') {
+//       // SuperAdmin can access everything
+//       return true;
+//     } else if (userRole === 'Admin') {
+//       effectiveAllowedPages = ['home', 'registration', ...userPageNames];
+//     } else if (userRole === 'User') {
+//       effectiveAllowedPages = ['registration'];
+//     }
   
-    // Now check access
-    const hasAccess = allowedPageNames.some(page => effectiveAllowedPages.includes(page));
+//     // Now check access
+//     const hasAccess = allowedPageNames.some(page => effectiveAllowedPages.includes(page));
   
    
+//   if (hasAccess) {
+//     return true;
+//   } else {
+//     // Redirect Admins to home, Users to registration
+//     if (userRole === 'Admin') {
+//       this.router.navigate(['/home']);
+//     } else {
+//       this.router.navigate(['/registration']);
+//     }
+//     return false;
+//   }
+//   }
+  
+  
+// }
+
+async canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
+
+  const allowedPageNames = route.data['pageNames'] as string[] || [];
+
+  await this.authService.ensureMsalInitialized();
+
+  if (!this.authService.hasActiveAccount()) {
+    this.router.navigate(['/login']);
+    return false;
+  }
+
+  const userRole = await this.authService.fetchUserDetails();
+  const userPageNames = await this.authService.getUserPageNames();
+
+  let effectiveAllowedPages: string[] = [];
+
+  if (userRole === 'SuperAdmin') {
+    return true;
+  } 
+  else if (userRole === 'Admin') {
+    effectiveAllowedPages = ['home', 'registration', 'profile', ...userPageNames];
+  } 
+  else if (userRole === 'User') {
+    effectiveAllowedPages = ['registration'];
+  }
+
+  const hasAccess = allowedPageNames.some(page =>
+    effectiveAllowedPages.includes(page)
+  );
+
   if (hasAccess) {
     return true;
   } else {
-    // Redirect Admins to home, Users to registration
     if (userRole === 'Admin') {
       this.router.navigate(['/home']);
     } else {
@@ -129,11 +174,7 @@ export class AuthGuard implements CanActivate {
     }
     return false;
   }
-  }
-  
-  
 }
-
 
 // import { inject } from '@angular/core';
 // import { CanActivateFn, Router } from '@angular/router';
@@ -237,3 +278,4 @@ export class AuthGuard implements CanActivate {
 
 
  
+}

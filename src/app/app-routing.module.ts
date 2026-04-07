@@ -56,14 +56,14 @@ import { ProfileComponent } from './profile/profile.component';
 
 
 const routes: Routes = [
-  {path:'adminuser',component:AdminuserComponent,canActivate: [MsalGuard]},
-  {path:'pmadminuser',component:PmadminuserComponent,canActivate: [MsalGuard]},
-  {path:'adminreports',component:AdminreportsComponent,canActivate: [MsalGuard]},
-  {path:'monthlyempreport',component:MonthlyempreportComponent,canActivate: [MsalGuard]},
-  {path:'projectreports',component:ProjectreportsComponent,canActivate: [MsalGuard]},
-  {path:'configuration',component:ConfigurationsComponent,canActivate: [MsalGuard]},
+  {path:'adminuser',component:AdminuserComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['adminuser'], roles: ['Admin', 'SuperAdmin'] }},
+  {path:'pmadminuser',component:PmadminuserComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['pmadminuser'], roles: ['Admin', 'SuperAdmin'] }},
+  {path:'adminreports',component:AdminreportsComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['adminreports'], roles: ['Admin', 'SuperAdmin'] }},
+  {path:'monthlyempreport',component:MonthlyempreportComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['monthlyempreport'], roles: ['Admin', 'SuperAdmin'] }},
+  {path:'projectreports',component:ProjectreportsComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['projectreports'], roles: ['Admin', 'SuperAdmin'] }},
+  {path:'configuration',component:ConfigurationsComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['configuration'], roles: ['Admin', 'SuperAdmin'] }},
   // {path:'attendance',component:AttendanceComponent,canActivate: [MsalGuard]},
-  {path:'empattendance',component:EmpattendanceComponent,canActivate: [MsalGuard]},
+  {path:'empattendance',component:EmpattendanceComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['empattendance'], roles: ['Admin', 'SuperAdmin'] }},
   {path:'registered',component:RegisteredusersComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['registered'], roles: ['Admin', 'SuperAdmin'] }},
   // {path:'home',component:HomeComponent,canActivate:[MsalGuard]},
   // {path:'',redirectTo:'login', pathMatch:'full'},
@@ -94,6 +94,7 @@ const routes: Routes = [
   {path:'user-groups',component:UserGroupsComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['user-groups'], roles: ['Admin', 'SuperAdmin']}},
   {path:'eventscheduler',component:EventschedulerComponent,canActivate: [MsalGuard],data: { pageNames: ['eventscheduler'], roles: ['Admin', 'SuperAdmin']}},
   {path:'admin',component:AdminComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['admin'], roles: ['Admin', 'SuperAdmin']}},
+  //{path:'profile',component:ProfileComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['profile'], roles: ['Admin', 'SuperAdmin'] }},
   {path:'profile',component:ProfileComponent,canActivate: [MsalGuard,AuthGuard],data: { pageNames: ['profile'], roles: ['Admin', 'SuperAdmin'] }},
 
 
@@ -124,3 +125,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+

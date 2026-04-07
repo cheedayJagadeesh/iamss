@@ -49,26 +49,30 @@
     </div>
 
     <!-- Expanded view (when sidebar is open) -->
-    <div class="dropdown-content" *ngIf="activeDropdown === 'compliance' && !isSidebarClosed">
+    <!-- <div class="dropdown-content" *ngIf="activeDropdown === 'compliance' && !isSidebarClosed"> -->
+      <div class="dropdown-content" [hidden]="activeDropdown !== 'compliance' || isSidebarClosed">
       <!-- ISMS -->
-      <div class="dropdown" [class.open]="isOpen['isms']">
+      <!-- <div class="dropdown" [class.open]="isOpen['isms']"> -->
+        <div class="dropdown" *ngIf="canAccess('ismstask')" [class.open]="isOpen['isms']">
         <div class="dropdown-toggle" (click)="toggleSubDropdown('isms')">
           ISMS Task <span class="arrow">{{ isOpen['isms'] ? '▲' : '▼' }}</span>
         </div>
-        <div class="dropdown-content" *ngIf="isOpen['isms']">
+        <!-- <div class="dropdown-content" *ngIf="isOpen['isms']"> -->
+          <div class="dropdown-content" [hidden]="!isOpen['isms']">
           <a routerLink="/ismstask" [ngClass]="{ 'active-submenu': isSubMenuActive('/ismstask') }">ISMS Calendar</a>
-          <a routerLink="/ismshistory" [ngClass]="{ 'active-submenu': isSubMenuActive('/ismshistory') }">ISMS
-            History</a>
+          <a routerLink="/ismshistory" [ngClass]="{ 'active-submenu': isSubMenuActive('/ismshistory') }">ISMS History</a>
           <a routerLink="/ismsmails" [ngClass]="{ 'active-submenu': isSubMenuActive('/ismsmails') }">ISMS Mails</a>
         </div>
       </div>
 
       <!-- QMS -->
-      <div class="dropdown" [class.open]="isOpen['qms']">
+      <!-- <div class="dropdown" [class.open]="isOpen['qms']"> -->
+        <div class="dropdown" *ngIf="canAccess('qmstask')" [class.open]="isOpen['qms']">
         <div class="dropdown-toggle" (click)="toggleSubDropdown('qms')">
           QMS Task <span class="arrow">{{ isOpen['qms'] ? '▲' : '▼' }}</span>
         </div>
-        <div class="dropdown-content" *ngIf="isOpen['qms']">
+        <!-- <div class="dropdown-content" *ngIf="isOpen['qms']"> -->
+          <div class="dropdown-content" [hidden]="!isOpen['qms']">
           <a routerLink="/qmstask" [ngClass]="{ 'active-submenu': isSubMenuActive('/qmstask') }">QMS Calendar</a>
           <a routerLink="/qmshistory" [ngClass]="{ 'active-submenu': isSubMenuActive('/qmshistory') }">QMS History</a>
           <a routerLink="/qmsmails" [ngClass]="{ 'active-submenu': isSubMenuActive('/qmsmails') }">QMS Mails</a>
@@ -76,14 +80,15 @@
       </div>
 
       <!-- SOC2 -->
-      <div class="dropdown" [class.open]="isOpen['soc2']">
+      <!-- <div class="dropdown" [class.open]="isOpen['soc2']"> -->
+        <div class="dropdown" *ngIf="canAccess('soc2task')" [class.open]="isOpen['soc2']">
         <div class="dropdown-toggle" (click)="toggleSubDropdown('soc2')">
           SOC2 Task <span class="arrow">{{ isOpen['soc2'] ? '▲' : '▼' }}</span>
         </div>
-        <div class="dropdown-content" *ngIf="isOpen['soc2']">
+        <!-- <div class="dropdown-content" *ngIf="isOpen['soc2']"> -->
+          <div class="dropdown-content" [hidden]="!isOpen['soc2']">
           <a routerLink="/soc2task" [ngClass]="{ 'active-submenu': isSubMenuActive('/soc2task') }">SOC2 Calendar</a>
-          <a routerLink="/soc2history" [ngClass]="{ 'active-submenu': isSubMenuActive('/soc2history') }">SOC2
-            History</a>
+          <a routerLink="/soc2history" [ngClass]="{ 'active-submenu': isSubMenuActive('/soc2history') }">SOC2 History</a>
           <a routerLink="/soc2mails" [ngClass]="{ 'active-submenu': isSubMenuActive('/soc2mails') }">SOC2 Mails</a>
         </div>
       </div>
@@ -95,26 +100,32 @@
      [style.top.px]="floatingTop">
 
 
-      <div class="dropdown-group">
-        <strong>ISMS Task</strong>
+      <!-- <div class="dropdown-group"> -->
+        <!-- <strong>ISMS Task</strong> -->
+         <div class="dropdown-group" *ngIf="canAccess('ismstask')">
         <a routerLink="/ismstask">ISMS Calendar</a>
         <a routerLink="/ismshistory">ISMS History</a>
         <a routerLink="/ismsmails">ISMS Mails</a>
-      </div>
+         </div>
+      <!-- </div>
 
-      <div class="dropdown-group">
-        <strong>QMS Task</strong>
+      <div class="dropdown-group"> -->
+        <!-- <strong>QMS Task</strong> -->
+         <div class="dropdown-group" *ngIf="canAccess('qmstask')">
         <a routerLink="/qmstask">QMS Calendar</a>
         <a routerLink="/qmshistory">QMS History</a>
         <a routerLink="/qmsmails">QMS Mails</a>
-      </div>
+         </div>
+      <!-- </div>
 
-      <div class="dropdown-group">
-        <strong>SOC2 Task</strong>
+      <div class="dropdown-group"> -->
+        <!-- <strong>SOC2 Task</strong> -->
+         <div class="dropdown-group" *ngIf="canAccess('soc2task')">
         <a routerLink="/soc2task">SOC2 Calendar</a>
         <a routerLink="/soc2history">SOC2 History</a>
         <a routerLink="/soc2mails">SOC2 Mails</a>
-      </div>
+         </div>
+      <!-- </div> -->
     </div>
   </div>
 
@@ -163,14 +174,14 @@
 
 
   <!-- Attendance -->
-  <div class="dropdown" *ngIf="canAccess('iams')" [class.open]="activeDropdown === 'iams'" #dropdownToggle
+  <!-- <div class="dropdown" *ngIf="canAccess('iams')" [class.open]="activeDropdown === 'iams'" #dropdownToggle
     (mouseenter)="onMouseEnter('iams', $event)" (mouseleave)="onMouseLeave()">
     <div class="dropdown-toggle" (click)="toggleDropdown('iams')">
       <i>👥</i><span>Attendance</span>
       <span class="arrow">{{ activeDropdown === 'iams' ? '▲' : '▼' }}</span>
-    </div>
+    </div> -->
     <!-- Normal expanded content -->
-    <div class="dropdown-content" *ngIf="activeDropdown === 'iams' && !isSidebarClosed">
+    <!-- <div class="dropdown-content" *ngIf="activeDropdown === 'iams' && !isSidebarClosed">
       <a routerLink="/empattendance" [ngClass]="{ 'active-submenu': isSubMenuActive('/empattendance') }">Attendance</a>
       <a routerLink="/adminuser" [ngClass]="{ 'active-submenu': isSubMenuActive('/iams/adminuser')  }" >Admin User</a>
       <a routerLink="/pmadminuser" [ngClass]="{ 'active-submenu': isSubMenuActive('/pmadminuser') }">PM Admin User</a>
@@ -178,10 +189,49 @@
       <a routerLink="/projectreports" [ngClass]="{ 'active-submenu': isSubMenuActive('/projectreports') }">Project Reports</a>
       <a routerLink="/monthlyempreport" [ngClass]="{ 'active-submenu': isSubMenuActive('/monthlyempreport') }">Monthly Emp Report</a>
       <a routerLink="/configuration" [ngClass]="{ 'active-submenu': isSubMenuActive('/configuration') }">Configurations</a>
-    </div>
+    </div> -->
+
+    <div class="dropdown" *ngIf="canAccess('iams')" [class.open]="activeDropdown === 'iams'">
+
+<div class="dropdown-toggle" (click)="toggleDropdown('iams')">
+  <i>👥</i><span>Attendance</span>
+</div>
+
+<div class="dropdown-content" *ngIf="activeDropdown === 'iams' && !isSidebarClosed">
+
+  <a *ngIf="canAccess('empattendance')" routerLink="/empattendance">
+    Attendance
+  </a>
+
+  <a *ngIf="canAccess('adminuser')" routerLink="/adminuser">
+    Admin User
+  </a>
+
+  <a *ngIf="canAccess('pmadminuser')" routerLink="/pmadminuser">
+    PM Admin User
+  </a>
+
+  <a *ngIf="canAccess('adminreports')" routerLink="/adminreports">
+    Admin Reports
+  </a>
+
+  <a *ngIf="canAccess('projectreports')" routerLink="/projectreports">
+    Project Reports
+  </a>
+
+  <a *ngIf="canAccess('monthlyempreport')" routerLink="/monthlyempreport">
+    Monthly Emp Report
+  </a>
+
+  <a *ngIf="canAccess('configuration')" routerLink="/configuration">
+    Configurations
+  </a>
+
+</div>
+</div>
 
     <!-- Floating submenu when collapsed -->
-    <div class="floating-dropdown" *ngIf="hoveredDropdown === 'iams' && isSidebarClosed"
+    <!-- <div class="floating-dropdown" *ngIf="hoveredDropdown === 'iams' && isSidebarClosed"
       [style.top.px]="floatingTop">
       <a routerLink="/empattendance">Attendance</a>
       <a routerLink="/adminuser">Admin User</a>
@@ -191,7 +241,7 @@
       <a routerLink="/monthlyempreport">Monthly Emp Report</a>
       <a routerLink="/configuration">Configurations</a>
     </div>
-  </div>
+  </div> -->
 
 
 
@@ -247,14 +297,21 @@
   <span class="caret">▾</span>
 
   <!-- Dropdown -->
-  <div class="user-dropdown" *ngIf="showUserMenu">
+  <!-- <div class="user-dropdown" *ngIf="showUserMenu && isAdmin">
     <div class="dropdown-item" (click)="goToProfile($event)">
       👤 Profile
-    </div>
-
-    <!-- <div class="dropdown-item" (click)="clearCache($event)">
-      🧹 Clear Cache
     </div> -->
+
+    <div class="user-dropdown" *ngIf="showUserMenu">
+
+  <div class="dropdown-item" *ngIf="isAdmin" (click)="goToProfile($event)">
+    👤 Profile
+  </div>
+
+
+    <div class="dropdown-item" (click)="clearCache($event)">
+      🧹 Clear Cache
+    </div>
 
     <div class="dropdown-item logout" (click)="confirmLogout()">
       🚪 Logout

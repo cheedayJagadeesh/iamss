@@ -13,6 +13,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { EmailService } from 'src/app/email.service';
 declare var Email: any;
 
+
 interface holidaysinfo {
   date: string;
   content: string;
@@ -148,6 +149,7 @@ mode = '';
 date: string = '';
 time: string = '';
 mobile = '';
+mail: string = '';
 examdata: exam = {
   id: 0,
   examTime: 0,
@@ -240,6 +242,7 @@ skillOrderConfig: SkillOrderConfig = {
   'Technologies': [],
   'Security': []
 };
+  userRole: string = '';
 
 constructor(private ielc: IelcapiService, private msalService: MsalService, private authService: AuthService, private router: Router, private route: ActivatedRoute, private emailService: EmailService){
   this.selectedDate = new Date().toISOString().split('T')[0]
@@ -248,6 +251,7 @@ constructor(private ielc: IelcapiService, private msalService: MsalService, priv
   this.GetEventsList();
   this.GetExamlist();
   this.GetCourseist();
+
 
   if (this.eventslist && this.eventslist.length > 0) {
     this.eventslist = this.eventslist.sort((a, b) => Number(b.id) - Number(a.id));
@@ -348,6 +352,8 @@ async ngOnInit() {
         this.GetAllPosters();
         this.startPosterAutoRefresh();
         this.getCyberTips();
+        this.checkUserRole();
+
       }
     });
   }
@@ -1160,6 +1166,15 @@ checkCoOwnerUserExists() {
     } else {
       //console.log('Your username is NOT in the list.');
     }
+  });
+}
+
+isAdmin = false;
+
+checkUserRole() {
+  this.ielc.GetUserRole(this.userEmail as string).subscribe((role: any) => {
+    const r = (role?.[0] || '').toLowerCase();
+    this.isAdmin = r === 'admin' || r === 'superadmin';
   });
 }
 

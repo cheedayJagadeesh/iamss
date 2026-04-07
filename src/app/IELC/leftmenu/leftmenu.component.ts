@@ -32,24 +32,44 @@ export class LeftmenuComponent implements OnDestroy {
 
   allowedPages: string[] = JSON.parse(
   localStorage.getItem('allowedPages') || '[]'
-);
+  );
+
+
+  //allowedPages: string[] = [];
 
 
 userRole: string = localStorage.getItem('userRole') || 'User';
 //userRole: string = '';
+isAdmin = false;
 
   constructor(private router: Router, private renderer: Renderer2, private msalService: MsalService, private authService: AuthService, private ielc: IelcapiService) {
 
+    // this.router.events
+    //   .pipe(filter(event => event instanceof NavigationEnd))
+    //   .subscribe((event: any) => {
+    //     this.activeRoute = event.urlAfterRedirects;
+
+    //     this.isSidebarClosed = false;
+    //     this.sidebarToggled.emit(this.isSidebarClosed);
+
+    //     this.autoOpenDropdown(this.activeRoute);
+    //   });
+
+
     this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: any) => {
-        this.activeRoute = event.urlAfterRedirects;
+  .pipe(filter(event => event instanceof NavigationEnd))
+  .subscribe((event: any) => {
 
-        this.isSidebarClosed = false;
-        this.sidebarToggled.emit(this.isSidebarClosed);
+    this.activeRoute = event.urlAfterRedirects;
 
-        this.autoOpenDropdown(this.activeRoute);
-      });
+    // this.isSidebarClosed = false;
+    // this.sidebarToggled.emit(this.isSidebarClosed);
+
+    // ✅ allow profile page without resetting menu
+    if (!this.activeRoute.startsWith('/profile')) {
+      this.autoOpenDropdown(this.activeRoute);
+    }
+  });
 
 //       const account = this.msalService.instance.getActiveAccount();
 
@@ -148,6 +168,8 @@ const email =
 //   console.log('Role:', this.userRole);
 // });
 
+
+localStorage.removeItem('allowedPages');
 forkJoin({
   role: this.ielc.GetUserRole(email as string),
   permissions: this.ielc.getUserPermissions(email as string)
@@ -155,6 +177,9 @@ forkJoin({
 //debugger;
   this.userRole = (role || '').toString();
   localStorage.setItem('userRole', this.userRole);
+
+    const r = this.userRole.toLowerCase();
+    this.isAdmin = r === 'admin' || r === 'superadmin';
 
   this.allowedPages = permissions
     .map(x => x.pageName?.toLowerCase())
@@ -165,8 +190,6 @@ forkJoin({
   localStorage.setItem('allowedPages', JSON.stringify(this.allowedPages));
 
 });
-
-
 
   }
 
@@ -262,22 +285,33 @@ forkJoin({
 //   return this.allowedPages.includes(normalized);
 // }
 
+// canAccess(module: string): boolean {
+
+//   const normalized = module.replace(/\s+/g,'').toLowerCase();
+
+//   const role = (this.userRole || '').toString().toLowerCase();
+
+//   // SuperAdmin
+//   if (role === 'superadmin') return true;
+
+//   // Always visible
+//   if (normalized === 'home' || normalized === 'registration' || normalized === 'profile') return true;
+
+//   return this.allowedPages.includes(normalized);
+// }
+
 canAccess(module: string): boolean {
 
   const normalized = module.replace(/\s+/g,'').toLowerCase();
-
   const role = (this.userRole || '').toString().toLowerCase();
 
-  // SuperAdmin
   if (role === 'superadmin') return true;
 
-  // Always visible
-  if (normalized === 'home' || normalized === 'registration') return true;
+  if (normalized === 'home' || normalized === 'registration' || normalized === 'profile')
+    return true;
 
   return this.allowedPages.includes(normalized);
 }
-
-
 
 
   onMouseLeave() {
@@ -324,19 +358,92 @@ canAccess(module: string): boolean {
   /** Auto-open dropdowns when landing on specific routes */
   private autoOpenDropdown(route: string) {
     // Compliance (ISMS / QMS / SOC2)
-    if (route.startsWith('/ismstask') || route.startsWith('/ismshistory') || route.startsWith('/ismsmails')) {
+    //if (route.startsWith('/ismstask') || route.startsWith('/ismshistory') || route.startsWith('/ismsmails')) {
+      //this.activeDropdown = 'compliance';
+      //this.isOpen['isms'] = true;
+          this.activeDropdown = 'compliance';
+    // this.isOpen['isms'] = true;
+    // this.isOpen['qms'] = false;
+    // this.isOpen['soc2'] = false;
+    // return;
+    if (
+    route.startsWith('/ismstask') ||
+    route.startsWith('/ismshistory') ||
+    route.startsWith('/ismsmails')
+  ) {
+
+    if (this.activeDropdown !== 'compliance') {
       this.activeDropdown = 'compliance';
-      this.isOpen['isms'] = true;
-    } else if (route.startsWith('/qmstask') || route.startsWith('/qmshistory') || route.startsWith('/qmsmails')) {
-      this.activeDropdown = 'compliance';
-      this.isOpen['qms'] = true;
-    } else if (route.startsWith('/soc2task') || route.startsWith('/soc2history') || route.startsWith('/soc2mails')) {
-      this.activeDropdown = 'compliance';
-      this.isOpen['soc2'] = true;
     }
 
+    if (!this.isOpen['isms']) {
+      this.isOpen['isms'] = true;
+      this.isOpen['qms'] = false;
+      this.isOpen['soc2'] = false;
+    }
+
+    return;
+  }
+    // } else if (route.startsWith('/qmstask') || route.startsWith('/qmshistory') || route.startsWith('/qmsmails')) {
+    //   this.activeDropdown = 'compliance';
+    //   //this.isOpen['qms'] = true;
+    //   this.isOpen['qms'] = true;
+    // this.isOpen['isms'] = false;
+    // this.isOpen['soc2'] = false;
+    // return;
+    // } else if (route.startsWith('/soc2task') || route.startsWith('/soc2history') || route.startsWith('/soc2mails')) {
+    //   this.activeDropdown = 'compliance';
+    //   //this.isOpen['soc2'] = true;
+    //      this.isOpen['soc2'] = true;
+    // this.isOpen['isms'] = false;
+    // this.isOpen['qms'] = false;
+    // return;
+    // }
+     /* ================= QMS ================= */
+  if (
+    route.startsWith('/qmstask') ||
+    route.startsWith('/qmshistory') ||
+    route.startsWith('/qmsmails')
+  ) {
+
+    if (this.activeDropdown !== 'compliance') {
+      this.activeDropdown = 'compliance';
+    }
+
+    if (!this.isOpen['qms']) {
+      this.isOpen['qms'] = true;
+      this.isOpen['isms'] = false;
+      this.isOpen['soc2'] = false;
+    }
+
+    return;
+  }
+
+  /* ================= SOC2 ================= */
+  if (
+    route.startsWith('/soc2task') ||
+    route.startsWith('/soc2history') ||
+    route.startsWith('/soc2mails')
+  ) {
+
+    if (this.activeDropdown !== 'compliance') {
+      this.activeDropdown = 'compliance';
+    }
+
+    if (!this.isOpen['soc2']) {
+      this.isOpen['soc2'] = true;
+      this.isOpen['isms'] = false;
+      this.isOpen['qms'] = false;
+    }
+
+    return;
+  }
+
+  /* ================= default ================= */
+  this.activeDropdown = null;
+
     // Departments (Admin / HR / IT)
-    else if (route.startsWith('/admindept') || route.startsWith('/hrdept') || route.startsWith('/itdept')) {
+     if (route.startsWith('/admindept') || route.startsWith('/hrdept') || route.startsWith('/itdept')) {
       this.activeDropdown = 'departments';
     }
 
@@ -356,7 +463,7 @@ canAccess(module: string): boolean {
     // Registered User
     else if (route.startsWith('/registered') || route.startsWith('/resultinfo')) {
       this.activeDropdown = 'registered';
-    } else {
+    }  else {
       this.activeDropdown = null;
     }
   }
@@ -378,7 +485,7 @@ toggleUserMenu(event: MouseEvent) {
 goToProfile(event: MouseEvent) {
   event.stopPropagation();
   this.showUserMenu = false;
-  this.router.navigate(['/profile']);
+  this.router.navigateByUrl('/profile');
 }
 
 /* ✅ Clear Cache */
@@ -408,6 +515,9 @@ openLogoutModal(event: MouseEvent) {
 closeLogoutModal() {
   this.showLogoutModal = false;
 }
+
+
+
 
 confirmLogout() {
   localStorage.clear();
