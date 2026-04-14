@@ -1,0 +1,1067 @@
+<form class="row g-3" #addskillsform="ngForm" novalidate >
+
+<div class="top-bar">
+
+  <div class="title">Employee Master</div>
+
+  <div class="toolbar-fields">
+    <div class="field">
+      <label>Emp. ID</label>
+      <input type="text" placeholder="Auto generator" />
+    </div>
+
+    <div class="field">
+      <label>Emp. Name</label>
+      <input type="text" placeholder="Latest emp" />
+    </div>
+
+    <button class="search-btn">🔍</button>
+  </div>
+
+  <div class="actions">
+    <button class="btn edit">Edit</button>
+    <button class="btn new">New</button>
+    <button class="btn save">Save</button>
+  </div>
+
+</div>
+
+
+<div class="employee-container">
+
+<div class="section-header" (click)="toggleSection('personal')">
+    Personal Information
+    <span class="toggle-icon">
+        {{ isOpen.personal ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="form-grid" *ngIf="isOpen.personal">
+
+    <div class="form-group">
+        <label>First Name*</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Middle Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Prefix</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Suffix</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Gender*</label>
+        <select>
+            <option>Select</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Date Of Birth*</label>
+        <input type="date">
+    </div>
+
+
+    <div class="form-group">
+        <label>Identification Marks</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Marital Status</label>
+        <select>
+            <option>Select</option>
+        </select>
+    </div>
+
+
+    <div class="form-group">
+        <label>Blood Group</label>
+        <select>
+            <option>Select</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Place of Birth</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Religion</label>
+        <input type="text">
+    </div>
+
+
+    <div class="form-group">
+        <label>Nationality</label>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <input type="text" matInput placeholder="Search" [formControl]="citizenshipCtrl" [matAutocomplete]="auto" />
+
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let country of filteredCountries" [value]="country">
+                    {{ country }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+
+    <div class="form-group">
+        <label>Phone Number 1</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Phone Number 2</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Personal Email ID</label>
+        <input type="text">
+    </div>
+
+</div>
+
+
+<div class="section-header" (click)="toggleSection('identity')">
+    Identity & Legal Information
+    <span class="toggle-icon">
+        {{ isOpen.identity ? '−' : '+' }}
+    </span>
+</div>
+
+
+<div class="form-grid" *ngIf="isOpen.identity">
+
+    <div class="form-group">
+        <label>Aadhaar / SSN ID</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>PAN Card Number</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Voter ID</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Passport Number</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Passport Valid Till</label>
+        <input type="date">
+    </div>
+
+    <div class="form-group">
+        <label>Passport Place of Issued</label>
+        <input type="text">
+    </div>
+
+</div>
+
+
+<div class="section-header" (click)="toggleSection('visa')">
+    Employee ViSA Info
+    <span class="toggle-icon">
+        {{ isOpen.visa ? '−' : '+' }}
+    </span>
+</div>
+
+
+<div class="form-grid" *ngIf="isOpen.visa">
+    <div class="form-group">
+        <label>Passport Number</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Passport Valid till Date</label>
+        <input type="date">
+    </div>
+
+    <div class="form-group">
+        <label>Country</label>
+
+        <mat-form-field appearance="outline" class="full-width">
+            <input type="text" matInput placeholder="Search" [formControl]="citizenshipCtrl" [matAutocomplete]="auto" />
+
+            <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let country of filteredCountries" [value]="country">
+                    {{ country }}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </div>
+
+    <div class="form-group">
+        <label>Type of VISA</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Visa Valid till </label>
+        <input type="date">
+    </div>
+</div>
+
+
+<div class="section-header" (click)="toggleSection('education')">
+    Employee Educational Qualifications
+    <span class="toggle-icon">
+        {{ isOpen.education ? '−' : '+' }}
+    </span>
+</div>
+
+
+<div class="form-grid" *ngIf="isOpen.education">
+
+    <div class="form-group">
+        <label>Emp Educational Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Class</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Board Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Name of the School</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Period of Study</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Month of year passing</label>
+        <input type="date">
+    </div>
+
+
+    <div class="form-group">
+        <label>Percentage/Grade obtained</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Address</label>
+        <input type="text">
+    </div>
+</div>
+
+
+<div class="section-header" (click)="toggleSection('contact')">
+    Emp Contact Details
+    <span class="toggle-icon">
+        {{ isOpen.contact ? '−' : '+' }}
+    </span>
+</div>
+
+
+<div class="form-grid" *ngIf="isOpen.contact">
+
+    <div class="form-group">
+        <label>Per Address Details</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Per Address City</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Per Address State</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Per Address Country</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Res Address Details</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Res Address City</label>
+        <input type="text">
+    </div>
+
+
+    <div class="form-group">
+        <label>Res Address State</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Res Address Country</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Period of stay</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emergency Contact Name1</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emergency Contact Relation1</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emergency Contact Address1</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emergency Contact Number1</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emergency Contact Name2</label>
+        <input type="text">
+    </div>
+
+
+    <div class="form-group">
+        <label>Emergency Contact Relation2</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emergency Contact Address2</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Emergency Contact Number2</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Employee Professional References Name1</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Employee Professional References Number1</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Employee Professional References Name2</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Employee Professional References Number2</label>
+        <input type="text">
+    </div>
+</div>
+
+
+    <div class="section-header" (click)="toggleSection('certifications')">
+        Employee Certifications
+        <span class="toggle-icon">
+            {{ isOpen.certifications ? '−' : '+' }}
+        </span>
+    </div>
+    
+    <div class="form-grid" *ngIf="isOpen.certifications">
+    
+        <div class="form-group">
+            <label>Certification Name</label>
+            <input type="text">
+        </div>
+    
+        <div class="form-group">
+            <label>Certification Number (Member ID)</label>
+            <input type="text">
+        </div>
+    
+        <div class="form-group">
+            <label>Earned Month and Year of Certification</label>
+            <input type="text">
+        </div>
+    
+        <div class="form-group">
+            <label>Certification Valid till</label>
+            <input type="text">
+        </div>
+    
+        <div class="form-group">
+            <label>Accredited Board \ association \ institution \ Organization</label>
+            <input type="text">
+        </div>
+    
+        <div class="form-group">
+            <label>Month and Year of passing</label>
+            <input type="date">
+        </div>
+    
+    
+        <div class="form-group">
+            <label>Percentage/ Grade obtained</label>
+            <input type="text">
+        </div>
+    
+        <div class="form-group">
+            <label>Skills acquired</label>
+            <input type="text">
+        </div>
+    </div>
+
+
+<div class="section-header" (click)="toggleSection('residential')">
+    Employee Residential Address
+    <span class="toggle-icon">
+        {{ isOpen.residential ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="form-grid" *ngIf="isOpen.residential">
+
+    <div class="form-group">
+        <label>Residential Address 1</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Contact Number</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Period of stay</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Residential Address 2</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Contact Number</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Period of stay</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Residential Address 3</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Contact Number</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Period of stay</label>
+        <input type="text">
+    </div>
+</div>
+
+
+
+<div class="section-header" (click)="toggleSection('professional')">
+    Employee Professional Membership
+    <span class="toggle-icon">
+        {{ isOpen.professional ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="form-grid" *ngIf="isOpen.professional">
+
+    <div class="form-group">
+        <label>Emp Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Association/ Professional Body</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Type of Membership (permanent \ Temporary)</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Date of Joined</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Status of Membership (running\ ended)</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Valid till (date \ Life time)</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Contact details: Address/Website/email id</label>
+        <input type="text">
+    </div>
+</div>
+
+<div class="section-header" (click)="toggleSection('legal')">
+    Employee Legal Records
+    <span class="toggle-icon">
+        {{ isOpen.legal ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="form-grid" *ngIf="isOpen.legal">
+
+    <div class="form-group">
+        <label>Have you ever been arrested?</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Do you have any police case going on against you?</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>FIR Number</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Address Details</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Address City</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Address State</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Address Country</label>
+        <input type="text">
+    </div>
+</div>
+
+<div class="section-header" (click)="toggleSection('family')">
+    Family
+    <span class="toggle-icon">
+        {{ isOpen.family ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="form-grid" *ngIf="isOpen.family">
+
+    <div class="form-group">
+        <label>Father’s / Husband’s Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Mother Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Siblings</label>
+        <input type="text">
+    </div>
+</div>
+
+<div class="section-header" (click)="toggleSection('experience')">
+    Previous Experience
+    <span class="toggle-icon">
+        {{ isOpen.experience ? '−' : '+' }}
+    </span>
+</div>
+
+
+<div class="form-grid" *ngIf="isOpen.experience">
+
+    <div class="form-group">
+        <label>Pre Emp Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Company Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Designation</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Job Role</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Department</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Date of Joining</label>
+        <input type="date">
+    </div>
+
+
+    <div class="form-group">
+        <label>Pre Date of Relieving</label>
+        <input type="date">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Total Experience</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Pre Last Salary drawn(Annual Gross)  </label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Address Details</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Address City</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Address State</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Address Country</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Nature of Employment(Temporary/ Permanent)</label>
+        <input type="text">
+    </div>
+
+
+    <div class="form-group">
+        <label>Pre Eemployed Through(Direct \ Agency)</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Reasons for Leaving</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Pre Company Reporting Manager Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Company Reporting Manager Designation</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Company Reporting Manager Department</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Company Reporting Manager Mobile No</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Company Reporting Manager Email ID</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Pre Company HR Manager Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Company HR Manager Name Email ID</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Company HR Manager Name Mobile No</label>
+        <input type="text">
+    </div>
+</div>
+
+<div class="section-header" (click)="toggleSection('language')">
+    Employee Language
+    <span class="toggle-icon">
+        {{ isOpen.language ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="form-grid" *ngIf="isOpen.language">
+
+    <div class="form-group">
+        <label>Language Known</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Speak</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Read</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+            <label>Write</label>
+            <input type="text">
+        </div>
+</div>
+
+<div class="section-header" (click)="toggleSection('feedback')">
+    Employee Feedback
+    <span class="toggle-icon">
+        {{ isOpen.feedback ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="form-grid" *ngIf="isOpen.feedback">
+
+    <div class="form-group">
+        <label>Meeting Goals</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Time management</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Self Improvement</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+            <label>Appraisal Score</label>
+            <input type="text">
+        </div>
+</div>
+
+<div class="section-header" (click)="toggleSection('details')">
+    Employment Details
+    <span class="toggle-icon">
+        {{ isOpen.details ? '−' : '+' }}
+    </span>
+</div>
+
+
+<div class="form-grid" *ngIf="isOpen.details">
+
+    <div class="form-group">
+        <label>Department Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Designation</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Skill Type</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Type of Employment</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Date of Joining</label>
+        <input type="date">
+    </div>
+
+    <div class="form-group">
+        <label>Date of Confirmation</label>
+        <input type="date">
+    </div>
+
+
+    <div class="form-group">
+        <label>Date of Relieving</label>
+        <input type="date">
+    </div>
+
+    <div class="form-group">
+        <label>Relieving Remarks</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Background Verification</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Remarks</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Official Email ID</label>
+        <input type="text">
+    </div>
+</div>
+
+<div class="section-header" (click)="toggleSection('type')">
+    Employee Type
+    <span class="toggle-icon">
+        {{ isOpen.type ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="form-grid" *ngIf="isOpen.type">
+
+    <div class="form-group">
+        <label>Emp Type Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Type Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Type Description</label>
+        <input type="text">
+    </div>
+</div>
+
+
+<div class="section-header" (click)="toggleSection('project')">
+    Employee Project Job
+    <span class="toggle-icon">
+        {{ isOpen.project ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="form-grid" *ngIf="isOpen.project">
+
+    <div class="form-group">
+        <label>Emp Job Role</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Joining Job</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Releving Job</label>
+        <input type="text">
+    </div>
+</div>
+
+<div class="section-header" (click)="toggleSection('salary')">
+    Salary
+    <span class="toggle-icon">
+        {{ isOpen.salary ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="form-grid" *ngIf="isOpen.salary">
+
+    <div class="form-group">
+        <label>Salary Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Basic Pay</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>HRA</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Special Allowance</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Conveyance Allowance</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Child Education</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Meal Vouchers</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Night Shift Allowance</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Medical Allowance</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Project Perf Allowance</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Special Bonus</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Leave Travel Allowance</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>PF Contribution by Company</label>
+        <input type="text">
+    </div>
+</div>
+
+<div class="section-header" (click)="toggleSection('deductions')">
+    Salary - Deductions
+    <span class="toggle-icon">
+        {{ isOpen.deductions ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="form-grid" *ngIf="isOpen.deductions">
+
+    <div class="form-group">
+        <label>Provident Fund</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>ESI</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Professional Tax</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>TDS</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Salary Advance</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Meal Vouchers</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Loss of Pay</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Other Deductions</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Update on Date</label>
+        <input type="date">
+    </div>
+</div>
+</div>
+</form>

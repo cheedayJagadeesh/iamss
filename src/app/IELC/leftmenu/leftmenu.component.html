@@ -244,9 +244,17 @@
   </div> -->
 
 
+  <a *ngIf="canAccess('empmaster')" routerLink="/empmaster" routerLinkActive="active"
+    [class.active]="activeRoute === '/empmaster'" (mouseenter)="showFloatingLabel($event, 'EMP Master')"
+    (mouseleave)="hideFloatingLabel()">
+    <i>➕</i><span>EMP Master</span>
+  </a>
 
-
-
+  <a *ngIf="canAccess('empanalytics')" routerLink="/empanalytics" routerLinkActive="active"
+    [class.active]="activeRoute === '/empanalytics'" (mouseenter)="showFloatingLabel($event, 'EMP Analytics')"
+    (mouseleave)="hideFloatingLabel()">
+    <i>➕</i><span>EMP Analytics</span>
+  </a>
 
 
   <a *ngIf="canAccess('registration')" routerLink="/registration" [class.active]="activeRoute === '/registration'"
@@ -309,9 +317,9 @@
   </div>
 
 
-    <!-- <div class="dropdown-item" (click)="clearCache($event)">
+    <div class="dropdown-item" (click)="clearCache($event)">
       🧹 Clear Cache
-    </div> -->
+    </div>
 
     <div class="dropdown-item logout" (click)="confirmLogout()">
       🚪 Logout

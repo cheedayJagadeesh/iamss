@@ -52,6 +52,9 @@ import { EventschedulerComponent } from './IELC/eventscheduler/eventscheduler.co
 import { ISMSMasterComponent } from './ISMS/ismsmaster/ismsmaster.component';
 import { AdminComponent } from './admin/admin.component';
 import { ProfileComponent } from './profile/profile.component';
+import { EmpmasterComponent } from './IELC/empmaster/empmaster.component';
+import { EmpanalyticsComponent } from './IELC/empanalytics/empanalytics.component';
+
 
 
 
@@ -74,6 +77,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   // { path: '**', redirectTo: 'login' },
+
+    {path:'empmaster',component:EmpmasterComponent,canActivate: [MsalGuard],data: { pageNames: ['empmaster'], roles: ['Admin', 'SuperAdmin'] }},
+    {path:'empanalytics',component:EmpanalyticsComponent,canActivate: [MsalGuard],data: { pageNames: ['empanalytics'], roles: ['Admin', 'SuperAdmin'] }},
 
 
   {path:'registration',component:RegistrationComponent, canActivate: [MsalGuard]},

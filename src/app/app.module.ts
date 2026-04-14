@@ -9,6 +9,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -100,7 +101,8 @@ import { AdminComponent } from './admin/admin.component';
 import { IsmsqmssupportComponent } from './ismsqmssupport/ismsqmssupport.component';
 import { ProfileComponent } from './profile/profile.component';
 import { environmentConfig } from './IELC/environment.runtime';
-
+import { EmpmasterComponent } from './IELC/empmaster/empmaster.component';
+import { EmpanalyticsComponent } from './IELC/empanalytics/empanalytics.component';
 
 
 
@@ -289,7 +291,9 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     EmpattendanceComponent,
     AdminComponent,
     IsmsqmssupportComponent,
-    ProfileComponent
+    ProfileComponent,
+    EmpmasterComponent,
+    EmpanalyticsComponent
   ],
   imports: [
     BrowserModule,
@@ -298,7 +302,7 @@ export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     NgbModule,
     NgbDatepickerModule,FormsModule,MatDatepickerModule,MatNativeDateModule,MatCardModule,FullCalendarModule,MatInputModule,
     MatFormFieldModule,MatButtonModule,MatIconModule,HttpClientModule,NgxPaginationModule,LazyLoadImageModule,
-         MatDialogModule,
+         MatDialogModule,MatAutocompleteModule,MatDividerModule,ReactiveFormsModule,
     MatRadioModule,PdfViewerModule, RouterModule
   ],
   providers: [IelcapiService,HttpClient,AuthService,MsalModule,MsalGuard,MsalService,DatePipe,ExcelExportService,MsalBroadcastService, 

@@ -1,0 +1,1135 @@
+<div class="employee-container">
+
+<div class="section-header" (click)="toggleSection('disciplinary')">
+    Employee Disciplinary Tracker
+    <span class="toggle-icon">
+        {{ isOpen.disciplinary ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="form-grid" *ngIf="isOpen.disciplinary">
+
+    <div class="form-group">
+        <label>Emp Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Designation</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Functional Head Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Record Date</label>
+        <input type="date">
+    </div>
+
+    <div class="form-group">
+        <label>Record Time</label>
+        <input type="time">
+    </div>
+
+
+    <div class="form-group">
+        <label>Offense Date</label>
+        <input type="date">
+    </div>
+
+    <div class="form-group">
+        <label>Offense Time</label>
+        <input type="time">
+    </div>
+
+
+    <div class="form-group">
+        <label>Offense Location</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Offense Details</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Offense Category</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Type of warning (Verbal/Written)</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Description of the incident that occurred</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Witnessess to the incident (if applicable)</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Redressal Committee attendees1</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Redressal Committee attendees2</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Corrective or Disciplinary action to be taken</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Prior discussions or warnings on the subject, whether oral or written</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Employee Statement</label>
+        <input type="text">
+    </div>
+
+</div>
+
+
+<div class="section-header" (click)="toggleSection('redressal')">
+    Redressal Committee attendees
+    <span class="toggle-icon">
+        {{ isOpen.redressal ? '−' : '+' }}
+    </span>
+</div>
+
+
+<div class="form-grid" *ngIf="isOpen.redressal">
+
+    <div class="form-group">
+        <label>Emp Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Voter ID</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Redressal Designation</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Remarks</label>
+        <input type="text">
+    </div>
+
+</div>
+
+
+<div class="section-header" (click)="toggleSection('leave')">
+    Emp Leave Details
+    <span class="toggle-icon">
+        {{ isOpen.leave ? '−' : '+' }}
+    </span>
+</div>
+
+
+<div class="form-grid" *ngIf="isOpen.leave">
+    <div class="form-group">
+        <label>Leave Id</label>
+        <input type="text">
+        <!-- <span>This table need to align with attendance system</span> -->
+    </div>
+
+    <div class="form-group">
+        <label>Emp Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Leave Type</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Leave from</label>
+        <input type="date">
+    </div>
+
+    <div class="form-group">
+        <label>Leave to</label>
+        <input type="date">
+    </div>
+
+        <div class="form-group">
+        <label>No of Days</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Reason</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Last Modified By</label>
+        <input type="text">
+    </div>
+    
+    <div class="form-group">
+        <label>Last Modified Date</label>
+        <input type="date">
+    </div>
+</div>
+
+
+<div class="section-header" (click)="toggleSection('dailyattendance')">
+    Daily Attendance
+    <span class="toggle-icon">
+        {{ isOpen.dailyattendance ? '−' : '+' }}
+    </span>
+</div>
+
+
+<div class="form-grid" *ngIf="isOpen.dailyattendance">
+
+    <div class="form-group">
+        <label>WorkType Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Attendance Date</label>
+        <input type="date">
+    </div>
+
+    <div class="form-group">
+        <label>Login Time</label>
+        <input type="time">
+    </div>
+
+    <div class="form-group">
+        <label>Logout Time</label>
+        <input type="time">
+    </div>
+
+    <div class="form-group">
+        <label>Total working hrs</label>
+        <input type="text">
+    </div>
+</div>
+
+
+<div class="section-header" (click)="toggleSection('empattendance')">
+    Emp Attendance
+    <span class="toggle-icon">
+        {{ isOpen.empattendance ? '−' : '+' }}
+    </span>
+</div>
+
+
+<div class="form-grid" *ngIf="isOpen.empattendance">
+
+    <div class="form-group">
+        <label>Emp Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Total Working Days</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Total Leave Count</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Total working hrs</label>
+        <input type="text">
+    </div>
+
+    <!-- <div class="form-group">
+        <label>Month</label>
+        <input type="text">
+    </div> -->
+
+    <div class="form-group">
+  <label>Month</label>
+  <select>
+    <option value="">Select Month</option>
+    <option *ngFor="let m of months" [value]="m">{{ m }}</option>
+  </select>
+</div>
+
+    <div class="form-group">
+        <label>Year</label>
+        <input type="text">
+    </div>
+</div>
+
+
+    <div class="section-header" (click)="toggleSection('employeeattendance')">
+        Empoyee Attendance
+        <span class="toggle-icon">
+            {{ isOpen.employeeattendance ? '−' : '+' }}
+        </span>
+    </div>
+    
+    <div class="form-grid" *ngIf="isOpen.employeeattendance">
+    
+        <div class="form-group">
+            <label>Attendance Id</label>
+            <input type="text">
+        </div>
+    
+        <div class="form-group">
+            <label>Emp Id</label>
+            <input type="text">
+        </div>
+    
+        <div class="form-group">
+            <label>Project Id</label>
+            <input type="text">
+        </div>
+    
+        <div class="form-group">
+            <label>Date</label>
+            <input type="date">
+        </div>
+    
+        <div class="form-group">
+            <label>Login Time</label>
+            <input type="time">
+        </div>
+    
+        <div class="form-group">
+            <label>Logout Time</label>
+            <input type="time">
+        </div>
+    
+    
+        <div class="form-group">
+            <label>Total working hrs</label>
+            <input type="text">
+        </div>
+    </div>
+
+
+<div class="section-header" (click)="toggleSection('performanceassessment')">
+    Employee Performance Assessment
+    <span class="toggle-icon">
+        {{ isOpen.performanceassessment ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="form-grid" *ngIf="isOpen.performanceassessment">
+
+    <div class="form-group">
+        <label>Emp Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Assessment Period</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Assessed By</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Date of Assessment</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Department Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Dept Section</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Location</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Designation</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Quality of Work</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Quantity of Works</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Commitment</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Initiative</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Attitude</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Job Knowledge</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Attendance and Punctuality</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Leadership</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Communication</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Planning and Organizing Effectiveness</label>
+        <input type="text">
+    </div>
+
+    
+    <div class="form-group">
+        <label>Organizational Skills</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Adherence to Quality Management System Policies</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Strengths</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Areas of Improvement</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Comments and Remarks Level 1</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Comments and Remarks Level 2</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Comments and Remarks Level 3</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Overall Rating</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Comments and Remarks of HR</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Comments and Remarks of Designated Partner</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Reviewed By</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Reviewed Date</label>
+        <input type="date">
+    </div>
+
+        <div class="form-group">
+        <label>Comments</label>
+        <input type="text">
+    </div>
+</div>
+
+
+
+<div class="section-header" (click)="toggleSection('resourceallocation')">
+    Resource Allocation Chart Empoyee Project Job
+    <span class="toggle-icon">
+        {{ isOpen.resourceallocation ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="form-grid" *ngIf="isOpen.resourceallocation">
+
+    <div class="form-group">
+        <label>Emp Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Project Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Dept Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Project Manager/Head</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Job Role</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>January</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>February</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>March</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>April</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>May</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>June</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>July</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>August</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>September</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>October</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>November</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>December</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Year</label>
+        <input type="text">
+    </div>
+</div>
+
+<div class="section-header" (click)="toggleSection('skillset')">
+    Skill Set Matrix
+    <span class="toggle-icon">
+        {{ isOpen.skillset ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="form-grid" *ngIf="isOpen.skillset">
+
+    <div class="form-group">
+        <label>Emp Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Skill Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Skill Grade</label>
+        <input type="text">
+    </div>
+</div>
+
+<div class="section-header" (click)="toggleSection('freshersrating')">
+    Employee Freshers Rating \ Interview Assessment
+    <span class="toggle-icon">
+        {{ isOpen.freshersrating ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="form-grid" *ngIf="isOpen.freshersrating">
+
+    <div class="form-group">
+        <label>Emp Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Designation</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Fresher Interview Date</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Fresher Interview Type</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Name of Interviewer1</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Name of Interviewer2</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Name of Interviewer3</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Attitude</label>
+        <input type="text">
+    </div>
+
+
+    <div class="form-group">
+        <label>Communication Skills</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Technical Skill-1</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Technical Skill-2</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Technical Skill-3</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Pre Address City</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Aptitude</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Presence of Mind</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Confidence</label>
+        <input type="text">
+    </div>
+
+
+    <div class="form-group">
+        <label>Comments</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Overall Rating</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Remarks</label>
+        <input type="text">
+    </div>
+</div>
+
+<div class="section-header" (click)="toggleSection('selfappraisal')">
+    Self-Appraisal Form
+    <span class="toggle-icon">
+        {{ isOpen.selfappraisal ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="form-grid" *ngIf="isOpen.selfappraisal">
+
+    <div class="form-group">
+        <label>Emp Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Designation</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+            <label>Emp Job Role</label>
+            <input type="text">
+        </div>
+
+    <div class="form-group">
+        <label>Project Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Dept Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Project Manager/Head</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+            <label>Appraisal Period</label>
+            <input type="text">
+        </div>
+
+    <div class="form-group">
+        <label>List what you consider to be your primary job duties or assignments during the appraisal period (List in order of priority)</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Describe contributions or achievements, which indicate your success at improving your performance or exceeding job requirements during the appraisal period.</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Describe any specific changes or improvements you want to make in your performance in the next appraisal period. Describe obstacles to getting your job done and suggest possible solutions.</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Describe the training or development activities that would help you pursue improved performance, job growth and learning and/or career development.</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Date</label>
+        <input type="date">
+    </div>
+</div>
+
+<div class="section-header" (click)="toggleSection('nodues')">
+    No Dues Form
+    <span class="toggle-icon">
+        {{ isOpen.nodues ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="nodues-container" *ngIf="isOpen.nodues">
+
+
+  <!-- Employee Info -->
+  <div class="sub-section">
+    <div class="sub-title">Employee Details</div>
+
+    <div class="inner-grid">
+      <div class="form-group">
+        <label>Emp Id</label>
+        <input type="text">
+      </div>
+
+      <div class="form-group">
+        <label>Emp Name</label>
+        <input type="text">
+      </div>
+
+      <div class="form-group">
+        <label>Designation</label>
+        <input type="text">
+      </div>
+
+      <div class="form-group">
+        <label>Date of Relieving</label>
+        <input type="date">
+      </div>
+
+      <div class="form-group">
+        <label>Remarks</label>
+        <input type="text">
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Functional Department -->
+  <div class="sub-section">
+    <div class="sub-title">Functional Department</div>
+
+    <div class="inner-grid">
+      <div class="form-group"><label>Dues</label><input type="text"></div>
+      <div class="form-group"><label>Signature</label><input type="text"></div>
+      <div class="form-group"><label>Date</label><input type="date"></div>
+      <div class="form-group"><label>Signatory</label><input type="text"></div>
+      <div class="form-group"><label>Knowledge Transfer</label><input type="text"></div>
+    </div>
+  </div>
+
+
+  <!-- Accounts -->
+  <div class="sub-section">
+    <div class="sub-title">Accounts Department</div>
+
+    <div class="inner-grid">
+      <div class="form-group"><label>Dues</label><input type="text"></div>
+      <div class="form-group"><label>Signature</label><input type="text"></div>
+      <div class="form-group"><label>Date</label><input type="date"></div>
+      <div class="form-group"><label>Signatory</label><input type="text"></div>
+      <div class="form-group"><label>HRA Receipts</label><input type="text"></div>
+    </div>
+  </div>
+
+
+<div class="sub-section">
+  <div class="sub-title">Admin Department</div>
+
+  <div class="inner-grid">
+    <div class="form-group"><label>Dues</label><input type="text"></div>
+    <div class="form-group"><label>Signature</label><input type="text"></div>
+    <div class="form-group"><label>Date</label><input type="date"></div>
+    <div class="form-group"><label>Signatory</label><input type="text"></div>
+
+    <div class="form-group"><label>Return of Access / ID Card</label><input type="text"></div>
+    <div class="form-group"><label>Removal of Access Rights</label><input type="text"></div>
+    <div class="form-group"><label>Return of Assets</label><input type="text"></div>
+  </div>
+</div>
+
+<div class="sub-section">
+  <div class="sub-title">HR Department</div>
+
+  <div class="inner-grid">
+    <div class="form-group"><label>Dues</label><input type="text"></div>
+    <div class="form-group"><label>Signature</label><input type="text"></div>
+    <div class="form-group"><label>Date</label><input type="date"></div>
+    <div class="form-group"><label>Signatory</label><input type="text"></div>
+
+    <div class="form-group"><label>Library</label><input type="text"></div>
+    <div class="form-group"><label>Return of Insurance Card</label><input type="text"></div>
+    <div class="form-group"><label>Exit Interview Feedback</label><input type="text"></div>
+  </div>
+</div>
+
+<div class="sub-section">
+  <div class="sub-title">CISO Department</div>
+
+  <div class="inner-grid">
+    <div class="form-group"><label>Dues</label><input type="text"></div>
+    <div class="form-group"><label>Signature</label><input type="text"></div>
+    <div class="form-group"><label>Date</label><input type="date"></div>
+    <div class="form-group"><label>Signatory</label><input type="text"></div>
+
+    <div class="form-group full">
+      <label>Remarks</label>
+      <input type="text">
+    </div>
+  </div>
+</div>
+
+<div class="sub-section full-width-card">
+  <div class="sub-title">IT Department</div>
+
+  <div class="inner-grid">
+    <div class="form-group"><label>Dues</label><input type="text"></div>
+    <div class="form-group"><label>Signature</label><input type="text"></div>
+    <div class="form-group"><label>Date</label><input type="date"></div>
+    <div class="form-group"><label>Signatory</label><input type="text"></div>
+
+    <div class="form-group"><label>Return of Assets</label><input type="text"></div>
+    <div class="form-group"><label>Reset Email Password</label><input type="text"></div>
+    <div class="form-group"><label>Reset/Disable Domain Password</label><input type="text"></div>
+    <div class="form-group"><label>Backup</label><input type="text"></div>
+    <div class="form-group"><label>Remove Email Account</label><input type="text"></div>
+    <div class="form-group"><label>Remove Domain Account</label><input type="text"></div>
+
+    <div class="form-group">
+      <label>Removal of company data from personal devices</label>
+      <input type="text">
+    </div>
+  </div>
+</div>
+
+</div>
+
+
+<div class="section-header" (click)="toggleSection('exitinterview')">
+    Exit Interview Form
+    <span class="toggle-icon">
+        {{ isOpen.exitinterview ? '−' : '+' }}
+    </span>
+</div>
+
+<div class="form-grid" *ngIf="isOpen.exitinterview">
+
+    <div class="form-group">
+        <label>Emp Id</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Name</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Designation</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Emp Phone Number</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Personal Email ID</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Address Details</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Address City</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Address State</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Address Country</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Date of Resignation</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Did anything trigger the decision to leave?</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Most satisfying thing about the job</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Least satisfying thing about the job</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>If you can change something what would you change in your job</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Did your job duties turn out to be as you expected?</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Did you receive enough training to do your job effectively?</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Did you receive adequate support to do your job?</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Did you receive sufficient feedback about your performance between reviews?</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Did this company help you to fulfill your career goals?</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>What would you improve to make our workplace better?</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Did any company policies or procedures (or any other obstacles) make your job more difficult?</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Would you consider working again for this company in the future?</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>What does your new company offer that this company doesn't?</label>
+        <input type="text">
+    </div>
+
+        <div class="form-group">
+        <label>Can this company do anything to encourage you to stay?</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Did you find any change in the people behavior after your resignation?</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Any other comments</label>
+        <input type="text">
+    </div>
+
+    <div class="form-group">
+        <label>Reviewed Date</label>
+        <input type="date">
+    </div>
+
+        <div class="form-group">
+        <label>Reviewed By</label>
+        <input type="text">
+    </div>
+
+    <span>Note: after left this company you should not try to access or attempt any type of access, including INTEQ Applications and INTEQ Client Applications and Network from outside. Also not share to any type of INTEQ and Clients data and access information.</span>
+    <span>To disclose any kind misuse of INTEQ/Clients information we will take a necessary legal proceeding and will not consider your INTEQ experience will be null (back ground check will be considered as misconduct)</span>
+</div>
