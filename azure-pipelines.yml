@@ -22,7 +22,6 @@ steps:
 
 - task: AzureStaticWebApp@0
   inputs:
-    app_location: "/"
-    output_location: "dist/clonetest"
+    app_location: "dist/clonetest"   # 👈 POINT TO BUILD OUTPUT
     azure_static_web_apps_api_token: "$(deployment_token)"
-    skip_app_build: true   # ✅ ADD THIS
+    skip_app_build: true
