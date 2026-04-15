@@ -9,6 +9,12 @@ variables:
   output_location: "dist/clonetest"
 
 steps:
+- task: qetza.replacetokens.replacetokens-task.replacetokens@5
+  displayName: 'Replace tokens in **/environment.prod.ts'
+  inputs:
+    rootDirectory: src/app/IELC
+    targetFiles: '**/environment.prod.ts'
+    
 - task: NodeTool@0
   inputs:
     versionSpec: '18.x'
