@@ -1,0 +1,27 @@
+trigger:
+- testing-leftmenucode
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  app_location: "/"
+  output_location: "dist/clonetest"
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '18.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm install -g @angular/cli
+    npm install
+    ng build --configuration production
+  displayName: 'Build Angular App'
+
+- task: AzureStaticWebApp@0
+  inputs:
+    app_location: "dist/iams"   # 👈 POINT TO BUILD OUTPUT
+    azure_static_web_apps_api_token: "$(deployment_token)"
+    skip_app_build: true
