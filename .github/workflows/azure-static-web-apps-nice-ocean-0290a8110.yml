@@ -25,9 +25,23 @@ jobs:
       - name: Install OIDC Client from Core Package
         run: npm install @actions/core@1.6.0 @actions/http-client
       - name: Get Id Token
-        uses: actions/github-script@v6
+        uses: actions/github-script@v6       
         id: idtoken
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
+          node-version: '18'
+
+      - name: Replace environment file
+        run: |
+         echo "export const environment = {
+         production: true,
+         redirectUri: '${{ secrets.TEST_DNS_REDIRECT_URI }}',
+         postLogoutUri: '${{ secrets.TEST_DNS_POST_LOGOUT_URI }}'
+         };" > src/environments/environment.prod.ts
+        
+         with:
            script: |
                const coredemo = require('@actions/core')
                return await coredemo.getIDToken()
