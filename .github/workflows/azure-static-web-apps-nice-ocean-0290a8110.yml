@@ -14,44 +14,64 @@ jobs:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
     name: Build and Deploy Job
+
     permissions:
-       id-token: write
-       contents: read
+      id-token: write
+      contents: read
+
     steps:
       - uses: actions/checkout@v3
+
+      # 🔥 Step 1: Setup Node (important for Angular 16)
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          submodules: true
-          lfs: false
-      - name: Install OIDC Client from Core Package
-        run: npm install @actions/core@1.6.0 @actions/http-client
+          node-version: '18'
+
+      # 🔥 Step 2: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # 🔥 Step 3: Replace environment file with GitHub secrets
+      - name: Replace environment file
+        run: |
+          echo "export const environment = {
+            production: true,
+            redirectUri: '${{ secrets.TEST_DNS_REDIRECT_URI }}',
+            postLogoutUri: '${{ secrets.TEST_DNS_POST_LOGOUT_URI }}'
+          };" > src/environments/environment.prod.ts
+
+      # 🔥 Step 4: Build Angular app
+      - name: Build Angular App
+        run: npm run build -- --configuration production
+
+      # 🔥 Step 5: Get ID Token
       - name: Get Id Token
         uses: actions/github-script@v6
         id: idtoken
         with:
-           script: |
-               const coredemo = require('@actions/core')
-               return await coredemo.getIDToken()
-           result-encoding: string
+          script: |
+            const core = require('@actions/core')
+            return await core.getIDToken()
+          result-encoding: string
+
+      # 🔥 Step 6: Deploy to Azure Static Web Apps
       - name: Build And Deploy
-        id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_NICE_OCEAN_0290A8110 }}
           action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "/" # App source code path
-          output_location: "dist/iams" # Built app content directory - optional
+          app_location: "/"
+          output_location: "dist/iams"
           github_id_token: ${{ steps.idtoken.outputs.result }}
-          ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
     name: Close Pull Request Job
+
     steps:
       - name: Close Pull Request
-        id: closepullrequest
         uses: Azure/static-web-apps-deploy@v1
         with:
           action: "close"
