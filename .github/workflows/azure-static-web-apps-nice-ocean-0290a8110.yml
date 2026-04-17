@@ -33,18 +33,6 @@ jobs:
                return await coredemo.getIDToken()
            result-encoding: string
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Replace environment variables
-        run: |
-         sed -i "s|#{TEST_DNS_REDIRECT_URI}#|${{ secrets.TEST_DNS_REDIRECT_URI }}|g" src/app/IELC/environment.prod.ts
-         sed -i "s|#{TEST_DNS_POST_LOGOUT_URI}#|${{ secrets.TEST_DNS_POST_LOGOUT_URI }}|g" src/app/IELC/environment.prod.ts
-         echo "----- AFTER REPLACE -----"
-         cat src/app/IELC/environment.prod.ts
-
       - name: Build Angular App
         run: npm run build -- --configuration production
            
