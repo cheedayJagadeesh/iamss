@@ -44,7 +44,7 @@ jobs:
          production: true,
          redirectUri: '${{ secrets.TEST_DNS_REDIRECT_URI }}',
          postLogoutUri: '${{ secrets.TEST_DNS_POST_LOGOUT_URI }}'
-         };" > src/environments/environment.prod.ts
+         };" > src/app/IELC/environment.prod.ts
            
       - name: Build And Deploy
         id: builddeploy
