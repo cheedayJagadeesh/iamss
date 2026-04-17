@@ -71,8 +71,8 @@ export const environment = {
       postLogoutRedirectUri: "#{TEST_POST_LOGOUT_URI}#"
     },
     "test-dns": {
-      redirectUri: "#{TEST_DNS_REDIRECT_URI}#",
-      postLogoutRedirectUri: "#{TEST_DNS_POST_LOGOUT_URI}#"
+      redirectUri: "https://nice-ocean-0290a8110.6.azurestaticapps.net/authcallback",
+      postLogoutRedirectUri: "https://nice-ocean-0290a8110.6.azurestaticapps.net/#/login"
     },
     stage: {
       redirectUri: "#{STAGE_REDIRECT_URI}#",
