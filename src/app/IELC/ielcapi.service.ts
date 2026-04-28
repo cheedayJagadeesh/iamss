@@ -300,7 +300,7 @@ GetExamInfos(): Observable<any> {
   EnrolledskillDataUrl='https://your-function-app.azurewebsites.net/api/enrollment';
     GetEnrolledSkills(): Observable<any> {
       //return this.http.get<any>(this.EnrolledskillDataUrl, { headers: this.getHeaders() });
-     return this.http.get(this.apiUrl).subscribe(res => {
+     return this.http.get(this.EnrolledskillDataUrl).subscribe(res => {
   console.log(res);
 });
     }
