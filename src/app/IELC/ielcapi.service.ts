@@ -296,14 +296,11 @@ GetExamInfos(): Observable<any> {
       });
     }
 
-    //EnrolledskillDataUrl='https://ielctest.azurewebsites.net/EnrollmentSkillData';
-  EnrolledskillDataUrl='https://your-function-app.azurewebsites.net/api/enrollment';
-    GetEnrolledSkills(): Observable<any> {
-      //return this.http.get<any>(this.EnrolledskillDataUrl, { headers: this.getHeaders() });
-     return this.http.get(this.EnrolledskillDataUrl).subscribe(res => {
-  console.log(res);
-});
-    }
+EnrolledskillDataUrl = 'https://testfuncsapp.azurewebsites.net/api/enrollment';
+
+GetEnrolledSkills(): Observable<any> {
+  return this.http.get<any>(this.EnrolledskillDataUrl);
+}
 
     PostEnrolledSkill(skillData: any): Observable<any> {
       // const headers = { 'Content-Type': 'application/json' };
