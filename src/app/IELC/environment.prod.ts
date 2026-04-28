@@ -67,8 +67,8 @@ export const environment = {
   production: true,
   urls: {
     test: {
-      redirectUri: "#{TEST_REDIRECT_URI}#",
-      postLogoutRedirectUri: "#{TEST_POST_LOGOUT_URI}#"
+      redirectUri: "https://nice-ocean-0290a8110.6.azurestaticapps.net/authcallback",
+      postLogoutRedirectUri: "https://nice-ocean-0290a8110.6.azurestaticapps.net/#/login"
     },
     "test-dns": {
       redirectUri: "https://nice-ocean-0290a8110.6.azurestaticapps.net/authcallback",
