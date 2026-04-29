@@ -296,7 +296,7 @@ GetExamInfos(): Observable<any> {
       });
     }
 
-EnrolledskillDataUrl = 'https://testfuncsapp.azurewebsites.net/api/enrollment';
+    EnrolledskillDataUrl = 'https://testfuncsapp.azurewebsites.net/api/enrollment';
 
 GetEnrolledSkills(): Observable<any> {
   return this.http.get<any>(this.EnrolledskillDataUrl);
