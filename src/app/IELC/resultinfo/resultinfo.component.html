@@ -14,7 +14,7 @@
                 <label for="skillname" class="form-label">Skill Name</label>
                 <select class="form-select" required name="skillname" [(ngModel)]="skillname">
                   <option value="" disabled selected>- select skill -</option>
-                  <option *ngFor="let row of Enrolledskills">{{ row.skillName }}</option>
+                  <option *ngFor="let row of Enrolledskills">{{ row.SkillName }}</option>
                 </select>
               </div>
               <div class="col-sm-4">
