@@ -125,9 +125,10 @@ export class ResultinfoComponent implements OnInit  {
     
    }
  
-   GetAllSkillsData(){
+  GetAllSkillsData(){
     this.ielc.GetEnrolledSkills().subscribe((data) => {
       this.Enrolledskills=data;
+      console.log("Enrolled Skills:", this.Enrolledskills);
     });
    }
 
