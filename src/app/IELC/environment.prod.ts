@@ -67,12 +67,8 @@ export const environment = {
   production: true,
   urls: {
     test: {
-      redirectUri: "https://nice-ocean-0290a8110.6.azurestaticapps.net/authcallback",
-      postLogoutRedirectUri: "https://nice-ocean-0290a8110.6.azurestaticapps.net/#/login"
-    },
-    "test-dns": {
-      redirectUri: "https://nice-ocean-0290a8110.6.azurestaticapps.net/authcallback",
-      postLogoutRedirectUri: "https://nice-ocean-0290a8110.6.azurestaticapps.net/#/login"
+      redirectUri: "https://lively-moss-08f622f10.7.azurestaticapps.net/authcallback",
+      postLogoutRedirectUri: "https://lively-moss-08f622f10.7.azurestaticapps.net/#/login"
     },
     stage: {
       redirectUri: "#{STAGE_REDIRECT_URI}#",
