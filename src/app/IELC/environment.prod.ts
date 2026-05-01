@@ -70,6 +70,10 @@ export const environment = {
       redirectUri: "https://lively-moss-08f622f10.7.azurestaticapps.net/authcallback",
       postLogoutRedirectUri: "https://lively-moss-08f622f10.7.azurestaticapps.net/#/login"
     },
+        "test-dns": {
+      redirectUri: "https://lively-moss-08f622f10.7.azurestaticapps.net/authcallback",
+      postLogoutRedirectUri: "https://lively-moss-08f622f10.7.azurestaticapps.net/#/login"
+    },
     stage: {
       redirectUri: "#{STAGE_REDIRECT_URI}#",
       postLogoutRedirectUri: "#{STAGE_POST_LOGOUT_URI}#"
