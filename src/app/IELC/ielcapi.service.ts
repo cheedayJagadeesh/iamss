@@ -296,7 +296,13 @@ GetExamInfos(): Observable<any> {
       });
     }
 
-    EnrolledskillDataUrl = 'https://my-funs-app.azurewebsites.net/api/enrollment';
+//     EnrolledskillDataUrl = 'https://my-funs-app.azurewebsites.net/api/enrollment';
+
+// GetEnrolledSkills(): Observable<any> {
+//   return this.http.get<any>(this.EnrolledskillDataUrl);
+// }
+
+      EnrolledskillDataUrl = 'https://my-apims.azure-api.net/my-funs-app/enrollment';
 
 GetEnrolledSkills(): Observable<any> {
   return this.http.get<any>(this.EnrolledskillDataUrl);
